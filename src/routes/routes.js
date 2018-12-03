@@ -6,6 +6,7 @@ import Dashboard from "@/pages/Dashboard/Dashboard.vue";
 
 // Pages
 const User = () => import("@/pages/Dashboard/Pages/UserProfile.vue");
+const Patient = () => import("@/pages/Dashboard/Pages/PatientProfile.vue");
 const Pricing = () => import("@/pages/Dashboard/Pages/Pricing.vue");
 const TimeLine = () => import("@/pages/Dashboard/Pages/TimeLinePage.vue");
 const RtlSupport = () => import("@/pages/Dashboard/Pages/RtlSupport.vue");
@@ -229,6 +230,19 @@ let authPages = {
   ]
 };
 
+let PatientPages = {
+  path: "/patients",
+  component: Patient,
+  name: "Patient",
+  children: [
+    {
+      path: "/login",
+      name: "Login",
+      component: Login
+    }
+  ]
+};
+
 const routes = [
   {
     path: "/",
@@ -236,6 +250,7 @@ const routes = [
     name: "Home"
   },
   componentsMenu,
+  PatientPages,
   formsMenu,
   tablesMenu,
   mapsMenu,
@@ -245,6 +260,11 @@ const routes = [
     path: "/",
     component: DashboardLayout,
     children: [
+      // {
+      //   path: "patients",
+      //   name: "PatientPages",
+      //   components: { default: PatientPages }
+      // },
       {
         path: "dashboard",
         name: "Dashboard",

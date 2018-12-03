@@ -19,6 +19,7 @@
           <sidebar-item :link="{name: 'ملف تعريفي للمستخدم', path: '/pages/user'}"></sidebar-item>
         </sidebar-item>
         <sidebar-item v-else :link="{name: 'Pages', icon: 'image'}">
+          <sidebar-item :link="{name: 'Patient', path: '/patients'}"></sidebar-item>
           <sidebar-item :link="{name: 'Pricing', path: '/pricing'}"></sidebar-item>
           <sidebar-item :link="{name: 'RTL Support', path: '/pages/rtl'}"></sidebar-item>
           <sidebar-item :link="{name: 'Timeline', path: '/pages/timeline'}"></sidebar-item>
@@ -37,7 +38,9 @@
           <sidebar-item :link="{name: 'طباعة', path: '/components/typography'}"></sidebar-item>
         </sidebar-item>
         <sidebar-item v-else :link="{name: 'Components', icon: 'apps'}">
-          <sidebar-item :link="{name: 'Buttons', path: '/components/buttons'}"></sidebar-item>
+          <sidebar-item :link="{name: 'Buttons', path: '/components/buttons'}">
+            <sidebar-item :link="{name: 'Buttons', path: '/components/buttons'}"></sidebar-item>
+          </sidebar-item>
           <sidebar-item :link="{name: 'Grid System', path: '/components/grid-system'}"></sidebar-item>
           <sidebar-item :link="{name: 'Panels', path: '/components/panels'}"></sidebar-item>
           <sidebar-item :link="{name: 'Sweet Alert', path: '/components/sweet-alert'}"></sidebar-item>

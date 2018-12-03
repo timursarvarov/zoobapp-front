@@ -19,12 +19,12 @@
             <div v-show="!isClosed">
               <ul class="nav" >
                 <slot>
-                  <li>
-                    <a v-if="$route.meta.rtlActive" href="#vue">
+                  <li >
+                    <a v-if="$route.meta.rtlActive" href="#patients">
                       <span class="sidebar-mini">مع</span>
                       <span class="sidebar-normal">ملف</span>
                     </a>
-                    <a v-else href="#vue">
+                    <a v-else   href="#patients">
                       <span class="sidebar-mini">MP</span>
                       <span class="sidebar-normal">My Profile</span>
                     </a>
@@ -34,7 +34,7 @@
                       <span class="sidebar-mini">هوع</span>
                       <span class="sidebar-normal">تعديل الملف الشخصي</span>
                     </a>
-                    <a v-else href="#vue">
+                    <a v-else href="charts">
                       <span class="sidebar-mini">EP</span>
                       <span class="sidebar-normal">Edit Profile</span>
                     </a>
