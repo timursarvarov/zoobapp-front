@@ -1,10 +1,10 @@
 <template>
-  <div class="user">
-    <div class="photo">
+  <div class="user"  >
+    <div class="photo"   >
       <img :src="avatar" alt="avatar"/>
     </div>
     <div class="user-info">
-      <a data-toggle="collapse" :aria-expanded="!isClosed" @click.stop="toggleMenu" @click.capture="clicked">
+      <a data-toggle="collapse" :class="{navactive : isActive('/patients'),}" :aria-expanded="!isClosed" @click.stop="toggleMenu" @click.capture="clicked">
            <span v-if="$route.meta.rtlActive">
              {{rtlTitle}}
              <b class="caret"></b>
@@ -19,36 +19,21 @@
             <div v-show="!isClosed">
               <ul class="nav" >
                 <slot>
-                  <li >
-                    <a v-if="$route.meta.rtlActive" href="#patients">
-                      <span class="sidebar-mini">مع</span>
-                      <span class="sidebar-normal">ملف</span>
-                    </a>
-                    <a v-else   href="#patients">
-                      <span class="sidebar-mini">MP</span>
+                  <!-- <li >
+
+                  <sidebar-item  :link="{name: 'Patients', path: '/patients'}">
+                    <span class="sidebar-mini">MP</span>
                       <span class="sidebar-normal">My Profile</span>
-                    </a>
+                   </sidebar-item>
+                  </li > -->
+
+                  <li :class="{active : isActive('/patients')}" >
+                    <router-link class="sidebar-normal" tag='a' to="/patients" >
+                    <span class="sidebar-mini">MP</span>
+                      <span class="sidebar-normal">My Profile</span>
+                    </router-link>
                   </li>
-                  <li>
-                    <a v-if="$route.meta.rtlActive" href="#vue">
-                      <span class="sidebar-mini">هوع</span>
-                      <span class="sidebar-normal">تعديل الملف الشخصي</span>
-                    </a>
-                    <a v-else href="charts">
-                      <span class="sidebar-mini">EP</span>
-                      <span class="sidebar-normal">Edit Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a v-if="$route.meta.rtlActive" href="#vue">
-                      <span class="sidebar-mini">و</span>
-                      <span class="sidebar-normal">إعدادات</span>
-                    </a>
-                    <a v-else href="#vue">
-                      <span class="sidebar-mini">S</span>
-                      <span class="sidebar-normal">Settings</span>
-                    </a>
-                  </li>
+
                 </slot>
               </ul>
           </div>
@@ -88,6 +73,15 @@ export default {
     },
     toggleMenu: function() {
       this.isClosed = !this.isClosed;
+    },
+    isActive(route) {
+      if (this.$route && this.$route.path) {
+        let matchingRoute = this.$route.path.startsWith(route);
+        if (matchingRoute !== undefined) {
+          return matchingRoute;
+        }
+      }
+      return false;
     }
   }
 };

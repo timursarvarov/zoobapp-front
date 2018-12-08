@@ -3,7 +3,6 @@ import Badge from "./Badge";
 
 import DropDown from "./Dropdown.vue";
 
-
 // Modals
 import Modal from "./Modal.vue";
 
@@ -30,7 +29,7 @@ import SimpleWizard from "./Wizard/Wizard.vue";
 import WizardTab from "./Wizard/WizardTab.vue";
 import AsyncWorldMap from "./WorldMap/AsyncWorldMap.vue";
 
-import Jaw from "./Jaw/Jaw.vue";
+import JawCard from "./Jaw/JawCard.vue";
 
 import Pagination from "./Pagination.vue";
 
@@ -65,5 +64,5 @@ export {
   AnimatedNumber,
   Collapse,
   AsyncWorldMap,
-  Jaw,
+  JawCard
 };

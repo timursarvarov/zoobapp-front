@@ -1,7 +1,7 @@
 <template>
   <component :is="baseComponent"
              :to="link.path ? link.path : '/'"
-             :class="{active : isActive}"
+             :class=" {active : isActive(link.path)}"        
              tag="li">
     <a v-if="isMenu"
        href="#"
@@ -9,7 +9,12 @@
        :aria-expanded="!collapsed"
        data-toggle="collapse"
        @click.prevent="collapseMenu">
-      <md-icon>{{link.icon}}</md-icon>
+      <md-icon v-if="link.img"  >
+        <md-avatar  class="md-avatar-icon">
+         <img  :src="link.img" alt="avatar"/>
+         </md-avatar>
+      </md-icon>
+      <md-icon v-else >{{link.icon}}</md-icon>
       <p>
         {{link.name}}
         <b class="caret"></b>
@@ -17,7 +22,7 @@
 
     </a>
 
-    <collapse-transition>
+    <collapse-transition  >
       <div v-if="$slots.default || this.isMenu" v-show="!collapsed">
         <ul class="nav" >
           <slot></slot>
@@ -33,7 +38,7 @@
         :class="{active: link.active}"
         class="nav-link"
         :target="link.target"
-        :href="link.path">
+        :href="link.path.active">
         <template v-if="addLink">
           <span class="sidebar-mini">{{linkPrefix}}</span>
           <span class="sidebar-normal">{{link.name}}</span>
@@ -43,7 +48,7 @@
           <p>{{link.name}}</p>
         </template>
       </component>
-    </slot>
+    </slot >
   </component>
 </template>
 <script>
@@ -101,23 +106,31 @@ export default {
     },
     isMenu() {
       return this.children.length > 0 || this.menu === true;
-    },
-    isActive() {
-      if (this.$route && this.$route.path) {
-        let matchingRoute = this.children.find(c =>
-          this.$route.path.startsWith(c.link.path)
-        );
-        if (matchingRoute !== undefined) {
-          return true;
-        }
-      }
-      return false;
     }
   },
   methods: {
     addChild(item) {
       const index = this.$slots.default.indexOf(item.$vnode);
       this.children.splice(index, 0, item);
+    },
+    isActive(re) {
+      if (this.$route && this.$route.path) {
+        let matchingRoute = "";
+        if (this.children.length > 0) {
+          matchingRoute = this.children.find(c =>
+            this.$route.path.startsWith(c.link.path)
+          );
+        } else if (
+          re &&
+          this.$route.path.split("/").length != re.split("/").length
+        ) {
+          matchingRoute = this.$route.path.startsWith(re);
+        }
+        if (matchingRoute === true) {
+          return true;
+        }
+      }
+      return false;
     },
     removeChild(item) {
       const tabs = this.children;
@@ -172,8 +185,11 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
 .sidebar-menu-item {
   cursor: pointer;
+  .md-avatar-icon {
+    margin-top: -5px;
+  }
 }
 </style>

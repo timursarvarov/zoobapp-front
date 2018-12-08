@@ -2,9 +2,16 @@
   <div class="wrapper" :class="[{'nav-open': $sidebar.showSidebar}, {'rtl': $route.meta.rtlActive}]">
     <notifications></notifications>
     <side-bar>
-      <user-menu></user-menu>
+      <!-- <user-menu></user-menu> -->
       <mobile-menu></mobile-menu>
+     
       <template slot="links">
+        <sidebar-item :link="{name: 'Angela Davis', icon: 'image', img:'./img/faces/avatar.jpg' }" class="separated" >
+           <sidebar-item :link="{name: 'BIO', icon: 'image', path: '/patient/bio'}"></sidebar-item>
+           <sidebar-item :link="{name: 'Treatment', path: '/patient/treatment'}"> </sidebar-item>
+           <sidebar-item :link="{name: 'Media', path: '/patient/media'}"></sidebar-item>
+           <sidebar-item :link="{name: 'WizardJaw', path: '/patient/wizardjaw'}"></sidebar-item>
+        </sidebar-item>
         <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'لوحة القيادةة', icon: 'dashboard', path: '/dashboard'}">
         </sidebar-item>
         <sidebar-item v-else :link="{name: 'Dashboard', icon: 'dashboard', path: '/dashboard'}">
@@ -19,7 +26,6 @@
           <sidebar-item :link="{name: 'ملف تعريفي للمستخدم', path: '/pages/user'}"></sidebar-item>
         </sidebar-item>
         <sidebar-item v-else :link="{name: 'Pages', icon: 'image'}">
-          <sidebar-item :link="{name: 'Patient', path: '/patients'}"></sidebar-item>
           <sidebar-item :link="{name: 'Pricing', path: '/pricing'}"></sidebar-item>
           <sidebar-item :link="{name: 'RTL Support', path: '/pages/rtl'}"></sidebar-item>
           <sidebar-item :link="{name: 'Timeline', path: '/pages/timeline'}"></sidebar-item>
@@ -28,6 +34,7 @@
           <sidebar-item :link="{name: 'Lock Screen', path: '/lock'}"></sidebar-item>
           <sidebar-item :link="{name: 'User Profile', path: '/pages/user'}"></sidebar-item>
         </sidebar-item>
+       
         <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'المكونات', icon: 'apps'}">
           <sidebar-item :link="{name: 'وصفتت', path: '/components/buttons'}"></sidebar-item>
           <sidebar-item :link="{name: 'نظام الشبكةو', path: '/components/grid-system'}"></sidebar-item>
@@ -38,9 +45,7 @@
           <sidebar-item :link="{name: 'طباعة', path: '/components/typography'}"></sidebar-item>
         </sidebar-item>
         <sidebar-item v-else :link="{name: 'Components', icon: 'apps'}">
-          <sidebar-item :link="{name: 'Buttons', path: '/components/buttons'}">
-            <sidebar-item :link="{name: 'Buttons', path: '/components/buttons'}"></sidebar-item>
-          </sidebar-item>
+          <sidebar-item :link="{name: 'Buttons', path: '/components/buttons'}"></sidebar-item>
           <sidebar-item :link="{name: 'Grid System', path: '/components/grid-system'}"></sidebar-item>
           <sidebar-item :link="{name: 'Panels', path: '/components/panels'}"></sidebar-item>
           <sidebar-item :link="{name: 'Sweet Alert', path: '/components/sweet-alert'}"></sidebar-item>
@@ -102,7 +107,6 @@
     </side-bar>
     <div class="main-panel">
       <top-navbar></top-navbar>
-
       <div :class="{content: !$route.meta.hideContent}" @click="toggleSidebar">
         <zoom-center-transition :duration="200" mode="out-in">
           <!-- your content here -->
@@ -136,7 +140,7 @@ function initScrollbar(className) {
 import TopNavbar from "./TopNavbar.vue";
 import ContentFooter from "./ContentFooter.vue";
 import MobileMenu from "./Extra/MobileMenu.vue";
-import UserMenu from "./Extra/UserMenu.vue";
+// import UserMenu from "./Extra/UserMenu.vue";
 import { ZoomCenterTransition } from "vue2-transitions";
 
 export default {
@@ -144,7 +148,7 @@ export default {
     TopNavbar,
     ContentFooter,
     MobileMenu,
-    UserMenu,
+    // UserMenu,
     ZoomCenterTransition
   },
   methods: {
@@ -195,5 +199,17 @@ $scaleSize: 0.95;
 }
 .main-panel .zoomOut {
   animation-name: zoomOut95;
+}
+.separated:after {
+  content: "";
+  position: absolute;
+  margin: 15px 0 15px 0;
+  right: 15px;
+  height: 1px;
+  width: calc(100% - 30px);
+  background-color: rgba(180, 180, 180, 0.3);
+}
+.separated {
+  padding-bottom: 20px;
 }
 </style>

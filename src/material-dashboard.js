@@ -11,6 +11,7 @@ import SideBar from "./components/SidebarPlugin";
 // Tabs plugin. Used on Panels page.
 
 import VueMaterial from "vue-material";
+import Vuex from "vuex";
 
 // asset imports
 import "vue-material/dist/vue-material.min.css";
@@ -22,6 +23,7 @@ import "es6-promise/auto";
 
 export default {
   install(Vue) {
+    Vue.use(Vuex);
     Vue.use(GlobalComponents);
     Vue.use(GlobalDirectives);
     Vue.use(VueMaterial);

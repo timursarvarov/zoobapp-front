@@ -6,7 +6,14 @@ import Dashboard from "@/pages/Dashboard/Dashboard.vue";
 
 // Pages
 const User = () => import("@/pages/Dashboard/Pages/UserProfile.vue");
-const Patient = () => import("@/pages/Dashboard/Pages/PatientProfile.vue");
+const PatientProfile = () =>
+  import("@/pages/Dashboard/Pages/PatientProfile.vue");
+const PatientTreatment = () =>
+  import("@/pages/Dashboard/Pages/PatientTreatment.vue");
+const PatientMedia = () =>
+  import("@/pages/Dashboard/Pages/PatientMedia.vue");
+const WizardJaw = () =>
+  import("@/pages/Dashboard/Pages/WizardJaw.vue");
 const Pricing = () => import("@/pages/Dashboard/Pages/Pricing.vue");
 const TimeLine = () => import("@/pages/Dashboard/Pages/TimeLinePage.vue");
 const RtlSupport = () => import("@/pages/Dashboard/Pages/RtlSupport.vue");
@@ -175,6 +182,58 @@ let mapsMenu = {
   ]
 };
 
+let PatientPages = {
+  path: "/patient",
+  component: DashboardLayout,
+  name: "Patient",
+  redirect: "/patient/bio",
+  children: [
+    {
+      path: "bio",
+      name: "BIO",
+      component: PatientProfile
+    },
+    {
+      path: "treatment",
+      name: "Treatment",
+      component: PatientTreatment,
+      redirect: "/patient/treatment/anamnes",
+      children: [
+        {
+          path: "anamnes",
+          name: "patient/treatment/anamnes",
+          component: PatientTreatment
+        },
+        {
+          path: "diagnose",
+          name: "patient/treatment/diagnose",
+          component: PatientTreatment
+        },
+        {
+          path: "history",
+          name: "patient/treatment/history",
+          component: PatientTreatment
+        },
+        {
+          path: "treatment",
+          name: "patient/treatment/treatment",
+          component: PatientTreatment
+        }
+      ]
+    },
+    {
+      path: "media",
+      name: "Media",
+      component: PatientMedia
+    },
+    {
+      path: "wizardjaw",
+      name: "WizardJaw",
+      component: WizardJaw
+    }
+  ]
+};
+
 let pagesMenu = {
   path: "/pages",
   component: DashboardLayout,
@@ -230,19 +289,6 @@ let authPages = {
   ]
 };
 
-let PatientPages = {
-  path: "/patients",
-  component: Patient,
-  name: "Patient",
-  children: [
-    {
-      path: "/login",
-      name: "Login",
-      component: Login
-    }
-  ]
-};
-
 const routes = [
   {
     path: "/",
@@ -260,11 +306,6 @@ const routes = [
     path: "/",
     component: DashboardLayout,
     children: [
-      // {
-      //   path: "patients",
-      //   name: "PatientPages",
-      //   components: { default: PatientPages }
-      // },
       {
         path: "dashboard",
         name: "Dashboard",
