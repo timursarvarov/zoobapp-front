@@ -5,7 +5,10 @@
         <div class="card-icon">
           <md-icon>perm_identity</md-icon>
         </div>
-        <h4 class="title">Edit Profile - <small>Complete your profile</small></h4>
+        <h4 class="title">
+          Edit Profile -
+          <small>Complete your profile</small>
+        </h4>
       </md-card-header>
 
       <md-card-content>
@@ -74,41 +77,40 @@
             <md-button class="md-raised md-success mt-4">Update Profile</md-button>
           </div>
         </div>
-
       </md-card-content>
     </md-card>
   </form>
 </template>
 <script>
-export default {
-  name: "edit-profile-form",
-  props: {
-    headerColor: {
-      type: String,
-      default: ""
-    }
-  },
-  data() {
-    return {
-      username: null,
-      disabled: null,
-      emailadress: null,
-      lastname: null,
-      firstname: null,
-      address: null,
-      city: null,
-      country: null,
-      code: null,
-      aboutme:
-        "Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-    };
-  },
-  methods: {
-    getClass: function(headerColor) {
-      return "md-card-header-" + headerColor + "";
-    }
-  }
-};
+  export default {
+    name: 'edit-profile-form',
+    props: {
+      headerColor: {
+        type: String,
+        default: '',
+      },
+    },
+    data() {
+      return {
+        username: null,
+        disabled: null,
+        emailadress: null,
+        lastname: null,
+        firstname: null,
+        address: null,
+        city: null,
+        country: null,
+        code: null,
+        aboutme:
+          "Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.",
+      };
+    },
+    methods: {
+      getClass(headerColor) {
+        return `${'md-card-header' - +headerColor}`;
+      },
+    },
+  };
 </script>
 <style>
 </style>

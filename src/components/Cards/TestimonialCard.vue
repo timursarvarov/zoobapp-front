@@ -16,7 +16,7 @@
   </md-card>
 </template>
 <script>
-export default {
-  name: "testimonial-card"
-};
+  export default {
+    name: 'testimonial-card',
+  };
 </script>

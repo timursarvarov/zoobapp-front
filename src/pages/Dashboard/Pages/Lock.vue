@@ -14,18 +14,19 @@
   </div>
 </template>
 <script>
-import { LockCard } from "@/components";
-export default {
-  components: {
-    LockCard
-  },
-  data() {
-    return {
-      password: null,
-      image: "./img/faces/avatar.jpg"
-    };
-  }
-};
+  import { LockCard } from '@/components';
+
+  export default {
+    components: {
+      LockCard,
+    },
+    data() {
+      return {
+        password: null,
+        image: './img/faces/avatar.jpg',
+      };
+    },
+  };
 </script>
 <style>
 </style>

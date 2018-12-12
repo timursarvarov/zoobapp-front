@@ -28,28 +28,28 @@
   </div>
 </template>
 <script>
-import { IconCheckbox } from "@/components";
+  import { IconCheckbox } from '@/components';
 
-export default {
-  components: {
-    IconCheckbox
-  },
-  data() {
-    return {
-      model: {
-        design: false,
-        code: true,
-        develop: false
-      }
-    };
-  },
-  methods: {
-    validate() {
-      this.$emit("on-validated", true, this.model);
-      return Promise.resolve(true);
-    }
-  }
-};
+  export default {
+    components: {
+      IconCheckbox,
+    },
+    data() {
+      return {
+        model: {
+          design: false,
+          code: true,
+          develop: false,
+        },
+      };
+    },
+    methods: {
+      validate() {
+        this.$emit('on-validated', true, this.model);
+        return Promise.resolve(true);
+      },
+    },
+  };
 </script>
 <style>
 </style>

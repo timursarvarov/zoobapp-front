@@ -20,14 +20,21 @@
                 v-model="required"
                 data-vv-name="required"
                 type="text"
-                v-validate= "modelValidations.required"
-                required>
+                v-validate="modelValidations.required"
+                required
+              >
               </md-input>
               <slide-y-down-transition>
-                <md-icon class="error" v-show="errors.has('required')">close</md-icon>
+                <md-icon
+                  class="error"
+                  v-show="errors.has('required')"
+                >close</md-icon>
               </slide-y-down-transition>
               <slide-y-down-transition>
-                <md-icon class="success" v-show="!errors.has('required') && touched.required">done</md-icon>
+                <md-icon
+                  class="success"
+                  v-show="!errors.has('required') && touched.required"
+                >done</md-icon>
               </slide-y-down-transition>
             </md-field>
           </div>
@@ -47,14 +54,21 @@
                 v-model="email"
                 data-vv-name="email"
                 type="text"
-                v-validate= "modelValidations.email"
-                required>
+                v-validate="modelValidations.email"
+                required
+              >
               </md-input>
               <slide-y-down-transition>
-                <md-icon class="error" v-show="errors.has('email')">close</md-icon>
+                <md-icon
+                  class="error"
+                  v-show="errors.has('email')"
+                >close</md-icon>
               </slide-y-down-transition>
               <slide-y-down-transition>
-                <md-icon class="success" v-show="!errors.has('email') && touched.email">done</md-icon>
+                <md-icon
+                  class="success"
+                  v-show="!errors.has('email') && touched.email"
+                >done</md-icon>
               </slide-y-down-transition>
             </md-field>
           </div>
@@ -74,14 +88,21 @@
                 v-model="number"
                 data-vv-name="number"
                 type="number"
-                v-validate= "modelValidations.number"
-                required>
+                v-validate="modelValidations.number"
+                required
+              >
               </md-input>
               <slide-y-down-transition>
-                <md-icon class="error" v-show="errors.has('number')">close</md-icon>
+                <md-icon
+                  class="error"
+                  v-show="errors.has('number')"
+                >close</md-icon>
               </slide-y-down-transition>
               <slide-y-down-transition>
-                <md-icon class="success" v-show="!errors.has('number') && touched.number">done</md-icon>
+                <md-icon
+                  class="success"
+                  v-show="!errors.has('number') && touched.number"
+                >done</md-icon>
               </slide-y-down-transition>
             </md-field>
           </div>
@@ -102,13 +123,20 @@
                 data-vv-name="url"
                 type="url"
                 v-validate="modelValidations.url"
-                required>
+                required
+              >
               </md-input>
               <slide-y-down-transition>
-                <md-icon class="errror" v-show="errors.has('url')">close</md-icon>
+                <md-icon
+                  class="errror"
+                  v-show="errors.has('url')"
+                >close</md-icon>
               </slide-y-down-transition>
               <slide-y-down-transition>
-                <md-icon class="success" v-show="!errors.has('url') && touched.url">done</md-icon>
+                <md-icon
+                  class="success"
+                  v-show="!errors.has('url') && touched.url"
+                >done</md-icon>
               </slide-y-down-transition>
             </md-field>
           </div>
@@ -133,13 +161,20 @@
                     ref="equalToSource"
                     type="text"
                     v-validate="modelValidations.equalToSource"
-                    required>
+                    required
+                  >
                   </md-input>
                   <slide-y-down-transition>
-                    <md-icon class="error" v-show="errors.has('equalToSource')">close</md-icon>
+                    <md-icon
+                      class="error"
+                      v-show="errors.has('equalToSource')"
+                    >close</md-icon>
                   </slide-y-down-transition>
                   <slide-y-down-transition>
-                    <md-icon class="success" v-show="!errors.has('equalToSource') && touched.equalToSource">done</md-icon>
+                    <md-icon
+                      class="success"
+                      v-show="!errors.has('equalToSource') && touched.equalToSource"
+                    >done</md-icon>
                   </slide-y-down-transition>
                 </md-field>
               </div>
@@ -154,13 +189,20 @@
                     data-vv-as="equalToSource"
                     type="text"
                     v-validate="modelValidations.equalToDest"
-                    required>
+                    required
+                  >
                   </md-input>
                   <slide-y-down-transition>
-                    <md-icon class="error" v-show="errors.has('equalToDest')">close</md-icon>
+                    <md-icon
+                      class="error"
+                      v-show="errors.has('equalToDest')"
+                    >close</md-icon>
                   </slide-y-down-transition>
                   <slide-y-down-transition>
-                    <md-icon class="success" v-show="!errors.has('equalToDest') && touched.equalToDest">done</md-icon>
+                    <md-icon
+                      class="success"
+                      v-show="!errors.has('equalToDest') && touched.equalToDest"
+                    >done</md-icon>
                   </slide-y-down-transition>
                 </md-field>
               </div>
@@ -173,87 +215,92 @@
       </md-card-content>
 
       <md-card-actions class="text-center">
-        <md-button native-type="submit" @click.native.prevent="validate" class="md-success">Validate Inputs</md-button>
+        <md-button
+          native-type="submit"
+          @click.native.prevent="validate"
+          class="md-success"
+        >Validate Inputs</md-button>
       </md-card-actions>
     </md-card>
   </form>
 </template>
 <script>
-import { SlideYDownTransition } from "vue2-transitions";
-export default {
-  components: {
-    SlideYDownTransition
-  },
-  data() {
-    return {
-      equalToSource: "",
-      equalToDest: "",
-      required: "",
-      email: "",
-      number: "",
-      url: "",
-      touched: {
-        required: false,
-        email: false,
-        number: false,
-        url: false,
-        equalToSource: false,
-        equalToDest: false
+  import { SlideYDownTransition } from 'vue2-transitions';
+
+  export default {
+    components: {
+      SlideYDownTransition,
+    },
+    data() {
+      return {
+        equalToSource: '',
+        equalToDest: '',
+        required: '',
+        email: '',
+        number: '',
+        url: '',
+        touched: {
+          required: false,
+          email: false,
+          number: false,
+          url: false,
+          equalToSource: false,
+          equalToDest: false,
+        },
+        modelValidations: {
+          required: {
+            required: true,
+          },
+          email: {
+            required: true,
+            email: true,
+          },
+          number: {
+            required: true,
+            numeric: true,
+          },
+          url: {
+            required: true,
+            url: true,
+          },
+          equalToSource: {
+            required: true,
+          },
+          equalToDest: {
+            required: true,
+            confirmed: 'equalToSource',
+          },
+        },
+      };
+    },
+    methods: {
+      validate() {
+        this.$validator.validateAll().then((isValid) => {
+          this.$emit('on-submit', this.registerForm, isValid);
+        });
       },
-      modelValidations: {
-        required: {
-          required: true
-        },
-        email: {
-          required: true,
-          email: true
-        },
-        number: {
-          required: true,
-          numeric: true
-        },
-        url: {
-          required: true,
-          url: true
-        },
-        equalToSource: {
-          required: true
-        },
-        equalToDest: {
-          required: true,
-          confirmed: "equalToSource"
-        }
-      }
-    };
-  },
-  methods: {
-    validate() {
-      this.$validator.validateAll().then(isValid => {
-        this.$emit("on-submit", this.registerForm, isValid);
-      });
-    }
-  },
-  watch: {
-    required() {
-      this.touched.required = true;
     },
-    email() {
-      this.touched.email = true;
+    watch: {
+      required() {
+        this.touched.required = true;
+      },
+      email() {
+        this.touched.email = true;
+      },
+      number() {
+        this.touched.number = true;
+      },
+      url() {
+        this.touched.url = true;
+      },
+      equalToSource() {
+        this.touched.equalToSource = true;
+      },
+      equalToDest() {
+        this.touched.equalToDest = true;
+      },
     },
-    number() {
-      this.touched.number = true;
-    },
-    url() {
-      this.touched.url = true;
-    },
-    equalToSource() {
-      this.touched.equalToSource = true;
-    },
-    equalToDest() {
-      this.touched.equalToDest = true;
-    }
-  }
-};
+  };
 </script>
 <style lang="scss" scoped>
 .md-card .md-card-actions {

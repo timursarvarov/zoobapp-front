@@ -3,5 +3,11 @@
 </template>
 
 <script>
-export default {};
+  export default {};
 </script>
+<style>
+.md-tabs-navigation {
+  overflow: auto;
+}
+</style>
+>

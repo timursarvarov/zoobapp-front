@@ -260,57 +260,94 @@
           <div class="md-layout">
             <div class="md-layout-item md-size-50 md-small-size-100">
               <h3>Some card-title Here</h3>
-              <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a
-                horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown
-                belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it
-                and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest
-                of him, waved about helplessly as he looked. "What's happened to me?" he thought.</p>
+              <p>One morning, when Gregor Samsa woke from troubled dreams,
+                he found himself transformed in his bed into a
+                horrible vermin. He lay on his armour-like back,
+                if he lifted his head a little he could see his brown
+                belly, slightly domed
+                divided by arches into stiff sections. The bedding was hardly able to cover it
+
+                seemed ready to slide off any moment. His
+                many legs, pitifully thin compared with the size of the rest
+                of him, waved about helplessly
+                as he looked. "What's happened to me?" he thought.</p>
             </div>
             <div class="md-layout-item md-size-50 md-small-size-100">
               <h3>Another card-title Here</h3>
-              <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a
-                horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown
-                belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it
-                and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest
-                of him, waved about helplessly as he looked. "What's happened to me?" he thought.</p>
+              <p>One morning, when Gregor Samsa woke from troubled dreams,
+                he found himself transformed in his bed into a
+                horrible vermin. He lay on his armour-like back,
+                if he lifted his head a little he could see his brown
+                belly, slightly domed
+                divided by arches into stiff sections. The bedding was hardly able to cover it
+
+                seemed ready to slide off any moment. His many legs,
+                pitifully thin compared with the size of the rest
+                of him, waved about helplessly as he looked.
+                "What's happened to me?" he thought.</p>
             </div>
             <div class="md-layout-item md-size-33 md-small-size-100">
               <h3>Some card-title Here</h3>
-              <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a
-                horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown
-                belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it
-                and seemed ready to slide off any moment.</p>
+              <p>One morning, when Gregor Samsa woke from troubled dreams,
+                he found himself transformed in his bed into a
+                horrible vermin. He lay on his armour-like back,
+                if he lifted his head a little he could see his brown
+                belly, slightly domed
+                divided by arches into stiff sections. The bedding was hardly able to cover it
+
+                seemed ready to slide off any moment.</p>
             </div>
             <div class="md-layout-item md-size-33 md-small-size-100">
               <h3>Another card-title Here</h3>
-              <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a
-                horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown
-                belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it
-                and seemed ready to slide off any moment.</p>
+              <p>One morning, when Gregor Samsa woke from troubled dreams,
+                he found himself transformed in his bed into a
+                horrible vermin. He lay on his armour-like back,
+                if he lifted his head a little he could see his brown
+                belly, slightly domed
+                divided by arches into stiff sections. The bedding was hardly able to cover it
+
+                seemed ready to slide off any moment.</p>
             </div>
             <div class="md-layout-item md-size-33 md-small-size-100">
               <h3>Another card-title Here</h3>
-              <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a
-                horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown
-                belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it
-                and seemed ready to slide off any moment.</p>
+              <p>One morning, when Gregor Samsa woke from troubled dreams,
+                he found himself transformed in his bed into a
+                horrible vermin. He lay on his armour-like back,
+                if he lifted his head a little he could see his brown
+                belly, slightly domed
+                divided by arches into stiff sections. The bedding was hardly able to cover it
+
+                seemed ready to slide off any moment.</p>
             </div>
             <div class="md-layout-item md-size-33 md-small-size-100">
               <h3>Some card-title Here</h3>
-              <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a
-                horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown
-                belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it
-                and seemed ready to slide off any moment.</p>
+              <p>One morning, when Gregor Samsa woke from troubled dreams,
+                he found himself transformed in his bed into a
+                horrible vermin. He lay on his armour-like back,
+                if he lifted his head a little he could see his brown
+                belly, slightly domed
+                divided by arches into stiff sections. The bedding was hardly able to cover it
+
+                seemed ready to slide off any moment.</p>
             </div>
             <div class="md-layout-item md-size-66 md-small-size-100">
               <h3>Another card-title Here</h3>
-              <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a
-                horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown
-                belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it
-                and seemed ready to slide off any moment. One morning, when Gregor Samsa woke from troubled dreams, he
-                found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he
-                lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff
-                sections. The bedding was hardly able to cover it and seemed ready to slide off any moment.</p>
+              <p>One morning, when Gregor Samsa woke from troubled dreams,
+                he found himself transformed in his bed into a
+                horrible vermin. He lay on his armour-like back,
+                if he lifted his head a little he could see his brown
+                belly, slightly domed
+                divided by arches into stiff sections. The bedding was hardly able to cover it
+                seemed ready to slide off any moment. One morning, when Gregor
+                Samsa woke from troubled dreams,
+                he
+                w found himself transformed in his
+                bed into a horrible vermin. He lay on his armour-like back,
+                if he
+                lifted his head a little he could see his brown belly, slightly domed
+                divided by arches into stiff
+                sections. The bedding was hardly able to cover it
+                seemed ready to slide off any moment.</p>
             </div>
           </div>
         </md-card-content>
@@ -318,8 +355,9 @@
     </div>
   </div>
 </template>
+
 <script>
-export default {};
+  export default {};
 </script>
 <style scoped>
 .text-center {

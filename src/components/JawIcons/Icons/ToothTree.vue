@@ -1,0 +1,92 @@
+<template>
+  <svg
+    version="1.1"
+    id="Слой_1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0px"
+    y="0px"
+    viewBox="0 0 125.2 98.9"
+    style="enable-background:new 0 0 125.2 98.9;"
+    xml:space="preserve"
+  >
+    <title>Tooth Tree</title>
+    <g id="Слой_2_1_">
+      <g id="_лой_1">
+        <g id="_Группа_">
+          <g id="_Группа_2">
+            <path
+              id="_Контур_"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M62.3,4.1l13-2.3c1-0.2,1.9-0.3,2.9-0.2l0,0c5.8-0.1,11.2,3,14.2,8c2.2,4,3.4,8.6,3.3,13.2l0,0c0,4.9-1.3,9.7-3.7,14l-3.7,6.5
+					c-1.8,3.1-2.8,6.5-3.2,10c-0.7,8.2-3.2,16.2-7.3,23.3l-2.5,4.3c-0.6,1.1-1.8,1.8-3.1,1.8l0,0c-2,0-3.6-1.6-3.6-3.5l0,0v-6.8
+					c0-3.5-0.6-6.9-1.8-10.2l-1-2.6c-0.5-1.5-2-2.5-3.5-2.5l0,0c-1.6,0-3.1,1-3.6,2.6l-1,2.9c-1,3.1-1.6,6.3-1.6,9.5v7.2
+					c0,2-1.6,3.6-3.5,3.6l0,0l0,0c-1.3,0-2.4-0.7-3.1-1.8L47,76.8c-4.1-7.2-6.6-15.1-7.3-23.3c-0.3-3.5-1.4-7-3.2-10L32.8,37
+					c-2.4-4.2-3.7-9.1-3.7-14l0,0c-0.1-4.6,1-9.2,3.3-13.3c2.9-5,8.3-8.1,14.1-8l0,0c1,0,1.9,0.1,2.9,0.2L62.3,4.1"
+            />
+            <path
+              id="_Контур_2"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M59.2,11.7L51.3,10c-3.5-0.8-7.1,0.3-9.4,3c-0.2,0.2-0.3,0.4-0.5,0.6c-1.3,1.9-2,4.1-1.9,6.4"
+            />
+          </g>
+          <g id="_Группа_3">
+            <path
+              id="_Контур_3"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M99.4,53.7c0,17-11.5,31.8-27.9,36"
+            />
+            <path
+              id="_Контур_4"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M99.9,53.2c5.5-0.4,10.6-3,14.1-7.2c5.5-6.8,4.1-15,3.9-16.3c-1.4,0.1-9.6,0.6-14.9,7.6c-3.3,4.4-4.6,10-3.7,15.5"
+            />
+            <path
+              id="_Контур_5"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M95.4,73.4c4.7,2.8,10.4,3.7,15.7,2.3c8.4-2.4,12-9.8,12.6-11.1c-1.2-0.7-8.2-5-16.6-2.4c-5.3,1.7-9.6,5.5-12,10.5"
+            />
+            <path
+              id="_Контур_6"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M78.8,88.4c3,4.6,7.8,7.8,13.2,8.8c8.7,1.4,15.1-3.7,16.1-4.6c-0.7-1.2-5.2-8-13.9-9.3c-5.5-0.7-11,0.9-15.2,4.3"
+            />
+          </g>
+          <g id="_Группа_4">
+            <path
+              id="_Контур_7"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M25.8,53.7c0,17,11.5,31.8,27.9,36"
+            />
+            <path
+              id="_Контур_8"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M25.3,53.2c-5.5-0.4-10.6-3-14.2-7.2C5.6,39.1,7,31,7.2,29.7c1.4,0.1,9.6,0.6,15,7.6c3.3,4.4,4.6,10,3.7,15.5"
+            />
+            <path
+              id="_Контур_9"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M29.8,73.4c-4.7,2.8-10.4,3.7-15.7,2.3c-8.5-2.4-12-9.8-12.6-11.1c1.2-0.7,8.2-5,16.6-2.4c5.2,1.7,9.5,5.5,11.9,10.5"
+            />
+            <path
+              id="_Контур_10"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M46.3,88.4c-3.1,4.6-7.8,7.8-13.2,8.8C24.4,98.6,18,93.5,17,92.6c0.7-1.2,5.2-8,13.9-9.3c5.5-0.7,11,0.9,15.3,4.3"
+            />
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
+
+</template>

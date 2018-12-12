@@ -22,13 +22,13 @@
 </template>
 
 <script>
-export default {
-  methods: {
-    closeModal: function() {
-      this.$emit("close");
-    }
-  }
-};
+  export default {
+    methods: {
+      closeModal() {
+        this.$emit('close');
+      },
+    },
+  };
 </script>
 
 <style lang="scss">

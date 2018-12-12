@@ -1,0 +1,112 @@
+<template>
+  <svg
+    version="1.1"
+    id="Слой_1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0px"
+    y="0px"
+    viewBox="0 0 109.1 123"
+    style="enable-background:new 0 0 109.1 123;"
+    xml:space="preserve"
+  >
+    <title>Tooth Washing</title>
+    <g>
+      <g id="_лой_1">
+        <g id="_Группа_">
+          <path
+            id="_Контур_"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M77.7,29l6.4-1.1c1.1-0.2,2.2-0.3,3.3-0.3l0,0c6.7-0.1,13,3.4,16.4,9.2c1.2,2.1,2.1,4.3,2.7,6.6c0.7,2.9,1.1,5.8,1.1,8.7
+				c0,5.7-1.5,11.2-4.3,16.2L99,75.8c-2.1,3.6-3.3,7.5-3.7,11.7c-0.8,9.5-3.7,18.7-8.5,27l-2.9,5c-1.1,2-3.6,2.6-5.6,1.5
+				c-1.3-0.7-2.1-2.1-2.1-3.5v-8.4c0-3.7-0.6-7.5-1.8-11l-1.1-3.3c-0.8-2.3-3.3-3.5-5.6-2.7c-1.2,0.4-2.2,1.4-2.7,2.6l-1.1,3
+				c-1.4,3.8-2.1,7.8-2.1,11.8v7.9c0,1.1-0.4,2.1-1.2,2.9c-0.8,0.8-1.8,1.2-2.9,1.2c-1.5,0-2.8-0.8-3.6-2.1l-2.9-5
+				c-4.8-8.3-7.7-17.5-8.5-27c-0.2-2.5-0.8-4.9-1.6-7.2"
+          />
+          <path
+            id="_Контур_2"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M31.7,60.8L31.7,60.8"
+          />
+          <path
+            id="_Контур_3"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M38.2,50.2c0,0.3,0,0.7-0.1,1c-0.3,0.1-0.7,0.3-1,0.5c0.3,0.1,0.6,0.3,0.9,0.4c6,2.5,13,1.1,17.6-3.5"
+          />
+          <path
+            id="_Контур_4"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M58,43.1c4.2-7,0-14.2,0-14.2c-4.5-7.7-14.4-10.3-22.1-5.8c-6.5,3.8-9.5,11.5-7.3,18.7c0.4,0,0.8-0.1,1.1-0.1
+				c2.1,0,4.1,0.8,5.6,2.2"
+          />
+          <path
+            id="_Контур_5"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M50.3,39.3c0.6,6,6.2,11.3,12.4,10.6c4.2-0.5,7.7-3.4,9-7.5c1.5-5.1-0.9-10.6-5.7-13"
+          />
+          <path
+            id="_Контур_6"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M49.3,52.5c2.2,1.7,3.7,4.1,4.1,6.8c0.1,0.6,0.2,1.2,0.2,1.8c0,3.7-1.9,7.2-5,9.1c-1.8,1.1-3.8,1.7-5.9,1.7
+				c-6,0-10.9-4.9-10.9-10.9c0-0.9,0.1-1.9,0.4-2.8c0.7-2.8,2.5-5.1,5-6.6c0.3-0.2,0.7-0.4,1-0.5"
+          />
+          <path
+            id="_Контур_7"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M28.6,41.8c-4.6,0.6-7.9,4.8-7.3,9.5c0.5,4.2,4.2,7.4,8.4,7.4c0.8,0,1.6-0.1,2.4-0.3"
+          />
+          <path
+            id="_Контур_8"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M38,52.1c0.1-0.3,0.1-0.6,0.2-0.9c-0.3,0.1-0.7,0.3-1,0.5"
+          />
+          <path
+            id="_Контур_9"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M53.4,59.3c1-0.4,2-0.6,3.1-0.6c4.8,0.2,8.6,4.2,8.4,9c-0.1,3.8-2.7,7.1-6.4,8.1c-0.6,0.2-4.9,1.1-8.3-1.7
+				c-1.1-0.9-2-2.1-2.5-3.4"
+          />
+
+          <circle
+            id="_Контур_10"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            cx="71.5"
+            cy="12.5"
+            r="7.7"
+          />
+
+          <circle
+            id="_Контур_11"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            cx="9.2"
+            cy="41.8"
+            r="7.7"
+          />
+          <path
+            id="_Контур_12"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M46.4,7c0,3-2.5,5.5-5.5,5.5c-3,0-5.5-2.5-5.5-5.5s2.5-5.5,5.5-5.5c0,0,0,0,0,0C43.9,1.5,46.4,4,46.4,7z"
+          />
+          <path
+            id="_Контур_13"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M27.9,77.5c0,3-2.5,5.5-5.5,5.5s-5.5-2.5-5.5-5.5c0-3,2.5-5.5,5.5-5.5C25.4,72,27.9,74.5,27.9,77.5
+				C27.9,77.5,27.9,77.5,27.9,77.5z"
+          />
+        </g>
+      </g>
+    </g>
+  </svg>
+
+</template>

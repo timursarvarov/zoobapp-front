@@ -36,19 +36,20 @@
   </div>
 </template>
 <script>
-import { LoginCard } from "@/components";
-export default {
-  components: {
-    LoginCard
-  },
-  data() {
-    return {
-      firstname: null,
-      email: null,
-      password: null
-    };
-  }
-};
+  import { LoginCard } from '@/components';
+
+  export default {
+    components: {
+      LoginCard,
+    },
+    data() {
+      return {
+        firstname: null,
+        email: null,
+        password: null,
+      };
+    },
+  };
 </script>
 
 <style>

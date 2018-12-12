@@ -16,13 +16,14 @@
 </template>
 
 <script>
-import { EditPatientProfileForm, PatientCard } from "@/pages";
-export default {
-  components: {
-    EditPatientProfileForm,
-    PatientCard
-  }
-};
+  import { EditPatientProfileForm, PatientCard } from '@/pages';
+
+  export default {
+    components: {
+      EditPatientProfileForm,
+      PatientCard,
+    },
+  };
 </script>
 <style lang="scss">
 .text-right {

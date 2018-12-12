@@ -6,12 +6,19 @@
         <div class="picture-container">
           <div class="picture">
             <div v-if="!image">
-              <img :src="avatar" class="picture-src" title="">
+              <img
+                :src="avatar"
+                class="picture-src"
+                title=""
+              >
             </div>
             <div v-else>
               <img :src="image" />
             </div>
-            <input type="file" @change="onFileChange">
+            <input
+              type="file"
+              @change="onFileChange"
+            >
           </div>
           <h6 class="description">Choose Picture</h6>
         </div>
@@ -29,13 +36,20 @@
             type="text"
             name="firstName"
             required
-            v-validate="modelValidations.firstName">
+            v-validate="modelValidations.firstName"
+          >
           </md-input>
           <slide-y-down-transition>
-            <md-icon class="error" v-show="errors.has('firstName')">close</md-icon>
+            <md-icon
+              class="error"
+              v-show="errors.has('firstName')"
+            >close</md-icon>
           </slide-y-down-transition>
           <slide-y-down-transition>
-            <md-icon class="success" v-show="!errors.has('firstName') && touched.firstName">done</md-icon>
+            <md-icon
+              class="success"
+              v-show="!errors.has('firstName') && touched.firstName"
+            >done</md-icon>
           </slide-y-down-transition>
         </md-field>
 
@@ -51,13 +65,20 @@
             type="text"
             name="lastName"
             required
-            v-validate="modelValidations.lastName">
+            v-validate="modelValidations.lastName"
+          >
           </md-input>
           <slide-y-down-transition>
-            <md-icon class="error" v-show="errors.has('lastName')">close</md-icon>
+            <md-icon
+              class="error"
+              v-show="errors.has('lastName')"
+            >close</md-icon>
           </slide-y-down-transition>
           <slide-y-down-transition>
-            <md-icon class="success" v-show="!errors.has('lastName') && touched.lastName">done</md-icon>
+            <md-icon
+              class="success"
+              v-show="!errors.has('lastName') && touched.lastName"
+            >done</md-icon>
           </slide-y-down-transition>
         </md-field>
       </div>
@@ -75,13 +96,20 @@
             type="text"
             name="email"
             required
-            v-validate="modelValidations.email">
+            v-validate="modelValidations.email"
+          >
           </md-input>
           <slide-y-down-transition>
-            <md-icon class="error" v-show="errors.has('email')">close</md-icon>
+            <md-icon
+              class="error"
+              v-show="errors.has('email')"
+            >close</md-icon>
           </slide-y-down-transition>
           <slide-y-down-transition>
-            <md-icon class="success" v-show="!errors.has('email') && touched.email">done</md-icon>
+            <md-icon
+              class="success"
+              v-show="!errors.has('email') && touched.email"
+            >done</md-icon>
           </slide-y-down-transition>
         </md-field>
       </div>
@@ -89,84 +117,85 @@
   </div>
 </template>
 <script>
-import { SlideYDownTransition } from "vue2-transitions";
-export default {
-  components: {
-    SlideYDownTransition
-  },
-  props: {
-    avatar: {
-      type: String,
-      default: "./img/default-avatar.png"
-    }
-  },
-  data() {
-    return {
-      image: "",
-      single: null,
-      firstName: "",
-      lastName: "",
-      email: "",
-      touched: {
-        firstName: false,
-        lastName: false
-      },
-      modelValidations: {
-        firstName: {
-          required: true,
-          min: 5
-        },
-        lastName: {
-          required: true,
-          min: 5
-        },
-        email: {
-          required: true,
-          email: true
-        }
-      }
-    };
-  },
-  methods: {
-    handlePreview(file) {
-      this.model.imageUrl = URL.createObjectURL(file.raw);
-    },
-    getError(fieldName) {
-      return this.errors.first(fieldName);
-    },
-    validate() {
-      return this.$validator.validateAll().then(res => {
-        this.$emit("on-validated", res);
-        return res;
-      });
-    },
-    onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.createImage(files[0]);
-    },
-    createImage(file) {
-      var reader = new FileReader();
-      var vm = this;
+  import { SlideYDownTransition } from 'vue2-transitions';
 
-      reader.onload = e => {
-        vm.image = e.target.result;
+  export default {
+    components: {
+      SlideYDownTransition,
+    },
+    props: {
+      avatar: {
+        type: String,
+        default: './img/default-avatar.png',
+      },
+    },
+    data() {
+      return {
+        image: '',
+        single: null,
+        firstName: '',
+        lastName: '',
+        email: '',
+        touched: {
+          firstName: false,
+          lastName: false,
+        },
+        modelValidations: {
+          firstName: {
+            required: true,
+            min: 5,
+          },
+          lastName: {
+            required: true,
+            min: 5,
+          },
+          email: {
+            required: true,
+            email: true,
+          },
+        },
       };
-      reader.readAsDataURL(file);
-    }
-  },
-  watch: {
-    firstName() {
-      this.touched.firstName = true;
     },
-    lastName() {
-      this.touched.lastName = true;
+    methods: {
+      handlePreview(file) {
+        this.model.imageUrl = URL.createObjectURL(file.raw);
+      },
+      getError(fieldName) {
+        return this.errors.first(fieldName);
+      },
+      validate() {
+        return this.$validator.validateAll().then((res) => {
+          this.$emit('on-validated', res);
+          return res;
+        });
+      },
+      onFileChange(e) {
+        const files = e.target.files || e.dataTransfer.files;
+        if (!files.length) return;
+        this.createImage(files[0]);
+      },
+      createImage(file) {
+        const reader = new FileReader();
+        const vm = this;
+
+        reader.onload = (e) => {
+          vm.image = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      },
     },
-    email() {
-      this.touched.email = true;
-    }
-  }
-};
+    watch: {
+      firstName() {
+        this.touched.firstName = true;
+      },
+      lastName() {
+        this.touched.lastName = true;
+      },
+      email() {
+        this.touched.email = true;
+      },
+    },
+  };
 </script>
 <style>
 </style>

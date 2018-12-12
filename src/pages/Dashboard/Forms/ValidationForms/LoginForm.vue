@@ -18,13 +18,20 @@
             data-vv-name="email"
             type="email"
             required
-            v-validate="modelValidations.email">
+            v-validate="modelValidations.email"
+          >
           </md-input>
           <slide-y-down-transition>
-            <md-icon class="error" v-show="errors.has('email')">close</md-icon>
+            <md-icon
+              class="error"
+              v-show="errors.has('email')"
+            >close</md-icon>
           </slide-y-down-transition>
           <slide-y-down-transition>
-            <md-icon class="success" v-show="!errors.has('email') && touched.email">done</md-icon>
+            <md-icon
+              class="success"
+              v-show="!errors.has('email') && touched.email"
+            >done</md-icon>
           </slide-y-down-transition>
         </md-field>
         <md-field :class="[
@@ -36,68 +43,80 @@
             data-vv-name="password"
             type="password"
             required
-            v-validate="modelValidations.password">
+            v-validate="modelValidations.password"
+          >
           </md-input>
           <slide-y-down-transition>
-            <md-icon class="error" v-show="errors.has('password')">close</md-icon>
+            <md-icon
+              class="error"
+              v-show="errors.has('password')"
+            >close</md-icon>
           </slide-y-down-transition>
           <slide-y-down-transition>
-            <md-icon class="success" v-show="!errors.has('password') && touched.password">done</md-icon>
+            <md-icon
+              class="success"
+              v-show="!errors.has('password') && touched.password"
+            >done</md-icon>
           </slide-y-down-transition>
         </md-field>
       </md-card-content>
 
       <md-card-actions>
-        <md-button native-type="submit" @click.native.prevent="validate" class="md-success">Register</md-button>
+        <md-button
+          native-type="submit"
+          @click.native.prevent="validate"
+          class="md-success"
+        >Register</md-button>
       </md-card-actions>
     </md-card>
   </form>
 </template>
 <script>
-import { SlideYDownTransition } from "vue2-transitions";
-export default {
-  components: {
-    SlideYDownTransition
-  },
-  data() {
-    return {
-      email: "",
-      password: "",
-      touched: {
-        email: false,
-        password: false
-      },
-      modelValidations: {
-        email: {
-          required: true,
-          email: true
-        },
-        password: {
-          required: true,
-          min: 5
-        }
-      }
-    };
-  },
-  methods: {
-    validate() {
-      this.$validator.validateAll().then(isValid => {
-        this.$emit("on-submit", this.registerForm, isValid);
-      });
+  import { SlideYDownTransition } from 'vue2-transitions';
 
-      this.touched.email = true;
-      this.touched.password = true;
-    }
-  },
-  watch: {
-    email() {
-      this.touched.email = true;
+  export default {
+    components: {
+      SlideYDownTransition,
     },
-    password() {
-      this.touched.password = true;
-    }
-  }
-};
+    data() {
+      return {
+        email: '',
+        password: '',
+        touched: {
+          email: false,
+          password: false,
+        },
+        modelValidations: {
+          email: {
+            required: true,
+            email: true,
+          },
+          password: {
+            required: true,
+            min: 5,
+          },
+        },
+      };
+    },
+    methods: {
+      validate() {
+        this.$validator.validateAll().then((isValid) => {
+          this.$emit('on-submit', this.registerForm, isValid);
+        });
+
+        this.touched.email = true;
+        this.touched.password = true;
+      },
+    },
+    watch: {
+      email() {
+        this.touched.email = true;
+      },
+      password() {
+        this.touched.password = true;
+      },
+    },
+  };
 </script>
 <style lang="scss" scoped>
 .md-card .md-card-actions {

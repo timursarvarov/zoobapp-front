@@ -19,20 +19,20 @@
   </li>
 </template>
 <script>
-export default {
-  name: "time-line-item",
-  props: {
-    inverted: Boolean,
-    badgeType: {
-      type: String,
-      default: "success"
+  export default {
+    name: 'time-line-item',
+    props: {
+      inverted: Boolean,
+      badgeType: {
+        type: String,
+        default: 'success',
+      },
+      badgeIcon: {
+        type: String,
+        default: '',
+      },
     },
-    badgeIcon: {
-      type: String,
-      default: ""
-    }
-  }
-};
+  };
 </script>
 <style>
 </style>

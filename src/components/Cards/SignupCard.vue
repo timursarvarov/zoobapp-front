@@ -2,7 +2,7 @@
   <md-card class="md-card-signup">
     <slot name="title"></slot>
 
-    <md-card-content>  
+    <md-card-content>
       <div class="md-layout">
         <slot name="content-left"></slot>
         <slot name="content-right"></slot>
@@ -16,9 +16,9 @@
 </template>
 
 <script>
-export default {
-  name: "signup-card"
-};
+  export default {
+    name: 'signup-card',
+  };
 </script>
 
 <style lang="css">

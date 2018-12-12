@@ -26,7 +26,7 @@
         </md-card-header>
 
         <md-card-content>
-          <md-datepicker v-model="selectedDate"/>
+          <md-datepicker v-model="selectedDate" />
         </md-card-content>
       </md-card>
     </div>
@@ -40,7 +40,10 @@
         </md-card-header>
 
         <md-card-content>
-          <md-datepicker v-model="selectedClose" md-immediately />
+          <md-datepicker
+            v-model="selectedClose"
+            md-immediately
+          />
         </md-card-content>
       </md-card>
     </div>
@@ -59,7 +62,11 @@
                 <div class="md-layout-item">
                   <md-field>
                     <label for="movie">Movie</label>
-                    <md-select v-model="movie" name="movie" id="movie">
+                    <md-select
+                      v-model="movie"
+                      name="movie"
+                      id="movie"
+                    >
                       <md-option value="fight-club">Fight Club</md-option>
                       <md-option value="godfather">Godfather</md-option>
                       <md-option value="godfather-ii">Godfather II</md-option>
@@ -73,7 +80,12 @@
                 <div class="md-layout-item">
                   <md-field>
                     <label for="movies">Movies</label>
-                    <md-select v-model="selectedMovies" name="movies" id="movies" multiple>
+                    <md-select
+                      v-model="selectedMovies"
+                      name="movies"
+                      id="movies"
+                      multiple
+                    >
                       <md-option value="fight-club">Fight Club</md-option>
                       <md-option value="godfather">Godfather</md-option>
                       <md-option value="godfather-ii">Godfather II</md-option>
@@ -88,34 +100,66 @@
             </div>
             <div class="md-layout-item md-size-50 md-small-size-100">
               <h4 class="card-title">Tags</h4>
-              <md-chips v-model="fruits" class="md-primary" md-placeholder="Add city..."></md-chips>
+              <md-chips
+                v-model="fruits"
+                class="md-primary"
+                md-placeholder="Add city..."
+              ></md-chips>
             </div>
             <div class="md-layout-item md-size-50 md-small-size-100">
               <h4 class="card-title">Dropdown & Dropup</h4>
               <div class="md-layout">
                 <div class="md-layout-item md-size-50 md-xsmall-size-100">
-                  <drop-down direction="down" multiLevel>
-                    <md-button slot="title" class="md-button md-success md-round md-block dropdown-toggle" data-toggle="dropdown">
+                  <drop-down
+                    direction="down"
+                    multiLevel
+                  >
+                    <md-button
+                      slot="title"
+                      class="md-button md-success md-round md-block dropdown-toggle"
+                      data-toggle="dropdown"
+                    >
                       Multilevel Dropdown
                     </md-button>
-                    <ul class="dropdown-menu" :class="{'dropdown-menu-right': responsive}">
+                    <ul
+                      class="dropdown-menu"
+                      :class="{'dropdown-menu-right': responsive}"
+                    >
                       <li><a href="#">Action</a></li>
                       <li><a href="#">Another Action</a></li>
                       <li>
-                        <a class="dropdown-toggle" :class="{'open': multiLevel}" @click="toggleMultiLevel">Submenu</a>
+                        <a
+                          class="dropdown-toggle"
+                          :class="{'open': multiLevel}"
+                          @click="toggleMultiLevel"
+                        >Submenu</a>
                         <ul class="dropdown-menu">
                           <li><a href="#">Submenu action</a></li>
                           <li><a href="#">Submenu action</a></li>
                           <li>
-                            <a class="dropdown-toggle" :class="{'open': multiLevel2}" @click="toggleMultiLevel2()">Subsubmenu</a>
-                            <ul class="dropdown-menu" :class="{'dropdown-menu-right': responsive}">
+                            <a
+                              class="dropdown-toggle"
+                              :class="{'open': multiLevel2}"
+                              @click="toggleMultiLevel2()"
+                            >Subsubmenu</a>
+                            <ul
+                              class="dropdown-menu"
+                              :class="{'dropdown-menu-right': responsive}"
+                            >
                               <li><a href="#">Subsubmenu action 1</a></li>
                               <li><a href="#">Subsubmenu action 2</a></li>
                             </ul>
                           </li>
                           <li>
-                            <a class="dropdown-toggle" :class="{'open': multiLevel3}" @click="toggleMultiLevel3">Second Subsubmenu</a>
-                            <ul class="dropdown-menu" :class="{'dropdown-menu-right': responsive}">
+                            <a
+                              class="dropdown-toggle"
+                              :class="{'open': multiLevel3}"
+                              @click="toggleMultiLevel3"
+                            >Second Subsubmenu</a>
+                            <ul
+                              class="dropdown-menu"
+                              :class="{'dropdown-menu-right': responsive}"
+                            >
                               <li><a href="#">Subsubmenu action 1</a></li>
                               <li><a href="#">Subsubmenu action 2</a></li>
                             </ul>
@@ -127,7 +171,11 @@
                 </div>
                 <div class="md-layout-item md-size-50 md-xsmall-size-100">
                   <drop-down direction="down">
-                    <md-button slot="title" class="md-button md-success md-round md-block dropdown-toggle" data-toggle="dropdown">
+                    <md-button
+                      slot="title"
+                      class="md-button md-success md-round md-block dropdown-toggle"
+                      data-toggle="dropdown"
+                    >
                       Dropdown
                     </md-button>
                     <ul class="dropdown-menu dropdown-menu-right">
@@ -141,7 +189,11 @@
                 </div>
                 <div class="md-layout-item md-size-50 mx-auto md-xsmall-size-100">
                   <drop-down direction="up">
-                    <md-button slot="title" class="md-button md-success md-round md-block dropdown-toggle" data-toggle="dropdown">
+                    <md-button
+                      slot="title"
+                      class="md-button md-success md-round md-block dropdown-toggle"
+                      data-toggle="dropdown"
+                    >
                       Dropup
                     </md-button>
                     <ul class="dropdown-menu dropdown-menu-right">
@@ -157,18 +209,31 @@
             </div>
             <div class="md-layout-item md-size-50 md-small-size-100">
               <h4 class="card-title">Progress Bar</h4>
-              <md-progress-bar class="md-primary" :md-value="amount"></md-progress-bar>
-              <md-progress-bar class="md-info" :md-value="amount2"></md-progress-bar>
-              <md-progress-bar class="md-warning" md-mode="buffer" :md-value="buffer" :md-buffer="buffer"></md-progress-bar>
+              <md-progress-bar
+                class="md-primary"
+                :md-value="amount"
+              ></md-progress-bar>
+              <md-progress-bar
+                class="md-info"
+                :md-value="amount2"
+              ></md-progress-bar>
+              <md-progress-bar
+                class="md-warning"
+                md-mode="buffer"
+                :md-value="buffer"
+                :md-buffer="buffer"
+              ></md-progress-bar>
             </div>
             <div class="md-layout-item md-size-50 md-small-size-100">
               <h4 class="card-title">Sliders</h4>
               <slider v-model="sliders.simple">
               </slider>
               <br>
-              <slider v-model="sliders.rangeSlider"
-                      type="info"
-                      :connect="true">
+              <slider
+                v-model="sliders.rangeSlider"
+                type="info"
+                :connect="true"
+              >
               </slider>
             </div>
             <div class="md-layout-item md-size-30 md-xsmall-size-100">
@@ -176,18 +241,31 @@
               <div class="file-input">
                 <div v-if="!imageRegular">
                   <div class="image-container">
-                    <img :src="regularImg" title="">
+                    <img
+                      :src="regularImg"
+                      title=""
+                    >
                   </div>
                 </div>
-                <div class="image-container" v-else>
+                <div
+                  class="image-container"
+                  v-else
+                >
                   <img :src="imageRegular" />
                 </div>
                 <div class="button-container">
-                  <md-button class="md-danger md-round" @click="removeImage" v-if="imageRegular"><i class="fa fa-times"></i>Remove</md-button>
+                  <md-button
+                    class="md-danger md-round"
+                    @click="removeImage"
+                    v-if="imageRegular"
+                  ><i class="fa fa-times"></i>Remove</md-button>
                   <md-button class="md-success md-round md-fileinput">
                     <template v-if="!imageRegular">Select image</template>
                     <template v-else>Change</template>
-                    <input type="file" @change="onFileChange">
+                    <input
+                      type="file"
+                      @change="onFileChange"
+                    >
                   </md-button>
                 </div>
               </div>
@@ -197,18 +275,32 @@
               <div class="file-input img-circle">
                 <template v-if="!imageCircle">
                   <div class="image-container">
-                    <img :src="avatarImg" title="">
+                    <img
+                      :src="avatarImg"
+                      title=""
+                    >
                   </div>
                 </template>
-                <div class="image-container" v-else>
+                <div
+                  class="image-container"
+                  v-else
+                >
                   <img :src="imageCircle" />
                 </div>
                 <div class="button-container">
-                  <md-button class="md-danger md-round" @click="removeImage('circle')" v-if="imageCircle"><i class="fa fa-times"></i>Remove</md-button>
+                  <md-button
+                    class="md-danger md-round"
+                    @click="removeImage('circle')"
+                    v-if="imageCircle"
+                  ><i class="fa fa-times"></i>Remove</md-button>
                   <md-button class="md-success md-round md-fileinput">
                     <template v-if="!imageCircle">Add Photo</template>
                     <template v-else>Change</template>
-                    <input type="file" name="circle" @change="onFileChange">
+                    <input
+                      type="file"
+                      name="circle"
+                      @change="onFileChange"
+                    >
                   </md-button>
                 </div>
               </div>
@@ -221,103 +313,104 @@
 </template>
 
 <script>
-import { Slider } from "@/components";
-export default {
-  components: {
-    Slider
-  },
-  props: {
-    regularImg: {
-      type: String,
-      default: "./img/image_placeholder.jpg"
-    },
-    avatarImg: {
-      type: String,
-      default: "./img/placeholder.jpg"
-    }
-  },
-  data() {
-    return {
-      responsive: false,
-      imageRegular: "",
-      imageCircle: "",
-      amount: 30,
-      amount2: 60,
-      buffer: 40,
-      multiLevel: false,
-      multiLevel2: false,
-      multiLevel3: false,
-      selectedLabeled: null,
-      selectedDate: new Date("2018/03/26"),
-      selectedClose: null,
-      switch1: true,
-      switch2: null,
-      movie: "godfather",
-      selectedMovies: [],
-      fruits: ["Amsterdam", "Washington", "Sydney", "Beijing"],
-      sliders: {
-        simple: 40,
-        rangeSlider: [20, 60]
-      }
-    };
-  },
-  methods: {
-    toggleMultiLevel() {
-      this.multiLevel = !this.multiLevel;
-    },
-    toggleMultiLevel2() {
-      this.multiLevel2 = !this.multiLevel2;
-      this.multiLevel3 = false;
-    },
-    toggleMultiLevel3() {
-      this.multiLevel3 = !this.multiLevel3;
-      this.multiLevel2 = false;
-    },
-    onFileChange(e) {
-      let files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      if (e.target.name) {
-        this.createImage(files[0], "circle");
-      } else {
-        this.createImage(files[0]);
-      }
-    },
-    createImage(file, type) {
-      let reader = new FileReader();
-      let vm = this;
+  import { Slider } from '@/components';
 
-      reader.onload = e => {
-        if (type === "circle") {
-          vm.imageCircle = e.target.result;
-        } else {
-          vm.imageRegular = e.target.result;
-        }
+  export default {
+    components: {
+      Slider,
+    },
+    props: {
+      regularImg: {
+        type: String,
+        default: './img/image_placeholder.jpg',
+      },
+      avatarImg: {
+        type: String,
+        default: './img/placeholder.jpg',
+      },
+    },
+    data() {
+      return {
+        responsive: false,
+        imageRegular: '',
+        imageCircle: '',
+        amount: 30,
+        amount2: 60,
+        buffer: 40,
+        multiLevel: false,
+        multiLevel2: false,
+        multiLevel3: false,
+        selectedLabeled: null,
+        selectedDate: new Date('2018/03/26'),
+        selectedClose: null,
+        switch1: true,
+        switch2: null,
+        movie: 'godfather',
+        selectedMovies: [],
+        fruits: ['Amsterdam', 'Washington', 'Sydney', 'Beijing'],
+        sliders: {
+          simple: 40,
+          rangeSlider: [20, 60],
+        },
       };
-      reader.readAsDataURL(file);
     },
-    removeImage: function(type) {
-      if (type === "circle") {
-        this.imageCircle = "";
-      } else {
-        this.imageRegular = "";
-      }
+    methods: {
+      toggleMultiLevel() {
+        this.multiLevel = !this.multiLevel;
+      },
+      toggleMultiLevel2() {
+        this.multiLevel2 = !this.multiLevel2;
+        this.multiLevel3 = false;
+      },
+      toggleMultiLevel3() {
+        this.multiLevel3 = !this.multiLevel3;
+        this.multiLevel2 = false;
+      },
+      onFileChange(e) {
+        const files = e.target.files || e.dataTransfer.files;
+        if (!files.length) return;
+        if (e.target.name) {
+          this.createImage(files[0], 'circle');
+        } else {
+          this.createImage(files[0]);
+        }
+      },
+      createImage(file, type) {
+        const reader = new FileReader();
+        const vm = this;
+
+        reader.onload = (e) => {
+          if (type === 'circle') {
+            vm.imageCircle = e.target.result;
+          } else {
+            vm.imageRegular = e.target.result;
+          }
+        };
+        reader.readAsDataURL(file);
+      },
+      removeImage(type) {
+        if (type === 'circle') {
+          this.imageCircle = '';
+        } else {
+          this.imageRegular = '';
+        }
+      },
+      onResponsiveInverted() {
+        if (window.innerWidth < 768) {
+          this.responsive = true;
+        } else {
+          this.responsive = false;
+        }
+      },
     },
-    onResponsiveInverted() {
-      if (window.innerWidth < 768) {
-        this.responsive = true;
-      } else {
-        this.responsive = false;
-      }
-    }
-  },
-  mounted() {
-    this.onResponsiveInverted();
-    window.addEventListener("resize", this.onResponsiveInverted);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.onResponsiveInverted);
-  }
-};
+    mounted() {
+      this.onResponsiveInverted();
+      window.addEventListener('resize', this.onResponsiveInverted);
+    },
+    beforeDestroy() {
+      window.removeEventListener('resize', this.onResponsiveInverted);
+    },
+  };
 </script>
 
 <style lang="scss">

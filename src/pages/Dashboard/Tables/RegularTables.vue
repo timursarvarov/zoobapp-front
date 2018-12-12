@@ -68,146 +68,146 @@
   </div>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      selected: [],
-      tableData: [
-        {
-          id: 1,
-          name: "Dakota Rice",
-          salary: "$36.738",
-          country: "Niger",
-          city: "Oud-Turnhout"
-        },
-        {
-          id: 2,
-          name: "Minerva Hooper",
-          salary: "$23,789",
-          country: "Curaçao",
-          city: "Sinaai-Waas"
-        },
-        {
-          id: 3,
-          name: "Sage Rodriguez",
-          salary: "$56,142",
-          country: "Netherlands",
-          city: "Baileux"
-        },
-        {
-          id: 4,
-          name: "Philip Chaney",
-          salary: "$38,735",
-          country: "Korea, South",
-          city: "Overland Park"
-        },
-        {
-          id: 5,
-          name: "Doris Greene",
-          salary: "$63,542",
-          country: "Malawi",
-          city: "Feldkirchen in Kärnten"
-        }
-      ],
-      tableDataPlain: [
-        {
-          id: 1,
-          name: "Dakota Rice",
-          salary: "$36.738",
-          country: "Niger",
-          city: "Oud-Turnhout"
-        },
-        {
-          id: 2,
-          name: "Minerva Hooper",
-          salary: "$23,789",
-          country: "Curaçao",
-          city: "Sinaai-Waas"
-        },
-        {
-          id: 3,
-          name: "Sage Rodriguez",
-          salary: "$56,142",
-          country: "Netherlands",
-          city: "Baileux"
-        },
-        {
-          id: 4,
-          name: "Philip Chaney",
-          salary: "$38,735",
-          country: "Korea, South",
-          city: "Overland Park"
-        },
-        {
-          id: 5,
-          name: "Doris Greene",
-          salary: "$63,542",
-          country: "Malawi",
-          city: "Feldkirchen in Kärnten"
-        }
-      ],
-      tableDataColor: [
-        {
-          id: 1,
-          name: "Dakota Rice",
-          salary: "$36.738",
-          country: "Niger",
-          city: "Oud-Turnhout"
-        },
-        {
-          id: 2,
-          name: "Minerva Hooper",
-          salary: "$23,789",
-          country: "Curaçao",
-          city: "Sinaai-Waas"
-        },
-        {
-          id: 3,
-          name: "Sage Rodriguez",
-          salary: "$56,142",
-          country: "Netherlands",
-          city: "Baileux"
-        },
-        {
-          id: 4,
-          name: "Philip Chaney",
-          salary: "$38,735",
-          country: "Korea, South",
-          city: "Overland Park"
-        },
-        {
-          id: 5,
-          name: "Philip Chaney",
-          salary: "$38,735",
-          country: "Korea, South",
-          city: "Overland Park"
-        },
-        {
-          id: 6,
-          name: "Philip Chaney",
-          salary: "$38,735",
-          country: "Korea, South",
-          city: "Overland Park"
-        },
-        {
-          id: 7,
-          name: "Doris Greene",
-          salary: "$63,542",
-          country: "Malawi",
-          city: "Feldkirchen in Kärnten"
-        }
-      ]
-    };
-  },
-  methods: {
-    getClass: ({ id }) => ({
-      "table-success": id === 1,
-      "table-info": id === 3,
-      "table-danger": id === 5,
-      "table-warning": id === 7
-    })
-  }
-};
+  export default {
+    data() {
+      return {
+        selected: [],
+        tableData: [
+          {
+            id: 1,
+            name: 'Dakota Rice',
+            salary: '$36.738',
+            country: 'Niger',
+            city: 'Oud-Turnhout',
+          },
+          {
+            id: 2,
+            name: 'Minerva Hooper',
+            salary: '$23,789',
+            country: 'Curaçao',
+            city: 'Sinaai-Waas',
+          },
+          {
+            id: 3,
+            name: 'Sage Rodriguez',
+            salary: '$56,142',
+            country: 'Netherlands',
+            city: 'Baileux',
+          },
+          {
+            id: 4,
+            name: 'Philip Chaney',
+            salary: '$38,735',
+            country: 'Korea, South',
+            city: 'Overland Park',
+          },
+          {
+            id: 5,
+            name: 'Doris Greene',
+            salary: '$63,542',
+            country: 'Malawi',
+            city: 'Feldkirchen in Kärnten',
+          },
+        ],
+        tableDataPlain: [
+          {
+            id: 1,
+            name: 'Dakota Rice',
+            salary: '$36.738',
+            country: 'Niger',
+            city: 'Oud-Turnhout',
+          },
+          {
+            id: 2,
+            name: 'Minerva Hooper',
+            salary: '$23,789',
+            country: 'Curaçao',
+            city: 'Sinaai-Waas',
+          },
+          {
+            id: 3,
+            name: 'Sage Rodriguez',
+            salary: '$56,142',
+            country: 'Netherlands',
+            city: 'Baileux',
+          },
+          {
+            id: 4,
+            name: 'Philip Chaney',
+            salary: '$38,735',
+            country: 'Korea, South',
+            city: 'Overland Park',
+          },
+          {
+            id: 5,
+            name: 'Doris Greene',
+            salary: '$63,542',
+            country: 'Malawi',
+            city: 'Feldkirchen in Kärnten',
+          },
+        ],
+        tableDataColor: [
+          {
+            id: 1,
+            name: 'Dakota Rice',
+            salary: '$36.738',
+            country: 'Niger',
+            city: 'Oud-Turnhout',
+          },
+          {
+            id: 2,
+            name: 'Minerva Hooper',
+            salary: '$23,789',
+            country: 'Curaçao',
+            city: 'Sinaai-Waas',
+          },
+          {
+            id: 3,
+            name: 'Sage Rodriguez',
+            salary: '$56,142',
+            country: 'Netherlands',
+            city: 'Baileux',
+          },
+          {
+            id: 4,
+            name: 'Philip Chaney',
+            salary: '$38,735',
+            country: 'Korea, South',
+            city: 'Overland Park',
+          },
+          {
+            id: 5,
+            name: 'Philip Chaney',
+            salary: '$38,735',
+            country: 'Korea, South',
+            city: 'Overland Park',
+          },
+          {
+            id: 6,
+            name: 'Philip Chaney',
+            salary: '$38,735',
+            country: 'Korea, South',
+            city: 'Overland Park',
+          },
+          {
+            id: 7,
+            name: 'Doris Greene',
+            salary: '$63,542',
+            country: 'Malawi',
+            city: 'Feldkirchen in Kärnten',
+          },
+        ],
+      };
+    },
+    methods: {
+      getClass: ({ id }) => ({
+        'table-success': id === 1,
+        'table-info': id === 3,
+        'table-danger': id === 5,
+        'table-warning': id === 7,
+      }),
+    },
+  };
 </script>
 <style scoped>
 .table-transparent {

@@ -1,0 +1,191 @@
+<template>
+  <svg
+    version="1.1"
+    id="Слой_1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0px"
+    y="0px"
+    viewBox="0 0 102.6 109.5"
+    style="enable-background:new 0 0 102.6 109.5;"
+    xml:space="preserve"
+  >
+    <title>Tooth Sun</title>
+    <g id="Слой_2_1_">
+      <g id="_лой_1">
+        <g id="_Группа_">
+          <g id="_Группа_2">
+            <path
+              id="_Контур_"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M68.6,65.3c-1.2,2.7-2,5.7-2.2,8.7c-0.8,9.5-3.7,18.7-8.5,27l-2.9,5c-0.7,1.2-2.1,2-3.5,2l0,0c-2.3,0-4.1-1.8-4.1-4.1l0,0v-7.8
+					c0-4-0.7-8-2.1-11.8l-1.1-3.1c-0.6-1.7-2.3-2.9-4.2-2.9l0,0c-1.9,0-3.6,1.2-4.2,3l-1.1,3.3c-1.2,3.5-1.8,7.3-1.8,11v8.3
+					c0,2.3-1.8,4.1-4.1,4.1l0,0c-1.5,0-2.8-0.8-3.6-2.1l-2.9-5c-4.8-8.3-7.6-17.5-8.5-27c-0.4-4.1-1.6-8.1-3.7-11.7l-4.3-7.5
+					c-2.8-4.8-4.3-10.4-4.3-16l0,0C1.4,33.3,2.7,28,5.3,23.3c3.4-5.8,9.6-9.3,16.4-9.2l0,0c1.1,0,2.2,0.1,3.3,0.3L40.1,17"
+            />
+            <path
+              id="_Контур_2"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M36.4,25.9l-9.1-2c-4-0.9-8.2,0.4-10.9,3.5c-0.2,0.2-0.4,0.5-0.6,0.7c-1.5,2.2-2.3,4.8-2.2,7.4"
+            />
+          </g>
+          <g id="_Группа_3">
+
+            <line
+              id="_Контур_3"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="57"
+              y1="16.2"
+              x2="51.5"
+              y2="7.3"
+            />
+
+            <line
+              id="_Контур_4"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="63.9"
+              y1="13.5"
+              x2="63"
+              y2="9.1"
+            />
+
+            <line
+              id="_Контур_5"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="71.3"
+              y1="13.2"
+              x2="72.7"
+              y2="1.5"
+            />
+
+            <line
+              id="_Контур_6"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="78.4"
+              y1="15.6"
+              x2="81.1"
+              y2="10.5"
+            />
+
+            <line
+              id="_Контур_7"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="84.2"
+              y1="20.2"
+              x2="92.9"
+              y2="12.3"
+            />
+
+            <line
+              id="_Контур_8"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="88.1"
+              y1="26.5"
+              x2="94.6"
+              y2="24"
+            />
+
+            <line
+              id="_Контур_9"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="89.6"
+              y1="33.8"
+              x2="101.1"
+              y2="33.5"
+            />
+
+            <line
+              id="_Контур_10"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="88.6"
+              y1="41.2"
+              x2="93.8"
+              y2="42.9"
+            />
+
+            <line
+              id="_Контур_11"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="85"
+              y1="47.7"
+              x2="93.3"
+              y2="53.3"
+            />
+
+            <line
+              id="_Контур_12"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="79.5"
+              y1="52.7"
+              x2="82.2"
+              y2="57.2"
+            />
+
+            <line
+              id="_Контур_13"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="72.6"
+              y1="55.4"
+              x2="75"
+              y2="65.8"
+            />
+
+            <line
+              id="_Контур_14"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="58"
+              y1="53.3"
+              x2="52.1"
+              y2="64"
+            />
+
+            <line
+              id="_Контур_15"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="52.2"
+              y1="48.7"
+              x2="48.9"
+              y2="51.3"
+            />
+
+            <line
+              id="_Контур_16"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="48.3"
+              y1="42.4"
+              x2="38.8"
+              y2="46.1"
+            />
+
+            <line
+              id="_Контур_17"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="46.8"
+              y1="35.1"
+              x2="43"
+              y2="35.3"
+            />
+            <path
+              id="_Контур_18"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M77.5,22.4c6.7,5.2,7.8,14.9,2.6,21.5c-5.2,6.7-14.9,7.8-21.5,2.6S50.8,31.7,56,25l0,0C61.2,18.3,70.9,17.2,77.5,22.4z"
+            />
+
+            <line
+              id="_Контур_19"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              x1="51.4"
+              y1="21.2"
+              x2="49.1"
+              y2="19.3"
+            />
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
+
+</template>

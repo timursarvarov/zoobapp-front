@@ -4,30 +4,30 @@
   </component>
 </template>
 <script>
-export default {
-  name: "badge",
-  props: {
-    tag: {
-      type: String,
-      default: "span"
+  export default {
+    name: 'badge',
+    props: {
+      tag: {
+        type: String,
+        default: 'span',
+      },
+      type: {
+        type: String,
+        default: 'default',
+        validator: (value) => {
+          const acceptedValues = [
+            'primary',
+            'info',
+            'success',
+            'warning',
+            'danger',
+            'rose',
+          ];
+          return acceptedValues.indexOf(value) !== -1;
+        },
+      },
     },
-    type: {
-      type: String,
-      default: "default",
-      validator: value => {
-        let acceptedValues = [
-          "primary",
-          "info",
-          "success",
-          "warning",
-          "danger",
-          "rose"
-        ];
-        return acceptedValues.indexOf(value) !== -1;
-      }
-    }
-  }
-};
+  };
 </script>
 <style>
 </style>

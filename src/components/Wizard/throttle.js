@@ -3,7 +3,7 @@
  * @param handlerFunc
  * @param [timeout] the throttle interval
  */
-export function throttle(handlerFunc, timeout = 66) {
+export default function throttle(handlerFunc, timeout = 66) {
   let resizeTimeout;
   if (!resizeTimeout) {
     resizeTimeout = setTimeout(() => {
@@ -13,3 +13,4 @@ export function throttle(handlerFunc, timeout = 66) {
     }, timeout);
   }
 }
+// export default throttle;

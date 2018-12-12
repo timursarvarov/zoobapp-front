@@ -19,76 +19,74 @@
   </div>
 </template>
 <script>
-export default {
-  name: "notification",
-  props: {
-    message: String,
-    icon: String,
-    verticalAlign: {
-      type: String,
-      default: "top"
+  export default {
+    name: 'notification',
+    props: {
+      message: String,
+      icon: String,
+      verticalAlign: {
+        type: String,
+        default: 'top',
+      },
+      horizontalAlign: {
+        type: String,
+        default: 'center',
+      },
+      type: {
+        type: String,
+        default: 'info',
+      },
+      timeout: {
+        type: Number,
+        default: 2500,
+      },
+      timestamp: {
+        type: Date,
+        default: () => new Date(),
+      },
     },
-    horizontalAlign: {
-      type: String,
-      default: "center"
+    data() {
+      return {
+        elmHeight: 0,
+      };
     },
-    type: {
-      type: String,
-      default: "info"
+    computed: {
+      hasIcon() {
+        return this.icon && this.icon.length > 0;
+      },
+      alertType() {
+        return `alert-${this.type}`;
+      },
+      customPosition() {
+        const initialMargin = 20;
+        const alertHeight = this.elmHeight + 10;
+        const sameAlertsCount = this.$notifications.state.filter(alert => (
+          alert.horizontalAlign === this.horizontalAlign
+          && alert.verticalAlign === this.verticalAlign
+          && alert.timestamp <= this.timestamp
+        )).length;
+        const pixels = (sameAlertsCount - 1) * alertHeight + initialMargin;
+        const styles = {};
+        if (this.verticalAlign === 'top') {
+          styles.top = `${pixels}px`;
+        } else {
+          styles.bottom = `${pixels}px`;
+        }
+        return styles;
+      },
     },
-    timeout: {
-      type: Number,
-      default: 2500
+    methods: {
+      close() {
+        this.$emit('on-close', this.timestamp);
+      },
     },
-    timestamp: {
-      type: Date,
-      default: () => new Date()
-    }
-  },
-  data() {
-    return {
-      elmHeight: 0
-    };
-  },
-  computed: {
-    hasIcon() {
-      return this.icon && this.icon.length > 0;
-    },
-    alertType() {
-      return `alert-${this.type}`;
-    },
-    customPosition() {
-      let initialMargin = 20;
-      let alertHeight = this.elmHeight + 10;
-      let sameAlertsCount = this.$notifications.state.filter(alert => {
-        return (
-          alert.horizontalAlign === this.horizontalAlign &&
-          alert.verticalAlign === this.verticalAlign &&
-          alert.timestamp <= this.timestamp
-        );
-      }).length;
-      let pixels = (sameAlertsCount - 1) * alertHeight + initialMargin;
-      let styles = {};
-      if (this.verticalAlign === "top") {
-        styles.top = `${pixels}px`;
-      } else {
-        styles.bottom = `${pixels}px`;
+    mounted() {
+      this.elmHeight = this.$el.clientHeight;
+      if (this.timeout) {
+        setTimeout(this.close, this.timeout);
       }
-      return styles;
-    }
-  },
-  methods: {
-    close() {
-      this.$emit("on-close", this.timestamp);
-    }
-  },
-  mounted() {
-    this.elmHeight = this.$el.clientHeight;
-    if (this.timeout) {
-      setTimeout(this.close, this.timeout);
-    }
-  }
-};
+    },
+  };
 </script>
 <style lang="scss" scoped>
 @media screen and (max-width: 991px) {

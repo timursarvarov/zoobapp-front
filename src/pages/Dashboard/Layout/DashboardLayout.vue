@@ -1,22 +1,35 @@
 <template>
-  <div class="wrapper" :class="[{'nav-open': $sidebar.showSidebar}, {'rtl': $route.meta.rtlActive}]">
+  <div
+    class="wrapper"
+    :class="[{'nav-open': $sidebar.showSidebar}, {'rtl': $route.meta.rtlActive}]"
+  >
     <notifications></notifications>
-    <side-bar>
+    <side-bar-jaw>
       <!-- <user-menu></user-menu> -->
       <mobile-menu></mobile-menu>
-     
       <template slot="links">
-        <sidebar-item :link="{name: 'Angela Davis', icon: 'image', img:'./img/faces/avatar.jpg' }" class="separated" >
-           <sidebar-item :link="{name: 'BIO', icon: 'image', path: '/patient/bio'}"></sidebar-item>
-           <sidebar-item :link="{name: 'Treatment', path: '/patient/treatment'}"> </sidebar-item>
-           <sidebar-item :link="{name: 'Media', path: '/patient/media'}"></sidebar-item>
-           <sidebar-item :link="{name: 'WizardJaw', path: '/patient/wizardjaw'}"></sidebar-item>
+        <sidebar-item
+          :link="{name: 'Angela Davis', icon: 'image', img:'./img/faces/avatar.jpg' }"
+          class="separateduser"
+        >
+          <sidebar-item :link="{name: 'BIO', icon: 'image', path: '/patient/bio'}"></sidebar-item>
+          <sidebar-item :link="{name: 'Treatment', path: '/patient/treatment'}"> </sidebar-item>
+          <sidebar-item :link="{name: 'Media', path: '/patient/media'}"></sidebar-item>
         </sidebar-item>
-        <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'لوحة القيادةة', icon: 'dashboard', path: '/dashboard'}">
+        <sidebar-item
+          v-if="$route.meta.rtlActive"
+          :link="{name: 'لوحة القيادةة', icon: 'dashboard', path: '/dashboard'}"
+        >
         </sidebar-item>
-        <sidebar-item v-else :link="{name: 'Dashboard', icon: 'dashboard', path: '/dashboard'}">
+        <sidebar-item
+          v-else
+          :link="{name: 'Dashboard', icon: 'dashboard', path: '/dashboard'}"
+        >
         </sidebar-item>
-        <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'صفحات', icon: 'image'}">
+        <sidebar-item
+          v-if="$route.meta.rtlActive"
+          :link="{name: 'صفحات', icon: 'image'}"
+        >
           <sidebar-item :link="{name: 'التسعير', path: '/pricing'}"></sidebar-item>
           <sidebar-item :link="{name: 'دعم رتل', path: '/pages/rtl'}"></sidebar-item>
           <sidebar-item :link="{name: 'الجدول الزمني', path: '/pages/timeline'}"></sidebar-item>
@@ -25,7 +38,10 @@
           <sidebar-item :link="{name: 'قفل صفحة الشاشة', path: '/lock'}"></sidebar-item>
           <sidebar-item :link="{name: 'ملف تعريفي للمستخدم', path: '/pages/user'}"></sidebar-item>
         </sidebar-item>
-        <sidebar-item v-else :link="{name: 'Pages', icon: 'image'}">
+        <sidebar-item
+          v-else
+          :link="{name: 'Pages', icon: 'image'}"
+        >
           <sidebar-item :link="{name: 'Pricing', path: '/pricing'}"></sidebar-item>
           <sidebar-item :link="{name: 'RTL Support', path: '/pages/rtl'}"></sidebar-item>
           <sidebar-item :link="{name: 'Timeline', path: '/pages/timeline'}"></sidebar-item>
@@ -34,81 +50,133 @@
           <sidebar-item :link="{name: 'Lock Screen', path: '/lock'}"></sidebar-item>
           <sidebar-item :link="{name: 'User Profile', path: '/pages/user'}"></sidebar-item>
         </sidebar-item>
-       
-        <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'المكونات', icon: 'apps'}">
+        <sidebar-item
+          v-if="$route.meta.rtlActive"
+          :link="{name: 'المكونات', icon: 'apps'}"
+        >
           <sidebar-item :link="{name: 'وصفتت', path: '/components/buttons'}"></sidebar-item>
-          <sidebar-item :link="{name: 'نظام الشبكةو', path: '/components/grid-system'}"></sidebar-item>
+          <sidebar-item :link="{name: 'نظام الشبكةو', path: '/components/grid-system'}">
+          </sidebar-item>
           <sidebar-item :link="{name: 'لوحات', path: '/components/panels'}"></sidebar-item>
-          <sidebar-item :link="{name: 'التنبيه الحلو', path: '/components/sweet-alert'}"></sidebar-item>
+          <sidebar-item :link="{name: 'التنبيه الحلو', path: '/components/sweet-alert'}">
+          </sidebar-item>
           <sidebar-item :link="{name: 'إخطارات', path: '/components/notifications'}"></sidebar-item>
           <sidebar-item :link="{name: 'الرموز', path: '/components/icons'}"></sidebar-item>
           <sidebar-item :link="{name: 'طباعة', path: '/components/typography'}"></sidebar-item>
         </sidebar-item>
-        <sidebar-item v-else :link="{name: 'Components', icon: 'apps'}">
+        <sidebar-item
+          v-else
+          :link="{name: 'Components', icon: 'apps'}"
+        >
           <sidebar-item :link="{name: 'Buttons', path: '/components/buttons'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Grid System', path: '/components/grid-system'}"></sidebar-item>
+          <sidebar-item :link="{name: 'Grid System', path: '/components/grid-system'}">
+          </sidebar-item>
           <sidebar-item :link="{name: 'Panels', path: '/components/panels'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Sweet Alert', path: '/components/sweet-alert'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Notifications', path: '/components/notifications'}"></sidebar-item>
+          <sidebar-item :link="{name: 'Sweet Alert', path: '/components/sweet-alert'}">
+          </sidebar-item>
+          <sidebar-item :link="{name: 'Notifications', path: '/components/notifications'}">
+          </sidebar-item>
           <sidebar-item :link="{name: 'Icons', path: '/components/icons'}"></sidebar-item>
           <sidebar-item :link="{name: 'Typography', path: '/components/typography'}"></sidebar-item>
         </sidebar-item>
-        <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'إستمارات', icon: 'content_paste'}">
+        <sidebar-item
+          v-if="$route.meta.rtlActive"
+          :link="{name: 'إستمارات', icon: 'content_paste'}"
+        >
           <sidebar-item :link="{name: 'أشكال منتظمة', path: '/forms/regular'}"></sidebar-item>
           <sidebar-item :link="{name: 'أشكال موسعة', path: '/forms/extended'}"></sidebar-item>
           <sidebar-item :link="{name: 'نماذج التحقق', path: '/forms/validation'}"></sidebar-item>
           <sidebar-item :link="{name: 'ساحر', path: '/forms/wizard'}"></sidebar-item>
         </sidebar-item>
-        <sidebar-item v-else :link="{name: 'Forms', icon: 'content_paste'}">
+        <sidebar-item
+          v-else
+          :link="{name: 'Forms', icon: 'content_paste'}"
+        >
           <sidebar-item :link="{name: 'Regular Forms', path: '/forms/regular'}"></sidebar-item>
           <sidebar-item :link="{name: 'Extended Forms', path: '/forms/extended'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Validation Forms', path: '/forms/validation'}"></sidebar-item>
+          <sidebar-item :link="{name: 'Validation Forms', path: '/forms/validation'}">
+          </sidebar-item>
           <sidebar-item :link="{name: 'Wizard', path: '/forms/wizard'}"></sidebar-item>
         </sidebar-item>
-        <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'الجداول', icon: 'grid_on'}">
-          <sidebar-item :link="{name: 'الجداول العادية', path: '/table-list/regular'}"></sidebar-item>
-          <sidebar-item :link="{name: 'الجداول الموسعة', path: '/table-list/extended'}"></sidebar-item>
-          <sidebar-item :link="{name: 'جداول البيانات صافي', path: '/table-list/paginated'}"></sidebar-item>
+        <sidebar-item
+          v-if="$route.meta.rtlActive"
+          :link="{name: 'الجداول', icon: 'grid_on'}"
+        >
+          <sidebar-item :link="{name: 'الجداول العادية', path: '/table-list/regular'}">
+          </sidebar-item>
+          <sidebar-item :link="{name: 'الجداول الموسعة', path: '/table-list/extended'}">
+          </sidebar-item>
+          <sidebar-item :link="{name: 'جداول البيانات صافي', path: '/table-list/paginated'}">
+          </sidebar-item>
         </sidebar-item>
-        <sidebar-item v-else :link="{name: 'Tables', icon: 'grid_on'}">
-          <sidebar-item :link="{name: 'Regular Tables', path: '/table-list/regular'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Extended Tables', path: '/table-list/extended'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Paginated Tables', path: '/table-list/paginated'}"></sidebar-item>
+        <sidebar-item
+          v-else
+          :link="{name: 'Tables', icon: 'grid_on'}"
+        >
+          <sidebar-item :link="{name: 'Regular Tables', path: '/table-list/regular'}">
+          </sidebar-item>
+          <sidebar-item :link="{name: 'Extended Tables', path: '/table-list/extended'}">
+          </sidebar-item>
+          <sidebar-item :link="{name: 'Paginated Tables', path: '/table-list/paginated'}">
+          </sidebar-item>
         </sidebar-item>
-        <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'خرائط', icon: 'place'}">
+        <sidebar-item
+          v-if="$route.meta.rtlActive"
+          :link="{name: 'خرائط', icon: 'place'}"
+        >
           <sidebar-item :link="{name: 'خرائط جوجل', path: '/maps/google'}"></sidebar-item>
-          <sidebar-item :link="{name: 'خريطة كاملة الشاشة', path: '/maps/full-screen'}"></sidebar-item>
-          <sidebar-item :link="{name: 'سهم التوجيه، الخريطة', path: '/maps/vector-map'}"></sidebar-item>
+          <sidebar-item :link="{name: 'خريطة كاملة الشاشة', path: '/maps/full-screen'}">
+          </sidebar-item>
+          <sidebar-item :link="{name: 'سهم التوجيه، الخريطة', path: '/maps/vector-map'}">
+          </sidebar-item>
         </sidebar-item>
-        <sidebar-item v-else :link="{name: 'Maps', icon: 'place'}">
+        <sidebar-item
+          v-else
+          :link="{name: 'Maps', icon: 'place'}"
+        >
           <sidebar-item :link="{name: 'Google Maps', path: '/maps/google'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Full Screen Maps', path: '/maps/full-screen'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Vector Maps', path: '/maps/vector-map'}"></sidebar-item>
+          <sidebar-item :link="{name: 'Full Screen Maps', path: '/maps/full-screen'}">
+          </sidebar-item>
+          <sidebar-item :link="{name: 'Vector Maps', path: '/maps/vector-map'}">
+          </sidebar-item>
         </sidebar-item>
         <sidebar-item
           v-if="$route.meta.rtlActive"
-          :link="{name: 'الحاجيات', icon: 'widgets', path: '/widgets'}"></sidebar-item>
+          :link="{name: 'الحاجيات', icon: 'widgets', path: '/widgets'}"
+        ></sidebar-item>
         <sidebar-item
           v-else
-          :link="{name: 'Widgets', icon: 'widgets', path: '/widgets'}"></sidebar-item>
+          :link="{name: 'Widgets', icon: 'widgets', path: '/widgets'}"
+        ></sidebar-item>
         <sidebar-item
           v-if="$route.meta.rtlActive"
-          :link="{name: 'الرسوم البيانية', icon: 'timeline', path: '/charts'}"></sidebar-item>
+          :link="{name: 'الرسوم البيانية', icon: 'timeline', path: '/charts'}"
+        ></sidebar-item>
         <sidebar-item
           v-else
-          :link="{name: 'Charts', icon: 'timeline', path: '/charts'}"></sidebar-item>
+          :link="{name: 'Charts', icon: 'timeline', path: '/charts'}"
+        ></sidebar-item>
         <sidebar-item
           v-if="$route.meta.rtlActive"
-          :link="{name: 'التقويم', icon: 'date_range', path: '/calendar'}"></sidebar-item>
+          :link="{name: 'التقويم', icon: 'date_range', path: '/calendar'}"
+        ></sidebar-item>
         <sidebar-item
           v-else
-          :link="{name: 'Calendar', icon: 'date_range', path: '/calendar'}"></sidebar-item>
+          :link="{name: 'Calendar', icon: 'date_range', path: '/calendar'}"
+        ></sidebar-item>
       </template>
-    </side-bar>
+    </side-bar-jaw>
     <div class="main-panel">
       <top-navbar></top-navbar>
-      <div :class="{content: !$route.meta.hideContent}" @click="toggleSidebar">
-        <zoom-center-transition :duration="200" mode="out-in">
+
+      <div
+        :class="{content: !$route.meta.hideContent}"
+        @click="toggleSidebar"
+      >
+        <zoom-center-transition
+          :duration="200"
+          mode="out-in"
+        >
           <!-- your content here -->
           <router-view></router-view>
         </zoom-center-transition>
@@ -119,62 +187,62 @@
 </template>
 <script>
 /* eslint-disable no-new */
-import PerfectScrollbar from "perfect-scrollbar";
-import "perfect-scrollbar/css/perfect-scrollbar.css";
+  import PerfectScrollbar from 'perfect-scrollbar';
+  import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
-function hasElement(className) {
-  return document.getElementsByClassName(className).length > 0;
-}
+  import { ZoomCenterTransition } from 'vue2-transitions';
+  import TopNavbar from './TopNavbar.vue';
+  import ContentFooter from './ContentFooter.vue';
+  import MobileMenu from './Extra/MobileMenu.vue';
+  // import UserMenu from './Extra/UserMenu.vue';
 
-function initScrollbar(className) {
-  if (hasElement(className)) {
-    new PerfectScrollbar(`.${className}`);
-  } else {
-    // try to init it later in case this component is loaded async
-    setTimeout(() => {
-      initScrollbar(className);
-    }, 100);
+  function hasElement(className) {
+    return document.getElementsByClassName(className).length > 0;
   }
-}
 
-import TopNavbar from "./TopNavbar.vue";
-import ContentFooter from "./ContentFooter.vue";
-import MobileMenu from "./Extra/MobileMenu.vue";
-// import UserMenu from "./Extra/UserMenu.vue";
-import { ZoomCenterTransition } from "vue2-transitions";
-
-export default {
-  components: {
-    TopNavbar,
-    ContentFooter,
-    MobileMenu,
-    // UserMenu,
-    ZoomCenterTransition
-  },
-  methods: {
-    toggleSidebar() {
-      if (this.$sidebar.showSidebar) {
-        this.$sidebar.displaySidebar(false);
-      }
-    }
-  },
-  mounted() {
-    let docClasses = document.body.classList;
-    let isWindows = navigator.platform.startsWith("Win");
-    if (isWindows) {
-      // if we are on windows OS we activate the perfectScrollbar function
-      initScrollbar("sidebar");
-      initScrollbar("sidebar-wrapper");
-      initScrollbar("main-panel");
-
-      docClasses.add("perfect-scrollbar-on");
+  function initScrollbar(className) {
+    if (hasElement(className)) {
+      new PerfectScrollbar(`.${className}`);
     } else {
-      docClasses.add("perfect-scrollbar-off");
+      // try to init it later in case this component is loaded async
+      setTimeout(() => {
+        initScrollbar(className);
+      }, 100);
     }
   }
-};
+
+  export default {
+    components: {
+      TopNavbar,
+      ContentFooter,
+      MobileMenu,
+      // UserMenu,
+      ZoomCenterTransition,
+    },
+    methods: {
+      toggleSidebar() {
+        if (this.$sidebar.showSidebar) {
+          this.$sidebar.displaySidebar(false);
+        }
+      },
+    },
+    mounted() {
+      const docClasses = document.body.classList;
+      const isWindows = navigator.platform.startsWith('Win');
+      if (isWindows) {
+        // if we are on windows OS we activate the perfectScrollbar function
+        initScrollbar('sidebar');
+        initScrollbar('sidebar-wrapper');
+        initScrollbar('main-panel');
+
+        docClasses.add('perfect-scrollbar-on');
+      } else {
+        docClasses.add('perfect-scrollbar-off');
+      }
+    },
+  };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 $scaleSize: 0.95;
 @keyframes zoomIn95 {
   from {
@@ -200,16 +268,18 @@ $scaleSize: 0.95;
 .main-panel .zoomOut {
   animation-name: zoomOut95;
 }
-.separated:after {
-  content: "";
-  position: absolute;
-  margin: 15px 0 15px 0;
-  right: 15px;
-  height: 1px;
-  width: calc(100% - 30px);
-  background-color: rgba(180, 180, 180, 0.3);
-}
-.separated {
-  padding-bottom: 20px;
+.wrapper {
+  .separateduser:after {
+    content: "";
+    position: absolute;
+    margin: 15px 0 15px 0;
+    right: 15px;
+    height: 1px;
+    width: calc(100% - 30px);
+    background: rgba(180, 180, 180, 0.3) !important;
+  }
+  .separateduser {
+    padding-bottom: 20px;
+  }
 }
 </style>

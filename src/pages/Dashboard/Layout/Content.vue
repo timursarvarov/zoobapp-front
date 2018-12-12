@@ -7,12 +7,13 @@
   </div>
 </template>
 <script>
-import { FadeTransition } from "vue2-transitions";
-export default {
-  components: {
-    FadeTransition
-  }
-};
+  import { FadeTransition } from 'vue2-transitions';
+
+  export default {
+    components: {
+      FadeTransition,
+    },
+  };
 </script>
 <style>
 </style>

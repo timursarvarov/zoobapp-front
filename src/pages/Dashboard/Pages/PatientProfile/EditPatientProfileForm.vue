@@ -80,35 +80,34 @@
   </form>
 </template>
 <script>
-export default {
-  name: "edit-patient-profile-form",
-  props: {
-    headerColor: {
-      type: String,
-      default: ""
-    }
-  },
-  data() {
-    return {
-      username: null,
-      disabled: null,
-      emailadress: null,
-      lastname: null,
-      firstname: null,
-      address: null,
-      city: null,
-      country: null,
-      code: null,
-      aboutme:
-        "Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-    };
-  },
-  methods: {
-    getClass: function(headerColor) {
-      return "md-card-header-" + headerColor + "";
-    }
-  }
-};
+  export default {
+    name: 'edit-patient-profile-form',
+    props: {
+      headerColor: {
+        type: String,
+        default: '',
+      },
+    },
+    data() {
+      return {
+        username: null,
+        disabled: null,
+        emailadress: null,
+        lastname: null,
+        firstname: null,
+        address: null,
+        city: null,
+        country: null,
+        code: null,
+        aboutme: "Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.",
+      };
+    },
+    methods: {
+      getClass(headerColor) {
+        return `md-card-header-${headerColor}`;
+      },
+    },
+  };
 </script>
 <style>
 </style>

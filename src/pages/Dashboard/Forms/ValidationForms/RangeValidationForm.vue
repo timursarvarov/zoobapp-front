@@ -21,13 +21,20 @@
                 data-vv-name="minLength"
                 type="text"
                 required
-                v-validate="modelValidations.minLength">
+                v-validate="modelValidations.minLength"
+              >
               </md-input>
               <slide-y-down-transition>
-                <md-icon class="error" v-show="errors.has('minLength')">close</md-icon>
+                <md-icon
+                  class="error"
+                  v-show="errors.has('minLength')"
+                >close</md-icon>
               </slide-y-down-transition>
               <slide-y-down-transition>
-                <md-icon class="success" v-show="!errors.has('minLength') && touched.minLength">done</md-icon>
+                <md-icon
+                  class="success"
+                  v-show="!errors.has('minLength') && touched.minLength"
+                >done</md-icon>
               </slide-y-down-transition>
             </md-field>
           </div>
@@ -48,13 +55,20 @@
                 data-vv-name="maxLength"
                 type="text"
                 required
-                v-validate="modelValidations.maxLength">
+                v-validate="modelValidations.maxLength"
+              >
               </md-input>
               <slide-y-down-transition>
-                <md-icon class="error" v-show="errors.has('maxLength')">close</md-icon>
+                <md-icon
+                  class="error"
+                  v-show="errors.has('maxLength')"
+                >close</md-icon>
               </slide-y-down-transition>
               <slide-y-down-transition>
-                <md-icon class="success" v-show="!errors.has('maxLength') && touched.maxLength">done</md-icon>
+                <md-icon
+                  class="success"
+                  v-show="!errors.has('maxLength') && touched.maxLength"
+                >done</md-icon>
               </slide-y-down-transition>
             </md-field>
           </div>
@@ -75,13 +89,20 @@
                 data-vv-name="range"
                 type="text"
                 required
-                v-validate="modelValidations.range">
+                v-validate="modelValidations.range"
+              >
               </md-input>
               <slide-y-down-transition>
-                <md-icon class="error" v-show="errors.has('range')">close</md-icon>
+                <md-icon
+                  class="error"
+                  v-show="errors.has('range')"
+                >close</md-icon>
               </slide-y-down-transition>
               <slide-y-down-transition>
-                <md-icon class="success" v-show="!errors.has('range') && touched.range">done</md-icon>
+                <md-icon
+                  class="success"
+                  v-show="!errors.has('range') && touched.range"
+                >done</md-icon>
               </slide-y-down-transition>
             </md-field>
           </div>
@@ -102,13 +123,20 @@
                 data-vv-name="minValue"
                 type="text"
                 required
-                v-validate="modelValidations.minValue">
+                v-validate="modelValidations.minValue"
+              >
               </md-input>
               <slide-y-down-transition>
-                <md-icon class="error" v-show="errors.has('minValue')">close</md-icon>
+                <md-icon
+                  class="error"
+                  v-show="errors.has('minValue')"
+                >close</md-icon>
               </slide-y-down-transition>
               <slide-y-down-transition>
-                <md-icon class="success" v-show="!errors.has('minValue') && touched.minValue">done</md-icon>
+                <md-icon
+                  class="success"
+                  v-show="!errors.has('minValue') && touched.minValue"
+                >done</md-icon>
               </slide-y-down-transition>
             </md-field>
           </div>
@@ -129,13 +157,20 @@
                 data-vv-name="maxValue"
                 type="text"
                 required
-                v-validate="modelValidations.maxValue">
+                v-validate="modelValidations.maxValue"
+              >
               </md-input>
               <slide-y-down-transition>
-                <md-icon class="error" v-show="errors.has('maxValue')">close</md-icon>
+                <md-icon
+                  class="error"
+                  v-show="errors.has('maxValue')"
+                >close</md-icon>
               </slide-y-down-transition>
               <slide-y-down-transition>
-                <md-icon class="success" v-show="!errors.has('maxValue') && touched.maxValue">done</md-icon>
+                <md-icon
+                  class="success"
+                  v-show="!errors.has('maxValue') && touched.maxValue"
+                >done</md-icon>
               </slide-y-down-transition>
             </md-field>
           </div>
@@ -146,81 +181,86 @@
       </md-card-content>
 
       <md-card-actions class="text-center">
-        <md-button native-type="submit" @click.native.prevent="validate" class="md-success">Validate Inputs</md-button>
+        <md-button
+          native-type="submit"
+          @click.native.prevent="validate"
+          class="md-success"
+        >Validate Inputs</md-button>
       </md-card-actions>
     </md-card>
   </form>
 </template>
 <script>
-import { SlideYDownTransition } from "vue2-transitions";
-export default {
-  components: {
-    SlideYDownTransition
-  },
-  data() {
-    return {
-      minLength: "",
-      maxLength: "",
-      range: "",
-      minValue: "",
-      maxValue: "",
-      touched: {
-        minLength: false,
-        maxLength: false,
-        range: false,
-        minValue: false,
-        maxValue: false
+  import { SlideYDownTransition } from 'vue2-transitions';
+
+  export default {
+    components: {
+      SlideYDownTransition,
+    },
+    data() {
+      return {
+        minLength: '',
+        maxLength: '',
+        range: '',
+        minValue: '',
+        maxValue: '',
+        touched: {
+          minLength: false,
+          maxLength: false,
+          range: false,
+          minValue: false,
+          maxValue: false,
+        },
+        modelValidations: {
+          minLength: {
+            required: true,
+            min: 5,
+          },
+          maxLength: {
+            required: true,
+            max: 5,
+          },
+          range: {
+            required: true,
+            min: 6,
+            max: 10,
+          },
+          minValue: {
+            required: true,
+            min_value: 6,
+          },
+          maxValue: {
+            required: true,
+            max_value: 6,
+          },
+        },
+      };
+    },
+    methods: {
+      validate() {
+        this.$validator.validateAll().then((isValid) => {
+          this.$emit('on-submit', this.registerForm, isValid);
+        });
       },
-      modelValidations: {
-        minLength: {
-          required: true,
-          min: 5
-        },
-        maxLength: {
-          required: true,
-          max: 5
-        },
-        range: {
-          required: true,
-          min: 6,
-          max: 10
-        },
-        minValue: {
-          required: true,
-          min_value: 6
-        },
-        maxValue: {
-          required: true,
-          max_value: 6
-        }
-      }
-    };
-  },
-  methods: {
-    validate() {
-      this.$validator.validateAll().then(isValid => {
-        this.$emit("on-submit", this.registerForm, isValid);
-      });
-    }
-  },
-  watch: {
-    minLength() {
-      this.touched.minLength = true;
     },
-    maxLength() {
-      this.touched.maxLength = true;
+    watch: {
+      minLength() {
+        this.touched.minLength = true;
+      },
+      maxLength() {
+        this.touched.maxLength = true;
+      },
+      range() {
+        this.touched.range = true;
+      },
+      minValue() {
+        this.touched.minValue = true;
+      },
+      maxValue() {
+        this.touched.maxValue = true;
+      },
     },
-    range() {
-      this.touched.range = true;
-    },
-    minValue() {
-      this.touched.minValue = true;
-    },
-    maxValue() {
-      this.touched.maxValue = true;
-    }
-  }
-};
+  };
 </script>
 <style lang="scss" scoped>
 .md-card .md-card-actions {

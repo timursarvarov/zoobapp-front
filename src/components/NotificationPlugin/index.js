@@ -1,4 +1,4 @@
-import Notifications from "./Notifications.vue";
+import Notifications from './Notifications.vue';
 
 const NotificationStore = {
   state: [], // here the notifications will be added
@@ -10,49 +10,50 @@ const NotificationStore = {
     }
   },
   addNotification(notification) {
-    notification.timestamp = new Date();
-    notification.timestamp.setMilliseconds(
-      notification.timestamp.getMilliseconds() + this.state.length
+    const Nnotificationv = notification;
+    Nnotificationv.timestamp = new Date();
+    Nnotificationv.timestamp.setMilliseconds(
+      Nnotificationv.timestamp.getMilliseconds() + this.state.length,
     );
-    this.state.push(notification);
+    this.state.push(Nnotificationv);
   },
   notify(notification) {
     if (Array.isArray(notification)) {
-      notification.forEach(notificationInstance => {
+      notification.forEach((notificationInstance) => {
         this.addNotification(notificationInstance);
       });
     } else {
       this.addNotification(notification);
     }
-  }
+  },
 };
 
-var NotificationsPlugin = {
+const NotificationsPlugin = {
   install(Vue) {
     Vue.mixin({
       data() {
         return {
-          notificationStore: NotificationStore
+          notificationStore: NotificationStore,
         };
       },
       methods: {
         notify(notification) {
           this.notificationStore.notify(notification);
-        }
-      }
+        },
+      },
     });
-    Object.defineProperty(Vue.prototype, "$notify", {
+    Object.defineProperty(Vue.prototype, '$notify', {
       get() {
         return this.$root.notify;
-      }
+      },
     });
-    Object.defineProperty(Vue.prototype, "$notifications", {
+    Object.defineProperty(Vue.prototype, '$notifications', {
       get() {
         return this.$root.notificationStore;
-      }
+      },
     });
-    Vue.component("Notifications", Notifications);
-  }
+    Vue.component('Notifications', Notifications);
+  },
 };
 
 export default NotificationsPlugin;
