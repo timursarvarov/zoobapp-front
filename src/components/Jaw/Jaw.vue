@@ -20,198 +20,198 @@
                 data-name="bridge"
                 class="cls-2"
                 :d="tooth.bridge"
-              ></path>
+              />
               <path
                 data-name="root"
                 class="cls-3"
                 :d="tooth.root"
-              ></path>
-              <path
+              />
+              <!-- <path
                 data-name="rootcanal"
                 class="cls-4"
                 :d="tooth.rootcanal"
-              ></path>
+              /> -->
               <path
                 data-name="coronalingual"
                 class="cls-5"
                 :d="tooth.coronalingual"
-              ></path>
+              />
               <path
                 data-name="coronalingualincisaldistal"
                 class="cls-2"
                 :d="tooth.coronalingualincisaldistal"
-              ></path>
-              <path
+              />
+              <!-- <path
                 data-name="coronalingualincisalmiddle"
                 class="cls-2"
                 :d="tooth.coronalingualincisalmiddle"
-              ></path>
-              <path
+              /> -->
+              <!-- <path
                 data-name="coronalingualincisionmesial"
                 class="cls-2"
                 :d="tooth.coronalingualincisionmesial"
-              ></path>
-              <path
+              /> -->
+              <!-- <path
                 data-name="coronalingualmiddledistal"
                 class="cls-2"
                 :d="tooth.coronalingualmiddledistal"
-              ></path>
+              /> -->
               <path
                 data-name="coronalingualmiddlemiddle"
                 class="cls-2"
                 :d="tooth.coronalingualmiddlemiddle"
-              ></path>
-              <path
+              />
+              <!-- <path
                 data-name="coronalingualmiddlemesial"
                 class="cls-2"
                 :d="tooth.coronalingualmiddlemesial"
-              ></path>
+              />
               <path
                 data-name="coronalingualcervicaldistal"
                 class="cls-2"
                 :d="tooth.coronalingualcervicaldistal"
-              ></path>
+              /> -->
               <path
                 data-name="coronalingualcervicalmiddle"
                 class="cls-2"
                 :d="tooth.coronalingualcervicalmiddle"
-              ></path>
-              <path
+              />
+              <!-- <path
                 data-name="coronalingualcervicalmesial"
                 class="cls-2"
                 :d="tooth.coronalingualcervicalmesial"
-              ></path>
-              <path
+              /> -->
+              <!-- <path
                 data-name="coronalabial"
                 class="cls-5"
                 :d="tooth.coronalabial"
-              ></path>
+              /> -->
               <path
                 data-name="coronalabialincisaldistal"
                 class="cls-2"
                 :d="tooth.coronalabialincisaldistal"
-              ></path>
-              <path
+              />
+              <!-- <path
                 data-name="coronalabialincisalmiddle"
                 class="cls-2"
                 :d="tooth.coronalabialincisalmiddle"
-              ></path>
+              /> -->
               <path
                 data-name="coronalabialincisionmesial"
                 class="cls-2"
                 :d="tooth.coronalabialincisionmesial"
-              ></path>
+              />
               <path
                 data-name="coronalabialmiddledistal"
                 class="cls-2"
                 :d="tooth.coronalabialmiddledistal"
-              ></path>
-              <path
+              />
+              <!-- <path
                 data-name="coronalabialmiddlemiddle"
                 class="cls-2"
                 :d="tooth.coronalabialmiddlemiddle"
-              ></path>
+              />
               <path
                 data-name="coronalabialmiddlemesial"
                 class="cls-2"
                 :d="tooth.coronalabialmiddlemesial"
-              ></path>
+              />
               <path
                 data-name="coronalabialcervicaldistal"
                 class="cls-2"
                 :d="tooth.coronalabialcervicaldistal"
-              ></path>
+              /> -->
               <path
                 data-name="coronalabialcervicalmiddle"
                 class="cls-2"
                 :d="tooth.coronalabialcervicalmiddle"
-              ></path>
-              <path
+              />
+              <!-- <path
                 data-name="coronalabialcervicalmesial"
                 class="cls-2"
                 :d="tooth.coronalabialcervicalmesial"
-              ></path>
-              <path
+              /> -->
+              <!-- <path
                 data-name="implant"
                 class="cls-2"
                 :d="tooth.implant"
-              ></path>
+              /> -->
               <path
                 data-name="veneer"
                 class="cls-2"
                 :d="tooth.veneer"
-              ></path>
-              <path
+              />
+              <!-- <path
                 data-name="coronatop"
                 class="cls-6"
                 :d="tooth.coronatop"
-              ></path>
+              /> -->
               <path
                 data-name="coronatopbuccal"
                 class="cls-2"
                 :d="tooth.coronatopbuccal"
-              ></path>
+              />
               <path
                 data-name="coronatopmedial"
                 class="cls-2"
                 :d="tooth.coronatopmedial"
-              ></path>
+              />
               <path
                 data-name="coronatoplingual"
                 class="cls-2"
                 :d="tooth.coronatoplingual"
-              ></path>
+              />
               <path
                 data-name="coronatopdistal"
                 class="cls-2"
                 :d="tooth.coronatopdistal"
-              ></path>
-              <path
+              />
+              <!-- <path
                 data-name="coronatopoclusial"
                 class="cls-2"
                 :d="tooth.coronatopoclusial"
-              ></path>
+              /> -->
               <path
                 data-name="silant"
                 class="cls-2"
                 :d="tooth.silant"
-              ></path>
+              />
               <path
                 data-name="gum"
                 class="cls-7"
                 :d="tooth.gum"
-              ></path>
+              />
               <path
                 data-name="paradontit1"
                 class="cls-8"
                 :d="tooth.paradontit1"
-              ></path>
+              />
               <path
                 data-name="paradontit2"
                 class="cls-9"
                 :d="tooth.paradontit2"
-              ></path>
+              />
               <path
                 data-name="paradontit3"
                 class="cls-9"
                 :d="tooth.paradontit3"
-              ></path>
+              />
               <path
                 data-name="paradontit4"
                 class="cls-10"
                 :d="tooth.paradontit4"
-              ></path>
+              />
               <path
                 data-name="periodontit"
                 class="cls-2"
                 :d="tooth.periodontit"
-              ></path>
+              />
               <!-- <path data-name="universal" class="cls-11" :d="tooth.universal" /> -->
               <path
                 data-name="fdi"
                 class="cls-11"
                 :d="tooth.fdi"
-              ></path>
+              />
               <!-- <path v-show="teethSettngs[key].palmer"
                :id="'palmer' + key " class="cls-11" :d="tooth.palmer" /> -->
             </g>
@@ -237,199 +237,195 @@
                 data-name="bridge"
                 class="cls-2"
                 :d="tooth.bridge"
-              ></path>
+              />
               <path
                 data-name="root"
                 class="cls-3"
                 :d="tooth.root"
-              ></path>
+              />
               <path
                 data-name="rootcanal"
                 class="cls-4"
                 :d="tooth.rootcanal"
-              ></path>
+              />
               <path
                 data-name="coronalingual"
                 class="cls-5"
                 :d="tooth.coronalingual"
-              ></path>
+              />
               <path
                 data-name="coronalingualincisaldistal"
                 class="cls-2"
                 :d="tooth.coronalingualincisaldistal"
-              ></path>
+              />
               <path
                 data-name="coronalingualincisalmiddle"
                 class="cls-2"
                 :d="tooth.coronalingualincisalmiddle"
-              ></path>
+              />
               <path
                 data-name="coronalingualincisionmesial"
                 class="cls-2"
                 :d="tooth.coronalingualincisionmesial"
-              ></path>
+              />
               <path
                 data-name="coronalingualmiddledistal"
                 class="cls-2"
                 :d="tooth.coronalingualmiddledistal"
-              ></path>
+              />
               <path
                 data-name="coronalingualmiddlemiddle"
                 class="cls-2"
                 :d="tooth.coronalingualmiddlemiddle"
-              ></path>
+              />
               <path
                 data-name="coronalingualmiddlemesial"
                 class="cls-2"
                 :d="tooth.coronalingualmiddlemesial"
-              ></path>
+              />
               <path
                 data-name="coronalingualcervicaldistal"
                 class="cls-2"
                 :d="tooth.coronalingualcervicaldistal"
-              ></path>
+              />
               <path
                 data-name="coronalingualcervicalmiddle"
                 class="cls-2"
                 :d="tooth.coronalingualcervicalmiddle"
-              ></path>
+              />
               <path
                 data-name="coronalingualcervicalmesial"
                 class="cls-2"
                 :d="tooth.coronalingualcervicalmesial"
-              ></path>
+              />
               <path
                 data-name="coronalabial"
                 class="cls-5"
                 :d="tooth.coronalabial"
-              ></path>
+              />
               <path
                 data-name="coronalabialincisaldistal"
                 class="cls-2"
                 :d="tooth.coronalabialincisaldistal"
-              ></path>
+              />
               <path
                 data-name="coronalabialincisalmiddle"
                 class="cls-2"
                 :d="tooth.coronalabialincisalmiddle"
-              ></path>
+              />
               <path
                 data-name="coronalabialincisionmesial"
                 class="cls-2"
                 :d="tooth.coronalabialincisionmesial"
-              ></path>
+              />
               <path
                 data-name="coronalabialmiddledistal"
                 class="cls-2"
                 :d="tooth.coronalabialmiddledistal"
-              ></path>
+              />
               <path
                 data-name="coronalabialmiddlemiddle"
                 class="cls-2"
                 :d="tooth.coronalabialmiddlemiddle"
-              ></path>
+              />
               <path
                 data-name="coronalabialmiddlemesial"
                 class="cls-2"
                 :d="tooth.coronalabialmiddlemesial"
-              ></path>
+              />
               <path
                 data-name="coronalabialcervicaldistal"
                 class="cls-2"
                 :d="tooth.coronalabialcervicaldistal"
-              ></path>
+              />
               <path
                 data-name="coronalabialcervicalmiddle"
                 class="cls-2"
                 :d="tooth.coronalabialcervicalmiddle"
-              ></path>
+              />
               <path
                 data-name="coronalabialcervicalmesial"
                 class="cls-2"
                 :d="tooth.coronalabialcervicalmesial"
-              ></path>
-              <path
-                data-name="implant"
-                class="cls-2"
-                :d="tooth.implant"
-              ></path>
+              />
+              <!-- <path data-name="implant" class="cls-2" :d="tooth.implant" /> -->
               <path
                 data-name="veneer"
                 class="cls-2"
                 :d="tooth.veneer"
-              ></path>
+              />
               <path
                 data-name="coronatop"
                 class="cls-6"
                 :d="tooth.coronatop"
-              ></path>
+              />
               <path
                 data-name="coronatopbuccal"
                 class="cls-2"
                 :d="tooth.coronatopbuccal"
-              ></path>
+              />
               <path
                 data-name="coronatopmedial"
                 class="cls-2"
                 :d="tooth.coronatopmedial"
-              ></path>
+              />
               <path
                 data-name="coronatoplingual"
                 class="cls-2"
                 :d="tooth.coronatoplingual"
-              ></path>
+              />
               <path
                 data-name="coronatopdistal"
                 class="cls-2"
                 :d="tooth.coronatopdistal"
-              ></path>
+              />
               <path
                 data-name="coronatopoclusial"
                 class="cls-2"
                 :d="tooth.coronatopoclusial"
-              ></path>
+              />
               <path
                 data-name="silant"
                 class="cls-2"
                 :d="tooth.silant"
-              ></path>
+              />
               <path
                 data-name="gum"
                 class="cls-7"
                 :d="tooth.gum"
-              ></path>
-              <path
+              />
+              <!-- <path
                 data-name="paradontit1"
                 class="cls-8"
                 :d="tooth.paradontit1"
-              ></path>
+              />
               <path
                 data-name="paradontit2"
                 class="cls-9"
                 :d="tooth.paradontit2"
-              ></path>
+              />
               <path
                 data-name="paradontit3"
                 class="cls-9"
                 :d="tooth.paradontit3"
-              ></path>
+              />
               <path
                 data-name="paradontit4"
                 class="cls-10"
                 :d="tooth.paradontit4"
-              ></path>
+              />
               <path
                 data-name="periodontit"
                 class="cls-2"
-                :d="tooth.periodontit"
-              ></path>
+                :d="tooth.periodontit" -->
+              />
               <!-- <path data-name="universal" class="cls-11"
                :d="tooth.universal" /> -->
               <path
                 data-name="fdi"
                 class="cls-11"
                 :d="tooth.fdi"
-              ></path>
+              />
               <!-- <path v-show="teethSettngs[key].palmer"
                :id="'palmer' + key " class="cls-11" :d="tooth.palmer" /> -->
             </g>
@@ -687,7 +683,7 @@
   };
 </script>
 
-<style lang="scss" scoped >
+<style lang="scss" scoped>
 .jaw {
   width: 100%;
   display: flex;
@@ -699,9 +695,11 @@
   .jaw-top,
   .jaw-bottom {
     display: flex;
+
     .tooth {
       display: flex;
       border-radius: 12px;
+
       svg {
         flex-grow: 1;
         flex-basis: 100%;
@@ -778,6 +776,8 @@
 
   .cls-11 {
     isolation: isolate;
+    // stroke: #fff;
+    fill: #fff;
   }
 }
 </style>

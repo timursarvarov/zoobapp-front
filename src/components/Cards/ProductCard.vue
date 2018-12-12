@@ -1,3 +1,4 @@
+/* eslint-disable vue/valid-v-bind */
 <template>
   <md-card
     class="md-card-product"
@@ -11,6 +12,7 @@
       :class="[{hovered: imgHovered}, {hinge: headerDown}, {fadeInDown: fixedHeader}]"
       class="md-card-header-image animated"
     >
+
       <slot name="imageHeader"></slot>
     </md-card-header>
 
@@ -35,6 +37,7 @@
         <md-button class="md-danger md-simple md-just-icon">
           <slot name="third-button"></slot>
         </md-button>
+        {{transformHeight}}dfdf
       </div>
       <slot name="title"></slot>
       <slot name="description"></slot>
@@ -43,6 +46,7 @@
     <md-card-actions md-alignment="space-between">
       <slot name="footer"></slot>
     </md-card-actions>
+
   </md-card>
 </template>
 

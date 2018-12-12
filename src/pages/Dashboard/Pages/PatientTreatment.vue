@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="md-layout">
-      <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-60">
+      <div class="md-layout-item md-medium-size-40 md-xsmall-size-100 md-size-60">
 
         <jaw-card header-animation="true">
           <img
@@ -49,7 +49,7 @@
           </template>
         </jaw-card>
       </div>
-      <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-40">
+      <div class="md-layout-item md-medium-size-60 md-xsmall-size-100 md-size-40">
         <nav-tabs-card>
           <template slot="content">
             <span class="md-nav-tabs-title">
