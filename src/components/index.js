@@ -92,6 +92,7 @@ import IconToothWings from './JawIcons/Icons/ToothWings.vue';
 import IconToothWorld from './JawIcons/Icons/ToothWorld.vue';
 import IconToothRestovration from './JawIcons/Icons/ToothRestovration.vue';
 import JawCard from './Jaw/JawCard.vue';
+import Jaw from './Jaw/Jaw.vue';
 
 export {
   IconCheckbox,
@@ -121,6 +122,7 @@ export {
   Collapse,
   AsyncWorldMap,
   JawCard,
+  Jaw,
   SidebarPluginJaw,
   // Icons
   IconAdult,

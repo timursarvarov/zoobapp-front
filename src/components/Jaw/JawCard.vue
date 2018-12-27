@@ -1,6 +1,5 @@
 <template>
   <div class="jaw-card">
-    {{сardActionStyles}}
     <md-card
       class="md-card-product"
       @mouseleave.native="onMouseLeave"
@@ -9,13 +8,14 @@
       <md-card-header
         @mouseenter.native="onMouseOver"
         :data-header-animation="headerAnimation"
-        :class="[{1: imgHovered}, {hinge: headerDown}, {fadeInDown: fixedHeader},
+        :class="[{1: imgHovered}, {fadeInDown: fixedHeader},
         'md-card-header-' + currentJawColor(), {'display-all':displayAll}]"
         class="md-card-header-image jaw-wrapper s "
         :style="newHeigthStyleObj()"
       >
-        <div ref="jaw">
-          <jaw background-color="success"></jaw>
+        <div ref="jaw" >
+          <!-- <jaw background-color="success" :jaw="jawp" ></jaw> -->
+          <slot name="jaw"></slot>
         </div>
       </md-card-header>
 
@@ -26,395 +26,8 @@
           v-if="headerAnimation === 'true'"
           :style="сardActionStyles"
         >
-          <div class="wrapper-md-card-action-buttons">
-            <md-button
-              class="md-danger md-simple fix-broken-card"
-              @click="fixHeader"
-              v-if="headerDown"
-            >
-              <slot name="fixed-button"></slot> Fix Header!
-            </md-button>
+            <slot name="actions"></slot>
 
-            <md-button class="md-simple  jaw-state">
-              <div
-                ref="jawstate"
-                class="icon-wrapper"
-              >
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Tooth Healhy"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-health />
-                </icon-base>
-                <small class="icon-wrapper--item">Helthy</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state  ">
-              <div class="icon-wrapper">
-                <icon-base
-                  class="icon-wrapper--item"
-                  width="30"
-                  height="30"
-                  icon-name="Tooth Healhy"
-                >
-                  <icon-root-canal />
-                </icon-base>
-                <small class="icon-wrapper--item">Pulpit</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple md-primary  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Paradontit"
-                  class="icon-wrapper--item"
-                >
-                  <icon-paradontit />
-                </icon-base>
-                <small class="icon-wrapper--item">Paradontit</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Carries"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-carries />
-                </icon-base>
-                <small class="icon-wrapper--item">Carries</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Missed"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-extraction />
-                </icon-base>
-                <small class="icon-wrapper--item">Missed</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Carries"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-cracked />
-                </icon-base>
-                <small class="icon-wrapper--item">Cracked</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple jaw-state ">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Other Diseas"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-treated />
-                </icon-base>
-                <small>Other Diseas</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Carries"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-carries />
-                </icon-base>
-                <small class="icon-wrapper--item">Carries</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Missed"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-extraction />
-                </icon-base>
-                <small class="icon-wrapper--item">Missed</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Carries"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-cracked />
-                </icon-base>
-                <small class="icon-wrapper--item">Cracked</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple jaw-state ">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Other Diseas"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-treated />
-                </icon-base>
-                <small>Other Diseas</small>
-              </div>
-            </md-button>
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Carries"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-carries />
-                </icon-base>
-                <small class="icon-wrapper--item">Carries</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Missed"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-extraction />
-                </icon-base>
-                <small class="icon-wrapper--item">Missed</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Carries"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-cracked />
-                </icon-base>
-                <small class="icon-wrapper--item">Cracked</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple jaw-state ">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Other Diseas"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-treated />
-                </icon-base>
-                <small>Other Diseas</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Carries"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-carries />
-                </icon-base>
-                <small class="icon-wrapper--item">Carries</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Missed"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-extraction />
-                </icon-base>
-                <small class="icon-wrapper--item">Missed</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Carries"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-cracked />
-                </icon-base>
-                <small class="icon-wrapper--item">Cracked</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple jaw-state ">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Other Diseas"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-treated />
-                </icon-base>
-                <small>Other Diseas</small>
-              </div>
-            </md-button>
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Carries"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-carries />
-                </icon-base>
-                <small class="icon-wrapper--item">Carries</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Missed"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-extraction />
-                </icon-base>
-                <small class="icon-wrapper--item">Missed</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Carries"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-cracked />
-                </icon-base>
-                <small class="icon-wrapper--item">Cracked</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple jaw-state ">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Other Diseas"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-treated />
-                </icon-base>
-                <small>Other Diseas</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Carries"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-carries />
-                </icon-base>
-                <small class="icon-wrapper--item">Carries</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Missed"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-extraction />
-                </icon-base>
-                <small class="icon-wrapper--item">Missed</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Carries"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-cracked />
-                </icon-base>
-                <small class="icon-wrapper--item">Cracked</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple jaw-state ">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="Other Diseas"
-                  class="icon-wrapper--item"
-                >
-                  <icon-tooth-treated />
-                </icon-base>
-                <small>Other Diseas</small>
-              </div>
-            </md-button>
-
-          </div>
         </div>
         <slot name="title"></slot>
         <slot name="description"></slot>
@@ -430,115 +43,9 @@
 
 <script>
   import Jaw from './Jaw.vue';
-  import {
-    // IconAdult,
-    IconBase,
-    // IconAnalgesic,
-    // IconBaby,
-    // IconBrekets,
-    // IconCard,
-    // IconForceps,
-    // IconImplant,
-    // IconInjection,
-    // IconInsetJaw,
-    // IconObservation,
-    // IconOpenMouth,
-    // IconPalmFace,
-    IconParadontit,
-    // IconPoint,
-    IconRootCanal,
-    // IconSurvey,
-    // IconTablets,
-    // IconToggleBottom,
-    // IconToggleTop,
-    // IconToothBacteria,
-    // IconToothBill,
-    // IconToothBottle,
-    // IconToothBottom,
-    // IconToothCalendar,
-    // IconToothCard,
-    IconToothCarries,
-    // IconToothClean,
-    // IconToothCorons,
-    IconToothCracked,
-    // IconToothDrop,
-    IconToothExtraction,
-    // IconToothHandCare,
-    IconToothHealth,
-    // IconToothIce,
-    // IconToothInfo,
-    // IconToothInspected,
-    // IconToothLocked,
-    // IconToothPain,
-    // IconToothPoint,
-    // IconToothProtected,
-    // IconToothRenew,
-    // IconToothSettings,
-    // IconToothSmall,
-    // IconToothStar,
-    // IconToothSun,
-    // IconToothTablet,
-    IconToothTreated,
-  // IconToothTree,
-  // IconToothWash,
-  // IconToothWings,
-  // IconToothWorld,
-  } from '@/components';
 
   export default {
     components: {
-      // IconAdult,
-      IconBase,
-      // IconAnalgesic,
-      // IconBaby,
-      // IconBrekets,
-      // IconCard,
-      // IconForceps,
-      // IconImplant,
-      // IconInjection,
-      // IconInsetJaw,
-      // IconObservation,
-      // IconOpenMouth,
-      // IconPalmFace,
-      IconParadontit,
-      // IconPoint,
-      IconRootCanal,
-      // IconSurvey,
-      // IconTablets,
-      // IconToggleBottom,
-      // IconToggleTop,
-      // IconToothBacteria,
-      // IconToothBill,
-      // IconToothBottle,
-      // IconToothBottom,
-      // IconToothCalendar,
-      // IconToothCard,
-      IconToothCarries,
-      // IconToothClean,
-      // IconToothCorons,
-      IconToothCracked,
-      // IconToothDrop,
-      IconToothExtraction,
-      // IconToothHandCare,
-      IconToothHealth,
-      // IconToothIce,
-      // IconToothInfo,
-      // IconToothInspected,
-      // IconToothLocked,
-      // IconToothPain,
-      // IconToothPoint,
-      // IconToothProtected,
-      // IconToothRenew,
-      // IconToothSettings,
-      // IconToothSmall,
-      // IconToothStar,
-      // IconToothSun,
-      // IconToothTablet,
-      IconToothTreated,
-      // IconToothTree,
-      // IconToothWash,
-      // IconToothWings,
-      // IconToothWorld,
       Jaw,
     },
     name: 'jaw-card',
@@ -546,6 +53,13 @@
       headerAnimation: {
         type: String,
         default: 'true',
+      },
+      actionSize: {
+        type: Object,
+        // default: {
+        //   width: 30,
+        //   height: 30,
+        // }
       },
     },
     data() {
@@ -561,9 +75,6 @@
       };
     },
     computed: {
-      headerDown() {
-        return this.hoverCount > 15;
-      },
     },
     methods: {
       currentJawColor() {
@@ -579,15 +90,6 @@
         }
         return color;
       },
-      headerBack() {
-        this.fixedHeader = false;
-      },
-      fixHeader() {
-        this.hoverCount = 0;
-        this.fixedHeader = true;
-
-        setTimeout(this.headerBack, 480);
-      },
       onMouseOver() {
         if (this.headerAnimation === 'true') {
           this.matchHeight();
@@ -602,15 +104,15 @@
         }
       },
       matchHeight() {
-        this.transformHeight = this.$refs.actions.clientHeight;
+        if (this.$refs.actions) {
+          this.transformHeight = this.$refs.actions.clientHeight + 20;
+        }
       },
       newHeigthStyleObj() {
         const height = this.transformHeight;
         const heigthStyleObj = {
           transform: `translate3d(0, -${height || 0}px, 0)`,
         };
-        console.log(heigthStyleObj);
-
         return heigthStyleObj;
       },
       mdCardActionsStyleObj() {
@@ -622,25 +124,38 @@
 
         return heigthStyleObj;
       },
+      setActionsSize() {
+        const actionsNum = document.querySelectorAll('.icon-wrapper').length;
+        const currentActionsWidth = this.$refs.actions.clientWidth;
+        const totalActionsWidth = actionsNum * this.actionSize.width;
+        let newHeight = 0;
+        if (totalActionsWidth < currentActionsWidth) {
+          newHeight = this.actionSize.height * 1.5;
+        } else {
+          newHeight = this.actionSize.height * 3;
+        }
+        this.сardActionStyles = {
+          'max-height': `${this.$refs.jaw.clientHeight || 0}px`,
+          top: `-${newHeight || 0}px`,
+          height: `${newHeight || 0}px`,
+          overflow: 'hidden',
+          'overflow-y': 'auto',
+        };
+      },
+    },
+    watch: {
+      actionSize() {
+        this.setActionsSize();
+      },
     },
     mounted() {
       // eslint-disable-next-line
-    const positionHeight =
-        (this.$refs.jaw.clientHeight > this.$refs.actions.clientHeight
-          ? this.$refs.actions.clientHeight
-        : this.$refs.jaw.clientHeight) - 30;
-      // eslint-disable-next-line
-    const computedHeight =
-        positionHeight < this.$refs.jawstate.clientHeight * 3
-          ? positionHeight
-          : this.$refs.jawstate.clientHeight * 3 - 30;
-      this.сardActionStyles = {
-        'max-height': `${this.$refs.jaw.clientHeight - 80 || 0}px`,
-        top: `-${positionHeight - 50 || 0}px`,
-        height: `-${computedHeight || 0}px`,
-        overflow: 'hidden',
-        'overflow-y': 'auto',
-      };
+      this.$nextTick(function () {
+        window.addEventListener('resize', this.setActionsSize);
+      });
+    },
+    beforeDestroy() {
+      window.removeEventListener('resize', this.setActionsSize);
     },
   };
 </script>
@@ -650,7 +165,19 @@
   margin-left: 15px;
 }
 .jaw-card {
+  z-index: 5;
   .md-card {
+    .md-card-action-buttons{
+      width: calc(100% - 31px);
+    }
+    .md-card-action-buttons::-webkit-scrollbar {
+    width: 6px;
+    background-color: transparent;
+    }
+    .md-card-action-buttons::-webkit-scrollbar-thumb {
+    background-color: grey;
+    border-radius: 5px;
+    }
     .jaw-state {
       min-width: 58px;
       .md-ripple {
@@ -680,9 +207,6 @@
       border-radius: 6px;
       box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
     }
-  }
-  .wrapper-md-card-action-button {
-    padding-top: 30px;
   }
 }
 .display-all {

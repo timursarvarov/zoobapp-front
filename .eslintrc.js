@@ -14,6 +14,10 @@ module.exports = {
     'vue/script-indent': ['warn', 2, {
       baseIndent: 1,
     }],
+    'max-len': ['error', {
+      code: 100,
+      ignoreTemplateLiterals: true,
+    }],
     overrides: [{
       files: ['*.vue'],
       rules: {

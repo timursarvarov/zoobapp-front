@@ -37,7 +37,6 @@
         <md-button class="md-danger md-simple md-just-icon">
           <slot name="third-button"></slot>
         </md-button>
-        {{transformHeight}}dfdf
       </div>
       <slot name="title"></slot>
       <slot name="description"></slot>

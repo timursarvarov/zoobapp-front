@@ -1,3 +1,4 @@
+import store from '@/store';
 import DashboardLayout from '@/pages/Dashboard/Layout/DashboardLayout.vue';
 import AuthLayout from '@/pages/Dashboard/Pages/AuthLayout.vue';
 
@@ -6,11 +7,15 @@ import Dashboard from '@/pages/Dashboard/Dashboard.vue';
 import Widgets from '@/pages/Dashboard/Widgets.vue';
 
 // Pages
+const ClinicSettings = () => import('@/pages/Dashboard/Pages/ClinicSettings.vue');
+// Pages
 const User = () => import('@/pages/Dashboard/Pages/UserProfile.vue');
 
 const PatientProfile = () => import('@/pages/Dashboard/Pages/PatientProfile.vue');
 const PatientTreatment = () => import('@/pages/Dashboard/Pages/PatientTreatment.vue');
 const PatientMedia = () => import('@/pages/Dashboard/Pages/PatientMedia.vue');
+
+const PatientsList = () => import('@/pages/Dashboard/Pages/PatientsList.vue');
 
 const Pricing = () => import('@/pages/Dashboard/Pages/Pricing.vue');
 const TimeLine = () => import('@/pages/Dashboard/Pages/TimeLinePage.vue');
@@ -49,10 +54,37 @@ const Calendar = () => import('@/pages/Dashboard/Calendar.vue');
 // Charts
 const Charts = () => import('@/pages/Dashboard/Charts.vue');
 
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    next();
+    return;
+  }
+  next('/');
+};
+const isProfileLoaded = (to, from, next) => {
+  if (store.getters.isProfileLoaded) {
+    next();
+    return;
+  }
+  next('/login');
+};
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next();
+    return;
+  }
+  if (store.getters.isProfileLoaded) {
+    next('/lock');
+    return;
+  }
+  next('/login');
+};
+
 const componentsMenu = {
   path: '/components',
   component: DashboardLayout,
   redirect: '/components/buttons',
+  beforeEnter: ifAuthenticated,
   name: 'Components',
   children: [{
     path: 'buttons',
@@ -109,6 +141,7 @@ const formsMenu = {
   path: '/forms',
   component: DashboardLayout,
   redirect: '/forms/regular',
+  beforeEnter: ifAuthenticated,
   name: 'Forms',
   children: [{
     path: 'regular',
@@ -145,6 +178,7 @@ const tablesMenu = {
   path: '/table-list',
   component: DashboardLayout,
   redirect: '/table-list/regular',
+  beforeEnter: ifAuthenticated,
   name: 'Tables',
   children: [{
     path: 'regular',
@@ -175,6 +209,7 @@ const mapsMenu = {
   component: DashboardLayout,
   name: 'Maps',
   redirect: '/maps/google',
+  beforeEnter: ifAuthenticated,
   children: [{
     path: 'google',
     name: 'Google Maps',
@@ -209,6 +244,7 @@ const pagesMenu = {
   component: DashboardLayout,
   name: 'Pages',
   redirect: '/pages/user',
+  beforeEnter: ifAuthenticated,
   children: [{
     path: 'user',
     name: 'User Page',
@@ -235,6 +271,56 @@ const pagesMenu = {
   },
   ],
 };
+const Settings = {
+  path: '/settings',
+  component: DashboardLayout,
+  name: 'Settings',
+  redirect: '/settings/user',
+  beforeEnter: ifAuthenticated,
+  children: [{
+    path: 'user',
+    name: 'My Profile',
+    components: {
+      default: User,
+    },
+  },
+  {
+    path: 'clinic',
+    name: 'Clinic',
+    components: {
+      default: ClinicSettings,
+    },
+  },
+  {
+    path: 'services',
+    name: 'Services',
+    components: {
+      default: User,
+    },
+  },
+  {
+    path: 'payment',
+    name: 'Payment',
+    components: {
+      default: User,
+    },
+  },
+  {
+    path: 'users',
+    name: 'Users',
+    components: {
+      default: User,
+    },
+  },
+  {
+    path: 'notifications',
+    name: 'Notification',
+    components: {
+      default: User,
+    },
+  },
+  ],
+};
 
 const authPages = {
   path: '/',
@@ -244,11 +330,13 @@ const authPages = {
     path: '/login',
     name: 'Login',
     component: Login,
+    beforeEnter: ifNotAuthenticated,
   },
   {
     path: '/register',
     name: 'Register',
     component: Register,
+    beforeEnter: ifNotAuthenticated,
   },
   {
     path: '/pricing',
@@ -259,6 +347,7 @@ const authPages = {
     path: '/lock',
     name: 'Lock',
     component: Lock,
+    beforeEnter: isProfileLoaded,
   },
   ],
 };
@@ -319,10 +408,12 @@ formsMenu,
 tablesMenu,
 mapsMenu,
 pagesMenu,
+Settings,
 authPages,
 {
   path: '/',
   component: DashboardLayout,
+  beforeEnter: ifAuthenticated,
   children: [{
     path: 'dashboard',
     name: 'Dashboard',
@@ -335,6 +426,13 @@ authPages,
     name: 'Calendar',
     components: {
       default: Calendar,
+    },
+  },
+  {
+    path: 'patients',
+    name: 'Patients',
+    components: {
+      default: PatientsList,
     },
   },
   {

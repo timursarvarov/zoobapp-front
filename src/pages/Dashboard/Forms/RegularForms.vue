@@ -112,7 +112,7 @@
                   v-model="helper"
                   type="text"
                 ></md-input>
-                w <span class="md-helper-text">A block of help
+                <span class="md-helper-text">A block of help
                   text that breaks onto a new line.</span>
               </md-field>
             </div>

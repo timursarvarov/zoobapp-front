@@ -12,7 +12,11 @@ import GlobalDirectives from './globalDirectives';
 // Sidebar on the right. Used as a local plugin in DashboardLayout.vue
 // import SideBar from './components/SidebarPlugin';
 // Tabs plugin. Used on Panels page.
+
+// Sidebar on the right. Used as a local plugin in DashboardLayout.vue
 import SideBarJaw from './components/SidebarPluginJaw';
+// Global Add Patient Form
+import PatientAddForm from './pages/Dashboard/Modals';
 // Tabs plugin. Used on Panels page.
 
 import VueMaterial from 'vue-material';
@@ -32,7 +36,7 @@ export default {
     Vue.use(GlobalDirectives);
     Vue.use(VueMaterial);
     Vue.use(SideBarJaw);
-    // Vue.use(SideBar);
+    Vue.use(PatientAddForm);
     Vue.use(Notifications);
   },
 };

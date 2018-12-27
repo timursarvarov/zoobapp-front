@@ -64,7 +64,7 @@
               slot="md-table-row"
               slot-scope="{ item }"
               md-selectable="multiple"
-              md-auto-select
+
             >
               <md-table-cell md-label="#">{{ item.id }}</md-table-cell>
               <md-table-cell md-label="Product Name">{{ item.name }}</md-table-cell>

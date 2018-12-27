@@ -3,7 +3,6 @@
     class="wrapper"
     :class="[{'nav-open': $sidebar.showSidebar}, {'rtl': $route.meta.rtlActive}]"
   >
-    <notifications></notifications>
     <side-bar-jaw>
       <!-- <user-menu></user-menu> -->
       <mobile-menu></mobile-menu>
@@ -25,6 +24,21 @@
           v-else
           :link="{name: 'Dashboard', icon: 'dashboard', path: '/dashboard'}"
         >
+        </sidebar-item>
+        <sidebar-item
+          :link="{name: 'Patients', icon: 'supervised_user_circle', path: '/patients'}"
+        >
+        </sidebar-item>
+        <sidebar-item
+          :link="{name: 'Settings', icon: 'settings', path: '/settings'}"
+        >
+          <sidebar-item :link="{name: 'My Profile', path: '/settings/user'}"></sidebar-item>
+          <sidebar-item :link="{name: 'Clinic', path: '/settings/clinic'}"></sidebar-item>
+          <sidebar-item :link="{name: 'Services', path: '/settings/services'}"></sidebar-item>
+          <sidebar-item :link="{name: 'Payment', path: '/settings/payment'}"></sidebar-item>
+          <sidebar-item :link="{name: 'Users', path: '/settings/users'}"></sidebar-item>
+          <sidebar-item :link="{name: 'Notifications', path: '/settings/notifications'}">
+          </sidebar-item>
         </sidebar-item>
         <sidebar-item
           v-if="$route.meta.rtlActive"
@@ -183,13 +197,13 @@
       </div>
       <content-footer v-if="!$route.meta.hideFooter"></content-footer>
     </div>
+    <patient-add-form/>
   </div>
 </template>
 <script>
 /* eslint-disable no-new */
   import PerfectScrollbar from 'perfect-scrollbar';
   import 'perfect-scrollbar/css/perfect-scrollbar.css';
-
   import { ZoomCenterTransition } from 'vue2-transitions';
   import TopNavbar from './TopNavbar.vue';
   import ContentFooter from './ContentFooter.vue';
@@ -234,7 +248,6 @@
         initScrollbar('sidebar');
         initScrollbar('sidebar-wrapper');
         initScrollbar('main-panel');
-
         docClasses.add('perfect-scrollbar-on');
       } else {
         docClasses.add('perfect-scrollbar-off');

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Chartist from 'chartist';
+import store from './store';
 import DashboardPlugin from './material-dashboard';
 
 // Plugins
@@ -31,6 +32,7 @@ new Vue({
   el: '#app',
   render: h => h(App),
   router,
+  store,
   data: {
     Chartist,
   },

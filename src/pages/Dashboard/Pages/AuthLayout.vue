@@ -7,6 +7,13 @@
       md-elevation="0"
       class="md-transparent md-toolbar-absolute"
     >
+      <div  class="wrapper-progress-bar" >
+          <md-progress-bar
+                v-if="loading"
+                class="md-white"
+                md-mode="indeterminate"
+              ></md-progress-bar>
+      </div>
       <div class="md-toolbar-row md-offset">
         <div class="md-toolbar-section-start">
           <h3 class="md-title">{{$route.name}}</h3>
@@ -27,7 +34,7 @@
             :class="{'off-canvas-sidebar': responsive}"
           >
             <md-list>
-              <md-list-item to="/">
+              <md-list-item to="/" v-if="isAuthenticated">
                 <md-icon>dashboard</md-icon>
                 Dashboard
               </md-list-item>
@@ -53,6 +60,7 @@
                 login
               </md-list-item>
               <md-list-item
+              v-if="isProfileLoaded"
                 to="/lock"
                 @click="linkClick"
               >
@@ -120,6 +128,7 @@
 </template>
 <script>
   import { ZoomCenterTransition } from 'vue2-transitions';
+  import { mapGetters } from 'vuex';
 
   export default {
     components: {
@@ -146,6 +155,11 @@
       };
     },
     computed: {
+      ...mapGetters({
+        isProfileLoaded: 'isProfileLoaded',
+        isAuthenticated: 'isAuthenticated',
+        loading: 'loading',
+      }),
       setBgImage() {
         const images = {
           Pricing: './img/bg-pricing.jpg',
@@ -216,7 +230,7 @@
     },
   };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
 $scaleSize: 0.1;
 $zoomOutStart: 0.7;
 $zoomOutEnd: 0.46;
@@ -231,6 +245,33 @@ $zoomOutEnd: 0.46;
 }
 .wrapper-full-page .zoomIn {
   animation-name: zoomIn8;
+}
+.full-page {
+  .md-toolbar{
+    .wrapper-progress-bar {
+    position: fixed;
+    top: 1px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 5px;
+    .md-progress-bar.md-theme-default.md-indeterminate,
+    .md-progress-bar.md-theme-default.md-query {
+      background-color:  rgba(250, 248, 250, 0.38) !important;
+    }
+    .md-progress-bar.md-theme-default.md-indeterminate
+    .md-progress-bar-track:after,
+    .md-progress-bar.md-theme-default.md-indeterminate
+    .md-progress-bar-fill:after,
+    .md-progress-bar.md-theme-default.md-query
+    .md-progress-bar-track:after,
+    .md-progress-bar.md-theme-default.md-query
+    .md-progress-bar-fill:after {
+    background-color: white!important;
+    background-color: var(--md-theme-default-primary, white!important);
+    }
+    }
+  }
 }
 @keyframes zoomOut8 {
   from {
