@@ -51,6 +51,7 @@ const VectorMaps = () => import('@/pages/Dashboard/Maps/VectorMaps.vue');
 
 // Calendar
 const Calendar = () => import('@/pages/Dashboard/Calendar.vue');
+
 // Charts
 const Charts = () => import('@/pages/Dashboard/Charts.vue');
 
@@ -87,54 +88,54 @@ const componentsMenu = {
   beforeEnter: ifAuthenticated,
   name: 'Components',
   children: [{
-    path: 'buttons',
-    name: 'Buttons',
-    components: {
-      default: Buttons,
+      path: 'buttons',
+      name: 'Buttons',
+      components: {
+        default: Buttons,
+      },
     },
-  },
-  {
-    path: 'grid-system',
-    name: 'Grid System',
-    components: {
-      default: GridSystem,
+    {
+      path: 'grid-system',
+      name: 'Grid System',
+      components: {
+        default: GridSystem,
+      },
     },
-  },
-  {
-    path: 'panels',
-    name: 'Panels',
-    components: {
-      default: Panels,
+    {
+      path: 'panels',
+      name: 'Panels',
+      components: {
+        default: Panels,
+      },
     },
-  },
-  {
-    path: 'sweet-alert',
-    name: 'Sweet Alert',
-    components: {
-      default: SweetAlert,
+    {
+      path: 'sweet-alert',
+      name: 'Sweet Alert',
+      components: {
+        default: SweetAlert,
+      },
     },
-  },
-  {
-    path: 'notifications',
-    name: 'Notifications',
-    components: {
-      default: Notifications,
+    {
+      path: 'notifications',
+      name: 'Notifications',
+      components: {
+        default: Notifications,
+      },
     },
-  },
-  {
-    path: 'icons',
-    name: 'Icons',
-    components: {
-      default: Icons,
+    {
+      path: 'icons',
+      name: 'Icons',
+      components: {
+        default: Icons,
+      },
     },
-  },
-  {
-    path: 'typography',
-    name: 'Typography',
-    components: {
-      default: Typography,
+    {
+      path: 'typography',
+      name: 'Typography',
+      components: {
+        default: Typography,
+      },
     },
-  },
   ],
 };
 const formsMenu = {
@@ -144,33 +145,33 @@ const formsMenu = {
   beforeEnter: ifAuthenticated,
   name: 'Forms',
   children: [{
-    path: 'regular',
-    name: 'Regular Forms',
-    components: {
-      default: RegularForms,
+      path: 'regular',
+      name: 'Regular Forms',
+      components: {
+        default: RegularForms,
+      },
     },
-  },
-  {
-    path: 'extended',
-    name: 'Extended Forms',
-    components: {
-      default: ExtendedForms,
+    {
+      path: 'extended',
+      name: 'Extended Forms',
+      components: {
+        default: ExtendedForms,
+      },
     },
-  },
-  {
-    path: 'validation',
-    name: 'Validation Forms',
-    components: {
-      default: ValidationForms,
+    {
+      path: 'validation',
+      name: 'Validation Forms',
+      components: {
+        default: ValidationForms,
+      },
     },
-  },
-  {
-    path: 'wizard',
-    name: 'Wizard',
-    components: {
-      default: Wizard,
+    {
+      path: 'wizard',
+      name: 'Wizard',
+      components: {
+        default: Wizard,
+      },
     },
-  },
   ],
 };
 
@@ -181,26 +182,26 @@ const tablesMenu = {
   beforeEnter: ifAuthenticated,
   name: 'Tables',
   children: [{
-    path: 'regular',
-    name: 'Regular Tables',
-    components: {
-      default: RegularTables,
+      path: 'regular',
+      name: 'Regular Tables',
+      components: {
+        default: RegularTables,
+      },
     },
-  },
-  {
-    path: 'extended',
-    name: 'Extended Tables',
-    components: {
-      default: ExtendedTables,
+    {
+      path: 'extended',
+      name: 'Extended Tables',
+      components: {
+        default: ExtendedTables,
+      },
     },
-  },
-  {
-    path: 'paginated',
-    name: 'Pagianted Tables',
-    components: {
-      default: PaginatedTables,
+    {
+      path: 'paginated',
+      name: 'Pagianted Tables',
+      components: {
+        default: PaginatedTables,
+      },
     },
-  },
   ],
 };
 
@@ -211,31 +212,31 @@ const mapsMenu = {
   redirect: '/maps/google',
   beforeEnter: ifAuthenticated,
   children: [{
-    path: 'google',
-    name: 'Google Maps',
-    components: {
-      default: GoogleMaps,
+      path: 'google',
+      name: 'Google Maps',
+      components: {
+        default: GoogleMaps,
+      },
     },
-  },
-  {
-    path: 'full-screen',
-    name: 'Full Screen Map',
-    meta: {
-      hideContent: true,
-      hideFooter: true,
-      navbarAbsolute: true,
+    {
+      path: 'full-screen',
+      name: 'Full Screen Map',
+      meta: {
+        hideContent: true,
+        hideFooter: true,
+        navbarAbsolute: true,
+      },
+      components: {
+        default: FullScreenMap,
+      },
     },
-    components: {
-      default: FullScreenMap,
+    {
+      path: 'vector-map',
+      name: 'Vector Map',
+      components: {
+        default: VectorMaps,
+      },
     },
-  },
-  {
-    path: 'vector-map',
-    name: 'Vector Map',
-    components: {
-      default: VectorMaps,
-    },
-  },
   ],
 };
 
@@ -246,29 +247,29 @@ const pagesMenu = {
   redirect: '/pages/user',
   beforeEnter: ifAuthenticated,
   children: [{
-    path: 'user',
-    name: 'User Page',
-    components: {
-      default: User,
+      path: 'user',
+      name: 'User Page',
+      components: {
+        default: User,
+      },
     },
-  },
-  {
-    path: 'timeline',
-    name: 'Timeline Page',
-    components: {
-      default: TimeLine,
+    {
+      path: 'timeline',
+      name: 'Timeline Page',
+      components: {
+        default: TimeLine,
+      },
     },
-  },
-  {
-    path: 'rtl',
-    name: 'وحة القيادة',
-    meta: {
-      rtlActive: true,
+    {
+      path: 'rtl',
+      name: 'وحة القيادة',
+      meta: {
+        rtlActive: true,
+      },
+      components: {
+        default: RtlSupport,
+      },
     },
-    components: {
-      default: RtlSupport,
-    },
-  },
   ],
 };
 const Settings = {
@@ -278,47 +279,47 @@ const Settings = {
   redirect: '/settings/user',
   beforeEnter: ifAuthenticated,
   children: [{
-    path: 'user',
-    name: 'My Profile',
-    components: {
-      default: User,
+      path: 'user',
+      name: 'My Profile',
+      components: {
+        default: User,
+      },
     },
-  },
-  {
-    path: 'clinic',
-    name: 'Clinic',
-    components: {
-      default: ClinicSettings,
+    {
+      path: 'clinic',
+      name: 'Clinic',
+      components: {
+        default: ClinicSettings,
+      },
     },
-  },
-  {
-    path: 'services',
-    name: 'Services',
-    components: {
-      default: User,
+    {
+      path: 'services',
+      name: 'Services',
+      components: {
+        default: User,
+      },
     },
-  },
-  {
-    path: 'payment',
-    name: 'Payment',
-    components: {
-      default: User,
+    {
+      path: 'payment',
+      name: 'Payment',
+      components: {
+        default: User,
+      },
     },
-  },
-  {
-    path: 'users',
-    name: 'Users',
-    components: {
-      default: User,
+    {
+      path: 'users',
+      name: 'Users',
+      components: {
+        default: User,
+      },
     },
-  },
-  {
-    path: 'notifications',
-    name: 'Notification',
-    components: {
-      default: User,
+    {
+      path: 'notifications',
+      name: 'Notification',
+      components: {
+        default: User,
+      },
     },
-  },
   ],
 };
 
@@ -327,28 +328,28 @@ const authPages = {
   component: AuthLayout,
   name: 'Authentication',
   children: [{
-    path: '/login',
-    name: 'Login',
-    component: Login,
-    beforeEnter: ifNotAuthenticated,
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register,
-    beforeEnter: ifNotAuthenticated,
-  },
-  {
-    path: '/pricing',
-    name: 'Pricing',
-    component: Pricing,
-  },
-  {
-    path: '/lock',
-    name: 'Lock',
-    component: Lock,
-    beforeEnter: isProfileLoaded,
-  },
+      path: '/login',
+      name: 'Login',
+      component: Login,
+      beforeEnter: ifNotAuthenticated,
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register,
+      beforeEnter: ifNotAuthenticated,
+    },
+    {
+      path: '/pricing',
+      name: 'Pricing',
+      component: Pricing,
+    },
+    {
+      path: '/lock',
+      name: 'Lock',
+      component: Lock,
+      beforeEnter: isProfileLoaded,
+    },
   ],
 };
 
@@ -358,99 +359,99 @@ const PatientPages = {
   name: 'Patient',
   redirect: '/patient/bio',
   children: [{
-    path: 'bio',
-    name: 'BIO',
-    component: PatientProfile,
-  },
-  {
-    path: 'treatment',
-    name: 'Treatment',
-    component: PatientTreatment,
-    redirect: '/patient/treatment/anamnes',
-    children: [{
-      path: 'anamnes',
-      name: 'patient/treatment/anamnes',
-      component: PatientTreatment,
-    },
-    {
-      path: 'diagnose',
-      name: 'patient/treatment/diagnose',
-      component: PatientTreatment,
-    },
-    {
-      path: 'history',
-      name: 'patient/treatment/history',
-      component: PatientTreatment,
+      path: 'bio',
+      name: 'BIO',
+      component: PatientProfile,
     },
     {
       path: 'treatment',
-      name: 'patient/treatment/treatment',
+      name: 'Treatment',
       component: PatientTreatment,
+      redirect: '/patient/treatment/anamnes',
+      children: [{
+          path: 'anamnes',
+          name: 'patient/treatment/anamnes',
+          component: PatientTreatment,
+        },
+        {
+          path: 'diagnose',
+          name: 'patient/treatment/diagnose',
+          component: PatientTreatment,
+        },
+        {
+          path: 'history',
+          name: 'patient/treatment/history',
+          component: PatientTreatment,
+        },
+        {
+          path: 'treatment',
+          name: 'patient/treatment/treatment',
+          component: PatientTreatment,
+        },
+      ],
     },
-    ],
-  },
-  {
-    path: 'media',
-    name: 'Media',
-    component: PatientMedia,
-  },
+    {
+      path: 'media',
+      name: 'Media',
+      component: PatientMedia,
+    },
   ],
 };
 
 const routes = [{
-  path: '/',
-  redirect: '/dashboard',
-  name: 'Home',
-},
-componentsMenu,
-PatientPages,
-formsMenu,
-tablesMenu,
-mapsMenu,
-pagesMenu,
-Settings,
-authPages,
-{
-  path: '/',
-  component: DashboardLayout,
-  beforeEnter: ifAuthenticated,
-  children: [{
-    path: 'dashboard',
-    name: 'Dashboard',
-    components: {
-      default: Dashboard,
-    },
+    path: '/',
+    redirect: '/dashboard',
+    name: 'Home',
   },
+  componentsMenu,
+  PatientPages,
+  formsMenu,
+  tablesMenu,
+  mapsMenu,
+  pagesMenu,
+  Settings,
+  authPages,
   {
-    path: 'calendar',
-    name: 'Calendar',
-    components: {
-      default: Calendar,
-    },
+    path: '/',
+    component: DashboardLayout,
+    beforeEnter: ifAuthenticated,
+    children: [{
+        path: 'dashboard',
+        name: 'Dashboard',
+        components: {
+          default: Dashboard,
+        },
+      },
+      {
+        path: 'calendar',
+        name: 'Calendar',
+        components: {
+          default: Calendar,
+        },
+      },
+      {
+        path: 'patients',
+        name: 'Patients',
+        components: {
+          default: PatientsList,
+        },
+      },
+      {
+        path: 'charts',
+        name: 'Charts',
+        components: {
+          default: Charts,
+        },
+      },
+      {
+        path: 'widgets',
+        name: 'Widgets',
+        components: {
+          default: Widgets,
+        },
+      },
+    ],
   },
-  {
-    path: 'patients',
-    name: 'Patients',
-    components: {
-      default: PatientsList,
-    },
-  },
-  {
-    path: 'charts',
-    name: 'Charts',
-    components: {
-      default: Charts,
-    },
-  },
-  {
-    path: 'widgets',
-    name: 'Widgets',
-    components: {
-      default: Widgets,
-    },
-  },
-  ],
-},
 ];
 
 export default routes;

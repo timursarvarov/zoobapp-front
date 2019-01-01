@@ -1,70 +1,248 @@
-<template>
-  <div class="md-layout">
-    <div class="md-layout-item md-layout md-small-size-100 md-size-100">
-      <div class="md-layout-item md-layout text-center">
 
-      </div>
-    </div>
-    <div class="md-layout-item md-size-100">
-      <h4 class="card-title">Selected Teeth</h4>
-      <md-chips
-        v-model="fruits"
-        class="md-primary"
-      ></md-chips>
-    </div>
-    <div class="md-layout-item md-size-100">
-      <md-field maxlength="5">
-        <label>Diagnose Particularities</label>
-        <md-textarea v-model="aboutme"></md-textarea>
-      </md-field>
-    </div>
-    <div class="md-layout-item md-size-100 text-right">
-      <md-button class="md-raised md-success mt-4">Add Diagnose</md-button>
-    </div>
-  </div>
-
+<template lang="html">
+  <div id="example">
+    <ul class="switch-list">
+      <li class="switch-item" v-for="item in propList">
+        <span>{{ item.name }}: </span>
+        <md-switch v-model="props[item.name]"></md-switch>
+      </li>
+    </ul>
+    <zk-table
+      ref="table"
+      sum-text="sum"
+      index-text="#"
+      :data="data"
+      :columns="columns"
+      :stripe="props.stripe"
+      :border="props.border"
+      :show-header="props.showHeader"
+      :show-summary="props.showSummary"
+      :show-row-hover="props.showRowHover"
+      :show-index="props.showIndex"
+      :tree-type="props.treeType"
+      :is-fold="props.isFold"
+      :expand-type="props.expandType"
+      :selection-type="props.selectionType">
+      <template slot="$expand" scope="scope">
+        {{ `My name is ${scope.row.name},
+           this rowIndex is ${scope.rowIndex}.`
+         }}
+      </template>
+      <template slot="likes" scope="scope">
+  {{ scope.row.likes.join(',') }}
 </template>
+    </zk-table>
+  </div>
+</template>
+
 <script>
+  import ZkTable from 'vue-table-with-tree-grid';
+
   export default {
-    name: 'jaw-anamnes',
-    props: {
-      headerColor: {
-        type: String,
-        default: '',
-      },
+    name: 'example',
+    components: {
+      ZkTable,
     },
     data() {
       return {
-        fruits: [],
-        username: null,
-        disabled: null,
-        emailadress: null,
-        lastname: null,
-        firstname: null,
-        address: null,
-        city: null,
-        country: null,
-        code: null,
-        aboutme:
-          "Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.",
+        props: {
+          stripe: false,
+          border: false,
+          showHeader: true,
+          showSummary: false,
+          showRowHover: true,
+          showIndex: false,
+          treeType: true,
+          isFold: true,
+          expandType: false,
+          selectionType: false,
+        },
+        data: [
+          {
+            name: 'Jack',
+            sex: 'male',
+            likes: ['football', 'basketball'],
+            score: 10,
+            children: [
+              {
+                name: 'Ashley',
+                sex: 'female',
+                likes: ['football', 'basketball'],
+                score: 20,
+                children: [
+                  {
+                    name: 'Ashley',
+                    sex: 'female',
+                    likes: ['football', 'basketball'],
+                    score: 20,
+                  },
+                  {
+                    name: 'Taki',
+                    sex: 'male',
+                    likes: ['football', 'basketball'],
+                    score: 10,
+                    children: [
+                      {
+                        name: 'Ashley',
+                        sex: 'female',
+                        likes: ['football', 'basketball'],
+                        score: 20,
+                      },
+                      {
+                        name: 'Taki',
+                        sex: 'male',
+                        likes: ['football', 'basketball'],
+                        score: 10,
+                        children: [
+                          {
+                            name: 'Ashley',
+                            sex: 'female',
+                            likes: ['football', 'basketball'],
+                            score: 20,
+                          },
+                          {
+                            name: 'Taki',
+                            sex: 'male',
+                            likes: ['football', 'basketball'],
+                            score: 10,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                name: 'Taki',
+                sex: 'male',
+                likes: ['football', 'basketball'],
+                score: 10,
+              },
+            ],
+          },
+          {
+            name: 'Tom',
+            sex: 'male',
+            likes: ['football', 'basketball'],
+            score: 20,
+            children: [
+              {
+                name: 'Ashley',
+                sex: 'female',
+                likes: ['football', 'basketball'],
+                score: 20,
+                children: [
+                  {
+                    name: 'Ashley',
+                    sex: 'female',
+                    likes: ['football', 'basketball'],
+                    score: 20,
+                  },
+                  {
+                    name: 'Taki',
+                    sex: 'male',
+                    likes: ['football', 'basketball'],
+                    score: 10,
+                  },
+                ],
+              },
+              {
+                name: 'Taki',
+                sex: 'male',
+                likes: ['football', 'basketball'],
+                score: 10,
+                children: [
+                  {
+                    name: 'Ashley',
+                    sex: 'female',
+                    likes: ['football', 'basketball'],
+                    score: 20,
+                  },
+                  {
+                    name: 'Taki',
+                    sex: 'male',
+                    likes: ['football', 'basketball'],
+                    score: 10,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: 'Tom',
+            sex: 'male',
+            likes: ['football', 'basketball'],
+            score: 20,
+          },
+          {
+            name: 'Tom',
+            sex: 'male',
+            likes: ['football', 'basketball'],
+            score: 20,
+            children: [
+              {
+                name: 'Ashley',
+                sex: 'female',
+                likes: ['football', 'basketball'],
+                score: 20,
+              },
+              {
+                name: 'Taki',
+                sex: 'male',
+                likes: ['football', 'basketball'],
+                score: 10,
+              },
+            ],
+          },
+        ],
+        columns: [
+          {
+            label: 'name',
+            prop: 'name',
+            width: '400px',
+          },
+        // {
+        //   label: 'sex',
+        //   prop: 'sex',
+        //   minWidth: '50px',
+        // },
+        // {
+        //   label: 'score',
+        //   prop: 'score',
+        // },
+        // {
+        //   label: 'likes',
+        //   prop: 'likes',
+        //   minWidth: '200px',
+        //   type: 'template',
+        //   template: 'likes',
+        // },
+        ],
       };
     },
-    methods: {
-      getClass(headerColor) {
-        return `md-card-header-${headerColor}`;
+    computed: {
+      propList() {
+        return Object.keys(this.props).map(item => ({
+          name: item,
+        }));
       },
     },
+    methods: {},
   };
 </script>
-<style  lang="scss">
-.anamnes {
-  min-width: 80px;
-  border-radius: 6px;
-  .md-ripple {
-    padding: 16px 6px !important;
-  }
-  i {
-    height: 30px !important;
-  }
+
+<style scoped lang="scss">
+* {
+  margin: 0;
+  padding: 0;
+}
+.switch-list {
+  margin: 20px 0;
+  list-style: none;
+  overflow: hidden;
+}
+.switch-item {
+  margin: 20px;
+  float: left;
 }
 </style>

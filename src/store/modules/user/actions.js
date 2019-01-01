@@ -6,58 +6,68 @@ import {
   USER_AVATAR_UPLOAD,
   USER_INITIAL,
   USER_UPDATE,
+  USER_SET_PARAMS
 } from '../constants';
 
 import axios from 'axios';
 
 export default {
-  [USER_UPDATE]: ({commit}, {user}) => {
+  [USER_UPDATE]: ({
+    commit
+  }, {
+    user
+  }) => {
     return new Promise((resolve, reject) => {
       commit(USER_REQUEST);
       axios.put('/account/',
-        JSON.stringify({
-          firstName: user.firstName,
-          lastName: user.lastName,
+          JSON.stringify({
+            firstName: user.firstName,
+            lastName: user.lastName,
           })
-      )
-      .then(resp => {
-        commit(USER_SUCCESS);
-        resolve(resp);
-      })
-      .catch(err => {
-        commit(USER_ERROR);
-        reject(err);
-      });
+        )
+        .then(resp => {
+          commit(USER_SUCCESS);
+          resolve(resp);
+        })
+        .catch(err => {
+          commit(USER_ERROR);
+          reject(err);
+        });
     });
   },
-  [USER_REQUEST]: ({commit, dispatch}) => {
+  [USER_REQUEST]: ({
+    commit,
+    dispatch
+  }) => {
     return new Promise((resolve, reject) => {
       commit(USER_REQUEST);
-      axios.get('/account/',{
-        params:  JSON.stringify({
-          processData: false,
-          data: ""
+      axios.get('/account/', {
+          params: JSON.stringify({
+            processData: false,
+            data: ""
           }),
-      }
-      )
-      .then(resp => {
-        localStorage.setItem('userName', resp.data.userName);
-        localStorage.setItem('lastName', resp.data.lastName);
-        localStorage.setItem('firstName', resp.data.firstName);
-        localStorage.setItem('avatar', resp.data.avatar);
-        commit(USER_SUCCESS);
-        commit(USER_UPDATE, resp);
-        resolve(resp);
-      })
-      .catch(err => {
-        commit(USER_ERROR);
-        reject(err);
-      });
+        })
+        .then(resp => {
+          localStorage.setItem('userName', resp.data.userName);
+          localStorage.setItem('lastName', resp.data.lastName);
+          localStorage.setItem('firstName', resp.data.firstName);
+          localStorage.setItem('avatar', resp.data.avatar);
+          commit(USER_SUCCESS);
+          commit(USER_UPDATE, resp);
+          resolve(resp);
+        })
+        .catch(err => {
+          commit(USER_ERROR);
+          reject(err);
+        });
     });
   },
-  [USER_INITIAL]: ({commit, dispatch}) => {
+  [USER_INITIAL]: ({
+    commit,
+    dispatch
+  }) => {
     const USER_NAME = localStorage.getItem('userName');
-    if(USER_NAME) {
+    if (USER_NAME) {
       const profile = {
         userName: USER_NAME,
         lastName: localStorage.getItem('lastName'),
@@ -67,26 +77,40 @@ export default {
       commit(USER_INITIAL, profile);
     }
   },
-  [USER_AVATAR_UPLOAD]: ({commit}, { fd }) => {
+  [USER_AVATAR_UPLOAD]: ({
+    commit
+  }, {
+    fd
+  }) => {
     return new Promise((resolve, reject) => {
       commit(USER_REQUEST);
       axios.post('/account/photo/',
-      fd,
-      {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }
-  )
-      .then(resp => {
-        commit(USER_SUCCESS);
-        commit(USER_AVATAR_UPLOAD, resp);
-        resolve(resp);
-      })
-      .catch(err => {
-        commit(USER_ERROR);
-        reject(err);
-      });
+          fd, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        )
+        .then(resp => {
+          commit(USER_SUCCESS);
+          commit(USER_AVATAR_UPLOAD, resp);
+          resolve(resp);
+        })
+        .catch(err => {
+          commit(USER_ERROR);
+          reject(err);
+        });
     });
   },
+  [USER_SET_PARAMS]: ({
+    commit
+  }, {
+    type,
+    value
+  }) => {
+    commit(USER_SET_PARAMS, {
+      type,
+      value
+    });
+  }
 };

@@ -15,8 +15,11 @@ module.exports = {
       baseIndent: 1,
     }],
     'max-len': ['error', {
-      code: 100,
+      code: 400,
       ignoreTemplateLiterals: true,
+      ignoreStrings: true,
+      // ignoreComments: true,
+      // ignorePattern: true,
     }],
     overrides: [{
       files: ['*.vue'],

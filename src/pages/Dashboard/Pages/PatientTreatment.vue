@@ -3,7 +3,7 @@
     <div class="md-layout">
       <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-small-size-100 md-size-50">
         <nav-tabs-card>
-          <template slot="content" >
+          <template slot="content">
             <span class="md-nav-tabs-title">
               Set new:
             </span>
@@ -18,42 +18,53 @@
                 md-label="Anamnes"
                 to="/patient/treatment/anamnes"
               >
-              <md-checkbox v-model="root">root</md-checkbox>
-              <md-checkbox v-model="rootcanal" >rootcanal</md-checkbox>
-              <md-checkbox v-model="coronalingual" >coronalingual</md-checkbox>
-              <md-checkbox v-model="coronalingualincisaldistal" >coronalingualincisaldistal</md-checkbox>
-              <md-checkbox v-model="coronalingualincisalmiddle" >coronalingualincisalmiddle</md-checkbox>
-              <md-checkbox v-model="coronalingualincisionmesial" >coronalingualincisionmesial</md-checkbox>
-              <md-checkbox v-model="coronalingualmiddledistal" >coronalingualmiddledistal</md-checkbox>
-              <md-checkbox v-model="coronalingualmiddlemiddle" >coronalingualmiddlemiddle</md-checkbox>
-              <md-checkbox v-model="coronalingualmiddlemesial" >coronalingualmiddlemesial</md-checkbox>
-              <md-checkbox v-model="coronalingualcervicaldistal" >coronalingualcervicaldistal</md-checkbox>
-              <md-checkbox v-model="coronalingualcervicalmiddle" >coronalingualcervicalmiddle</md-checkbox>
-              <md-checkbox v-model="coronalingualcervicalmesial" >coronalingualcervicalmesial</md-checkbox>
-              <md-checkbox v-model="coronalabial" >coronalabial</md-checkbox>
-              <md-checkbox v-model="coronalabialincisaldistal" >coronalabialincisaldistal</md-checkbox>
-              <md-checkbox v-model="coronalabialincisalmiddle" >coronalabialincisalmiddle</md-checkbox>
-              <md-checkbox v-model="coronalabialincisionmesial" >coronalabialincisionmesial</md-checkbox>
-              <md-checkbox v-model="coronalabialmiddledistal" >coronalabialmiddledistal</md-checkbox>
-              <md-checkbox v-model="coronalabialmiddlemiddle" >coronalabialmiddlemiddle</md-checkbox>
-              <md-checkbox v-model="coronalabialmiddlemesial" >coronalabialmiddlemesial</md-checkbox>
-              <md-checkbox v-model="coronalabialcervicaldistal" >coronalabialcervicaldistal</md-checkbox>
-              <md-checkbox v-model="coronalabialcervicalmiddle" >coronalabialcervicalmiddle</md-checkbox>
-              <md-checkbox v-model="coronalabialcervicalmesial" >coronalabialcervicalmesial</md-checkbox>
-              <md-checkbox v-model="implant" >implant</md-checkbox>
-              <md-checkbox v-model="veneer" >veneer</md-checkbox>
-              <md-checkbox v-model="coronatop" >coronatop</md-checkbox>
-              <md-checkbox v-model="coronatopbuccal" >coronatopbuccal</md-checkbox>
-              <md-checkbox v-model="coronatopmedial" >coronatopmedial</md-checkbox>
-              <md-checkbox v-model="coronatoplingual" >coronatoplingual</md-checkbox>
-              <md-checkbox v-model="coronatopdistal" >coronatopdistal</md-checkbox>
-              <md-checkbox v-model="coronatopoclusial" >coronatopoclusial</md-checkbox>
-              <md-checkbox v-model="silant" >silant</md-checkbox>
-              <md-checkbox v-model="gum" >gum</md-checkbox>
-              <md-checkbox v-model="paradontit1" >paradontit1</md-checkbox>
-              <md-checkbox v-model="paradontit2" >paradontit2</md-checkbox>
-              <md-checkbox v-model="paradontit3" >paradontit3</md-checkbox>
-              <md-checkbox v-model="paradontit4" >paradontit4</md-checkbox>
+                <div style="overflow:scroll; height:400px;">
+                  <ol style="max-height:1300px;">
+                    <md-checkbox v-model="background">background</md-checkbox>
+                    <md-checkbox v-model="bridge">bridge</md-checkbox>
+                    <md-checkbox v-model="root">root</md-checkbox>
+                    <md-checkbox v-model="rootcanal">rootcanal</md-checkbox>
+                    <md-checkbox v-model="implant">implant</md-checkbox>
+                    <md-checkbox v-model="coronalingual">coronalingual</md-checkbox>
+                    <md-checkbox v-model="coronalingualincisaldistal">coronalingualincisaldistal</md-checkbox>
+                    <md-checkbox v-model="coronalingualincisalmiddle">coronalingualincisalmiddle</md-checkbox>
+                    <md-checkbox v-model="coronalingualincisionmesial">coronalingualincisionmesial</md-checkbox>
+                    <md-checkbox v-model="coronalingualmiddledistal">coronalingualmiddledistal</md-checkbox>
+                    <md-checkbox v-model="coronalingualmiddlemiddle">coronalingualmiddlemiddle</md-checkbox>
+                    <md-checkbox v-model="coronalingualmiddlemesial">coronalingualmiddlemesial</md-checkbox>
+                    <md-checkbox v-model="coronalingualcervicaldistal">coronalingualcervicaldistal</md-checkbox>
+                    <md-checkbox v-model="coronalingualcervicalmiddle">coronalingualcervicalmiddle</md-checkbox>
+                    <md-checkbox v-model="coronalingualcervicalmesial">coronalingualcervicalmesial</md-checkbox>
+                    <md-checkbox v-model="coronalabial">coronalabial</md-checkbox>
+                    <md-checkbox v-model="coronalabialincisaldistal">coronalabialincisaldistal</md-checkbox>
+                    <md-checkbox v-model="coronalabialincisalmiddle">coronalabialincisalmiddle</md-checkbox>
+                    <md-checkbox v-model="coronalabialincisionmesial">coronalabialincisionmesial</md-checkbox>
+                    <md-checkbox v-model="coronalabialmiddledistal">coronalabialmiddledistal</md-checkbox>
+                    <md-checkbox v-model="coronalabialmiddlemiddle">coronalabialmiddlemiddle</md-checkbox>
+                    <md-checkbox v-model="coronalabialmiddlemesial">coronalabialmiddlemesial</md-checkbox>
+                    <md-checkbox v-model="coronalabialcervicaldistal">coronalabialcervicaldistal</md-checkbox>
+                    <md-checkbox v-model="coronalabialcervicalmiddle">coronalabialcervicalmiddle</md-checkbox>
+                    <md-checkbox v-model="coronalabialcervicalmesial">coronalabialcervicalmesial</md-checkbox>
+                    <md-checkbox v-model="veneer">veneer</md-checkbox>
+                    <md-checkbox v-model="coronatop">coronatop</md-checkbox>
+                    <md-checkbox v-model="coronatopbuccal">coronatopbuccal</md-checkbox>
+                    <md-checkbox v-model="coronatopmedial">coronatopmedial</md-checkbox>
+                    <md-checkbox v-model="coronatoplingual">coronatoplingual</md-checkbox>
+                    <md-checkbox v-model="coronatopdistal">coronatopdistal</md-checkbox>
+                    <md-checkbox v-model="coronatopoclusial">coronatopoclusial</md-checkbox>
+                    <md-checkbox v-model="silant">silant</md-checkbox>
+                    <md-checkbox v-model="gum">gum</md-checkbox>
+                    <md-checkbox v-model="paradontit1">paradontit1</md-checkbox>
+                    <md-checkbox v-model="paradontit2">paradontit2</md-checkbox>
+                    <md-checkbox v-model="paradontit3">paradontit3</md-checkbox>
+                    <md-checkbox v-model="paradontit4">paradontit4</md-checkbox>
+                    <md-checkbox v-model="periodontit">periodontit</md-checkbox>
+                    <md-checkbox v-model="universal">universal</md-checkbox>
+                    <md-checkbox v-model="fdi">fdi</md-checkbox>
+                    <md-checkbox v-model="palmer">palmer</md-checkbox>
+                  </ol>
+
+                </div>
 
                 <jaw-anamnes></jaw-anamnes>
               </md-tab>
@@ -88,12 +99,20 @@
       <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-small-size-100 md-size-50">
 
         <jaw-card
-        :action-size="actionSize"
-        header-animation="true"
-        :jaw="jaw">
-          <jaw background-color="success"  slot="jaw"  :jaw="jaw" ></jaw>
-          <div slot="actions" >
-            <md-button class="md-simple jaw-state"  @click="getJaw()" >
+          :action-size="actionSize"
+          header-animation="true"
+          :jaw="jaw"
+        >
+          <jaw
+            background-color="success"
+            slot="jaw"
+            :jaw="jaw"
+          ></jaw>
+          <div slot="actions">
+            <md-button
+              class="md-simple jaw-state"
+              @click="getJaw()"
+            >
               <div
                 ref="jawstate"
                 class="icon-wrapper"
@@ -337,13 +356,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+  import { mapGetters } from 'vuex';
   import {
-    NavTabsCard,
-    JawCard,
-    Jaw,
-    IconBase,
-  } from '@/components';
+ NavTabsCard, JawCard, Jaw, IconBase 
+} from '@/components';
 
   import {
     AnamnesList,
@@ -369,10 +385,12 @@ import { mapGetters } from 'vuex';
     },
     data() {
       return {
+        background: false,
+        bridge: false,
         root: true,
-        rootcanal: true,
-        coronalingual: false,
-        coronalingualincisaldistal: true,
+        rootcanal: false,
+        coronalingual: true,
+        coronalingualincisaldistal: false,
         coronalingualincisalmiddle: false,
         coronalingualincisionmesial: false,
         coronalingualmiddledistal: false,
@@ -382,36 +400,89 @@ import { mapGetters } from 'vuex';
         coronalingualcervicalmiddle: false,
         coronalingualcervicalmesial: false,
         coronalabial: true,
-        coronalabialincisaldistal: true,
-        coronalabialincisalmiddle: true,
-        coronalabialincisionmesial: true,
-        coronalabialmiddledistal: true,
-        coronalabialmiddlemiddle: true,
-        coronalabialmiddlemesial: true,
-        coronalabialcervicaldistal: true,
-        coronalabialcervicalmiddle: true,
-        coronalabialcervicalmesial: true,
-        implant: true,
-        veneer: true,
+        coronalabialincisaldistal: false,
+        coronalabialincisalmiddle: false,
+        coronalabialincisionmesial: false,
+        coronalabialmiddledistal: false,
+        coronalabialmiddlemiddle: false,
+        coronalabialmiddlemesial: false,
+        coronalabialcervicaldistal: false,
+        coronalabialcervicalmiddle: false,
+        coronalabialcervicalmesial: false,
+        implant: false,
+        veneer: false,
         coronatop: true,
-        coronatopbuccal: true,
-        coronatopmedial: true,
-        coronatoplingual: true,
-        coronatopdistal: true,
-        coronatopoclusial: true,
-        silant: true,
+        coronatopbuccal: false,
+        coronatopmedial: false,
+        coronatoplingual: false,
+        coronatopdistal: false,
+        coronatopoclusial: false,
+        silant: false,
         gum: true,
-        paradontit1: true,
-        paradontit2: true,
-        paradontit3: true,
-        paradontit4: true,
+        paradontit1: false,
+        paradontit2: false,
+        paradontit3: false,
+        paradontit4: false,
+        periodontit: false,
+        fdi: true,
+        universal: false,
+        palmer: false,
+
         showDialog: false,
         actionSize: {},
         teeth: [
-          55, 54, 53, 52, 51, 18, 17, 16, 15, 14, 13, 12, 11,
-          21, 22, 23, 24, 25, 26, 27, 28, 61, 62, 63, 64, 65,
-          85, 84, 83, 82, 81, 48, 47, 46, 45, 44, 43, 42, 41,
-          31, 32, 33, 34, 35, 36, 37, 38, 71, 72, 73, 74, 75,
+          55,
+          54,
+          53,
+          52,
+          51,
+          18,
+          17,
+          16,
+          15,
+          14,
+          13,
+          12,
+          11,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          61,
+          62,
+          63,
+          64,
+          65,
+          85,
+          84,
+          83,
+          82,
+          81,
+          48,
+          47,
+          46,
+          45,
+          44,
+          43,
+          42,
+          41,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          71,
+          72,
+          73,
+          74,
+          75,
         ],
       };
     },
@@ -435,6 +506,7 @@ import { mapGetters } from 'vuex';
           jaw[element] = {
             bridge: this.bridge,
             root: this.root,
+            background: this.background,
             rootcanal: this.rootcanal,
             coronalingual: this.coronalingual,
             coronalingualincisaldistal: this.coronalingualincisaldistal,
@@ -470,9 +542,10 @@ import { mapGetters } from 'vuex';
             paradontit2: this.paradontit2,
             paradontit3: this.paradontit3,
             paradontit4: this.paradontit4,
-            periodontit: this.clinicSettings.teethSystem === 'periodontit',
-            universal: this.clinicSettings.teethSystem === 'universal',
-            fdi: this.clinicSettings.teethSystem === 'fdi',
+            periodontit: this.periodontit,
+            fdi: this.fdi,
+            universal: this.universal,
+            palmer: this.palmer,
           };
         });
         return jaw;
@@ -488,11 +561,11 @@ import { mapGetters } from 'vuex';
     },
     mounted() {
       // eslint-disable-next-line
-    this.actionSize ={
+    this.actionSize = {
         height: this.$refs.jawstate.clientHeight,
         width: this.$refs.jawstate.clientWidth,
       };
-      // this.getJaw();
+    // this.getJaw();
     },
   };
 </script>

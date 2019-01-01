@@ -1,19 +1,28 @@
 /* eslint-disable */
 import {
-  PATIENTS_REQUEST,
-  PATIENTS_ERROR,
-  PATIENTS_SUCCESS,
+  CLINIC_SET,
+  CLINIC_REQUEST,
+  CLINIC_SUCCESS,
+  CLINIC_ERROR,
+  CLINIC_LOGO_UPLOAD
 } from '../constants';
 
 export default {
-  // [PATIENTS_REQUEST]: (state) => {
-  //   state.status = 'loading';
-  // },
-  // [PATIENTS_SUCCESS]: (state, resp) => {
-  //   state.status = 'success';
-  //   state.patients = resp.data;
-  // },
-  // [PATIENTS_ERROR]: (state) => {
-  //   state.status = 'error';
-  // },
+  [CLINIC_SET]: (
+    state, {
+      type,
+      value
+    }
+  ) => {
+    state.clinic[type] = value;
+  },
+  [CLINIC_REQUEST]: (state) => {
+    state.status = 'loading';
+  },
+  [CLINIC_SUCCESS]: (state) => {
+    state.status = 'success';
+  },
+  [CLINIC_ERROR]: (state) => {
+    state.status = 'error';
+  },
 };
