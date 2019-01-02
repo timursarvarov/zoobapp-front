@@ -321,6 +321,7 @@ export default {
         {
           code: 'K07.8',
           title: 'Другие денто-лицевые аномалии',
+          explain: 'Dislocation, TMJ, click, pain',
         },
         {
           code: 'K07.9',

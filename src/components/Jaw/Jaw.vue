@@ -2,6 +2,7 @@
 <template>
   <div>
     <div class="jaw">
+      <slot name="top"></slot>
       <div class="jaw-top">
         <div
           v-ripple
@@ -460,52 +461,7 @@
           </svg>
         </div>
       </div>
-      <div class="md-layout md-alignment-center-center md-gutter">
-        <md-button class="md-layout-item md-simple md-just-icon">
-          <icon-base
-            width="30"
-            height="30"
-            icon-name="icon-baby "
-            iconColor="white"
-          >
-            <icon-baby />
-          </icon-base>
-          <md-tooltip>Baby teeth</md-tooltip>
-        </md-button>
-        <md-button class="md-layout-item md-simple md-just-icon">
-          <icon-base
-            width="30"
-            height="30"
-            icon-name="icon-adult "
-            iconColor="white"
-          >
-            <icon-adult />
-          </icon-base>
-          <md-tooltip>Adult teeth</md-tooltip>
-        </md-button>
-        <md-button class="md-layout-item md-simple md-just-icon">
-          <icon-base
-            width="30"
-            height="30"
-            icon-name="icon-baby "
-            iconColor="white"
-          >
-            <icon-toggle-top />
-          </icon-base>
-          <md-tooltip>Toggle bottom</md-tooltip>
-        </md-button>
-        <md-button class="md-layout-item md-simple md-just-icon">
-          <icon-base
-            width="30"
-            height="30"
-            icon-name="icon-baby "
-            iconColor="white"
-          >
-            <icon-toggle-bottom />
-          </icon-base>
-          <md-tooltip>Toggle top</md-tooltip>
-        </md-button>
-      </div>
+      <slot name="bottom"></slot>
     </div>
     <md-dialog :md-active.sync="showSelectedToothDialog">
       <md-dialog-title>Preferences</md-dialog-title>
@@ -1109,7 +1065,7 @@ export default {
   .cls-11 {
     isolation: isolate;
     // stroke: #fff;
-    fill: #fff;
+    fill: #aaa;
   }
 }
 </style>

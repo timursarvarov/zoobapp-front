@@ -4,7 +4,7 @@
       :class="[
       'md-collapse',
       activeCollapse(index + 1),
-      {[getColorCollapse(colorCollapse)]: true}]"
+      {[getColorCollapse(colorCollapse)]: !toggleAll}]"
       v-for="(item, index) in collapse"
       :key="item"
     >
@@ -13,8 +13,8 @@
         @click="toggle(index + 1)"
       >
         <h5 class="md-collapse-title">
-          {{item}}
-          <md-icon>{{icon}}</md-icon>
+          <span v-html="item"></span>
+          <md-icon v-show="!toggleAll">{{icon}}</md-icon>
         </h5>
       </div>
 
@@ -42,6 +42,7 @@
       collapse: Array,
       icon: String,
       colorCollapse: String,
+      toggleAll: Boolean,
     },
     data() {
       return {
@@ -50,6 +51,9 @@
     },
     methods: {
       getActiveCollapse(index) {
+        if (this.toggleAll) {
+          return true;
+        }
         return this.isActive === index;
       },
       activeCollapse(index) {

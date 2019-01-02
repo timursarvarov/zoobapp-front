@@ -1,248 +1,241 @@
-
 <template lang="html">
-  <div id="example">
-    <ul class="switch-list">
-      <li class="switch-item" v-for="item in propList">
-        <span>{{ item.name }}: </span>
-        <md-switch v-model="props[item.name]"></md-switch>
-      </li>
-    </ul>
-    <zk-table
-      ref="table"
-      sum-text="sum"
-      index-text="#"
-      :data="data"
-      :columns="columns"
-      :stripe="props.stripe"
-      :border="props.border"
-      :show-header="props.showHeader"
-      :show-summary="props.showSummary"
-      :show-row-hover="props.showRowHover"
-      :show-index="props.showIndex"
-      :tree-type="props.treeType"
-      :is-fold="props.isFold"
-      :expand-type="props.expandType"
-      :selection-type="props.selectionType">
-      <template slot="$expand" scope="scope">
-        {{ `My name is ${scope.row.name},
-           this rowIndex is ${scope.rowIndex}.`
-         }}
-      </template>
-      <template slot="likes" scope="scope">
-  {{ scope.row.likes.join(',') }}
-</template>
-    </zk-table>
+  <div class="set-diagnose-form">
+    <div class="md-layout">
+    <md-field class="md-layout-item">
+      <label>Type to search diagnose</label>
+      <md-input v-model="search"  ></md-input>
+    </md-field>
+    <div class="md-layout-item md-size-30">
+      <md-checkbox v-model="toggleAll" :disabled='search.length > 0' >Show all</md-checkbox>
+    </div>
+    </div>
+       <collapse-transition>
+          <div class="collapse-wrapper">
+            <collapse
+                  :collapse="diagnosisGroup"
+                  icon="keyboard_arrow_down"
+                  color-collapse="success"
+                  :toggleAll = "getToggleAll"
+
+                >
+
+              <template  v-for="(diagnoseGroup, key) in getDiagnosis" :slot="'md-collapse-pane-'+(parseInt(key) + 1)" >
+                  <md-table
+                  v-model="diagnoseGroup.codes"
+                  @md-selected="onSelect"
+                >
+
+                  <md-table-row
+                    slot="md-table-row"
+                    slot-scope="{ item }"
+                    md-auto-select
+                  >
+                    <md-table-cell v-ripple v-html="item.code" > </md-table-cell>
+                    <md-table-cell  v-ripple.900> <span  v-html="item.title"></span> <br/> <span class="helper"  v-html="item.explain"></span>  </md-table-cell>
+                    <md-table-cell>
+                    </md-table-cell>
+                  </md-table-row>
+                </md-table>
+              </template>
+            </collapse>
+          </div>
+       </collapse-transition>
   </div>
+
 </template>
 
 <script>
-  import ZkTable from 'vue-table-with-tree-grid';
+  import { mapGetters } from 'vuex';
+  import { Collapse } from '@/components';
+  import Fuse from 'fuse.js';
+  import { CollapseTransition } from 'vue2-transitions';
+
+  const fuseOptions = {
+    findAllMatches: true,
+    // tokenize: true,
+    // matchAllTokens: true,
+    // shouldSort: true,
+    include: ['score', 'matches'],
+    includeMatches: true,
+    threshold: 0.5,
+    location: 0,
+    distance: 3,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    // keys: ['title', 'explain', 'code'],
+    keys: [
+      {
+        name: 'title',
+        weight: 0.1,
+      },
+      {
+        name: 'explain',
+        weight: 0.9,
+      },
+      {
+        name: 'code',
+        weight: 0.2,
+      },
+    ],
+  };
 
   export default {
-    name: 'example',
     components: {
-      ZkTable,
+      Collapse,
+      CollapseTransition,
     },
     data() {
       return {
-        props: {
-          stripe: false,
-          border: false,
-          showHeader: true,
-          showSummary: false,
-          showRowHover: true,
-          showIndex: false,
-          treeType: true,
-          isFold: true,
-          expandType: false,
-          selectionType: false,
-        },
-        data: [
-          {
-            name: 'Jack',
-            sex: 'male',
-            likes: ['football', 'basketball'],
-            score: 10,
-            children: [
-              {
-                name: 'Ashley',
-                sex: 'female',
-                likes: ['football', 'basketball'],
-                score: 20,
-                children: [
-                  {
-                    name: 'Ashley',
-                    sex: 'female',
-                    likes: ['football', 'basketball'],
-                    score: 20,
-                  },
-                  {
-                    name: 'Taki',
-                    sex: 'male',
-                    likes: ['football', 'basketball'],
-                    score: 10,
-                    children: [
-                      {
-                        name: 'Ashley',
-                        sex: 'female',
-                        likes: ['football', 'basketball'],
-                        score: 20,
-                      },
-                      {
-                        name: 'Taki',
-                        sex: 'male',
-                        likes: ['football', 'basketball'],
-                        score: 10,
-                        children: [
-                          {
-                            name: 'Ashley',
-                            sex: 'female',
-                            likes: ['football', 'basketball'],
-                            score: 20,
-                          },
-                          {
-                            name: 'Taki',
-                            sex: 'male',
-                            likes: ['football', 'basketball'],
-                            score: 10,
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-              {
-                name: 'Taki',
-                sex: 'male',
-                likes: ['football', 'basketball'],
-                score: 10,
-              },
-            ],
-          },
-          {
-            name: 'Tom',
-            sex: 'male',
-            likes: ['football', 'basketball'],
-            score: 20,
-            children: [
-              {
-                name: 'Ashley',
-                sex: 'female',
-                likes: ['football', 'basketball'],
-                score: 20,
-                children: [
-                  {
-                    name: 'Ashley',
-                    sex: 'female',
-                    likes: ['football', 'basketball'],
-                    score: 20,
-                  },
-                  {
-                    name: 'Taki',
-                    sex: 'male',
-                    likes: ['football', 'basketball'],
-                    score: 10,
-                  },
-                ],
-              },
-              {
-                name: 'Taki',
-                sex: 'male',
-                likes: ['football', 'basketball'],
-                score: 10,
-                children: [
-                  {
-                    name: 'Ashley',
-                    sex: 'female',
-                    likes: ['football', 'basketball'],
-                    score: 20,
-                  },
-                  {
-                    name: 'Taki',
-                    sex: 'male',
-                    likes: ['football', 'basketball'],
-                    score: 10,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            name: 'Tom',
-            sex: 'male',
-            likes: ['football', 'basketball'],
-            score: 20,
-          },
-          {
-            name: 'Tom',
-            sex: 'male',
-            likes: ['football', 'basketball'],
-            score: 20,
-            children: [
-              {
-                name: 'Ashley',
-                sex: 'female',
-                likes: ['football', 'basketball'],
-                score: 20,
-              },
-              {
-                name: 'Taki',
-                sex: 'male',
-                likes: ['football', 'basketball'],
-                score: 10,
-              },
-            ],
-          },
-        ],
-        columns: [
-          {
-            label: 'name',
-            prop: 'name',
-            width: '400px',
-          },
-        // {
-        //   label: 'sex',
-        //   prop: 'sex',
-        //   minWidth: '50px',
-        // },
-        // {
-        //   label: 'score',
-        //   prop: 'score',
-        // },
-        // {
-        //   label: 'likes',
-        //   prop: 'likes',
-        //   minWidth: '200px',
-        //   type: 'template',
-        //   template: 'likes',
-        // },
-        ],
+        search: '',
+        searched: [],
+        firstTabs: [],
+        toggleAll: false,
+
+        fuse: false,
+        filter: '',
+        diagnoseOriginal: [],
+        users: [],
       };
     },
-    computed: {
-      propList() {
-        return Object.keys(this.props).map(item => ({
-          name: item,
-        }));
+    methods: {
+      onSelect() {
+        console.log(11);
+      },
+      copyObj(obj) {
+        return JSON.parse(JSON.stringify(obj));
+      },
+      loadData() {
+        this.searched = this.copyObj(this.diagnosis);
+        this.diagnoseOriginal = this.copyObj(this.searched);
+        this.fuse = new Fuse(this.diagnosis, fuseOptions);
+      },
+      namespace(object, path) {
+        return path.split('.').reduce((value, index) => value[index], object);
+      },
+      setValue(object, path, newValue) {
+        const paths = path.split('.');
+        let count = 0;
+        paths.reduce((value, index) => {
+          count++;
+          if (count >= paths.length) {
+            value[index] = newValue;
+          } else {
+            return value[index];
+          }
+        }, object);
+      },
+      highlightText(sourceString, startIndex, endIndex) {
+        return `${sourceString.substring(
+          0,
+          startIndex,
+        )}<span class="highlight">${sourceString.substring(
+          startIndex,
+          endIndex + 1,
+        )}</span>${sourceString.substring(endIndex + 1)}`;
       },
     },
-    methods: {},
+    computed: {
+      ...mapGetters({
+        diagnosis: 'getDiagnosis',
+      }),
+      filteredDiagnosis() {
+        this.searched = this.copyObj(this.diagnoseOriginal);
+        const grooup = [];
+        this.searched.forEach((diagnosisGroupe) => {
+          const fuseResults = new Fuse(diagnosisGroupe.codes, fuseOptions).search(
+            this.search,
+          );
+          const results = [];
+          console.log(fuseResults);
+          if (fuseResults.length > 0) {
+            Object.values(fuseResults).forEach((result) => {
+              result.matches.forEach((match) => {
+                let text = this.namespace(result.item, match.key);
+                if (text) {
+                  let offset = 0;
+                  match.indices.forEach((index) => {
+                    text = this.highlightText(
+                      text,
+                      index[0] + offset,
+                      index[1] + offset,
+                    );
+                    offset += 31;
+                  });
+                  this.setValue(result.item, match.key, text);
+                }
+              });
+              results.push(result.item);
+            });
+
+            if (results.length > 0) {
+              console.log(results);
+              grooup.push({
+                code: diagnosisGroupe.code,
+                title: diagnosisGroupe.title,
+                codes: results,
+              });
+            }
+          }
+        });
+        return grooup;
+      },
+      getToggleAll() {
+        if (this.search || this.toggleAll) {
+          return true;
+        }
+        return this.toggleAll;
+      },
+      getDiagnosis() {
+        this.searched = this.copyObj(this.diagnoseOriginal);
+        return this.search === '' ? this.searched : this.filteredDiagnosis;
+      },
+      diagnosisGroup() {
+        const dGroup = [];
+        this.getDiagnosis.forEach((element) => {
+          dGroup.push(`${element.code}  ${element.title}`);
+        });
+        return dGroup;
+      },
+    },
+    mounted() {
+      this.loadData();
+    },
   };
 </script>
-
-<style scoped lang="scss">
-* {
-  margin: 0;
-  padding: 0;
-}
-.switch-list {
-  margin: 20px 0;
-  list-style: none;
-  overflow: hidden;
-}
-.switch-item {
-  margin: 20px;
-  float: left;
+<style lang="scss">
+.set-diagnose-form {
+  .collapse-wrapper {
+    margin: 20px 0 20px 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    max-height: 50vh;
+    &::-webkit-scrollbar {
+      width: 7px;
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: grey;
+      border-radius: 7px;
+    }
+    .md-collapse-label {
+      padding: 5px 10px 15px 0;
+      .md-collapse-title {
+        font-weight: 400;
+        .md-icon {
+          top: 5px;
+        }
+      }
+    }
+    .md-collapse-label:after {
+      bottom: 6px;
+    }
+    .highlight {
+      background-color: #ffc;
+    }
+    .helper {
+      font-weight: 400;
+      font-size: 11px;
+    }
+  }
 }
 </style>

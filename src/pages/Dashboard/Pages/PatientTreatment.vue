@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="md-layout">
-      <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-small-size-100 md-size-50">
+      <div class="md-layout-item md-size-100">
         <nav-tabs-card>
           <template slot="content">
             <span class="md-nav-tabs-title">
@@ -18,51 +18,81 @@
                 md-label="Anamnes"
                 to="/patient/treatment/anamnes"
               >
-                <div style="overflow:scroll; height:400px;">
-                  <ol style="max-height:1300px;">
-                    <md-checkbox v-model="background">background</md-checkbox>
-                    <md-checkbox v-model="bridge">bridge</md-checkbox>
-                    <md-checkbox v-model="root">root</md-checkbox>
-                    <md-checkbox v-model="rootcanal">rootcanal</md-checkbox>
-                    <md-checkbox v-model="implant">implant</md-checkbox>
-                    <md-checkbox v-model="coronalingual">coronalingual</md-checkbox>
-                    <md-checkbox v-model="coronalingualincisaldistal">coronalingualincisaldistal</md-checkbox>
-                    <md-checkbox v-model="coronalingualincisalmiddle">coronalingualincisalmiddle</md-checkbox>
-                    <md-checkbox v-model="coronalingualincisionmesial">coronalingualincisionmesial</md-checkbox>
-                    <md-checkbox v-model="coronalingualmiddledistal">coronalingualmiddledistal</md-checkbox>
-                    <md-checkbox v-model="coronalingualmiddlemiddle">coronalingualmiddlemiddle</md-checkbox>
-                    <md-checkbox v-model="coronalingualmiddlemesial">coronalingualmiddlemesial</md-checkbox>
-                    <md-checkbox v-model="coronalingualcervicaldistal">coronalingualcervicaldistal</md-checkbox>
-                    <md-checkbox v-model="coronalingualcervicalmiddle">coronalingualcervicalmiddle</md-checkbox>
-                    <md-checkbox v-model="coronalingualcervicalmesial">coronalingualcervicalmesial</md-checkbox>
-                    <md-checkbox v-model="coronalabial">coronalabial</md-checkbox>
-                    <md-checkbox v-model="coronalabialincisaldistal">coronalabialincisaldistal</md-checkbox>
-                    <md-checkbox v-model="coronalabialincisalmiddle">coronalabialincisalmiddle</md-checkbox>
-                    <md-checkbox v-model="coronalabialincisionmesial">coronalabialincisionmesial</md-checkbox>
-                    <md-checkbox v-model="coronalabialmiddledistal">coronalabialmiddledistal</md-checkbox>
-                    <md-checkbox v-model="coronalabialmiddlemiddle">coronalabialmiddlemiddle</md-checkbox>
-                    <md-checkbox v-model="coronalabialmiddlemesial">coronalabialmiddlemesial</md-checkbox>
-                    <md-checkbox v-model="coronalabialcervicaldistal">coronalabialcervicaldistal</md-checkbox>
-                    <md-checkbox v-model="coronalabialcervicalmiddle">coronalabialcervicalmiddle</md-checkbox>
-                    <md-checkbox v-model="coronalabialcervicalmesial">coronalabialcervicalmesial</md-checkbox>
-                    <md-checkbox v-model="veneer">veneer</md-checkbox>
-                    <md-checkbox v-model="coronatop">coronatop</md-checkbox>
-                    <md-checkbox v-model="coronatopbuccal">coronatopbuccal</md-checkbox>
-                    <md-checkbox v-model="coronatopmedial">coronatopmedial</md-checkbox>
-                    <md-checkbox v-model="coronatoplingual">coronatoplingual</md-checkbox>
-                    <md-checkbox v-model="coronatopdistal">coronatopdistal</md-checkbox>
-                    <md-checkbox v-model="coronatopoclusial">coronatopoclusial</md-checkbox>
-                    <md-checkbox v-model="silant">silant</md-checkbox>
-                    <md-checkbox v-model="gum">gum</md-checkbox>
-                    <md-checkbox v-model="paradontit1">paradontit1</md-checkbox>
-                    <md-checkbox v-model="paradontit2">paradontit2</md-checkbox>
-                    <md-checkbox v-model="paradontit3">paradontit3</md-checkbox>
-                    <md-checkbox v-model="paradontit4">paradontit4</md-checkbox>
-                    <md-checkbox v-model="periodontit">periodontit</md-checkbox>
-                    <md-checkbox v-model="universal">universal</md-checkbox>
-                    <md-checkbox v-model="fdi">fdi</md-checkbox>
-                    <md-checkbox v-model="palmer">palmer</md-checkbox>
-                  </ol>
+                <div class="md-layout">
+                  <div class="md-layout-item  md-small-size-100 md-xsmall-size-100">
+                    <jaw
+                      background-color="success"
+                      slot="jaw"
+                      :jaw="jaw"
+                    >
+                      <div slot="bottom">
+
+                        <md-button class="md-simple  jaw-state  ">
+                          <div class="icon-wrapper">
+                            <icon-base
+                              class="icon-wrapper--item"
+                              width="30"
+                              height="30"
+                              icon-name="icon-root-canal"
+                            />
+                            <small class="icon-wrapper--item">Pulpit</small>
+                          </div>
+                        </md-button>
+
+                      </div>
+                    </jaw>
+
+                  </div>
+                  <div
+                    class="md-layout-item  md-small-size-100 md-xsmall-size-100"
+                    style="overflow:scroll; height:400px;"
+                  >
+                    <ol style="max-height:1300px;">
+                      <md-checkbox v-model="background">background</md-checkbox>
+                      <md-checkbox v-model="bridge">bridge</md-checkbox>
+                      <md-checkbox v-model="root">root</md-checkbox>
+                      <md-checkbox v-model="rootcanal">rootcanal</md-checkbox>
+                      <md-checkbox v-model="implant">implant</md-checkbox>
+                      <md-checkbox v-model="coronalingual">coronalingual</md-checkbox>
+                      <md-checkbox v-model="coronalingualincisaldistal">coronalingualincisaldistal</md-checkbox>
+                      <md-checkbox v-model="coronalingualincisalmiddle">coronalingualincisalmiddle</md-checkbox>
+                      <md-checkbox v-model="coronalingualincisionmesial">coronalingualincisionmesial</md-checkbox>
+                      <md-checkbox v-model="coronalingualmiddledistal">coronalingualmiddledistal</md-checkbox>
+                      <md-checkbox v-model="coronalingualmiddlemiddle">coronalingualmiddlemiddle</md-checkbox>
+                      <md-checkbox v-model="coronalingualmiddlemesial">coronalingualmiddlemesial</md-checkbox>
+                      <md-checkbox v-model="coronalingualcervicaldistal">coronalingualcervicaldistal</md-checkbox>
+                      <md-checkbox v-model="coronalingualcervicalmiddle">coronalingualcervicalmiddle</md-checkbox>
+                      <md-checkbox v-model="coronalingualcervicalmesial">coronalingualcervicalmesial</md-checkbox>
+                      <md-checkbox v-model="coronalabial">coronalabial</md-checkbox>
+                      <md-checkbox v-model="coronalabialincisaldistal">coronalabialincisaldistal</md-checkbox>
+                      <md-checkbox v-model="coronalabialincisalmiddle">coronalabialincisalmiddle</md-checkbox>
+                      <md-checkbox v-model="coronalabialincisionmesial">coronalabialincisionmesial</md-checkbox>
+                      <md-checkbox v-model="coronalabialmiddledistal">coronalabialmiddledistal</md-checkbox>
+                      <md-checkbox v-model="coronalabialmiddlemiddle">coronalabialmiddlemiddle</md-checkbox>
+                      <md-checkbox v-model="coronalabialmiddlemesial">coronalabialmiddlemesial</md-checkbox>
+                      <md-checkbox v-model="coronalabialcervicaldistal">coronalabialcervicaldistal</md-checkbox>
+                      <md-checkbox v-model="coronalabialcervicalmiddle">coronalabialcervicalmiddle</md-checkbox>
+                      <md-checkbox v-model="coronalabialcervicalmesial">coronalabialcervicalmesial</md-checkbox>
+                      <md-checkbox v-model="veneer">veneer</md-checkbox>
+                      <md-checkbox v-model="coronatop">coronatop</md-checkbox>
+                      <md-checkbox v-model="coronatopbuccal">coronatopbuccal</md-checkbox>
+                      <md-checkbox v-model="coronatopmedial">coronatopmedial</md-checkbox>
+                      <md-checkbox v-model="coronatoplingual">coronatoplingual</md-checkbox>
+                      <md-checkbox v-model="coronatopdistal">coronatopdistal</md-checkbox>
+                      <md-checkbox v-model="coronatopoclusial">coronatopoclusial</md-checkbox>
+                      <md-checkbox v-model="silant">silant</md-checkbox>
+                      <md-checkbox v-model="gum">gum</md-checkbox>
+                      <md-checkbox v-model="paradontit1">paradontit1</md-checkbox>
+                      <md-checkbox v-model="paradontit2">paradontit2</md-checkbox>
+                      <md-checkbox v-model="paradontit3">paradontit3</md-checkbox>
+                      <md-checkbox v-model="paradontit4">paradontit4</md-checkbox>
+                      <md-checkbox v-model="periodontit">periodontit</md-checkbox>
+                      <md-checkbox v-model="universal">universal</md-checkbox>
+                      <md-checkbox v-model="fdi">fdi</md-checkbox>
+                      <md-checkbox v-model="palmer">palmer</md-checkbox>
+                    </ol>
+
+                  </div>
 
                 </div>
 
@@ -75,12 +105,40 @@
                 md-label="Diagnose"
                 to="/patient/treatment/diagnose"
               >
-                <diagnose></diagnose>
+                <div class="md-layout">
+                  <div class="md-layout-item  md-small-size-100 md-xsmall-size-100 md-size-50">
+
+                    <jaw
+                      background-color="success"
+                      slot="jaw"
+                      :jaw="jaw"
+                    >
+                      <div slot="bottom">
+
+                        <md-button class="md-simple  jaw-state  ">
+                          <div class="icon-wrapper">
+                            <icon-base
+                              class="icon-wrapper--item"
+                              width="30"
+                              height="30"
+                              icon-name="icon-root-canal"
+                            />
+                            <small class="icon-wrapper--item">Pulpit</small>
+                          </div>
+                        </md-button>
+
+                      </div>
+                    </jaw>
+                  </div>
+                  <div class="md-layout-item   md-small-size-100 md-xsmall-size-100 ">
+                    <diagnose></diagnose>
+                  </div>
+                </div>
+
               </md-tab>
 
               <md-tab
                 id="tab-treatment"
-                md-icon="local_hospital"
                 md-label="Treatment"
                 to="/patient/treatment/treatment"
               ></md-tab>
@@ -97,218 +155,6 @@
         </nav-tabs-card>
       </div>
       <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-small-size-100 md-size-50">
-
-        <jaw-card
-          :action-size="actionSize"
-          header-animation="true"
-          :jaw="jaw"
-        >
-          <jaw
-            background-color="success"
-            slot="jaw"
-            :jaw="jaw"
-          ></jaw>
-          <div slot="actions">
-            <md-button
-              class="md-simple jaw-state"
-              @click="getJaw()"
-            >
-              <div
-                ref="jawstate"
-                class="icon-wrapper"
-              >
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-tooth-health"
-                  class="icon-wrapper--item"
-                />
-                <small class="icon-wrapper--item">Helthy</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state  ">
-              <div class="icon-wrapper">
-                <icon-base
-                  class="icon-wrapper--item"
-                  width="30"
-                  height="30"
-                  icon-name="icon-root-canal"
-                />
-                <small class="icon-wrapper--item">Pulpit</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple md-primary  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-paradontit"
-                  class="icon-wrapper--item"
-                />
-                <small class="icon-wrapper--item">Paradontit</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-tooth-carries"
-                  class="icon-wrapper--item"
-                />
-                <small class="icon-wrapper--item">Carries</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-tooth-extraction"
-                  class="icon-wrapper--item"
-                />
-                <small class="icon-wrapper--item">Missed</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-tooth-cracked"
-                  class="icon-wrapper--item"
-                />
-                <small class="icon-wrapper--item">Cracked</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple jaw-state ">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-tooth-treated"
-                  class="icon-wrapper--item"
-                />
-                <small>Other Diseas</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-tooth-carries"
-                  class="icon-wrapper--item"
-                />
-                <small class="icon-wrapper--item">Carries</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-tooth-extraction"
-                  class="icon-wrapper--item"
-                />
-                <small class="icon-wrapper--item">Missed</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-tooth-cracked"
-                  class="icon-wrapper--item"
-                />
-                <small class="icon-wrapper--item">Cracked</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple jaw-state ">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-tooth-treated"
-                  class="icon-wrapper--item"
-                />
-                <small>Other Diseas</small>
-              </div>
-            </md-button>
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-tooth-carries"
-                  class="icon-wrapper--item"
-                />
-                <small class="icon-wrapper--item">Carries</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-tooth-extraction"
-                  class="icon-wrapper--item"
-                />
-                <small class="icon-wrapper--item">Missed</small>
-              </div>
-            </md-button>
-
-            <md-button class="md-simple  jaw-state">
-              <div class="icon-wrapper">
-                <icon-base
-                  width="30"
-                  height="30"
-                  icon-name="icon-tooth-cracked"
-                  class="icon-wrapper--item"
-                />
-                <small class="icon-wrapper--item">Cracked</small>
-              </div>
-            </md-button>
-          </div>
-
-          <h4
-            class="title"
-            slot="title"
-          >
-            <a href="#pablo">Cozy 5 Stars Apartment</a>
-          </h4>
-          <div
-            class="card-description"
-            slot="description"
-          >
-            The place is close to Barceloneta
-            Beach and bus stop just 2 min
-            by walk and near to "Naviglio"
-            where you can enjoy the main night life in Barcelona.
-          </div>
-          <template slot="footer">
-            <div class="price">
-              <h4>$899/night</h4>
-            </div>
-            <div class="stats">
-              <p class="category">
-                <md-icon>place</md-icon>Barcelona, Spain
-              </p>
-            </div>
-          </template>
-        </jaw-card>
       </div>
     </div>
     <div class="md-layout">
@@ -357,9 +203,7 @@
 
 <script>
   import { mapGetters } from 'vuex';
-  import {
- NavTabsCard, JawCard, Jaw, IconBase 
-} from '@/components';
+  import { NavTabsCard, Jaw, IconBase } from '@/components';
 
   import {
     AnamnesList,
@@ -372,7 +216,7 @@
 
   export default {
     components: {
-      JawCard,
+      // JawCard,
       Jaw,
       NavTabsCard,
       JawAnamnes,
@@ -561,11 +405,11 @@
     },
     mounted() {
       // eslint-disable-next-line
-    this.actionSize = {
-        height: this.$refs.jawstate.clientHeight,
-        width: this.$refs.jawstate.clientWidth,
-      };
-    // this.getJaw();
+    // this.actionSize = {
+      //     height: this.$refs.jawstate.clientHeight,
+      //     width: this.$refs.jawstate.clientWidth,
+      //   };
+      // this.getJaw();
     },
   };
 </script>
