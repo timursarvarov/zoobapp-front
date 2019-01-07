@@ -12,16 +12,19 @@
         </edit-patient-profile-form>
       </div>
     </div>
+    <jaw-generator />
   </div>
 </template>
 
 <script>
   import { EditPatientProfileForm, PatientCard } from '@/pages';
+  import { JawGenerator } from '@/components';
 
   export default {
     components: {
       EditPatientProfileForm,
       PatientCard,
+      JawGenerator,
     },
   };
 </script>

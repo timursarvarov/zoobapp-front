@@ -94,6 +94,10 @@ import IconToothRestovration from './JawIcons/Icons/ToothRestovration.vue';
 import JawCard from './Jaw/JawCard.vue';
 import Jaw from './Jaw/Jaw.vue';
 
+// For Dev Use Only
+
+import JawGenerator from './JawGenerator/jawSVGgenerator.vue';
+
 export {
   IconCheckbox,
   Badge,
@@ -178,5 +182,6 @@ export {
   IconToothWings,
   IconToothWorld,
   IconToothRestovration,
+  JawGenerator,
 
 };

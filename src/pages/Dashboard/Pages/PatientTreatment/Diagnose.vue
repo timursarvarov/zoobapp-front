@@ -1,52 +1,94 @@
 <template lang="html">
-  <div class="set-diagnose-form">
-    <div class="md-layout">
-    <md-field class="md-layout-item">
-      <label>Type to search diagnose</label>
-      <md-input v-model="search"  ></md-input>
-    </md-field>
-    <div class="md-layout-item md-size-30">
-      <md-checkbox v-model="toggleAll" :disabled='search.length > 0' >Show all</md-checkbox>
-    </div>
-    </div>
-       <collapse-transition>
-          <div class="collapse-wrapper">
-            <collapse
-                  :collapse="diagnosisGroup"
-                  icon="keyboard_arrow_down"
-                  color-collapse="success"
-                  :toggleAll = "getToggleAll"
 
-                >
 
-              <template  v-for="(diagnoseGroup, key) in getDiagnosis" :slot="'md-collapse-pane-'+(parseInt(key) + 1)" >
-                  <md-table
-                  v-model="diagnoseGroup.codes"
-                  @md-selected="onSelect"
-                >
+  <div class="md-layout">
+                  <div class="md-layout-item  md-small-size-100 md-xsmall-size-100 md-size-50">
 
-                  <md-table-row
-                    slot="md-table-row"
-                    slot-scope="{ item }"
-                    md-auto-select
-                  >
-                    <md-table-cell v-ripple v-html="item.code" > </md-table-cell>
-                    <md-table-cell  v-ripple.900> <span  v-html="item.title"></span> <br/> <span class="helper"  v-html="item.explain"></span>  </md-table-cell>
-                    <md-table-cell>
-                    </md-table-cell>
-                  </md-table-row>
-                </md-table>
-              </template>
-            </collapse>
+                    <jaw
+
+                      v-model="selectedTeeth"
+                      :jaw="jaw"
+                      :prefer = "'diagnose'"
+
+                    >
+                      <div slot="bottom">
+                        {{selectedTeeth}}
+                        {{selectedDiagnose}}
+
+                        <md-button class="md-simple  jaw-state  ">
+                          <div class="icon-wrapper">
+                            <icon-base
+                              class="icon-wrapper--item"
+                              width="30"
+                              height="30"
+                              icon-name="icon-root-canal"
+                            />
+                            <small class="icon-wrapper--item">Pulpit</small>
+                          </div>
+                        </md-button>
+
+                      </div>
+                    </jaw>
+                  </div>
+                  <div class="md-layout-item   md-small-size-100 md-xsmall-size-100 ">
+
+
+                <div class="set-diagnose-form">
+                  <div class="md-layout">
+                     <md-button @click="Implant(selectedTeeth[0])">Implant</md-button>
+                  <md-field class="md-layout-item">
+                    <label>Type to search diagnose</label>
+                    <md-input v-model="search"  ></md-input>
+                  </md-field>
+                  <div class="md-layout-item md-size-30">
+                    <md-checkbox v-model="toggleAll" :disabled='search.length > 0' >Show all</md-checkbox>
+                  </div>
+                  </div>
+                    <collapse-transition>
+                        <div class="collapse-wrapper">
+                          <collapse
+                                :collapse="diagnosisGroup"
+                                icon="keyboard_arrow_down"
+                                color-collapse="success"
+                                :toggleAll = "getToggleAll"
+
+                              >
+
+                            <template  v-for="(diagnoseGroup, key) in getDiagnosis" :slot="'md-collapse-pane-'+(parseInt(key) + 1)" >
+                                <md-table
+                                v-model="diagnoseGroup.codes" :key="diagnoseGroup.code"
+                                @md-selected="onSelect"
+                              >
+
+                                <md-table-row
+                                  slot="md-table-row"
+                                  slot-scope="{ item }"
+                                  md-selectable="single"
+
+
+                                  :md-disabled="item.type == 'dental' && selectedTeeth.length == 0"
+                                >
+                                  <md-table-cell  v-html="item.code" > </md-table-cell>
+                                  <md-table-cell >
+                                      <span class="helper text-primary" v-if="item.type == 'dental' && selectedTeeth.length == 0" > Please firstly choose a tooth  <br/> </span>
+                                    <span  v-html="item.title"></span> <br/>
+                                      <span class="helper"  v-html="item.explain"></span>
+                                    </md-table-cell>
+                                </md-table-row>
+                              </md-table>
+                            </template>
+                          </collapse>
+                        </div>
+                    </collapse-transition>
           </div>
-       </collapse-transition>
+      </div>
   </div>
 
 </template>
 
 <script>
   import { mapGetters } from 'vuex';
-  import { Collapse } from '@/components';
+  import { Collapse, Jaw, IconBase } from '@/components';
   import Fuse from 'fuse.js';
   import { CollapseTransition } from 'vue2-transitions';
 
@@ -83,23 +125,45 @@
     components: {
       Collapse,
       CollapseTransition,
+      Jaw,
+      IconBase,
+    },
+    props: {
+      // selectedTeeth: {
+      //   type: Array,
+      //   default: () => [],
+      // },
+      selectedDiagnose: {
+        type: Array,
+        default: () => [],
+      },
     },
     data() {
       return {
         search: '',
         searched: [],
+        selectedTeeth: [],
         firstTabs: [],
         toggleAll: false,
 
         fuse: false,
-        filter: '',
+        filter: {},
         diagnoseOriginal: [],
         users: [],
+        selectedDiagnoseLocal: [],
       };
     },
     methods: {
-      onSelect() {
-        console.log(11);
+      Implant() {
+        console.log(this.selectedTeeth);
+        for (let index = 0; index < this.selectedTeeth.length; index += 1) {
+          this.jaw.jawDiagnose[this.selectedTeeth[index]].implant = true;
+          this.jaw.jawDiagnose[this.selectedTeeth[index]].root = false;
+        }
+      },
+      onSelect(diagnose) {
+        this.selectedDiagnoseLocal = diagnose;
+        this.$emit('input', this.selectedDiagnoseLocal);
       },
       copyObj(obj) {
         return JSON.parse(JSON.stringify(obj));
@@ -137,6 +201,7 @@
     computed: {
       ...mapGetters({
         diagnosis: 'getDiagnosis',
+        jaw: 'jaw',
       }),
       filteredDiagnosis() {
         this.searched = this.copyObj(this.diagnoseOriginal);
@@ -196,6 +261,14 @@
         });
         return dGroup;
       },
+    // selectedTeethLocal: {
+    //   get() {
+    //     return this.selectedTeeth;
+    //   },
+    //   set(val) {
+    //     this.selectedTeeth = val;
+    //   },
+    // },
     },
     mounted() {
       this.loadData();
@@ -209,6 +282,7 @@
     overflow: hidden;
     overflow-y: scroll;
     max-height: 50vh;
+    min-height: 400px;
     &::-webkit-scrollbar {
       width: 7px;
       background-color: transparent;
@@ -218,15 +292,15 @@
       border-radius: 7px;
     }
     .md-collapse-label {
-      padding: 5px 10px 15px 0;
+      padding: 0px 10px 25px 0;
       .md-collapse-title {
         font-weight: 400;
         .md-icon {
-          top: 5px;
+          top: 0px;
         }
       }
     }
-    .md-collapse-label:after {
+    md-error .md-collapse-label:after {
       bottom: 6px;
     }
     .highlight {

@@ -56,7 +56,7 @@
     },
   };
 </script>
-<style  lang="scss">
+<style  lang="scss" scoped>
 .anamnes {
   min-width: 80px;
   border-radius: 6px;

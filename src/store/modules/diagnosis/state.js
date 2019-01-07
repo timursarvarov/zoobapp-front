@@ -6,6 +6,7 @@ export default {
           code: 'K00.0',
           title: 'Адентия',
           explain: 'Congenitally missing teeth - complete or partial',
+          type: 'dental',
         },
         {
           code: 'K00.1',
@@ -72,30 +73,36 @@ export default {
     {
       code: 'K02',
       title: 'Кариес зубов',
+      type: 'dental',
       codes: [{
           code: 'K02.0',
           title: 'Кариес эмали стадия белого (мелового) пятна',
           explain: 'Restoration, amalgam, composite, resin',
+          type: 'dental',
         },
         {
           code: 'K02.1',
           title: 'Кариес дентина',
           explain: 'Restoration, amalgam, composite, resin',
+          type: 'dental',
         },
         {
           code: 'K02.2',
           title: 'Кариес цемента',
           explain: 'Restoration, amalgam, composite, resin, crown',
+          type: 'dental',
         },
         {
           code: 'K02.3',
           title: 'Приостановившийся кариес зубов',
           explain: 'Restoration, amalgam, composite, resin, crown',
+          type: 'dental',
         },
         {
           code: 'K02.4',
           title: 'Одонтоклазия детская меланодентия, меланодонтоклазия',
           explain: 'Infantile meladontia',
+          type: 'dental',
         },
         {
           code: 'K02.8',

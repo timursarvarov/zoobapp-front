@@ -1,233 +1,38 @@
 /* eslint-disable */
 <template>
   <div>
+    {{selectedTeethLocal}}
     <div class="jaw">
       <slot name="top"></slot>
       <div class="jaw-top">
         <div
-          v-ripple
-          class="tooth"
-          v-for="(tooth ) in topAdultTeeth"
-          :key="tooth"
-          :ref="tooth"
-          :style="{ 'width': jawSVG[tooth].width_perc + '%', 'height': '100%' }"
-          @click="showTooth(tooth)"
+          :class="[
+          'tooth',
+          isSelected(toothId),
+          prefer]"
+          v-for="(toothId ) in topAdultTeeth"
+          :key="toothId"
+          :ref="toothId"
+          :style="{ 'width': jawSVG[toothId].width_perc + '%', 'height': '100%' }"
+          @click="selectTooth(toothId)"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            :viewBox="jawSVG[tooth].viewBox"
-            :style="{ 'width': jawSVG[tooth].width_perc + '%'}"
+            :viewBox="jawSVG[toothId].viewBox"
+            :style="{ 'width': jawSVG[toothId].width_perc + '%'}"
           >
             <g>
               <path
-                v-if="jaw[tooth].background"
-                class="cls-1"
-                :d="jawSVG[tooth].background"
-              />
-              <path
-                v-if="jaw[tooth].bridge"
-                class="cls-2"
-                :d="jawSVG[tooth].bridge"
-              />
-              <path
-                v-if="jaw[tooth].root"
-                class="cls-3"
-                :d="jawSVG[tooth].root"
-              />
-              <path
-                v-if="jaw[tooth].rootcanal"
-                class="cls-4"
-                :d="jawSVG[tooth].rootcanal"
-              />
-              <path
-                v-if="jaw[tooth].implant"
-                class="cls-5"
-                :d="jawSVG[tooth].implant"
-              />
-              <path
-                v-if="jaw[tooth].coronalingual"
-                class="cls-6"
-                :d="jawSVG[tooth].coronalingual"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualincisaldistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualincisaldistal"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualincisalmiddle"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualincisalmiddle"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualincisionmesial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualincisionmesial"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualmiddledistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualmiddledistal"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualmiddlemiddle"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualmiddlemiddle"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualmiddlemesial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualmiddlemesial"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualcervicaldistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualcervicaldistal"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualcervicalmiddle"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualcervicalmiddle"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualcervicalmesial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualcervicalmesial"
-              />
-              <path
-                v-if="jaw[tooth].coronalabial"
-                class="cls-6"
-                :d="jawSVG[tooth].coronalabial"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialincisaldistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialincisaldistal"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialincisalmiddle"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialincisalmiddle"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialincisionmesial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialincisionmesial"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialmiddledistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialmiddledistal"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialmiddlemiddle"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialmiddlemiddle"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialmiddlemesial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialmiddlemesial"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialcervicaldistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialcervicaldistal"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialcervicalmiddle"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialcervicalmiddle"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialcervicalmesial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialcervicalmesial"
-              />
-              <path
-                v-if="jaw[tooth].veneer"
-                class="cls-2"
-                :d="jawSVG[tooth].veneer"
-              />
-              <path
-                v-if="jaw[tooth].coronatop"
-                class="cls-6"
-                :d="jawSVG[tooth].coronatop"
-              />
-              <path
-                v-if="jaw[tooth].coronatopbuccal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronatopbuccal"
-              />
-              <path
-                v-if="jaw[tooth].coronatopmedial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronatopmedial"
-              />
-              <path
-                v-if="jaw[tooth].coronatoplingual"
-                class="cls-2"
-                :d="jawSVG[tooth].coronatoplingual"
-              />
-              <path
-                v-if="jaw[tooth].coronatopdistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronatopdistal"
-              />
-              <path
-                v-if="jaw[tooth].coronatopoclusial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronatopoclusial"
-              />
-              <path
-                v-if="jaw[tooth].silant"
-                class="cls-2"
-                :d="jawSVG[tooth].silant"
-              />
-              <path
-                v-if="jaw[tooth].gum"
-                class="cls-7"
-                :d="jawSVG[tooth].gum"
-              />
-              <path
-                v-if="jaw[tooth].paradontit1"
-                class="cls-8"
-                :d="jawSVG[tooth].paradontit1"
-              />
-              <path
-                v-if="jaw[tooth].paradontit2"
-                class="cls-9"
-                :d="jawSVG[tooth].paradontit2"
-              />
-              <path
-                v-if="jaw[tooth].paradontit3"
-                class="cls-9"
-                :d="jawSVG[tooth].paradontit3"
-              />
-              <path
-                v-if="jaw[tooth].paradontit4"
-                class="cls-10"
-                :d="jawSVG[tooth].paradontit4"
-              />
-              <path
-                v-if="jaw[tooth].periodontit"
-                class="cls-2"
-                :d="jawSVG[tooth].periodontit"
-              />
-              <path
-                v-if="jaw[tooth].universal"
-                class="cls-11"
-                :d="jawSVG[tooth].universal"
-              />
-              <path
-                v-if="jaw[tooth].fdi"
-                class="cls-11"
-                :d="jawSVG[tooth].fdi"
-              />
-              <path
-                v-if="jaw[tooth].palmer"
-                class="cls-11"
-                :d="jawSVG[tooth].palmer"
+                v-for="(location, key) in defaultLocations"
+                v-if="!jawComputed[toothId][key].class.hide"
+                :key="`${toothId}${key}`"
+                :class="[{ 
+                  'treatment': jawComputed[toothId][key].class.treatment,
+                  'anamnes':  jawComputed[toothId][key].class.anamnes,
+                  'diagnose': jawComputed[toothId][key].class.diagnose,
+                  'hide': jawComputed[toothId][key].class.hide,
+                  },   jawSVG[toothId][key]['class'] ]"
+                :d="jawSVG[toothId][key]['d']"
               />
             </g>
           </svg>
@@ -236,226 +41,32 @@
       <div class="jaw-bottom">
         <div
           v-ripple
-          class="tooth"
-          v-for="(tooth) in bottomAdultTeeth"
-          :key="tooth"
-          :style="{ 'width': jawSVG[tooth].width_perc + '%', 'height': '100%' }"
+          :class="[
+          'tooth',
+          isSelected(toothId)]"
+          v-for="(toothId ) in bottomAdultTeeth"
+          :key="toothId"
+          :ref="toothId"
+          :style="{ 'width': jawSVG[toothId].width_perc + '%', 'height': '100%' }"
+          @click="selectTooth(toothId)"
         >
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            :viewBox="jawSVG[tooth].viewBox"
-            :style="{ 'width': jawSVG[tooth].width_perc + '%'}"
+            xmlns="
+          http://www.w3.org/2000/svg"
+            :viewBox="jawSVG[toothId].viewBox"
+            :style="{ 'width': jawSVG[toothId].width_perc + '%'}"
           >
             <g>
               <path
-                v-if="jaw[tooth].background"
-                class="cls-1"
-                :d="jawSVG[tooth].background"
-              />
-              <path
-                v-if="jaw[tooth].bridge"
-                class="cls-2"
-                :d="jawSVG[tooth].bridge"
-              />
-              <path
-                v-if="jaw[tooth].root"
-                class="cls-3"
-                :d="jawSVG[tooth].root"
-              />
-              <path
-                v-if="jaw[tooth].rootcanal"
-                class="cls-4"
-                :d="jawSVG[tooth].rootcanal"
-              />
-              <path
-                v-if="jaw[tooth].implant"
-                class="cls-5"
-                :d="jawSVG[tooth].implant"
-              />
-              <path
-                v-if="jaw[tooth].coronalingual"
-                class="cls-6"
-                :d="jawSVG[tooth].coronalingual"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualincisaldistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualincisaldistal"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualincisalmiddle"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualincisalmiddle"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualincisionmesial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualincisionmesial"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualmiddledistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualmiddledistal"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualmiddlemiddle"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualmiddlemiddle"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualmiddlemesial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualmiddlemesial"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualcervicaldistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualcervicaldistal"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualcervicalmiddle"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualcervicalmiddle"
-              />
-              <path
-                v-if="jaw[tooth].coronalingualcervicalmesial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalingualcervicalmesial"
-              />
-              <path
-                v-if="jaw[tooth].coronalabial"
-                class="cls-6"
-                :d="jawSVG[tooth].coronalabial"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialincisaldistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialincisaldistal"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialincisalmiddle"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialincisalmiddle"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialincisionmesial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialincisionmesial"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialmiddledistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialmiddledistal"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialmiddlemiddle"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialmiddlemiddle"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialmiddlemesial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialmiddlemesial"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialcervicaldistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialcervicaldistal"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialcervicalmiddle"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialcervicalmiddle"
-              />
-              <path
-                v-if="jaw[tooth].coronalabialcervicalmesial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronalabialcervicalmesial"
-              />
-              <path
-                v-if="jaw[tooth].veneer"
-                class="cls-2"
-                :d="jawSVG[tooth].veneer"
-              />
-              <path
-                v-if="jaw[tooth].coronatop"
-                class="cls-6"
-                :d="jawSVG[tooth].coronatop"
-              />
-              <path
-                v-if="jaw[tooth].coronatopbuccal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronatopbuccal"
-              />
-              <path
-                v-if="jaw[tooth].coronatopmedial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronatopmedial"
-              />
-              <path
-                v-if="jaw[tooth].coronatoplingual"
-                class="cls-2"
-                :d="jawSVG[tooth].coronatoplingual"
-              />
-              <path
-                v-if="jaw[tooth].coronatopdistal"
-                class="cls-2"
-                :d="jawSVG[tooth].coronatopdistal"
-              />
-              <path
-                v-if="jaw[tooth].coronatopoclusial"
-                class="cls-2"
-                :d="jawSVG[tooth].coronatopoclusial"
-              />
-              <path
-                v-if="jaw[tooth].silant"
-                class="cls-2"
-                :d="jawSVG[tooth].silant"
-              />
-              <path
-                v-if="jaw[tooth].gum"
-                class="cls-7"
-                :d="jawSVG[tooth].gum"
-              />
-              <path
-                v-if="jaw[tooth].paradontit1"
-                class="cls-8"
-                :d="jawSVG[tooth].paradontit1"
-              />
-              <path
-                v-if="jaw[tooth].paradontit2"
-                class="cls-9"
-                :d="jawSVG[tooth].paradontit2"
-              />
-              <path
-                v-if="jaw[tooth].paradontit3"
-                class="cls-9"
-                :d="jawSVG[tooth].paradontit3"
-              />
-              <path
-                v-if="jaw[tooth].paradontit4"
-                class="cls-10"
-                :d="jawSVG[tooth].paradontit4"
-              />
-              <path
-                v-if="jaw[tooth].periodontit"
-                class="cls-2"
-                :d="jawSVG[tooth].periodontit"
-              />
-              <path
-                v-if="jaw[tooth].universal"
-                class="cls-11"
-                :d="jawSVG[tooth].universal"
-              />
-              <path
-                v-if="jaw[tooth].fdi"
-                class="cls-11"
-                :d="jawSVG[tooth].fdi"
-              />
-              <path
-                v-if="jaw[tooth].palmer"
-                class="cls-11"
-                :d="jawSVG[tooth].palmer"
+                v-for="(location, key) in defaultLocations"
+                :key="`${toothId}${key}`"
+                :class="[{ 
+                  'treatment': jawComputed[toothId][key].class.treatment,
+                  'anamnes':  jawComputed[toothId][key].class.anamnes,
+                  'diagnose': jawComputed[toothId][key].class.diagnose,
+                  'hide': jawComputed[toothId][key].class.hide,
+                  },   jawSVG[toothId][key]['class'] ]"
+                :d="jawSVG[toothId][key]['d']"
               />
             </g>
           </svg>
@@ -465,7 +76,6 @@
     </div>
     <md-dialog :md-active.sync="showSelectedToothDialog">
       <md-dialog-title>Preferences</md-dialog-title>
-
       <div
         v-if="selectedTooth"
         class="tooth"
@@ -473,219 +83,16 @@
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          :viewBox="jawSVG[selectedTooth].viewBox"
-          :style="{ 'width': '50%', 'height': '50vh'}"
+          :viewBox="jawSVG[tooth].viewBox"
+          :style="{ 'width': jawSVG[tooth].width_perc + '%'}"
         >
           <g>
             <path
-              v-if="jaw[selectedTooth].background"
-              class="cls-1"
-              :d="jawSVG[selectedTooth].background"
-            />
-            <path
-              v-if="jaw[selectedTooth].bridge"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].bridge"
-            />
-            <path
-              v-if="jaw[selectedTooth].root"
-              class="cls-3"
-              :d="jawSVG[selectedTooth].root"
-            />
-            <path
-              v-if="jaw[selectedTooth].rootcanal"
-              class="cls-4"
-              :d="jawSVG[selectedTooth].rootcanal"
-            />
-            <path
-              v-if="jaw[selectedTooth].implant"
-              class="cls-5"
-              :d="jawSVG[selectedTooth].implant"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalingual"
-              class="cls-6"
-              :d="jawSVG[selectedTooth].coronalingual"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalingualincisaldistal"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalingualincisaldistal"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalingualincisalmiddle"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalingualincisalmiddle"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalingualincisionmesial"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalingualincisionmesial"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalingualmiddledistal"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalingualmiddledistal"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalingualmiddlemiddle"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalingualmiddlemiddle"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalingualmiddlemesial"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalingualmiddlemesial"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalingualcervicaldistal"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalingualcervicaldistal"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalingualcervicalmiddle"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalingualcervicalmiddle"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalingualcervicalmesial"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalingualcervicalmesial"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalabial"
-              class="cls-6"
-              :d="jawSVG[selectedTooth].coronalabial"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalabialincisaldistal"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalabialincisaldistal"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalabialincisalmiddle"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalabialincisalmiddle"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalabialincisionmesial"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalabialincisionmesial"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalabialmiddledistal"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalabialmiddledistal"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalabialmiddlemiddle"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalabialmiddlemiddle"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalabialmiddlemesial"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalabialmiddlemesial"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalabialcervicaldistal"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalabialcervicaldistal"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalabialcervicalmiddle"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalabialcervicalmiddle"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronalabialcervicalmesial"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronalabialcervicalmesial"
-            />
-            <path
-              v-if="jaw[selectedTooth].veneer"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].veneer"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronatop"
-              class="cls-6"
-              :d="jawSVG[selectedTooth].coronatop"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronatopbuccal"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronatopbuccal"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronatopmedial"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronatopmedial"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronatoplingual"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronatoplingual"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronatopdistal"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronatopdistal"
-            />
-            <path
-              v-if="jaw[selectedTooth].coronatopoclusial"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].coronatopoclusial"
-            />
-            <path
-              v-if="jaw[selectedTooth].silant"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].silant"
-            />
-            <path
-              v-if="jaw[selectedTooth].gum"
-              class="cls-7"
-              :d="jawSVG[selectedTooth].gum"
-            />
-            <path
-              v-if="jaw[selectedTooth].paradontit1"
-              class="cls-8"
-              :d="jawSVG[selectedTooth].paradontit1"
-            />
-            <path
-              v-if="jaw[selectedTooth].paradontit2"
-              class="cls-9"
-              :d="jawSVG[selectedTooth].paradontit2"
-            />
-            <path
-              v-if="jaw[selectedTooth].paradontit3"
-              class="cls-9"
-              :d="jawSVG[selectedTooth].paradontit3"
-            />
-            <path
-              v-if="jaw[selectedTooth].paradontit4"
-              class="cls-10"
-              :d="jawSVG[selectedTooth].paradontit4"
-            />
-            <path
-              v-if="jaw[selectedTooth].periodontit"
-              class="cls-2"
-              :d="jawSVG[selectedTooth].periodontit"
-            />
-            <path
-              v-if="jaw[selectedTooth].universal"
-              class="cls-11"
-              :d="jawSVG[selectedTooth].universal"
-            />
-            <path
-              v-if="jaw[selectedTooth].fdi"
-              class="cls-11"
-              :d="jawSVG[selectedTooth].fdi"
-            />
-            <path
-              v-if="jaw[selectedTooth].palmer"
-              class="cls-11"
-              :d="jawSVG[selectedTooth].palmer"
+              v-for="(location, key) in defaultLocations"
+              :key="`${tooth}${key}`"
+              v-if="jaw[tooth][key] && jawSVG[tooth][key]"
+              :class="jawSVG[tooth][key]['classList']"
+              :d="jawSVG[tooth][key]['d']"
             />
           </g>
         </svg>
@@ -704,7 +111,6 @@
   </div>
 </template>
 <script>
-/* eslint-disable */
 import jawSVGjs from "./jawSVG";
 import {
   IconAdult,
@@ -723,9 +129,17 @@ export default {
     IconToggleTop
   },
   props: {
+    selectedTeeth: {
+      type: Array,
+      default: () => []
+    },
     jaw: {
       type: Object,
-      default: {}
+      default: () => {}
+    },
+    prefer: {
+      type: String,
+      default: () => "treatment"
     }
   },
   name: "AppMain",
@@ -880,36 +294,143 @@ export default {
         36,
         37,
         38
-      ]
+      ],
+      selectedTeethLocal: [],
+      defaultLocations: {
+        background: false,
+        bridge: false,
+        root: true,
+        rootCanal: false,
+        coronaLingual: true,
+        coronaLingualIncisalDistal: false,
+        coronaLingualIncisalMiddle: false,
+        coronaLingualIncisionMesial: false,
+        coronaLingualMiddleDistal: false,
+        coronaLingualMiddleMiddle: false,
+        coronaLingualMiddleMesial: false,
+        coronaLingualCervicalDistal: false,
+        coronaLingualCervicalMiddle: false,
+        coronaLingualCervicalMesial: false,
+        coronaLabial: true,
+        coronaLabialIncisalDistal: false,
+        coronaLabialIncisalMiddle: false,
+        coronaLabialIncisionMesial: false,
+        coronaLabialMiddleDistal: false,
+        coronaLabialMiddleMiddle: false,
+        coronaLabialMiddleMesial: false,
+        coronaLabialCervicalDistal: false,
+        coronaLabialCervicalMiddle: false,
+        coronaLabialCervicalMesial: false,
+        implant: false,
+        veneer: false,
+        coronaTop: true,
+        coronaTopBuccal: false,
+        coronaTopMedial: false,
+        coronaTopLingual: false,
+        coronaTopDistal: false,
+        coronaTopOclusial: false,
+        silant: false,
+        gum: true,
+        paradontit1: false,
+        paradontit2: false,
+        paradontit3: false,
+        paradontit4: false,
+        periodontit: false,
+        fdi: true,
+        universal: false,
+        palmer: false
+      }
     };
   },
 
   computed: {
     jawSVG() {
       const jawVG = JSON.parse(jawSVGjs);
-      return jawVG[0];
+      return jawVG;
     },
-    jawSVGtop() {
-      return this.jawSVG.slice(0, 16);
+    selectedTeethJ() {
+      return this.selectedTeeth;
     },
-    jawSVGbottom() {
-      return this.jawSVG.slice(16, 32);
-    },
+    jawComputed() {
+      let jaw = {};
+      for (let i = 0; i < this.teeth.length; i += 1) {
+        jaw[this.teeth[i]] = {};
+        Object.keys(this.defaultLocations).forEach(key => {
+          jaw[this.teeth[i]][key] = {
+            class: {
+              hide: this.isHidingLocation(i, key),
+              treatment: this.jaw.jawTreatment[this.teeth[i]][key]
+                ? true
+                : false,
+              anamnes: this.jaw.jawAnamnes[this.teeth[i]][key] ? true : false,
+              diagnose: this.jaw.jawDiagnose[this.teeth[i]][key] ? true : false
+            }
+          };
+        });
+      }
 
-    sum() {
-      let i = 0;
-      this.jawSVG.forEach(element => {
-        i += element.width_perc;
-      });
-      return i;
+      return jaw;
     }
   },
 
-  created() {
+  mounted() {
     this.setTeeth();
+    this.selectedTeeth = this.selectedTeethJ;
   },
 
   methods: {
+    isHidingLocation(i, location) {
+      const anamnes =
+        this.jaw.jawAnamnes &&
+        this.jaw.jawAnamnes[this.teeth[i]] &&
+        this.jaw.jawAnamnes[this.teeth[i]][location];
+      const treatment =
+        this.jaw.jawTreatment &&
+        this.jaw.jawTreatment[this.teeth[i]] &&
+        this.jaw.jawTreatment[this.teeth[i]][location];
+      const diagnose =
+        this.jaw.jawDiagnose &&
+        this.jaw.jawDiagnose[this.teeth[i]] &&
+        this.jaw.jawDiagnose[this.teeth[i]][location];
+      const defaultLocation = !this.defaultLocations[location];
+
+      let hide = defaultLocation;
+      if (this.prefer === "anamnes") {
+        if (diagnose === true || diagnose === false) {
+          hide = !diagnose;
+        }
+        if (treatment === true || treatment === false) {
+          hide = !treatment;
+        }
+        if (anamnes === true || anamnes === false) {
+          hide = !anamnes;
+        }
+      }
+      if (this.prefer === "treatment") {
+        if (diagnose === true || diagnose === false) {
+          hide = !diagnose;
+        }
+        if (anamnes === true || anamnes === false) {
+          hide = !anamnes;
+        }
+        if (treatment === true || treatment === false) {
+          hide = !treatment;
+        }
+      }
+      if (this.prefer === "diagnose") {
+        if (anamnes === true || anamnes === false) {
+          hide = !anamnes;
+        }
+        if (treatment === true || treatment === false) {
+          hide = !treatment;
+        }
+        if (diagnose === true || diagnose === false) {
+          hide = !diagnose;
+        }
+      }
+
+      return hide;
+    },
     showTooth(tooth) {
       this.selectedTooth = tooth;
       this.showSelectedToothDialog = true;
@@ -917,59 +438,32 @@ export default {
     },
     setTeeth() {
       for (let i = 0; i < this.teeth.length; i += 1) {
-        this.teethSettngs.push({
-          toothID: this.teeth[i],
-          background: false,
-          bridge: false,
-          root: false,
-          rootcanal: false,
-          coronalingual: false,
-          coronalingualincisaldistal: false,
-          coronalingualincisalmiddle: false,
-          coronalingualincisionmesial: false,
-          coronalingualmiddledistal: false,
-          coronalingualmiddlemiddle: false,
-          coronalingualmiddlemesial: false,
-          coronalingualcervicaldistal: false,
-          coronalingualcervicalmiddle: false,
-          coronalingualcervicalmesial: false,
-          coronalabial: false,
-          coronalabialincisaldistal: false,
-          coronalabialincisalmiddle: false,
-          coronalabialincisionmesial: false,
-          coronalabialmiddledistal: false,
-          coronalabialmiddlemiddle: false,
-          coronalabialmiddlemesial: false,
-          coronalabialcervicaldistal: false,
-          coronalabialcervicalmiddle: false,
-          coronalabialcervicalmesial: false,
-          implant: false,
-          veneer: false,
-          coronatop: false,
-          coronatopbuccal: false,
-          coronatopmedial: false,
-          coronatoplingual: false,
-          coronatopdistal: false,
-          coronatopoclusial: false,
-          silant: false,
-          gum: false,
-          paradontit1: false,
-          paradontit2: false,
-          paradontit3: false,
-          paradontit4: false,
-          periodontit: false,
-          universal: false,
-          fdi: false,
-          palmer: false
-        });
+        this.teethSettngs[i] = {
+          toothID: this.teeth[i]
+        };
+        for (const key in this.defaultLocations) {
+          this.teethSettngs[i][key] = this.defaultLocations[key];
+        }
       }
     },
-    click(w) {
-      console.log(w);
+    selectTooth(tooth) {
+      const index = this.selectedTeethLocal.indexOf(tooth);
+      if (index === -1) {
+        this.selectedTeethLocal.push(tooth);
+      } else {
+        this.selectedTeethLocal.splice(index, 1);
+      }
+      this.$emit("input", this.selectedTeethLocal);
+    },
+    isSelected(tooth) {
+      if (this.selectedTeethLocal.indexOf(tooth) !== -1) {
+        return "selected";
+      }
     }
   }
 };
 </script>
+
 <style lang="scss" scoped>
 .jaw,
 .md-dialog-container {
@@ -984,88 +478,181 @@ export default {
   .jaw-bottom {
     display: flex;
 
+    .selected {
+      background-color: rgba(116, 116, 116, 0.58);
+
+      .fdi,
+      .universal,
+      .palmer {
+        isolation: isolate;
+        fill: rgb(255, 255, 255);
+      }
+    }
+
     .tooth {
       display: flex;
-      border-radius: 12px;
+      // transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-property: all;
+      transition-duration: 0.4s;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0s;
 
       svg {
         flex-grow: 1;
         flex-basis: 100%;
         height: 100%;
+
+        .background {
+          fill: #9fdaff;
+        }
+
+        .bridge {
+          fill: #3535ed;
+        }
+
+        .root {
+          fill: #f8edc8;
+          stroke: #292320;
+          stroke-width: 0.25px;
+        }
+
+        .rootCanal {
+          fill: #3535ed;
+        }
+
+        .coronaLingual,
+        .coronaTop,
+        .coronaLabial {
+          fill: #fff;
+          stroke: #000;
+          stroke-width: 0.25px;
+        }
+
+        .coronaLingualIncisalDistal,
+        .coronaLingualIncisalMiddle,
+        .coronaLingualIncisionMesial,
+        .coronaLingualMiddleDistal,
+        .coronaLingualMiddleMiddle,
+        .coronaLingualMiddleMesial,
+        .coronaLingualCervicalDistal,
+        .coronaLingualCervicalMiddle,
+        .coronaLingualCervicalMesial,
+        .coronaLabialIncisalDistal,
+        .coronaLabialIncisalMiddle,
+        .coronaLabialIncisionMesial,
+        .coronaLabialMiddleDistal,
+        .coronaLabialMiddleMiddle,
+        .coronaLabialMiddleMesial,
+        .coronaLabialCervicalDistal,
+        .coronaLabialCervicalMiddle,
+        .coronaLabialCervicalMesial,
+        .coronaTopBuccal,
+        .coronaTopMedial,
+        .coronaTopLingual,
+        .coronaTopDistal,
+        .coronaTopOclusial {
+          fill: #3535ed;
+        }
+
+        .implant {
+          fill: #3535ed;
+        }
+
+        .veneer {
+          fill: #3535ed;
+        }
+
+        .silant {
+          fill: #3535ed;
+        }
+
+        .gum {
+          stroke: #ffb900;
+        }
+
+        .paradontit1 {
+          stroke: #ff822e;
+          fill: rgba(56, 43, 37, 0.283);
+        }
+
+        .paradontit2 {
+          stroke: #f9610d;
+          fill: rgba(56, 43, 37, 0.383);
+        }
+
+        .paradontit3 {
+          stroke: #f75403;
+          fill: rgba(56, 43, 37, 0.483);
+        }
+
+        .paradontit4 {
+          stroke: #f73403;
+          fill: rgba(56, 43, 37, 0.583);
+        }
+
+        .periodontit {
+          fill: #3535ed;
+        }
+
+        .gum {
+          stroke: #ffb900;
+          stroke-linejoin: round;
+          stroke-width: 2px;
+          fill: none;
+        }
+
+        .paradontit1,
+        .paradontit2,
+        .paradontit3,
+        .paradontit4,
+        .periodontit {
+          stroke-linejoin: round;
+          stroke-width: 2px;
+        }
+
+        .fdi,
+        .universal,
+        .palmer {
+          isolation: isolate;
+        }
+        .hide {
+          display: none;
+        }
       }
     }
   }
-
-  .cls-1 {
-    fill: #9fdaff;
+  .tooth.anamnes {
+    .anamnes {
+      fill: #fb8c00 !important;
+    }
+    .diagnose {
+      fill: #8e24aa;
+    }
+    .treatment {
+      fill: #43a047;
+    }
   }
-
-  .cls-2 {
-    fill: #3535ed;
+  .tooth.diagnose {
+    .anamnes {
+      fill: #fb8c00;
+    }
+    .diagnose {
+      fill: #8e24aa !important;
+    }
+    .treatment {
+      fill: #43a047;
+    }
   }
-
-  .cls-3 {
-    fill: #f8edc8;
-    stroke: #292320;
-    stroke-width: 0.25px;
-  }
-
-  .cls-5 {
-    fill: #f8edc8;
-    stroke: #292320;
-    stroke-width: 0.25px;
-  }
-
-  .cls-3,
-  .cls-6 {
-    // stroke-miterlimit: 10;
-    stroke-width: 0.25px;
-  }
-
-  .cls-4 {
-    fill: #4d68aa;
-  }
-
-  .cls-10,
-  .cls-7,
-  .cls-8,
-  .cls-9 {
-    fill: none;
-  }
-
-  .cls-6 {
-    fill: #fff;
-    stroke: #000;
-  }
-
-  .cls-7 {
-    stroke: #ffb900;
-  }
-
-  .cls-10,
-  .cls-7,
-  .cls-8,
-  .cls-9 {
-    stroke-linejoin: round;
-    stroke-width: 3px;
-  }
-
-  .cls-8 {
-    stroke: #ff822e;
-  }
-
-  .cls-9 {
-    stroke: #f9610d;
-  }
-
-  .cls-10 {
-    stroke: #f75403;
-  }
-
-  .cls-11 {
-    isolation: isolate;
-    // stroke: #fff;
-    fill: #aaa;
+  .tooth.treatment {
+    .anamnes {
+      fill: #fb8c00;
+    }
+    .diagnose {
+      fill: #8e24aa;
+    }
+    .treatment {
+      fill: #43a047 !important;
+    }
   }
 }
 </style>
