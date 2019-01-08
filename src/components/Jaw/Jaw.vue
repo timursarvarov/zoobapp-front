@@ -6,6 +6,7 @@
       <slot name="top"></slot>
       <div class="jaw-top">
         <div
+        v-ripple
           :class="[
           'tooth',
           isSelected(toothId),
@@ -74,7 +75,7 @@
       </div>
       <slot name="bottom"></slot>
     </div>
-    <md-dialog :md-active.sync="showSelectedToothDialog">
+    <!-- <md-dialog :md-active.sync="showSelectedToothDialog">
       <md-dialog-title>Preferences</md-dialog-title>
       <div
         v-if="selectedTooth"
@@ -107,7 +108,7 @@
           @click="showDialog = false"
         >Save</md-button>
       </md-dialog-actions>
-    </md-dialog>
+    </md-dialog> -->
   </div>
 </template>
 <script>
@@ -339,7 +340,8 @@ export default {
         fdi: true,
         universal: false,
         palmer: false
-      }
+      },
+      jawComputed:{},
     };
   },
 
@@ -351,37 +353,38 @@ export default {
     selectedTeethJ() {
       return this.selectedTeeth;
     },
-    jawComputed() {
-      let jaw = {};
-      for (let i = 0; i < this.teeth.length; i += 1) {
-        jaw[this.teeth[i]] = {};
-        Object.keys(this.defaultLocations).forEach(key => {
-          jaw[this.teeth[i]][key] = {
-            class: {
-              hide: this.isHidingLocation(i, key),
-              treatment: this.jaw.jawTreatment[this.teeth[i]][key]
-                ? true
-                : false,
-              anamnes: this.jaw.jawAnamnes[this.teeth[i]][key] ? true : false,
-              diagnose: this.jaw.jawDiagnose[this.teeth[i]][key] ? true : false
-            }
-          };
-        });
-      }
+    // jawComputed() {
+    //   let jaw = {};
+    //   for (let i = 0; i < this.teeth.length; i += 1) {
+    //     jaw[this.teeth[i]] = {};
+    //     Object.keys(this.defaultLocations).forEach(key => {
+    //       jaw[this.teeth[i]][key] = {
+    //         class: {
+    //           hide: this.isHidingLocation(i, key),
+    //           treatment: this.jaw.jawTreatment[this.teeth[i]][key]
+    //             ? true
+    //             : false,
+    //           anamnes: this.jaw.jawAnamnes[this.teeth[i]][key] ? true : false,
+    //           diagnose: this.jaw.jawDiagnose[this.teeth[i]][key] ? true : false
+    //         }
+    //       };
+    //     });
+    //   }
 
-      return jaw;
-    }
+    //   return jaw;
+    // }
   },
 
+  created() {
+    this.calculateJaw();
+  },
   mounted() {
-    this.setTeeth();
     this.selectedTeeth = this.selectedTeethJ;
   },
 
   methods: {
     isHidingLocation(i, location) {
-      const anamnes =
-        this.jaw.jawAnamnes &&
+      const anamnes = this.jaw.jawAnamnes &&
         this.jaw.jawAnamnes[this.teeth[i]] &&
         this.jaw.jawAnamnes[this.teeth[i]][location];
       const treatment =
@@ -431,6 +434,27 @@ export default {
 
       return hide;
     },
+    calculateJaw() {
+      let jaw = {};
+      for (let i = 0; i < this.teeth.length; i += 1) {
+        jaw[this.teeth[i]] = {};
+        Object.keys(this.defaultLocations).forEach(key => {
+          jaw[this.teeth[i]][key] = {
+            class: {
+              hide: this.isHidingLocation(i, key),
+              treatment: this.jaw.jawTreatment[this.teeth[i]][key]
+                ? true
+                : false,
+              anamnes: this.jaw.jawAnamnes[this.teeth[i]][key] ? true : false,
+              diagnose: this.jaw.jawDiagnose[this.teeth[i]][key] ? true : false
+            }
+          };
+        });
+      }
+
+      this.jawComputed = jaw;
+    },
+
     showTooth(tooth) {
       this.selectedTooth = tooth;
       this.showSelectedToothDialog = true;
@@ -626,29 +650,29 @@ export default {
       fill: #fb8c00 !important;
     }
     .diagnose {
-      fill: #8e24aa;
+      fill: #8e24aa!important;
     }
     .treatment {
-      fill: #43a047;
+      fill: #43a047!important;
     }
   }
   .tooth.diagnose {
     .anamnes {
-      fill: #fb8c00;
+      fill: #fb8c00!important;
     }
     .diagnose {
       fill: #8e24aa !important;
     }
     .treatment {
-      fill: #43a047;
+      fill: #43a047!important;
     }
   }
   .tooth.treatment {
     .anamnes {
-      fill: #fb8c00;
+      fill: #fb8c00!important;
     }
     .diagnose {
-      fill: #8e24aa;
+      fill: #8e24aa!important;
     }
     .treatment {
       fill: #43a047 !important;

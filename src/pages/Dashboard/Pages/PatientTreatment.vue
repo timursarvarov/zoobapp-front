@@ -21,9 +21,8 @@
                 <div class="md-layout">
                   <div class="md-layout-item  md-small-size-100 md-xsmall-size-100">
                     <jaw
-                      background-color="success"
                       :prefer="'anamnes'"
-                      :jaw="jawA"
+                      :jaw="jaw"
                       v-model="selectedTeeth"
                     >
                       <div slot="bottom">
@@ -50,24 +49,12 @@
                     style="overflow:scroll; height:400px;"
                   >
                     <md-button @click="Implant(selectedTeeth[0])">Implant</md-button>
-                    <!-- <ol
-                      v-for="(tooth, toothID) in jaw"
-                      :key="toothID"
-                      style="max-height:1300px;"
-                    >
-                      <li
-                        v-for="(location, ID) in tooth"
-                        :key="ID"
-                      >
-                        <md-checkbox v-model="jaw[toothID][ID]">{{toothID}} {{ID}}</md-checkbox>
-                      </li>
-                    </ol> -->
 
                   </div>
 
                 </div>
 
-                <jaw-anamnes></jaw-anamnes>
+                <!-- <jaw-anamnes></jaw-anamnes> -->
               </md-tab>
 
               <md-tab
@@ -192,7 +179,9 @@
         for (let index = 0; index < this.selectedTeeth.length; index += 1) {
           this.jaw.jawAnamnes[this.selectedTeeth[index]].implant = true;
           this.jaw.jawAnamnes[this.selectedTeeth[index]].root = false;
-        }
+          }
+          // this.jaw.jawAnamnes[17].implant = true;
+          // this.jaw.jawAnamnes[17].root = false;
       },
       currentTabColor() {
         let color = '';
@@ -221,9 +210,6 @@
         teethAdultBottom: 'teethAdultBottom',
         jaw: 'jaw',
       }),
-      jawA() {
-        return this.jaw;
-      },
     },
     created() {
       this.$store.dispatch(TEETH_INITIATION);

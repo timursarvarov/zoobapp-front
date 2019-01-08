@@ -96,7 +96,7 @@ import Jaw from './Jaw/Jaw.vue';
 
 // For Dev Use Only
 
-import JawGenerator from './JawGenerator/jawSVGgenerator.vue';
+// import JawGenerator from './JawGenerator/jawSVGgenerator.vue';
 
 export {
   IconCheckbox,
@@ -182,6 +182,6 @@ export {
   IconToothWings,
   IconToothWorld,
   IconToothRestovration,
-  JawGenerator,
+  // JawGenerator,
 
 };

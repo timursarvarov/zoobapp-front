@@ -34,17 +34,17 @@
 
 
                 <div class="set-diagnose-form">
+                     <md-button @click="Implant()">Implant</md-button>
                   <div class="md-layout">
-                     <md-button @click="Implant(selectedTeeth[0])">Implant</md-button>
                   <md-field class="md-layout-item">
                     <label>Type to search diagnose</label>
-                    <md-input v-model="search"  ></md-input>
+                    <md-input v-model="search"  > </md-input>
                   </md-field>
-                  <div class="md-layout-item md-size-30">
+                  <div class="md-layout-item ">
                     <md-checkbox v-model="toggleAll" :disabled='search.length > 0' >Show all</md-checkbox>
                   </div>
                   </div>
-                    <collapse-transition>
+                    <!-- <collapse-transition> -->
                         <div class="collapse-wrapper">
                           <collapse
                                 :collapse="diagnosisGroup"
@@ -78,8 +78,15 @@
                               </md-table>
                             </template>
                           </collapse>
+                         <md-empty-state
+                         v-if="getDiagnosis.length == 0"
+                          class="md-primary"
+                          md-icon="sentiment_dissatisfied"
+                          md-label="No matching diagnosis"
+                          md-description="Try another search params">
+                        </md-empty-state>
                         </div>
-                    </collapse-transition>
+                    <!-- </collapse-transition> -->
           </div>
       </div>
   </div>
@@ -90,7 +97,6 @@
   import { mapGetters } from 'vuex';
   import { Collapse, Jaw, IconBase } from '@/components';
   import Fuse from 'fuse.js';
-  import { CollapseTransition } from 'vue2-transitions';
 
   const fuseOptions = {
     findAllMatches: true,
@@ -124,7 +130,6 @@
   export default {
     components: {
       Collapse,
-      CollapseTransition,
       Jaw,
       IconBase,
     },
@@ -157,9 +162,9 @@
       Implant() {
         console.log(this.selectedTeeth);
         for (let index = 0; index < this.selectedTeeth.length; index += 1) {
-          this.jaw.jawDiagnose[this.selectedTeeth[index]].implant = true;
-          this.jaw.jawDiagnose[this.selectedTeeth[index]].root = false;
-        }
+        this.jaw.jawAnamnes[this.selectedTeeth[index]].implant = true;
+        this.jaw.jawAnamnes[this.selectedTeeth[index]].root = false;
+          }
       },
       onSelect(diagnose) {
         this.selectedDiagnoseLocal = diagnose;
@@ -179,12 +184,15 @@
       setValue(object, path, newValue) {
         const paths = path.split('.');
         let count = 0;
+        // eslint-disable-next-line
         paths.reduce((value, index) => {
-          count++;
+          count += 1;
           if (count >= paths.length) {
+            // eslint-disable-next-line
             value[index] = newValue;
           } else {
-            return value[index];
+            const nValue = value[index];
+            return nValue;
           }
         }, object);
       },
@@ -197,21 +205,14 @@
           endIndex + 1,
         )}</span>${sourceString.substring(endIndex + 1)}`;
       },
-    },
-    computed: {
-      ...mapGetters({
-        diagnosis: 'getDiagnosis',
-        jaw: 'jaw',
-      }),
-      filteredDiagnosis() {
-        this.searched = this.copyObj(this.diagnoseOriginal);
+      getFilteredDiagnosis() {
+        this.searched = this.copyObj(this.diagnoseOriginal).slice(0);
         const grooup = [];
         this.searched.forEach((diagnosisGroupe) => {
           const fuseResults = new Fuse(diagnosisGroupe.codes, fuseOptions).search(
             this.search,
           );
           const results = [];
-          console.log(fuseResults);
           if (fuseResults.length > 0) {
             Object.values(fuseResults).forEach((result) => {
               result.matches.forEach((match) => {
@@ -233,7 +234,6 @@
             });
 
             if (results.length > 0) {
-              console.log(results);
               grooup.push({
                 code: diagnosisGroupe.code,
                 title: diagnosisGroupe.title,
@@ -244,6 +244,15 @@
         });
         return grooup;
       },
+    },
+    computed: {
+      ...mapGetters({
+        diagnosis: 'getDiagnosis',
+        jaw: 'jaw',
+      }),
+      filteredDiagnosis() {
+        return this.getFilteredDiagnosis();
+      },
       getToggleAll() {
         if (this.search || this.toggleAll) {
           return true;
@@ -251,7 +260,6 @@
         return this.toggleAll;
       },
       getDiagnosis() {
-        this.searched = this.copyObj(this.diagnoseOriginal);
         return this.search === '' ? this.searched : this.filteredDiagnosis;
       },
       diagnosisGroup() {
@@ -272,6 +280,7 @@
     },
     mounted() {
       this.loadData();
+      this.searched = this.copyObj(this.diagnoseOriginal);
     },
   };
 </script>
@@ -282,7 +291,7 @@
     overflow: hidden;
     overflow-y: scroll;
     max-height: 50vh;
-    min-height: 400px;
+    min-height: 420px;
     &::-webkit-scrollbar {
       width: 7px;
       background-color: transparent;
@@ -292,11 +301,11 @@
       border-radius: 7px;
     }
     .md-collapse-label {
-      padding: 0px 10px 25px 0;
+      padding: 10px 10px 35px 0;
       .md-collapse-title {
         font-weight: 400;
         .md-icon {
-          top: 0px;
+          top: 8px;
         }
       }
     }
@@ -304,7 +313,7 @@
       bottom: 6px;
     }
     .highlight {
-      background-color: #ffc;
+      background-color: rgb(236, 236, 41);
     }
     .helper {
       font-weight: 400;
