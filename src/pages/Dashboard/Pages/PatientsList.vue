@@ -47,20 +47,21 @@
               </md-field>
             </md-table-toolbar>
 
-              <md-table-empty-state
+            <md-table-empty-state
               v-if="status === 'success' "
-                md-label="No users found"
-                :md-description=
-                "`No user found for this '${searchQuery}' query.
-                Try a different search term or create a new user.`">
-                <md-button class="md-primary md-raised" >Create New User</md-button>
-              </md-table-empty-state>
+              md-label="No users found"
+              :md-description="`No user found for this '${searchQuery}' query.
+                Try a different search term or create a new user.`"
+            >
+              <md-button class="md-primary md-raised">Create New User</md-button>
+            </md-table-empty-state>
 
-              <md-table-empty-state
+            <md-table-empty-state
               v-else
-                md-label="Waiting for patients to load"
-                :md-description="`Please be patient, just a few seconds...`">
-              </md-table-empty-state>
+              md-label="Waiting for patients to load"
+              :md-description="`Please be patient, just a few seconds...`"
+            >
+            </md-table-empty-state>
 
             <md-table-row
               slot="md-table-row"
@@ -69,12 +70,20 @@
             >
               <md-table-cell
                 md-label="Avatar"
-                md-sort-by="avatar">
-                <md-avatar v-if="item.avatar"  >
-                    <img :src="item.avatar" alt="People">
+                md-sort-by="avatar"
+              >
+                <md-avatar v-if="item.avatar">
+                  <img
+                    :src="item.avatar"
+                    alt="People"
+                  >
                 </md-avatar>
-                <md-avatar  v-else class="md-avatar-icon" :style="{background: 'black'}"  >
-                    {{item.firstName[0]}}{{item.lastName[0]}}
+                <md-avatar
+                  v-else
+                  class="md-avatar-icon"
+                  :style="{background: 'black'}"
+                >
+                  {{item.firstName[0]}}{{item.lastName[0]}}
                 </md-avatar>
               </md-table-cell>
               <md-table-cell

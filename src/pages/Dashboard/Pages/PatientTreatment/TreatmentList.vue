@@ -3,264 +3,307 @@
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-analgesic"/>
+      icon-name="icon-analgesic"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-baby"/>
+      icon-name="icon-baby"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-brekets"/>
+      icon-name="icon-brekets"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-card"/>
+      icon-name="icon-card"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-forceps"/>
+      icon-name="icon-forceps"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-implant"/>
+      icon-name="icon-implant"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-injection"/>
+      icon-name="icon-injection"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-inset-jaw"/>
+      icon-name="icon-inset-jaw"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-observation"/>
+      icon-name="icon-observation"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-open-mouth"/>
+      icon-name="icon-open-mouth"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-palm-face"/>
+      icon-name="icon-palm-face"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-paradontit"/>
+      icon-name="icon-paradontit"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-point"/>
+      icon-name="icon-point"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-root-canal"/>
+      icon-name="icon-root-canal"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-survey"/>
+      icon-name="icon-survey"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tablets"/>
+      icon-name="icon-tablets"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-bacteria"/>
+      icon-name="icon-tooth-bacteria"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-bill"/>
+      icon-name="icon-tooth-bill"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-bottle"/>
+      icon-name="icon-tooth-bottle"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-bottom"/>
+      icon-name="icon-tooth-bottom"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-calendar"/>
+      icon-name="icon-tooth-calendar"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-card"/>
+      icon-name="icon-tooth-card"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-clean"/>
+      icon-name="icon-tooth-clean"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-corons"/>
+      icon-name="icon-tooth-corons"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-cracked"/>
+      icon-name="icon-tooth-cracked"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-drop"/>
+      icon-name="icon-tooth-drop"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-extraction"/>
+      icon-name="icon-tooth-extraction"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-health"/>
+      icon-name="icon-tooth-health"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-ice"/>
+      icon-name="icon-tooth-ice"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-info"/>
+      icon-name="icon-tooth-info"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-inspected"/>
+      icon-name="icon-tooth-inspected"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-locked"/>
+      icon-name="icon-tooth-locked"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-pain"/>
+      icon-name="icon-tooth-pain"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-point"/>
+      icon-name="icon-tooth-point"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-protected"/>
+      icon-name="icon-tooth-protected"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-renew"/>
+      icon-name="icon-tooth-renew"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-settings"/>
+      icon-name="icon-tooth-settings"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-small"/>
+      icon-name="icon-tooth-small"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-star"/>
+      icon-name="icon-tooth-star"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-sun"/>
+      icon-name="icon-tooth-sun"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-tablet"/>
+      icon-name="icon-tooth-tablet"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-treated"/>
+      icon-name="icon-tooth-treated"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-tree"/>
+      icon-name="icon-tooth-tree"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-wash"/>
+      icon-name="icon-tooth-wash"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-wings"/>
+      icon-name="icon-tooth-wings"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-world"/>
+      icon-name="icon-tooth-world"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-toggle-bottom"/>
+      icon-name="icon-toggle-top"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-toggle-top"/>
+      icon-name="icon-toggle-bottom"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-toggle-bottom"/>
+      icon-name="icon-tooth-hand-care"
+    />
 
     <icon-base
       width="30"
       height="30"
-      icon-name="icon-tooth-hand-care"/>
-
-    <icon-base
-      width="30"
-      height="30"
-      icon-name="icon-tooth-carries"/>
+      icon-name="icon-tooth-carries"
+    />
   </div>
 
 </template>
 <script>
-  import {
-    IconBase,
-  } from '@/components';
+  import { IconBase } from '@/components';
 
   export default {
     components: {

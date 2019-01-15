@@ -7,5 +7,7 @@ export default {
   teethAdultAll: state => state.teethAdultAll,
   teethAdultTop: state => state.teethAdultTop,
   teethAdultBottom: state => state.teethAdultBottom,
+  teethSchema: state => state.teethSchema,
   jaw: state => state.jaw,
+  jawEthalon: state => state.jawEthalon,
 };

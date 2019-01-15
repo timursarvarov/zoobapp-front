@@ -38,13 +38,23 @@ export default {
   },
   [CLINIC_SET]: ({
     commit
-  }, clinic) => {
-    for (var k in clinic) {
-      if (clinic.hasOwnProperty(k)) {
+  }, organization) => {
+    for (var k in organization) {
+      if (organization.hasOwnProperty(k)) {
         commit(CLINIC_SET, {
           type: k,
-          value: clinic[k]
+          value: organization[k]
         });
+        localStorage.setItem('CLINIC_ID', organization.ID);
+        localStorage.setItem('CLINIC_NAME', organization.name);
+        localStorage.setItem('CLINIC_DESCRIPTION', organization.description);
+        localStorage.setItem('CLINIC_LOGO', organization.logo);
+        localStorage.setItem('CLINIC_PHONE', organization.phone);
+        localStorage.setItem('CLINIC_EMAIL', organization.email);
+        localStorage.setItem('CLINIC_URL', organization.url);
+        localStorage.setItem('CLINIC_ADDRESS', organization.address);
+        localStorage.setItem('CLINIC_TIMEZONE_OFFSET', organization.timezoneOffset);
+        localStorage.setItem('CLINIC_CURRENCY_CODE', organization.currencyCode);
       }
     }
   },

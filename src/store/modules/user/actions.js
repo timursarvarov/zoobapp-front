@@ -48,10 +48,13 @@ export default {
           }),
         })
         .then(resp => {
-          localStorage.setItem('userName', resp.data.userName);
-          localStorage.setItem('lastName', resp.data.lastName);
-          localStorage.setItem('firstName', resp.data.firstName);
-          localStorage.setItem('avatar', resp.data.avatar);
+          localStorage.setItem('USER_NAME', resp.data.userName);
+          localStorage.setItem('USER_LAST_NAME', resp.data.lastName);
+          localStorage.setItem('USER_FIRST_NAME', resp.data.firstName);
+          localStorage.setItem('USER_AVATAR', resp.data.avatar);
+          localStorage.setItem('USER_PHONE', resp.data.phone);
+          localStorage.setItem('USER_ADDRESS', resp.data.address);
+          localStorage.setItem('USER_LANG', resp.data.lang); // 1=rus 2=eng
           commit(USER_SUCCESS);
           commit(USER_UPDATE, resp);
           resolve(resp);

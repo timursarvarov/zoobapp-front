@@ -5,19 +5,24 @@ import {
   PATIENT_REQUEST,
   PATIENT_ERROR,
   PATIENT_SUCCESS,
+  PATIENT_DIAGNOSE_SET,
 } from '../constants';
 
 export default {
-  [PATIENT_CREATE]: ({commit},{patient}) => {
-      return new Promise((resolve, reject) => {
-        commit(PATIENT_REQUEST);
-        axios.post('/patients/',
-        JSON.stringify({
-          firstName: patient.firstName,
-          lastName: patient.lastName,
-          phone: patient.phone,
-          email: patient.email,
-          // allergy: patient.allergy,
+  [PATIENT_CREATE]: ({
+    commit
+  }, {
+    patient
+  }) => {
+    return new Promise((resolve, reject) => {
+      commit(PATIENT_REQUEST);
+      axios.post('/patients/',
+          JSON.stringify({
+            firstName: patient.firstName,
+            lastName: patient.lastName,
+            phone: patient.phone,
+            email: patient.email,
+            // allergy: patient.allergy,
           })
         )
         .then(resp => {
@@ -30,7 +35,15 @@ export default {
           commit(PATIENT_ERROR);
           reject(err);
         });
-      });
+    });
 
+  },
+
+  [PATIENT_DIAGNOSE_SET]: ({
+    commit
+  }, {
+    diagnose
+  }) => {
+    commit(PATIENT_DIAGNOSE_SET, diagnose);
   },
 };

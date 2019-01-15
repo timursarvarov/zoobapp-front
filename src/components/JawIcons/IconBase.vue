@@ -8,10 +8,10 @@
     :aria-labelledby="iconName"
     role="presentation"
   >
-    <title
+    <!-- <title
       :id="iconName"
       lang="en"
-    >{{iconName}} icon</title>
+    >{{iconName}} icon</title> -->
     <g
       :fill="iconColor"
       :stroke="iconColor"

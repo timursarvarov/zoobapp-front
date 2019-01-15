@@ -1,5 +1,6 @@
 import {
   TEETH_INITIATION,
+  TEETH_INITIATION_ETHALON,
 } from '../constants';
 import state from './state';
 
@@ -22,6 +23,13 @@ export default {
         }
       });
       commit(TEETH_INITIATION, jaw);
+      const jawEthalon = {};
+      // eslint-disable-next-line
+      for (let attr in jaw) {
+        if (jaw.hasOwnProperty(attr)) jawEthalon[attr] = jaw[attr];
+      }
+
+      commit(TEETH_INITIATION_ETHALON, jawEthalon);
     }
   },
 };

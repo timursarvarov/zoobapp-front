@@ -9,10 +9,14 @@
       :key="item"
     >
       <div
+        :class="{'no-hover': toggleAll}"
         class="md-collapse-label"
         @click="toggle(index + 1)"
       >
-        <h5 class="md-collapse-title">
+        <h5
+          class="md-collapse-title"
+          :style="{ 'color':toggleAll ? '#3c4858 !important': '' }"
+        >
           <span v-html="item"></span>
           <md-icon v-show="!toggleAll">{{icon}}</md-icon>
         </h5>
@@ -72,7 +76,10 @@
         return `md-collapse-pane-${index}`;
       },
       getColorCollapse(colorCollapse) {
-        return `md-${colorCollapse}`;
+        if (!this.toggleAll) {
+          return `md-${colorCollapse}`;
+        }
+        return false;
       },
     },
   };
@@ -81,5 +88,12 @@
 <style lang="scss" scoped>
 .text-center {
   display: flex;
+}
+.no-hover {
+  cursor: default;
+  color: #3c4858 !important;
+}
+.md-collapse-title {
+  margin-right: 12px;
 }
 </style>

@@ -31,8 +31,8 @@
     </div>
     <md-card-content>
       <div class="md-layout">
-        <div class="md-layout md-layout-item md-size-100">
 
+        <div class="md-layout md-layout-item md-small-size-100 md-size-33">
           <md-field>
             <label>Clinic Name</label>
             <md-input
@@ -45,8 +45,7 @@
           </md-field>
         </div>
 
-        <div class="md-layout md-layout-item md-size-100">
-
+        <div class="md-layout md-layout-item md-small-size-100 md-size-33">
           <md-field :class="[
                         {'md-valid': !errors.has('phone') && touched.phone},
                         {'md-error': errors.has('phone')}]">
@@ -75,7 +74,7 @@
           </md-field>
         </div>
 
-        <div class="md-layout md-layout-item md-size-100">
+        <div class="md-layout md-layout-item md-small-size-100 md-size-33">
 
           <md-field>
             <label>Address</label>
@@ -86,36 +85,36 @@
           </md-field>
         </div>
 
-        <div class="md-layout md-layout-item md-size-100">
+        <div class="md-layout md-layout-item md-small-size-100 md-size-33">
 
           <md-field :class="[
-                        {'md-valid': !errors.has('URL') && touched.URL},
-                        {'md-error': errors.has('URL')}]">
-            <label>URL</label>
+                        {'md-valid': !errors.has('url') && touched.url},
+                        {'md-error': errors.has('url')}]">
+            <label>url</label>
             <md-input
-              v-model="clinic.URL"
+              v-model="clinic.url"
               type="text"
-              data-vv-name="URL"
+              data-vv-name="url"
               required
-              v-validate="modelValidations.URL"
+              v-validate="modelValidations.url"
             ></md-input>
-            <span class="md-error">{{errors.first('URL')}}</span>
+            <span class="md-error">{{errors.first('url')}}</span>
             <slide-y-down-transition>
               <md-icon
                 class="error"
-                v-show="errors.has('URL')"
+                v-show="errors.has('url')"
               >close</md-icon>
             </slide-y-down-transition>
             <slide-y-down-transition>
               <md-icon
                 class="success"
-                v-show="!errors.has('URL') && touched.URL"
+                v-show="!errors.has('url') && touched.url"
               >done</md-icon>
             </slide-y-down-transition>
           </md-field>
         </div>
 
-        <div class="md-layout md-layout-item md-size-100">
+        <div class="md-layout md-layout-item md-small-size-100 md-size-33">
 
           <md-field :class="[
                         {'md-valid': !errors.has('email') && touched.email},
@@ -144,7 +143,7 @@
           </md-field>
         </div>
 
-        <div class="md-layout md-layout-item md-size-100">
+        <div class="md-layout md-layout-item md-small-size-100 md-size-33">
 
           <md-field>
             <label>Tax</label>
@@ -158,9 +157,9 @@
           </md-field>
         </div>
 
-        <div class="md-layout md-layout-item md-size-100">
+        <div class="md-layout md-layout-item md-small-size-100 md-size-50">
 
-          <md-field>
+          <!-- <md-field>
             <label>Currency</label>
             <md-input
               v-model="clinic.currency"
@@ -169,10 +168,47 @@
             <span class="md-helper-text">
               Enter % that will be added to the total treatment price
             </span>
+          </md-field> -->
+          <!-- <md-autocomplete
+            v-model="searchTimezoneParams"
+            :md-options="timeZones"
+            @md-changed="getCountries"
+            @md-opened="getCountries"
+          >
+            <label>Timezone</label>
+
+            <template
+              slot="md-autocomplete-item"
+              slot-scope="{ item }"
+            >
+              <div @click="setTimezone(item)">{{ item.text }}<br>
+                <small>{{ item.utc.join(', ') }}</small>
+              </div>
+
+            </template>
+          </md-autocomplete> -->
+          {{selectedTimezone}}
+        </div>
+
+        <div class="md-layout md-layout-item md-small-size-100 md-size-50">
+
+          <md-field>
+            <label for="movie">Disabled Select</label>
+            <md-select v-model="searchTimezoneParams">
+              <md-option
+                v-for="(timezone, key) in timeZones"
+                :key="key"
+                :value="timezone.text"
+              >
+                {{ timezone.text }}
+                <!-- <small>{{ timezone.utc.join(', ') }}</small> -->
+
+              </md-option>
+            </md-select>
           </md-field>
         </div>
 
-        <div class="md-layout md-layout-item md-size-100">
+        <div class="md-layout md-layout-item md-small-size-100 md-size-50">
 
           <md-field>
             <label>Timezone</label>
@@ -187,11 +223,10 @@
             </span>
           </md-field>
         </div>
-
         <div class="md-layout md-layout-item md-size-100">
 
           <md-field maxlength="5">
-            <label>Descroption</label>
+            <label>Description</label>
             <md-textarea v-model="clinic.description"></md-textarea>
           </md-field>
         </div>
@@ -218,10 +253,13 @@
     CLINIC_LOGO_UPLOAD,
     CLINIC_UPDATE,
     NOTIFY,
+    USER_UPDATE,
   } from '@/store/modules/constants';
   import { mapGetters } from 'vuex';
   import { IconBase } from '@/components';
   import { SlideYDownTransition } from 'vue2-transitions';
+  import commonCurrency from './Common-Currency.json';
+  import timezones from './timezones.json';
 
   export default {
     components: {
@@ -245,15 +283,20 @@
     },
     data() {
       return {
+        searchTimezoneParams: {},
+        searcchedTimezones: [],
+        selectedTimezone: '',
         image: '',
         selectedAvatar: '',
+        currency: commonCurrency,
+        timeZones: timezones,
         touched: {
-          URL: false,
+          url: false,
           email: false,
           phone: false,
         },
         modelValidations: {
-          URL: {
+          url: {
             url: true,
           },
           email: {
@@ -267,6 +310,31 @@
       };
     },
     methods: {
+      setTimezone(timezone) {
+        console.log(timezone.text);
+        this.searchTimezoneParams = timezone.text;
+      },
+      getCountries(searchTerm) {
+        if (typeof searchTerm === 'object') {
+          console.log(typeof searchTerm);
+          this.searchTimezoneParams = searchTerm.text;
+        // this.selectedTimezone = searchTerm.offset;
+        } else if (typeof searchTerm === 'string') {
+          this.searcchedTimezones = new Promise((resolve) => {
+            window.setTimeout(() => {
+              if (!searchTerm) {
+                resolve(this.timeZones);
+              } else if (searchTerm) {
+                const term = searchTerm.toLowerCase();
+
+                resolve(
+                  this.timeZones.filter(({ value }) => value.toLowerCase().includes(term),),
+                );
+              }
+            }, 500);
+          });
+        }
+      },
       getColorButton(buttonColor) {
         return `md-${buttonColor}`;
       },
@@ -280,7 +348,7 @@
         this.$validator.validateAll().then((isValid) => {
           this.$emit('on-submit', this.registerForm, isValid);
         });
-        this.touched.URL = true;
+        this.touched.url = true;
         this.touched.email = true;
         this.touched.phone = true;
       },
@@ -290,7 +358,7 @@
         reader.onload = (e) => {
           vm.image = e.target.result;
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataurl(file);
       },
       updateProfile() {
         this.$validator.validateAll().then((result) => {
@@ -298,7 +366,7 @@
             this.$store
               .dispatch(USER_UPDATE, {
                 clinic: {
-                  URL: this.clinic.URL,
+                  url: this.clinic.url,
                   email: this.clinic.email,
                   phone: this.clinic.phone,
                 },
@@ -368,16 +436,16 @@
       email() {
         return this.clinic.email;
       },
-      URL() {
-        return this.clinic.URL;
+      url() {
+        return this.clinic.url;
       },
       phone() {
         return this.clinic.phone;
       },
     },
     watch: {
-      URL() {
-        this.touched.URL = true;
+      url() {
+        this.touched.url = true;
       },
       email() {
         this.touched.email = true;

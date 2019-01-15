@@ -93,6 +93,7 @@ import IconToothWorld from './JawIcons/Icons/ToothWorld.vue';
 import IconToothRestovration from './JawIcons/Icons/ToothRestovration.vue';
 import JawCard from './Jaw/JawCard.vue';
 import Jaw from './Jaw/Jaw.vue';
+import JawAddDiagnose from './Jaw/JawAddDiagnose.vue';
 
 // For Dev Use Only
 
@@ -127,6 +128,7 @@ export {
   AsyncWorldMap,
   JawCard,
   Jaw,
+  JawAddDiagnose,
   SidebarPluginJaw,
   // Icons
   IconAdult,

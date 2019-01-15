@@ -7,7 +7,7 @@ import axios from 'axios';
 import interceptorsSetup from './helpers/interceptors';
 interceptorsSetup();
 
-const AUTH_TOKEN = localStorage.getItem('accessToken');
+const AUTH_TOKEN = 'Bearer ' + localStorage.getItem('accessToken');
 if (AUTH_TOKEN) {
     axios.defaults.headers.common.Authorization = AUTH_TOKEN;
 }

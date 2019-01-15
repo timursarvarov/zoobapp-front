@@ -45,6 +45,9 @@
         </div>
       </transition>
     </md-card-content>
+    <md-card-actions>
+      <slot name="footer-actions"></slot>
+    </md-card-actions>
   </md-card>
 </template>
 
@@ -84,5 +87,5 @@
   };
 </script>
 
-<style lang="css">
+<style lang="scss">
 </style>

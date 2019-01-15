@@ -2,107 +2,100 @@
 
 
   <div class="md-layout">
-                  <div class="md-layout-item  md-small-size-100 md-xsmall-size-100 md-size-50">
+      <div  ref="jawWrapper" class="md-layout-item  md-small-size-100 md-xsmall-size-100 md-size-50">
+        <jaw
+          v-model="selectedTeeth"
+          :jaw="jaw"
+          :prefer = "'diagnose'"
+          >
+          <div slot="bottom">
+          </div>
+        </jaw>
+      </div>
+      <div class="md-layout-item   md-small-size-100 md-xsmall-size-100  md-size-50">
+        <div class="set-diagnose-form md-small-size-100 md-xsmall-size-100 md-size-50">
+          <div class="md-layout">
+              <md-checkbox class="md-layout-item" v-model="toggleAll" :disabled='search.length > 0' >Show all</md-checkbox>
+            <md-field class="md-layout-item">
+              <label>Type to search diagnose</label>
+              <md-input v-model="search"  > </md-input>
+               <slide-y-down-transition>
+                 <md-button @click="search = ''"  v-show="search.length > 0" class="md-simple md-icon-button md-dense md-input-action ">
+                  <md-icon :style="{ color: getDiagnosis.length === 0 ? '#9c27b0 !important': '' }"
+                  >close</md-icon>
+               </md-button>
+               </slide-y-down-transition>
 
-                    <jaw
+            </md-field>
+          </div>
 
-                      v-model="selectedTeeth"
-                      :jaw="jaw"
-                      :prefer = "'diagnose'"
+            <div class="collapse-wrapper" :style="{height: matchHeight()+'px'}" >
+              <collapse
+                    :collapse="diagnosisGroup"
+                    icon="keyboard_arrow_down"
+                    color-collapse="primary"
+                    :toggleAll = "getToggleAll"
+                  >
 
-                    >
-                      <div slot="bottom">
-                        {{selectedTeeth}}
-                        {{selectedDiagnose}}
+                <template  v-for="(diagnoseGroup, key) in getDiagnosis" :slot="'md-collapse-pane-'+(parseInt(key) + 1)" >
+                  <div   :key="key">
+                    <md-list class=" md-dense" >
+                        <md-list-item  :class="[{dental:  diagnose.type == 'dental' && selectedTeeth.length == 0 }]" v-ripple v-for="(diagnose, keyd) in diagnoseGroup.codes" :key="keyd" >
 
-                        <md-button class="md-simple  jaw-state  ">
-                          <div class="icon-wrapper">
-                            <icon-base
-                              class="icon-wrapper--item"
-                              width="30"
-                              height="30"
-                              icon-name="icon-root-canal"
-                            />
-                            <small class="icon-wrapper--item">Pulpit</small>
+
+                          <div class="diagnose-code" >
+                            <h6  v-html="diagnose.code"></h6>
                           </div>
-                        </md-button>
 
+                          <div class="md-list-item-text" @click="selectDiagnose(diagnose)" >
+
+                            <span  v-html="diagnose.title"></span>
+                            <small class="description text-warning" v-if="diagnose.type == 'dental' && selectedTeeth.length == 0" > Please firstly choose a tooth  </small>
+                            <small class="description" v-else  v-html="diagnose.explain">Horizontal Tabs</small>
+
+                          </div>
+
+                          <md-button  :md-ripple="false" class="md-simple md-list-action md-icon-button">
+                            <md-icon class="md-primary">star</md-icon>
+                          </md-button>
+
+                        </md-list-item>
+                      </md-list>
                       </div>
-                    </jaw>
-                  </div>
-                  <div class="md-layout-item   md-small-size-100 md-xsmall-size-100 ">
-
-
-                <div class="set-diagnose-form">
-                     <md-button @click="Implant()">Implant</md-button>
-                  <div class="md-layout">
-                  <md-field class="md-layout-item">
-                    <label>Type to search diagnose</label>
-                    <md-input v-model="search"  > </md-input>
-                  </md-field>
-                  <div class="md-layout-item ">
-                    <md-checkbox v-model="toggleAll" :disabled='search.length > 0' >Show all</md-checkbox>
-                  </div>
-                  </div>
-                    <!-- <collapse-transition> -->
-                        <div class="collapse-wrapper">
-                          <collapse
-                                :collapse="diagnosisGroup"
-                                icon="keyboard_arrow_down"
-                                color-collapse="success"
-                                :toggleAll = "getToggleAll"
-
-                              >
-
-                            <template  v-for="(diagnoseGroup, key) in getDiagnosis" :slot="'md-collapse-pane-'+(parseInt(key) + 1)" >
-                                <md-table
-                                v-model="diagnoseGroup.codes" :key="diagnoseGroup.code"
-                                @md-selected="onSelect"
-                              >
-
-                                <md-table-row
-                                  slot="md-table-row"
-                                  slot-scope="{ item }"
-                                  md-selectable="single"
-
-
-                                  :md-disabled="item.type == 'dental' && selectedTeeth.length == 0"
-                                >
-                                  <md-table-cell  v-html="item.code" > </md-table-cell>
-                                  <md-table-cell >
-                                      <span class="helper text-primary" v-if="item.type == 'dental' && selectedTeeth.length == 0" > Please firstly choose a tooth  <br/> </span>
-                                    <span  v-html="item.title"></span> <br/>
-                                      <span class="helper"  v-html="item.explain"></span>
-                                    </md-table-cell>
-                                </md-table-row>
-                              </md-table>
-                            </template>
-                          </collapse>
-                         <md-empty-state
-                         v-if="getDiagnosis.length == 0"
-                          class="md-primary"
-                          md-icon="sentiment_dissatisfied"
-                          md-label="No matching diagnosis"
-                          md-description="Try another search params">
-                        </md-empty-state>
-                        </div>
-                    <!-- </collapse-transition> -->
+                </template>
+              </collapse>
+              <md-empty-state
+              v-if="getDiagnosis.length == 0"
+              class="md-primary"
+              md-icon="sentiment_dissatisfied"
+              md-label="No matching diagnosis"
+              md-description="Try another search params">
+            </md-empty-state>
+            </div>
           </div>
       </div>
+          <jaw-add-diagnose
+          v-if="newDiagnoseParams.showForm"
+           v-model="newDiagnoseParams"
+           :selectedTeeth="selectedTeeth"
+           :selectedDiagnose="selectedDiagnoseLocal"
+           :jaw='jaw'
+           ></jaw-add-diagnose>
+
   </div>
 
 </template>
 
 <script>
+  import { NOTIFY, PATIENT_DIAGNOSE_SET } from '@/store/modules/constants';
   import { mapGetters } from 'vuex';
-  import { Collapse, Jaw, IconBase } from '@/components';
+  import { SlideYDownTransition } from 'vue2-transitions';
+  import { Collapse, Jaw, JawAddDiagnose } from '@/components';
   import Fuse from 'fuse.js';
+  import DiagnoseList from './DiagnoseList.vue';
 
   const fuseOptions = {
     findAllMatches: true,
-    // tokenize: true,
-    // matchAllTokens: true,
-    // shouldSort: true,
     include: ['score', 'matches'],
     includeMatches: true,
     threshold: 0.5,
@@ -110,7 +103,6 @@
     distance: 3,
     maxPatternLength: 32,
     minMatchCharLength: 1,
-    // keys: ['title', 'explain', 'code'],
     keys: [
       {
         name: 'title',
@@ -131,13 +123,11 @@
     components: {
       Collapse,
       Jaw,
-      IconBase,
+      SlideYDownTransition,
+      JawAddDiagnose,
+      DiagnoseList,
     },
     props: {
-      // selectedTeeth: {
-      //   type: Array,
-      //   default: () => [],
-      // },
       selectedDiagnose: {
         type: Array,
         default: () => [],
@@ -145,6 +135,12 @@
     },
     data() {
       return {
+        newDiagnoseParams: {
+          showForm: false,
+          diagnose: {},
+          saveDiagnose: false,
+        },
+        showSelectedToothDialog: false,
         search: '',
         searched: [],
         selectedTeeth: [],
@@ -155,26 +151,55 @@
         filter: {},
         diagnoseOriginal: [],
         users: [],
-        selectedDiagnoseLocal: [],
+        selectedDiagnoseLocal: {},
       };
     },
     methods: {
-      Implant() {
-        console.log(this.selectedTeeth);
-        for (let index = 0; index < this.selectedTeeth.length; index += 1) {
-        this.jaw.jawAnamnes[this.selectedTeeth[index]].implant = true;
-        this.jaw.jawAnamnes[this.selectedTeeth[index]].root = false;
-          }
+      matchHeight() {
+        let height = '';
+        if (this.$refs.jawWrapper) {
+          height = this.$refs.jawWrapper.clientHeight;
+        }
+        return height;
       },
-      onSelect(diagnose) {
-        this.selectedDiagnoseLocal = diagnose;
-        this.$emit('input', this.selectedDiagnoseLocal);
+      Implant() {
+        for (let index = 0; index < this.selectedTeeth.length; index += 1) {
+          this.jaw.jawDiagnose[this.selectedTeeth[index]].implant = true;
+          this.jaw.jawDiagnose[this.selectedTeeth[index]].root = false;
+        }
+      },
+      selectDiagnose(diagnose) {
+        if (diagnose) {
+          if (diagnose.type === 'dental' && this.selectedTeeth.length === 0) {
+            this.$store.dispatch(NOTIFY, {
+              settings: {
+                message: 'Please first select teeth',
+                cplor: 'warnning',
+              },
+            });
+          } else {
+            Object.values(this.diagnosis).forEach((group) => {
+              group.codes.forEach((diagnoseOrigin) => {
+                if (diagnoseOrigin.code === diagnose.constCode) {
+                  this.selectedDiagnoseLocal = diagnoseOrigin;
+                }
+              });
+            });
+            this.newDiagnoseParams.showForm = true;
+          }
+        }
       },
       copyObj(obj) {
         return JSON.parse(JSON.stringify(obj));
       },
       loadData() {
         this.searched = this.copyObj(this.diagnosis);
+        Object.values(this.searched).forEach((group) => {
+          group.codes.forEach((diagnose) => {
+            // eslint-disable-next-line
+          diagnose.constCode = this.copyObj(diagnose.code).slice(0);
+          });
+        });
         this.diagnoseOriginal = this.copyObj(this.searched);
         this.fuse = new Fuse(this.diagnosis, fuseOptions);
       },
@@ -185,11 +210,11 @@
         const paths = path.split('.');
         let count = 0;
         // eslint-disable-next-line
-        paths.reduce((value, index) => {
+      paths.reduce((value, index) => {
           count += 1;
           if (count >= paths.length) {
             // eslint-disable-next-line
-            value[index] = newValue;
+          value[index] = newValue;
           } else {
             const nValue = value[index];
             return nValue;
@@ -219,6 +244,7 @@
                 let text = this.namespace(result.item, match.key);
                 if (text) {
                   let offset = 0;
+
                   match.indices.forEach((index) => {
                     text = this.highlightText(
                       text,
@@ -244,12 +270,44 @@
         });
         return grooup;
       },
+      setDiagnosisToJaw() {
+        // console.log(1);
+        // Object.keys(this.jaw.jawDiagnose).forEach((toothId) => {
+        //   console.log(toothId);
+        //   Object.keys(this.jaw.jawDiagnose[toothId]).forEach((kLocation) => {
+        //     console.log(kLocation);
+        //     this.jaw.jawDiagnose[toothId][kLocation] = undefined;
+        //   });
+        // });
+        console.log(this.jawEthalon.jawDiagnose);
+        this.jaw.jawDiagnose = JSON.parse(
+          JSON.stringify(this.jawEthalon.jawDiagnose),
+        );
+        for (let i = 0; i < this.patient.diagnosis.length; i += 1) {
+          const diagnose = this.patient.diagnosis[i];
+          Object.keys(diagnose.teeth).forEach((toothId) => {
+            Object.keys(diagnose.teeth[toothId]).forEach((kLocation) => {
+              // eslint-disable-next-line
+            this.jaw.jawDiagnose[toothId][kLocation] =
+                diagnose.teeth[toothId][kLocation];
+            });
+          });
+        }
+      },
     },
     computed: {
       ...mapGetters({
         diagnosis: 'getDiagnosis',
         jaw: 'jaw',
+        jawEthalon: 'jawEthalon',
+        patient: 'getPatient',
       }),
+      saveDiagnose() {
+        return this.newDiagnoseParams.saveDiagnose;
+      },
+      patientDiagnosis() {
+        return this.patient.diagnosis;
+      },
       filteredDiagnosis() {
         return this.getFilteredDiagnosis();
       },
@@ -262,36 +320,46 @@
       getDiagnosis() {
         return this.search === '' ? this.searched : this.filteredDiagnosis;
       },
+
       diagnosisGroup() {
         const dGroup = [];
         this.getDiagnosis.forEach((element) => {
-          dGroup.push(`${element.code}  ${element.title}`);
+          dGroup.push(`${element.code}    ${element.title}`);
         });
         return dGroup;
       },
-    // selectedTeethLocal: {
-    //   get() {
-    //     return this.selectedTeeth;
-    //   },
-    //   set(val) {
-    //     this.selectedTeeth = val;
-    //   },
-    // },
     },
     mounted() {
       this.loadData();
       this.searched = this.copyObj(this.diagnoseOriginal);
     },
+    watch: {
+      saveDiagnose() {
+        if (this.saveDiagnose) {
+          this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
+            diagnose: this.newDiagnoseParams.diagnose,
+          });
+          this.newDiagnoseParams.saveDiagnose = false;
+        }
+      },
+      patientDiagnosis() {
+        this.setDiagnosisToJaw();
+      },
+    },
   };
 </script>
 <style lang="scss">
 .set-diagnose-form {
+  .diagnose-code {
+    margin-right: 24px;
+  }
   .collapse-wrapper {
     margin: 20px 0 20px 0;
     overflow: hidden;
     overflow-y: scroll;
-    max-height: 50vh;
-    min-height: 420px;
+    max-height: 40vh;
+    min-height: 30vh;
+    padding-right: 10px;
     &::-webkit-scrollbar {
       width: 7px;
       background-color: transparent;
@@ -301,24 +369,49 @@
       border-radius: 7px;
     }
     .md-collapse-label {
-      padding: 10px 10px 35px 0;
+      padding: 0px 10px 25px 0;
+      overflow: hidden;
       .md-collapse-title {
         font-weight: 400;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-right: 25px;
         .md-icon {
-          top: 8px;
+          top: 0;
         }
       }
     }
     md-error .md-collapse-label:after {
       bottom: 6px;
     }
+
     .highlight {
-      background-color: rgb(236, 236, 41);
+      background-color: rgba(255, 255, 21, 0.979);
     }
-    .helper {
-      font-weight: 400;
-      font-size: 11px;
+    .md-list-item-content {
+      max-height: 64px;
+      min-height: 44px;
+      height: 44px;
+      padding: 8px;
     }
+    .dental {
+      .md-list-item-text {
+        cursor: not-allowed;
+      }
+    }
+    .md-list-item-text {
+      cursor: pointer;
+    }
+    .md-list-action {
+      padding-right: 10px;
+    }
+  }
+  .noresult {
+    color: red !important;
+  }
+  .md-checkbox {
+    padding-top: 7px;
   }
 }
 </style>

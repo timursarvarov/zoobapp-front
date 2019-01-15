@@ -4,9 +4,12 @@
     class="md-transparent"
     :class="{'md-toolbar-absolute md-white md-fixed-top': $route.meta.navbarAbsolute}"
   >
-  <div class="wrapper-progre-bar" >
-    <md-progress-bar v-show="loading" md-mode="indeterminate"></md-progress-bar>
-  </div>
+    <div class="wrapper-progre-bar">
+      <md-progress-bar
+        v-show="loading"
+        md-mode="indeterminate"
+      ></md-progress-bar>
+    </div>
     <div class="md-toolbar-row">
       <div class="md-toolbar-section-start">
         <h3 class="md-title">{{$route.name}}</h3>
@@ -39,15 +42,16 @@
               <i class="material-icons">dashboard</i>
               <p class="hidden-lg hidden-md">Dashboard</p>
             </md-list-item>
-            <md-list-item @click="showPatientAddForm()">
+            <md-list-item
+              class="md-primary md-simple md-just-icon "
+              @click="showPatientAddForm()"
+            >
               <i class="material-icons">person_add</i>
               <p class="hidden-lg hidden-md">Add Patient</p>
             </md-list-item>
 
             <li class="md-list-item">
-              <a
-                class="md-list-item-router md-list-item-container md-button-clean dropdown"
-              >
+              <a class="md-list-item-router md-list-item-container md-button-clean dropdown">
                 <div class="md-list-item-content">
                   <drop-down direction="down">
                     <md-button
@@ -71,9 +75,7 @@
               </a>
             </li>
             <li class="md-list-item">
-              <a
-                class="md-list-item-router md-list-item-container md-button-clean dropdown"
-              >
+              <a class="md-list-item-router md-list-item-container md-button-clean dropdown">
                 <div class="md-list-item-content">
                   <drop-down direction="down">
                     <md-button
@@ -85,9 +87,14 @@
                       <!-- <p class="hidden-lg hidden-md">Notifications</p> -->
                     </md-button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                      <li @click="lock()" > <a href="#" >Lock</a></li>
-                      <li @click="logout()" > <a href="#" >Logout</a></li>
-                      <li><router-link tag="a" to="/pages/user">Profile</router-link></li>
+                      <li @click="lock()"> <a href="#">Lock</a></li>
+                      <li @click="logout()"> <a href="#">Logout</a></li>
+                      <li>
+                        <router-link
+                          tag="a"
+                          to="/pages/user"
+                        >Profile</router-link>
+                      </li>
                       <li><a href="#">You're now friend with Andrew</a></li>
                       <li><a href="#">Another Notification</a></li>
                       <li><a href="#">Another One</a></li>
@@ -138,15 +145,13 @@
         }
       },
       logout() {
-        this.$store.dispatch(AUTH_LOGOUT)
-          .then(() => {
-            this.$router.push('/login');
+        this.$store.dispatch(AUTH_LOGOUT).then(() => {
+          this.$router.push('/login');
         });
       },
       lock() {
-        this.$store.dispatch(AUTH_LOCK)
-          .then(() => {
-            this.$router.push('/lock');
+        this.$store.dispatch(AUTH_LOCK).then(() => {
+          this.$router.push('/lock');
         });
       },
     },
@@ -159,7 +164,7 @@
 </script>
 
 <style>
-.wrapper-progre-bar{
+.wrapper-progre-bar {
   position: fixed;
   top: 1px;
   right: 0;

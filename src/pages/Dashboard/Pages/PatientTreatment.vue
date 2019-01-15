@@ -96,7 +96,7 @@
     </div>
     <div class="md-layout">
       <div class="md-layout-item md-size-100">
-        <nav-tabs-card>
+        <!-- <nav-tabs-card>
           <template slot="content">
             <span class="md-nav-tabs-title">Set new:</span>
             <md-tabs
@@ -119,7 +119,7 @@
                 md-label="Diagnose"
                 to="/patient/treatment/diagnose"
               >
-                <diagnose-list></diagnose-list>
+
               </md-tab>
 
               <md-tab
@@ -132,7 +132,11 @@
               </md-tab>
             </md-tabs>
           </template>
-        </nav-tabs-card>
+        </nav-tabs-card> -->
+        <diagnose-list
+          v-if="$route.name === 'patient/treatment/diagnose' && patient.diagnosis.length > 0"
+          :diagnosis="patient.diagnosis"
+        ></diagnose-list>
       </div>
     </div>
   </div>
@@ -179,9 +183,9 @@
         for (let index = 0; index < this.selectedTeeth.length; index += 1) {
           this.jaw.jawAnamnes[this.selectedTeeth[index]].implant = true;
           this.jaw.jawAnamnes[this.selectedTeeth[index]].root = false;
-          }
-          // this.jaw.jawAnamnes[17].implant = true;
-          // this.jaw.jawAnamnes[17].root = false;
+        }
+      // this.jaw.jawAnamnes[17].implant = true;
+      // this.jaw.jawAnamnes[17].root = false;
       },
       currentTabColor() {
         let color = '';
@@ -209,6 +213,7 @@
         teethAdultTop: 'teethAdultTop',
         teethAdultBottom: 'teethAdultBottom',
         jaw: 'jaw',
+        patient: 'getPatient',
       }),
     },
     created() {

@@ -1,2 +1,5 @@
 export default {
+    patient: {
+        diagnosis: [],
+    },
 };
