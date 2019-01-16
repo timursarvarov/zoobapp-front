@@ -169,30 +169,31 @@
               Enter % that will be added to the total treatment price
             </span>
           </md-field> -->
-          <!-- <md-autocomplete
+          <md-autocomplete
             v-model="searchTimezoneParams"
             :md-options="timeZones"
             @md-changed="getCountries"
             @md-opened="getCountries"
-          >
+            @md-selected="selectedTimezoneFunc"
+          >{{searchTimezoneParams | json}}
             <label>Timezone</label>
 
             <template
               slot="md-autocomplete-item"
               slot-scope="{ item }"
             >
-              <div @click="setTimezone(item)">{{ item.text }}<br>
+              <div >{{ item.text }}<br>
                 <small>{{ item.utc.join(', ') }}</small>
               </div>
 
             </template>
-          </md-autocomplete> -->
+          </md-autocomplete>
           {{selectedTimezone}}
         </div>
 
         <div class="md-layout md-layout-item md-small-size-100 md-size-50">
 
-          <md-field>
+          <!-- <md-field>
             <label for="movie">Disabled Select</label>
             <md-select v-model="searchTimezoneParams">
               <md-option
@@ -201,11 +202,11 @@
                 :value="timezone.text"
               >
                 {{ timezone.text }}
-                <!-- <small>{{ timezone.utc.join(', ') }}</small> -->
+                <small>{{ timezone.utc.join(', ') }}</small>
 
               </md-option>
             </md-select>
-          </md-field>
+          </md-field> -->
         </div>
 
         <div class="md-layout md-layout-item md-small-size-100 md-size-50">
@@ -283,7 +284,7 @@
     },
     data() {
       return {
-        searchTimezoneParams: {},
+        searchTimezoneParams: null,
         searcchedTimezones: [],
         selectedTimezone: '',
         image: '',
@@ -310,11 +311,15 @@
       };
     },
     methods: {
+      selectedTimezoneFunc(timezone) {
+        this.searchTimezoneParams = timezone.text;
+      },
       setTimezone(timezone) {
         console.log(timezone.text);
         this.searchTimezoneParams = timezone.text;
       },
       getCountries(searchTerm) {
+        console.log(searchTerm);
         if (typeof searchTerm === 'object') {
           console.log(typeof searchTerm);
           this.searchTimezoneParams = searchTerm.text;

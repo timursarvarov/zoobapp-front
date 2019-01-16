@@ -580,11 +580,17 @@ export default {
 
 <style lang="scss"  >
 .jaw-dialog-wrapper {
+  max-height: 90% !important;
   background-color: transparent !important;
   box-shadow: none;
   margin: 0 !important;
   padding: 0 !important;
   -webkit-font-smoothing: antialiased !important;
+
+  .md-card{
+    overflow-y:auto;
+    overflow-x: hidden;
+  }
 
   .jaw,
   .md-dialog-container {

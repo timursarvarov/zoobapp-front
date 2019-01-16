@@ -1,7 +1,7 @@
 <template>
 
   <md-card>
-    <md-card-header class="md-card-header-icon md-card-header-primary">
+    <md-card-header class=" diagnose-list md-card-header-icon md-card-header-primary">
       <div class="card-icon">
         <md-icon>assignment</md-icon>
       </div>
@@ -312,6 +312,11 @@
 </script>
 
 <style lang="css" scoped>
+.diagnose-list{
+.md-tabs-content table thead {
+  display: table-header-group !important;
+}
+}
 .md-card .md-card-actions {
   border: 0;
   margin-left: 20px;

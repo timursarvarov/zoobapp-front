@@ -81,6 +81,9 @@
            :selectedDiagnose="selectedDiagnoseLocal"
            :jaw='jaw'
            ></jaw-add-diagnose>
+            <diagnose-list
+          :diagnosis="patient.diagnosis"
+        ></diagnose-list>
 
   </div>
 
