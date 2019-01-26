@@ -7,6 +7,8 @@ import {
   PATIENT_AVATAR_UPLOAD,
   PATIENT_UPDATE,
   PATIENT_DIAGNOSE_SET,
+  PATIENT_GET,
+  PATIENT_SET_PARAM,
 } from '../constants';
 
 export default {
@@ -31,5 +33,16 @@ export default {
   },
   [PATIENT_DIAGNOSE_SET]: (state, diagnose) => {
     state.patient.diagnosis.push(diagnose);
+  },
+  [PATIENT_GET]: (state, patient) => {
+    state.patient = patient;
+  },
+  [PATIENT_SET_PARAM]: (
+    state, {
+      type,
+      value
+    }
+  ) => {
+    state.patient[type] = value;
   },
 };

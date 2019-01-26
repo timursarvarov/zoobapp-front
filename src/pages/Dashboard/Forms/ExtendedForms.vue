@@ -96,6 +96,11 @@
                     </md-select>
                   </md-field>
                 </div>
+                <div class="md-layout-item">
+                  <md-datepicker v-model="selectedLabeled">
+                    <label>Select date</label>
+                  </md-datepicker>
+                </div>
               </div>
             </div>
             <div class="md-layout-item md-size-50 md-small-size-100">

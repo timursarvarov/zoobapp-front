@@ -1,21 +1,28 @@
 <template lang="html">
 
 
-  <div class="md-layout">
-      <div  ref="jawWrapper" class="md-layout-item  md-small-size-100 md-xsmall-size-100 md-size-50">
+  <div class="md-layout md-gutter">
+      <div  ref="jawWrapper" class="md-layout-item  md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
         <jaw
           v-model="selectedTeeth"
           :jaw="jaw"
+            :patientDiagnosis="patient.diagnosis"
           :prefer = "'diagnose'"
+          :teethSchema = "teethSchema"
+          :teethSystem = "clinic.teethSystem"
           >
           <div slot="bottom">
           </div>
         </jaw>
       </div>
-      <div class="md-layout-item   md-small-size-100 md-xsmall-size-100  md-size-50">
+
+      <div class="md-layout-item  md-small-size-100 md-xsmall-size-100  md-medium-size-50 md-size-50">
         <div class="set-diagnose-form md-small-size-100 md-xsmall-size-100 md-size-50">
-          <div class="md-layout">
-              <md-checkbox class="md-layout-item" v-model="toggleAll" :disabled='search.length > 0' >Show all</md-checkbox>
+          <div class="md-layout md-gutter">
+            <div  class="md-layout-item">
+              <md-checkbox v-model="toggleAll" :disabled='search.length > 0' >Show all</md-checkbox>
+
+            </div>
             <md-field class="md-layout-item">
               <label>Type to search diagnose</label>
               <md-input v-model="search"  > </md-input>
@@ -25,12 +32,12 @@
                   >close</md-icon>
                </md-button>
                </slide-y-down-transition>
-
             </md-field>
           </div>
 
-            <div class="collapse-wrapper" :style="{height: matchHeight()+'px'}" >
+            <div class="collapse-wrapper md-layout md-gutter" :style="{height: matchHeight()+'px'}" >
               <collapse
+              class="md-layout-item md-size-100"
                     :collapse="diagnosisGroup"
                     icon="keyboard_arrow_down"
                     color-collapse="primary"
@@ -55,8 +62,9 @@
 
                           </div>
 
-                          <md-button  :md-ripple="false" class="md-simple md-list-action md-icon-button">
-                            <md-icon class="md-primary">star</md-icon>
+                          <md-button @click="setFavoriteDiagnose(diagnose)" :class="[{'md-primary' : isFavorite(diagnose)}, 'md-simple', 'md-list-action', 'md-icon-button']"   :md-ripple="false" >
+                            <md-icon >star</md-icon>
+                            <md-tooltip  md-delay="700">Add to Favorite</md-tooltip>
                           </md-button>
 
                         </md-list-item>
@@ -73,24 +81,35 @@
             </md-empty-state>
             </div>
           </div>
+
       </div>
+
+      <div class="md-layout-item md-layout md-size-100" >
+        <diagnose-list class="md-layout-item  md-size-100"
+        ></diagnose-list>
+        </div>
+      <div class="md-layout-item md-layout md-size-100" >
           <jaw-add-diagnose
           v-if="newDiagnoseParams.showForm"
            v-model="newDiagnoseParams"
            :selectedTeeth="selectedTeeth"
            :selectedDiagnose="selectedDiagnoseLocal"
            :jaw='jaw'
+           :patientDiagnosis="patient.diagnosis"
+           :teethSchema = "teethSchema"
+           :teethSystem = "clinic.teethSystem"
            ></jaw-add-diagnose>
-            <diagnose-list
-          :diagnosis="patient.diagnosis"
-        ></diagnose-list>
-
+        </div>
   </div>
 
 </template>
 
 <script>
-  import { NOTIFY, PATIENT_DIAGNOSE_SET } from '@/store/modules/constants';
+  import {
+    NOTIFY,
+    PATIENT_DIAGNOSE_SET,
+    USER_SET_PARAM,
+  } from '@/store/modules/constants';
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
   import { Collapse, Jaw, JawAddDiagnose } from '@/components';
@@ -158,6 +177,25 @@
       };
     },
     methods: {
+      isFavorite(diagnose) {
+        if (this.favoriteDiagnosis.includes(diagnose.code)) {
+          return true;
+        }
+        return false;
+      },
+      setFavoriteDiagnose(diagnose) {
+        const index = this.favoriteDiagnosis.findIndex(d => d === diagnose.code);
+        if (index === -1) {
+          this.favoriteDiagnosis.unshift(diagnose.code);
+        } else {
+          this.favoriteDiagnosis.splice(index, 1);
+        }
+        this.$store.dispatch(USER_SET_PARAM, {
+          type: 'favoriteDiagnosis',
+          value: this.favoriteDiagnosis,
+        });
+        this.loadData();
+      },
       matchHeight() {
         let height = '';
         if (this.$refs.jawWrapper) {
@@ -196,6 +234,7 @@
         return JSON.parse(JSON.stringify(obj));
       },
       loadData() {
+        this.unshiftFavoriteDiagnosis();
         this.searched = this.copyObj(this.diagnosis);
         Object.values(this.searched).forEach((group) => {
           group.codes.forEach((diagnose) => {
@@ -205,6 +244,43 @@
         });
         this.diagnoseOriginal = this.copyObj(this.searched);
         this.fuse = new Fuse(this.diagnosis, fuseOptions);
+      },
+      unshiftFavoriteDiagnosis() {
+        const favoriteDiagnosis = {
+          code: '★',
+          codes: [],
+          title: 'Favorite Diagnosis',
+        };
+        if (this.favoriteDiagnosis.length > 0) {
+          this.favoriteDiagnosis.forEach((fDiagnose) => {
+            Object.values(this.diagnosis).forEach((group) => {
+              let favoriteD = null;
+              if (group.codes && group.code != '★') {
+                favoriteD = group.codes.find(
+                  diagnose => diagnose.code === fDiagnose,
+                );
+              }
+              if (favoriteD) {
+                favoriteDiagnosis.codes.push(favoriteD);
+              }
+            });
+          });
+        }
+        if (favoriteDiagnosis.codes.length > 0) {
+          const favoriteIndex = this.diagnosis.findIndex(
+            diagnose => diagnose.code === '★',
+          );
+          if (favoriteIndex === -1) {
+            this.diagnosis.unshift(favoriteDiagnosis);
+          } else {
+            this.diagnosis.splice(favoriteIndex, 1, favoriteDiagnosis);
+          }
+        } else {
+          const favoriteIndex = this.diagnosis.findIndex(
+            diagnose => diagnose.code === '★',
+          );
+          this.diagnosis.splice(favoriteIndex, 1);
+        }
       },
       namespace(object, path) {
         return path.split('.').reduce((value, index) => value[index], object);
@@ -274,15 +350,6 @@
         return grooup;
       },
       setDiagnosisToJaw() {
-        // console.log(1);
-        // Object.keys(this.jaw.jawDiagnose).forEach((toothId) => {
-        //   console.log(toothId);
-        //   Object.keys(this.jaw.jawDiagnose[toothId]).forEach((kLocation) => {
-        //     console.log(kLocation);
-        //     this.jaw.jawDiagnose[toothId][kLocation] = undefined;
-        //   });
-        // });
-        console.log(this.jawEthalon.jawDiagnose);
         this.jaw.jawDiagnose = JSON.parse(
           JSON.stringify(this.jawEthalon.jawDiagnose),
         );
@@ -304,6 +371,9 @@
         jaw: 'jaw',
         jawEthalon: 'jawEthalon',
         patient: 'getPatient',
+        favoriteDiagnosis: 'favoriteDiagnosis',
+        teethSchema: 'teethSchema',
+        clinic: 'getClinicSettings',
       }),
       saveDiagnose() {
         return this.newDiagnoseParams.saveDiagnose;
@@ -339,6 +409,7 @@
     watch: {
       saveDiagnose() {
         if (this.saveDiagnose) {
+          this.newDiagnoseParams.diagnose.id = Math.random();
           this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
             diagnose: this.newDiagnoseParams.diagnose,
           });
@@ -415,6 +486,7 @@
   }
   .md-checkbox {
     padding-top: 7px;
+    margin-left: 17px;
   }
 }
 </style>

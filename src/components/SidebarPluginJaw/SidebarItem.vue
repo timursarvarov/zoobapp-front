@@ -21,7 +21,16 @@
           />
         </md-avatar>
       </md-icon>
-      <md-icon v-else>{{link.icon}}</md-icon>
+      <md-icon v-if="!link.img && acronimL ">
+        <md-avatar
+          class="md-avatar-icon acronim"
+          :style="[{'background-color':`${link.avatarColor}`}]"
+        >
+          {{acronimL}}
+        </md-avatar>
+      </md-icon>
+
+      <md-icon v-if="!link.acronim && !link.img && link.icon">{{link.icon}}</md-icon>
       <p>
         {{link.name}}
         <b class="caret"></b>
@@ -83,6 +92,8 @@
         default: () => ({
           name: '',
           path: '',
+          avatarColor: '',
+          acronim: '',
           children: [],
         }),
       },
@@ -107,6 +118,9 @@
       };
     },
     computed: {
+      acronimL() {
+        return this.link.acronim;
+      },
       baseComponent() {
         return this.isMenu || this.link.isRoute ? 'li' : 'router-link';
       },
@@ -130,10 +144,10 @@
         if (this.$route && this.$route.path) {
           let matchingRoute = '';
           if (this.children.length > 0) {
-            matchingRoute = this.children.find(c => this.$route.path.startsWith(c.link.path));
+            matchingRoute = this.children.find(c => this.$route.path.startsWith(c.link.path),);
           } else if (
             re
-            && this.$route.path.split('/').length !== re.split('/').length
+          && this.$route.path.split('/').length !== re.split('/').length
           ) {
             matchingRoute = this.$route.path.startsWith(re);
           }
@@ -161,8 +175,8 @@
       linkClick() {
         if (
           this.autoClose
-          && this.$sidebar
-          && this.$sidebar.showSidebar === true
+        && this.$sidebar
+        && this.$sidebar.showSidebar === true
         ) {
           this.$sidebar.displaySidebar(false);
         }
@@ -186,6 +200,12 @@
         this.collapsed = false;
       }
     },
+    watch: {
+      acronimL() {
+        console.log(this.link.img);
+      // this.link.img = '';
+      },
+    },
     destroyed() {
       if (this.$el && this.$el.parentNode) {
         this.$el.parentNode.removeChild(this.$el);
@@ -198,9 +218,17 @@
 </script>
 <style lang="scss">
 .sidebar-menu-item {
+  p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   cursor: pointer;
   .md-avatar-icon {
     margin-top: -5px;
+  }
+  .acronim {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-size: 0.9rem;
   }
 }
 </style>

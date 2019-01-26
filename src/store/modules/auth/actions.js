@@ -5,11 +5,13 @@ import {
   AUTH_SUCCESS,
   AUTH_LOGOUT,
   AUTH_LOCK,
+  AUTH_REFRESH_ERROR,
   AUTH_REFRESH_TOKEN,
   AUTH_DECODE_TOKEN,
   USER_REQUEST,
   USER_LOGOUT,
   CLINIC_SET,
+  USER_SET_PARAM,
 } from '../constants';
 
 import axios from 'axios';
@@ -38,6 +40,7 @@ export default {
           localStorage.setItem('expiresAt', resp.data.expiresAt);
           localStorage.setItem('refreshToken', resp.data.refreshToken);
           axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
+          console.log(axios.defaults.headers.common.Authorization)
 
           commit(AUTH_SUCCESS, resp);
           dispatch(AUTH_DECODE_TOKEN);
@@ -71,24 +74,28 @@ export default {
           localStorage.setItem('accessToken', resp.data.accessToken);
           localStorage.setItem('expiresAt', resp.data.expiresAt);
           localStorage.setItem('refreshToken', resp.data.refreshToken);
+          axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
           commit(AUTH_SUCCESS, resp);
           dispatch(AUTH_DECODE_TOKEN);
-          resolve(resp.data.accessToken);
+          resolve(resp.data.accessToken)
         })
         .catch(err => {
           commit(AUTH_ERROR, err);
+          dispatch(AUTH_REFRESH_ERROR);
           dispatch(USER_LOGOUT);
           localStorage.removeItem('accessToken');
           reject(err);
         });
     })
   },
+
   [AUTH_LOGOUT]: ({
     commit,
+    dispatch
   }) => {
     return new Promise((resolve, reject) => {
       commit(AUTH_LOGOUT);
-      commit(USER_LOGOUT);
+      dispatch(USER_LOGOUT);
       localStorage.removeItem('accessToken');
       localStorage.removeItem('expiresAt');
       localStorage.removeItem('refreshToken');
@@ -96,6 +103,7 @@ export default {
       resolve();
     });
   },
+
   [AUTH_DECODE_TOKEN]: ({
     dispatch,
   }) => {
@@ -105,6 +113,10 @@ export default {
     const base64 = base64Url.replace('-', '+').replace('_', '/');
     const decodedParms = JSON.parse(window.atob(base64));
     dispatch(CLINIC_SET, decodedParms.organization);
+    dispatch(USER_SET_PARAM, {
+      type: 'ID',
+      value: decodedParms.userID
+    });
 
   },
   [AUTH_LOCK]: ({
@@ -118,5 +130,10 @@ export default {
       commit(AUTH_LOGOUT);
       resolve();
     });
+  },
+  [AUTH_REFRESH_ERROR]: ({
+    commit,
+  }) => {
+    commit(AUTH_REFRESH_ERROR);
   },
 };

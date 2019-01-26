@@ -13,11 +13,18 @@ import routes from './routes/routes';
 // plugin setup
 Vue.use(VueRouter);
 Vue.use(DashboardPlugin);
+Vue.use(require('vue-moment'));
 
 // configure router
 const router = new VueRouter({
   routes, // short for routes: routes
   linkExactActiveClass: 'nav-item active',
+});
+router.beforeEach((to, from, next) => {
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 10000);
+  next();
 });
 
 // global library setup

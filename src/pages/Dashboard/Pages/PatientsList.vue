@@ -49,7 +49,7 @@
 
             <md-table-empty-state
               v-if="status === 'success' "
-              md-label="No users found"
+              md-label="No patients found"
               :md-description="`No user found for this '${searchQuery}' query.
                 Try a different search term or create a new user.`"
             >
@@ -98,27 +98,38 @@
                 md-label="Email"
                 md-sort-by="email"
               >{{ item.email }}</md-table-cell>
-              <md-table-cell md-label="Age">{{ item.age }}</md-table-cell>
-              <md-table-cell md-label="Salary">{{ item.salary }}</md-table-cell>
+              <md-table-cell md-label="Phone">{{ item.phone }}</md-table-cell>
+              <md-table-cell
+                md-label="Source"
+                md-sort-by="source"
+              >{{ item.source }}</md-table-cell>
               <md-table-cell md-label="Actions">
+
+                <md-button
+                  v-show="item.allergy"
+                  class="md-just-icon md-danger md-simple"
+                  @click.native="handleShowAllergy(item)"
+                >
+                  <md-icon>report_problem</md-icon>
+                </md-button>
                 <md-button
                   class="md-just-icon md-info md-simple"
-                  @click.native="handleLike(item)"
+                  :to="{ name: 'Diagnose', params :{patientId : item.ID}}"
                 >
-                  <md-icon>favorite</md-icon>
+                  <md-icon>open_in_new</md-icon>
                 </md-button>
                 <md-button
                   class="md-just-icon md-warning md-simple"
-                  @click.native="handleEdit(item)"
+                  @click.native="openPatientProfile(item)"
                 >
                   <md-icon>dvr</md-icon>
                 </md-button>
-                <md-button
+                <!-- <md-button
                   class="md-just-icon md-danger md-simple"
                   @click.native="handleDelete(item)"
                 >
                   <md-icon>close</md-icon>
-                </md-button>
+                </md-button> -->
               </md-table-cell>
             </md-table-row>
           </md-table>
@@ -163,11 +174,11 @@
 
 <script>
   import { Pagination } from '@/components';
-  // import users from './users';
+  // import patients from './patients';
   import Fuse from 'fuse.js';
   import swal from 'sweetalert2';
   import { mapGetters } from 'vuex';
-  import { PATIENTS_REQUEST } from '@/store/modules/constants';
+  import { PATIENTS_REQUEST, AUTH_LOGOUT } from '@/store/modules/constants';
 
   export default {
     components: {
@@ -175,7 +186,7 @@
     },
     computed: {
       ...mapGetters({
-        users: 'getPatients',
+        patients: 'getPatients',
         status: 'patientsStatus',
       }),
       /** *
@@ -210,9 +221,9 @@
         currentSort: 'name',
         currentSortOrder: 'asc',
         pagination: {
-          perPage: 5,
+          perPage: 25,
           currentPage: 1,
-          perPageOptions: [5, 10, 25, 50],
+          perPageOptions: [25, 50],
           total: 0,
         },
         footerTable: ['Name', 'Email', 'Age', 'Salary', 'Actions'],
@@ -224,6 +235,17 @@
       };
     },
     methods: {
+      isEmpty(obj) {
+        // eslint-disable-next-line
+      for (const key in obj) {
+          // eslint-disable-next-line
+        if (obj.hasOwnProperty(key)) return false;
+        }
+        return true;
+      },
+      openPatientProfile() {
+        this.$store.dispatch(AUTH_LOGOUT, { params: '' });
+      },
       customSort(value) {
         return value.sort((a, b) => {
           const sortBy = this.currentSort;
@@ -239,6 +261,18 @@
           buttonsStyling: false,
           type: 'success',
           confirmButtonClass: 'md-button md-success',
+        });
+      },
+      handleShowAllergy(item) {
+        swal({
+          title: 'Attention!',
+          buttonsStyling: false,
+          html: ` ${item.firstName} ${
+            item.lastName
+          } has allergy! Please dont use: <h3> ${item.allergy.join(', ')} </h3>`,
+          type: 'warning',
+          confirmButtonClass: 'md-button md-success',
+          confirmButtonText: 'OK, I will not use them!',
         });
       },
       handleEdit(item) {
@@ -281,10 +315,17 @@
       },
     },
     created() {
-      this.$store.dispatch(PATIENTS_REQUEST, { params: '' });
+      if (this.isEmpty(this.patients)) {
+        this.$store.dispatch(PATIENTS_REQUEST, { params: '' });
+      } else {
+        this.tableData = this.patients;
+      }
     },
     mounted() {
       // Fuse search initialization.
+      if (!this.tableData && !this.isEmpty(this.patients)) {
+        this.tableData = this.patients;
+      }
       this.fuseSearch = new Fuse(this.tableData, {
         keys: ['name', 'email'],
         threshold: 0.3,
@@ -304,8 +345,8 @@
         }
         this.searchedData = result;
       },
-      users() {
-        this.tableData = this.users;
+      patients() {
+        this.tableData = this.patients;
       },
     },
   };

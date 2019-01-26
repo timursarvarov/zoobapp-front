@@ -2,6 +2,7 @@ export default {
   jaw: {},
   jawEthalon: {},
   toothLocations: {
+    rejected: undefined,
     background: undefined,
     bridge: undefined,
     root: undefined,

@@ -1,15 +1,10 @@
 <template>
   <div class="content">
     <div class="md-layout">
-      <div class="md-layout-item md-medium-size-100 md-size-33">
+      <div class="md-layout-item  md-size-100">
         <patient-card button-color="success">
 
         </patient-card>
-      </div>
-      <div class="md-layout-item md-medium-size-100 md-size-66">
-        <edit-patient-profile-form header-color="green">
-
-        </edit-patient-profile-form>
       </div>
     </div>
     <!-- <jaw-generator /> -->
@@ -17,14 +12,31 @@
 </template>
 
 <script>
-  import { EditPatientProfileForm, PatientCard } from '@/pages';
+  import { mapGetters } from 'vuex';
+  import { PatientCard } from '@/pages';
+  import { PATIENT_GET } from '@/store/modules/constants';
   // import { JawGenerator } from '@/components';
 
   export default {
     components: {
-      EditPatientProfileForm,
       PatientCard,
-      // JawGenerator,
+    // JawGenerator,
+    },
+    computed: {
+      ...mapGetters({
+        patient: 'getPatient',
+      }),
+    },
+    created() {
+      if (
+        this.$route.params.patientId
+      && (this.patient.ID === null
+        || this.patient.ID !== parseInt(this.$route.params.patientId, 10))
+      ) {
+        this.$store.dispatch(PATIENT_GET, {
+          patientId: this.$route.params.patientId,
+        });
+      }
     },
   };
 </script>

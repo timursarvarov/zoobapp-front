@@ -90,7 +90,7 @@
           <md-field :class="[
                         {'md-valid': !errors.has('url') && touched.url},
                         {'md-error': errors.has('url')}]">
-            <label>url</label>
+            <label>Clinic web site address</label>
             <md-input
               v-model="clinic.url"
               type="text"
@@ -156,74 +156,42 @@
             </span>
           </md-field>
         </div>
-
-        <div class="md-layout md-layout-item md-small-size-100 md-size-50">
-
-          <!-- <md-field>
-            <label>Currency</label>
-            <md-input
-              v-model="clinic.currency"
-              type="text"
-            ></md-input>
-            <span class="md-helper-text">
-              Enter % that will be added to the total treatment price
-            </span>
-          </md-field> -->
-          <md-autocomplete
-            v-model="searchTimezoneParams"
-            :md-options="timeZones"
-            @md-changed="getCountries"
-            @md-opened="getCountries"
-            @md-selected="selectedTimezoneFunc"
-          >{{searchTimezoneParams | json}}
-            <label>Timezone</label>
-
-            <template
-              slot="md-autocomplete-item"
-              slot-scope="{ item }"
-            >
-              <div >{{ item.text }}<br>
-                <small>{{ item.utc.join(', ') }}</small>
-              </div>
-
-            </template>
-          </md-autocomplete>
-          {{selectedTimezone}}
-        </div>
-
-        <div class="md-layout md-layout-item md-small-size-100 md-size-50">
-
-          <!-- <md-field>
-            <label for="movie">Disabled Select</label>
-            <md-select v-model="searchTimezoneParams">
-              <md-option
-                v-for="(timezone, key) in timeZones"
-                :key="key"
-                :value="timezone.text"
-              >
-                {{ timezone.text }}
-                <small>{{ timezone.utc.join(', ') }}</small>
-
-              </md-option>
-            </md-select>
-          </md-field> -->
-        </div>
-
-        <div class="md-layout md-layout-item md-small-size-100 md-size-50">
+        <div class="md-layout md-layout-item md-small-size-100 md-size-33">
 
           <md-field>
-            <label>Timezone</label>
-            <md-input
-              v-model="clinic.timezone"
-              type="text"
-            ></md-input>
-            <span class="md-helper-text">
-              Please enter your timezone,
-              this timezone will be used
-              to send sms in your timezone.
-            </span>
+            <label for="teethSystem">Disabled Select</label>
+            <md-select
+              v-model="clinic.teethSystem"
+              name="teethSystem"
+              id="teethSystem"
+            >
+              <md-option :value="1">FDI World Dental Federation notation</md-option>
+              <md-option :value="2">Universal numbering system</md-option>
+              <md-option :value="3">Palmer notation method</md-option>
+            </md-select>
           </md-field>
         </div>
+        <div class="md-layout md-layout-item ">
+          <md-autocomplete
+            v-model="selectedCurrency"
+            :md-open-on-focus="false"
+            :md-options="currencyForOptions"
+            @md-selected="currencySelected"
+          >
+            <label>Choose your Currency</label>
+          </md-autocomplete>
+        </div>
+        <div class="md-layout md-layout-item   md-size-100">
+          <md-autocomplete
+            v-model="selectedTimezone"
+            :md-open-on-focus="false"
+            :md-options="timeZoneForOptions"
+            @md-selected="timezoneSelected"
+          >
+            <label>Choose your timezone to specify sms sending time</label>
+          </md-autocomplete>
+        </div>
+
         <div class="md-layout md-layout-item md-size-100">
 
           <md-field maxlength="5">
@@ -231,22 +199,16 @@
             <md-textarea v-model="clinic.description"></md-textarea>
           </md-field>
         </div>
-        <div class="md-layout-item md-size-100 text-right">
-          <md-button
-            native-type="submit"
-            @click="updateClinicSettings"
-            class="md-raised md-success mt-4"
-          >Update Settings</md-button>
-        </div>
+
       </div>
     </md-card-content>
-    <!-- <md-card-actions class="text-right">
+    <md-card-actions>
       <md-button
         native-type="submit"
-        @click.native.prevent="validate"
-        class="md-success"
-      >Update</md-button>
-    </md-card-actions> -->
+        @click="updateClinicSettings"
+        class="md-raised md-success  ml-auto"
+      >Update Settings</md-button>
+    </md-card-actions>
   </md-card>
 </template>
     <script>
@@ -269,28 +231,20 @@
     },
     name: 'clinic-settings',
     props: {
-      cardUserImage: {
-        type: String,
-        default: './img/faces/marc.jpg',
-      },
       buttonColor: {
         type: String,
         default: '',
       },
-      avatar: {
-        type: String,
-        default: './img/default-avatar.png',
-      },
     },
     data() {
       return {
-        searchTimezoneParams: null,
-        searcchedTimezones: [],
-        selectedTimezone: '',
+        selectedTimezone: null,
+        selectedCurrency: null,
+        timeZoneForOptions: [],
+        currencyForOptions: [],
         image: '',
-        selectedAvatar: '',
-        currency: commonCurrency,
-        timeZones: timezones,
+        currency: {},
+        timezones: [],
         touched: {
           url: false,
           email: false,
@@ -306,37 +260,32 @@
           phone: {
             required: true,
             min: 12,
+            max: 20,
           },
         },
       };
     },
     methods: {
-      selectedTimezoneFunc(timezone) {
-        this.searchTimezoneParams = timezone.text;
+      copyObj(obj) {
+        return JSON.parse(JSON.stringify(obj));
       },
-      setTimezone(timezone) {
-        console.log(timezone.text);
-        this.searchTimezoneParams = timezone.text;
+      timezoneSelected(timezoneL) {
+        if (timezoneL) {
+          this.timezones.forEach((element) => {
+            if (`${element.UTC} ${element.cities}` === timezoneL) {
+              this.clinic.timezoneOffset = element.offset;
+            }
+          });
+        }
       },
-      getCountries(searchTerm) {
-        console.log(searchTerm);
-        if (typeof searchTerm === 'object') {
-          console.log(typeof searchTerm);
-          this.searchTimezoneParams = searchTerm.text;
-        // this.selectedTimezone = searchTerm.offset;
-        } else if (typeof searchTerm === 'string') {
-          this.searcchedTimezones = new Promise((resolve) => {
-            window.setTimeout(() => {
-              if (!searchTerm) {
-                resolve(this.timeZones);
-              } else if (searchTerm) {
-                const term = searchTerm.toLowerCase();
-
-                resolve(
-                  this.timeZones.filter(({ value }) => value.toLowerCase().includes(term),),
-                );
-              }
-            }, 500);
+      currencySelected(currency) {
+        if (currency) {
+          Object.values(this.currency).forEach((element) => {
+            if (
+              `${element.symbol} ${element.name} ${element.code}` === currency
+            ) {
+              this.clinic.currencyCode = element.code;
+            }
           });
         }
       },
@@ -363,31 +312,11 @@
         reader.onload = (e) => {
           vm.image = e.target.result;
         };
-        reader.readAsDataurl(file);
-      },
-      updateProfile() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.$store
-              .dispatch(USER_UPDATE, {
-                clinic: {
-                  url: this.clinic.url,
-                  email: this.clinic.email,
-                  phone: this.clinic.phone,
-                },
-              })
-              .then((response) => {
-                if (response) {
-                  this.$store.dispatch(NOTIFY, {
-                    settings: {
-                      message: 'Settings updated successfully',
-                      type: 'primary',
-                    },
-                  });
-                }
-            });
-          }
-        });
+        if (reader.readAsDataURL) {
+          reader.readAsDataURL(file);
+        } else if (reader.readAsDataurl) {
+          reader.readAsDataurl(file);
+        }
       },
       updateClinicLogo(file) {
         const fd = new FormData();
@@ -415,10 +344,7 @@
           if (result) {
             this.$store
               .dispatch(CLINIC_UPDATE, {
-                clinic: {
-                  name: this.clinic.name,
-                  description: this.clinic.description,
-                },
+                clinic: this.clinic,
               })
               .then((response) => {
                 if (response) {
@@ -430,6 +356,40 @@
                   });
                 }
             });
+          }
+        });
+      },
+      createArrayTimezones() {
+        const Ntimezones = {};
+        this.timezones.forEach((element) => {
+          this.timeZoneForOptions.unshift(`${element.UTC} ${element.cities}`);
+        });
+
+        return Ntimezones;
+      },
+      createArrayCurrency() {
+        const Ncurrency = {};
+        Object.values(this.currency).forEach((element) => {
+          this.currencyForOptions.unshift(
+            `${element.symbol} ${element.name} ${element.code}`,
+          );
+        });
+
+        return Ncurrency;
+      },
+      setLocalTimezone() {
+        this.timezones.forEach((element) => {
+          if (element.offset === this.clinic.timezoneOffset) {
+            this.selectedTimezone = `${element.UTC} ${element.cities}`;
+          }
+        });
+      },
+      setLocalCurrency() {
+        Object.values(this.currency).forEach((element) => {
+          if (element.code === this.clinic.currencyCode) {
+            this.selectedCurrency = `${element.symbol} ${element.name} ${
+              element.code
+            }`;
           }
         });
       },
@@ -447,6 +407,14 @@
       phone() {
         return this.clinic.phone;
       },
+    },
+    created() {
+      this.currency = this.copyObj(commonCurrency);
+      this.timezones = this.copyObj(timezones);
+      this.createArrayTimezones();
+      this.createArrayCurrency();
+      this.setLocalTimezone();
+      this.setLocalCurrency();
     },
     watch: {
       url() {

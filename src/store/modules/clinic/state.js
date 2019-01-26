@@ -1,6 +1,6 @@
 export default {
     clinic: {
-        teethSystem: 'fdi',
+        teethSystem: 1,
         name: null,
         url: null,
         email: null,

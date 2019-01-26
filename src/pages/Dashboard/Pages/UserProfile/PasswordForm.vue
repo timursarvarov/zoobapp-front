@@ -104,6 +104,7 @@
 </template>
 <script>
   import { SlideYDownTransition } from 'vue2-transitions';
+  import { USER_UPDATE_PASSWORD, NOTIFY } from '@/store/modules/constants';
 
   export default {
     name: 'PassworForm',
@@ -123,6 +124,7 @@
         modelValidations: {
           oldPassword: {
             required: true,
+            min: 5,
           },
           newPassword: {
             required: true,
@@ -137,6 +139,58 @@
       };
     },
     methods: {
+      updatePassword() {
+        this.$validator.validateAll().then((result) => {
+          if (result) {
+            this.$store
+              .dispatch(USER_UPDATE_PASSWORD, {
+                pw: {
+                  password: this.oldPassword,
+                  password_new: this.newPassword,
+                },
+              })
+              .then((response) => {
+                this.oldPassword = '';
+                this.newPassword = '';
+                this.rNewPassword = '';
+                this.$nextTick(() => this.$validator.reset());
+                if (response) {
+                  this.$store.dispatch(NOTIFY, {
+                    settings: {
+                      message: 'Password updated successfully',
+                      type: 'primary',
+                    },
+                  });
+                }
+              })
+              .catch((err) => {
+                if (err) {
+                  if (err.response.data.message === 'Wrong password') {
+                    this.showErrorsValidate('oldPassword');
+                  }
+                }
+            });
+          }
+        });
+      },
+      showErrorsValidate(errField = 'username') {
+        const field = this.$validator.fields.find({
+          name: errField,
+          scope: this.$options.scope,
+        });
+        if (!field) return;
+        this.$validator.errors.add({
+          id: errField,
+          field: errField,
+          msg: errField === 'username' ? 'Invalid login' : 'Wrong password',
+          scope: this.$options.scope,
+        });
+        field.setFlags({
+          invalid: true,
+          valid: false,
+          validated: true,
+        });
+      },
       validate() {
         this.$validator.validateAll().then((isValid) => {
           this.$emit('on-submit', this.registerForm, isValid);
@@ -145,6 +199,7 @@
         this.touched.oldPassword = true;
         this.touched.newPassword = true;
         this.touched.rNewPassword = true;
+        this.updatePassword();
       },
     },
     watch: {

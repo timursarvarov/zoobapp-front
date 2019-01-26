@@ -163,29 +163,24 @@
 
         <div class="md-layout-item md-small-size-100 md-size-33">
           <md-field>
-            <label>City</label>
+            <label>Address</label>
             <md-input
-              v-model="city"
+              v-model="user.address"
               type="text"
             ></md-input>
           </md-field>
         </div>
         <div class="md-layout-item md-small-size-100 md-size-33">
           <md-field>
-            <label>Country</label>
-            <md-input
-              v-model="country"
-              type="text"
-            ></md-input>
-          </md-field>
-        </div>
-        <div class="md-layout-item md-small-size-100 md-size-33">
-          <md-field>
-            <label>Postal Code</label>
-            <md-input
-              v-model="code"
-              type="number"
-            ></md-input>
+            <label for="movies">Language</label>
+            <md-select
+              v-model="user.lang"
+              name="language"
+              id="language"
+            >
+              <md-option :value="1">English</md-option>
+              <md-option :value="2">Русский</md-option>
+            </md-select>
           </md-field>
         </div>
         <div class="md-layout-item md-size-100">
@@ -299,12 +294,7 @@
           if (result) {
             this.$store
               .dispatch(USER_UPDATE, {
-                user: {
-                  firstName: this.user.firstName,
-                  lastName: this.user.lastName,
-                  email: this.user.phone,
-                  phone: this.user.phone,
-                },
+                user: this.user,
               })
               .then((response) => {
                 if (response) {

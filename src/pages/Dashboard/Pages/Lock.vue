@@ -3,15 +3,32 @@
     <div class="md-layout-item md-size-50 md-small-size-100">
       <form>
         <lock-card>
-          <img
-            class="img"
+          <div
+            class="avatar-container"
             slot="imageProfile"
-            :src="getProfile.avatar"
-          />
+          >
+
+            <div class="avatarC">
+              <div
+                v-if="!user.avatar"
+                class="md-layout md-alignment-center-center wrapper-acronim"
+              >
+                <div class="md-layout-item acronim">
+                  <span>{{user.firstName[0]}}{{user.lastName[0]}}</span>
+                </div>
+              </div>
+              <div
+                v-else
+                class="avatar"
+                :style="{'background-image':  'url(' + user.avatar + ')'}"
+              >
+              </div>
+            </div>
+          </div>
           <h4
             slot="title"
             class="title"
-          >{{getProfile.firstName + ' ' + getProfile.lastName}}</h4>
+          >{{user.firstName + ' ' + user.lastName}}</h4>
           <md-field
             :class="[{'md-error': errors.has('password')},
             {'md-valid': !errors.has('password') && touched.password}]"
@@ -82,7 +99,7 @@
     },
     computed: {
       ...mapGetters({
-        getProfile: 'getProfile',
+        user: 'getProfile',
       }),
     },
     methods: {
@@ -100,9 +117,9 @@
           this.showErrorsValidate('password');
           return;
         }
-        const { getProfile, password } = this;
+        const { user, password } = this;
         this.$store
-          .dispatch(AUTH_REQUEST, { username: getProfile.userName, password })
+          .dispatch(AUTH_REQUEST, { username: user.userName, password })
           .then(
             (response) => {
               console.log(response);
@@ -157,6 +174,48 @@
       font-size: 0.6875rem;
       bottom: -1.3rem;
       line-height: normal;
+    }
+  }
+  .avatar-container {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    .wrapper-acronim {
+      height: -webkit-fill-available;
+      .acronim {
+        font-size: 2.375rem;
+      }
+    }
+    .avatarC {
+      width: 90px;
+      height: 90px;
+      background-color: #999999;
+      color: #ffffff;
+      border-radius: 50%;
+      overflow: hidden;
+      transition: all 0.2s;
+      -webkit-transition: all 0.2s;
+      .avatar {
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin: 0 auto;
+        min-height: 90px;
+        min-width: 90px;
+      }
+      &:hover {
+        border-color: #4caf50;
+      }
+      input[type="file"] {
+        cursor: pointer;
+        display: block;
+        height: 100%;
+        left: 0;
+        opacity: 0 !important;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
     }
   }
 }

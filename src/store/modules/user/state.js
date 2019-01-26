@@ -1,5 +1,6 @@
 export default {
   profile: {
+    ID: '',
     avatar: '',
     firstName: '',
     lastName: '',
@@ -7,4 +8,5 @@ export default {
   },
   status: '',
   teethSystem: 'fdi',
+  favoriteDiagnosis: ['K00.3', 'K00.7', 'K01.1'],
 };

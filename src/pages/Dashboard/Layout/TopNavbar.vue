@@ -14,6 +14,23 @@
       <div class="md-toolbar-section-start">
         <h3 class="md-title">{{$route.name}}</h3>
       </div>
+
+      <div v-if="$route.path.startsWith('/patient/')">
+
+        <h3 class="md-title">
+          {{patient.firstName}} {{patient.lastName}}
+          <md-button
+            @click="handleAllergy(patient.allergy)"
+            v-if="patient.allergy &&  patient.allergy.length>0"
+            class="md-icon-button md-simple md-danger  md-just-icon"
+          >
+            <md-icon>report_problem</md-icon>
+            <!-- <span class="notification">{{patient.allergy.length}}</span> -->
+            <md-tooltip>Attention allergy!</md-tooltip>
+          </md-button>
+        </h3>
+
+      </div>
       <div class="md-toolbar-section-end">
         <md-button
           class="md-just-icon md-round md-simple md-toolbar-toggle"
@@ -113,6 +130,7 @@
 </template>
 
 <script>
+  import swal from 'sweetalert2';
   import { AUTH_LOGOUT, AUTH_LOCK } from '@/store/modules/constants';
   import { mapGetters } from 'vuex';
 
@@ -133,6 +151,15 @@
       };
     },
     methods: {
+      handleAllergy(items) {
+        swal({
+          title: 'The patient has allergies!',
+          text: `${items.join(' ,')}`,
+          type: 'warning',
+          buttonsStyling: false,
+          confirmButtonClass: 'md-button md-danger',
+        });
+      },
       toggleSidebar() {
         this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
       },
@@ -158,17 +185,25 @@
     computed: {
       ...mapGetters({
         loading: 'loading',
+        patient: 'getPatient',
       }),
     },
   };
 </script>
 
-<style>
+<style style="scss" >
 .wrapper-progre-bar {
   position: fixed;
   top: 1px;
   right: 0;
   width: 100%;
   height: 5px;
+}
+
+.search {
+  margin: 0 !important;
+}
+
+.md-toolbar {
 }
 </style>

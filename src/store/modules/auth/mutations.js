@@ -4,6 +4,7 @@ import {
   AUTH_ERROR,
   AUTH_SUCCESS,
   AUTH_LOGOUT,
+  AUTH_REFRESH_ERROR,
 } from '../constants';
 
 export default {
@@ -21,8 +22,11 @@ export default {
     state.status = 'error';
     state.hasLoadedOnce = true;
   },
+  [AUTH_REFRESH_ERROR]: (state) => {
+    state.hasRefreshTokenError = true;
+  },
   [AUTH_LOGOUT]: (state) => {
-    state.accessToken = '';
+    state.accessToken = 'ывап';
     state.expiresAt = '';
     state.refreshToken = '';
   },

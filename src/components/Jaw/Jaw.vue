@@ -1,105 +1,152 @@
 /* eslint-disable */
 <template>
   <div>
-    <div class="jaw">
-      <div class="md-layout  md-alignment-center-space-between">
-        <div class="md-layout-item md-size-33  md-small-size-50 md-xsmall-size-50 ">
-          <md-switch
-            v-model="toggleAdultTop"
-            @change="toggleTeeth(topAdultTeeth)"
-          >Toggle Top</md-switch>
-        </div>
-        <div class="md-layout-item md-size-33   md-small-size-50 md-xsmall-size-50  ">
-          <md-switch
-            v-model="toggleAdultBottom"
-            @change="toggleTeeth(bottomAdultTeeth)"
-          >Toggle Bottom</md-switch>
+
+    <div class="jaw md-layout   mx-auto md-gutter ">
+      <md-toolbar class="md-transparent md-layout md-gutter">
+        <div class="md-layout md-layout-item  md-gutter">
+          <div class="md-layout-item md-small-size-33 md-xsmall-size-50 md-size-33 ">
+            <md-switch
+              v-model="toggleAdultTop"
+              @change="toggleTeeth(topAdultTeeth)"
+            >Toggle Top</md-switch>
+          </div>
+          <div class="md-layout-item md-small-size-33 md-xsmall-size-50 md-size-33">
+            <md-switch
+              v-model="toggleAdultBottom"
+              @change="toggleTeeth(bottomAdultTeeth)"
+            >Toggle Bottom</md-switch>
+          </div>
+
+          <div class="md-layout-item md-small-size-33 md-xsmall-size-100 md-size-33">
+            <md-field>
+              <label for="prefer">Show first</label>
+              <md-select
+                md-dense
+                v-model="preferLocal"
+                name="prefer"
+                id="prefer"
+              >
+                <md-option value="treatment">Treatment</md-option>
+                <md-option value="diagnose">Diagnose</md-option>
+                <md-option value="anamnes">Anamnes</md-option>
+              </md-select>
+            </md-field>
+          </div>
         </div>
 
-        <div class="md-layout-item md-size-33  md-small-size-100 md-xsmall-size-100">
-          <md-field>
-            <label for="movie">Show first</label>
-            <md-select
-              md-dense
-              v-model="preferLocal"
-              name="prefer"
-              id="prefer"
-            >
-              <md-option value="treatment">Treatment</md-option>
-              <md-option value="diagnose">Diagnose</md-option>
-              <md-option value="anamnes">Anamnes</md-option>
-            </md-select>
-          </md-field>
-        </div>
+        <md-button
+          @click="selectedTeethLocal = []"
+          :class="[{'md-primary': selectedTeethLocal.length > 0 }, 'md-just-icon', 'md-just-icon', 'md-round', 'md-simple']"
+        >
+          <md-icon> clear</md-icon>
+          <md-tooltip md-delay="1000">
+            Unselect all teeth
+          </md-tooltip>
+        </md-button>
+
+      </md-toolbar>
+      <div class="md-layout md-layout-item  md-size-100  mx-auto md-gutter">
+        <slot name="top"></slot>
       </div>
 
-      <slot name="top"></slot>
-      <div class="jaw-top">
-        <div
-          v-ripple.click.100
-          :class="[
+      <div class="jaw-scroll  md-layout-item md-size-100 md-layout md-gutter  mx-auto">
+        <div class="jaw-top  md-alignment-top-center  mx-auto md-layout-item md-size-100">
+          <div
+            v-ripple.click.100
+            :class="[
           'tooth',
           isSelected(toothId),
           preferj]"
-          v-for="(toothId ) in topAdultTeeth"
-          :key="toothId"
-          :ref="toothId"
-          :style="{ 'width': jawSVG[toothId].width_perc + '%', 'height': '100%' }"
-          @click="selectTooth(toothId)"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            :viewBox="jawSVG[toothId].viewBox"
-            :style="{ 'width': jawSVG[toothId].width_perc + '%'}"
+            v-for="(toothId ) in topAdultTeeth"
+            :key="toothId"
+            :ref="toothId"
+            :style="{ 'width': getCustomWidth(jawSVG[toothId].width_perc) + 'px' }"
+            @click="selectTooth(toothId)"
           >
-            <g>
-              <path
-                v-for="(location, key) in defaultLocations"
-                v-show="!jawComputed[toothId][key].hide"
-                :key="`${toothId}${key}`"
-                :class="[
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              :viewBox="jawSVG[toothId].viewBox"
+              :style="{ 'width': getCustomWidth(jawSVG[toothId].width_perc) + 'px' }"
+            >
+              <g>
+                <path
+                  v-for="(location, key) in defaultLocations"
+                  v-show="!jawComputed[toothId][key].hide"
+                  :key="`${toothId}${key}`"
+                  :class="[
                jawComputed[toothId][key].class,
                jawSVG[toothId][key]['class'] ]"
-                :d="jawSVG[toothId][key]['d']"
-              />
-            </g>
-          </svg>
+                  :d="jawSVG[toothId][key]['d']"
+                />
+              </g>
+            </svg>
+            <span class="tooth-number">{{toCurrentTeethSystem(toothId)}}</span>
+            <div
+              v-if="separatedDiagnosis[toothId]"
+              class="tooth-diagnosis"
+            >
+              <div
+                v-for="(d, k) in separatedDiagnosis[toothId]"
+                :key="k"
+              >
+                {{d}}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="jaw-bottom">
-        <div
-          v-ripple
-          :class="[
+        <div class="jaw-bottom md-layout-item md-size-100">
+          <div
+            v-ripple
+            :class="[
           'tooth',
           isSelected(toothId),
           preferj]"
-          v-for="(toothId ) in bottomAdultTeeth"
-          :key="toothId"
-          :ref="toothId"
-          :style="{ 'width': jawSVG[toothId].width_perc + '%', 'height': '100%' }"
-          @click="selectTooth(toothId)"
-        >
-          <svg
-            xmlns="
-          http://www.w3.org/2000/svg"
-            :viewBox="jawSVG[toothId].viewBox"
-            :style="{ 'width': jawSVG[toothId].width_perc + '%'}"
+            v-for="(toothId ) in bottomAdultTeeth"
+            :key="toothId"
+            :ref="toothId"
+            :style="{ 'width': getCustomWidth(jawSVG[toothId].width_perc) + 'px' }"
+            @click="selectTooth(toothId)"
           >
-            <g>
-              <path
-                v-for="(location, key) in defaultLocations"
-                :key="`${toothId}${key}`"
-                v-show="!jawComputed[toothId][key].hide"
-                :class="[
+            <svg
+              xmlns="
+          http://www.w3.org/2000/svg"
+              :viewBox="jawSVG[toothId].viewBox"
+              :style="{ 'width': getCustomWidth(jawSVG[toothId].width_perc) + 'px' }"
+            >
+              <g>
+                <path
+                  v-for="(location, key) in defaultLocations"
+                  :key="`${toothId}${key}`"
+                  v-show="!jawComputed[toothId][key].hide"
+                  :class="[
                   jawComputed[toothId][key].class,
                   jawSVG[toothId][key]['class'] ]"
-                :d="jawSVG[toothId][key]['d']"
-              />
-            </g>
-          </svg>
+                  :d="jawSVG[toothId][key]['d']"
+                />
+              </g>
+            </svg>
+            <span class="tooth-number">{{toCurrentTeethSystem(toothId)}}</span>
+            <div
+              v-if="separatedDiagnosis[toothId]"
+              class="tooth-diagnosis md-primary"
+            >
+              <div
+                v-for="(d, k) in separatedDiagnosis[toothId]"
+                :key="k"
+              >
+                {{d}}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <slot name="bottom"></slot>
+      <div class="md-layout-item  md-layout  md-gutter md-size-100">
+        <slot
+          class="md-layout-item  md-layout  md-gutter md-size-100"
+          name="bottom"
+        ></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -119,11 +166,29 @@ export default {
     prefer: {
       type: String,
       default: () => "treatment"
+    },
+    teethSchema: {
+      type: Object,
+      default: () => {}
+    },
+    patientDiagnosis: {
+      type: Array,
+      default: () => []
+    },
+
+    teethSystem: {
+      type: Number,
+      default: () => 1
+      // 1 = FDI World Dental Federation notation
+      // 2 = Universal numbering system
+      // 3 = Palmer notation method
     }
   },
   name: "AppMain",
   data() {
     return {
+      separatedDiagnosis: {},
+      windowWidth: 0,
       toggleAdultTop: false,
       toggleAdultBottom: false,
       preferj: "anamnes",
@@ -318,7 +383,7 @@ export default {
         paradontit3: false,
         paradontit4: false,
         periodontit: false,
-        fdi: true,
+        fdi: false,
         universal: false,
         palmer: false
       },
@@ -330,6 +395,23 @@ export default {
     jawSVG() {
       const jawVG = JSON.parse(jawSVGjs);
       return jawVG;
+    },
+    teethSystemL() {
+      let system = "fdi";
+      if (this.teethSystem === 1) {
+        system = "fdi";
+      } else if (this.teethSystem === 2) {
+        system = "universal";
+      } else if (this.teethSystem === 3) {
+        system = "palmer";
+      }
+      return system;
+    },
+    patientDiagnosisL() {
+      return this.patientDiagnosis;
+    },
+    teethSchemaL() {
+      return this.teethSchema;
     },
     preferLocal: {
       // геттер:
@@ -349,13 +431,66 @@ export default {
 
   created() {
     this.calculateJaw();
+    this.getDiagnoseForEachTooth();
     this.preferj = this.prefer;
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
   },
   mounted() {
     this.selectedTeeth = this.selectedTeethJ;
   },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
 
   methods: {
+    getDiagnoseForEachTooth() {
+      if (this.patientDiagnosisL.length > 0) {
+        this.separatedDiagnosis = {};
+        this.patientDiagnosisL.forEach(diagnose => {
+          if (!this.isEmpty(diagnose.teeth)) {
+            Object.keys(diagnose.teeth).forEach(toothId => {
+              if (this.separatedDiagnosis[toothId]) {
+                this.separatedDiagnosis[toothId].push(diagnose.code);
+              } else {
+                this.separatedDiagnosis[toothId] = [];
+                this.separatedDiagnosis[toothId].push(diagnose.code);
+              }
+            });
+          }
+        });
+      }
+    },
+    isEmpty(obj) {
+      // eslint-disable-next-line
+      for (const key in obj) {
+        // eslint-disable-next-line
+        if (obj.hasOwnProperty(key)) return false;
+      }
+      return true;
+    },
+    getCustomWidth(toothWidth) {
+      if (this.windowWidth < 600) {
+        return 5 * toothWidth;
+      }
+      if (this.windowWidth >= 600 && this.windowWidth < 960) {
+        return ((this.windowWidth - 80) / 100) * toothWidth;
+      }
+      if (this.windowWidth < 1280 && this.windowWidth > 960) {
+        return ((this.windowWidth - 240) / 2 / 100) * toothWidth;
+      }
+      if (this.windowWidth < 1920 && this.windowWidth > 1280) {
+        return ((this.windowWidth - 280) / 2 / 100) * toothWidth;
+      }
+      if (this.windowWidth > 1920) {
+        return ((this.windowWidth - 380) / 2 / 100) * toothWidth;
+      } else {
+        // return (this.windowWidth / 2 / 100) * toothWidth;
+      }
+    },
+    handleResize() {
+      this.windowWidth = window.innerWidth;
+    },
     isHidingLocation(i, location) {
       const anamnes =
         this.jaw.jawAnamnes &&
@@ -541,19 +676,37 @@ export default {
       if (this.selectedTeethLocal.indexOf(tooth) !== -1) {
         return "selected";
       }
+    },
+    toCurrentTeethSystem(toothID) {
+      let tooth = toothID;
+      if (
+        this.teethSchemaL &&
+        this.teethSchemaL[toothID] &&
+        this.teethSchemaL[toothID][this.teethSystemL]
+      ) {
+        tooth = this.teethSchemaL[toothID][this.teethSystemL];
+      }
+      return tooth;
     }
   },
   watch: {
     jaw: {
       handler: function(newValue) {
-        console.log(newValue);
+        // console.log(newValue);
         const startTime = performance.now();
 
         this.calculateJaw();
         const duration = performance.now() - startTime;
-        console.log(`someMethodIThinkMightBeSlow took ${duration}ms`);
+        // console.log(`someMethodIThinkMightBeSlow took ${duration}ms`);
       },
       deep: true
+    },
+    windowHeight(newHeight, oldHeight) {
+      this.handleResize();
+      // this.txt = `it changed to ${newHeight} from ${oldHeight}`;
+    },
+    patientDiagnosis() {
+      this.getDiagnoseForEachTooth();
     }
   }
 };
@@ -562,25 +715,120 @@ export default {
 <style lang="scss" scoped>
 .jaw,
 .md-dialog-container {
+  user-select: none;
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 15px;
   background: rgba(white, 0.4);
   border-radius: 5px;
+  min-height: 30vh;
+  .jaw-scroll {
+    padding-bottom: 35px;
+    padding-top: 35px;
+    overflow-x: auto;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      height: 7px;
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: grey;
+      border-radius: 7px;
+    }
+  }
 
+  .jaw-top {
+    .tooth-number {
+      bottom: 0;
+    }
+    .tooth-diagnosis {
+      top: 0;
+      transform: translate(-50%, -20px);
+      &:hover {
+        transform: translate(-50%, -20px) !important;
+      }
+    }
+  }
+  .jaw-bottom {
+    .tooth-number {
+      top: 0;
+    }
+    .tooth-diagnosis {
+      transform: translate(-50%, 20px);
+      bottom: 0;
+      &:hover {
+        transform: translate(-50%, 20px) !important;
+      }
+    }
+  }
   .jaw-top,
   .jaw-bottom {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    .tooth-number {
+      font-size: 0.9em;
+      overflow: show;
+      margin: auto;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    .tooth-diagnosis:not(:hover) {
+      min-height: 3px;
+      max-height: 30px;
+      min-width: 3px;
+      max-width: 30px;
+    }
+    .tooth-diagnosis {
+      transition: all 0.2s ease-in-out;
+
+      overflow: hidden;
+      left: 50%;
+      opacity: 0.8;
+      background: #8e24aa;
+      color: white;
+      width: 1.6vh;
+      height: 1.6vh;
+      z-index: 50;
+      font-size: 0.9em;
+      position: absolute;
+      border-radius: 50%;
+      box-shadow: 0 4px 5px -2px rgba(0, 0, 0, 0.2),
+        0 7px 10px 1px rgba(0, 0, 0, 0.14), 0 2px 16px 1px rgba(0, 0, 0, 0.12);
+      div {
+        transition: all 0.2s ease-in-out;
+        display: none;
+        padding: 0 3px 0 3px;
+      }
+      &:hover {
+        opacity: 1;
+        height: auto !important;
+        width: auto !important;
+        min-height: 3px;
+        // max-height: 100%;
+        min-width: 3px;
+        max-width: auto;
+        border-radius: 3px;
+        transform: scale(1.1);
+        position: absolute;
+        div {
+          transition: all 0.2s ease-in-out;
+          width: 100%;
+          height: auto;
+          display: table;
+          white-space: normal;
+          padding: 0 3px 0 3px;
+        }
+      }
+    }
 
     .selected {
       background-color: rgba(116, 116, 116, 0.58);
 
-      .fdi,
-      .universal,
-      .palmer {
-        isolation: isolate;
-        fill: rgb(255, 255, 255);
+      .tooth-number {
+        color: rgb(255, 255, 255);
       }
     }
 
@@ -591,6 +839,7 @@ export default {
       transition-duration: 0.4s;
       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       transition-delay: 0s;
+      position: relative;
 
       svg {
         flex-grow: 1;
@@ -667,22 +916,22 @@ export default {
 
         .paradontit1 {
           stroke: #ff822e;
-          fill: rgba(56, 43, 37, 0.283);
+          fill: none !important;
         }
 
         .paradontit2 {
           stroke: #f9610d;
-          fill: rgba(56, 43, 37, 0.383);
+          fill: none !important;
         }
 
         .paradontit3 {
           stroke: #f75403;
-          fill: rgba(56, 43, 37, 0.483);
+          fill: none !important;
         }
 
         .paradontit4 {
           stroke: #f73403;
-          fill: rgba(56, 43, 37, 0.583);
+          fill: none !important;
         }
 
         .periodontit {
@@ -715,16 +964,31 @@ export default {
         }
       }
     }
+
+    .diagnose.gum {
+      stroke-width: 6px !important;
+      stroke: #8e24aa !important;
+      stroke-linejoin: round;
+    }
   }
 
   .anamnes {
     fill: #fb8c00 !important;
+    .tooth-number {
+      color: #fb8c00;
+    }
   }
   .diagnose {
     fill: #8e24aa !important;
+    .tooth-number {
+      color: #8e24aa;
+    }
   }
   .treatment {
     fill: #43a047 !important;
+    .tooth-number {
+      color: #43a047;
+    }
   }
 }
 </style>

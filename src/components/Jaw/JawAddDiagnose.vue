@@ -7,31 +7,67 @@
       <tabs
         :tab-name="tabs"
         color-button="primary"
+        ref="jaw"
       >
-        <md-toolbar
-          md-elevation="0"
-          class="md-transparent"
-          slot="header-title"
-        >
-          <div class="md-toolbar-row">
-            <h3 class="md-title"> Set Diagnose:
-              {{selectedDiagnose.code}} {{selectedDiagnose.title}}
-            </h3>
-          </div>
-          <div class="md-toolbar-row">
-            <span class="description">
-              {{getTeethWithLocations() }} </span>
-          </div>
-        </md-toolbar>
+
+        <div slot="header-title">
+          <h4> Set Diagnose:
+            {{selectedDiagnose.code}} {{selectedDiagnose.title}}
+          </h4>
+          <span class="description">
+            {{getTeethWithLocations() }} </span>
+        </div>
+
         <template
           slot="tab-pane-1"
-          v-if="selectedTeeth.length > 0 && selectedDiagnose.type == 'dental'"
+          v-if="selectedTeeth.length > 0 "
         >
+          <div class="md-layout md-gutter md-layout-item">
 
-          <div class="">
+            <div class="md-layout-item md-size-33">
+              <md-field class="md-layout-tem">
+                <label for="prefer">Show first</label>
+                <md-select
+                  md-dense
+                  v-model="preferLocal"
+                  name="prefer"
+                  id="prefer"
+                >
+                  <md-option value="treatment">Treatment</md-option>
+                  <md-option value="diagnose">Diagnose</md-option>
+                  <md-option value="anamnes">Anamnes</md-option>
+                </md-select>
+              </md-field>
+            </div>
 
-            <div class="jaw">
-              <div class="jaw-list  mx-auto">
+            <div class="md-layout-item md-size-33">
+
+              <md-button
+                @click="setLastLocationForAllTeeth()"
+                class="md-primary md-simple"
+                v-show="(selectedTeeth.length > 1 && ( selectedDiagnose.locations && lastLocation in selectedDiagnose.locations))"
+              >
+                Set for all teeth
+                <md-tooltip md-delay="1000">Set last created
+                  <br /> change for all teeth</md-tooltip>
+              </md-button>
+            </div>
+            <div class="md-layout-item md-size-33">
+              <md-button
+                @click="dropAllLocations()"
+                class="md-primary md-simple"
+                v-show=" !isEmpty(selectedDiagnose.locations)"
+              >
+                Clear all
+                <md-tooltip md-delay="1000">
+                  Drop all locations
+                </md-tooltip>
+              </md-button>
+            </div>
+          </div>
+          <div class="md-layout md-layout-item md-gutter">
+            <div class="jaw md-layout-item">
+              <div class="jaw-list mx-auto">
                 <div
                   :class="[
                   'tooth',
@@ -39,12 +75,12 @@
                   v-for="(toothId) in selectedTeeth"
                   :key="toothId"
                   :ref="toothId"
-                  :style="{ 'width': jawSVG[toothId].width_perc * 10 + 'px' }"
+                  :style="{ 'width': jawSVG[toothId].width_perc * 8 + 'px' }"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     :viewBox="jawSVG[toothId].viewBox"
-                    :style="{ 'width':  jawSVG[toothId].width_perc * 10 + 'px'}"
+                    :style="{ 'width':  jawSVG[toothId].width_perc * 8 + 'px'}"
                   >
                     <g>
                       <path
@@ -52,77 +88,60 @@
                         v-for="(location, key) in defaultLocations"
                         :key="`${toothId}${key}`"
                         :class="[{
-                  transparent:  selectedDiagnose.locations && selectedDiagnose.locations.hasOwnProperty(key) ? selectedDiagnose.locations[key] : false,
-                  hide: selectedDiagnose.view && selectedDiagnose.view.hasOwnProperty(key) ?  !selectedDiagnose.view[key] : true
+                  transparent:  selectedDiagnose.locations
+                   && selectedDiagnose.locations.hasOwnProperty(key) ? 
+                   selectedDiagnose.locations[key] : false,  //класс transparent применяется для не выбранных парадонтитов  
+
+                  hide: selectedDiagnose.view && 
+                  selectedDiagnose.view.hasOwnProperty(key) && 
+                  selectedDiagnose.view[key] ?
+                    false : true // класс hide применяется если во view выбранного диагноза нет текущей локации  
                   },
-                  jawComputed[toothId][key].class,
-                  jawSVG[toothId][key]['class']
+                  jawComputed[toothId][key].class, // Название класса локации из высчитанной формуллы для отображеня в диагнозов анамнеза и лечения 
+                 
+                  jawSVG[toothId][key]['class'] // Название класса локации из svg для отображеня в норме 
                   ] "
                         :d="jawSVG[toothId][key]['d']"
                       />
                     </g>
+                    <use
+                      id="use"
+                      xlink:href=".diagnose"
+                    />
                   </svg>
+                  <span class="tooth-number">{{toCurrentTeethSystem(toothId)}}</span>
+                  <div
+                    @click="chooseLocation(toothId, 'rejected')"
+                    v-if="selectedDiagnose.locations.hasOwnProperty('rejected')"
+                    class="tooth-rejected"
+                    :class="[{
+                  transparent:  selectedDiagnose.locations
+                   && selectedDiagnose.locations.hasOwnProperty('rejected') ? 
+                   selectedDiagnose.locations['rejected'] : false,
+                  hide: selectedDiagnose.view && selectedDiagnose.view.hasOwnProperty('rejected') ?
+                    !selectedDiagnose.view['rejected'] : true
+                  },
+                  jawComputed[toothId]['rejected'].class,
+                  jawSVG[toothId]['rejected']['class']
+                  ] "
+                  ></div>
 
                 </div>
-              </div>
-            </div>
-            <div class="md-layout">
-
-              <div class="md-layout-item md-size-33">
-                <md-field class="md-layout-tem">
-                  <label for="prefer">Show first</label>
-                  <md-select
-                    md-dense
-                    v-model="preferLocal"
-                    name="prefer"
-                    id="prefer"
-                  >
-                    <md-option value="treatment">Treatment</md-option>
-                    <md-option value="diagnose">Diagnose</md-option>
-                    <md-option value="anamnes">Anamnes</md-option>
-                  </md-select>
-                </md-field>
-              </div>
-
-              <div class="md-layout-item md-size-33">
-
-                <md-button
-                  @click="setLastLocationForAllTeeth()"
-                  class="md-primary md-simple"
-                  :disabled="!(selectedTeeth.length > 1 && !isEmpty(selectedDiagnose.locations) && lastLocation)"
-                >
-                  Set for all teeth
-                  <md-tooltip md-delay="1000">Set last created
-                    <br /> change for all teeth</md-tooltip>
-                </md-button>
-              </div>
-              <div class="md-layout-item md-size-33">
-
-                <md-button
-                  @click="dropAllLocations()"
-                  class="md-primary md-simple"
-                  :disabled="!isEmpty(diagnose.teeth) == 0 && !isEmpty(selectedDiagnose.locations)"
-                >
-                  Clear all
-                  <md-tooltip md-delay="1000">
-                    Drop all locations
-                  </md-tooltip>
-                </md-button>
               </div>
             </div>
 
           </div>
         </template>
         <template :slot=" selectedTeeth.length > 0 && selectedDiagnose.type == 'dental' ? 'tab-pane-2' : 'tab-pane-1'">
-
-          <md-field>
-            <label>Textarea with Autogrow</label>
-            <md-textarea
-              md-autogrow
-              v-model="diagnose.description"
-            ></md-textarea>
-          </md-field>
-
+          <div class="md-layout">
+            <md-field>
+              <label>Textarea with Autogrow</label>
+              <md-textarea
+                md-autogrow
+                v-model="diagnose.description"
+              ></md-textarea>
+            </md-field>
+          </div>
         </template>
         <template :slot=" selectedTeeth.length > 0 && selectedDiagnose.type == 'dental' ? 'tab-pane-3' : 'tab-pane-2'">
           <div class="md-layout">
@@ -139,6 +158,7 @@
         </template>
 
         <div slot='footer-actions'>
+
           <md-button @click="newDiagnoseParamsLocal.showForm = !newDiagnoseParamsLocal.showForm">Close</md-button>
           <md-button
             class="md-primary"
@@ -172,6 +192,7 @@ export default {
       type: String,
       default: () => "diagnose"
     },
+    // Пропс выбранношо диагноза
     selectedDiagnose: {
       type: Object,
       default: () => {}
@@ -180,9 +201,24 @@ export default {
       type: Array,
       default: () => []
     },
+    // Глобальная V-model для
+    // отображения/скрытия формы
     newDiagnoseParams: {
       type: Object,
       default: () => {}
+    },
+    // Объект с ключами (toothID)  и шаблонами для отображения названия зубов в различных сиситемах
+    teethSchema: {
+      type: Object,
+      default: () => {}
+    },
+
+    teethSystem: {
+      type: Number,
+      default: () => 1
+      // 1 = FDI World Dental Federation notation
+      // 2 = Universal numbering system
+      // 3 = Palmer notation method
     }
   },
   name: "JawAddDiagnseForm",
@@ -243,7 +279,7 @@ export default {
         paradontit3: false,
         paradontit4: false,
         periodontit: false,
-        fdi: true,
+        fdi: false,
         universal: false,
         palmer: false
       }
@@ -255,6 +291,8 @@ export default {
       this.newDiagnoseParamsLocal.showForm = false;
       this.newDiagnoseParamsLocal.saveDiagnose = true;
     },
+    // Отображаем в заголовке список зубов с указанными локациями или,
+    // (скрыт если диагноз оральный)
     getTeethWithLocations() {
       if (this.selectedTeeth.length > 0) {
         let teeth = "for: ";
@@ -276,15 +314,18 @@ export default {
         return teeth;
       }
     },
+    //Очищаем список зубов в выбранном диагнозе
     dropAllLocations() {
       this.diagnose.teeth = {};
     },
+    // функция для проверки пустого объекта
     isEmpty(obj) {
       for (var key in obj) {
         if (obj.hasOwnProperty(key)) return false;
       }
       return true;
     },
+    // Функция для подсчета количества элементов в объекте
     countProperties(obj) {
       var count = 0;
 
@@ -294,6 +335,17 @@ export default {
 
       return count;
     },
+    getPropertiesWithTrue(obj) {
+      let props = [];
+
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop) && obj[prop] === true) {
+          props.push(prop);
+        }
+      }
+      return props;
+    },
+    //  Устанавливаем последнюю указанную локацию для всех выбранных зубов
     setLastLocationForAllTeeth() {
       const location = this.lastLocation;
       this.lastLocation = null;
@@ -335,6 +387,13 @@ export default {
             }
 
             this.diagnose.teeth[toothIdP][location] = true;
+            const locationsToHide = Object.keys(
+              this.selectedDiagnose.locations
+            ).filter(key => this.selectedDiagnose.locations[key] === false);
+            for (let locationToHide of locationsToHide) {
+              console.log(locationToHide);
+              this.diagnose.teeth[toothIdP][locationToHide] = false;
+            }
           }
         } else {
           for (let index = 0; index < this.selectedTeeth.length; index++) {
@@ -361,9 +420,9 @@ export default {
           }
         }
       }
-
       this.triger = !this.triger;
     },
+    // выбираем область зуба и записываем ее в массив с зубами в дигнозе
     chooseLocation(toothId, location) {
       this.lastLocation = location;
       if (this.selectedDiagnose.locations.hasOwnProperty(location)) {
@@ -390,15 +449,30 @@ export default {
               this.islastActionDelete = false;
               this.diagnose.teeth[toothId][location] = true;
             }
+            const locationsToHide = Object.keys(
+              this.selectedDiagnose.locations
+            ).filter(key => this.selectedDiagnose.locations[key] === false);
+            for (let locationToHide of locationsToHide) {
+              console.log(locationToHide);
+              this.diagnose.teeth[toothId][locationToHide] = false;
+            }
           }
         } else {
           this.islastActionDelete = false;
           this.diagnose.teeth[toothId] = {};
           this.diagnose.teeth[toothId][location] = true;
+          const locationsToHide = Object.keys(
+            this.selectedDiagnose.locations
+          ).filter(key => this.selectedDiagnose.locations[key] === false);
+          for (let locationToHide of locationsToHide) {
+            console.log(locationToHide);
+            this.diagnose.teeth[toothId][locationToHide] = false;
+          }
         }
       }
       this.triger = !this.triger;
     },
+    // Высчитывваем в какую очередь нужно прятать локацию в зависимости от выбронного приоретета показа(анамнез дигноз или лечение)
     isHidingLocation(i, location) {
       const anamnes =
         this.jaw.jawAnamnes &&
@@ -451,6 +525,8 @@ export default {
 
       return hide;
     },
+    // Высчитывваем в какую очередь нужно присвоить класс для показа локации в зависимости от выбронного приоретета показа(анамнез дигноз или лечение)
+
     preferableJawClasses(i, location) {
       let toothClass = {};
 
@@ -498,10 +574,32 @@ export default {
         return toothClass;
       }
       return toothClass;
+    },
+    toCurrentTeethSystem(toothID) {
+      let tooth = toothID;
+      if (
+        this.teethSchema &&
+        this.teethSchema[toothID] &&
+        this.teethSchema[toothID][this.teethSystemL]
+      ) {
+        tooth = this.teethSchema[toothID][this.teethSystemL];
+      }
+      return tooth;
     }
   },
 
   computed: {
+    teethSystemL() {
+      let system = "fdi";
+      if (this.teethSystem === 1) {
+        system = "fdi";
+      } else if (this.teethSystem === 2) {
+        system = "universal";
+      } else if (this.teethSystem === 3) {
+        system = "palmer";
+      }
+      return system;
+    },
     jawSVG() {
       const jawVG = JSON.parse(jawSVGjs);
       return jawVG;
@@ -555,16 +653,22 @@ export default {
   created: function() {
     this.diagnose.code = this.selectedDiagnose.code;
     this.diagnose.title = this.selectedDiagnose.title;
-
+    console.log(this.getPropertiesWithTrue(this.selectedDiagnose.locations));
     if (
-      this.selectedTeeth.length > 0 &&
-      this.countProperties(this.selectedDiagnose.locations) <= 1
+      (this.selectedTeeth.length > 0 &&
+        this.countProperties(this.selectedDiagnose.locations) <= 1) ||
+      this.getPropertiesWithTrue(this.selectedDiagnose.locations).length == 1
     ) {
-      if (this.countProperties(this.selectedDiagnose.locations) == 1) {
+      if (
+        this.countProperties(this.selectedDiagnose.locations) == 1 ||
+        this.getPropertiesWithTrue(this.selectedDiagnose.locations).length == 1
+      ) {
         for (let index = 0; index < this.selectedTeeth.length; index++) {
           this.diagnose.teeth[this.selectedTeeth[index]] = {};
           this.diagnose.teeth[this.selectedTeeth[index]][
             Object.keys(this.selectedDiagnose.locations)[0]
+              ? Object.keys(this.selectedDiagnose.locations)[0]
+              : this.getPropertiesWithTrue(this.selectedDiagnose.locations)[0]
           ] = true;
         }
       } else {
@@ -580,31 +684,48 @@ export default {
 
 <style lang="scss"  >
 .jaw-dialog-wrapper {
-  max-height: 90% !important;
+  min-width: 80%;
+  max-height: 100% !important;
   background-color: transparent !important;
   box-shadow: none;
   margin: 0 !important;
   padding: 0 !important;
   -webkit-font-smoothing: antialiased !important;
 
-  .md-card{
-    overflow-y:auto;
-    overflow-x: hidden;
+  .md-card {
+    overflow-y: auto;
+    overflow-x: auto;
+    margin: 0;
+
+    // overflow: -webkit-paged-x;
+    &::-webkit-scrollbar {
+      width: 7px;
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: grey;
+      border-radius: 20px;
+    }
   }
 
   .jaw,
   .md-dialog-container {
     margin: 0 !important;
-    padding: 10px !important;
-    width: 100%;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+
     display: flex;
     flex-direction: column;
     padding: 15px;
     border-radius: 5px;
+    .jaw-settings {
+      max-width: 300px;
+    }
     .tab-pane-1,
     .tab-pane-2,
     .tab-pane-3 {
       width: 100%;
+      min-height: 40vh;
       .jaw {
         overflow: -webkit-paged-x;
         &::-webkit-scrollbar {
@@ -622,18 +743,6 @@ export default {
       max-height: 42vh;
       min-height: 200px;
       display: flex;
-
-      .selected {
-        background-color: rgba(116, 116, 116, 0.58);
-
-        .fdi,
-        .universal,
-        .palmer {
-          isolation: isolate;
-          fill: rgb(255, 255, 255);
-        }
-      }
-
       .tooth {
         display: flex;
         // transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -641,6 +750,17 @@ export default {
         transition-duration: 0.4s;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-delay: 0s;
+        position: relative;
+        padding-bottom: 15px;
+        .tooth-number {
+          font-size: 1.3em;
+          overflow: show;
+          margin: auto;
+          position: absolute;
+          left: 50%;
+          bottom: -5px;
+          transform: translate(-50%, 0);
+        }
 
         svg {
           flex-grow: 1;
@@ -793,24 +913,42 @@ export default {
             stroke-linejoin: round;
             stroke-width: 3px;
           }
-
-          .fdi,
-          .universal,
-          .palmer {
-            isolation: isolate;
-          }
           .hide {
             display: none;
           }
         }
       }
     }
+    .tooth-rejected {
+      top: 0;
+      width: 100%;
+      position: absolute;
+      height: 90%;
+      opacity: 0.4;
+      margin-bottom: 60px;
+    }
 
     .anamnes {
+      .tooth-rejected {
+        background-color: #fb8c00;
+      }
       fill: #fb8c00 !important;
+      .tooth-number {
+        color: #fb8c00;
+      }
     }
     .diagnose:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
+      .tooth-rejected {
+        background-color: #8e24aa;
+      }
       fill: #8e24aa !important;
+      .tooth-number {
+        color: #8e24aa;
+      }
+    }
+    .diagnose.gum {
+      stroke-width: 4px !important;
+      stroke: #8e24aa !important;
     }
     .diagnose.paradontit1,
     .diagnose.paradontit2,
@@ -821,6 +959,12 @@ export default {
     }
     .treatment {
       fill: #43a047 !important;
+      .tooth-number {
+        color: #43a047;
+      }
+      .tooth-rejected {
+        background-color: #43a047;
+      }
     }
     .transparent {
       stroke: #8e24aa;
@@ -834,15 +978,17 @@ export default {
         transition-delay: 0s;
       }
     }
+
     .transparent.paradontit4,
     .transparent.paradontit3,
     .transparent.paradontit2,
     .transparent.paradontit1 {
       stroke: #8e24aa;
-      opacity: 0.3;
+      opacity: 0.1;
 
       &:hover {
         opacity: 1;
+        z-index: 50;
         stroke-width: 4px !important;
         stroke: #8e24aa !important;
         transition-property: all;

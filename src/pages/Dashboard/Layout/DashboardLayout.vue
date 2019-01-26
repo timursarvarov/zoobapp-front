@@ -7,13 +7,16 @@
       <!-- <user-menu></user-menu> -->
       <mobile-menu></mobile-menu>
       <template slot="links">
+        <sidebar-item :link="{name: 'Patients', icon: 'supervised_user_circle', path: '/patients'}">
+        </sidebar-item>
         <sidebar-item
-          :link="{name: 'Angela Davis', icon: 'image', img:'./img/faces/avatar.jpg' }"
+          v-if="patient.ID !== null"
+          :link="{name: `${patient.firstName} ${patient.lastName}`, icon: 'account_circle', img:patient.avatar? patient.avatar: '',  avatarColor:patient.color, acronim:`${patient.firstName[0]} ${patient.lastName[0]}`  }"
           class="separateduser"
         >
-          <sidebar-item :link="{name: 'BIO', icon: 'image', path: '/patient/bio'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Treatment', path: '/patient/treatment'}"> </sidebar-item>
-          <sidebar-item :link="{name: 'Media', path: '/patient/media'}"></sidebar-item>
+          <sidebar-item :link="{name: 'BIO', icon: 'image', path: `/patient/${patient.ID}/bio`}"></sidebar-item>
+          <sidebar-item :link="{name: 'Treatment', path: `/patient/${patient.ID}/treatment`}"> </sidebar-item>
+          <sidebar-item :link="{name: 'Media', path: `/patient/${patient.ID}/media`}"></sidebar-item>
         </sidebar-item>
         <sidebar-item
           v-if="$route.meta.rtlActive"
@@ -25,13 +28,7 @@
           :link="{name: 'Dashboard', icon: 'dashboard', path: '/dashboard'}"
         >
         </sidebar-item>
-        <sidebar-item
-          :link="{name: 'Patients', icon: 'supervised_user_circle', path: '/patients'}"
-        >
-        </sidebar-item>
-        <sidebar-item
-          :link="{name: 'Settings', icon: 'settings', path: '/settings'}"
-        >
+        <sidebar-item :link="{name: 'Settings', icon: 'settings', path: '/settings'}">
           <sidebar-item :link="{name: 'My Profile', path: '/settings/user'}"></sidebar-item>
           <sidebar-item :link="{name: 'Clinic', path: '/settings/clinic'}"></sidebar-item>
           <sidebar-item :link="{name: 'Services', path: '/settings/services'}"></sidebar-item>
@@ -197,7 +194,7 @@
       </div>
       <content-footer v-if="!$route.meta.hideFooter"></content-footer>
     </div>
-    <patient-add-form/>
+    <patient-add-form />
   </div>
 </template>
 <script>
@@ -205,6 +202,7 @@
   import PerfectScrollbar from 'perfect-scrollbar';
   import 'perfect-scrollbar/css/perfect-scrollbar.css';
   import { ZoomCenterTransition } from 'vue2-transitions';
+  import { mapGetters } from 'vuex';
   import TopNavbar from './TopNavbar.vue';
   import ContentFooter from './ContentFooter.vue';
   import MobileMenu from './Extra/MobileMenu.vue';
@@ -252,6 +250,11 @@
       } else {
         docClasses.add('perfect-scrollbar-off');
       }
+    },
+    computed: {
+      ...mapGetters({
+        patient: 'getPatient',
+      }),
     },
   };
 </script>
