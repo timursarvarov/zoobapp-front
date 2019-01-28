@@ -1330,11 +1330,14 @@ export default {
           explain: 'Pulp stones, sclerosis',
           type: 'dental',
           locations: {
-            rootCanal: true,
+            root: false,
+            coronaLingual: false,
+            coronaLabial: false,
+            coronaTop: false, // false = локация для удаления, true = для выбора области к лечению
+
           },
           view: {
             root: true,
-            rootCanal: true,
             coronaLingual: true,
             coronaLabial: true,
             coronaTop: true,
@@ -1585,7 +1588,7 @@ export default {
             paradontit2: true,
             paradontit3: true,
             paradontit4: true,
-            gum: false,
+            gum: true,
           },
           view: {
             root: true,

@@ -88,14 +88,13 @@
                         v-for="(location, key) in defaultLocations"
                         :key="`${toothId}${key}`"
                         :class="[{
-                  transparent:  selectedDiagnose.locations
-                   && selectedDiagnose.locations.hasOwnProperty(key) ? 
-                   selectedDiagnose.locations[key] : false,  //класс transparent применяется для не выбранных парадонтитов  
+                  'has-in-locations': getNestedProperty(selectedDiagnose, 'locations', key )  !== undefined,  //класс 'has-in-locations' применяется для не выбранных парадонтитов  
+                 
+                  rejectable: getNestedProperty(selectedDiagnose, 'locations', key ) === false,  //класс 'rejectable' применяется для локаций которые возможнор отметить для удаления  
+                  
+                  selected: getNestedProperty(diagnose, 'teeth', toothId,  key ) !== undefined,  //класс 'seleced' применяется для выбранной локации  
 
-                  hide: selectedDiagnose.view && 
-                  selectedDiagnose.view.hasOwnProperty(key) && 
-                  selectedDiagnose.view[key] ?
-                    false : true // класс hide применяется если во view выбранного диагноза нет текущей локации  
+                  hide: !getNestedProperty(selectedDiagnose, 'view', key )  // класс hide применяется если во view выбранного диагноза нет текущей локации  
                   },
                   jawComputed[toothId][key].class, // Название класса локации из высчитанной формуллы для отображеня в диагнозов анамнеза и лечения 
                  
@@ -110,22 +109,6 @@
                     />
                   </svg>
                   <span class="tooth-number">{{toCurrentTeethSystem(toothId)}}</span>
-                  <div
-                    @click="chooseLocation(toothId, 'rejected')"
-                    v-if="selectedDiagnose.locations.hasOwnProperty('rejected')"
-                    class="tooth-rejected"
-                    :class="[{
-                  transparent:  selectedDiagnose.locations
-                   && selectedDiagnose.locations.hasOwnProperty('rejected') ? 
-                   selectedDiagnose.locations['rejected'] : false,
-                  hide: selectedDiagnose.view && selectedDiagnose.view.hasOwnProperty('rejected') ?
-                    !selectedDiagnose.view['rejected'] : true
-                  },
-                  jawComputed[toothId]['rejected'].class,
-                  jawSVG[toothId]['rejected']['class']
-                  ] "
-                  ></div>
-
                 </div>
               </div>
             </div>
@@ -286,6 +269,24 @@ export default {
     };
   },
   methods: {
+    getNestedProperty(object = {}, key1 = null, key2 = null, key3 = null) {
+      if (this.isEmpty(object)) return undefined;
+      if (object.hasOwnProperty(key1)) {
+        if (!key2) {
+          return object[key1];
+        } else if (object[key1].hasOwnProperty(key2)) {
+          if (!key3) {
+            return object[key1][key2];
+          } else if (object[key1][key2].hasOwnProperty(key3)) {
+            return object[key1][key2][key3];
+          } else {
+            return undefined;
+          }
+        } else {
+          return undefined;
+        }
+      }
+    },
     setDiagnose() {
       this.newDiagnoseParamsLocal.diagnose = this.diagnose;
       this.newDiagnoseParamsLocal.showForm = false;
@@ -349,6 +350,7 @@ export default {
     setLastLocationForAllTeeth() {
       const location = this.lastLocation;
       this.lastLocation = null;
+      console.log(this.islastActionDelete);
       if (this.selectedDiagnose.locations.hasOwnProperty(location)) {
         if (
           location === "paradontit4" ||
@@ -359,26 +361,42 @@ export default {
           for (let index = 0; index < this.selectedTeeth.length; index++) {
             const toothIdP = this.selectedTeeth[index];
             if (
-              this.hasOwnProperty(this.diagnose.teeth[toothIdP]) &&
-              this.hasOwnProperty(this.diagnose.teeth[toothIdP]["paradontit4"])
+              this.getNestedProperty(
+                this.diagnose,
+                "teeth",
+                toothIdP,
+                "paradontit4"
+              )
             ) {
               delete this.diagnose.teeth[toothIdP]["paradontit4"];
             }
             if (
-              this.hasOwnProperty(this.diagnose.teeth[toothIdP]) &&
-              this.hasOwnProperty(this.diagnose.teeth[toothIdP]["paradontit3"])
+              this.getNestedProperty(
+                this.diagnose,
+                "teeth",
+                toothIdP,
+                "paradontit3"
+              )
             ) {
               delete this.diagnose.teeth[toothIdP]["paradontit3"];
             }
             if (
-              this.hasOwnProperty(this.diagnose.teeth[toothIdP]) &&
-              this.hasOwnProperty(this.diagnose.teeth[toothIdP]["paradontit2"])
+              this.getNestedProperty(
+                this.diagnose,
+                "teeth",
+                toothIdP,
+                "paradontit2"
+              )
             ) {
               delete this.diagnose.teeth[toothIdP]["paradontit2"];
             }
             if (
-              this.hasOwnProperty(this.diagnose.teeth[toothIdP]) &&
-              this.hasOwnProperty(this.diagnose.teeth[toothIdP]["paradontit1"])
+              this.getNestedProperty(
+                this.diagnose,
+                "teeth",
+                toothIdP,
+                "paradontit1"
+              )
             ) {
               delete this.diagnose.teeth[toothIdP]["paradontit1"];
             }
@@ -395,9 +413,28 @@ export default {
               this.diagnose.teeth[toothIdP][locationToHide] = false;
             }
           }
+        } else if (
+          this.selectedDiagnose["locations"][location] === false &&
+          (location === "coronaLingual" ||
+            location === "coronaLabial" ||
+            location === "coronaTop")
+        ) {
+          for (let index = 0; index < this.selectedTeeth.length; index++) {
+            const toothIdP = this.selectedTeeth[index];
+            if (!this.islastActionDelete) {
+              this.diagnose.teeth[toothIdP]["coronaTop"] = false;
+              this.diagnose.teeth[toothIdP]["coronaLabial"] = false;
+              this.diagnose.teeth[toothIdP]["coronaLingual"] = false;
+            } else {
+              delete this.diagnose.teeth[toothIdP]["coronaLingual"];
+              delete this.diagnose.teeth[toothIdP]["coronaLabial"];
+              delete this.diagnose.teeth[toothIdP]["coronaTop"];
+            }
+          }
         } else {
           for (let index = 0; index < this.selectedTeeth.length; index++) {
             const toothId = this.selectedTeeth[index];
+
             if (this.diagnose.teeth.hasOwnProperty(toothId)) {
               if (this.diagnose.teeth[toothId].hasOwnProperty(location)) {
                 if (this.islastActionDelete) {
@@ -424,12 +461,24 @@ export default {
     },
     // выбираем область зуба и записываем ее в массив с зубами в дигнозе
     chooseLocation(toothId, location) {
-      this.lastLocation = location;
       if (this.selectedDiagnose.locations.hasOwnProperty(location)) {
+        this.lastLocation = location;
         if (this.diagnose.teeth.hasOwnProperty(toothId)) {
           if (this.diagnose.teeth[toothId].hasOwnProperty(location)) {
-            this.islastActionDelete = true;
-            delete this.diagnose.teeth[toothId][location];
+            if (
+              this.selectedDiagnose["locations"][location] === false &&
+              (location === "coronaLingual" ||
+                location === "coronaLabial" ||
+                location === "coronaTop")
+            ) {
+              delete this.diagnose.teeth[toothId]["coronaLingual"];
+              delete this.diagnose.teeth[toothId]["coronaLabial"];
+              delete this.diagnose.teeth[toothId]["coronaTop"];
+              this.islastActionDelete = true;
+            } else {
+              this.islastActionDelete = true;
+              delete this.diagnose.teeth[toothId][location];
+            }
             if (this.isEmpty(this.diagnose.teeth[toothId])) {
               delete this.diagnose.teeth[toothId];
             }
@@ -445,17 +494,29 @@ export default {
               delete this.diagnose.teeth[toothId]["paradontit2"];
               delete this.diagnose.teeth[toothId]["paradontit1"];
               this.diagnose.teeth[toothId][location] = true;
+            } else if (
+              this.selectedDiagnose["locations"][location] === false &&
+              (location === "coronaLingual" ||
+                location === "coronaLabial" ||
+                location === "coronaTop")
+            ) {
+              this.diagnose.teeth[toothId]["coronaLingual"] = false;
+              this.diagnose.teeth[toothId]["coronaLabial"] = false;
+              this.diagnose.teeth[toothId]["coronaTop"] = false;
+              this.islastActionDelete = false;
             } else {
               this.islastActionDelete = false;
-              this.diagnose.teeth[toothId][location] = true;
+              this.diagnose.teeth[toothId][
+                location
+              ] = this.selectedDiagnose.locations[location];
             }
-            const locationsToHide = Object.keys(
-              this.selectedDiagnose.locations
-            ).filter(key => this.selectedDiagnose.locations[key] === false);
-            for (let locationToHide of locationsToHide) {
-              console.log(locationToHide);
-              this.diagnose.teeth[toothId][locationToHide] = false;
-            }
+            // const locationsToHide = Object.keys(
+            //   this.selectedDiagnose.locations
+            // ).filter(key => this.selectedDiagnose.locations[key] === false);
+            // for (let locationToHide of locationsToHide) {
+            //   console.log(locationToHide);
+            //   this.diagnose.teeth[toothId][locationToHide] = false;
+            // }
           }
         } else {
           this.islastActionDelete = false;
@@ -470,22 +531,30 @@ export default {
           }
         }
       }
+      console.log(this.diagnose.teeth);
       this.triger = !this.triger;
     },
     // Высчитывваем в какую очередь нужно прятать локацию в зависимости от выбронного приоретета показа(анамнез дигноз или лечение)
     isHidingLocation(i, location) {
-      const anamnes =
-        this.jaw.jawAnamnes &&
-        this.jaw.jawAnamnes[this.selectedTeeth[i]] &&
-        this.jaw.jawAnamnes[this.selectedTeeth[i]][location];
-      const treatment =
-        this.jaw.jawTreatment &&
-        this.jaw.jawTreatment[this.selectedTeeth[i]] &&
-        this.jaw.jawTreatment[this.selectedTeeth[i]][location];
-      const diagnose =
-        this.jaw.jawDiagnose &&
-        this.jaw.jawDiagnose[this.selectedTeeth[i]] &&
-        this.jaw.jawDiagnose[this.selectedTeeth[i]][location];
+      const toothId = this.selectedTeeth[i];
+      const anamnes = this.getNestedProperty(
+        this.jaw,
+        "jawAnamnes",
+        toothId,
+        location
+      );
+      const treatment = this.getNestedProperty(
+        this.jaw,
+        "jawTreatment",
+        toothId,
+        location
+      );
+      const diagnose = this.getNestedProperty(
+        this.jaw,
+        "jawDiagnose",
+        toothId,
+        location
+      );
       const defaultLocation = !this.defaultLocations[location];
 
       let hide = defaultLocation;
@@ -529,45 +598,42 @@ export default {
 
     preferableJawClasses(i, location) {
       let toothClass = {};
+      const toothId = this.selectedTeeth[i];
 
       if (this.preferj === "anamnes") {
-        if (this.jaw.jawAnamnes[this.selectedTeeth[i]][location]) {
+        if (this.jaw.jawAnamnes[toothId][location]) {
           toothClass["anamnes"] = true;
           return toothClass;
-        } else if (this.jaw.jawTreatment[this.selectedTeeth[i]][location]) {
+        } else if (this.jaw.jawTreatment[toothId][location]) {
           toothClass["treatment"] = true;
           return toothClass;
-        } else if (this.jaw.jawDiagnose[this.selectedTeeth[i]][location]) {
+        } else if (this.jaw.jawDiagnose[toothId][location]) {
           toothClass["diagnose"] = true;
           return toothClass;
         }
         return toothClass;
       }
       if (this.preferj === "diagnose") {
-        if (
-          this.jaw.jawDiagnose[this.selectedTeeth[i]][location] ||
-          (this.diagnose.teeth.hasOwnProperty([this.selectedTeeth[i]]) &&
-            this.diagnose.teeth[this.selectedTeeth[i]][location] === true)
-        ) {
+        if (this.jaw.jawDiagnose[toothId][location]) {
           toothClass["diagnose"] = true;
           return toothClass;
-        } else if (this.jaw.jawTreatment[this.selectedTeeth[i]][location]) {
+        } else if (this.jaw.jawTreatment[toothId][location]) {
           toothClass["treatment"] = true;
           return toothClass;
-        } else if (this.jaw.jawAnamnes[this.selectedTeeth[i]][location]) {
+        } else if (this.jaw.jawAnamnes[toothId][location]) {
           toothClass["anamnes"] = true;
           return toothClass;
         }
         return toothClass;
       }
       if (this.preferj === "treatment") {
-        if (this.jaw.jawTreatment[this.selectedTeeth[i]][location]) {
+        if (this.jaw.jawTreatment[toothId][location]) {
           toothClass["treatment"] = true;
           return toothClass;
-        } else if (this.jaw.jawAnamnes[this.selectedTeeth[i]][location]) {
+        } else if (this.jaw.jawAnamnes[toothId][location]) {
           toothClass["anamnes"] = true;
           return toothClass;
-        } else if (this.jaw.jawDiagnose[this.selectedTeeth[i]][location]) {
+        } else if (this.jaw.jawDiagnose[toothId][location]) {
           toothClass["diagnose"] = true;
           return toothClass;
         }
@@ -578,9 +644,7 @@ export default {
     toCurrentTeethSystem(toothID) {
       let tooth = toothID;
       if (
-        this.teethSchema &&
-        this.teethSchema[toothID] &&
-        this.teethSchema[toothID][this.teethSystemL]
+        this.getNestedProperty(this.teethSchema, toothID, this.teethSystemL)
       ) {
         tooth = this.teethSchema[toothID][this.teethSystemL];
       }
@@ -654,26 +718,32 @@ export default {
     this.diagnose.code = this.selectedDiagnose.code;
     this.diagnose.title = this.selectedDiagnose.title;
     console.log(this.getPropertiesWithTrue(this.selectedDiagnose.locations));
-    if (
-      (this.selectedTeeth.length > 0 &&
-        this.countProperties(this.selectedDiagnose.locations) <= 1) ||
-      this.getPropertiesWithTrue(this.selectedDiagnose.locations).length == 1
-    ) {
+    if (this.selectedTeeth.length > 0) {
       if (
-        this.countProperties(this.selectedDiagnose.locations) == 1 ||
-        this.getPropertiesWithTrue(this.selectedDiagnose.locations).length == 1
+        this.getPropertiesWithTrue(this.selectedDiagnose.locations).length ===
+        this.selectedDiagnose.locations.length // или все локации к удалению (равные false))
       ) {
+        //тогда присвой все локации из выбранного дигноза вновь создаваемому
         for (let index = 0; index < this.selectedTeeth.length; index++) {
           this.diagnose.teeth[this.selectedTeeth[index]] = {};
+          const locations = Object.keys(this.selectedDiagnose.locations);
+          for (const key in this.selectedDiagnose.locations) {
+            if (this.selectedDiagnose.locations.hasOwnProperty(key)) {
+              this.diagnose.teeth[this.selectedTeeth[index]][
+                key
+              ] = this.selectedDiagnose.locations[key];
+            }
+          }
+        }
+      } else {
+        // в противном случае вносим во вновь создаваемое лечение только первые положительные локации
+        for (let index = 0; index < this.selectedTeeth.length; index++) {
+          this.diagnose.teeth[this.selectedTeeth[index]] = {}; //создаем массив с зубами в диагнозе
           this.diagnose.teeth[this.selectedTeeth[index]][
             Object.keys(this.selectedDiagnose.locations)[0]
               ? Object.keys(this.selectedDiagnose.locations)[0]
               : this.getPropertiesWithTrue(this.selectedDiagnose.locations)[0]
           ] = true;
-        }
-      } else {
-        for (let index = 0; index < this.selectedTeeth.length; index++) {
-          this.diagnose.teeth[this.selectedTeeth[index]] = {};
         }
       }
     }
@@ -775,7 +845,7 @@ export default {
             fill: #3535ed;
           }
 
-          .root {
+          .root:not(.has-in-locations) {
             fill: #f8edc8;
             stroke: #292320;
             stroke-width: 0.25px;
@@ -784,14 +854,22 @@ export default {
           .rootCanal {
             // fill: #3535ed;
           }
+          .selected:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1):not(.gum) {
+            fill: #8e24aa !important;
+          }
 
-          .coronaLingual,
-          .coronaTop,
-          .coronaLabial {
+          .coronaLingual:not(.has-in-locations),
+          .coronaTop:not(.has-in-locations),
+          .coronaLabial:not(.has-in-locations) {
             fill: #fff;
             stroke: #000;
             stroke-width: 0.25px;
           }
+          .has-in-locations:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1):not(.gum) {
+            stroke: #8e24aa;
+            stroke-width: 1.5px !important;
+          }
+          .has-in-locations,
           .rootCanal,
           .periodontit,
           .coronaLingualIncisalDistal,
@@ -819,7 +897,7 @@ export default {
           .coronaTopOclusial {
             fill: white;
             stroke: #8d24aa70;
-            stroke-width: 0.45px !important;
+            stroke-width: 0.45px;
             &:active {
               opacity: 0.8;
               transition-property: all;
@@ -828,31 +906,6 @@ export default {
               transition-delay: 0s;
             }
           }
-          // .coronaLingualIncisalDistal,
-          // .coronaLingualIncisalMiddle,
-          // .coronaLingualIncisionMesial,
-          // .coronaLingualMiddleDistal,
-          // .coronaLingualMiddleMiddle,
-          // .coronaLingualMiddleMesial,
-          // .coronaLingualCervicalDistal,
-          // .coronaLingualCervicalMiddle,
-          // .coronaLingualCervicalMesial,
-          // .coronaLabialIncisalDistal,
-          // .coronaLabialIncisalMiddle,
-          // .coronaLabialIncisionMesial,
-          // .coronaLabialMiddleDistal,
-          // .coronaLabialMiddleMiddle,
-          // .coronaLabialMiddleMesial,
-          // .coronaLabialCervicalDistal,
-          // .coronaLabialCervicalMiddle,
-          // .coronaLabialCervicalMesial,
-          // .coronaTopBuccal,
-          // .coronaTopMedial,
-          // .coronaTopLingual,
-          // .coronaTopDistal,
-          // .coronaTopOclusial {
-          //   fill: #3535ed;
-          // }
 
           .implant {
             fill: #3535ed;
@@ -905,13 +958,42 @@ export default {
             fill: none;
           }
 
+          .paradontit1.has-in-locations,
+          .paradontit2.has-in-locations,
+          .paradontit3.has-in-locations,
+          .paradontit4.has-in-locations,
+          .periodnotit.has-in-locations {
+            opacity: 0.3;
+            stroke-linejoin: round;
+            stroke-width: 3px;
+            &:hover {
+              opacity: 1;
+              stroke-width: 4px !important;
+              stroke: #8e24aa !important;
+            }
+          }
+          .paradontit1.selected,
+          .paradontit2.selected,
+          .paradontit3.selected,
+          .paradontit4.selected,
+          .periodnotit.selected {
+            opacity: 1;
+            stroke-linejoin: round;
+            stroke-width: 3px;
+            stroke: #8e24aa;
+          }
+
           .paradontit1,
           .paradontit2,
           .paradontit3,
           .paradontit4,
-          .periodontit {
+          .periodnotit {
             stroke-linejoin: round;
             stroke-width: 3px;
+            transition-property: all;
+            transition-duration: 0.4s;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-delay: 0s;
           }
           .hide {
             display: none;
@@ -919,84 +1001,68 @@ export default {
         }
       }
     }
-    .tooth-rejected {
-      top: 0;
-      width: 100%;
-      position: absolute;
-      height: 90%;
-      opacity: 0.4;
-      margin-bottom: 60px;
-    }
+    // .has-in-locations:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
+    //   stroke: #8e24aa !important;
+    // }
 
     .anamnes {
-      .tooth-rejected {
-        background-color: #fb8c00;
-      }
       fill: #fb8c00 !important;
       .tooth-number {
         color: #fb8c00;
       }
     }
     .diagnose:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
-      .tooth-rejected {
-        background-color: #8e24aa;
-      }
-      fill: #8e24aa !important;
+      // fill: #8e24aa !important;
       .tooth-number {
         color: #8e24aa;
       }
     }
     .diagnose.gum {
       stroke-width: 4px !important;
-      stroke: #8e24aa !important;
     }
-    .diagnose.paradontit1,
-    .diagnose.paradontit2,
-    .diagnose.paradontit3,
-    .diagnose.paradontit4 {
-      stroke: #8e24aa !important;
-      opacity: 1 !important;
-    }
+
     .treatment {
       fill: #43a047 !important;
       .tooth-number {
         color: #43a047;
       }
-      .tooth-rejected {
-        background-color: #43a047;
-      }
     }
-    .transparent {
+    .selected {
       stroke: #8e24aa;
-      // opacity: 0.1;
-      &:hover:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
-        fill: #8e24aa !important;
-        opacity: 0.7;
-        transition-property: all;
-        transition-duration: 0.4s;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        transition-delay: 0s;
-      }
+      opacity: 1 !important;
     }
 
-    .transparent.paradontit4,
-    .transparent.paradontit3,
-    .transparent.paradontit2,
-    .transparent.paradontit1 {
-      stroke: #8e24aa;
-      opacity: 0.1;
+    // .has-in-locations {
+    //   stroke: #8e24aa;
+    //   // opacity: 0.3;
+    //   &:hover:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
+    //     fill: #8e24aa !important;
+    //     opacity: 0.7;
+    //     transition-property: all;
+    //     transition-duration: 0.4s;
+    //     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    //     transition-delay: 0s;
+    //   }
+    // }
 
-      &:hover {
-        opacity: 1;
-        z-index: 50;
-        stroke-width: 4px !important;
-        stroke: #8e24aa !important;
-        transition-property: all;
-        transition-duration: 0.4s;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        transition-delay: 0s;
-      }
-    }
+    // .has-in-locations.paradontit4,
+    // .has-in-locations.paradontit3,
+    // .has-in-locations.paradontit2,
+    // .has-in-locations.paradontit1 {
+    //   stroke: #8e24aa;
+    //   opacity: 0.1;
+
+    //   &:hover {
+    //     opacity: 1;
+    //     z-index: 50;
+    //     stroke-width: 4px !important;
+    //     stroke: #8e24aa !important;
+    //     transition-property: all;
+    //     transition-duration: 0.4s;
+    //     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    //     transition-delay: 0s;
+    //   }
+    // }
   }
 }
 </style>

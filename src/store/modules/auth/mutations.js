@@ -26,7 +26,7 @@ export default {
     state.hasRefreshTokenError = true;
   },
   [AUTH_LOGOUT]: (state) => {
-    state.accessToken = 'ывап';
+    state.accessToken = '';
     state.expiresAt = '';
     state.refreshToken = '';
   },

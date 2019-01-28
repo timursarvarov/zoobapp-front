@@ -150,13 +150,13 @@
       currentTabColor() {
         let color = '';
         if (this.$route.name === 'Anamnes') {
-          color = 'warning';
+          color = 'success';
         } else if (this.$route.name === 'Diagnose') {
-          color = 'primary';
+          color = 'success';
         } else if (this.$route.name === 'Therapy') {
           color = 'success';
         } else if (this.$route.name === 'Notes') {
-          color = 'info';
+          color = 'success';
         }
         return color;
       },
