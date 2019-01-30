@@ -4,19 +4,23 @@ import {
 } from '../constants';
 
 export default {
-  [NOTIFY]: ({commit},{settings}) => {
+  [NOTIFY]: ({
+    commit
+  }, {
+    settings
+  }) => {
     console.log(settings);
-    let vSettings ={};
-    if(settings) {
+    let vSettings = {};
+    if (settings) {
       vSettings = {
-        message: settings.message ||'OOPS! Something went wrong...',
-        icon: settings.icon ||'add_alert',
-        horizontalAlign: settings.horizontalAlign ||'left',
-        verticalAlign: settings.verticalAlign ||'bottom',
-        type: settings.type ||'warning',
-        status: settings.status ||'',
+        message: settings.message || 'OOPS! Something went wrong...',
+        icon: settings.icon || 'add_alert',
+        horizontalAlign: settings.horizontalAlign || 'left',
+        verticalAlign: settings.verticalAlign || 'bottom',
+        type: settings.type || '.alert-warning',
+        status: settings.status || '',
       };
-    }else{
+    } else {
       vSettings = {
         message: 'OOPS! Something wrong...',
         icon: 'add_alert',

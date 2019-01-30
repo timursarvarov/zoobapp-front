@@ -12,12 +12,14 @@ import {
   PATIENT_AVATAR_UPLOAD,
   PATIENT_UPDATE,
   PATIENT_CREATE_NOTE,
-  USER_SET_PARAM,
+  PATIENTS_UPDATE_PATIENT,
 } from '../constants';
 
 export default {
   [PATIENT_AVATAR_UPLOAD]: ({
-    commit
+    commit,
+    getters,
+    dispatch
   }, {
     patient
   }) => {
@@ -33,6 +35,11 @@ export default {
         .then(resp => {
           commit(PATIENT_SUCCESS);
           commit(PATIENT_AVATAR_UPLOAD, resp);
+          const patient = getters.getPatient;
+          dispatch(PATIENT_SET_PARAMS, {
+            patient: patient
+          })
+          dispatch()
           resolve(resp);
         })
         .catch(err => {
@@ -42,7 +49,8 @@ export default {
     });
   },
   [PATIENT_UPDATE]: ({
-    commit
+    commit,
+    dispatch,
   }, {
     patient
   }) => {
@@ -57,10 +65,14 @@ export default {
             address: patient.address,
             allergy: patient.allergy,
             source: patient.source,
+            rating: parseInt(patient.rating, 10),
           })
         )
         .then(resp => {
           commit(PATIENT_SUCCESS);
+          dispatch(PATIENT_SET_PARAMS, {
+            patient: resp.data
+          });
           resolve(resp);
         })
         .catch(err => {
@@ -152,6 +164,7 @@ export default {
   },
   [PATIENT_SET_PARAMS]: ({
     commit,
+    dispatch
   }, {
     patient
   }) => {
@@ -166,8 +179,10 @@ export default {
         type: k,
         value: value,
       });
-
     }
+    dispatch(PATIENTS_UPDATE_PATIENT, {
+      patient
+    });
   },
   [PATIENT_GET]: ({
     commit,

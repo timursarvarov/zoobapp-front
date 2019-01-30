@@ -2,7 +2,12 @@
   <md-card class="md-card-profile clinic-wrapper">
     <div class="md-card-avatar">
       <div class="picture-container">
-        <div class="picture">
+        <div
+          class="picture"
+          :class="[
+            {'md-valid': !errors.has('size_field') && touched.size_field},
+              {'md-error': errors.has('size_field')}]"
+        >
           <div
             v-if="!clinic.logo"
             class="md-layout md-alignment-center-center wrapper-acronim"
@@ -24,6 +29,9 @@
           </div>
           <input
             type="file"
+            v-validate="'image|size:2000'"
+            name="size_field"
+            data-vv-as="file"
             @change="onFileChange"
           >
         </div>
@@ -249,6 +257,7 @@
           url: false,
           email: false,
           phone: false,
+          size_field: false,
         },
         modelValidations: {
           url: {
@@ -293,15 +302,29 @@
         return `md-${buttonColor}`;
       },
       onFileChange(e) {
-        const files = e.target.files || e.dataTransfer.files;
-        if (!files.length) return;
-        this.createImage(files[0]);
-        this.updateClinicLogo(files[0]);
+        this.$validator.validate('size_field').then((result) => {
+          if (result) {
+            const files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+            this.createImage(files[0]);
+            this.updateClinicLogo(files[0]);
+            this.touched.size_field = true;
+          } else {
+            this.$store.dispatch(NOTIFY, {
+              settings: {
+                message: this.errors.first('size_field'),
+                type: 'warning',
+              },
+            });
+          }
+        });
       },
       validate() {
-        this.$validator.validateAll().then((isValid) => {
-          this.$emit('on-submit', this.registerForm, isValid);
-        });
+        this.$validator
+          .validate('url', 'email', 'phone', 'size_field')
+          .then((isValid) => {
+            this.$emit('on-submit', this.registerForm, isValid);
+          });
         this.touched.url = true;
         this.touched.email = true;
         this.touched.phone = true;
@@ -329,6 +352,12 @@
           .then(
             (response) => {
               console.log(response);
+              this.$store.dispatch(NOTIFY, {
+                settings: {
+                  message: 'Image uploaded',
+                  type: 'success',
+                },
+              });
             },
             (error) => {
               this.selectedFileUrl = null;
@@ -455,11 +484,23 @@
         font-size: 4.875rem;
       }
     }
+    .md-error.picture {
+      border-color: #f44336 !important;
+      border: 3px solid;
+    }
+    .md-valid.picture {
+      border-color: #4caf50 !important;
+      border: 3px solid;
+    }
     .picture {
+      transition-property: all;
+      transition-duration: 0.4s;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0s;
       width: 130px;
       height: 130px;
       background-color: #999999;
-      border: 4px solid #cccccc;
+      border: 3px solid #cccccc;
       color: #ffffff;
       border-radius: 50%;
       overflow: hidden;

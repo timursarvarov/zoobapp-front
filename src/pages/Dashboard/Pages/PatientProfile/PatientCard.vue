@@ -1,8 +1,13 @@
 <template>
-  <md-card class="md-card-profile">
+  <md-card class="md-card-profile patient-card-wrapper">
     <div class="md-card-avatar">
       <div class="picture-container">
-        <div class="picture">
+        <div
+          class="picture"
+          :class="[
+            {'md-valid': !errors.has('size_field') && touched.size_field},
+              {'md-error': errors.has('size_field')}]"
+        >
           <div
             v-if="!patient.avatar"
             class="md-layout md-alignment-center-center wrapper-acronim"
@@ -18,6 +23,9 @@
           >
           </div>
           <input
+            v-validate="'image|size:2000'"
+            name="size_field"
+            data-vv-as="file"
             type="file"
             @change="onFileChange"
           >
@@ -164,13 +172,23 @@
             </slide-y-down-transition>
           </md-field>
         </div>
-
         <div class="md-layout-item md-size-33   md-small-size-100">
           <md-chips
             v-model="patient.allergy"
             class="md-danger"
             md-placeholder="Add allergy..."
           ></md-chips>
+        </div>
+        <div class="md-layout-item md-small-size-50  md-xsmall-size-100  md-size-33 ">
+          <slider
+            :range="{
+              min:0,
+              max:5,
+            }"
+            v-model="patient.rating"
+          >
+          </slider>
+          <md-tooltip>Patient rating</md-tooltip>
         </div>
         <div class="md-layout-item md-size-100 text-right">
           <md-button
@@ -179,6 +197,7 @@
           >Update Profile</md-button>
         </div>
       </div>
+
     </md-card-content>
 
   </md-card>
@@ -191,10 +210,12 @@
   } from '@/store/modules/constants';
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
+  import { Slider } from '@/components';
 
   export default {
     components: {
       SlideYDownTransition,
+      Slider,
     },
     name: 'patient-card',
     props: {
@@ -223,6 +244,7 @@
         code: null,
         aboutme: null,
         touched: {
+          size_field: false,
           firstName: false,
           lastName: false,
           email: false,
@@ -251,16 +273,29 @@
         return `md-${buttonColor}`;
       },
       onFileChange(e) {
-        const files = e.target.files || e.dataTransfer.files;
-        if (!files.length) return;
-        this.createImage(files[0]);
-        this.updatepatientAvatar(files[0]);
+        this.$validator.validate('size_field').then((result) => {
+          if (result) {
+            const files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+            this.createImage(files[0]);
+            this.updatepatientAvatar(files[0]);
+            this.touched.size_field = true;
+          } else {
+            this.$store.dispatch(NOTIFY, {
+              settings: {
+                message: this.errors.first('size_field'),
+                type: 'warning',
+              },
+            });
+          }
+        });
       },
       validate() {
         this.$validator.validateAll().then((isValid) => {
           this.$emit('on-submit', this.registerForm, isValid);
         });
         this.touched.lastName = true;
+
         this.touched.firstName = true;
         this.touched.email = true;
         this.touched.phone = true;
@@ -274,25 +309,28 @@
         reader.readAsDataURL(file);
       },
       updateProfile() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.$store
-              .dispatch(PATIENT_UPDATE, {
-                patient: this.patient,
-              })
-              .then((response) => {
-                if (response) {
-                  this.$store.dispatch(NOTIFY, {
-                    settings: {
-                      message: 'Settings updated successfully',
-                      type: 'primary',
-                    },
-                  });
-                }
-            });
-          }
+        this.$validator
+          .validateAll('firstName', 'email', 'phone', 'lastName')
+          .then((result) => {
+            if (result) {
+              this.$store
+                .dispatch(PATIENT_UPDATE, {
+                  patient: this.patient,
+                })
+                .then((response) => {
+                  if (response) {
+                    this.$store.dispatch(NOTIFY, {
+                      settings: {
+                        message: 'Settings updated successfully',
+                        type: 'primary',
+                      },
+                    });
+                  }
+              });
+            }
         });
       },
+
       updatepatientAvatar(file) {
         const fd = new FormData();
         fd.append('file', file, file.name);
@@ -308,6 +346,12 @@
           .then(
             (response) => {
               console.log(response);
+              this.$store.dispatch(NOTIFY, {
+                settings: {
+                  message: 'Image uploaded',
+                  type: 'success',
+                },
+              });
             },
             (error) => {
               this.selectedFileUrl = null;
@@ -319,6 +363,7 @@
         );
       },
     },
+
     computed: {
       ...mapGetters({
         patient: 'getPatient',
@@ -328,6 +373,9 @@
       },
       firstName() {
         return this.patient.firstName;
+      },
+      size_field() {
+        return this.patient.size_field;
       },
       lastName() {
         return this.patient.lastName;
@@ -343,6 +391,9 @@
       firstName() {
         this.touched.firstName = true;
       },
+      size_field() {
+        this.touched.size_field = true;
+      },
       lastName() {
         this.touched.lastName = true;
       },
@@ -353,53 +404,71 @@
   };
 </script>
 <style lang="scss">
-.md-datepicker-dialog {
-  height: 286px;
-}
-.md-datepicker-body-content {
-  height: 232px !important;
-}
-
-th .picture-container {
-  position: relative;
-  cursor: pointer;
-  text-align: center;
-  .wrapper-acronim {
-    height: -webkit-fill-available;
-    .acronim {
-      font-size: 4.875rem;
-    }
+.patient-card-wrapper {
+  .slider {
+    margin-top: 58px;
   }
-  .picture {
-    width: 130px;
-    height: 130px;
-    background-color: #999999;
-    border: 4px solid #cccccc;
-    color: #ffffff;
-    border-radius: 50%;
-    overflow: hidden;
-    transition: all 0.2s;
-    -webkit-transition: all 0.2s;
-    .avatar {
-      background-position: 50%;
-      background-repeat: no-repeat;
-      background-size: cover;
-      margin: 0 auto;
-      min-height: 130px;
-      min-width: 130px;
+
+  .md-datepicker-dialog {
+    height: 286px;
+  }
+  .md-datepicker-body-content {
+    height: 232px !important;
+  }
+
+  .picture-container {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    .wrapper-acronim {
+      height: -webkit-fill-available;
+      .acronim {
+        font-size: 4.875rem;
+      }
     }
-    &:hover {
-      border-color: #4caf50;
+    .md-error.picture {
+      border-color: #f44336 !important;
+      border: 3px solid;
     }
-    input[type="file"] {
-      cursor: pointer;
-      display: block;
-      height: 100%;
-      left: 0;
-      opacity: 0 !important;
-      position: absolute;
-      top: 0;
-      width: 100%;
+    .md-valid.picture {
+      border-color: #4caf50 !important;
+      border: 3px solid;
+    }
+    .picture {
+      transition-property: all;
+      transition-duration: 0.4s;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0s;
+      width: 130px;
+      height: 130px;
+      background-color: #999999;
+      border: 3px solid #cccccc;
+      color: #ffffff;
+      border-radius: 50%;
+      overflow: hidden;
+      transition: all 0.2s;
+      -webkit-transition: all 0.2s;
+      .avatar {
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin: 0 auto;
+        min-height: 130px;
+        min-width: 130px;
+      }
+      &:hover {
+        border-color: #4caf50;
+      }
+      input[type="file"] {
+        cursor: pointer;
+        display: block;
+        height: 100%;
+        left: 0;
+        opacity: 0 !important;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
     }
   }
 }

@@ -103,6 +103,20 @@
                 md-label="Source"
                 md-sort-by="source"
               >{{ item.source }}</md-table-cell>
+
+              <md-table-cell
+                md-label="Raiting"
+                md-sort-by="raiting"
+              >{{ item.raiting }}
+                <star-rating
+                  read-only
+                  :glow="5"
+                  :show-rating="false"
+                  :star-size="12"
+                  v-model="item.rating"
+                ></star-rating>
+              </md-table-cell>
+
               <md-table-cell md-label="Actions">
 
                 <md-button
@@ -174,6 +188,7 @@
 
 <script>
   import { Pagination } from '@/components';
+  import StarRating from 'vue-star-rating';
   // import patients from './patients';
   import Fuse from 'fuse.js';
   import swal from 'sweetalert2';
@@ -183,6 +198,7 @@
   export default {
     components: {
       Pagination,
+      StarRating,
     },
     computed: {
       ...mapGetters({

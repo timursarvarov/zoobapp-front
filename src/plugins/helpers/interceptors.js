@@ -76,7 +76,7 @@ export default function () {
                 store.dispatch(NOTIFY, {
                     settings: {
                         status: error.response.status ? error.response.status : 'Some status',
-                        message: error.response.data.message ? error.response.data.message : 'No data to show'
+                        message: error.response.data.error ? error.response.data.error : 'No data to show'
                     }
                 });
             }
