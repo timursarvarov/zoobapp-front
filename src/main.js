@@ -1,4 +1,5 @@
 import Vue from 'vue';
+
 import VueRouter from 'vue-router';
 import Chartist from 'chartist';
 import store from './store';

@@ -1,5 +1,6 @@
 <template>
   <md-card class="md-card-profile patient-card-wrapper">
+
     <div class="md-card-avatar">
       <div class="picture-container">
         <div
@@ -28,11 +29,13 @@
             data-vv-as="file"
             type="file"
             @change="onFileChange"
+            ref="imageInserter"
           >
         </div>
       </div>
     </div>
     <md-card-content>
+      {{patient.avatar}}
       <div class="md-layout md-gutter">
 
         <div class="md-layout-item md-small-size-50   md-xsmall-size-100  md-size-33  ">
@@ -197,6 +200,16 @@
           >Update Profile</md-button>
         </div>
       </div>
+      <image-cropper-form
+        v-model="fd"
+        :maxFilesize="2000"
+        buttonColor='green'
+        title="Add a patient avatar"
+        :icon="'add_a_photo'"
+        :imageName="patient.ID != null ? patient.ID.toString() + '_' + Date.now(): ''"
+        :imageToCorp="image"
+        :showForm.sync="showForm"
+      ></image-cropper-form>
 
     </md-card-content>
 
@@ -211,11 +224,13 @@
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
   import { Slider } from '@/components';
+  import { ImageCropperForm } from '@/pages';
 
   export default {
     components: {
       SlideYDownTransition,
       Slider,
+      ImageCropperForm,
     },
     name: 'patient-card',
     props: {
@@ -234,6 +249,8 @@
     },
     data() {
       return {
+        fd: null,
+        showForm: false,
         image: '',
         selectedAvatar: '',
         patientname: null,
@@ -269,26 +286,30 @@
       };
     },
     methods: {
+      clearImage() {
+        const input = this.$refs.imageInserter;
+        input.type = 'text';
+        input.type = 'file';
+      },
       getColorButton(buttonColor) {
         return `md-${buttonColor}`;
       },
       onFileChange(e) {
-        this.$validator.validate('size_field').then((result) => {
-          if (result) {
-            const files = e.target.files || e.dataTransfer.files;
-            if (!files.length) return;
-            this.createImage(files[0]);
-            this.updatepatientAvatar(files[0]);
-            this.touched.size_field = true;
-          } else {
-            this.$store.dispatch(NOTIFY, {
-              settings: {
-                message: this.errors.first('size_field'),
-                type: 'warning',
-              },
-            });
-          }
-        });
+        const files = e.target.files || e.dataTransfer.files;
+        if (files.length > 0) {
+          this.createImage(files[0]);
+
+          this.showForm = true;
+          this.touched.size_field = true;
+          this.clearImage();
+        } else {
+          this.$store.dispatch(NOTIFY, {
+            settings: {
+              message: this.errors.first('size_field'),
+              type: 'warning',
+            },
+          });
+        }
       },
       validate() {
         this.$validator.validateAll().then((isValid) => {
@@ -331,9 +352,9 @@
         });
       },
 
-      updatepatientAvatar(file) {
-        const fd = new FormData();
-        fd.append('file', file, file.name);
+      updatepatientAvatar(fd) {
+        // const fd = new FormData();
+        // fd.append('file', file, file.name);
         const patient = {
           ID: this.patient.ID,
           fd,
@@ -353,12 +374,9 @@
                 },
               });
             },
-            (error) => {
+            (err) => {
               this.selectedFileUrl = null;
-              console.error(
-                error,
-                'Got nothing from server. Prompt patient to check internet connection and try again',
-              );
+              console.log(err);
             },
         );
       },
@@ -385,6 +403,9 @@
       },
     },
     watch: {
+      fd() {
+        this.updatepatientAvatar(this.fd);
+      },
       email() {
         this.touched.email = true;
       },
@@ -392,6 +413,7 @@
         this.touched.firstName = true;
       },
       size_field() {
+        console.log(22);
         this.touched.size_field = true;
       },
       lastName() {

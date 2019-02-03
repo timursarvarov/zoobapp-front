@@ -15,6 +15,6 @@ export default {
         diagnosis: [],
         created: null,
         updated: null,
-        raiting: null,
+        rating: null,
     },
 };

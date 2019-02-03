@@ -1,5 +1,6 @@
 import UserCard from './Dashboard/Pages/UserProfile/UserCard.vue';
 import PasswordForm from './Dashboard/Pages/UserProfile/PasswordForm.vue';
+import ImageCropperForm from './Dashboard/Modals/ImageCropperForm.vue';
 
 import PatientCard from './Dashboard/Pages/PatientProfile/PatientCard.vue';
 import JawAnamnes from './Dashboard/Pages/PatientTreatment/JawAnamnes.vue';
@@ -24,4 +25,5 @@ export {
   TreatmentList,
   AnamnesList,
   ClinicSettings,
+  ImageCropperForm,
 };

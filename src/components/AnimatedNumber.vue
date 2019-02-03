@@ -13,6 +13,10 @@
         type: Number,
         default: 800,
       },
+      toFix: {
+        type: Number,
+        default: 0,
+      },
     },
     data() {
       return {
@@ -33,7 +37,7 @@
           .easing(TWEEN.Easing.Quadratic.Out)
           .to({ tweeningNumber: newValue }, this.duration)
           .onUpdate((object) => {
-            vm.animatedNumber = object.tweeningNumber.toFixed(0);
+            vm.animatedNumber = object.tweeningNumber.toFixed(this.toFix);
           })
           .start();
 
@@ -44,7 +48,7 @@
       this.initAnimation(this.value, 0);
     },
     watch: {
-      number(newValue, oldValue) {
+      value(newValue, oldValue) {
         this.initAnimation(newValue, oldValue);
       },
     },

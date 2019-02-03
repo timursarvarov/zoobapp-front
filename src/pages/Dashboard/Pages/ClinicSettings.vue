@@ -2,12 +2,7 @@
   <md-card class="md-card-profile clinic-wrapper">
     <div class="md-card-avatar">
       <div class="picture-container">
-        <div
-          class="picture"
-          :class="[
-            {'md-valid': !errors.has('size_field') && touched.size_field},
-              {'md-error': errors.has('size_field')}]"
-        >
+        <div class="picture">
           <div
             v-if="!clinic.logo"
             class="md-layout md-alignment-center-center wrapper-acronim"
@@ -217,6 +212,80 @@
         class="md-raised md-success  ml-auto"
       >Update Settings</md-button>
     </md-card-actions>
+    <md-dialog
+      class="cropper-form"
+      :md-active.sync="showForm"
+      :md-click-outside-to-close="!isLoadingRegistration"
+    >
+      <div>
+        <md-card>
+          <md-card-header class="md-card-header-icon md-card-header-green">
+            <div class="card-icon">
+              <md-icon>add_a_photo</md-icon>
+            </div>
+            <h4 class="title">Add a clinic logo</h4>
+          </md-card-header>
+
+          <md-card-content class="md-layout md-gutter">
+            <div class="md-layout-item md-size-66 md-xsmall-size-100">
+              <clipper-fixed
+                class="clipper-setter"
+                :src="image"
+                ref="clipper"
+                bg-color="white"
+                :ratio="1"
+                :round="false"
+                preview="preview"
+                :rotate="parseInt(rotate, 10)"
+              >
+                <div slot="placeholder">No image</div>
+              </clipper-fixed>
+
+            </div>
+
+            <div class="md-layout-item md-layout md-gutter md-size-33 md-xsmall-size-100">
+              <div class="md-layout-item">
+                <clipper-preview
+                  name="preview"
+                  class="clipper-preview"
+                ></clipper-preview>
+              </div>
+              <div class="md-layout-item">
+                <clipper-preview
+                  name="preview"
+                  class="clipper-preview-round"
+                ></clipper-preview>
+
+              </div>
+            </div>
+            <div class="md-layout-item md-list md-layout md-gutter  md-size-100">
+              <div class="md-layout-item md-layout md-list-item ">
+                <div class="">
+                  Rotate:
+                  {{rotate}}°
+                </div>
+                <div class="md-layout-item ">
+                  <slider
+                    :range="{
+              min:0,
+              max:180,
+            }"
+                    v-model="rotate"
+                  />
+                </div>
+              </div>
+            </div>
+
+          </md-card-content>
+          <md-card-actions md-alignment="right">
+            <md-button
+              @click="creatClipingImage()"
+              class="md-success"
+            >Create</md-button>
+          </md-card-actions>
+        </md-card>
+      </div>
+    </md-dialog>
   </md-card>
 </template>
     <script>
@@ -224,10 +293,9 @@
     CLINIC_LOGO_UPLOAD,
     CLINIC_UPDATE,
     NOTIFY,
-    USER_UPDATE,
   } from '@/store/modules/constants';
   import { mapGetters } from 'vuex';
-  import { IconBase } from '@/components';
+  import { IconBase, Slider } from '@/components';
   import { SlideYDownTransition } from 'vue2-transitions';
   import commonCurrency from './Common-Currency.json';
   import timezones from './timezones.json';
@@ -236,6 +304,7 @@
     components: {
       SlideYDownTransition,
       IconBase,
+      Slider,
     },
     name: 'clinic-settings',
     props: {
@@ -246,6 +315,10 @@
     },
     data() {
       return {
+        rotate: 0,
+        showForm: false,
+        resultURL: null,
+        isLoadingRegistration: true,
         selectedTimezone: null,
         selectedCurrency: null,
         timeZoneForOptions: [],
@@ -301,23 +374,20 @@
       getColorButton(buttonColor) {
         return `md-${buttonColor}`;
       },
+
       onFileChange(e) {
-        this.$validator.validate('size_field').then((result) => {
-          if (result) {
-            const files = e.target.files || e.dataTransfer.files;
-            if (!files.length) return;
-            this.createImage(files[0]);
-            this.updateClinicLogo(files[0]);
-            this.touched.size_field = true;
-          } else {
-            this.$store.dispatch(NOTIFY, {
-              settings: {
-                message: this.errors.first('size_field'),
-                type: 'warning',
-              },
-            });
-          }
-        });
+        const files = e.target.files || e.dataTransfer.files;
+        if (!files.length) return;
+        this.createImage(files[0]);
+      },
+
+      creatClipingImage() {
+        const canvas = this.$refs.clipper.clip();
+        const dataURL = canvas.toDataURL('image/jpeg', 0.5);
+        const blob = this.dataURItoBlob(dataURL);
+        const fd = new FormData(document.forms[0]);
+        fd.append('file', blob, `${this.clinic.ID}.jpeg`);
+        this.updateClinicLogo(fd);
       },
       validate() {
         this.$validator
@@ -329,9 +399,31 @@
         this.touched.email = true;
         this.touched.phone = true;
       },
+      dataURItoBlob(dataURI) {
+        // convert base64/URLEncoded data component to raw binary data held in a string
+        let byteString;
+        if (dataURI.split(',')[0].indexOf('base64') >= 0) {
+          byteString = atob(dataURI.split(',')[1]);
+        } else byteString = unescape(dataURI.split(',')[1]);
+
+        // separate out the mime component
+        const mimeString = dataURI
+          .split(',')[0]
+          .split(':')[1]
+          .split(';')[0];
+
+        // write the bytes of the string to a typed array
+        const ia = new Uint8Array(byteString.length);
+        for (let i = 0; i < byteString.length; i += 1) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+
+        return new Blob([ia], { type: mimeString });
+      },
       createImage(file) {
         const reader = new FileReader();
         const vm = this;
+        this.showForm = true;
         reader.onload = (e) => {
           vm.image = e.target.result;
         };
@@ -341,9 +433,9 @@
           reader.readAsDataurl(file);
         }
       },
-      updateClinicLogo(file) {
-        const fd = new FormData();
-        fd.append('file', file, file.name);
+      updateClinicLogo(fd) {
+        // const fd = new FormData();
+        // fd.append('file', file, file.name);
 
         this.$store
           .dispatch(CLINIC_LOGO_UPLOAD, {
@@ -438,6 +530,8 @@
       },
     },
     created() {
+      // const canvas = this.$refs.clipper.clip();
+
       this.currency = this.copyObj(commonCurrency);
       this.timezones = this.copyObj(timezones);
       this.createArrayTimezones();
@@ -459,6 +553,28 @@
   };
 </script>
 <style lang="scss">
+.md-dialog.cropper-form {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  .clipper-setter {
+    overflow: hidden;
+    max-width: 70vh;
+    max-height: 70vh;
+  }
+  .clipper-preview {
+    overflow: hidden;
+    width: 130px;
+    height: 130px;
+    margin: auto;
+  }
+  .clipper-preview-round {
+    overflow: hidden;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 20px;
+  }
+}
 .clinic-wrapper {
   .md-field {
     // margin-top: 24px;

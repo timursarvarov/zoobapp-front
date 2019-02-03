@@ -36,15 +36,16 @@ export default {
   }, {
     patient
   }) => {
-    const index = state.patients.findIndex(function (e) {
-      return e.ID === patient.ID;
-    })
-    if (index === -1) return;
-    const payload = {
-      index: index,
-      patient: patient
+    if (state.patients.lenght > 0) {
+      const index = state.patients.findIndex(function (e) {
+        return e.ID === patient.ID;
+      });
+      if (index === -1) return;
+      const payload = {
+        index: index,
+        patient: patient
+      }
+      commit(PATIENTS_UPDATE_PATIENT, payload);
     }
-
-    commit(PATIENTS_UPDATE_PATIENT, payload);
   },
 };

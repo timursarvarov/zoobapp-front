@@ -18,7 +18,7 @@ import {
 export default {
   [PATIENT_AVATAR_UPLOAD]: ({
     commit,
-    getters,
+    state,
     dispatch
   }, {
     patient
@@ -34,12 +34,14 @@ export default {
         )
         .then(resp => {
           commit(PATIENT_SUCCESS);
-          commit(PATIENT_AVATAR_UPLOAD, resp);
-          const patient = getters.getPatient;
+          dispatch(PATIENT_SET_PARAM, {
+            type: 'avatar',
+            value: resp.data.url,
+          })
+          const patient = state.patient;
           dispatch(PATIENT_SET_PARAMS, {
             patient: patient
           })
-          dispatch()
           resolve(resp);
         })
         .catch(err => {
