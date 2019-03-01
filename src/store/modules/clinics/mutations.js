@@ -1,13 +1,13 @@
 /* eslint-disable */
 import {
-  CLINIC_SET,
-  CLINIC_REQUEST,
-  CLINIC_SUCCESS,
-  CLINIC_ERROR,
+  CLINICS_REQUEST,
+  CLINICS_ERROR,
+  CLINICS_SUCCESS,
+  CLINICS_CREATE,
 } from '../constants';
 
 export default {
-  [CLINIC_SET]: (
+  [CLINICS_CREATE]: (
     state, {
       type,
       value
@@ -15,13 +15,13 @@ export default {
   ) => {
     state.clinic[type] = value;
   },
-  [CLINIC_REQUEST]: (state) => {
+  [CLINICS_REQUEST]: (state) => {
     state.status = 'loading';
   },
-  [CLINIC_SUCCESS]: (state) => {
+  [CLINICS_SUCCESS]: (state) => {
     state.status = 'success';
   },
-  [CLINIC_ERROR]: (state) => {
+  [CLINICS_ERROR]: (state) => {
     state.status = 'error';
   },
 };

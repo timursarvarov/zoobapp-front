@@ -13,21 +13,21 @@
 
         </md-card-header>
 
-        <md-card-content class="md-layout ">
+        <md-card-content class="md-layout md-gutter">
           <div
-            class="md-layout-item md-size-100 "
+            @mouseup="mouseActions =!mouseActions"
+            @mousewheel="mouseActions =!mouseActions"
+            @mouseleave="mouseActions =!mouseActions"
+            class="md-layout-item md-size-66 md-xsmall-size-100"
           >
             <clipper-fixed
               class="clipper-setter"
               :src="imageToCorp"
-              :round="true"
-              @changed="changed"
-              @error="onError"
               ref="clipper"
-              :grid="false"
-              bg-color="black"
-              shadow="rgba(20,20,20, .7)"
+              bg-color="white"
               :ratio="1"
+              :round="false"
+              preview="preview"
               :rotate="parseInt(rotate, 10)"
             >
               <div slot="placeholder">No image</div>
@@ -35,23 +35,47 @@
 
           </div>
 
-          <div class="md-layout-item md-size-100"><small>* max file size {{ formatBytes(maxFileSize).num}} {{ formatBytes(maxFileSize).type}}</small></div>
-          <div class="md-layout-item">
-          <div  class="filesize md-layout-item">
-          <p
+          <div class="md-layout-item md-layout md-gutter md-size-33 md-xsmall-size-100">
+
+            <div
+              v-if="message !== 'Calculating...'"
               :class="[{'error': !correctSize(),
-              'success':correctSize()}]"
+            'success':correctSize()}]"
+              class="md-size-100 md-layout-item"
             >
-              Cropped image size:
+              {{message}}:
               <animated-number
                 :value="size.num"
                 :toFix="2"
                 :duration="300"
               ></animated-number>
-              {{size.type}}
-            </p>
+              {{size.type}}<br />
             </div>
-            <div v-if="rotatable" class="md-layout-item md-layout ">
+
+            <div
+              v-if="message === 'Calculating...'"
+              class="md-layout-item md-size-100"
+            >
+              {{message}} <br />
+            </div>
+
+            <div class="md-layout-item">
+              <clipper-preview
+                name="preview"
+                class="clipper-preview"
+              ></clipper-preview>
+            </div>
+            <div class="md-layout-item">
+              <clipper-preview
+                name="preview"
+                class="clipper-preview-round"
+              ></clipper-preview>
+
+            </div>
+          </div>
+          <div class="md-layout-item md-size-100"><small>* max file size {{ formatBytes(maxFileSize).num}} {{ formatBytes(maxFileSize).type}}</small></div>
+          <div class="md-layout-item md-list md-layout md-gutter  md-size-100">
+            <div class="md-layout-item md-layout md-list-item ">
               <div class="">
                 Rotate:
                 {{rotate}}°
@@ -70,9 +94,6 @@
 
         </md-card-content>
         <md-card-actions md-alignment="right">
-          <md-button
-            @click="showFormLocal = false;"
-          >Cancel</md-button>
           <md-button
             :disabled="!correctSize()"
             @click="creatClipingImage()"
@@ -123,10 +144,6 @@
         type: Boolean,
         default: () => false,
       },
-      rotatable: {
-        type: Boolean,
-        default: () => false,
-      },
     },
     components: {
       Slider,
@@ -137,7 +154,6 @@
         size: {
           num: 0,
           type: '',
-          bytes: null,
         },
         mouseActions: false,
         size2: 2,
@@ -150,20 +166,6 @@
       };
     },
     methods: {
-      changed(e) {
-        this.size.num = e.num;
-        this.size.type = e.type;
-        this.size.bytes = e.bytes;
-      },
-      onError(e) {
-        console.log(e);
-        //  this.$store.dispatch(NOTIFY, {
-        //     settings: {
-        //       message: 'Error on image cropping, please choose another file',
-        //       type: 'warning',
-        //     },
-        //   });
-      },
       getColorButton(buttonColor) {
         return `md-${buttonColor}`;
       },
@@ -228,8 +230,33 @@
 
         return new Blob([ia], { type: mimeString });
       },
+      calculateSize() {
+        if (this.$refs.clipper) {
+          const DELAY = 700;
+          this.message = 'Calculating...';
+
+          const vm = this;
+          if (this.callbackLauncher) {
+            clearTimeout(vm.callbackLauncher);
+          }
+
+          this.callbackLauncher = setTimeout(() => {
+            Promise.resolve(vm.calculateSizeAfterTimeout());
+            Promise.resolve((vm.message = 'Current size'));
+          }, DELAY);
+        }
+      },
+      calculateSizeAfterTimeout() {
+        if (this.$refs.clipper) {
+          const canvas = this.$refs.clipper.clip();
+          const dataURL = canvas.toDataURL('imageToCorp/jpeg', 0.5);
+          const blob = this.dataURItoBlob(dataURL);
+          this.blobLength = blob.size;
+          this.size = this.formatBytes(blob.size, 0);
+        }
+      },
       correctSize() {
-        return this.size.bytes < this.maxFileSize;
+        return this.blobLength < this.maxFileSize;
       },
     },
     computed: {
@@ -242,6 +269,20 @@
         set(newValue) {
           this.$emit('update:showForm', newValue);
         },
+      },
+    },
+    mounted() {
+      this.calculateSizeAfterTimeout();
+    },
+    watch: {
+      mouseActions() {
+        this.calculateSize();
+      },
+      rotate() {
+        this.calculateSize();
+      },
+      imageToCorp() {
+        this.calculateSize();
       },
     },
   };
@@ -264,9 +305,18 @@
     max-width: 70vh;
     max-height: 70vh;
   }
-  .filesize{
-    text-align: center;
-    min-width: 200px;
+  .clipper-preview {
+    overflow: hidden;
+    width: 130px;
+    height: 130px;
+    margin: auto;
+  }
+  .clipper-preview-round {
+    overflow: hidden;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 20px;
   }
 }
 </style>

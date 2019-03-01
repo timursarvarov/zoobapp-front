@@ -94,7 +94,7 @@
           md-label="Files"
           :to="`/patient/${patient.ID}/treatment/files`"
         >
-          <patient-add-files-form/>
+          <patient-add-files-form />
           <patient-files></patient-files>
         </md-tab>
       </md-tabs>
@@ -104,124 +104,129 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
-  import { NavTabsCard, Jaw, IconBase } from '@/components';
-  import { TEETH_INITIATION, PATIENT_GET, NOTIFY } from '@/store/modules/constants';
+/* eslint-disable */
+import { mapGetters } from "vuex";
+import { NavTabsCard, Jaw, IconBase } from "@/components";
+import {
+  TEETH_INITIATION,
+  PATIENT_GET,
+  NOTIFY
+} from "@/store/modules/constants";
 
-  import {
-    AnamnesList,
+import {
+  AnamnesList,
+  Diagnose,
+  DiagnoseList,
+  Notes,
+  JawAnamnes,
+  TreatmentList,
+  PatientFiles,
+  PatientAddFilesForm
+} from "@/pages";
+
+export default {
+  components: {
+    // JawCard,
+    Jaw,
+    NavTabsCard,
+    JawAnamnes,
     Diagnose,
     DiagnoseList,
     Notes,
-    JawAnamnes,
     TreatmentList,
+    AnamnesList,
+    IconBase,
     PatientFiles,
-    PatientAddFilesForm,
-  } from '@/pages';
-
-  export default {
-    components: {
-      // JawCard,
-      Jaw,
-      NavTabsCard,
-      JawAnamnes,
-      Diagnose,
-      DiagnoseList,
-      Notes,
-      TreatmentList,
-      AnamnesList,
-      IconBase,
-      PatientFiles,
-      PatientAddFilesForm,
-    },
-    data() {
-      return {
-        showDialog: false,
-        actionSize: {},
-        selectedTeeth: [],
-        selectedDiagnose: [],
-      };
-    },
-    methods: {
-      isEmpty(obj) {
-        // eslint-disable-next-line
+    PatientAddFilesForm
+  },
+  data() {
+    return {
+      showDialog: false,
+      actionSize: {},
+      selectedTeeth: [],
+      selectedDiagnose: []
+    };
+  },
+  methods: {
+    isEmpty(obj) {
+      // eslint-disable-next-line
       for (const key in obj) {
-          // eslint-disable-next-line
+        // eslint-disable-next-line
         if (obj.hasOwnProperty(key)) return false;
-        }
-        return true;
-      },
-      Implant() {
-        console.log(this.selectedTeeth);
-        for (let index = 0; index < this.selectedTeeth.length; index += 1) {
-          this.jaw.jawAnamnes[this.selectedTeeth[index]].implant = true;
-          this.jaw.jawAnamnes[this.selectedTeeth[index]].root = false;
-        }
+      }
+      return true;
+    },
+    Implant() {
+      console.log(this.selectedTeeth);
+      for (let index = 0; index < this.selectedTeeth.length; index += 1) {
+        this.jaw.jawAnamnes[this.selectedTeeth[index]].implant = true;
+        this.jaw.jawAnamnes[this.selectedTeeth[index]].root = false;
+      }
       // this.jaw.jawAnamnes[17].implant = true;
       // this.jaw.jawAnamnes[17].root = false;
-      },
-      currentTabColor() {
-        let color = '';
-        // if (this.$route.name === 'Anamnes') {
-        //   color = 'success';
-        // } else if (this.$route.name === 'Diagnose') {
-        //   color = 'success';
-        // } else if (this.$route.name === 'Therapy') {
-        //   color = 'success';
-        // } else if (this.$route.name === 'Notes') {
-        //   color = 'success';
-        // }
-        color = 'success';
-        return color;
-      },
     },
-    computed: {
-      ...mapGetters({
-        clinicSettings: 'getClinicSettings',
-        toothLocations: 'toothLocations',
-        teethBabyBottom: 'teethBabyBottom',
-        teethBabyTop: 'teethBabyTop',
-        teethBabyAll: 'teethBabyAll',
-        teethAll: 'teethAll',
-        teethAdultAll: 'teethAdultAll',
-        teethAdultTop: 'teethAdultTop',
-        teethAdultBottom: 'teethAdultBottom',
-        jaw: 'jaw',
-        patient: 'getPatient',
-      }),
-    },
-    created() {
-      this.$store.dispatch(TEETH_INITIATION);
+    currentTabColor() {
+      let color = "";
+      // if (this.$route.name === 'Anamnes') {
+      //   color = 'success';
+      // } else if (this.$route.name === 'Diagnose') {
+      //   color = 'success';
+      // } else if (this.$route.name === 'Therapy') {
+      //   color = 'success';
+      // } else if (this.$route.name === 'Notes') {
+      //   color = 'success';
+      // }
+      color = "success";
+      return color;
+    }
+  },
+  computed: {
+    ...mapGetters({
+      clinicSettings: "getClinicSettings",
+      toothLocations: "toothLocations",
+      teethBabyBottom: "teethBabyBottom",
+      teethBabyTop: "teethBabyTop",
+      teethBabyAll: "teethBabyAll",
+      teethAll: "teethAll",
+      teethAdultAll: "teethAdultAll",
+      teethAdultTop: "teethAdultTop",
+      teethAdultBottom: "teethAdultBottom",
+      jaw: "jaw",
+      patient: "getPatient"
+    })
+  },
+  created() {
+    this.$store.dispatch(TEETH_INITIATION);
+    if (
+      this.$route.params.patientId &&
+      (this.patient.ID === null ||
+        this.patient.ID !== parseInt(this.$route.params.patientId, 10))
+    ) {
+      this.$store.dispatch(PATIENT_GET, {
+        patientId: this.$route.params.patientId
+      });
+    }
+  },
+  watch: {
+    $route() {
       if (
-        this.$route.params.patientId
-        && (this.patient.ID === null
-        || this.patient.ID !== parseInt(this.$route.params.patientId, 10))
+        this.$route.params.patientId &&
+        (this.patient.ID === null ||
+          this.patient.ID !== parseInt(this.$route.params.patientId, 10))
       ) {
         this.$store.dispatch(PATIENT_GET, {
-          patientId: this.$route.params.patientId,
+          patientId: this.$route.params.patientId
+        });
+        this.$store.dispatch(NOTIFY, {
+          settings: {
+            message: "Patient changed",
+            type: "success"
+          }
         });
       }
-    },
-    watch: {
-      $route(to, from) {
-        if (
-          this.$route.params.patientId
-          && (this.patient.ID === null
-          || this.patient.ID !== parseInt(this.$route.params.patientId, 10))
-        ) {
-          this.$store.dispatch(PATIENT_GET, {
-            patientId: this.$route.params.patientId,
-          });
-          this.$store.dispatch(NOTIFY, {
-            settings: {
-              message: 'Patient changed',
-              type: 'success',
-            },
-          });
-        }
-      },
-    },
-  };
+    }
+  }
+};
 </script>
 <style lang="scss" >
 .treatment-wrapper {

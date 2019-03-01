@@ -1,5 +1,5 @@
 <template>
- <div
+  <div
     class="md-layout md-gutter files-list"
     v-if="!isEmpty(queriedData)"
   >
@@ -7,130 +7,139 @@
       <md-toolbar class="md-transparent">
         <h3 class="md-title">All Diagnosis</h3>
       </md-toolbar>
-          <md-table
-            v-viewer="{movable: false }"
-            :value="queriedData"
-            :md-sort.sync="currentSort"
-            :md-sort-order.sync="currentSortOrder"
-            :md-sort-fn="customSort"
-            class="paginated-table table-striped table-hover"
-          >
-            <md-table-toolbar>
-              <md-field>
-                <label for="pages">Per page</label>
-                <md-select
-                  v-model="pagination.perPage"
-                  name="pages"
-                >
-                  <md-option
-                    v-for="item in pagination.perPageOptions"
-                    :key="item"
-                    :label="item"
-                    :value="item"
-                  >
-                    {{ item }}
-                  </md-option>
-                </md-select>
-              </md-field>
-
-              <md-field>
-                <md-input
-                  type="search"
-                  class="mb-3"
-                  clearable
-                  style="width: 200px"
-                  placeholder="Search records"
-                  v-model="searchQuery"
-                >
-                </md-input>
-              </md-field>
-            </md-table-toolbar>
-
-            <md-table-row
-              slot="md-table-row"
-              slot-scope="{ item }"
+      <md-table
+        v-viewer="{movable: false }"
+        :value="queriedData"
+        :md-sort.sync="currentSort"
+        :md-sort-order.sync="currentSortOrder"
+        :md-sort-fn="customSort"
+        class="paginated-table table-striped table-hover"
+      >
+        <md-table-toolbar>
+          <md-field>
+            <label for="pages">Per page</label>
+            <md-select
+              v-model="pagination.perPage"
+              name="pages"
             >
-            <md-table-cell md-label="">
-                <div  class="img-container images">
-                  <img
-                    :ref="'img' + item.id"
-                    :src="item.url"
-                    alt="products"
-                  />
-                </div>
-              </md-table-cell>
-              <md-table-cell
-                md-label="Name"
-                md-sort-by="name"
-              >{{ item.name }}</md-table-cell>
-              <md-table-cell
-                md-label="Created"
-                md-sort-by="created"
+              <md-option
+                v-for="item in pagination.perPageOptions"
+                :key="item"
+                :label="item"
+                :value="item"
               >
-                <span>{{ item.created | moment("from") }}</span><br />
-                <small>{{ item.created | moment("calendar")}}</small>
-              </md-table-cell>
-              <md-table-cell
-                md-label="File Type"
-                md-sort-by="fileType"
-              >
-              {{item.url}}
-              </md-table-cell>
-              <md-table-cell
-                md-label="File Size"
-                md-sort-by="fileSize"
-              >
-              {{item.url}}
-              </md-table-cell>
-              <md-table-cell md-label="Author" md-sort-by="author" >
-                    <div class="md-layout md-alignment-left-center" >
-                      <div class="md-layout-item" style="max-width:70px;">
-                        <t-avatar
-                          :color="item.author.color"
-                          :noImgTag="true"
-                          :imageSrc="item.author.avatar"
-                          :firstName="item.author.firstName"
-                          :lastName="item.author.lastName"
-                          />
-                      </div>
+                {{ item }}
+              </md-option>
+            </md-select>
+          </md-field>
 
-                      <span class="md-layout-item">
-                        <span>
-                          {{item.author.lastName | capitilize}}
-                        </span>
-                          <br/>
-                        <span>
-                          {{item.author.firstName | capitilize}}
-                        </span>
-                      </span>
-                  </div>
-              </md-table-cell>
-              <md-table-cell md-label="Actions">
-                <md-button
-                  class="md-just-icon md-simple"
-                  @click="downoladFile(item.url)"
-                >
-                  <md-icon>cloud_download</md-icon>
-                </md-button>
-                <md-button
-                  class="md-just-icon md-simple"
-                  @click.native="handleEdit(item)"
-                >
-                <a :href="item.url" download>File Template</a>
-                  <md-icon>print</md-icon>
-                </md-button>
-                <md-button
-                  class="md-just-icon md-danger md-simple"
-                  @click.native="handleDelete(item)"
-                >
-                  <md-icon>close</md-icon>
-                </md-button>
-              </md-table-cell>
-            </md-table-row>
-          </md-table>
-          <div class="footer-table md-table">
-            <table>
-            <tfoot>
+          <md-field>
+            <md-input
+              type="search"
+              class="mb-3"
+              clearable
+              style="width: 200px"
+              placeholder="Search records"
+              v-model="searchQuery"
+            >
+            </md-input>
+          </md-field>
+        </md-table-toolbar>
+
+        <md-table-row
+          slot="md-table-row"
+          slot-scope="{ item }"
+        >
+          <md-table-cell md-label="">
+            <div class="img-container images">
+              <img
+                :ref="'img' + item.id"
+                :src="item.url"
+                alt="products"
+              />
+            </div>
+          </md-table-cell>
+          <md-table-cell
+            md-label="Name"
+            md-sort-by="name"
+          >{{ item.name }}</md-table-cell>
+          <md-table-cell
+            md-label="Created"
+            md-sort-by="created"
+          >
+            <span>{{ item.created | moment("from") }}</span><br />
+            <small>{{ item.created | moment("calendar")}}</small>
+          </md-table-cell>
+          <md-table-cell
+            md-label="File Type"
+            md-sort-by="fileType"
+          >
+            {{item.url}}
+          </md-table-cell>
+          <md-table-cell
+            md-label="File Size"
+            md-sort-by="fileSize"
+          >
+            {{item.url}}
+          </md-table-cell>
+          <md-table-cell
+            md-label="Author"
+            md-sort-by="author"
+          >
+            <div class="md-layout md-alignment-left-center">
+              <div
+                class="md-layout-item"
+                style="max-width:70px;"
+              >
+                <t-avatar
+                  :color="item.author.color"
+                  :noImgTag="true"
+                  :imageSrc="item.author.avatar"
+                  :firstName="item.author.firstName"
+                  :lastName="item.author.lastName"
+                />
+              </div>
+
+              <span class="md-layout-item">
+                <span>
+                  {{item.author.lastName | capitilize}}
+                </span>
+                <br />
+                <span>
+                  {{item.author.firstName | capitilize}}
+                </span>
+              </span>
+            </div>
+          </md-table-cell>
+          <md-table-cell md-label="Actions">
+            <md-button
+              class="md-just-icon md-simple"
+              @click="downoladFile(item.url)"
+            >
+              <md-icon>cloud_download</md-icon>
+            </md-button>
+            <md-button
+              class="md-just-icon md-simple"
+              @click.native="handleEdit(item)"
+            >
+              <a
+                :href="item.url"
+                download
+              >File Template</a>
+              <md-icon>print</md-icon>
+            </md-button>
+            <md-button
+              class="md-just-icon md-danger md-simple"
+              @click.native="handleDelete(item)"
+            >
+              <md-icon>close</md-icon>
+            </md-button>
+          </md-table-cell>
+        </md-table-row>
+      </md-table>
+      <div class="footer-table md-table">
+        <table>
+          <tfoot>
             <tr>
               <th
                 v-for="item in footerTable"
@@ -169,23 +178,21 @@
 <script>
   import { saveAs } from 'file-saver';
   import { mapGetters } from 'vuex';
-  import { Pagination, TAvatar, } from '@/components';
+  import { Pagination, TAvatar } from '@/components';
   import Fuse from 'fuse.js';
   import swal from 'sweetalert2';
-  import 'viewerjs/dist/viewer.css'
-  import {
-    PATIENT_DOWNLOAD_FILE
-  } from '@/store/modules/constants';
+  import 'viewerjs/dist/viewer.css';
+  import { PATIENT_DOWNLOAD_FILE } from '@/store/modules/constants';
 
   export default {
     name: 'patient-files',
     components: {
       Pagination,
-      TAvatar
+      TAvatar,
     },
     data() {
       return {
-        saveAs: saveAs,
+        saveAs,
         currentSort: 'name',
         currentSortOrder: 'asc',
         pagination: {
@@ -209,23 +216,23 @@
       };
     },
     methods: {
-      downoladFile(url){
-         this.$store.dispatch(PATIENT_DOWNLOAD_FILE, {
+      downoladFile(url) {
+        this.$store
+          .dispatch(PATIENT_DOWNLOAD_FILE, {
             params: {
-              url:url
+              url,
             },
           })
-            .then((resp) => {
-              if (resp) {
-                this.saveAs(resp.data, 'Export2.jpg')
-              }
-            })
-            .catch((err) => {
-          });
+          .then((resp) => {
+            if (resp) {
+              this.saveAs(resp.data, 'Export2.jpg');
+            }
+          })
+          .catch((err) => {});
       },
       show() {
-        const viewer = this.$el.querySelector('.images').$viewer
-        viewer.show()
+        const viewer = this.$el.querySelector('.images').$viewer;
+        viewer.show();
       },
       isEmpty(obj) {
         // eslint-disable-next-line
@@ -298,10 +305,14 @@
         patient: 'getPatient',
       }),
       postAction() {
-        return `https://dental-api.owl.team/v1/patients/${this.patient ? this.patient.ID : ''}/files/`;
+        return `https://dental-api.owl.team/v1/patients/${
+          this.patient ? this.patient.ID : ''
+        }/files/`;
       },
       putAction() {
-        return `https://dental-api.owl.team/v1/patients/${this.patient ? this.patient.ID : ''}/files/`;
+        return `https://dental-api.owl.team/v1/patients/${
+          this.patient ? this.patient.ID : ''
+        }/files/`;
       },
       headers() {
         return {
@@ -314,7 +325,7 @@
         };
       },
       queriedData() {
-        let result = this.patient.files ? this.patient.files: [];
+        let result = this.patient.files ? this.patient.files : [];
         if (this.searchedData.length > 0) {
           result = this.searchedData;
         }
@@ -362,15 +373,15 @@
 </script>
 
 <style lang="scss" >
-.files-list{
-  .md-table-cell{
-    .md-table-cell-container{
-    overflow: hidden;
-    text-overflow: ellipsis;
+.files-list {
+  .md-table-cell {
+    .md-table-cell-container {
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
-  .img-container{
-    overflow:hidden;
+  .img-container {
+    overflow: hidden;
     max-width: 60px;
     max-height: 60px;
     border-radius: 3px;

@@ -1,6 +1,6 @@
 <template>
   <component
-  :style="[{'background-color':`${color}`}]" 
+  :style="[{'background-color':`${color}`}]"
   :is="tag"
   class="badge"
   :class="`badge-${type}`">

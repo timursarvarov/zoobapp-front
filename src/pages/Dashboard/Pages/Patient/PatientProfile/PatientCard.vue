@@ -3,14 +3,12 @@
 
     <div class="md-card-avatar">
       <div class="picture-container">
-        <div
-          class="picture"
-        >
+        <div class="picture">
           <div class="picture-hint md-layout">
-            <md-icon  class="md-layout-item md-size-2x" >add_a_photo</md-icon>
+            <md-icon class="md-layout-item md-size-2x">add_a_photo</md-icon>
           </div>
           <img
-              v-if="patient.avatar"
+            v-if="patient.avatar"
             class="avatar"
             :style="{'background-color': patientColor }"
             :alt="patient.firstName[0]+patient.lastName[0]"
@@ -23,12 +21,12 @@
             <div class="md-layout-item acronim">
               <span v-if="patient.firstName">{{patient.firstName[0]}}{{patient.lastName[0]}}</span>
             </div>
-        <input
-          type="file"
-          @change="onFileChange"
-          ref="imageInserter"
-           accept="image/*"
-        >
+            <input
+              type="file"
+              @change="onFileChange"
+              ref="imageInserter"
+              accept="image/*"
+            >
           </div>
         </div>
       </div>
@@ -174,17 +172,17 @@
           </md-field>
         </div>
         <div class="md-layout-item md-layout switch md-gutter md-small-size-50 md-alignment-center-center md-xsmall-size-100  md-size-66 ">
-          <div class="md-layout-item md-size-50" >
+          <div class="md-layout-item md-size-50">
             <md-switch v-model="showRating">Show Rating</md-switch>
           </div>
-          <div class="md-layout-item md-size-50" >
+          <div class="md-layout-item md-size-50">
             <star-rating
-                v-show="showRating" 
-                :glow="5"
-                :show-rating="false"
-                :star-size="18"
-                v-model="patient.rating"
-              ></star-rating>
+              v-show="showRating"
+              :glow="5"
+              :show-rating="false"
+              :star-size="18"
+              v-model="patient.rating"
+            ></star-rating>
           </div>
         </div>
         <div class="md-layout-item md-size-100">
@@ -224,7 +222,6 @@
   } from '@/store/modules/constants';
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
-  import { Slider } from '@/components';
   import StarRating from 'vue-star-rating';
   import { ImageCropperForm } from '@/pages';
 
@@ -233,9 +230,8 @@
   export default {
     components: {
       SlideYDownTransition,
-      Slider,
       ImageCropperForm,
-      StarRating
+      StarRating,
     },
     name: 'patient-card',
     props: {
@@ -381,7 +377,9 @@
         patient: 'getPatient',
       }),
       patientColor() {
-        const color = randomMC.getColor({ text: this.firstName + this.lastName + this.phone + this.email });
+        const color = randomMC.getColor({
+          text: this.firstName + this.lastName + this.phone + this.email,
+        });
         return color;
       },
       email() {
@@ -418,10 +416,10 @@
 </script>
 <style lang="scss" >
 .patient-card-wrapper {
-  .switch{
-    margin-top:20px;
+  .switch {
+    margin-top: 20px;
   }
-  .picture-wrapper-acronim{
+  .picture-wrapper-acronim {
     transition: all 2.5s ease;
   }
   .slider {

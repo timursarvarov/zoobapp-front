@@ -3,11 +3,15 @@
     class="wrapper"
     :class="[{'nav-open': $sidebar.showSidebar}, {'rtl': $route.meta.rtlActive}]"
   >
-    <side-bar-jaw>
+    <side-bar-jaw
+      :logo='clinic.logo'
+      :title='clinic.name'
+      :logoColor='clinic.color'
+    >
       <!-- <user-menu></user-menu> -->
       <mobile-menu></mobile-menu>
       <template slot="links">
-         <sidebar-item
+        <sidebar-item
           v-if="$route.meta.rtlActive"
           :link="{name: 'لوحة القيادةة', icon: 'dashboard', path: '/dashboard'}"
         >
@@ -33,11 +37,9 @@
           <sidebar-item :link="{name: 'BIO', icon: 'image', path: `/patient/${patient.ID}/bio`}"></sidebar-item>
           <sidebar-item :link="{name: 'Treatment', path: `/patient/${patient.ID}/treatment`}"> </sidebar-item>
         </sidebar-item>
-         <sidebar-item 
-         :link="{name: 'Clinics',
+        <sidebar-item :link="{name: 'Clinics',
                 icon: 'business',
-                path: '/clinics'}"
-          >
+                path: '/clinics'}">
         </sidebar-item>
         <sidebar-item
           v-if="clinic.ID !== null"
@@ -49,13 +51,28 @@
             acronim:`${clinic.name.toUpperCase()}`}"
           class="separated-down"
         >
-          <sidebar-item :link="{name: 'BIO', icon: 'image', path: `/patient/${patient.ID}/bio`}"></sidebar-item>
-          <sidebar-item :link="{name: 'Treatment', path: `/patient/${patient.ID}/treatment`}"> </sidebar-item>
-          <sidebar-item :link="{name: 'Media', path: `/patient/${patient.ID}/media`}"></sidebar-item>
+          <sidebar-item :link="{name: 'Profile', icon: 'image', path: `/clinic/${clinic.ID}/profile`}"></sidebar-item>
+          <sidebar-item :link="{name: 'Statistic', path: `/clinic/${clinic.ID}/statistic`}"> </sidebar-item>
+        </sidebar-item>
+        <sidebar-item :link="{name: 'Collaborators',
+                icon: 'people_outline',
+                path: '/collaborators'}">
+        </sidebar-item>
+        <sidebar-item
+          v-if="clinic.ID !== null"
+          :link="{
+            name: `${clinic.name}`,
+            icon: 'account_circle',
+            img:clinic.logo? clinic.logo: '',
+            avatarColor:clinic.color,
+            acronim:`${clinic.name.toUpperCase()}`}"
+          class="separated-down"
+        >
+          <sidebar-item :link="{name: 'Profile', path: `/collaborator/${clinic.ID}/profile`}"> </sidebar-item>
+          <sidebar-item :link="{name: 'Statistic', path: `/collaborator/${clinic.ID}/statistic`}"> </sidebar-item>
         </sidebar-item>
         <sidebar-item :link="{name: 'Settings', icon: 'settings', path: '/settings'}">
-          <sidebar-item :link="{name: 'My Profile', path: '/settings/user'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Clinic', path: '/settings/clinic'}"></sidebar-item>
+          <sidebar-item :link="{name: 'My Profile',  icon: 'account_circle', path: '/settings/user'}"></sidebar-item>
           <sidebar-item :link="{name: 'Services', path: '/settings/services'}"></sidebar-item>
           <sidebar-item :link="{name: 'Payment', path: '/settings/payment'}"></sidebar-item>
           <sidebar-item :link="{name: 'Collaborators', path: '/settings/collaborators'}"></sidebar-item>
@@ -330,7 +347,7 @@ $scaleSize: 0.95;
     background: rgba(180, 180, 180, 0.3) !important;
   }
   .separated-top {
-     padding-top: 20px;
+    padding-top: 20px;
   }
   .separated-down {
     padding-bottom: 20px;

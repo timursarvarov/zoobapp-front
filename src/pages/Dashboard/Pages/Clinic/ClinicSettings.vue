@@ -1,25 +1,21 @@
 <template>
   <md-card class="md-card-profile clinic-wrapper">
-       <div class="md-card-avatar">
+    <div class="md-card-avatar">
       <div class="picture-container">
-        <div
-          class="picture"
-        >
+        <div class="picture">
           <div class="picture-hint md-layout">
-            <md-icon  class="md-layout-item md-size-2x" >add_a_photo</md-icon>
+            <md-icon class="md-layout-item md-size-2x">add_a_photo</md-icon>
           </div>
 
           <img
-              v-if="clinic.logo"
+            v-if="clinic.logo"
             class="avatar"
             :style="{'background-color': '#fff' }"
             :alt="clinic.name[0]"
             :src="clinic.logo"
           />
 
-          <div
-            class="md-layout md-alignment-center-center picture-wrapper-acronim"
-          >
+          <div class="md-layout md-alignment-center-center picture-wrapper-acronim">
             <div class="md-layout-item acronim">
               <icon-base
                 class="icon-wrapper--item"
@@ -28,12 +24,12 @@
                 icon-name="icon-tooth-wings"
               />
             </div>
-        <input
-          type="file"
-          @change="onFileChange"
-          ref="imageInserter"
-           accept="image/*"
-        >
+            <input
+              type="file"
+              @change="onFileChange"
+              ref="imageInserter"
+              accept="image/*"
+            >
           </div>
         </div>
       </div>
@@ -237,7 +233,7 @@
     NOTIFY,
   } from '@/store/modules/constants';
   import { mapGetters } from 'vuex';
-  import { IconBase, Slider } from '@/components';
+  import { IconBase } from '@/components';
   import { SlideYDownTransition } from 'vue2-transitions';
   import commonCurrency from './Common-Currency.json';
   import timezones from './timezones.json';
@@ -247,7 +243,6 @@
     components: {
       SlideYDownTransition,
       IconBase,
-      Slider,
       ImageCropperForm,
     },
     name: 'clinic-settings',
@@ -346,11 +341,9 @@
         this.updateClinicLogo(fd);
       },
       validate() {
-        this.$validator
-          .validate('url', 'email', 'phone')
-          .then((isValid) => {
-            this.$emit('on-submit', this.registerForm, isValid);
-          });
+        this.$validator.validate('url', 'email', 'phone').then((isValid) => {
+          this.$emit('on-submit', this.registerForm, isValid);
+        });
         this.touched.url = true;
         this.touched.email = true;
         this.touched.phone = true;
@@ -389,17 +382,15 @@
           .dispatch(CLINIC_LOGO_UPLOAD, {
             fd,
           })
-          .then(
-            (response) => {
-              console.log(response);
-              this.$store.dispatch(NOTIFY, {
-                settings: {
-                  message: 'Image uploaded',
-                  type: 'primary',
-                },
-              });
-            },
-        );
+          .then((response) => {
+            console.log(response);
+            this.$store.dispatch(NOTIFY, {
+              settings: {
+                message: 'Image uploaded',
+                type: 'primary',
+              },
+            });
+        });
       },
       updateClinicSettings() {
         this.$validator.validateAll().then((result) => {

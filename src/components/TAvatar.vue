@@ -1,5 +1,5 @@
 <template>
-    <md-avatar 
+    <md-avatar
       :class="[{'md-small': small}]"
       class="md-avatar-icon t-avatar"
       :style="{'background-color': color}"

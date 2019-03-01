@@ -211,7 +211,6 @@
   </md-card>
 </template>
 <script>
-  const randomMC = require('random-material-color');
   import {
     USER_AVATAR_UPLOAD,
     USER_UPDATE,
@@ -220,6 +219,8 @@
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
   import { ImageCropperForm } from '@/pages';
+
+  const randomMC = require('random-material-color');
 
   export default {
     components: {

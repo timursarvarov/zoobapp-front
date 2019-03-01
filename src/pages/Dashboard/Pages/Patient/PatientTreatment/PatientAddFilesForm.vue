@@ -22,14 +22,16 @@
 
 <script>
   import { mapGetters } from 'vuex';
-  import { AUTH_REFRESH_TOKEN, PATIENT_GET, NOTIFY, PATIENT_ADD_SUB_PROP } from '@/store/modules/constants';
+  import {
+    AUTH_REFRESH_TOKEN, PATIENT_GET, NOTIFY, PATIENT_ADD_SUB_PROP,
+  } from '@/store/modules/constants';
   import { TDropzone } from '@/components';
 
   export default {
     name: 'patient-add-files-form',
     processRefreshToken: false,
     components: {
-      TDropzone
+      TDropzone,
     },
     data() {
       return {
@@ -61,18 +63,20 @@
     methods: {
 
       onSuccess(file, response) {
-        this.$store.dispatch(PATIENT_ADD_SUB_PROP, {params:{
-          propName:'files',
-          value:response[0],
-        }})
+        this.$store.dispatch(PATIENT_ADD_SUB_PROP, {
+          params: {
+            propName: 'files',
+            value: response[0],
+          },
+        });
       },
       addHeader(file, xhr, formData) {
-        xhr.setRequestHeader('Authorization', 'Bearer ' + this.access_token);
+        xhr.setRequestHeader('Authorization', `Bearer ${this.access_token}`);
       },
       checkForExpiredToken() {
         const currentTime = Math.floor(Date.now() / 1000);
         if (this.expiresAt < currentTime) {
-          if (!this.processRefreshToken){
+          if (!this.processRefreshToken) {
             this.processRefreshToken = true;
             new Promise((resolve, reject) => {
               this.$store.dispatch(AUTH_REFRESH_TOKEN).then((response) => {

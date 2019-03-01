@@ -8,7 +8,10 @@
       <div>
         <md-card>
           <md-card-header class="md-card-header-icon">
-            <div class="card-icon" :style="{'background-color': patientColor}" >
+            <div
+              class="card-icon"
+              :style="{'background-color': patientColor}"
+            >
               <md-icon>business</md-icon>
             </div>
             <h4 class="title">Add New Clinic</h4>
@@ -73,7 +76,7 @@
           </md-card-content>
           <md-card-actions md-alignment="right">
             <md-button
-              @click="addClinic()"
+              @click="addClinic"
               class="md-success"
             >Create</md-button>
           </md-card-actions>
@@ -83,19 +86,19 @@
   </div>
 </template>
 <script>
-  import {
-    CLINIC_CREATE, NOTIFY
-  } from '@/store/modules/constants';
+  import { CLINICS_CREATE, NOTIFY } from '@/store/modules/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
+
   const randomMC = require('random-material-color');
+
   export default {
     components: {
       SlideYDownTransition,
     },
     props: {
-       showForm: {
+      showForm: {
         type: Boolean,
-        default:false,
+        default: false,
       },
     },
     data() {
@@ -129,12 +132,12 @@
         this.description = null;
         this.$nextTick(() => this.$validator.reset());
       },
-      addPatient() {
+      addClinic() {
         this.$validator.validateAll().then((result) => {
           if (result) {
             this.$store
-              .dispatch(CLINIC_CREATE, {
-                params: {
+              .dispatch(CLINICS_CREATE, {
+                clinic: {
                   name: this.name,
                   description: this.description,
                 },
@@ -157,7 +160,9 @@
     },
     computed: {
       patientColor() {
-        const color = this.randomMC.getColor({ text: this.name + this.description + this.phone + this.name });
+        const color = this.randomMC.getColor({
+          text: this.name + this.description + this.phone + this.name,
+        });
         return color;
       },
       showForml: {
@@ -165,7 +170,7 @@
           return this.showForm;
         },
         set(e) {
-          this.$emit('update:showForm', e)
+          this.$emit('update:showForm', e);
         },
       },
     },
@@ -176,7 +181,7 @@
       name() {
         this.touched.name = true;
       },
-       description() {
+      description() {
         this.touched.description = true;
       },
     },
@@ -202,9 +207,9 @@
       text-align: left;
     }
   }
-    .card-icon{
-      transition: all 2.5s ease;
-    }
+  .card-icon {
+    transition: all 2.5s ease;
+  }
   .wrapper-chips {
     margin-top: -30px;
     .md-error {

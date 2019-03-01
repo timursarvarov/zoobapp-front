@@ -45,53 +45,69 @@
         <div class="md-collapse">
           <div class="md-autocomplete">
             <mdt-auto-complite
-            autocomplete="off"
-            v-model="searchTerm"
-            class="search"
-            md-dense
-            @md-selected="goToPatient"
-            :md-options="patients"
-            @md-changed="getPatients"
-            @md-opened="getPatients"
+              autocomplete="off"
+              v-model="searchTerm"
+              class="search"
+              md-dense
+              @md-selected="goToPatient"
+              :md-options="patients"
+              @md-changed="getPatients"
+              @md-opened="getPatients"
             >
-            <label v-if="$route.meta.rtlActive">بحث...</label>
-              <label v-else >Search...</label>
+              <label v-if="$route.meta.rtlActive">بحث...</label>
+              <label v-else>Search...</label>
               <template
-              slot="md-autocomplete-item"
-              slot-scope="{ item }"
-            >
-                  <t-avatar
-                    class="search-avatar"
-                    :color="item.color"
-                    :imageSrc="item.avatar"
-                    :firstName="item.firstName"
-                    :lastName="item.lastName"
-                    />
-                    <!-- <md-avatar
+                slot="md-autocomplete-item"
+                slot-scope="{ item }"
+              >
+                <t-avatar
+                  class="search-avatar"
+                  :color="item.color"
+                  :imageSrc="item.avatar"
+                  :firstName="item.firstName"
+                  :lastName="item.lastName"
+                />
+                <!-- <md-avatar
                       class="md-avatar-icon search-avatar" :style="{background:item.color}"  >
                         <img v-if="item.avatar" :src="item.avatar" alt="People">
                         <span v-else >{{item.firstName | acronim }}{{item.lastName | acronim }}</span>
                     </md-avatar> -->
 
-                    <span class="md-serched-list-item-text" >  {{ item.firstName | capitilize}} {{ item.lastName | capitilize }}
-                      <br>
-                      <small v-if="item.phone" >{{ "+" +  item.phone }}</small>
-                    </span>
+                <span class="md-serched-list-item-text"> {{ item.firstName | capitilize}} {{ item.lastName | capitilize }}
+                  <br>
+                  <small v-if="item.phone">{{ "+" + item.phone }}</small>
+                </span>
 
-                </template>
-              <template   slot="md-autocomplete-empty" slot-scope="{ term }">
-                  <div  class="md-layout" v-if="term.length >= 3 && !searching" style="white-space: pre-wrap;oveflow:hidden;" >
-                    <span class="md-layout-item  md-size-100" style="white-space: pre-wrap;oveflow:hidden;" >No patients matching   "{{ term }}" were found.</span>
-                    <md-button class="md-primary md-layout-item mx-auto md-sm"   @click="showPatientAddForm()">Create patient</md-button>
-                  </div>
-                <span v-if="term.length < 3 && !searching && 0 < term.length" >
+              </template>
+              <template
+                slot="md-autocomplete-empty"
+                slot-scope="{ term }"
+              >
+                <div
+                  class="md-layout"
+                  v-if="term.length >= 3 && !searching"
+                  style="white-space: pre-wrap;oveflow:hidden;"
+                >
+                  <span
+                    class="md-layout-item  md-size-100"
+                    style="white-space: pre-wrap;oveflow:hidden;"
+                  >No patients matching "{{ term }}" were found.</span>
+                  <md-button
+                    class="md-primary md-layout-item mx-auto md-sm"
+                    @click="showPatientAddForm()"
+                  >Create patient</md-button>
+                </div>
+                <span v-if="term.length < 3 && !searching && 0 < term.length">
                   At least 3 characters required
                 </span>
-                <div v-if="searching" class="for-loader" >
+                <div
+                  v-if="searching"
+                  class="for-loader"
+                >
 
                 </div>
-                <span v-if="term.length === 0 && !searching" >
-                  Type to search by<br/> phone, email or name
+                <span v-if="term.length === 0 && !searching">
+                  Type to search by<br /> phone, email or name
                 </span>
               </template>
             </mdt-auto-complite>
@@ -172,34 +188,42 @@
 </template>
 
 <script>
-  import swal from 'sweetalert2';
-  import { AUTH_LOGOUT, PATIENTS_REQUEST, AUTH_LOCK } from '@/store/modules/constants';
-  import { mapGetters } from 'vuex';
-  import { MdtAutoComplite, TAvatar } from '@/components';
+/* eslint-disable */
+import swal from "sweetalert2";
+import {
+  AUTH_LOGOUT,
+  PATIENTS_REQUEST,
+  AUTH_LOCK
+} from "@/store/modules/constants";
+import { mapGetters } from "vuex";
+import { MdtAutoComplite, TAvatar } from "@/components";
 
-  export default {
-    components: {
-      MdtAutoComplite,
-      TAvatar,
+export default {
+  components: {
+    MdtAutoComplite,
+    TAvatar
+  },
+  data() {
+    return {
+      callbackLauncher: null,
+      searchTerm: "",
+      patients: [],
+      searching: false
+    };
+  },
+  methods: {
+    goToPatient(patient) {
+      if (patient) {
+        this.$router.push({
+          name: "Diagnose",
+          params: { patientId: patient.ID }
+        });
+      }
     },
-    data() {
-      return {
-        callbackLauncher: null,
-        searchTerm: '',
-        patients: [],
-        searching: false,
-      };
-    },
-    methods: {
-      goToPatient(patient) {
-        if (patient) {
-          this.$router.push({ name: 'Diagnose', params: { patientId: patient.ID } });
-        }
-      },
-      getPatients(searchTerm) {
-        if (typeof searchTerm === 'string') {
-          this.lastSearchItem = searchTerm,
-          this.patients = new Promise((resolve) => {
+    getPatients(searchTerm) {
+      if (typeof searchTerm === "string") {
+        (this.lastSearchItem = searchTerm),
+          (this.patients = new Promise(resolve => {
             if (!searchTerm || searchTerm.length < 3) {
               resolve([]);
             } else {
@@ -212,67 +236,68 @@
 
               this.callbackLauncher = setTimeout(() => {
                 resolve(
-                  vm.$store.dispatch(PATIENTS_REQUEST, {
-                    params: {
-                      perPage: 1000,
-                      page: 1,
-                      search: searchTerm,
-                      toStore: false,
-                    },
-                  })
-                    .then((resp) => {
+                  vm.$store
+                    .dispatch(PATIENTS_REQUEST, {
+                      params: {
+                        perPage: 1000,
+                        page: 1,
+                        search: searchTerm,
+                        toStore: false
+                      }
+                    })
+                    .then(resp => {
                       if (resp) {
                         vm.searching = false;
                         return resp.data === null ? [] : resp.data;
                       }
                     })
-                    .catch((err) => {
+                    .catch(err => {
                       vm.searching = false;
-                  }),
+                    })
                 );
               }, DELAY);
             }
-          });
-        }
-      },
-      handleAllergy(items) {
-        swal({
-          title: 'The patient has allergies!',
-          text: `${items.join(' ,')}`,
-          type: 'warning',
-          buttonsStyling: false,
-          confirmButtonClass: 'md-button md-danger',
-        });
-      },
-      toggleSidebar() {
-        this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
-      },
-      showPatientAddForm() {
-        this.$patientAddForm.showPatientAddForm(true);
-      },
-      minimizeSidebar() {
-        if (this.$sidebar) {
-          this.$sidebar.toggleMinimize();
-        }
-      },
-      logout() {
-        this.$store.dispatch(AUTH_LOGOUT).then(() => {
-          this.$router.push('/login');
-        });
-      },
-      lock() {
-        this.$store.dispatch(AUTH_LOCK).then(() => {
-          this.$router.push('/lock');
-        });
-      },
+          }));
+      }
     },
-    computed: {
-      ...mapGetters({
-        loading: 'loading',
-        patient: 'getPatient',
-      }),
+    handleAllergy(items) {
+      swal({
+        title: "The patient has allergies!",
+        text: `${items.join(" ,")}`,
+        type: "warning",
+        buttonsStyling: false,
+        confirmButtonClass: "md-button md-danger"
+      });
     },
-  };
+    toggleSidebar() {
+      this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+    },
+    showPatientAddForm() {
+      this.$patientAddForm.showPatientAddForm(true);
+    },
+    minimizeSidebar() {
+      if (this.$sidebar) {
+        this.$sidebar.toggleMinimize();
+      }
+    },
+    logout() {
+      this.$store.dispatch(AUTH_LOGOUT).then(() => {
+        this.$router.push("/login");
+      });
+    },
+    lock() {
+      this.$store.dispatch(AUTH_LOCK).then(() => {
+        this.$router.push("/lock");
+      });
+    }
+  },
+  computed: {
+    ...mapGetters({
+      loading: "loading",
+      patient: "getPatient"
+    })
+  }
+};
 </script>
 
 <style style="scss" >
@@ -293,13 +318,14 @@
   height: 40px;
 }
 .md-serched-list-item-text {
-  position: relative!important;
+  position: relative !important;
 }
 .search-avatar {
-  margin:0!important;
+  margin: 0 !important;
 }
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
   opacity: 0;

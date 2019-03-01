@@ -3,12 +3,12 @@ import {
   CLINICS_REQUEST,
   CLINICS_ERROR,
   CLINICS_SUCCESS,
-  CLINICS_SET,
+  CLINICS_CREATE,
 } from '../constants';
 
 import axios from 'axios';
 export default {
-  [CLINIC_UPDATE]: ({
+  [CLINICS_CREATE]: ({
     commit,
     dispatch
   }, {
@@ -16,28 +16,19 @@ export default {
   }) => {
     console.log(clinic);
     return new Promise((resolve, reject) => {
-      commit(CLINIC_REQUEST);
+      commit(CLINICS_REQUEST);
       axios.put('/organization/',
           JSON.stringify({
             name: clinic.name,
-            address: clinic.address,
-            currencyCode: clinic.currencyCode,
-            email: clinic.email,
-            // tax: clinic.tax,
-            phone: parseInt(clinic.phone, 10),
-            teethSystem: clinic.teethSystem,
-            timezoneOffset: clinic.timezoneOffset,
-            url: clinic.url,
             description: clinic.description,
           })
         )
         .then(resp => {
-          commit(CLINIC_SUCCESS);
-          dispatch(AUTH_REFRESH_TOKEN)
+          commit(CLINICS_SUCCESS);
           resolve(resp);
         })
         .catch(err => {
-          commit(CLINIC_ERROR);
+          commit(CLINICS_ERROR);
           reject(err);
         });
     });

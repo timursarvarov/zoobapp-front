@@ -8,14 +8,20 @@
   >
 
     <div class="logo">
+
       <a
         href="https://www.creative-tim.com"
         class="simple-text logo-mini"
         target="_blank"
       >
-        <div class="logo-img">
+        <t-avatar
+          :color="logoColor"
+          :firstName="title"
+          :imageSrc="logo"
+        />
+        <!-- <div class="logo-img">
           <img :src="logo">
-        </div>
+        </div> -->
       </a>
       <a
         href="https://www.creative-tim.com"
@@ -62,9 +68,18 @@
   </div>
 </template>
 <script>
+  import { TAvatar } from '@/components';
+
   export default {
+    components: {
+      TAvatar,
+    },
     name: 'sidebar',
     props: {
+      logoColor: {
+        type: String,
+        default: '#790e8b',
+      },
       title: {
         type: String,
         default: 'Vue MD PRO',
@@ -146,5 +161,8 @@
   .nav-mobile-menu {
     display: none;
   }
+}
+.logo-mini {
+  width: 40px !important;
 }
 </style>

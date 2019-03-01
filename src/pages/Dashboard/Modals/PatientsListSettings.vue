@@ -69,8 +69,8 @@
   </md-dialog>
 </template>
 <script>
-import { Container, Draggable } from "vue-smooth-dnd";
-import { applyDrag, generateItems } from '@/utils/helpers';
+  import { Container, Draggable } from 'vue-smooth-dnd';
+  import { applyDrag, generateItems } from '@/utils/helpers';
 
   export default {
     name: 'table-settings',
@@ -111,42 +111,42 @@ import { applyDrag, generateItems } from '@/utils/helpers';
     data() {
       return {
         items1: generateItems(15, i => ({
-          id: '1' + i,
-          data: `Draggable 1 - ${i}`
+          id: `1${i}`,
+          data: `Draggable 1 - ${i}`,
         })),
         items2: generateItems(15, i => ({
-          id: '2' + i,
-          data: `Draggable 2 - ${i}`
+          id: `2${i}`,
+          data: `Draggable 2 - ${i}`,
         })),
         newTableColumn: null,
-        newColumns:[
+        newColumns: [
           {
-              key: 'ID1',
-              title: 'ID',
-            },
-              {
-          key: 'address1',
-              title: 'Address',
+            key: 'ID1',
+            title: 'ID',
+          },
+          {
+            key: 'address1',
+            title: 'Address',
           },
         ],
-        availableColumns:[]
+        availableColumns: [],
       };
     },
     methods: {
-      shouldAcceptDrop (sourceContainerOptions, payload) {
+      shouldAcceptDrop(sourceContainerOptions, payload) {
         return true;
       },
       copyObj(obj) {
         return JSON.parse(JSON.stringify(obj));
       },
-      onDrop (collection, dropResult) {
-        this[collection] = applyDrag(this[collection], dropResult)
+      onDrop(collection, dropResult) {
+        this[collection] = applyDrag(this[collection], dropResult);
       },
-      getChildPayload1 (index) {
-        return this.newColumns[index]
+      getChildPayload1(index) {
+        return this.newColumns[index];
       },
-      getChildPayload2 (index) {
-        return this.availableColumns[index]
+      getChildPayload2(index) {
+        return this.availableColumns[index];
       },
       getColorButton(buttonColor) {
         return `md-${buttonColor}`;
@@ -155,14 +155,10 @@ import { applyDrag, generateItems } from '@/utils/helpers';
         this.$emit('selected', this.newColumns);
       },
     },
-    mounted(){
-      this.newColumns =  Object.keys(this.tableColumns).map(i => this.tableColumns[i])
-      const vm = this
-      this.availableColumns = this.availableTableColumns.filter(function (el) {
-              return  !vm.newColumns.some(function (f) {
-                  return  f.key === el.key
-              });
-          });
+    mounted() {
+      this.newColumns = Object.keys(this.tableColumns).map(i => this.tableColumns[i]);
+      const vm = this;
+      this.availableColumns = this.availableTableColumns.filter(el => !vm.newColumns.some(f => f.key === el.key));
     },
     computed: {
       showFormLocal: {
@@ -236,7 +232,7 @@ import { applyDrag, generateItems } from '@/utils/helpers';
   min-width: 0;
   max-width: none;
   max-height: none;
-  width: 100%; 
+  width: 100%;
   height: 100%;
   transform: none;
 

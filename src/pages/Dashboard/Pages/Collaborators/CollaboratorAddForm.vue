@@ -60,10 +60,10 @@
 </template>
 <script>
   import {
-    COLLABORATOR_CREATE, NOTIFY
+    COLLABORATOR_CREATE, NOTIFY,
   } from '@/store/modules/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
-  
+
 
   const randomMC = require('random-material-color');
 
@@ -73,9 +73,9 @@
       SlideYDownTransition,
     },
     props: {
-       showForm: {
+      showForm: {
         type: Boolean,
-        default:false,
+        default: false,
       },
     },
     data() {
@@ -134,7 +134,7 @@
           return this.showForm;
         },
         set(e) {
-          this.$emit('update:showForm', e)
+          this.$emit('update:showForm', e);
         },
       },
     },

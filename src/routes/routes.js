@@ -355,7 +355,7 @@ const authPages = {
   ],
 };
 
-const PatientPages = {
+const patientPages = {
   path: '/patient',
   component: DashboardLayout,
   name: 'Patient',
@@ -401,15 +401,39 @@ const PatientPages = {
   ],
 };
 
-const ClinicPages = {
+const clinicPages = {
   path: '/clinic',
   component: DashboardLayout,
   name: 'Clinic',
   redirect: '/clinic/:clinicId/profile/',
   beforeEnter: ifAuthenticated,
   children: [{
-      path: '/patient/:clinicId/profile',
+      path: '/clinic/:clinicId/profile',
       name: 'Clinic Profile',
+      component: ClinicProfile,
+    },
+    {
+      path: '/clinic/:clinicId/statistic',
+      name: 'Clinic Statistic',
+      component: ClinicProfile,
+    },
+  ],
+};
+
+const collaboratorPages = {
+  path: '/collaborator',
+  component: DashboardLayout,
+  name: 'Collaborator',
+  redirect: '/Collaborator/:clinicId/profile/',
+  beforeEnter: ifAuthenticated,
+  children: [{
+      path: '/Collaborator/:clinicId/profile',
+      name: 'Collaborator Profile',
+      component: ClinicProfile,
+    },
+    {
+      path: '/Collaborator/:clinicId/statistic',
+      name: 'Collaborator Statistic',
       component: ClinicProfile,
     },
   ],
@@ -421,8 +445,9 @@ const routes = [{
     name: 'Home',
   },
   componentsMenu,
-  PatientPages,
-  ClinicPages,
+  patientPages,
+  clinicPages,
+  collaboratorPages,
   formsMenu,
   tablesMenu,
   mapsMenu,
