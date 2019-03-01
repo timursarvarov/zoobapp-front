@@ -3,23 +3,22 @@
     <slot name="badge">
       <div
         class="timeline-badge"
-        :class="badgeType"
+        :class="badgeAvatar.color == null? '' : badgeType"
+        :style="[{'background-color':
+        badgeAvatar.img == null ||
+        badgeAvatar.acronim == null ? '': `${badgeAvatar.color}`}]"
       >
-        <md-avatar
-          v-if=" badgeAvatar.img || badgeAvatar.acronim"
-          class="md-avatar-icon"
-          :style="[{'background-color':`${badgeAvatar.color}`}]"
-        >
           <img
             v-if="badgeAvatar.img"
             :src="badgeAvatar.img"
             alt="avatar"
           />
-          <span v-else>
+          <span v-if="badgeAvatar.acronim">
             {{badgeAvatar.acronim}}
           </span>
-        </md-avatar>
-        <md-icon v-else>{{ badgeIcon }}</md-icon>
+          <span v-else>
+            <md-icon>{{ badgeIcon }}</md-icon>
+          </span>
       </div>
     </slot>
     <div class="timeline-panel">
@@ -47,23 +46,28 @@
         type: String,
         default: 'success',
       },
+      badgeColor: {
+        type: String,
+        default: '',
+      },
       badgeIcon: {
         type: String,
         default: '',
       },
       badgeAvatar: {
         type: Object,
-        default: () => ({ img: '', acronim: '', color: '' }),
+        default: () => ({ img: null, acronim: null, color: 'null' }),
       },
     },
   };
 </script>
 <style lang="scss" scoped>
-.md-avatar {
-  height: 50px;
-  min-height: 50px;
-  min-width: 50px;
-  width: 50px;
-  margin-top: -5px;
+.timeline-badge{
+  img{
+    margin-top:-3px;
+  }
+  overflow: hidden;
+    -webkit-box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)!important;
+    box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2) !important;
 }
 </style>

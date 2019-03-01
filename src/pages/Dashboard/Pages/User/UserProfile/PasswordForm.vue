@@ -16,7 +16,7 @@
           <md-input
             v-model="oldPassword"
             data-vv-name="oldPassword"
-            type="password"
+            type="old-password"
             required
             v-validate="modelValidations.oldPassword"
           >
@@ -43,7 +43,7 @@
           <md-input
             v-model="newPassword"
             data-vv-name="newPassword"
-            type="password"
+            type="new-password"
             ref="newPassword"
             required
             v-validate="modelValidations.newPassword"
@@ -71,7 +71,7 @@
             v-model="rNewPassword"
             data-vv-name="rNewPassword"
             data-vv-as="newPassword"
-            type="password"
+            type="new-password"
             required
             v-validate="modelValidations.rNewPassword"
           >
@@ -97,7 +97,7 @@
           native-type="submit"
           @click.native.prevent="validate"
           class="md-success"
-        >Update</md-button>
+        >Update Password</md-button>
       </md-card-actions>
     </md-card>
   </form>

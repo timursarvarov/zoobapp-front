@@ -49,7 +49,7 @@ const NotificationsPlugin = {
     });
     Object.defineProperty(Vue.prototype, '$notifications', {
       get() {
-        return this.$root.notificationStore;
+        return this.$root ? this.$root.notificationStore : '';
       },
     });
     Vue.component('Notifications', Notifications);

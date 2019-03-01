@@ -30,7 +30,7 @@
     created() {
       if (
         this.$route.params.patientId
-      && (this.patient.ID === null
+        && (this.patient.ID === null
         || this.patient.ID !== parseInt(this.$route.params.patientId, 10))
       ) {
         this.$store.dispatch(PATIENT_GET, {

@@ -7,18 +7,7 @@
       <!-- <user-menu></user-menu> -->
       <mobile-menu></mobile-menu>
       <template slot="links">
-        <sidebar-item :link="{name: 'Patients', icon: 'supervised_user_circle', path: '/patients'}">
-        </sidebar-item>
-        <sidebar-item
-          v-if="patient.ID !== null"
-          :link="{name: `${patient.firstName} ${patient.lastName}`, icon: 'account_circle', img:patient.avatar? patient.avatar: '',  avatarColor:patient.color, acronim:`${patient.firstName[0]} ${patient.lastName[0]}`  }"
-          class="separateduser"
-        >
-          <sidebar-item :link="{name: 'BIO', icon: 'image', path: `/patient/${patient.ID}/bio`}"></sidebar-item>
-          <sidebar-item :link="{name: 'Treatment', path: `/patient/${patient.ID}/treatment`}"> </sidebar-item>
-          <sidebar-item :link="{name: 'Media', path: `/patient/${patient.ID}/media`}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item
+         <sidebar-item
           v-if="$route.meta.rtlActive"
           :link="{name: 'لوحة القيادةة', icon: 'dashboard', path: '/dashboard'}"
         >
@@ -28,12 +17,48 @@
           :link="{name: 'Dashboard', icon: 'dashboard', path: '/dashboard'}"
         >
         </sidebar-item>
+
+        <sidebar-item :link="{name: 'Patients', icon: 'supervised_user_circle', path: '/patients'}">
+        </sidebar-item>
+        <sidebar-item
+          v-if="patient.ID !== null"
+          :link="{
+            name: `${patient.firstName} ${patient.lastName}`,
+            icon: 'account_circle',
+            img:patient.avatar? patient.avatar: '',
+            avatarColor:patient.color,
+            acronim:`${patient.firstName[0].toUpperCase()}${patient.lastName[0].toUpperCase()}`  }"
+          class="separated-down"
+        >
+          <sidebar-item :link="{name: 'BIO', icon: 'image', path: `/patient/${patient.ID}/bio`}"></sidebar-item>
+          <sidebar-item :link="{name: 'Treatment', path: `/patient/${patient.ID}/treatment`}"> </sidebar-item>
+        </sidebar-item>
+         <sidebar-item 
+         :link="{name: 'Clinics',
+                icon: 'business',
+                path: '/clinics'}"
+          >
+        </sidebar-item>
+        <sidebar-item
+          v-if="clinic.ID !== null"
+          :link="{
+            name: `${clinic.name}`,
+            icon: 'account_circle',
+            img:clinic.logo? clinic.logo: '',
+            avatarColor:clinic.color,
+            acronim:`${clinic.name.toUpperCase()}`}"
+          class="separated-down"
+        >
+          <sidebar-item :link="{name: 'BIO', icon: 'image', path: `/patient/${patient.ID}/bio`}"></sidebar-item>
+          <sidebar-item :link="{name: 'Treatment', path: `/patient/${patient.ID}/treatment`}"> </sidebar-item>
+          <sidebar-item :link="{name: 'Media', path: `/patient/${patient.ID}/media`}"></sidebar-item>
+        </sidebar-item>
         <sidebar-item :link="{name: 'Settings', icon: 'settings', path: '/settings'}">
           <sidebar-item :link="{name: 'My Profile', path: '/settings/user'}"></sidebar-item>
           <sidebar-item :link="{name: 'Clinic', path: '/settings/clinic'}"></sidebar-item>
           <sidebar-item :link="{name: 'Services', path: '/settings/services'}"></sidebar-item>
           <sidebar-item :link="{name: 'Payment', path: '/settings/payment'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Users', path: '/settings/users'}"></sidebar-item>
+          <sidebar-item :link="{name: 'Collaborators', path: '/settings/collaborators'}"></sidebar-item>
           <sidebar-item :link="{name: 'Notifications', path: '/settings/notifications'}">
           </sidebar-item>
         </sidebar-item>
@@ -254,6 +279,7 @@
     computed: {
       ...mapGetters({
         patient: 'getPatient',
+        clinic: 'getClinicSettings',
       }),
     },
   };
@@ -285,7 +311,7 @@ $scaleSize: 0.95;
   animation-name: zoomOut95;
 }
 .wrapper {
-  .separateduser:after {
+  .separated-down:after {
     content: "";
     position: absolute;
     margin: 15px 0 15px 0;
@@ -294,7 +320,19 @@ $scaleSize: 0.95;
     width: calc(100% - 30px);
     background: rgba(180, 180, 180, 0.3) !important;
   }
-  .separateduser {
+  .separated-top:before {
+    content: "";
+    position: absolute;
+    margin: -8px 0 15px 0;
+    right: 15px;
+    height: 1px;
+    width: calc(100% - 30px);
+    background: rgba(180, 180, 180, 0.3) !important;
+  }
+  .separated-top {
+     padding-top: 20px;
+  }
+  .separated-down {
     padding-bottom: 20px;
   }
 }

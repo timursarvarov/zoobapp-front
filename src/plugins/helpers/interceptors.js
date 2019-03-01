@@ -3,6 +3,7 @@
 import axios from 'axios';
 // import { settings } from '../settings';
 
+
 import store from '@/store';
 import {
     AUTH_REFRESH_TOKEN,
@@ -90,7 +91,7 @@ export default function () {
                     message: 'The request was made but no response was received'
                 }
             });
-        } else {
+        } else if(error != 'Cancel') {
             store.dispatch(NOTIFY, {
                 settings: {
                     type: 'danger',

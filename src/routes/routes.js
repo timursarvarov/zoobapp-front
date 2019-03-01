@@ -7,15 +7,17 @@ import Dashboard from '@/pages/Dashboard/Dashboard.vue';
 import Widgets from '@/pages/Dashboard/Widgets.vue';
 
 // Pages
-const ClinicSettings = () => import('@/pages/Dashboard/Pages/ClinicSettings.vue');
+const ClinicSettings = () => import('@/pages/Dashboard/Pages/Clinic/ClinicSettings.vue');
 // Pages
-const User = () => import('@/pages/Dashboard/Pages/UserProfile.vue');
+const User = () => import('@/pages/Dashboard/Pages/User/UserProfile.vue');
+const Collaborators = () => import('@/pages/Dashboard/Pages/Collaborators/CollaboratorsList.vue');
 
-const PatientProfile = () => import('@/pages/Dashboard/Pages/PatientProfile.vue');
-const PatientTreatment = () => import('@/pages/Dashboard/Pages/PatientTreatment.vue');
-const PatientMedia = () => import('@/pages/Dashboard/Pages/PatientMedia.vue');
+const PatientProfile = () => import('@/pages/Dashboard/Pages/Patient/PatientProfile.vue');
+const PatientTreatment = () => import('@/pages/Dashboard/Pages/Patient/PatientTreatment.vue');
+const PatientsList = () => import('@/pages/Dashboard/Pages/Patients/PatientsList.vue');
 
-const PatientsList = () => import('@/pages/Dashboard/Pages/PatientsList.vue');
+const ClinicsList = () => import('@/pages/Dashboard/Pages/Clinics/ClinicsList.vue');
+const ClinicProfile = () => import('@/pages/Dashboard/Pages/Clinic/ClinicSettings.vue');
 
 const Pricing = () => import('@/pages/Dashboard/Pages/Pricing.vue');
 const TimeLine = () => import('@/pages/Dashboard/Pages/TimeLinePage.vue');
@@ -307,10 +309,10 @@ const Settings = {
       },
     },
     {
-      path: 'users',
-      name: 'Users',
+      path: 'collaborators',
+      name: 'Collaborators',
       components: {
-        default: User,
+        default: Collaborators,
       },
     },
     {
@@ -389,12 +391,26 @@ const PatientPages = {
           name: 'Therapy',
           component: PatientTreatment,
         },
+        {
+          path: '/patient/:patientId/treatment/files',
+          name: 'Files',
+          component: PatientTreatment,
+        },
       ],
     },
-    {
-      path: '/patient/:patientId/media',
-      name: 'Media',
-      component: PatientMedia,
+  ],
+};
+
+const ClinicPages = {
+  path: '/clinic',
+  component: DashboardLayout,
+  name: 'Clinic',
+  redirect: '/clinic/:clinicId/profile/',
+  beforeEnter: ifAuthenticated,
+  children: [{
+      path: '/patient/:clinicId/profile',
+      name: 'Clinic Profile',
+      component: ClinicProfile,
     },
   ],
 };
@@ -406,6 +422,7 @@ const routes = [{
   },
   componentsMenu,
   PatientPages,
+  ClinicPages,
   formsMenu,
   tablesMenu,
   mapsMenu,
@@ -435,6 +452,13 @@ const routes = [{
         name: 'Patients',
         components: {
           default: PatientsList,
+        },
+      },
+      {
+        path: 'clinics',
+        name: 'Clinics',
+        components: {
+          default: ClinicsList,
         },
       },
       {

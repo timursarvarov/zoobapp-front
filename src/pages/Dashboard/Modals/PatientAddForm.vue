@@ -7,8 +7,8 @@
     >
       <div>
         <md-card>
-          <md-card-header class="md-card-header-icon md-card-header-green">
-            <div class="card-icon">
+          <md-card-header class="md-card-header-icon">
+            <div class="card-icon" :style="{'background-color': patientColor}" >
               <md-icon>person_add</md-icon>
             </div>
             <h4 class="title">Add New Patient</h4>
@@ -223,12 +223,16 @@
   } from '@/store/modules/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
 
+  const randomMC = require('random-material-color');
+
+
   export default {
     components: {
       SlideYDownTransition,
     },
     data() {
       return {
+        randomMC: '',
         openProfile: true,
         closeAddForm: true,
         firstName: null,
@@ -321,6 +325,7 @@
                   phone: parseInt(this.phone, 10),
                   email: this.email,
                   allergy: this.allergy,
+                  color: this.patientColor,
                 },
               })
               .then((response) => {
@@ -351,6 +356,10 @@
       },
     },
     computed: {
+      patientColor() {
+        const color = this.randomMC.getColor({ text: this.firstName + this.lastName + this.phone + this.email });
+        return color;
+      },
       showForm: {
         get() {
           return this.$patientAddForm.patientAddFormShown;
@@ -360,6 +369,9 @@
             .patientAddFormShown;
         },
       },
+    },
+    created() {
+      this.randomMC = randomMC;
     },
     watch: {
       showForm() {
@@ -438,6 +450,9 @@
       text-align: left;
     }
   }
+    .card-icon{
+      transition: all 2.5s ease;
+    }
   .wrapper-chips {
     margin-top: -30px;
     .md-error {

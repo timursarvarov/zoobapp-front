@@ -1,11 +1,24 @@
 <template>
   <md-card class="md-card-profile clinic-wrapper">
-    <div class="md-card-avatar">
+       <div class="md-card-avatar">
       <div class="picture-container">
-        <div class="picture">
+        <div
+          class="picture"
+        >
+          <div class="picture-hint md-layout">
+            <md-icon  class="md-layout-item md-size-2x" >add_a_photo</md-icon>
+          </div>
+
+          <img
+              v-if="clinic.logo"
+            class="avatar"
+            :style="{'background-color': '#fff' }"
+            :alt="clinic.name[0]"
+            :src="clinic.logo"
+          />
+
           <div
-            v-if="!clinic.logo"
-            class="md-layout md-alignment-center-center wrapper-acronim"
+            class="md-layout md-alignment-center-center picture-wrapper-acronim"
           >
             <div class="md-layout-item acronim">
               <icon-base
@@ -15,20 +28,13 @@
                 icon-name="icon-tooth-wings"
               />
             </div>
+        <input
+          type="file"
+          @change="onFileChange"
+          ref="imageInserter"
+           accept="image/*"
+        >
           </div>
-          <div
-            v-else
-            class="logo"
-            :style="{'background-image':  'url(' + clinic.logo + ')'}"
-          >
-          </div>
-          <input
-            type="file"
-            v-validate="'image|size:2000'"
-            name="size_field"
-            data-vv-as="file"
-            @change="onFileChange"
-          >
         </div>
       </div>
     </div>
@@ -204,6 +210,16 @@
         </div>
 
       </div>
+      <image-cropper-form
+        v-model="fd"
+        :maxFilesize="2000"
+        buttonColor='green'
+        title="Add patient avatar"
+        :icon="'add_a_photo'"
+        :imageName="clinic.ID != null ? clinic.ID.toString() + '_' + Date.now(): ''"
+        :imageToCorp="image"
+        :showForm.sync="showForm"
+      ></image-cropper-form>
     </md-card-content>
     <md-card-actions>
       <md-button
@@ -212,80 +228,6 @@
         class="md-raised md-success  ml-auto"
       >Update Settings</md-button>
     </md-card-actions>
-    <md-dialog
-      class="cropper-form"
-      :md-active.sync="showForm"
-      :md-click-outside-to-close="!isLoadingRegistration"
-    >
-      <div>
-        <md-card>
-          <md-card-header class="md-card-header-icon md-card-header-green">
-            <div class="card-icon">
-              <md-icon>add_a_photo</md-icon>
-            </div>
-            <h4 class="title">Add a clinic logo</h4>
-          </md-card-header>
-
-          <md-card-content class="md-layout md-gutter">
-            <div class="md-layout-item md-size-66 md-xsmall-size-100">
-              <clipper-fixed
-                class="clipper-setter"
-                :src="image"
-                ref="clipper"
-                bg-color="white"
-                :ratio="1"
-                :round="false"
-                preview="preview"
-                :rotate="parseInt(rotate, 10)"
-              >
-                <div slot="placeholder">No image</div>
-              </clipper-fixed>
-
-            </div>
-
-            <div class="md-layout-item md-layout md-gutter md-size-33 md-xsmall-size-100">
-              <div class="md-layout-item">
-                <clipper-preview
-                  name="preview"
-                  class="clipper-preview"
-                ></clipper-preview>
-              </div>
-              <div class="md-layout-item">
-                <clipper-preview
-                  name="preview"
-                  class="clipper-preview-round"
-                ></clipper-preview>
-
-              </div>
-            </div>
-            <div class="md-layout-item md-list md-layout md-gutter  md-size-100">
-              <div class="md-layout-item md-layout md-list-item ">
-                <div class="">
-                  Rotate:
-                  {{rotate}}°
-                </div>
-                <div class="md-layout-item ">
-                  <slider
-                    :range="{
-              min:0,
-              max:180,
-            }"
-                    v-model="rotate"
-                  />
-                </div>
-              </div>
-            </div>
-
-          </md-card-content>
-          <md-card-actions md-alignment="right">
-            <md-button
-              @click="creatClipingImage()"
-              class="md-success"
-            >Create</md-button>
-          </md-card-actions>
-        </md-card>
-      </div>
-    </md-dialog>
   </md-card>
 </template>
     <script>
@@ -299,12 +241,14 @@
   import { SlideYDownTransition } from 'vue2-transitions';
   import commonCurrency from './Common-Currency.json';
   import timezones from './timezones.json';
+  import { ImageCropperForm } from '@/pages';
 
   export default {
     components: {
       SlideYDownTransition,
       IconBase,
       Slider,
+      ImageCropperForm,
     },
     name: 'clinic-settings',
     props: {
@@ -315,10 +259,8 @@
     },
     data() {
       return {
-        rotate: 0,
+        fd: null,
         showForm: false,
-        resultURL: null,
-        isLoadingRegistration: true,
         selectedTimezone: null,
         selectedCurrency: null,
         timeZoneForOptions: [],
@@ -330,7 +272,6 @@
           url: false,
           email: false,
           phone: false,
-          size_field: false,
         },
         modelValidations: {
           url: {
@@ -348,6 +289,11 @@
       };
     },
     methods: {
+      clearImage() {
+        const input = this.$refs.imageInserter;
+        input.type = 'text';
+        input.type = 'file';
+      },
       copyObj(obj) {
         return JSON.parse(JSON.stringify(obj));
       },
@@ -377,8 +323,18 @@
 
       onFileChange(e) {
         const files = e.target.files || e.dataTransfer.files;
-        if (!files.length) return;
-        this.createImage(files[0]);
+        if (files.length > 0) {
+          this.createImage(files[0]);
+          this.showForm = true;
+          this.clearImage();
+        } else {
+          this.$store.dispatch(NOTIFY, {
+            settings: {
+              message: 'No files selected!',
+              type: 'warning',
+            },
+          });
+        }
       },
 
       creatClipingImage() {
@@ -391,7 +347,7 @@
       },
       validate() {
         this.$validator
-          .validate('url', 'email', 'phone', 'size_field')
+          .validate('url', 'email', 'phone')
           .then((isValid) => {
             this.$emit('on-submit', this.registerForm, isValid);
           });
@@ -423,20 +379,12 @@
       createImage(file) {
         const reader = new FileReader();
         const vm = this;
-        this.showForm = true;
         reader.onload = (e) => {
           vm.image = e.target.result;
         };
-        if (reader.readAsDataURL) {
-          reader.readAsDataURL(file);
-        } else if (reader.readAsDataurl) {
-          reader.readAsDataurl(file);
-        }
+        reader.readAsDataURL(file);
       },
       updateClinicLogo(fd) {
-        // const fd = new FormData();
-        // fd.append('file', file, file.name);
-
         this.$store
           .dispatch(CLINIC_LOGO_UPLOAD, {
             fd,
@@ -447,16 +395,9 @@
               this.$store.dispatch(NOTIFY, {
                 settings: {
                   message: 'Image uploaded',
-                  type: 'success',
+                  type: 'primary',
                 },
               });
-            },
-            (error) => {
-              this.selectedFileUrl = null;
-              console.error(
-                error,
-                'Got nothing from server. Prompt clinic to check internet connection and try again',
-              );
             },
         );
       },
@@ -471,7 +412,7 @@
                 if (response) {
                   this.$store.dispatch(NOTIFY, {
                     settings: {
-                      message: 'Settings updated successfully',
+                      message: 'Settings updated',
                       type: 'primary',
                     },
                   });
@@ -530,8 +471,6 @@
       },
     },
     created() {
-      // const canvas = this.$refs.clipper.clip();
-
       this.currency = this.copyObj(commonCurrency);
       this.timezones = this.copyObj(timezones);
       this.createArrayTimezones();
@@ -540,6 +479,9 @@
       this.setLocalCurrency();
     },
     watch: {
+      fd() {
+        this.updateClinicLogo(this.fd);
+      },
       url() {
         this.touched.url = true;
       },
@@ -552,7 +494,7 @@
     },
   };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .md-dialog.cropper-form {
   background-color: transparent !important;
   box-shadow: none !important;
@@ -563,8 +505,8 @@
   }
   .clipper-preview {
     overflow: hidden;
-    width: 130px;
-    height: 130px;
+    width: 132px;
+    height: 132px;
     margin: auto;
   }
   .clipper-preview-round {
@@ -588,61 +530,6 @@
       bottom: -1.3rem;
       line-height: normal;
       text-align: left;
-    }
-  }
-  .picture-container {
-    position: relative;
-    cursor: pointer;
-    text-align: center;
-    .wrapper-acronim {
-      height: -webkit-fill-available;
-      .acronim {
-        font-size: 4.875rem;
-      }
-    }
-    .md-error.picture {
-      border-color: #f44336 !important;
-      border: 3px solid;
-    }
-    .md-valid.picture {
-      border-color: #4caf50 !important;
-      border: 3px solid;
-    }
-    .picture {
-      transition-property: all;
-      transition-duration: 0.4s;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-delay: 0s;
-      width: 130px;
-      height: 130px;
-      background-color: #999999;
-      border: 3px solid #cccccc;
-      color: #ffffff;
-      border-radius: 50%;
-      overflow: hidden;
-      transition: all 0.2s;
-      -webkit-transition: all 0.2s;
-      .logo {
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        margin: 0 auto;
-        min-height: 130px;
-        min-width: 130px;
-      }
-      &:hover {
-        border-color: #4caf50;
-      }
-      input[type="file"] {
-        cursor: pointer;
-        display: block;
-        height: 100%;
-        left: 0;
-        opacity: 0 !important;
-        position: absolute;
-        top: 0;
-        width: 100%;
-      }
     }
   }
 }

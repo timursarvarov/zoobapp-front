@@ -32,7 +32,7 @@
 
       <md-icon v-if="!link.acronim && !link.img && link.icon">{{link.icon}}</md-icon>
       <p>
-        {{link.name}}
+        {{link.name | capitilize}}
         <b class="caret"></b>
       </p>
 
@@ -76,6 +76,7 @@
 </template>
 <script>
   import { CollapseTransition } from 'vue2-transitions';
+  import { mapFilters } from '@/filters/map-filters';
 
   export default {
     name: 'sidebar-item',
@@ -136,6 +137,7 @@
       },
     },
     methods: {
+      ...mapFilters(['capitilize']),
       addChild(item) {
         const index = this.$slots.default.indexOf(item.$vnode);
         this.children.splice(index, 0, item);
@@ -144,10 +146,10 @@
         if (this.$route && this.$route.path) {
           let matchingRoute = '';
           if (this.children.length > 0) {
-            matchingRoute = this.children.find(c => this.$route.path.startsWith(c.link.path),);
+            matchingRoute = this.children.find(c => this.$route.path.startsWith(c.link.path));
           } else if (
             re
-          && this.$route.path.split('/').length !== re.split('/').length
+            && this.$route.path.split('/').length !== re.split('/').length
           ) {
             matchingRoute = this.$route.path.startsWith(re);
           }
@@ -175,8 +177,8 @@
       linkClick() {
         if (
           this.autoClose
-        && this.$sidebar
-        && this.$sidebar.showSidebar === true
+          && this.$sidebar
+          && this.$sidebar.showSidebar === true
         ) {
           this.$sidebar.displaySidebar(false);
         }
@@ -200,12 +202,6 @@
         this.collapsed = false;
       }
     },
-    watch: {
-      acronimL() {
-        console.log(this.link.img);
-      // this.link.img = '';
-      },
-    },
     destroyed() {
       if (this.$el && this.$el.parentNode) {
         this.$el.parentNode.removeChild(this.$el);
@@ -228,7 +224,7 @@
   }
   .acronim {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-size: 0.9rem;
+    // font-size: 0.9rem;
   }
 }
 </style>

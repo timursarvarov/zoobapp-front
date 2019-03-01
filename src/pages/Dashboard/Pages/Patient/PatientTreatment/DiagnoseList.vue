@@ -294,14 +294,14 @@
           }
           if (typeof a[thisLocal.currentSort] === 'number') {
             const orderLocal = thisLocal.currentSortOrder;
-            const dflt =            orderLocal == 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+            const dflt = orderLocal == 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
             const aVal = a[sortBy] == null ? dflt : a[sortBy];
             const bVal = b[sortBy] == null ? dflt : b[sortBy];
             return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
           }
           if (typeof a[thisLocal.currentSort] === 'object') {
             const orderLocal = thisLocal.currentSortOrder;
-            const dflt =            orderLocal == 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+            const dflt = orderLocal == 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
             const aVal = a[sortBy] == null ? dflt : a[sortBy];
             const bVal = b[sortBy] == null ? dflt : b[sortBy];
             return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
@@ -381,7 +381,7 @@
       patientDiagnosis() {
         if (
           Object.keys(this.patientDiagnosis).length
-        >= Object.keys(this.originalDiagnosis).length
+          >= Object.keys(this.originalDiagnosis).length
         ) {
           this.originalDiagnosis = this.copyObj(this.patientDiagnosis);
         }

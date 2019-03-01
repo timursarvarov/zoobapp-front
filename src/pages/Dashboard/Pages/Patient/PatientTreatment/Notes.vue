@@ -56,49 +56,49 @@
         <time-line-item
           v-for="note in patient.notes"
           :key="note.ID"
-          inverted
+          :inverted="note.author.ID !== user.ID"
           badge-type="danger"
           badge-icon="card_travel"
-          :badgeAvatar="{color:note.color, acronim:note.author.name[0], img:note.author.avatar,}"
+          :badgeAvatar="{
+            // TODO поменять на цвет автора после добавления в api
+            color: user.color,
+            acronim: (note.author.firstName ? note.author.firstName[0]:'')
+            + (note.author.lastName ? note.author.lastName[0]:''),
+            img:note.author.avatar,}"
         >
           <badge
             slot="header"
             type="danger"
+            :color="user.color"
           >
-            {{note.author.name}}
+            {{note.author.firstName + ' ' + note.author.lastName}}
           </badge>
           <div slot="content">
+          <div  v-if="note.author.ID !== user.ID" slot="content">
             {{note.note}}
             <hr>
-            <drop-down
-              direction="down"
-              v-if="note.author.ID === user.ID"
-            >
-              <md-button
-                slot="title"
-                class="md-button md-info md-round dropdown-toggle"
-                data-toggle="dropdown"
-              >
-                <md-icon>build</md-icon>
-              </md-button>
-              <ul
-                class="dropdown-menu"
-                :class="{'dropdown-menu-right': !responsive}"
-              >
-                <li><a href="#">Mike John responded to your email</a></li>
-                <li><a href="#">You have 5 new tasks</a></li>
-                <li><a href="#">You're now friend with Andrew</a></li>
-                <li><a href="#">Another Notification</a></li>
-                <li><a href="#">Another One</a></li>
-              </ul>
-            </drop-down>
+          </div>
+          <div v-else >
+             <md-field>
+              <label>Textarea</label>
+              <md-textarea v-model="textarea"></md-textarea>
+            </md-field>
+          </div>
           </div>
 
-          <h6 slot="footer">
-            <i class="ti-time"></i>
+          <div class="md-layout" slot="footer" >
+          <h6 class="md-layout-item" >
+            <md-icon>access_time</md-icon>
             {{note.created | moment("from", "now")}}
-
           </h6>
+            <div class="md-info md-layout-item">
+              <md-button
+                class="md-layout-item md-info"
+                v-if="note.author.ID === user.ID"
+                @click="createNote()"
+              >Save</md-button>
+            </div>
+          </div>
 
         </time-line-item>
         <time-line-item
@@ -119,7 +119,7 @@
             at 2am Sold Out Famous viewing @ Figueroa and 12th in downtown.</p>
 
           <h6 slot="footer">
-            <i class="ti-time"></i>
+            <md-icon>access_time</md-icon>
             11 hours ago via Twitter
           </h6>
         </time-line-item>

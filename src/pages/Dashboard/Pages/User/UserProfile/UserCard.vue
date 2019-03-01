@@ -4,34 +4,38 @@
       <div class="picture-container">
         <div
           class="picture"
-          :class="[
-            {'md-valid': !errors.has('size_field') && touched.size_field},
-              {'md-error': errors.has('size_field')}]"
+          :style="{'background-color': userColor }"
         >
-          <div
-            v-if="!user.avatar"
-            class="md-layout md-alignment-center-center wrapper-acronim"
-          >
-            <div class="md-layout-item acronim">
-              <span>{{user.firstName[0]}}{{user.lastName[0]}}</span>
-            </div>
+          <div class="picture-hint md-layout">
+            <md-icon  class="md-layout-item md-size-2x" >add_a_photo</md-icon>
           </div>
-          <div
-            v-else
+
+           <img
+              v-if="user.avatar"
             class="avatar"
-            :style="{'background-image':  'url(' + user.avatar + ')'}"
+            :style="{'background-color': userColor }"
+            :alt="user.firstName[0]+user.lastName[0]"
+            :src="user.avatar"
+          />
+
+          <div
+            class="md-layout md-alignment-center-center picture-wrapper-acronim"
           >
+            <div class="md-layout-item acronim"
+              >
+              <span v-if="user.firstName">{{user.firstName[0]}}{{user.lastName[0]}}</span>
+            </div>
+        <input
+          type="file"
+          @change="onFileChange"
+          ref="imageInserter"
+          accept="image/*"
+        >
           </div>
-          <input
-            v-validate="'image|size:2000'"
-            name="size_field"
-            data-vv-as="file"
-            type="file"
-            @change="onFileChange"
-          >
         </div>
       </div>
     </div>
+
     <md-card-content>
       <div class="md-layout">
 
@@ -101,17 +105,6 @@
             ></md-input>
           </md-field>
         </div>
-
-        <div class="md-layout-item md-small-size-100 md-size-33">
-          <md-field>
-            <label>Company (disabled)</label>
-            <md-input
-              v-model="disabled"
-              disabled
-            ></md-input>
-          </md-field>
-        </div>
-
         <div class="md-layout-item md-small-size-100 md-size-33">
           <md-field :class="[
               {'md-valid': !errors.has('phone') && touched.phone},
@@ -204,10 +197,21 @@
           >Update Profile</md-button>
         </div>
       </div>
+      <image-cropper-form
+        v-model="fd"
+        :maxFilesize="2000"
+        buttonColor='green'
+        title="Add a user avatar"
+        :icon="'add_a_photo'"
+        :imageName="user.ID != null ? user.ID.toString() + '_' + Date.now(): ''"
+        :imageToCorp="image"
+        :showForm.sync="showForm"
+      ></image-cropper-form>
     </md-card-content>
   </md-card>
 </template>
 <script>
+  const randomMC = require('random-material-color');
   import {
     USER_AVATAR_UPLOAD,
     USER_UPDATE,
@@ -215,10 +219,12 @@
   } from '@/store/modules/constants';
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
+  import { ImageCropperForm } from '@/pages';
 
   export default {
     components: {
       SlideYDownTransition,
+      ImageCropperForm,
     },
     name: 'user-card',
     props: {
@@ -230,24 +236,17 @@
         type: String,
         default: '',
       },
-      avatar: {
-        type: String,
-        default: './img/default-avatar.png',
-      },
     },
     data() {
       return {
+        fd: null,
+        showForm: false,
         image: '',
-        selectedAvatar: '',
-        username: null,
-        disabled: null,
-        address: null,
         city: null,
         country: null,
         code: null,
         aboutme: null,
         touched: {
-          size_field: false,
           firstName: false,
           lastName: false,
           email: false,
@@ -275,23 +274,25 @@
       getColorButton(buttonColor) {
         return `md-${buttonColor}`;
       },
+      clearImage() {
+        const input = this.$refs.imageInserter;
+        input.type = 'text';
+        input.type = 'file';
+      },
       onFileChange(e) {
-        this.$validator.validate('size_field').then((result) => {
-          if (result) {
-            const files = e.target.files || e.dataTransfer.files;
-            if (!files.length) return;
-            this.createImage(files[0]);
-            this.updateUserAvatar(files[0]);
-            this.touched.size_field = true;
-          } else {
-            this.$store.dispatch(NOTIFY, {
-              settings: {
-                message: this.errors.first('size_field'),
-                type: 'warning',
-              },
-            });
-          }
-        });
+        const files = e.target.files || e.dataTransfer.files;
+        if (files.length > 0) {
+          this.createImage(files[0]);
+          this.showForm = true;
+          this.clearImage();
+        } else {
+          this.$store.dispatch(NOTIFY, {
+            settings: {
+              message: 'No files selected!',
+              type: 'warning',
+            },
+          });
+        }
       },
       validate() {
         this.$validator.validateAll().then((isValid) => {
@@ -314,6 +315,8 @@
         this.$validator
           .validate('firstName', 'lastName', 'email', 'phone')
           .then((result) => {
+            // TODO подключить после настройки api
+            // this.user['color'] = this.userColor
             if (result) {
               this.$store
                 .dispatch(USER_UPDATE, {
@@ -323,7 +326,7 @@
                   if (response) {
                     this.$store.dispatch(NOTIFY, {
                       settings: {
-                        message: 'Settings updated successfully',
+                        message: 'Updated',
                         type: 'primary',
                       },
                     });
@@ -332,10 +335,7 @@
             }
         });
       },
-      updateUserAvatar(file) {
-        const fd = new FormData();
-        fd.append('file', file, file.name);
-
+      updateUserAvatar(fd) {
         this.$store
           .dispatch(USER_AVATAR_UPLOAD, {
             fd,
@@ -346,18 +346,11 @@
               if (response) {
                 this.$store.dispatch(NOTIFY, {
                   settings: {
-                    message: 'Settings updated successfully',
+                    message: 'Profile image updated',
                     type: 'primary',
                   },
                 });
               }
-            },
-            (error) => {
-              this.selectedFileUrl = null;
-              console.error(
-                error,
-                'Got nothing from server. Prompt user to check internet connection and try again',
-              );
             },
         );
       },
@@ -378,8 +371,15 @@
       phone() {
         return this.user.phone;
       },
+      userColor() {
+        const color = randomMC.getColor({ text: this.firstName + this.lastName + this.phone + this.email });
+        return color;
+      },
     },
     watch: {
+      fd() {
+        this.updateUserAvatar(this.fd);
+      },
       email() {
         this.touched.email = true;
       },
@@ -395,60 +395,5 @@
     },
   };
 </script>
-<style lang="scss">
-.picture-container {
-  position: relative;
-  cursor: pointer;
-  text-align: center;
-  .wrapper-acronim {
-    height: -webkit-fill-available;
-    .acronim {
-      font-size: 4.875rem;
-    }
-  }
-  .md-error.picture {
-    border-color: #f44336 !important;
-    border: 3px solid;
-  }
-  .md-valid.picture {
-    border-color: #4caf50 !important;
-    border: 3px solid;
-  }
-  .picture {
-    transition-property: all;
-    transition-duration: 0.4s;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-delay: 0s;
-    width: 130px;
-    height: 130px;
-    background-color: #999999;
-    border: 3px solid #cccccc;
-    color: #ffffff;
-    border-radius: 50%;
-    overflow: hidden;
-    transition: all 0.2s;
-    -webkit-transition: all 0.2s;
-    .avatar {
-      background-position: 50%;
-      background-repeat: no-repeat;
-      background-size: cover;
-      margin: 0 auto;
-      min-height: 130px;
-      min-width: 130px;
-    }
-    &:hover {
-      border-color: #4caf50;
-    }
-    input[type="file"] {
-      cursor: pointer;
-      display: block;
-      height: 100%;
-      left: 0;
-      opacity: 0 !important;
-      position: absolute;
-      top: 0;
-      width: 100%;
-    }
-  }
-}
+<style lang="scss" scoped>
 </style>

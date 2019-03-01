@@ -42,25 +42,30 @@ export default {
     });
   },
   [USER_UPDATE]: ({
-    commit
+    commit,
+    dispatch,
   }, {
     user
   }) => {
+    let fields = {};
+    for (const key in user) {
+      if (user.hasOwnProperty(key)) {
+        if(key !== 'userName'){
+          fields[key] = !isNaN(user[key]) ? parseInt(user[key], 10) : user[key];
+        }
+      }
+    }
     return new Promise((resolve, reject) => {
       commit(USER_REQUEST);
       axios.put('/account/',
-          JSON.stringify({
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            phone: parseInt(user.phone, 10),
-            address: user.address,
-            lang: parseInt(user.lang, 10),
-          })
+          JSON.stringify(fields)
         )
         .then(resp => {
           commit(USER_SUCCESS);
           resolve(resp);
+          dispatch(USER_SET_PARAMS, {
+            user: resp.data
+          });
         })
         .catch(err => {
           commit(USER_ERROR);
@@ -154,7 +159,8 @@ export default {
     }
   },
   [USER_AVATAR_UPLOAD]: ({
-    commit
+    commit,
+    dispatch
   }, {
     fd
   }) => {
@@ -169,7 +175,7 @@ export default {
         )
         .then(resp => {
           commit(USER_SUCCESS);
-          commit(USER_SET_PARAM, {
+          dispatch(USER_SET_PARAM, {
             type: 'avatar',
             value: resp.data.url
           });

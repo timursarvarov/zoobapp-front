@@ -95,6 +95,12 @@ import JawCard from './Jaw/JawCard.vue';
 import Jaw from './Jaw/Jaw.vue';
 import JawAddDiagnose from './Jaw/JawAddDiagnose.vue';
 
+
+import MdtAutoComplite from './MdtAutoComplite.vue';
+import TAvatar from './TAvatar.vue';
+import TDropzone from './TDropzone.vue';
+
+
 // For Dev Use Only
 
 // import JawGenerator from './JawGenerator/jawSVGgenerator.vue';
@@ -184,6 +190,8 @@ export {
   IconToothWings,
   IconToothWorld,
   IconToothRestovration,
+  MdtAutoComplite,
+  TAvatar,
+  TDropzone,
   // JawGenerator,
-
 };

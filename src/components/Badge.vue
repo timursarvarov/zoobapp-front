@@ -1,5 +1,9 @@
 <template>
-  <component :is="tag" class="badge" :class="`badge-${type}`">
+  <component
+  :style="[{'background-color':`${color}`}]" 
+  :is="tag"
+  class="badge"
+  :class="`badge-${type}`">
     <slot></slot>
   </component>
 </template>
@@ -10,6 +14,10 @@
       tag: {
         type: String,
         default: 'span',
+      },
+      color: {
+        type: String,
+        default: '',
       },
       type: {
         type: String,

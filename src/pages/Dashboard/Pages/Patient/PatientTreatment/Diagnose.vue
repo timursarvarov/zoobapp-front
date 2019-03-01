@@ -18,12 +18,8 @@
 
       <div class="md-layout-item  md-small-size-100 md-xsmall-size-100  md-medium-size-50 md-size-50">
         <div class="set-diagnose-form md-small-size-100 md-xsmall-size-100 md-size-50">
-          <div class="md-layout md-gutter">
-            <div  class="md-layout-item">
-              <md-checkbox v-model="toggleAll" :disabled='search.length > 0' >Show all</md-checkbox>
-
-            </div>
-            <md-field class="md-layout-item">
+          <div class="md-layout  md-gutter">
+            <md-field class="md-layout-item ml-auto md-size-50">
               <label>Type to search diagnose</label>
               <md-input v-model="search"  > </md-input>
                <slide-y-down-transition>
@@ -78,9 +74,12 @@
               md-icon="sentiment_dissatisfied"
               md-label="No matching diagnosis"
               md-description="Try another search params">
-            </md-empty-state>
+             </md-empty-state>
             </div>
           </div>
+          <div  class="md-layout-item md-size-25 ml-auto">
+              <md-checkbox v-model="toggleAll" :disabled='search.length > 0' >Show all</md-checkbox>
+            </div>
 
       </div>
 
@@ -91,14 +90,14 @@
       <div class="md-layout-item md-layout md-size-100" >
           <jaw-add-diagnose
           v-if="newDiagnoseParams.showForm"
-           v-model="newDiagnoseParams"
-           :selectedTeeth="selectedTeeth"
-           :selectedDiagnose="selectedDiagnoseLocal"
-           :jaw='jaw'
-           :patientDiagnosis="patient.diagnosis"
-           :teethSchema = "teethSchema"
-           :teethSystem = "clinic.teethSystem"
-           ></jaw-add-diagnose>
+          v-model="newDiagnoseParams"
+          :selectedTeeth="selectedTeeth"
+          :selectedDiagnose="selectedDiagnoseLocal"
+          :jaw='jaw'
+          :patientDiagnosis="patient.diagnosis"
+          :teethSchema = "teethSchema"
+          :teethSystem = "clinic.teethSystem"
+          ></jaw-add-diagnose>
         </div>
   </div>
 
@@ -215,7 +214,7 @@
             this.$store.dispatch(NOTIFY, {
               settings: {
                 message: 'Please first select teeth',
-                cplor: 'warnning',
+                type: 'warning',
               },
             });
           } else {

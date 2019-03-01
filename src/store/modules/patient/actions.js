@@ -13,6 +13,8 @@ import {
   PATIENT_UPDATE,
   PATIENT_CREATE_NOTE,
   PATIENTS_UPDATE_PATIENT,
+  PATIENT_ADD_SUB_PROP,
+  PATIENT_DOWNLOAD_FILE,
 } from '../constants';
 
 export default {
@@ -67,6 +69,7 @@ export default {
             address: patient.address,
             allergy: patient.allergy,
             source: patient.source,
+            color: patient.color,
             rating: parseInt(patient.rating, 10),
           })
         )
@@ -106,7 +109,7 @@ export default {
           dispatch(PATIENT_SET_PARAM, {
             type: 'notes',
             value: notes,
-          })
+          });
           resolve(resp);
         })
         .catch(err => {
@@ -114,6 +117,39 @@ export default {
           reject(err);
         });
     });
+  },
+  [PATIENT_DOWNLOAD_FILE]: ({
+  }, {
+    params
+  }) => {
+    console.log(params);
+    return new Promise((resolve, reject) => {
+      axios({
+        url: params.url,
+        method: 'GET',
+        responseType: 'blob', // important
+      })
+        .then(resp => {
+          resolve(resp);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  },
+  [PATIENT_ADD_SUB_PROP]: ({
+    state,
+    dispatch
+  }, {
+    params
+  }) => {
+          var {propName, value} = params;
+          let props = state.patient[propName];
+          props.unshift(value);
+          dispatch(PATIENT_SET_PARAM, {
+            type: propName,
+            value: props,
+        });
   },
   [PATIENT_CREATE]: ({
     commit
@@ -130,6 +166,7 @@ export default {
             email: patient.email,
             allergy: patient.allergy,
             source: patient.source,
+            color: patient.color,
           })
         )
         .then(resp => {
@@ -173,7 +210,7 @@ export default {
     for (var k in patient) {
       let value = patient[k];
       if (value === null) {
-        if (k === 'allergy' || k === 'notes' || k === 'diagnosis') {
+        if (k === 'allergy' || k === 'notes' || k === 'diagnosis'|| k === 'files') {
           value = [];
         }
       }

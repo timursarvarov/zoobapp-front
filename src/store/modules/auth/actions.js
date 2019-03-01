@@ -40,7 +40,7 @@ export default {
           localStorage.setItem('expiresAt', resp.data.expiresAt);
           localStorage.setItem('refreshToken', resp.data.refreshToken);
           axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
-          console.log(axios.defaults.headers.common.Authorization)
+          console.log(axios.defaults.headers.common.Authorization);
 
           commit(AUTH_SUCCESS, resp);
           dispatch(AUTH_DECODE_TOKEN);
@@ -77,7 +77,7 @@ export default {
           axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
           commit(AUTH_SUCCESS, resp);
           dispatch(AUTH_DECODE_TOKEN);
-          resolve(resp.data.accessToken)
+          resolve(resp.data.accessToken);
         })
         .catch(err => {
           commit(AUTH_ERROR, err);
@@ -99,7 +99,7 @@ export default {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('expiresAt');
       localStorage.removeItem('refreshToken');
-      localStorage.removeItem('username');
+      localStorage.removeItem('USER_NAME');
       resolve();
     });
   },

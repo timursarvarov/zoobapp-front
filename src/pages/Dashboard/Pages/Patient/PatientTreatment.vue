@@ -88,6 +88,15 @@
         >
           <notes></notes>
         </md-tab>
+        <md-tab
+          id="tab-files"
+          md-icon="folder_shared"
+          md-label="Files"
+          :to="`/patient/${patient.ID}/treatment/files`"
+        >
+          <patient-add-files-form/>
+          <patient-files></patient-files>
+        </md-tab>
       </md-tabs>
     </template>
   </nav-tabs-card>
@@ -97,7 +106,7 @@
 <script>
   import { mapGetters } from 'vuex';
   import { NavTabsCard, Jaw, IconBase } from '@/components';
-  import { TEETH_INITIATION, PATIENT_GET } from '@/store/modules/constants';
+  import { TEETH_INITIATION, PATIENT_GET, NOTIFY } from '@/store/modules/constants';
 
   import {
     AnamnesList,
@@ -106,6 +115,8 @@
     Notes,
     JawAnamnes,
     TreatmentList,
+    PatientFiles,
+    PatientAddFilesForm,
   } from '@/pages';
 
   export default {
@@ -120,6 +131,8 @@
       TreatmentList,
       AnamnesList,
       IconBase,
+      PatientFiles,
+      PatientAddFilesForm,
     },
     data() {
       return {
@@ -149,15 +162,16 @@
       },
       currentTabColor() {
         let color = '';
-        if (this.$route.name === 'Anamnes') {
-          color = 'success';
-        } else if (this.$route.name === 'Diagnose') {
-          color = 'success';
-        } else if (this.$route.name === 'Therapy') {
-          color = 'success';
-        } else if (this.$route.name === 'Notes') {
-          color = 'success';
-        }
+        // if (this.$route.name === 'Anamnes') {
+        //   color = 'success';
+        // } else if (this.$route.name === 'Diagnose') {
+        //   color = 'success';
+        // } else if (this.$route.name === 'Therapy') {
+        //   color = 'success';
+        // } else if (this.$route.name === 'Notes') {
+        //   color = 'success';
+        // }
+        color = 'success';
         return color;
       },
     },
@@ -180,13 +194,32 @@
       this.$store.dispatch(TEETH_INITIATION);
       if (
         this.$route.params.patientId
-      && (this.patient.ID === null
+        && (this.patient.ID === null
         || this.patient.ID !== parseInt(this.$route.params.patientId, 10))
       ) {
         this.$store.dispatch(PATIENT_GET, {
           patientId: this.$route.params.patientId,
         });
       }
+    },
+    watch: {
+      $route(to, from) {
+        if (
+          this.$route.params.patientId
+          && (this.patient.ID === null
+          || this.patient.ID !== parseInt(this.$route.params.patientId, 10))
+        ) {
+          this.$store.dispatch(PATIENT_GET, {
+            patientId: this.$route.params.patientId,
+          });
+          this.$store.dispatch(NOTIFY, {
+            settings: {
+              message: 'Patient changed',
+              type: 'success',
+            },
+          });
+        }
+      },
     },
   };
 </script>

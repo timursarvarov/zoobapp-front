@@ -5,37 +5,35 @@
       <div class="picture-container">
         <div
           class="picture"
-          :class="[
-            {'md-valid': !errors.has('size_field') && touched.size_field},
-              {'md-error': errors.has('size_field')}]"
         >
+          <div class="picture-hint md-layout">
+            <md-icon  class="md-layout-item md-size-2x" >add_a_photo</md-icon>
+          </div>
+          <img
+              v-if="patient.avatar"
+            class="avatar"
+            :style="{'background-color': patientColor }"
+            :alt="patient.firstName[0]+patient.lastName[0]"
+            :src="patient.avatar"
+          />
           <div
-            v-if="!patient.avatar"
-            class="md-layout md-alignment-center-center wrapper-acronim"
+            class="md-layout md-alignment-center-center picture-wrapper-acronim"
+            :style="{'background-color': patientColor }"
           >
             <div class="md-layout-item acronim">
               <span v-if="patient.firstName">{{patient.firstName[0]}}{{patient.lastName[0]}}</span>
             </div>
+        <input
+          type="file"
+          @change="onFileChange"
+          ref="imageInserter"
+           accept="image/*"
+        >
           </div>
-          <div
-            v-else
-            class="avatar"
-            :style="{'background-image':  'url(' + patient.avatar + ')'}"
-          >
-          </div>
-          <input
-            v-validate="'image|size:2000'"
-            name="size_field"
-            data-vv-as="file"
-            type="file"
-            @change="onFileChange"
-            ref="imageInserter"
-          >
         </div>
       </div>
     </div>
     <md-card-content>
-      {{patient.avatar}}
       <div class="md-layout md-gutter">
 
         <div class="md-layout-item md-small-size-50   md-xsmall-size-100  md-size-33  ">
@@ -175,23 +173,26 @@
             </slide-y-down-transition>
           </md-field>
         </div>
-        <div class="md-layout-item md-size-33   md-small-size-100">
+        <div class="md-layout-item md-layout switch md-gutter md-small-size-50 md-alignment-center-center md-xsmall-size-100  md-size-66 ">
+          <div class="md-layout-item md-size-50" >
+            <md-switch v-model="showRating">Show Rating</md-switch>
+          </div>
+          <div class="md-layout-item md-size-50" >
+            <star-rating
+                v-show="showRating" 
+                :glow="5"
+                :show-rating="false"
+                :star-size="18"
+                v-model="patient.rating"
+              ></star-rating>
+          </div>
+        </div>
+        <div class="md-layout-item md-size-100">
           <md-chips
             v-model="patient.allergy"
             class="md-danger"
             md-placeholder="Add allergy..."
           ></md-chips>
-        </div>
-        <div class="md-layout-item md-small-size-50  md-xsmall-size-100  md-size-33 ">
-          <slider
-            :range="{
-              min:0,
-              max:5,
-            }"
-            v-model="patient.rating"
-          >
-          </slider>
-          <md-tooltip>Patient rating</md-tooltip>
         </div>
         <div class="md-layout-item md-size-100 text-right">
           <md-button
@@ -204,7 +205,7 @@
         v-model="fd"
         :maxFilesize="2000"
         buttonColor='green'
-        title="Add a patient avatar"
+        title="Add patient avatar"
         :icon="'add_a_photo'"
         :imageName="patient.ID != null ? patient.ID.toString() + '_' + Date.now(): ''"
         :imageToCorp="image"
@@ -224,13 +225,17 @@
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
   import { Slider } from '@/components';
+  import StarRating from 'vue-star-rating';
   import { ImageCropperForm } from '@/pages';
+
+  const randomMC = require('random-material-color');
 
   export default {
     components: {
       SlideYDownTransition,
       Slider,
       ImageCropperForm,
+      StarRating
     },
     name: 'patient-card',
     props: {
@@ -250,18 +255,11 @@
     data() {
       return {
         fd: null,
+        showRating: false,
         showForm: false,
         image: '',
-        selectedAvatar: '',
-        patientname: null,
-        disabled: null,
         address: null,
-        city: null,
-        country: null,
-        code: null,
-        aboutme: null,
         touched: {
-          size_field: false,
           firstName: false,
           lastName: false,
           email: false,
@@ -298,14 +296,12 @@
         const files = e.target.files || e.dataTransfer.files;
         if (files.length > 0) {
           this.createImage(files[0]);
-
           this.showForm = true;
-          this.touched.size_field = true;
           this.clearImage();
         } else {
           this.$store.dispatch(NOTIFY, {
             settings: {
-              message: this.errors.first('size_field'),
+              message: 'No files selected!',
               type: 'warning',
             },
           });
@@ -316,7 +312,6 @@
           this.$emit('on-submit', this.registerForm, isValid);
         });
         this.touched.lastName = true;
-
         this.touched.firstName = true;
         this.touched.email = true;
         this.touched.phone = true;
@@ -330,6 +325,7 @@
         reader.readAsDataURL(file);
       },
       updateProfile() {
+        this.patient.color = this.patientColor;
         this.$validator
           .validateAll('firstName', 'email', 'phone', 'lastName')
           .then((result) => {
@@ -343,7 +339,7 @@
                     this.$store.dispatch(NOTIFY, {
                       settings: {
                         message: 'Settings updated successfully',
-                        type: 'primary',
+                        type: 'success',
                       },
                     });
                   }
@@ -353,8 +349,6 @@
       },
 
       updatepatientAvatar(fd) {
-        // const fd = new FormData();
-        // fd.append('file', file, file.name);
         const patient = {
           ID: this.patient.ID,
           fd,
@@ -386,14 +380,15 @@
       ...mapGetters({
         patient: 'getPatient',
       }),
+      patientColor() {
+        const color = randomMC.getColor({ text: this.firstName + this.lastName + this.phone + this.email });
+        return color;
+      },
       email() {
         return this.patient.email;
       },
       firstName() {
         return this.patient.firstName;
-      },
-      size_field() {
-        return this.patient.size_field;
       },
       lastName() {
         return this.patient.lastName;
@@ -412,10 +407,6 @@
       firstName() {
         this.touched.firstName = true;
       },
-      size_field() {
-        console.log(22);
-        this.touched.size_field = true;
-      },
       lastName() {
         this.touched.lastName = true;
       },
@@ -425,8 +416,14 @@
     },
   };
 </script>
-<style lang="scss">
+<style lang="scss" >
 .patient-card-wrapper {
+  .switch{
+    margin-top:20px;
+  }
+  .picture-wrapper-acronim{
+    transition: all 2.5s ease;
+  }
   .slider {
     margin-top: 58px;
   }
@@ -436,62 +433,6 @@
   }
   .md-datepicker-body-content {
     height: 232px !important;
-  }
-
-  .picture-container {
-    position: relative;
-    cursor: pointer;
-    text-align: center;
-    .wrapper-acronim {
-      height: -webkit-fill-available;
-      .acronim {
-        font-size: 4.875rem;
-      }
-    }
-    .md-error.picture {
-      border-color: #f44336 !important;
-      border: 3px solid;
-    }
-    .md-valid.picture {
-      border-color: #4caf50 !important;
-      border: 3px solid;
-    }
-    .picture {
-      transition-property: all;
-      transition-duration: 0.4s;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-delay: 0s;
-      width: 130px;
-      height: 130px;
-      background-color: #999999;
-      border: 3px solid #cccccc;
-      color: #ffffff;
-      border-radius: 50%;
-      overflow: hidden;
-      transition: all 0.2s;
-      -webkit-transition: all 0.2s;
-      .avatar {
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        margin: 0 auto;
-        min-height: 130px;
-        min-width: 130px;
-      }
-      &:hover {
-        border-color: #4caf50;
-      }
-      input[type="file"] {
-        cursor: pointer;
-        display: block;
-        height: 100%;
-        left: 0;
-        opacity: 0 !important;
-        position: absolute;
-        top: 0;
-        width: 100%;
-      }
-    }
   }
 }
 </style>

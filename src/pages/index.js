@@ -1,15 +1,22 @@
-import UserCard from './Dashboard/Pages/UserProfile/UserCard.vue';
-import PasswordForm from './Dashboard/Pages/UserProfile/PasswordForm.vue';
-import ImageCropperForm from './Dashboard/Modals/ImageCropperForm.vue';
 
-import PatientCard from './Dashboard/Pages/PatientProfile/PatientCard.vue';
-import JawAnamnes from './Dashboard/Pages/PatientTreatment/JawAnamnes.vue';
-import Diagnose from './Dashboard/Pages/PatientTreatment/Diagnose.vue';
-import DiagnoseList from './Dashboard/Pages/PatientTreatment/DiagnoseList.vue';
-import Notes from './Dashboard/Pages/PatientTreatment/Notes.vue';
-import TreatmentList from './Dashboard/Pages/PatientTreatment/TreatmentList.vue';
-import AnamnesList from './Dashboard/Pages/PatientTreatment/AnamnesList.vue';
-import ClinicSettings from './Dashboard/Pages/ClinicSettings.vue';
+import ImageCropperForm from './Dashboard/Modals/ImageCropperForm.vue';
+import PatientsListSettings from './Dashboard/Modals/PatientsListSettings.vue';
+
+import PasswordForm from './Dashboard/Pages/User/UserProfile/PasswordForm.vue';
+import UserCard from './Dashboard/Pages/User/UserProfile/UserCard.vue';
+
+import PatientCard from './Dashboard/Pages/Patient/PatientProfile/PatientCard.vue';
+import JawAnamnes from './Dashboard/Pages/Patient/PatientTreatment/JawAnamnes.vue';
+import Diagnose from './Dashboard/Pages/Patient/PatientTreatment/Diagnose.vue';
+import DiagnoseList from './Dashboard/Pages/Patient/PatientTreatment/DiagnoseList.vue';
+import Notes from './Dashboard/Pages/Patient/PatientTreatment/Notes.vue';
+import PatientFiles from './Dashboard/Pages/Patient/PatientTreatment/PatientFiles.vue';
+import PatientAddFilesForm from './Dashboard/Pages/Patient/PatientTreatment/PatientAddFilesForm.vue';
+import TreatmentList from './Dashboard/Pages/Patient/PatientTreatment/TreatmentList.vue';
+import AnamnesList from './Dashboard/Pages/Patient/PatientTreatment/AnamnesList.vue';
+import ClinicSettings from './Dashboard/Pages/Clinic/ClinicSettings.vue';
+import ClinicsList from './Dashboard/Pages/Clinics/ClinicsList.vue';
+
 
 export {
   UserCard,
@@ -17,13 +24,17 @@ export {
 };
 
 export {
+  PatientsListSettings,
+  ImageCropperForm,
   PatientCard,
   JawAnamnes,
   Diagnose,
   DiagnoseList,
   Notes,
+  PatientFiles,
   TreatmentList,
   AnamnesList,
   ClinicSettings,
-  ImageCropperForm,
+  PatientAddFilesForm,
+  ClinicsList,
 };

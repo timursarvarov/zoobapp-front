@@ -1,4 +1,5 @@
 import patientAddForm from './PatientAddForm.vue';
+import clinicAddForm from './ClinicAddForm.vue';
 
 const patientAddFormStore = {
     patientAddFormShown: false,
@@ -7,7 +8,36 @@ const patientAddFormStore = {
     },
 };
 
-const PatientAddForm = {
+const clinicAddFormStore = {
+    clinicAddFormShown: false,
+    showPatientAddForm(value) {
+        this.patientAddFormShown = value;
+    },
+};
+
+const ClinicAddForml = {
+    install(Vue) {
+    // if (options && options.sidebarLinks) {
+    //   SidebarStore.sidebarLinks = options.sidebarLinks;
+    // }
+        Vue.mixin({
+        data() {
+            return {
+                clinicAddFormStore,
+            };
+        },
+        });
+
+        Object.defineProperty(Vue.prototype, '$clinicAddForm', {
+        get() {
+            return this.$root.clinicAddFormStore;
+        },
+        });
+            Vue.component('clinic-add-form', clinicAddForm);
+    },
+};
+
+const PatientAddForml = {
     install(Vue) {
     // if (options && options.sidebarLinks) {
     //   SidebarStore.sidebarLinks = options.sidebarLinks;
@@ -28,5 +58,7 @@ const PatientAddForm = {
             Vue.component('patient-add-form', patientAddForm);
     },
 };
+export const PatientAddForm = PatientAddForml;
+export const ClinicAddForm = ClinicAddForml;
 
-export default PatientAddForm;
+// export default ClinicAddForm;

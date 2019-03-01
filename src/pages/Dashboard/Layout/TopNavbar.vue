@@ -4,7 +4,7 @@
     class="md-transparent"
     :class="{'md-toolbar-absolute md-white md-fixed-top': $route.meta.navbarAbsolute}"
   >
-    <div class="wrapper-progre-bar">
+    <div class="wrapper-progress-bar">
       <md-progress-bar
         v-show="loading"
         md-mode="indeterminate"
@@ -44,15 +44,57 @@
 
         <div class="md-collapse">
           <div class="md-autocomplete">
-            <md-autocomplete
-              class="search"
-              v-model="selectedEmployee"
-              :md-options="employees"
-              :md-open-on-focus="false"
+            <mdt-auto-complite
+            autocomplete="off"
+            v-model="searchTerm"
+            class="search"
+            md-dense
+            @md-selected="goToPatient"
+            :md-options="patients"
+            @md-changed="getPatients"
+            @md-opened="getPatients"
             >
-              <label v-if="$route.meta.rtlActive">بحث...</label>
-              <label v-else>Search...</label>
-            </md-autocomplete>
+            <label v-if="$route.meta.rtlActive">بحث...</label>
+              <label v-else >Search...</label>
+              <template
+              slot="md-autocomplete-item"
+              slot-scope="{ item }"
+            >
+                  <t-avatar
+                    class="search-avatar"
+                    :color="item.color"
+                    :imageSrc="item.avatar"
+                    :firstName="item.firstName"
+                    :lastName="item.lastName"
+                    />
+                    <!-- <md-avatar
+                      class="md-avatar-icon search-avatar" :style="{background:item.color}"  >
+                        <img v-if="item.avatar" :src="item.avatar" alt="People">
+                        <span v-else >{{item.firstName | acronim }}{{item.lastName | acronim }}</span>
+                    </md-avatar> -->
+
+                    <span class="md-serched-list-item-text" >  {{ item.firstName | capitilize}} {{ item.lastName | capitilize }}
+                      <br>
+                      <small v-if="item.phone" >{{ "+" +  item.phone }}</small>
+                    </span>
+
+                </template>
+              <template   slot="md-autocomplete-empty" slot-scope="{ term }">
+                  <div  class="md-layout" v-if="term.length >= 3 && !searching" style="white-space: pre-wrap;oveflow:hidden;" >
+                    <span class="md-layout-item  md-size-100" style="white-space: pre-wrap;oveflow:hidden;" >No patients matching   "{{ term }}" were found.</span>
+                    <md-button class="md-primary md-layout-item mx-auto md-sm"   @click="showPatientAddForm()">Create patient</md-button>
+                  </div>
+                <span v-if="term.length < 3 && !searching && 0 < term.length" >
+                  At least 3 characters required
+                </span>
+                <div v-if="searching" class="for-loader" >
+
+                </div>
+                <span v-if="term.length === 0 && !searching" >
+                  Type to search by<br/> phone, email or name
+                </span>
+              </template>
+            </mdt-auto-complite>
           </div>
           <md-list>
             <md-list-item to="/">
@@ -101,7 +143,7 @@
                       data-toggle="dropdown"
                     >
                       <md-icon>person</md-icon>
-                      <!-- <p class="hidden-lg hidden-md">Notifications</p> -->
+                      <p class="hidden-lg hidden-md">Notifications</p>
                     </md-button>
                     <ul class="dropdown-menu dropdown-menu-right">
                       <li @click="lock()"> <a href="#">Lock</a></li>
@@ -131,26 +173,68 @@
 
 <script>
   import swal from 'sweetalert2';
-  import { AUTH_LOGOUT, AUTH_LOCK } from '@/store/modules/constants';
+  import { AUTH_LOGOUT, PATIENTS_REQUEST, AUTH_LOCK } from '@/store/modules/constants';
   import { mapGetters } from 'vuex';
+  import { MdtAutoComplite, TAvatar } from '@/components';
 
   export default {
+    components: {
+      MdtAutoComplite,
+      TAvatar,
+    },
     data() {
       return {
-        selectedEmployee: '',
-        employees: [
-          'Jim Halpert',
-          'Dwight Schrute',
-          'Michael Scott',
-          'Pam Beesly',
-          'Angela Martin',
-          'Kelly Kapoor',
-          'Ryan Howard',
-          'Kevin Malone',
-        ],
+        callbackLauncher: null,
+        searchTerm: '',
+        patients: [],
+        searching: false,
       };
     },
     methods: {
+      goToPatient(patient) {
+        if (patient) {
+          this.$router.push({ name: 'Diagnose', params: { patientId: patient.ID } });
+        }
+      },
+      getPatients(searchTerm) {
+        if (typeof searchTerm === 'string') {
+          this.lastSearchItem = searchTerm,
+          this.patients = new Promise((resolve) => {
+            if (!searchTerm || searchTerm.length < 3) {
+              resolve([]);
+            } else {
+              this.searching = true;
+              const vm = this;
+              const DELAY = 400;
+              if (this.callbackLauncher) {
+                clearTimeout(vm.callbackLauncher);
+              }
+
+              this.callbackLauncher = setTimeout(() => {
+                resolve(
+                  vm.$store.dispatch(PATIENTS_REQUEST, {
+                    params: {
+                      perPage: 1000,
+                      page: 1,
+                      search: searchTerm,
+                      toStore: false,
+                    },
+                  })
+                    .then((resp) => {
+                      if (resp) {
+                        vm.searching = false;
+                        return resp.data === null ? [] : resp.data;
+                      }
+                    })
+                    .catch((err) => {
+                      vm.searching = false;
+                  }),
+                );
+              }, DELAY);
+            }
+          });
+        }
+      },
       handleAllergy(items) {
         swal({
           title: 'The patient has allergies!',
@@ -192,7 +276,7 @@
 </script>
 
 <style style="scss" >
-.wrapper-progre-bar {
+.wrapper-progress-bar {
   position: fixed;
   top: 1px;
   right: 0;
@@ -201,9 +285,23 @@
 }
 
 .search {
+  min-width: 250px;
+  width: 20vh;
   margin: 0 !important;
 }
-
-.md-toolbar {
+.for-loader {
+  height: 40px;
+}
+.md-serched-list-item-text {
+  position: relative!important;
+}
+.search-avatar {
+  margin:0!important;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
 }
 </style>
