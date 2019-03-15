@@ -15,6 +15,7 @@ import {
   PATIENTS_UPDATE_PATIENT,
   PATIENT_ADD_SUB_PROP,
   PATIENT_DOWNLOAD_FILE,
+  PATIENT_DIAGNOSE_UPDATE,
 } from '../constants';
 
 export default {
@@ -187,6 +188,14 @@ export default {
     diagnose
   }) => {
     commit(PATIENT_DIAGNOSE_SET, diagnose);
+  },
+
+  [PATIENT_DIAGNOSE_UPDATE]: ({
+    commit,
+  }, {
+    diagnose
+  }) => {
+    commit(PATIENT_DIAGNOSE_UPDATE, diagnose);
   },
 
   [PATIENT_SET_PARAM]: ({

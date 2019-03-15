@@ -182,15 +182,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      clinicSettings: "getClinicSettings",
-      toothLocations: "toothLocations",
-      teethBabyBottom: "teethBabyBottom",
-      teethBabyTop: "teethBabyTop",
-      teethBabyAll: "teethBabyAll",
-      teethAll: "teethAll",
-      teethAdultAll: "teethAdultAll",
-      teethAdultTop: "teethAdultTop",
-      teethAdultBottom: "teethAdultBottom",
+  
       jaw: "jaw",
       patient: "getPatient"
     })
@@ -230,7 +222,7 @@ export default {
 </script>
 <style lang="scss" >
 .treatment-wrapper {
-  padding-bottom: 50px;
+
 
   .md-tabs-navigation {
     overflow-x: auto;

@@ -40,6 +40,13 @@
   };
 </script>
 <style lang="scss">
+.md-table-cell {
+    .md-table-cell-container > div {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+  }
 .md-tabs-navigation {
   overflow: auto;
 }
@@ -76,9 +83,24 @@ div :not(.md-toolbar) > .md-field:not(.md-chips) {
     margin: 0;
   }
 }
-.md-button,
-.md-button.md-default {
+// .md-button,
+// .md-button.md-default {
+//   box-shadow: none;
+// }
+.clear-button{
+  width: 28px!important;
+  min-width: 28px !important;
+  height: 28px!important;
+  margin: 0;
+  position: absolute!important;
+  background-color: transparent !important;
+  -webkit-box-shadow: none;
   box-shadow: none;
+  top:6px!important;
+.md-button-content{
+    top: -13px;
+    left: 13px;
+}
 }
 textarea::-webkit-scrollbar {
   width: 6px;
@@ -93,6 +115,9 @@ textarea::-webkit-scrollbar-thumb {
 /* } */
 .main-panel > .content {
   min-height: calc(100vh - 160px);
+}
+.md-dialog{
+  box-shadow: none;
 }
 .md-chips:before,
 .md-chips:after {
@@ -167,6 +192,9 @@ textarea::-webkit-scrollbar-thumb {
         position: absolute;
         top: 0;
         width: 100%;
+        max-width: 132px;
+        margin-top: -132px;
+        position: relative;
       }
     }
   }

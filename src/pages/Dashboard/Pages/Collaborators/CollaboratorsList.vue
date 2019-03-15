@@ -113,8 +113,7 @@
                   <t-avatar
                     :color="item.color"
                     :imageSrc="item.avatar"
-                    :firstName="item.firstName"
-                    :lastName="item.lastName"
+                    :title="item.firstName + ' ' + item.lastName"
                   />
                 </div>
 
@@ -146,8 +145,7 @@
                         :small="true"
                         :color="item[field.key].color"
                         :imageSrc="item[field.key].avatar"
-                        :firstName="item[field.key].firstName"
-                        :lastName="item[field.key].lastName"
+                        :title="item[field.key].firstName + ' ' + item[field.key].lastName"
                       />
                     </div>
                     <span class="md-layout-item">
@@ -514,7 +512,7 @@
       from() {
         return (
           this.queryParams.pagination.perPage
-        * (this.queryParams.pagination.currentPage - 1)
+          * (this.queryParams.pagination.currentPage - 1)
         );
       },
     },

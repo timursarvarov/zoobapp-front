@@ -24,6 +24,7 @@
     "file-saver": "^2.0.1",
     "fullcalendar": "3.9.0",
     "fuse.js": "^3.3.0",
+    "fuzzysearch": "^1.0.3",
     "google-maps": "3.3.0",
     "is-promise": "^2.1.0",
     "jquery": "3.3.1",

@@ -13,9 +13,9 @@
       <img
         v-else-if="imageSrc"
         :src="imageSrc"
-        :alt="((firstName.length > 0 ? firstName[0]:'') + (lastName.length > 0 ? lastName[0]:'')) | capitilize">
+        :alt="title | acronim">
       <span v-else>
-      {{ (firstName.length > 0 ? firstName[0]:'') | capitilize}}{{ (lastName.length > 0 ? lastName[0]:'') | capitilize}}
+      {{ title | acronim}}
       </span>
     </md-avatar>
 </template>
@@ -36,11 +36,7 @@
         type: Boolean,
         default: false,
       },
-      firstName: {
-        type: String,
-        default: '',
-      },
-      lastName: {
+      title: {
         type: String,
         default: '',
       },
@@ -48,6 +44,8 @@
         type: Boolean,
         default: false,
       },
+    },
+    methods: {
     },
   };
 </script>

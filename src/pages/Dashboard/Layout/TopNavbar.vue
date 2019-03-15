@@ -22,7 +22,7 @@
           <md-button
             @click="handleAllergy(patient.allergy)"
             v-if="patient.allergy &&  patient.allergy.length>0"
-            class="md-icon-button md-simple md-danger  md-just-icon"
+            class="md-icon-button md-simple md-danger   md-round  md-just-icon"
           >
             <md-icon>report_problem</md-icon>
             <!-- <span class="notification">{{patient.allergy.length}}</span> -->
@@ -33,7 +33,7 @@
       </div>
       <div class="md-toolbar-section-end">
         <md-button
-          class="md-just-icon md-round md-simple md-toolbar-toggle"
+          class="md-just-icon  md-round  md-round md-simple md-toolbar-toggle"
           :class="{toggled: $sidebar.showSidebar}"
           @click="toggleSidebar"
         >
@@ -64,14 +64,8 @@
                   class="search-avatar"
                   :color="item.color"
                   :imageSrc="item.avatar"
-                  :firstName="item.firstName"
-                  :lastName="item.lastName"
+                  :title="item.firstName + ' ' + item.lastName"
                 />
-                <!-- <md-avatar
-                      class="md-avatar-icon search-avatar" :style="{background:item.color}"  >
-                        <img v-if="item.avatar" :src="item.avatar" alt="People">
-                        <span v-else >{{item.firstName | acronim }}{{item.lastName | acronim }}</span>
-                    </md-avatar> -->
 
                 <span class="md-serched-list-item-text"> {{ item.firstName | capitilize}} {{ item.lastName | capitilize }}
                   <br>
@@ -118,7 +112,7 @@
               <p class="hidden-lg hidden-md">Dashboard</p>
             </md-list-item>
             <md-list-item
-              class="md-primary md-simple md-just-icon "
+              class="md-primary  md-round  md-simple md-just-icon "
               @click="showPatientAddForm()"
             >
               <i class="material-icons">person_add</i>
@@ -131,7 +125,7 @@
                   <drop-down direction="down">
                     <md-button
                       slot="title"
-                      class="md-button md-just-icon md-simple"
+                      class="md-button  md-round  md-just-icon md-simple"
                       data-toggle="dropdown"
                     >
                       <md-icon>notifications</md-icon>
@@ -155,30 +149,27 @@
                   <drop-down direction="down">
                     <md-button
                       slot="title"
-                      class="md-button md-just-icon md-simple"
+                      class="md-button  md-round  md-just-icon md-simple"
                       data-toggle="dropdown"
                     >
-                      <md-icon>person</md-icon>
-                      <p class="hidden-lg hidden-md">Notifications</p>
+                      <md-icon>more_vert</md-icon>
+                      <p class="hidden-lg hidden-md">More</p>
                     </md-button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                      <li @click="lock()"> <a href="#">Lock</a></li>
-                      <li @click="logout()"> <a href="#">Logout</a></li>
                       <li>
                         <router-link
                           tag="a"
                           to="/pages/user"
-                        >Profile</router-link>
+                        >My Profile</router-link>
                       </li>
-                      <li><a href="#">You're now friend with Andrew</a></li>
-                      <li><a href="#">Another Notification</a></li>
-                      <li><a href="#">Another One</a></li>
+                      <li  @click="showPatientAddForm()" class="md-layout" ><a href="#" class="md-layout-item">Add new Patient</a></li>
+                      <li @click="lock()" class="md-layout" ><a href="#" class="md-layout-item">Lock</a></li>
+                      <li @click="logout()"> <a href="#">Logout</a></li>
                     </ul>
                   </drop-down>
                 </div>
               </a>
             </li>
-
           </md-list>
         </div>
       </div>

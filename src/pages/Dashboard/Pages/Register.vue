@@ -30,34 +30,180 @@
           class="md-layout-item md-size-50 md-medium-size-50 md-small-size-100 mr-auto"
           slot="content-right"
         >
-          <div class="social-line text-center">
-            <md-button class="md-just-icon md-round md-twitter">
-              <i class="fab fa-twitter"></i>
-            </md-button>
-            <md-button class="md-just-icon md-round md-dribbble">
-              <i class="fab fa-dribbble"></i>
-            </md-button>
-            <md-button class="md-just-icon md-round md-facebook">
-              <i class="fab fa-facebook-f"></i>
-            </md-button>
-            <h4 class="mt-3"> or be classical </h4>
-          </div>
+        <slide-x-left-transition>
+        <div v-if="boolean2">
           <md-field
             class="md-form-group"
-            v-for="item in inputs"
-            :key="item.name"
+            slot="inputs"
+            :class="[
+            {'md-valid': !errors.has('username') && touched.username},
+            {'md-error': errors.has('username')}]"
           >
-            <md-icon>{{item.icon}}</md-icon>
-            <label>{{item.name}}</label>
+            <md-icon>face</md-icon>
+            <label>User Name</label>
             <md-input
-              :v-model="item.nameAttr"
-              :type="item.type"
+              ref="login"
+              autocomplete="username"
+              v-model="username"
+              v-on:keyup.enter="passwordFocus()"
+              data-vv-name="username"
+              type="username"
+              required
+              v-validate="modelValidations.username"
             ></md-input>
+            <span class="md-error">{{errors.first('username')}}</span>
+            <slide-y-down-transition>
+              <md-icon
+                class="error"
+                v-show="errors.has('username')"
+              >close</md-icon>
+            </slide-y-down-transition>
+            <slide-y-down-transition>
+              <md-icon
+                class="success"
+                v-show="!errors.has('username') && touched.username"
+              >done</md-icon>
+            </slide-y-down-transition>
           </md-field>
-          <md-checkbox v-model="boolean">I agree to the <a>terms and conditions</a>.</md-checkbox>
+           <md-field
+            class="md-form-group"
+            slot="inputs"
+            :class="[
+            {'md-valid': !errors.has('firstName') && touched.firstName},
+            {'md-error': errors.has('firstName')}]"
+          >
+            <md-icon>looks_one</md-icon>
+            <label>First Name</label>
+            <md-input
+              ref="login"
+              autocomplete="firstName"
+              v-model="firstName"
+              v-on:keyup.enter="passwordFocus()"
+              data-vv-name="firstName"
+              type="firstName"
+              required
+              v-validate="modelValidations.firstName"
+            ></md-input>
+            <span class="md-error">{{errors.first('firstName')}}</span>
+            <slide-y-down-transition>
+              <md-icon
+                class="error"
+                v-show="errors.has('firstName')"
+              >close</md-icon>
+            </slide-y-down-transition>
+            <slide-y-down-transition>
+              <md-icon
+                class="success"
+                v-show="!errors.has('firstName') && touched.firstName"
+              >done</md-icon>
+            </slide-y-down-transition>
+          </md-field>
+           <md-field
+            class="md-form-group"
+            slot="inputs"
+            :class="[
+            {'md-valid': !errors.has('lastName') && touched.lastName},
+            {'md-error': errors.has('lastName')}]"
+          >
+            <md-icon>looks_two</md-icon>
+            <label>Last Name</label>
+            <md-input
+              ref="login"
+              autocomplete="lastName"
+              v-model="lastName"
+              v-on:keyup.enter="passwordFocus()"
+              data-vv-name="lastName"
+              type="lastName"
+              required
+              v-validate="modelValidations.lastName"
+            ></md-input>
+            <span class="md-error">{{errors.first('lastName')}}</span>
+            <slide-y-down-transition>
+              <md-icon
+                class="error"
+                v-show="errors.has('lastName')"
+              >close</md-icon>
+            </slide-y-down-transition>
+            <slide-y-down-transition>
+              <md-icon
+                class="success"
+                v-show="!errors.has('lastName') && touched.lastName"
+              >done</md-icon>
+            </slide-y-down-transition>
+          </md-field>
+            <md-field
+            class="md-form-group"
+            slot="inputs"
+            :class="[{'md-error': errors.has('password')},
+            {'md-valid': !errors.has('password') && touched.password}]"
+          >
+            <md-icon>lock_outline</md-icon>
+            <label>Password</label>
+            <md-input
+              ref="password"
+              autocomplete="password"
+              v-on:keyup.enter="login()"
+              v-model="password"
+              data-vv-name="password"
+              type="password"
+              required
+              v-validate="modelValidations.password"
+            ></md-input>
+            <span class="md-error">{{errors.first('password')}}</span>
+            <slide-y-down-transition>
+              <md-icon
+                class="error"
+                v-show="errors.has('password')"
+              >close</md-icon>
+            </slide-y-down-transition>
+            <slide-y-down-transition>
+              <md-icon
+                class="success"
+                v-show="!errors.has('password') && touched.password"
+              >done</md-icon>
+            </slide-y-down-transition>
+          </md-field>
+            <md-field
+            class="md-form-group"
+            slot="inputs"
+            :class="[{'md-error': errors.has('password')},
+            {'md-valid': !errors.has('password') && touched.password}]"
+          >
+            <md-icon>lock_outline</md-icon>
+            <label>Repeate Password</label>
+            <md-input
+              ref="rPassword"
+              autocomplete="rPassword"
+              v-on:keyup.enter="login()"
+              v-model="rPassword"
+              data-vv-name="rPassword"
+              type="rPassword"
+              required
+              v-validate="modelValidations.rPassword"
+            ></md-input>
+            <span class="md-error">{{errors.first('rPassword')}}</span>
+            <slide-y-down-transition>
+              <md-icon
+                class="error"
+                v-show="errors.has('rPassword')"
+              >close</md-icon>
+            </slide-y-down-transition>
+            <slide-y-down-transition>
+              <md-icon
+                class="success"
+                v-show="!errors.has('rPassword') && touched.rPassword"
+              >done</md-icon>
+            </slide-y-down-transition>
+          </md-field>
+          <md-checkbox v-model="boolean">I agree to the terms and conditions.</md-checkbox>
+          <div><a>Terms and Conditions</a></div>
+        </div>
+          </slide-x-left-transition>
           <div class="button-container">
+          <md-checkbox v-model="boolean2">I agree to the terms and conditions.</md-checkbox>
             <md-button
-              href
+              :disabled="!boolean"
+              @click="registrate()"
               class="md-success md-round mt-4"
               slot="footer"
             >Get Started</md-button>
@@ -69,17 +215,55 @@
 </template>
 <script>
   import { SignupCard } from '@/components';
+  import { USER_REGISTER, NOTIFY } from '@/store/modules/constants';
+  import { SlideYDownTransition, SlideXLeftTransition } from 'vue2-transitions';
 
   export default {
     components: {
       SignupCard,
+      SlideYDownTransition,
+      SlideXLeftTransition,
     },
     data() {
       return {
-        firstname: null,
+        firstName: null,
+        lastName: null,
+        username: null,
         boolean: false,
+        boolean2: false,
         email: null,
         password: null,
+        rPassword: null,
+        touched: {
+          lastName: false,
+          firstName: false,
+          username: false,
+          password: false,
+          rPassword: false,
+        },
+        modelValidations: {
+          username: {
+            required: true,
+            min: 5,
+          },
+          password: {
+            required: true,
+            min: 5,
+          },
+          lastName: {
+            required: true,
+            min: 2,
+          },
+          firstName: {
+            required: true,
+            min: 2,
+          },
+          rPassword: {
+            required: true,
+            min: 2,
+            confirmed: 'password',
+          },
+        },
         contentLeft: [
           {
             colorIcon: 'icon-success',
@@ -105,31 +289,131 @@
               'There is also a Fully Customizable CMS Admin Dashboard for this product.',
           },
         ],
-        inputs: [
-          {
-            icon: 'face',
-            name: 'First Name...',
-            nameAttr: 'firstname',
-            type: 'text',
-          },
-
-          {
-            icon: 'email',
-            name: 'Email...',
-            nameAttr: 'email',
-            type: 'email',
-          },
-
-          {
-            icon: 'lock_outline',
-            name: 'Password..',
-            nameAttr: 'password',
-            type: 'password',
-          },
-        ],
       };
+    },
+    methods: {
+      passwordFocus() {
+        this.$refs.password.$el.focus();
+      },
+      validate() {
+        this.$validator.validateAll().then((isValid) => {
+          this.$emit('on-submit', this.registerForm, isValid);
+        });
+        this.touched.username = true;
+        this.touched.password = true;
+        this.touched.lastName = true;
+        this.touched.firstName = true;
+        this.touched.rPassword = true;
+      },
+      registrate() {
+        if (this.errors.has('username') || !this.username) {
+          this.showErrorsValidate('username');
+          this.$store.dispatch(NOTIFY, {
+            settings: {
+              message: this.errors.first('username'),
+              type: 'warning',
+            },
+          });
+          return;
+        }
+        if (this.errors.has('lastName') || !this.lastName) {
+          this.showErrorsValidate('lastName');
+          this.$store.dispatch(NOTIFY, {
+            settings: {
+              message: this.errors.first('lastName'),
+              type: 'warning',
+            },
+          });
+          return;
+        }
+        if (this.errors.has('firstName') || !this.firstName) {
+          this.showErrorsValidate('firstName');
+          this.$store.dispatch(NOTIFY, {
+            settings: {
+              message: this.errors.first('firstName'),
+              type: 'warning',
+            },
+          });
+          return;
+        }
+        if (this.errors.has('password') || !this.password) {
+          this.showErrorsValidate('password');
+          this.$store.dispatch(NOTIFY, {
+            settings: {
+              message: this.errors.first('password'),
+              type: 'warning',
+            },
+          });
+          return;
+        }
+        if (this.errors.has('rPassword') || !this.rPassword) {
+          this.showErrorsValidate('rPassword');
+          this.$store.dispatch(NOTIFY, {
+            settings: {
+              message: this.errors.first('rPassword'),
+              type: 'warning',
+            },
+          });
+          return;
+        }
+        this.$store.dispatch(USER_REGISTER, {
+          params: {
+            username: this.username,
+            password: this.password,
+            lastName: this.lastName,
+            firstName: this.firstName,
+          },
+        }).then(
+          (response) => {
+            this.$router.push('/');
+          },
+          (error) => {
+            if (error.response.data.message === 'Wrong password') {
+              this.showErrorsValidate('password');
+            }
+            if (error.response.data.message === 'Invalid login') {
+              this.showErrorsValidate('username');
+            }
+          },
+        );
+      },
+      showErrorsValidate(errField = 'username') {
+        const field = this.$validator.fields.find({
+          name: errField,
+          scope: this.$options.scope,
+        });
+        if (!field) return;
+        this.$validator.errors.add({
+          id: errField,
+          field: errField,
+          msg: errField === 'username' ? 'Invalid login' : 'Wrong password',
+          scope: this.$options.scope,
+        });
+        field.setFlags({
+          invalid: true,
+          valid: false,
+          validated: true,
+        });
+      },
+    },
+    watch: {
+      username() {
+        this.touched.username = true;
+      },
+      password() {
+        this.touched.password = true;
+      },
+      firstName() {
+        this.touched.firstName = true;
+      },
+      lastName() {
+        this.touched.lastName = true;
+      },
     },
   };
 </script>
-<style>
+<style lang="scss" scoped >
+div :not(.md-toolbar) > .md-field:not(.md-chips) .md-error {
+  margin-left: 36px;
+}
 </style>

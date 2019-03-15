@@ -4,9 +4,10 @@
     :class="[{'nav-open': $sidebar.showSidebar}, {'rtl': $route.meta.rtlActive}]"
   >
     <side-bar-jaw
-      :logo='clinic.logo'
-      :title='clinic.name'
-      :logoColor='clinic.color'
+      :logo='currentClinic.logo'
+      :title='currentClinic.name'
+      :logoColor='currentClinic.color'
+      :link='currentClinic.link'
     >
       <!-- <user-menu></user-menu> -->
       <mobile-menu></mobile-menu>
@@ -30,8 +31,8 @@
             name: `${patient.firstName} ${patient.lastName}`,
             icon: 'account_circle',
             img:patient.avatar? patient.avatar: '',
-            avatarColor:patient.color,
-            acronim:`${patient.firstName[0].toUpperCase()}${patient.lastName[0].toUpperCase()}`  }"
+            avatarColor: patient.color,
+            acronim: acronim(patient.firstName+' '+patient.lastName)}"
           class="separated-down"
         >
           <sidebar-item :link="{name: 'BIO', icon: 'image', path: `/patient/${patient.ID}/bio`}"></sidebar-item>
@@ -42,36 +43,37 @@
                 path: '/clinics'}">
         </sidebar-item>
         <sidebar-item
-          v-if="clinic.ID !== null"
+          v-if="selectedClinic.ID "
           :link="{
-            name: `${clinic.name}`,
+            name: `${selectedClinic.name}`,
             icon: 'account_circle',
-            img:clinic.logo? clinic.logo: '',
-            avatarColor:clinic.color,
-            acronim:`${clinic.name.toUpperCase()}`}"
+            img:selectedClinic.logo? selectedClinic.logo: '',
+            avatarColor:selectedClinic.color,
+            acronim:acronim(selectedClinic.name)}"
           class="separated-down"
         >
-          <sidebar-item :link="{name: 'Profile', icon: 'image', path: `/clinic/${clinic.ID}/profile`}"></sidebar-item>
-          <sidebar-item :link="{name: 'Statistic', path: `/clinic/${clinic.ID}/statistic`}"> </sidebar-item>
+          <sidebar-item :link="{name: 'Profile', icon: 'image', path: `/clinic/${selectedClinic.ID}/profile`}"></sidebar-item>
+          <sidebar-item :link="{name: 'Statistic', path: `/clinic/${selectedClinic.ID}/statistic`}"> </sidebar-item>
         </sidebar-item>
         <sidebar-item :link="{name: 'Collaborators',
                 icon: 'people_outline',
                 path: '/collaborators'}">
         </sidebar-item>
         <sidebar-item
-          v-if="clinic.ID !== null"
+          v-if="selectedClinic.ID"
           :link="{
-            name: `${clinic.name}`,
+            name: `${selectedClinic.name}`,
             icon: 'account_circle',
-            img:clinic.logo? clinic.logo: '',
-            avatarColor:clinic.color,
-            acronim:`${clinic.name.toUpperCase()}`}"
+            img:selectedClinic.logo? selectedClinic.logo: '',
+            avatarColor:selectedClinic.color,
+            acronim: acronim(selectedClinic.name)}"
           class="separated-down"
         >
-          <sidebar-item :link="{name: 'Profile', path: `/collaborator/${clinic.ID}/profile`}"> </sidebar-item>
-          <sidebar-item :link="{name: 'Statistic', path: `/collaborator/${clinic.ID}/statistic`}"> </sidebar-item>
+          <sidebar-item :link="{name: 'Profile', path: `/collaborator/${selectedClinic.ID}/profile`}"> </sidebar-item>
+          <sidebar-item :link="{name: 'Statistic', path: `/collaborator/${selectedClinic.ID}/statistic`}"> </sidebar-item>
         </sidebar-item>
         <sidebar-item :link="{name: 'Settings', icon: 'settings', path: '/settings'}">
+          <sidebar-item :link="{name: 'My Clinic',  icon: 'account_circle', path: '/clinic'}"></sidebar-item>
           <sidebar-item :link="{name: 'My Profile',  icon: 'account_circle', path: '/settings/user'}"></sidebar-item>
           <sidebar-item :link="{name: 'Services', path: '/settings/services'}"></sidebar-item>
           <sidebar-item :link="{name: 'Payment', path: '/settings/payment'}"></sidebar-item>
@@ -245,6 +247,12 @@
   import 'perfect-scrollbar/css/perfect-scrollbar.css';
   import { ZoomCenterTransition } from 'vue2-transitions';
   import { mapGetters } from 'vuex';
+  import {
+    COMPANY_NAME,
+    COMPANY_LOGO_URL,
+    COMPANY_COLOR,
+    COMPANY_LINK,
+  } from '@/store/modules/constants';
   import TopNavbar from './TopNavbar.vue';
   import ContentFooter from './ContentFooter.vue';
   import MobileMenu from './Extra/MobileMenu.vue';
@@ -274,6 +282,11 @@
       ZoomCenterTransition,
     },
     methods: {
+      acronim(words) {
+        if (!words) { return ''; }
+        const first_letter = function (x) { if (x) { return x[0]; } return ''; };
+        return words.split(' ').map(first_letter).join('');
+      },
       toggleSidebar() {
         if (this.$sidebar.showSidebar) {
           this.$sidebar.displaySidebar(false);
@@ -296,7 +309,8 @@
     computed: {
       ...mapGetters({
         patient: 'getPatient',
-        clinic: 'getClinicSettings',
+        currentClinic: 'getCurrentClinic',
+        selectedClinic: 'getSelectedClinic',
       }),
     },
   };

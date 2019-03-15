@@ -1,5 +1,5 @@
 <template>
-  <md-card class="md-card-profile clinic-wrapper">
+  <md-card class="md-card-profile currentClinic-wrapper">
     <div class="md-card-avatar">
       <div class="picture-container">
         <div class="picture">
@@ -8,15 +8,17 @@
           </div>
 
           <img
-            v-if="clinic.logo"
+            v-if="currentClinic.logo"
             class="avatar"
-            :style="{'background-color': '#fff' }"
-            :alt="clinic.name[0]"
-            :src="clinic.logo"
+            :style="{'background-color': '#000' }"
+            :alt="currentClinic.name[0]"
+            :src="currentClinic.logo"
           />
 
-          <div class="md-layout md-alignment-center-center picture-wrapper-acronim">
-            <div class="md-layout-item acronim">
+          <div class="md-layout md-alignment-center-center picture-wrapper-acronim"
+          :style="{'background-color': '#000' }">
+            <div class="md-layout-item acronim"
+            >
               <icon-base
                 class="icon-wrapper--item"
                 width="90"
@@ -41,11 +43,11 @@
           <md-field>
             <label>Clinic Name</label>
             <md-input
-              v-model="clinic.name"
+              v-model="currentClinic.name"
               type="text"
             ></md-input>
             <span class="md-helper-text">
-              Enter a cool clinic name
+              Enter a cool currentClinic name
             </span>
           </md-field>
         </div>
@@ -57,7 +59,7 @@
             <label>Phone</label>
             <span class="md-prefix">+</span>
             <md-input
-              v-model="clinic.phone"
+              v-model="currentClinic.phone"
               type="number"
               data-vv-name="phone"
               required
@@ -84,7 +86,7 @@
           <md-field>
             <label>Address</label>
             <md-input
-              v-model="clinic.address"
+              v-model="currentClinic.address"
               type="text"
             ></md-input>
           </md-field>
@@ -97,7 +99,7 @@
                         {'md-error': errors.has('url')}]">
             <label>Clinic web site address</label>
             <md-input
-              v-model="clinic.url"
+              v-model="currentClinic.url"
               type="text"
               data-vv-name="url"
               required
@@ -126,7 +128,7 @@
                         {'md-error': errors.has('email')}]">
             <label>Email</label>
             <md-input
-              v-model="clinic.email"
+              v-model="currentClinic.email"
               type="text"
               data-vv-name="email"
               required
@@ -153,7 +155,7 @@
           <md-field>
             <label>Tax</label>
             <md-input
-              v-model="clinic.tax"
+              v-model="currentClinic.tax"
               type="number"
             ></md-input>
             <span class="md-helper-text">
@@ -166,7 +168,7 @@
           <md-field>
             <label for="teethSystem">Disabled Select</label>
             <md-select
-              v-model="clinic.teethSystem"
+              v-model="currentClinic.teethSystem"
               name="teethSystem"
               id="teethSystem"
             >
@@ -201,7 +203,7 @@
 
           <md-field maxlength="5">
             <label>Description</label>
-            <md-textarea v-model="clinic.description"></md-textarea>
+            <md-textarea v-model="currentClinic.description"></md-textarea>
           </md-field>
         </div>
 
@@ -212,7 +214,7 @@
         buttonColor='green'
         title="Add patient avatar"
         :icon="'add_a_photo'"
-        :imageName="clinic.ID != null ? clinic.ID.toString() + '_' + Date.now(): ''"
+        :imageName="currentClinic.ID != null ? currentClinic.ID.toString() + '_' + Date.now(): ''"
         :imageToCorp="image"
         :showForm.sync="showForm"
       ></image-cropper-form>
@@ -245,7 +247,7 @@
       IconBase,
       ImageCropperForm,
     },
-    name: 'clinic-settings',
+    name: 'currentClinic-settings',
     props: {
       buttonColor: {
         type: String,
@@ -296,7 +298,7 @@
         if (timezoneL) {
           this.timezones.forEach((element) => {
             if (`${element.UTC} ${element.cities}` === timezoneL) {
-              this.clinic.timezoneOffset = element.offset;
+              this.currentClinic.timezoneOffset = element.offset;
             }
           });
         }
@@ -307,7 +309,7 @@
             if (
               `${element.symbol} ${element.name} ${element.code}` === currency
             ) {
-              this.clinic.currencyCode = element.code;
+              this.currentClinic.currencyCode = element.code;
             }
           });
         }
@@ -332,14 +334,14 @@
         }
       },
 
-      creatClipingImage() {
-        const canvas = this.$refs.clipper.clip();
-        const dataURL = canvas.toDataURL('image/jpeg', 0.5);
-        const blob = this.dataURItoBlob(dataURL);
-        const fd = new FormData(document.forms[0]);
-        fd.append('file', blob, `${this.clinic.ID}.jpeg`);
-        this.updateClinicLogo(fd);
-      },
+      // creatClipingImage() {
+      //   const canvas = this.$refs.clipper.clip();
+      //   const dataURL = canvas.toDataURL('image/jpeg', 0.5);
+      //   const blob = this.dataURItoBlob(dataURL);
+      //   const fd = new FormData(document.forms[0]);
+      //   fd.append('file', blob, `${this.currentClinic.ID}.jpeg`);
+      //   this.updateClinicLogo(fd);
+      // },
       validate() {
         this.$validator.validate('url', 'email', 'phone').then((isValid) => {
           this.$emit('on-submit', this.registerForm, isValid);
@@ -387,7 +389,7 @@
             this.$store.dispatch(NOTIFY, {
               settings: {
                 message: 'Image uploaded',
-                type: 'primary',
+                type: 'success',
               },
             });
         });
@@ -397,7 +399,7 @@
           if (result) {
             this.$store
               .dispatch(CLINIC_UPDATE, {
-                clinic: this.clinic,
+                clinic: this.currentClinic,
               })
               .then((response) => {
                 if (response) {
@@ -432,14 +434,14 @@
       },
       setLocalTimezone() {
         this.timezones.forEach((element) => {
-          if (element.offset === this.clinic.timezoneOffset) {
+          if (element.offset === this.currentClinic.timezoneOffset) {
             this.selectedTimezone = `${element.UTC} ${element.cities}`;
           }
         });
       },
       setLocalCurrency() {
         Object.values(this.currency).forEach((element) => {
-          if (element.code === this.clinic.currencyCode) {
+          if (element.code === this.currentClinic.currencyCode) {
             this.selectedCurrency = `${element.symbol} ${element.name} ${
               element.code
             }`;
@@ -449,16 +451,16 @@
     },
     computed: {
       ...mapGetters({
-        clinic: 'getClinicSettings',
+        currentClinic: 'getCurrentClinic',
       }),
       email() {
-        return this.clinic.email;
+        return this.currentClinic.email;
       },
       url() {
-        return this.clinic.url;
+        return this.currentClinic.url;
       },
       phone() {
-        return this.clinic.phone;
+        return this.currentClinic.phone;
       },
     },
     created() {
@@ -508,7 +510,7 @@
     margin: 20px;
   }
 }
-.clinic-wrapper {
+.currentClinic-wrapper {
   .md-field {
     // margin-top: 24px;
     .md-error {

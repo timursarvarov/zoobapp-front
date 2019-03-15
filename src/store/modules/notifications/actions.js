@@ -9,16 +9,20 @@ export default {
   }, {
     settings
   }) => {
-    console.log(settings);
+    let set = settings;
+    if( set.message ) {
+      const nvalue = set.message.toString();
+      set.message = nvalue.charAt(0).toUpperCase() + nvalue.slice(1);
+    }
     let vSettings = {};
-    if (settings) {
+    if (set) {
       vSettings = {
-        message: settings.message || 'OOPS! Something went wrong...',
-        icon: settings.icon || 'add_alert',
-        horizontalAlign: settings.horizontalAlign || 'left',
-        verticalAlign: settings.verticalAlign || 'bottom',
-        type: settings.type || '.alert-warning',
-        status: settings.status || '',
+        message:  set.message  || 'OOPS! Something went wrong...',
+        icon: set.icon || 'add_alert',
+        horizontalAlign: set.horizontalAlign || 'left',
+        verticalAlign: set.verticalAlign || 'bottom',
+        type: set.type || '.alert-warning',
+        status: set.status || '',
       };
     } else {
       vSettings = {

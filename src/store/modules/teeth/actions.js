@@ -26,6 +26,7 @@ export default {
       const jawEthalon = {};
       // eslint-disable-next-line
       for (let attr in jaw) {
+        // eslint-disable-next-line
         if (jaw.hasOwnProperty(attr)) jawEthalon[attr] = jaw[attr];
       }
 

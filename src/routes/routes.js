@@ -7,7 +7,7 @@ import Dashboard from '@/pages/Dashboard/Dashboard.vue';
 import Widgets from '@/pages/Dashboard/Widgets.vue';
 
 // Pages
-const ClinicSettings = () => import('@/pages/Dashboard/Pages/Clinic/ClinicSettings.vue');
+
 // Pages
 const User = () => import('@/pages/Dashboard/Pages/User/UserProfile.vue');
 const Collaborators = () => import('@/pages/Dashboard/Pages/Collaborators/CollaboratorsList.vue');
@@ -23,7 +23,7 @@ const Pricing = () => import('@/pages/Dashboard/Pages/Pricing.vue');
 const TimeLine = () => import('@/pages/Dashboard/Pages/TimeLinePage.vue');
 const RtlSupport = () => import('@/pages/Dashboard/Pages/RtlSupport.vue');
 const Login = () => import('@/pages/Dashboard/Pages/Login.vue');
-const Register = () => import('@/pages/Dashboard/Pages/Register.vue');
+const RegisterWizard = () => import('@/pages/Dashboard/Pages/Registration/Wizard.vue');
 const Lock = () => import('@/pages/Dashboard/Pages/Lock.vue');
 
 // Components pages
@@ -288,13 +288,6 @@ const Settings = {
       },
     },
     {
-      path: 'clinic',
-      name: 'Clinic',
-      components: {
-        default: ClinicSettings,
-      },
-    },
-    {
       path: 'services',
       name: 'Services',
       components: {
@@ -306,13 +299,6 @@ const Settings = {
       name: 'Payment',
       components: {
         default: User,
-      },
-    },
-    {
-      path: 'collaborators',
-      name: 'Collaborators',
-      components: {
-        default: Collaborators,
       },
     },
     {
@@ -338,7 +324,7 @@ const authPages = {
     {
       path: '/register',
       name: 'Register',
-      component: Register,
+      component: RegisterWizard,
       beforeEnter: ifNotAuthenticated,
     },
     {
@@ -405,10 +391,10 @@ const clinicPages = {
   path: '/clinic',
   component: DashboardLayout,
   name: 'Clinic',
-  redirect: '/clinic/:clinicId/profile/',
+  redirect: '/clinic/',
   beforeEnter: ifAuthenticated,
   children: [{
-      path: '/clinic/:clinicId/profile',
+      path: '/clinic/',
       name: 'Clinic Profile',
       component: ClinicProfile,
     },
@@ -424,15 +410,15 @@ const collaboratorPages = {
   path: '/collaborator',
   component: DashboardLayout,
   name: 'Collaborator',
-  redirect: '/Collaborator/:clinicId/profile/',
+  redirect: '/collaborator/:clinicId/profile/',
   beforeEnter: ifAuthenticated,
   children: [{
-      path: '/Collaborator/:clinicId/profile',
+      path: '/collaborator/:clinicId/profile',
       name: 'Collaborator Profile',
       component: ClinicProfile,
     },
     {
-      path: '/Collaborator/:clinicId/statistic',
+      path: '/collaborator/:clinicId/statistic',
       name: 'Collaborator Statistic',
       component: ClinicProfile,
     },
@@ -477,6 +463,13 @@ const routes = [{
         name: 'Patients',
         components: {
           default: PatientsList,
+        },
+      },
+      {
+        path: 'collaborators',
+        name: 'Collaborators',
+        components: {
+          default: Collaborators,
         },
       },
       {

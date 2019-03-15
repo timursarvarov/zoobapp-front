@@ -135,6 +135,7 @@ export {
   JawCard,
   Jaw,
   JawAddDiagnose,
+
   SidebarPluginJaw,
   // Icons
   IconAdult,

@@ -1,71 +1,57 @@
 <template>
-  <div>
-    <md-dialog
-      :md-active.sync="newDiagnoseParamsLocal.showForm"
-      class="jaw-dialog-wrapper"
-    >
-      <tabs
-        :tab-name="tabs"
-        color-button="primary"
-        ref="jaw"
-      >
+  <div class=" jaw-list-wrapper"  >
 
-        <div slot="header-title">
-          <h4> Set Diagnose:
-            {{selectedDiagnose.code}} {{selectedDiagnose.title}}
-          </h4>
-          <span class="description">
-            {{getTeethWithLocations() }} </span>
-        </div>
 
-        <template
-          slot="tab-pane-1"
-          v-if="selectedTeeth.length > 0 "
-        >
-          <div class="md-layout md-gutter md-layout-item">
+          <md-toolbar class="md-transparent">
+              <!-- <div class="md-toolbar-section-start"> -->
+                <slide-y-down-transition>
+                <slot name="title"></slot>
+                </slide-y-down-transition>
+              <!-- </div> -->
+              <div class="md-toolbar-section-end">
 
-            <div class="md-layout-item md-size-33">
-              <md-field class="md-layout-tem">
-                <label for="prefer">Show first</label>
-                <md-select
-                  md-dense
-                  v-model="preferLocal"
-                  name="prefer"
-                  id="prefer"
-                >
-                  <md-option value="treatment">Treatment</md-option>
-                  <md-option value="diagnose">Diagnose</md-option>
-                  <md-option value="anamnes">Anamnes</md-option>
-                </md-select>
-              </md-field>
-            </div>
+                  <md-button
+                    @click="setLastLocationForAllTeeth()"
+                    class="md-primary md-round md-simple md-just-icon "
+                  >
+                    <md-icon>
+                      done_all
+                    </md-icon>
+                    <md-tooltip md-delay="1000">Set last created
+                      <br /> change for all teeth</md-tooltip>
+                  </md-button>
 
-            <div class="md-layout-item md-size-33">
+                  <md-button
+                    @click="dropAllLocations()"
+                    class="md-primary md-round md-simple md-just-icon "
+                  >
+                    <md-icon>
+                      clear_all
+                    </md-icon>
+                    <md-tooltip md-delay="1000">
+                      Drop all locations
+                    </md-tooltip>
+                  </md-button>
+                  <drop-down direction="down">
+                            <md-button
+                              slot="title"
+                              class="md-button md-just-icon md-round md-simple md-block "
+                              data-toggle="dropdown"
+                            >
+                              <md-icon>more_vert</md-icon>
+                            </md-button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                              <li><md-switch v-model="preferj" value="anamnes">Anamnes</md-switch></li>
+                              <li><md-switch v-model="preferj" value="diagnose">Diagnose</md-switch></li>
+                              <li><md-switch v-model="preferj" value="treatment">Treatment</md-switch></li>
+                            </ul>
+                      </drop-down>
+              </div>
+            </md-toolbar>
 
-              <md-button
-                @click="setLastLocationForAllTeeth()"
-                class="md-primary md-simple"
-                v-show="(selectedTeeth.length > 1 && ( selectedDiagnose.locations && lastLocation in selectedDiagnose.locations))"
-              >
-                Set for all teeth
-                <md-tooltip md-delay="1000">Set last created
-                  <br /> change for all teeth</md-tooltip>
-              </md-button>
-            </div>
-            <div class="md-layout-item md-size-33">
-              <md-button
-                @click="dropAllLocations()"
-                class="md-primary md-simple"
-                v-show=" !isEmpty(selectedDiagnose.locations)"
-              >
-                Clear all
-                <md-tooltip md-delay="1000">
-                  Drop all locations
-                </md-tooltip>
-              </md-button>
-            </div>
-          </div>
-          <div class="md-layout md-layout-item md-gutter">
+
+          <div :style="[{'max-width': `${jawListWidth}px`}]"
+            class="md-layout md-layout-item md-gutter  jaw-list-container">
             <div class="jaw md-layout-item">
               <div class="jaw-list mx-auto">
                 <div
@@ -108,63 +94,28 @@
                       xlink:href=".diagnose"
                     />
                   </svg>
-                  <span class="tooth-number">{{toCurrentTeethSystem(toothId)}}</span>
+                  <span class="tooth-number">{{toothId | toCurrentTeethSystem(teethSystem)}}</span>
                 </div>
               </div>
             </div>
 
           </div>
-        </template>
-        <template :slot=" selectedTeeth.length > 0 && selectedDiagnose.type == 'dental' ? 'tab-pane-2' : 'tab-pane-1'">
-          <div class="md-layout">
-            <md-field>
-              <label>Textarea with Autogrow</label>
-              <md-textarea
-                md-autogrow
-                v-model="diagnose.description"
-              ></md-textarea>
-            </md-field>
-          </div>
-        </template>
-        <template :slot=" selectedTeeth.length > 0 && selectedDiagnose.type == 'dental' ? 'tab-pane-3' : 'tab-pane-2'">
-          <div class="md-layout">
 
-            <div class="md-layout-item">
-              <md-field>
-                <label>Textarea ASDFASDFASDFASDFASDFwith Autogrow</label>
-                <md-textarea md-autogrow></md-textarea>
-              </md-field>
-
-            </div>
-          </div>
-
-        </template>
-
-        <div slot='footer-actions'>
-
-          <md-button @click="newDiagnoseParamsLocal.showForm = !newDiagnoseParamsLocal.showForm">Close</md-button>
-          <md-button
-            class="md-primary"
-            :disabled="(selectedDiagnose.type == 'dental' && isEmpty(diagnose.teeth))"
-            @click="setDiagnose()"
-          >Save</md-button>
-        </div>
-      </tabs>
-    </md-dialog>
-  </div>
+      </div>
 </template>
 <script>
 import jawSVGjs from "./jawSVG";
-import { IconBase, Tabs } from "@/components";
+import { IconBase } from "@/components";
+import { SlideYDownTransition } from 'vue2-transitions';
 
 export default {
   components: {
     IconBase,
-    Tabs
+    SlideYDownTransition
   },
   model: {
     prop: "newDiagnoseParams",
-    event: "hideSelectedToothDialog"
+    event: "updateDiagonoseParams"
   },
   props: {
     jaw: {
@@ -178,7 +129,13 @@ export default {
     // Пропс выбранношо диагноза
     selectedDiagnose: {
       type: Object,
-      default: () => {}
+      default: () => {
+        return {
+          code:'',
+          title: '',
+          locations: [],
+        }
+      }
     },
     selectedTeeth: {
       type: Array,
@@ -207,6 +164,8 @@ export default {
   name: "JawAddDiagnseForm",
   data() {
     return {
+      disabled: false,
+      windowWidth:1,
       preferj: "diagnose",
       SvgTeeth: [],
       lastLocation: null,
@@ -220,7 +179,6 @@ export default {
         description: "",
         teeth: {},
         date: new Date(),
-        author: "Some Cool"
       },
       defaultLocations: {
         background: false,
@@ -287,11 +245,6 @@ export default {
         }
       }
     },
-    setDiagnose() {
-      this.newDiagnoseParamsLocal.diagnose = this.diagnose;
-      this.newDiagnoseParamsLocal.showForm = false;
-      this.newDiagnoseParamsLocal.saveDiagnose = true;
-    },
     // Отображаем в заголовке список зубов с указанными локациями или,
     // (скрыт если диагноз оральный)
     getTeethWithLocations() {
@@ -318,6 +271,7 @@ export default {
     //Очищаем список зубов в выбранном диагнозе
     dropAllLocations() {
       this.diagnose.teeth = {};
+      this.getDiagnose();
     },
     // функция для проверки пустого объекта
     isEmpty(obj) {
@@ -457,6 +411,7 @@ export default {
           }
         }
       }
+
       this.triger = !this.triger;
     },
     // выбираем область зуба и записываем ее в массив с зубами в дигнозе
@@ -531,7 +486,7 @@ export default {
           }
         }
       }
-      console.log(this.diagnose.teeth);
+      // console.log(this.diagnose.teeth);
       this.triger = !this.triger;
     },
     // Высчитывваем в какую очередь нужно прятать локацию в зависимости от выбронного приоретета показа(анамнез дигноз или лечение)
@@ -641,28 +596,20 @@ export default {
       }
       return toothClass;
     },
-    toCurrentTeethSystem(toothID) {
-      let tooth = toothID;
-      if (
-        this.getNestedProperty(this.teethSchema, toothID, this.teethSystemL)
-      ) {
-        tooth = this.teethSchema[toothID][this.teethSystemL];
-      }
-      return tooth;
+    handleResize() {
+      this.windowWidth = window.innerWidth;
+    },
+    getDiagnose(){
+      this.$emit("updateDiagonoseParams", this.diagnose);
     }
   },
 
   computed: {
-    teethSystemL() {
-      let system = "fdi";
-      if (this.teethSystem === 1) {
-        system = "fdi";
-      } else if (this.teethSystem === 2) {
-        system = "universal";
-      } else if (this.teethSystem === 3) {
-        system = "palmer";
+    jawListWidth(){
+      if(this.windowWidth<600){
+        return (this.windowWidth/100*80)-40;
       }
-      return system;
+        return Math.round((this.windowWidth/100*80)-70);
     },
     jawSVG() {
       const jawVG = JSON.parse(jawSVGjs);
@@ -685,7 +632,7 @@ export default {
       },
       // сеттер:
       set: function(newValue) {
-        this.$emit("hideSelectedToothDialog", this.newDiagnoseParamsLocal);
+        this.$emit("updateDiagonoseParams", newValue);
       }
     },
 
@@ -702,6 +649,7 @@ export default {
         });
       }
       // console.log(jaw);
+      this.getDiagnose();
       return jaw;
     },
     tabs: function() {
@@ -714,10 +662,20 @@ export default {
       return this.tabName;
     }
   },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
+  },
   created: function() {
-    this.diagnose.code = this.selectedDiagnose.code;
-    this.diagnose.title = this.selectedDiagnose.title;
-    console.log(this.getPropertiesWithTrue(this.selectedDiagnose.locations));
+    window.addEventListener('resize', this.handleResize)
+      this.handleResize();
+      this.diagnose.id = this.selectedDiagnose.id;
+      this.diagnose.author = this.selectedDiagnose.author;
+      this.diagnose.view = this.selectedDiagnose.view;
+      this.diagnose.locations = this.selectedDiagnose.locations;
+      this.diagnose.explain = this.selectedDiagnose.explain;
+      this.diagnose.type = this.selectedDiagnose.type;
+      this.diagnose.code = this.selectedDiagnose.code;
+      this.diagnose.title = this.selectedDiagnose.title;
     if (this.selectedTeeth.length > 0) {
       if (
         this.getPropertiesWithTrue(this.selectedDiagnose.locations).length ===
@@ -735,334 +693,322 @@ export default {
             }
           }
         }
-      } else {
-        // в противном случае вносим во вновь создаваемое лечение только первые положительные локации
-        for (let index = 0; index < this.selectedTeeth.length; index++) {
-          this.diagnose.teeth[this.selectedTeeth[index]] = {}; //создаем массив с зубами в диагнозе
-          this.diagnose.teeth[this.selectedTeeth[index]][
-            Object.keys(this.selectedDiagnose.locations)[0]
-              ? Object.keys(this.selectedDiagnose.locations)[0]
-              : this.getPropertiesWithTrue(this.selectedDiagnose.locations)[0]
-          ] = true;
-        }
+      // } else {
+      //   // в противном случае вносим во вновь создаваемое лечение только первые положительные локации
+      //   for (let index = 0; index < this.selectedTeeth.length; index++) {
+      //     this.diagnose.teeth[this.selectedTeeth[index]] = {}; //создаем массив с зубами в диагнозе
+      //     this.diagnose.teeth[this.selectedTeeth[index]][
+      //       Object.keys(this.selectedDiagnose.locations)[0]
+      //         ? Object.keys(this.selectedDiagnose.locations)[0]
+      //         : this.getPropertiesWithTrue(this.selectedDiagnose.locations)[0]
+      //     ] = true;
+      //   }
       }
     }
+    // this.getDiagnose();
     // this.triger = !this.triger;
   }
 };
 </script>
 
 <style lang="scss"  >
-.jaw-dialog-wrapper {
-  min-width: 80%;
-  max-height: 100% !important;
-  background-color: transparent !important;
-  box-shadow: none;
-  margin: 0 !important;
-  padding: 0 !important;
-  -webkit-font-smoothing: antialiased !important;
 
-  .md-card {
+.jaw-list-wrapper{
+  .md-toolbar{
+    .error{
+      color:red;
+    }
+    .dropdown-menu li {
+      padding: 0px 0px 0px 16px
+    }
+    .jaw-settings {
+      max-width: 300px;
+    }
+        }
+
+  .jaw-list-container {
     overflow-y: auto;
     overflow-x: auto;
     margin: 0;
+    padding: 20px 0 20px 0;
 
     // overflow: -webkit-paged-x;
     &::-webkit-scrollbar {
-      width: 7px;
+      height:7px;
       background-color: transparent;
     }
     &::-webkit-scrollbar-thumb {
       background-color: grey;
       border-radius: 20px;
     }
-  }
+    .jaw {
+      margin: 0 !important;
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
 
-  .jaw,
-  .md-dialog-container {
-    margin: 0 !important;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    border-radius: 5px;
-    .jaw-settings {
-      max-width: 300px;
-    }
-    .tab-pane-1,
-    .tab-pane-2,
-    .tab-pane-3 {
-      width: 100%;
-      min-height: 40vh;
-      .jaw {
-        overflow: -webkit-paged-x;
-        &::-webkit-scrollbar {
-          height: 7px;
-          background-color: transparent;
-        }
-        &::-webkit-scrollbar-thumb {
-          background-color: grey;
-          border-radius: 20px;
-        }
-      }
-    }
-
-    .jaw-list {
-      max-height: 42vh;
-      min-height: 200px;
       display: flex;
-      .tooth {
+      flex-direction: column;
+      // padding: 15px;
+      border-radius: 5px;
+    
+
+
+      .jaw-list {
+        max-height: 42vh;
+        min-height: 200px;
         display: flex;
-        // transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        transition-property: all;
-        transition-duration: 0.4s;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        transition-delay: 0s;
-        position: relative;
-        padding-bottom: 15px;
-        .tooth-number {
-          font-size: 1.3em;
-          overflow: show;
-          margin: auto;
-          position: absolute;
-          left: 50%;
-          bottom: -5px;
-          transform: translate(-50%, 0);
-        }
-
-        svg {
-          flex-grow: 1;
-          flex-basis: 100%;
-          height: 100%;
-
-          .background {
-            fill: #9fdaff;
+        .tooth {
+          display: flex;
+          // transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          transition-property: all;
+          transition-duration: 0.4s;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          transition-delay: 0s;
+          position: relative;
+          padding-bottom: 15px;
+          .tooth-number {
+            font-size: 1.3em;
+            overflow: show;
+            margin: auto;
+            position: absolute;
+            left: 50%;
+            bottom: -5px;
+            transform: translate(-50%, 0);
           }
 
-          .bridge {
-            fill: #3535ed;
-          }
+          svg {
+            flex-grow: 1;
+            flex-basis: 100%;
+            height: 100%;
 
-          .root:not(.has-in-locations) {
-            fill: #f8edc8;
-            stroke: #292320;
-            stroke-width: 0.25px;
-          }
+            .background {
+              fill: #9fdaff;
+            }
 
-          .rootCanal {
-            // fill: #3535ed;
-          }
-          .selected:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1):not(.gum) {
-            fill: #8e24aa !important;
-          }
+            .bridge {
+              fill: #3535ed;
+            }
 
-          .coronaLingual:not(.has-in-locations),
-          .coronaTop:not(.has-in-locations),
-          .coronaLabial:not(.has-in-locations) {
-            fill: #fff;
-            stroke: #000;
-            stroke-width: 0.25px;
-          }
-          .has-in-locations:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1):not(.gum) {
-            stroke: #8e24aa;
-            stroke-width: 1.5px !important;
-          }
-          .has-in-locations,
-          .rootCanal,
-          .periodontit,
-          .coronaLingualIncisalDistal,
-          .coronaLingualIncisalMiddle,
-          .coronaLingualIncisionMesial,
-          .coronaLingualMiddleDistal,
-          .coronaLingualMiddleMiddle,
-          .coronaLingualMiddleMesial,
-          .coronaLingualCervicalDistal,
-          .coronaLingualCervicalMiddle,
-          .coronaLingualCervicalMesial,
-          .coronaLabialIncisalDistal,
-          .coronaLabialIncisalMiddle,
-          .coronaLabialIncisionMesial,
-          .coronaLabialMiddleDistal,
-          .coronaLabialMiddleMiddle,
-          .coronaLabialMiddleMesial,
-          .coronaLabialCervicalDistal,
-          .coronaLabialCervicalMiddle,
-          .coronaLabialCervicalMesial,
-          .coronaTopBuccal,
-          .coronaTopMedial,
-          .coronaTopLingual,
-          .coronaTopDistal,
-          .coronaTopOclusial {
-            fill: white;
-            stroke: #8d24aa70;
-            stroke-width: 0.45px;
-            &:active {
-              opacity: 0.8;
+            .root:not(.has-in-locations) {
+              fill: #f8edc8;
+              stroke: #292320;
+              stroke-width: 0.25px;
+            }
+
+            .rootCanal {
+              // fill: #3535ed;
+            }
+            .selected:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1):not(.gum) {
+              fill: #8e24aa !important;
+            }
+
+            .coronaLingual:not(.has-in-locations),
+            .coronaTop:not(.has-in-locations),
+            .coronaLabial:not(.has-in-locations) {
+              fill: #fff;
+              stroke: #000;
+              stroke-width: 0.25px;
+            }
+            .has-in-locations:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1):not(.gum) {
+              stroke: #8e24aa;
+              stroke-width: 1.5px !important;
+            }
+            .has-in-locations,
+            .rootCanal,
+            .periodontit,
+            .coronaLingualIncisalDistal,
+            .coronaLingualIncisalMiddle,
+            .coronaLingualIncisionMesial,
+            .coronaLingualMiddleDistal,
+            .coronaLingualMiddleMiddle,
+            .coronaLingualMiddleMesial,
+            .coronaLingualCervicalDistal,
+            .coronaLingualCervicalMiddle,
+            .coronaLingualCervicalMesial,
+            .coronaLabialIncisalDistal,
+            .coronaLabialIncisalMiddle,
+            .coronaLabialIncisionMesial,
+            .coronaLabialMiddleDistal,
+            .coronaLabialMiddleMiddle,
+            .coronaLabialMiddleMesial,
+            .coronaLabialCervicalDistal,
+            .coronaLabialCervicalMiddle,
+            .coronaLabialCervicalMesial,
+            .coronaTopBuccal,
+            .coronaTopMedial,
+            .coronaTopLingual,
+            .coronaTopDistal,
+            .coronaTopOclusial {
+              fill: white;
+              stroke: #8d24aa70;
+              stroke-width: 0.45px;
+              &:active {
+                opacity: 0.8;
+                transition-property: all;
+                transition-duration: 0.4s;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                transition-delay: 0s;
+              }
+            }
+
+            .implant {
+              fill: #3535ed;
+            }
+
+            .veneer {
+              fill: #3535ed;
+            }
+
+            .silant {
+              fill: #3535ed;
+            }
+
+            .gum {
+              stroke: #ffb900;
+            }
+
+            .paradontit1 {
+              stroke: #ff822e;
+              fill: none;
+              // fill: rgba(56, 43, 37, 0.283);
+            }
+
+            .paradontit2 {
+              stroke: #f9610d;
+              fill: none;
+              // fill: rgba(56, 43, 37, 0.383);
+            }
+
+            .paradontit3 {
+              stroke: #f75403;
+              fill: none;
+              // fill: rgba(56, 43, 37, 0.483);
+            }
+
+            .paradontit4 {
+              stroke: #f73403;
+              fill: none;
+              // fill: rgba(56, 43, 37, 0.583);
+            }
+
+            .periodontit {
+              // fill: #3535ed;
+            }
+
+            .gum {
+              stroke: #ffb900;
+              stroke-linejoin: round;
+              stroke-width: 2px;
+              fill: none;
+            }
+
+            .paradontit1.has-in-locations,
+            .paradontit2.has-in-locations,
+            .paradontit3.has-in-locations,
+            .paradontit4.has-in-locations,
+            .periodnotit.has-in-locations {
+              opacity: 0.3;
+              stroke-linejoin: round;
+              stroke-width: 3px;
+              &:hover {
+                opacity: 1;
+                stroke-width: 4px !important;
+                stroke: #8e24aa !important;
+              }
+            }
+            .paradontit1.selected,
+            .paradontit2.selected,
+            .paradontit3.selected,
+            .paradontit4.selected,
+            .periodnotit.selected {
+              opacity: 1;
+              stroke-linejoin: round;
+              stroke-width: 3px;
+              stroke: #8e24aa;
+            }
+
+            .paradontit1,
+            .paradontit2,
+            .paradontit3,
+            .paradontit4,
+            .periodnotit {
+              stroke-linejoin: round;
+              stroke-width: 3px;
               transition-property: all;
               transition-duration: 0.4s;
               transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
               transition-delay: 0s;
             }
-          }
-
-          .implant {
-            fill: #3535ed;
-          }
-
-          .veneer {
-            fill: #3535ed;
-          }
-
-          .silant {
-            fill: #3535ed;
-          }
-
-          .gum {
-            stroke: #ffb900;
-          }
-
-          .paradontit1 {
-            stroke: #ff822e;
-            fill: none;
-            // fill: rgba(56, 43, 37, 0.283);
-          }
-
-          .paradontit2 {
-            stroke: #f9610d;
-            fill: none;
-            // fill: rgba(56, 43, 37, 0.383);
-          }
-
-          .paradontit3 {
-            stroke: #f75403;
-            fill: none;
-            // fill: rgba(56, 43, 37, 0.483);
-          }
-
-          .paradontit4 {
-            stroke: #f73403;
-            fill: none;
-            // fill: rgba(56, 43, 37, 0.583);
-          }
-
-          .periodontit {
-            // fill: #3535ed;
-          }
-
-          .gum {
-            stroke: #ffb900;
-            stroke-linejoin: round;
-            stroke-width: 2px;
-            fill: none;
-          }
-
-          .paradontit1.has-in-locations,
-          .paradontit2.has-in-locations,
-          .paradontit3.has-in-locations,
-          .paradontit4.has-in-locations,
-          .periodnotit.has-in-locations {
-            opacity: 0.3;
-            stroke-linejoin: round;
-            stroke-width: 3px;
-            &:hover {
-              opacity: 1;
-              stroke-width: 4px !important;
-              stroke: #8e24aa !important;
+            .hide {
+              display: none;
             }
-          }
-          .paradontit1.selected,
-          .paradontit2.selected,
-          .paradontit3.selected,
-          .paradontit4.selected,
-          .periodnotit.selected {
-            opacity: 1;
-            stroke-linejoin: round;
-            stroke-width: 3px;
-            stroke: #8e24aa;
-          }
-
-          .paradontit1,
-          .paradontit2,
-          .paradontit3,
-          .paradontit4,
-          .periodnotit {
-            stroke-linejoin: round;
-            stroke-width: 3px;
-            transition-property: all;
-            transition-duration: 0.4s;
-            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            transition-delay: 0s;
-          }
-          .hide {
-            display: none;
           }
         }
       }
-    }
-    // .has-in-locations:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
-    //   stroke: #8e24aa !important;
-    // }
+      // .has-in-locations:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
+      //   stroke: #8e24aa !important;
+      // }
 
-    .anamnes {
-      fill: #fb8c00 !important;
-      .tooth-number {
-        color: #fb8c00;
+      .anamnes {
+        fill: #fb8c00 !important;
+        .tooth-number {
+          color: #fb8c00;
+        }
       }
-    }
-    .diagnose:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
-      // fill: #8e24aa !important;
-      .tooth-number {
-        color: #8e24aa;
+      .diagnose:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
+        // fill: #8e24aa !important;
+        .tooth-number {
+          color: #8e24aa;
+        }
       }
-    }
-    .diagnose.gum {
-      stroke-width: 4px !important;
-    }
-
-    .treatment {
-      fill: #43a047 !important;
-      .tooth-number {
-        color: #43a047;
+      .diagnose.gum {
+        stroke-width: 4px !important;
       }
-    }
-    .selected {
-      stroke: #8e24aa;
-      opacity: 1 !important;
-    }
 
-    // .has-in-locations {
-    //   stroke: #8e24aa;
-    //   // opacity: 0.3;
-    //   &:hover:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
-    //     fill: #8e24aa !important;
-    //     opacity: 0.7;
-    //     transition-property: all;
-    //     transition-duration: 0.4s;
-    //     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    //     transition-delay: 0s;
-    //   }
+      .treatment {
+        fill: #43a047 !important;
+        .tooth-number {
+          color: #43a047;
+        }
+      }
+      .selected {
+        stroke: #8e24aa;
+        opacity: 1 !important;
+      }
+
+      // .has-in-locations {
+      //   stroke: #8e24aa;
+      //   // opacity: 0.3;
+      //   &:hover:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
+      //     fill: #8e24aa !important;
+      //     opacity: 0.7;
+      //     transition-property: all;
+      //     transition-duration: 0.4s;
+      //     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      //     transition-delay: 0s;
+      //   }
+      // }
+
+      // .has-in-locations.paradontit4,
+      // .has-in-locations.paradontit3,
+      // .has-in-locations.paradontit2,
+      // .has-in-locations.paradontit1 {
+      //   stroke: #8e24aa;
+      //   opacity: 0.1;
+
+      //   &:hover {
+      //     opacity: 1;
+      //     z-index: 50;
+      //     stroke-width: 4px !important;
+      //     stroke: #8e24aa !important;
+      //     transition-property: all;
+      //     transition-duration: 0.4s;
+      //     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      //     transition-delay: 0s;
+      //   }
+      // }
     // }
-
-    // .has-in-locations.paradontit4,
-    // .has-in-locations.paradontit3,
-    // .has-in-locations.paradontit2,
-    // .has-in-locations.paradontit1 {
-    //   stroke: #8e24aa;
-    //   opacity: 0.1;
-
-    //   &:hover {
-    //     opacity: 1;
-    //     z-index: 50;
-    //     stroke-width: 4px !important;
-    //     stroke: #8e24aa !important;
-    //     transition-property: all;
-    //     transition-duration: 0.4s;
-    //     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    //     transition-delay: 0s;
-    //   }
-    // }
-  }
+    }
+}
 }
 </style>

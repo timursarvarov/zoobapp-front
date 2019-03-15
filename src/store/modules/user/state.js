@@ -10,6 +10,48 @@ export default {
     status: '',
     teethSystem: 'fdi',
     favoriteDiagnosis: ['K00.3', 'K00.7', 'K01.1'],
+    diagnoseDescriptions: [
+        {
+            title: 'description #1',
+            description: 'some cool and long description',
+        },
+        {
+            title: 'description #3',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+        },
+        {
+            title: 'description #4',
+            description: 'some cool and long description',
+        },
+        {
+            title: 'description #5',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+        },
+        {
+            title: 'description #6',
+            description: 'some cool and long description',
+        },
+        {
+            title: 'description #7',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+        },
+        {
+            title: 'description #8',
+            description: 'some cool and long description',
+        },
+        {
+            title: 'description #9',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+        },
+        {
+            title: 'description #10',
+            description: 'some cool and long description',
+        },
+        {
+            title: 'description #11',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+        },
+    ],
     availablePatientsTableColumns: [{
             key: 'ID',
             title: 'ID',

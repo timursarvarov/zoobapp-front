@@ -10,6 +10,7 @@ export default {
         currencyCode: null,
         timezoneOffset: null,
         logo: null,
+        ID: null,
     },
     status: '',
 };

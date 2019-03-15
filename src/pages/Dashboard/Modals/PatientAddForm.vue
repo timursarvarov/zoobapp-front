@@ -225,7 +225,6 @@
 
   const randomMC = require('random-material-color');
 
-
   export default {
     components: {
       SlideYDownTransition,

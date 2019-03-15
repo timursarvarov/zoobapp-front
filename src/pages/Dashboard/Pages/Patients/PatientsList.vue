@@ -107,8 +107,7 @@
                   <t-avatar
                     :color="item.color"
                     :imageSrc="item.avatar"
-                    :firstName="item.firstName"
-                    :lastName="item.lastName"
+                    :title="item.firstName + ' ' + item.lastName"
                   />
                 </div>
 
@@ -140,8 +139,7 @@
                         :small="true"
                         :color="item[field.key].color"
                         :imageSrc="item[field.key].avatar"
-                        :firstName="item[field.key].firstName"
-                        :lastName="item[field.key].lastName"
+                        :title="item[field.key].firstName + ' ' + item[field.key].lastName"
                       />
                     </div>
                     <span class="md-layout-item">
@@ -314,7 +312,7 @@ export default {
     callbackLauncher: null
   }),
   methods: {
-    ...mapFilters(["capitilize"]),
+    // ...mapFilters(["capitilize"]),
     getFieldName(key) {
       const field = this.availablePatientsTableColumns.find(f => f.key === key);
       if (field) {

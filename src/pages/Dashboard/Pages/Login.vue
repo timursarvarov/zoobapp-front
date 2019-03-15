@@ -32,73 +32,80 @@
             slot="description"
             class="description"
           >Or Be Classical</p>
+          <div slot="inputs">
 
-          <md-field
-            class="md-form-group"
-            slot="inputs"
-            :class="[
-            {'md-valid': !errors.has('username') && touched.username},
-            {'md-error': errors.has('username')}]"
-          >
-            <md-icon>face</md-icon>
-            <label>User Name...</label>
-            <md-input
-              ref="login"
-              autocomplete="username"
-              v-model="username"
-              v-on:keyup.enter="passwordFocus()"
-              data-vv-name="username"
-              type="username"
-              required
-              v-validate="modelValidations.username"
-            ></md-input>
-            <span class="md-error">{{errors.first('username')}}</span>
-            <slide-y-down-transition>
-              <md-icon
-                class="error"
-                v-show="errors.has('username')"
-              >close</md-icon>
-            </slide-y-down-transition>
-            <slide-y-down-transition>
-              <md-icon
-                class="success"
-                v-show="!errors.has('username') && touched.username"
-              >done</md-icon>
-            </slide-y-down-transition>
-          </md-field>
+              <md-field
+                class="md-form-group"
+                :class="[
+                {'md-valid': !errors.has('username') && touched.username},
+                {'md-error': errors.has('username')}]"
+              >
+                <md-icon>face</md-icon>
+                <label>User Name...</label>
+                <md-input
+                  ref="username"
+                  autocomplete="username"
+                  v-model="username"
+                  v-on:keyup.enter="focusOn('password')"
+                  data-vv-name="username"
+                  type="username"
+                  required
+                  v-validate="modelValidations.username"
+                ></md-input>
+                <span class="md-error">{{errors.first('username')}}</span>
+                <slide-y-down-transition>
+                  <md-button v-show="errors.has('username')"
+                    @click="username='',focusOn('login')"
+                    class="md-just-icon md-round  md-input-action clear-button  md-simple">
+                    <md-icon
+                      class="error"
+                    >close</md-icon>
+                  </md-button>
+                </slide-y-down-transition>
+                <slide-y-down-transition>
+                  <md-icon
+                    class="success"
+                    v-show="!errors.has('username') && touched.username"
+                  >done</md-icon>
+                </slide-y-down-transition>
+              </md-field>
 
-          <md-field
-            class="md-form-group"
-            slot="inputs"
-            :class="[{'md-error': errors.has('password')},
-            {'md-valid': !errors.has('password') && touched.password}]"
-          >
-            <md-icon>lock_outline</md-icon>
-            <label>Password...</label>
-            <md-input
-              ref="password"
-              autocomplete="password"
-              v-on:keyup.enter="login()"
-              v-model="password"
-              data-vv-name="password"
-              type="password"
-              required
-              v-validate="modelValidations.password"
-            ></md-input>
-            <span class="md-error">{{errors.first('password')}}</span>
-            <slide-y-down-transition>
-              <md-icon
-                class="error"
-                v-show="errors.has('password')"
-              >close</md-icon>
-            </slide-y-down-transition>
-            <slide-y-down-transition>
-              <md-icon
-                class="success"
-                v-show="!errors.has('password') && touched.password"
-              >done</md-icon>
-            </slide-y-down-transition>
-          </md-field>
+              <md-field
+                class="md-form-group"
+                slot="inputs"
+                :class="[{'md-error': errors.has('password')},
+                {'md-valid': !errors.has('password') && touched.password}]"
+              >
+                <md-icon>lock_outline</md-icon>
+                <label>Password...</label>
+                <md-input
+                  ref="password"
+                  autocomplete="password"
+                  v-on:keyup.enter="login()"
+                  v-model="password"
+                  data-vv-name="password"
+                  type="password"
+                  required
+                  v-validate="modelValidations.password"
+                ></md-input>
+                <span class="md-error">{{errors.first('password')}}</span>
+                <slide-y-down-transition>
+                  <md-icon
+                    class="error"
+                    v-show="errors.has('password')"
+                  >close</md-icon>
+                </slide-y-down-transition>
+                <slide-y-down-transition>
+                  <md-icon
+                    class="success"
+                    v-show="!errors.has('password') && touched.password"
+                  >done</md-icon>
+                </slide-y-down-transition>
+              </md-field>
+              <div class="md-layout">
+                <small  class="md-simple ml-auto " @click="showForgot = !showForgot">Forgot password?</small>
+              </div>
+          </div>
           <md-button
             slot="footer"
             @click="login"
@@ -110,20 +117,26 @@
         </login-card>
       </form>
     </div>
+  <forgot-password
+      :showForm.sync="showForgot"
+      />
   </div>
 </template>
 <script>
   import { LoginCard } from '@/components';
   import { AUTH_REQUEST, NOTIFY } from '@/store/modules/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
+  import ForgotPassword from './ForgotPassword.vue';
 
   export default {
     components: {
       LoginCard,
       SlideYDownTransition,
+      ForgotPassword,
     },
     data() {
       return {
+        showForgot: false,
         username: null,
         password: null,
         touched: {
@@ -143,15 +156,18 @@
       };
     },
     methods: {
+      focusOn(ref) {
+        if (!this.$refs[ref]) {
+          return;
+        }
+        this.$refs[ref].$el.focus();
+      },
       validate() {
         this.$validator.validateAll().then((isValid) => {
           this.$emit('on-submit', this.registerForm, isValid);
         });
         this.touched.username = true;
         this.touched.password = true;
-      },
-      passwordFocus() {
-        this.$refs.password.$el.focus();
       },
       login() {
         const { username, password } = this;
@@ -203,7 +219,7 @@
       },
     },
     mounted() {
-      this.$refs.login.$el.focus();
+      this.$refs.username.$el.focus();
     },
     watch: {
       username() {
@@ -218,6 +234,10 @@
 
 <style lang="scss">
 .login-wrapper {
+  small.md-simple{
+    color: #3c4858;
+    cursor: pointer
+  }
   .md-field {
     margin-top: 24px;
     .md-error {

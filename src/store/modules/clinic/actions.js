@@ -17,22 +17,18 @@ export default {
   }, {
     clinic
   }) => {
-    console.log(clinic);
+    let fields = {};
+    for (const key in clinic) {
+      if (clinic.hasOwnProperty(key)) {
+        fields[key] = !isNaN(clinic[key]) ? parseInt(clinic[key], 10) : clinic[key];
+      }
+    }
     return new Promise((resolve, reject) => {
       commit(CLINIC_REQUEST);
       axios.put('/organization/',
-          JSON.stringify({
-            name: clinic.name,
-            address: clinic.address,
-            currencyCode: clinic.currencyCode,
-            email: clinic.email,
-            // tax: clinic.tax,
-            phone: parseInt(clinic.phone, 10),
-            teethSystem: clinic.teethSystem,
-            timezoneOffset: clinic.timezoneOffset,
-            url: clinic.url,
-            description: clinic.description,
-          })
+          JSON.stringify(
+            fields
+          )
         )
         .then(resp => {
           commit(CLINIC_SUCCESS);

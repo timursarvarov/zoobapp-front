@@ -2,62 +2,61 @@
 <template>
   <div>
 
-    <div class="jaw md-layout   mx-auto md-gutter ">
-      <md-toolbar class="md-transparent md-layout md-gutter">
-        <div class="md-layout md-layout-item  md-gutter">
-          <div class="md-layout-item md-small-size-33 md-xsmall-size-50 md-size-33 ">
-            <md-switch
-              v-model="toggleAdultTop"
-              @change="toggleTeeth(topAdultTeeth)"
-            >Toggle Top</md-switch>
-          </div>
-          <div class="md-layout-item md-small-size-33 md-xsmall-size-50 md-size-33">
-            <md-switch
-              v-model="toggleAdultBottom"
-              @change="toggleTeeth(bottomAdultTeeth)"
-            >Toggle Bottom</md-switch>
-          </div>
+    <div class="jaw">
 
-          <div class="md-layout-item md-small-size-33 md-xsmall-size-100 md-size-33">
-            <md-field>
-              <label for="prefer">Show first</label>
-              <md-select
-                md-dense
-                v-model="preferLocal"
-                name="prefer"
-                id="prefer"
-              >
-                <md-option value="treatment">Treatment</md-option>
-                <md-option value="diagnose">Diagnose</md-option>
-                <md-option value="anamnes">Anamnes</md-option>
-              </md-select>
-            </md-field>
-          </div>
-        </div>
-
-        <md-button
-          @click="selectedTeethLocal = []"
-          :class="[{'md-primary': selectedTeethLocal.length > 0 }, 'md-just-icon', 'md-just-icon', 'md-round', 'md-simple']"
-        >
-          <md-icon> clear</md-icon>
+      <md-toolbar class="md-transparent">
+      <div class="md-toolbar-section-start">
+        <h4 class="title" >Select tooth</h4>
+      </div>
+      <div class="md-toolbar-section-end">
+          <md-button
+            @click="selectedTeethLocal = [], toggleAdultBottom = false, toggleAdultTop = false"
+            :class="[{'md-primary': selectedTeethLocal.length > 0 }, 'md-just-icon', 'md-round', 'md-simple']"
+          >
+          <md-icon>clear_all</md-icon>
           <md-tooltip md-delay="1000">
             Unselect all teeth
           </md-tooltip>
-        </md-button>
-
+          </md-button>
+         <drop-down direction="down">
+                    <md-button
+                      slot="title"
+                      class="md-button md-just-icon md-round md-simple md-block "
+                      data-toggle="dropdown"
+                    >
+                      <md-icon>more_vert</md-icon>
+                    </md-button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                      <li><md-switch v-model="preferL" value="anamnes">Anamnes</md-switch></li>
+                      <li><md-switch v-model="preferL" value="diagnose">Diagnose</md-switch></li>
+                      <li><md-switch v-model="preferL" value="treatment">Treatment</md-switch></li>
+                      <li>
+                          <md-switch
+                          v-model="toggleAdultTop"
+                          @change="toggleTeeth(topAdultTeeth)"
+                          >Toggle Top</md-switch>
+                      </li>
+                      <li> <md-switch
+                          v-model="toggleAdultBottom"
+                          @change="toggleTeeth(bottomAdultTeeth)"
+                        >Toggle Bottom</md-switch>
+                      </li>
+                    </ul>
+                  </drop-down>
+        </div>
       </md-toolbar>
-      <div class="md-layout md-layout-item  md-size-100  mx-auto md-gutter">
+      <div>
         <slot name="top"></slot>
       </div>
 
-      <div class="jaw-scroll  md-layout-item md-size-100 md-layout md-gutter  mx-auto">
+      <div class="jaw-scroll  md-layout   mx-auto">
         <div class="jaw-top  md-alignment-top-center  mx-auto md-layout-item md-size-100">
           <div
             v-ripple.click.100
             :class="[
           'tooth',
           isSelected(toothId),
-          preferj]"
+          preferL]"
             v-for="(toothId ) in topAdultTeeth"
             :key="toothId"
             :ref="toothId"
@@ -101,7 +100,7 @@
             :class="[
           'tooth',
           isSelected(toothId),
-          preferj]"
+          preferL]"
             v-for="(toothId ) in bottomAdultTeeth"
             :key="toothId"
             :ref="toothId"
@@ -141,9 +140,9 @@
           </div>
         </div>
       </div>
-      <div class="md-layout-item  md-layout  md-gutter md-size-100">
+
+      <div >
         <slot
-          class="md-layout-item  md-layout  md-gutter md-size-100"
           name="bottom"
         ></slot>
       </div>
@@ -191,7 +190,7 @@ export default {
       windowWidth: 0,
       toggleAdultTop: false,
       toggleAdultBottom: false,
-      preferj: "anamnes",
+      preferL: "anamnes",
       SvgTeeth: [],
       teethSettngs: [],
       selectedTeeth: [],
@@ -413,17 +412,17 @@ export default {
     teethSchemaL() {
       return this.teethSchema;
     },
-    preferLocal: {
-      // геттер:
-      get: function() {
-        return this.prefer;
-      },
-      // сеттер:
-      set: function(newValue) {
-        this.preferj = newValue;
-        this.calculateJaw();
-      }
-    },
+    // preferLocal: {
+    //   // геттер:
+    //   get: function() {
+    //     return this.prefer;
+    //   },
+    //   // сеттер:
+    //   set: function(newValue) {
+    //     this.preferL = newValue;
+    //     this.calculateJaw();
+    //   }
+    // },
     selectedTeethJ() {
       return this.selectedTeeth;
     }
@@ -432,7 +431,7 @@ export default {
   created() {
     this.calculateJaw();
     this.getDiagnoseForEachTooth();
-    this.preferj = this.prefer;
+    this.preferL = this.prefer;
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
@@ -507,7 +506,7 @@ export default {
       const defaultLocation = !this.defaultLocations[location];
 
       let hide = defaultLocation;
-      if (this.preferj === "anamnes") {
+      if (this.preferL === "anamnes") {
         if (diagnose === true || diagnose === false) {
           hide = !diagnose;
         }
@@ -518,7 +517,7 @@ export default {
           hide = !anamnes;
         }
       }
-      if (this.preferj === "treatment") {
+      if (this.preferL === "treatment") {
         if (diagnose === true || diagnose === false) {
           hide = !diagnose;
         }
@@ -529,7 +528,7 @@ export default {
           hide = !treatment;
         }
       }
-      if (this.preferj === "diagnose") {
+      if (this.preferL === "diagnose") {
         if (anamnes === true || anamnes === false) {
           hide = !anamnes;
         }
@@ -546,7 +545,7 @@ export default {
     preferableJawClasses(i, location) {
       let toothClass = {};
 
-      if (this.preferj === "anamnes") {
+      if (this.preferL === "anamnes") {
         if (this.jaw.jawAnamnes[this.teeth[i]][location]) {
           toothClass["anamnes"] = true;
           return toothClass;
@@ -559,7 +558,7 @@ export default {
         }
         return toothClass;
       }
-      if (this.preferj === "diagnose") {
+      if (this.preferL === "diagnose") {
         if (this.jaw.jawDiagnose[this.teeth[i]][location]) {
           toothClass["diagnose"] = true;
           return toothClass;
@@ -572,7 +571,7 @@ export default {
         }
         return toothClass;
       }
-      if (this.preferj === "treatment") {
+      if (this.preferL === "treatment") {
         if (this.jaw.jawTreatment[this.teeth[i]][location]) {
           toothClass["treatment"] = true;
           return toothClass;
@@ -722,6 +721,9 @@ export default {
   background: rgba(white, 0.4);
   border-radius: 5px;
   min-height: 30vh;
+  .dropdown-menu li {
+    padding: 0px 0px 0px 16px
+}
   .jaw-scroll {
     padding-bottom: 35px;
     padding-top: 35px;

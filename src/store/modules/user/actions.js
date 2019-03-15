@@ -11,6 +11,7 @@ import {
   USER_SET_PARAM,
   USER_UPDATE_PASSWORD,
   USER_LOGOUT,
+  USER_REGISTER,
 
 } from '../constants';
 
@@ -157,6 +158,31 @@ export default {
     } else {
       dispatch(USER_REQUEST)
     }
+  },
+  [USER_REGISTER]: ({
+    commit,
+  }, {
+    params
+  }) => {
+    return new Promise((resolve, reject) => {
+      commit(USER_REQUEST);
+      axios.post('/registration/',
+      JSON.stringify({
+        lastName: params.lastName,
+        firstName: params.firstName,
+        username: params.username,
+        password: params.password,
+      })
+        )
+        .then(resp => {
+          commit(USER_SUCCESS);
+          resolve(resp);
+        })
+        .catch(err => {
+          commit(USER_ERROR);
+          reject(err);
+        });
+    });
   },
   [USER_AVATAR_UPLOAD]: ({
     commit,

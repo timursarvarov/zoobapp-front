@@ -82,9 +82,8 @@
 
 <script>
 /* eslint-disable */
-
+import fuzzy from 'fuzzysearch'
 const isPromise = require("is-promise");
-
 export default {
   name: "MdtAutocomplete",
   props: {
@@ -93,6 +92,7 @@ export default {
       required: true
     },
     mdDense: Boolean,
+    chooseContent: Boolean,
     mdLayout: {
       type: String,
       default: "floating"
@@ -123,6 +123,7 @@ export default {
       filteredAsyncOptions: []
     };
   },
+
   computed: {
     isBoxLayout() {
       return this.mdLayout === "box";
@@ -194,6 +195,13 @@ export default {
       return isPromise(obj);
     },
     matchText(item) {
+        const target = item.toLowerCase()
+        const search = this.searchTerm.toLowerCase()
+        if (this.mdFuzzySearch ) {
+          return fuzzy(search, target)
+        }
+        return target.includes(search)
+
       return item;
     },
     filterByString() {
@@ -248,12 +256,12 @@ export default {
     selectItem(item, $event) {
       let content = "";
       content = $event.target.textContent.trim();
-      // this.searchTerm = content
+      this.searchTerm = this.chooseContent ? content : this.searchTerm
       this.$emit("input", this.searchTerm);
       this.$emit("md-selected", item);
       this.hideOptions();
     }
-  }
+  },
 };
 </script>
 

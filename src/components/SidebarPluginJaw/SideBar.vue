@@ -10,13 +10,13 @@
     <div class="logo">
 
       <a
-        href="https://www.creative-tim.com"
+        :href="link"
         class="simple-text logo-mini"
         target="_blank"
       >
         <t-avatar
           :color="logoColor"
-          :firstName="title"
+          :title="title"
           :imageSrc="logo"
         />
         <!-- <div class="logo-img">
@@ -24,7 +24,7 @@
         </div> -->
       </a>
       <a
-        href="https://www.creative-tim.com"
+        :href="link"
         class="simple-text logo-normal"
         target="_blank"
       >
@@ -83,6 +83,10 @@
       title: {
         type: String,
         default: 'Vue MD PRO',
+      },
+      link: {
+        type: String,
+        default: '#',
       },
       rtlTitle: {
         type: String,

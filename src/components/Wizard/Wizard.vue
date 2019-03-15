@@ -125,7 +125,8 @@ export default {
   provide() {
     return {
       addTab: this.addTab,
-      removeTab: this.removeTab
+      removeTab: this.removeTab,
+      addCallback: this.addCallback
     };
   },
   data() {
@@ -203,10 +204,14 @@ export default {
       if (beforeChange) {
         return Promise.resolve(beforeChange())
           .then(res => {
-            this.activeTab.hasError = res ? false : true;
-            return res;
+            let resp = res;
+            if(typeof res === 'object'){
+              resp = !resp[0]||!resp[1] ? false : true
+            }
+            this.activeTab.hasError = resp ? false : true;
+            return resp;
           })
-          .catch(() => {
+          .catch((err) => {
             this.activeTab.hasError = true;
           });
       } else {
@@ -278,7 +283,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" >
 /* Tab content animation */
 .tab-content {
   display: flex; // to avoid horizontal scroll when animating

@@ -81,7 +81,7 @@
           <div v-else >
              <md-field>
               <label>Textarea</label>
-              <md-textarea v-model="textarea"></md-textarea>
+              <md-textarea v-model="noteText"></md-textarea>
             </md-field>
           </div>
           </div>

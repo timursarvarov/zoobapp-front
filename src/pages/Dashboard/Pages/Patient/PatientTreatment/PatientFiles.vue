@@ -95,8 +95,7 @@
                   :color="item.author.color"
                   :noImgTag="true"
                   :imageSrc="item.author.avatar"
-                  :firstName="item.author.firstName"
-                  :lastName="item.author.lastName"
+                  :title="item.author.firstName + ' ' + item.author.lastName"
                 />
               </div>
 
@@ -217,18 +216,20 @@
     },
     methods: {
       downoladFile(url) {
-        this.$store
-          .dispatch(PATIENT_DOWNLOAD_FILE, {
-            params: {
-              url,
-            },
-          })
-          .then((resp) => {
-            if (resp) {
-              this.saveAs(resp.data, 'Export2.jpg');
-            }
-          })
-          .catch((err) => {});
+        window.location = `${url}?dl=1`;
+
+        // this.$store
+        //   .dispatch(PATIENT_DOWNLOAD_FILE, {
+        //     params: {
+        //       url,
+        //     },
+        //   })
+        //   .then((resp) => {
+        //     if (resp) {
+        //       this.saveAs(resp.data, 'Export2.jpg');
+        //     }
+        //   })
+        //   .catch((err) => {});
       },
       show() {
         const viewer = this.$el.querySelector('.images').$viewer;

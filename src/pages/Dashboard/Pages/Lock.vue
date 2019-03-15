@@ -14,7 +14,7 @@
                 class="md-layout md-alignment-center-center wrapper-acronim"
               >
                 <div class="md-layout-item acronim">
-                  <span>{{user.firstName[0]}}{{user.lastName[0]}}</span>
+                  <span>{{(user.firstName + ' ' + user.lastName) | acronim }}</span>
                 </div>
               </div>
               <div
@@ -28,11 +28,11 @@
           <h4
             slot="title"
             class="title"
-          >{{user.firstName + ' ' + user.lastName}}</h4>
+          >{{user.firstName | capitilize}} {{user.lastName | capitilize}}</h4>
+          <div slot="content">
           <md-field
             :class="[{'md-error': errors.has('password')},
             {'md-valid': !errors.has('password') && touched.password}]"
-            slot="content"
           >
             <md-icon>lock_outline</md-icon>
             <label>Enter Password</label>
@@ -61,6 +61,10 @@
               >done</md-icon>
             </slide-y-down-transition>
           </md-field>
+          <div class="md-layout">
+                  <small  class="md-simple ml-auto " @click="showForgot = !showForgot">Forgot password?</small>
+          </div>
+          </div>
           <md-button
             @click="login()"
             class="md-success md-round"
@@ -68,11 +72,15 @@
           >Unlock</md-button>
         </lock-card>
       </form>
+      <forgot-password
+      :showForm.sync="showForgot"
+      />
     </div>
   </div>
 </template>
 <script>
   import { LockCard } from '@/components';
+  import ForgotPassword from './ForgotPassword.vue';
   import { mapGetters } from 'vuex';
   import { AUTH_REQUEST, NOTIFY } from '@/store/modules/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
@@ -80,10 +88,12 @@
   export default {
     components: {
       LockCard,
+      ForgotPassword,
       SlideYDownTransition,
     },
     data() {
       return {
+        showForgot: false,
         password: null,
         image: './img/faces/avatar.jpg',
         touched: {
@@ -161,6 +171,10 @@
 </script>
 <style lang="scss" >
 .lock-wrapper {
+   small.md-simple{
+    color: #3c4858;
+    cursor: pointer
+  }
   .md-field {
     margin-top: 24px;
     .md-error {
@@ -177,8 +191,7 @@
     }
   }
   .avatar-container {
-    position: relative;
-    cursor: pointer;
+    cursor:default!important;
     text-align: center;
     .wrapper-acronim {
       height: -webkit-fill-available;
@@ -196,6 +209,7 @@
       transition: all 0.2s;
       -webkit-transition: all 0.2s;
       .avatar {
+        cursor:default!important;
         background-position: 50%;
         background-repeat: no-repeat;
         background-size: cover;
@@ -205,16 +219,6 @@
       }
       &:hover {
         border-color: #4caf50;
-      }
-      input[type="file"] {
-        cursor: pointer;
-        display: block;
-        height: 100%;
-        left: 0;
-        opacity: 0 !important;
-        position: absolute;
-        top: 0;
-        width: 100%;
       }
     }
   }

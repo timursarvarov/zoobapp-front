@@ -23,6 +23,7 @@ export const USER_SET_PARAMS = 'USER_SET_PARAMS';
 export const USER_SET_PARAM = 'USER_SET_PARAM';
 export const USER_UPDATE_PASSWORD = 'USER_UPDATE_PASSWORD';
 export const USER_SAVE_TO_LOCAL_STORAGE = 'USER_SAVE_TO_LOCAL_STORAGE';
+export const USER_REGISTER = 'USER_REGISTER';
 
 // Collaborators
 export const COLLABORATOR_REQUEST = 'COLLABORATOR_REQUEST';
@@ -53,6 +54,7 @@ export const PATIENT_AVATAR_UPLOAD = 'PATIENT_AVATAR_UPLOAD';
 export const PATIENT_UPDATE = 'PATIENT_UPDATE';
 export const PATIENT_LOGOUT = 'PATIENT_LOGOUT';
 export const PATIENT_DIAGNOSE_SET = 'PATIENT_DIAGNOSE_SET';
+export const PATIENT_DIAGNOSE_UPDATE = 'PATIENT_DIAGNOSE_UPDATE';
 export const PATIENT_GET = 'PATIENT_GET';
 export const PATIENT_SET_PARAM = 'PATIENT_SET_PARAM';
 export const PATIENT_SET_PARAMS = 'PATIENT_SET_PARAMS';
@@ -83,3 +85,9 @@ export const DIAGNOSIS_SET = 'DIAGNOSIS_SET';
 // Teeth
 export const TEETH_INITIATION = 'TEETH_INITIATION';
 export const TEETH_INITIATION_ETHALON = 'TEETH_INITIATION_ETHALON';
+
+// Company
+export const COMPANY_NAME = 'Dental CRM';
+export const COMPANY_LOGO_URL = 'https://s3.envato.com/files/247286010/owl-logo.png';
+export const COMPANY_COLOR = '#43a047';
+export const COMPANY_LINK = 'https://dental.owl.team';

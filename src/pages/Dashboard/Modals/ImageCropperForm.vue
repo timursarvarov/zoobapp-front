@@ -13,12 +13,12 @@
 
         </md-card-header>
 
-        <md-card-content class="md-layout md-gutter">
+        <md-card-content >
           <div
             @mouseup="mouseActions =!mouseActions"
             @mousewheel="mouseActions =!mouseActions"
             @mouseleave="mouseActions =!mouseActions"
-            class="md-layout-item md-size-66 md-xsmall-size-100"
+            class="md-layout-item md-size-100"
           >
             <clipper-fixed
               class="clipper-setter"
@@ -29,13 +29,14 @@
               :round="false"
               preview="preview"
               :rotate="parseInt(rotate, 10)"
+              @error="onError"
             >
               <div slot="placeholder">No image</div>
             </clipper-fixed>
 
           </div>
 
-          <div class="md-layout-item md-layout md-gutter md-size-33 md-xsmall-size-100">
+          <div >
 
             <div
               v-if="message !== 'Calculating...'"
@@ -59,37 +60,6 @@
               {{message}} <br />
             </div>
 
-            <div class="md-layout-item">
-              <clipper-preview
-                name="preview"
-                class="clipper-preview"
-              ></clipper-preview>
-            </div>
-            <div class="md-layout-item">
-              <clipper-preview
-                name="preview"
-                class="clipper-preview-round"
-              ></clipper-preview>
-
-            </div>
-          </div>
-          <div class="md-layout-item md-size-100"><small>* max file size {{ formatBytes(maxFileSize).num}} {{ formatBytes(maxFileSize).type}}</small></div>
-          <div class="md-layout-item md-list md-layout md-gutter  md-size-100">
-            <div class="md-layout-item md-layout md-list-item ">
-              <div class="">
-                Rotate:
-                {{rotate}}°
-              </div>
-              <div class="md-layout-item ">
-                <slider
-                  :range="{
-              min:0,
-              max:180,
-            }"
-                  v-model="rotate"
-                />
-              </div>
-            </div>
           </div>
 
         </md-card-content>
@@ -166,6 +136,9 @@
       };
     },
     methods: {
+      onError(e) {
+        console.log(e);
+      },
       getColorButton(buttonColor) {
         return `md-${buttonColor}`;
       },
@@ -304,19 +277,10 @@
     overflow: hidden;
     max-width: 70vh;
     max-height: 70vh;
-  }
-  .clipper-preview {
-    overflow: hidden;
-    width: 130px;
-    height: 130px;
-    margin: auto;
-  }
-  .clipper-preview-round {
-    overflow: hidden;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    margin: 20px;
+    width: 300px;
+    height: 300px;
+    min-width: 100px;
+    min-height: 100px;
   }
 }
 </style>

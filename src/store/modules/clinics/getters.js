@@ -1,3 +1,4 @@
 export default {
-  getClinicSettings: state => state.clinic,
+  getClinics: state => state.clinics,
+  getSelectedClinic: state => state.selectedClinic,
 };

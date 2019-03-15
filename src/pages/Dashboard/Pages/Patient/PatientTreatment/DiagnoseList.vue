@@ -67,13 +67,38 @@
               v-for="toothId in Object.keys(item.teeth)"
               :key="toothId"
             >
-              {{ getToothName(toothId).num}},
+              {{ toothId | toCurrentTeethSystem(teethSystem) }},
             </span>
           </md-table-cell>
           <md-table-cell
             md-sort-by="author"
             md-label="Diagnosed by"
-          >{{ item.author }}</md-table-cell>
+          >
+            <div
+                class="md-layout md-alignment-left-center"
+              >
+                <div
+                  class="md-layout-item md-layout"
+                  style="max-width:60px;"
+                >
+                  <t-avatar
+                    :small="true"
+                    :color="item.author.color"
+                    :imageSrc="item.author.avatar"
+                    :title="item.author.firstName + ' ' + item.author.lastName"
+                  />
+                </div>
+                <span class="md-layout-item">
+                  <span>
+                    {{item.author.lastName | capitilize}}
+                  </span>
+                  <br />
+                  <span>
+                    {{item.author.firstName | capitilize}}
+                  </span>
+                </span>
+              </div>
+          </md-table-cell>
           <md-table-cell
             md-sort-by="date"
             class="date"
@@ -143,32 +168,56 @@
         >
         </pagination>
       </div>
+       <jaw-add-diagnose-wizard
+          @on-created='saveDiagnose'
+          :selectedTeeth="setecltedTeeth"
+          :selectedDiagnose="selectedDiagnose"
+          :jaw='jaw'
+          :teethSchema="teethSchema"
+          :teethSystem="teethSystem"
+          :isDialogVisible.sync="showForm"
+          />
     </div>
   </div>
 
 </template>
 
 <script>
-  import { Pagination } from '@/components';
+ import {
+    NOTIFY,
+    PATIENT_DIAGNOSE_UPDATE,
+    USER_SET_PARAM,
+  } from '@/store/modules/constants';
+  import { Pagination, TAvatar } from '@/components';
   import { mapGetters } from 'vuex';
   import Fuse from 'fuse.js';
   import swal from 'sweetalert2';
+  import JawAddDiagnoseWizard from './JawAddDiagnoseWizard.vue';
+
 
   export default {
     components: {
       Pagination,
+      TAvatar,
+      JawAddDiagnoseWizard
     },
     props: {
       diagnosis: {
         type: Array,
         default: () => [],
       },
+     teethSystem: {
+        type: Number,
+        default: () => 1,
+      },
     },
     data() {
       return {
+        showForm: false,
         originalDiagnosis: [],
         currentSort: 'date',
         currentSortOrder: 'desc',
+        selectedDiagnose: {},
         pagination: {
           perPage: 10,
           currentPage: 1,
@@ -185,18 +234,22 @@
         ],
         searchQuery: '',
         propsToSearch: ['code', 'diagnose', 'date', 'author', 'title'],
-        // tableData: users,
         searchedData: [],
         fuseSearch: null,
       };
     },
     computed: {
       ...mapGetters({
-        teethSystem: 'teethSystem',
         teethSchema: 'teethSchema',
         jaw: 'jaw',
         patient: 'getPatient',
       }),
+      setecltedTeeth() {
+        if(!this.isEmpty(this.selectedDiagnose)){
+          return Object.keys(this.selectedDiagnose.teeth)
+        }
+        return [];
+      },
       tableData() {
         return this.originalDiagnosis;
       },
@@ -228,6 +281,14 @@
     },
 
     methods: {
+      saveDiagnose(d){
+         console.log(d)
+        let diagnose = d;
+       this.$store.dispatch(PATIENT_DIAGNOSE_UPDATE, {
+            diagnose: diagnose,
+          });
+
+      },
       isEmpty(obj) {
         // eslint-disable-next-line
       for (const key in obj) {
@@ -246,7 +307,7 @@
         return OindexToDelete !== -1 && PindexToDelete !== -1;
       },
       showHidePatientDiagnose(diagnose) {
-        console.log(this.originalDiagnosis);
+
         const indexToDelete = this.patientDiagnosis.findIndex(
           pDiagnose => pDiagnose.id === diagnose.id,
         );
@@ -318,11 +379,14 @@
         });
       },
       handleEdit(item) {
-        swal({
-          title: `You want to edit ${item.title}`,
-          buttonsStyling: false,
-          confirmButtonClass: 'md-button md-info',
-        });
+        this.selectedDiagnose = item
+        this.showForm = true;
+
+        // swal({
+        //   title: `You want to edit ${item.title}`,
+        //   buttonsStyling: false,
+        //   confirmButtonClass: 'md-button md-info',
+        // });
       },
       handleDelete(item) {
         swal({
@@ -381,7 +445,7 @@
       patientDiagnosis() {
         if (
           Object.keys(this.patientDiagnosis).length
-          >= Object.keys(this.originalDiagnosis).length
+          > Object.keys(this.originalDiagnosis).length
         ) {
           this.originalDiagnosis = this.copyObj(this.patientDiagnosis);
         }
