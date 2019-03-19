@@ -99,6 +99,9 @@ import JawAddDiagnose from './Jaw/JawAddDiagnose.vue';
 import MdtAutoComplite from './MdtAutoComplite.vue';
 import TAvatar from './TAvatar.vue';
 import TDropzone from './TDropzone.vue';
+import TAvatarInput from './TAvatarInput.vue';
+import TImageCropperForm from './TImageCropperForm.vue';
+import TFilePreview from './TFilePreview/TFilePreview.vue';
 
 
 // For Dev Use Only
@@ -194,5 +197,8 @@ export {
   MdtAutoComplite,
   TAvatar,
   TDropzone,
+  TImageCropperForm,
+  TAvatarInput,
+  TFilePreview,
   // JawGenerator,
 };

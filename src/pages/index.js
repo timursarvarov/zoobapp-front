@@ -7,11 +7,11 @@ import UserCard from './Dashboard/Pages/User/UserProfile/UserCard.vue';
 
 import PatientCard from './Dashboard/Pages/Patient/PatientProfile/PatientCard.vue';
 import JawAnamnes from './Dashboard/Pages/Patient/PatientTreatment/JawAnamnes.vue';
-import Diagnose from './Dashboard/Pages/Patient/PatientTreatment/Diagnose.vue';
-import DiagnoseList from './Dashboard/Pages/Patient/PatientTreatment/DiagnoseList.vue';
+import Diagnose from './Dashboard/Pages/Patient/PatientTreatment/PatientDiagnose/Diagnose.vue';
+import DiagnoseList from './Dashboard/Pages/Patient/PatientTreatment/PatientDiagnose/DiagnoseList.vue';
 import Notes from './Dashboard/Pages/Patient/PatientTreatment/Notes.vue';
-import PatientFiles from './Dashboard/Pages/Patient/PatientTreatment/PatientFiles.vue';
-import PatientAddFilesForm from './Dashboard/Pages/Patient/PatientTreatment/PatientAddFilesForm.vue';
+import PatientFiles from './Dashboard/Pages/Patient/PatientTreatment/PatientFiles/PatientFiles.vue';
+import PatientAddFilesForm from './Dashboard/Pages/Patient/PatientTreatment/PatientFiles/PatientAddFilesForm.vue';
 import TreatmentList from './Dashboard/Pages/Patient/PatientTreatment/TreatmentList.vue';
 import AnamnesList from './Dashboard/Pages/Patient/PatientTreatment/AnamnesList.vue';
 import ClinicSettings from './Dashboard/Pages/Clinic/ClinicSettings.vue';

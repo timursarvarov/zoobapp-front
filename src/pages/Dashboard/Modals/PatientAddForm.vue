@@ -389,7 +389,6 @@
         this.closeAddForm = localStorage.getItem(
           'USER_SETTINGS_CLOSE_PATIENT_ADD_FORM',
         );
-        console.log(this.closeAddForm);
         if (this.closeAddForm === 'true') {
           this.closeAddForm = true;
         } else if (this.closeAddForm === null) {

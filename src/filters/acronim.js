@@ -1,17 +1,13 @@
 export default function acronim(value) {
-    if (!value) { return ''; }
+    if (!value || value === 'null null') { return ''; }
     const words = value.split(' ');
-    const firstLetter = (x) => { if (x) { return x[0]; } return ''; };
-    const secondtLetter = (x) => { if (x) { return x[0] + x[1]; } return ''; };
+    const secondtLetter = (x) => { if (x && x[1]) { return x[1].toLowerCase(); } return ''; };
+    const firsttLetter = (x) => { if (x && x[0]) { return x[0].toUpperCase(); } return ''; };
     if (words[0] && !words[1]) {
-        let acr = '';
-        acr = value.split(' ').map(secondtLetter).join('');
-        acr = acr.charAt(0).toUpperCase() + acr.charAt(1).toLowerCase();
+        const acr = firsttLetter(words[0]) + secondtLetter(words[0]);
         return acr;
     }
-        let acr = value.split(' ').map(firstLetter).join('');
-        if (acr.length > 2) {
-            acr = acr.slice(0, 2);
-        }
-        return acr.toUpperCase();
+        let acr = '';
+        acr = value.split(' ').map(firsttLetter).join('');
+        return acr.slice(0, 3);
 }

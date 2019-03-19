@@ -1,36 +1,13 @@
 <template>
   <md-card class="md-card-profile patient-card-wrapper">
-
-    <div class="md-card-avatar">
-      <div class="picture-container">
-        <div class="picture">
-          <div class="picture-hint md-layout">
-            <md-icon class="md-layout-item md-size-2x">add_a_photo</md-icon>
-          </div>
-          <img
-            v-if="patient.avatar"
-            class="avatar"
-            :style="{'background-color': patientColor }"
-            :alt="patient.firstName[0]+patient.lastName[0]"
-            :src="patient.avatar"
-          />
-          <div
-            class="md-layout md-alignment-center-center picture-wrapper-acronim"
-            :style="{'background-color': patientColor }"
-          >
-            <div class="md-layout-item acronim">
-              <span v-if="patient.firstName">{{patient.firstName[0]}}{{patient.lastName[0]}}</span>
-            </div>
-            <input
-              type="file"
-              @change="onFileChange"
-              ref="imageInserter"
-              accept="image/*"
-            >
-          </div>
-        </div>
-      </div>
-    </div>
+    <t-avatar-input
+    :color="patientColor"
+    :imageSrc="patient.avatar"
+    :title="patient.firstName + ' ' + patient.lastName"
+    :formTitle="'Add patient foto'"
+    :buttonColor="'green'"
+    @on-created="updatepatientAvatar"
+    />
     <md-card-content>
       <div class="md-layout md-gutter">
 
@@ -199,17 +176,6 @@
           >Update Profile</md-button>
         </div>
       </div>
-      <image-cropper-form
-        v-model="fd"
-        :maxFilesize="2000"
-        buttonColor='green'
-        title="Add patient avatar"
-        :icon="'add_a_photo'"
-        :imageName="patient.ID != null ? patient.ID.toString() + '_' + Date.now(): ''"
-        :imageToCorp="image"
-        :showForm.sync="showForm"
-      ></image-cropper-form>
-
     </md-card-content>
 
   </md-card>
@@ -223,15 +189,15 @@
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
   import StarRating from 'vue-star-rating';
-  import { ImageCropperForm } from '@/pages';
+  import { TAvatarInput } from '@/components';
 
   const randomMC = require('random-material-color');
 
   export default {
     components: {
       SlideYDownTransition,
-      ImageCropperForm,
       StarRating,
+      TAvatarInput
     },
     name: 'patient-card',
     props: {
@@ -250,7 +216,6 @@
     },
     data() {
       return {
-        fd: null,
         showRating: false,
         showForm: false,
         image: '',
@@ -280,28 +245,8 @@
       };
     },
     methods: {
-      clearImage() {
-        const input = this.$refs.imageInserter;
-        input.type = 'text';
-        input.type = 'file';
-      },
       getColorButton(buttonColor) {
         return `md-${buttonColor}`;
-      },
-      onFileChange(e) {
-        const files = e.target.files || e.dataTransfer.files;
-        if (files.length > 0) {
-          this.createImage(files[0]);
-          this.showForm = true;
-          this.clearImage();
-        } else {
-          this.$store.dispatch(NOTIFY, {
-            settings: {
-              message: 'No files selected!',
-              type: 'warning',
-            },
-          });
-        }
       },
       validate() {
         this.$validator.validateAll().then((isValid) => {
@@ -311,14 +256,6 @@
         this.touched.firstName = true;
         this.touched.email = true;
         this.touched.phone = true;
-      },
-      createImage(file) {
-        const reader = new FileReader();
-        const vm = this;
-        reader.onload = (e) => {
-          vm.image = e.target.result;
-        };
-        reader.readAsDataURL(file);
       },
       updateProfile() {
         this.patient.color = this.patientColor;
@@ -396,9 +333,6 @@
       },
     },
     watch: {
-      fd() {
-        this.updatepatientAvatar(this.fd);
-      },
       email() {
         this.touched.email = true;
       },

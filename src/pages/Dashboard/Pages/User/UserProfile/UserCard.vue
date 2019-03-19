@@ -1,40 +1,14 @@
 <template>
   <md-card class="md-card-profile">
-    <div class="md-card-avatar">
-      <div class="picture-container">
-        <div
-          class="picture"
-          :style="{'background-color': userColor }"
-        >
-          <div class="picture-hint md-layout">
-            <md-icon  class="md-layout-item md-size-2x" >add_a_photo</md-icon>
-          </div>
-
-           <img
-              v-if="user.avatar"
-            class="avatar"
-            :style="{'background-color': userColor }"
-            :alt="user.firstName[0]+user.lastName[0]"
-            :src="user.avatar"
-          />
-
-          <div
-            class="md-layout md-alignment-center-center picture-wrapper-acronim"
-          >
-            <div class="md-layout-item acronim"
-              >
-              <span v-if="user.firstName">{{user.firstName[0]}}{{user.lastName[0]}}</span>
-            </div>
-        <input
-          type="file"
-          @change="onFileChange"
-          ref="imageInserter"
-          accept="image/*"
-        >
-          </div>
-        </div>
-      </div>
-    </div>
+      <t-avatar-input
+    :color="userColor"
+    :maxFilesize="2000"
+    :imageSrc="user.avatar"
+    :title="user.firstName+ ' ' + user.lastName"
+    :formTitle="'Add your photo'"
+    :buttonColor="'green'"
+    @on-created="updateUserAvatar"
+    />
 
     <md-card-content>
       <div class="md-layout">
@@ -197,16 +171,6 @@
           >Update Profile</md-button>
         </div>
       </div>
-      <image-cropper-form
-        v-model="fd"
-        :maxFilesize="2000"
-        buttonColor='green'
-        title="Add a user avatar"
-        :icon="'add_a_photo'"
-        :imageName="user.ID != null ? user.ID.toString() + '_' + Date.now(): ''"
-        :imageToCorp="image"
-        :showForm.sync="showForm"
-      ></image-cropper-form>
     </md-card-content>
   </md-card>
 </template>
@@ -218,14 +182,14 @@
   } from '@/store/modules/constants';
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
-  import { ImageCropperForm } from '@/pages';
+  import { TAvatarInput } from '@/components';
 
   const randomMC = require('random-material-color');
 
   export default {
     components: {
       SlideYDownTransition,
-      ImageCropperForm,
+      TAvatarInput,
     },
     name: 'user-card',
     props: {
@@ -240,9 +204,6 @@
     },
     data() {
       return {
-        fd: null,
-        showForm: false,
-        image: '',
         city: null,
         country: null,
         code: null,
@@ -272,29 +233,6 @@
       };
     },
     methods: {
-      getColorButton(buttonColor) {
-        return `md-${buttonColor}`;
-      },
-      clearImage() {
-        const input = this.$refs.imageInserter;
-        input.type = 'text';
-        input.type = 'file';
-      },
-      onFileChange(e) {
-        const files = e.target.files || e.dataTransfer.files;
-        if (files.length > 0) {
-          this.createImage(files[0]);
-          this.showForm = true;
-          this.clearImage();
-        } else {
-          this.$store.dispatch(NOTIFY, {
-            settings: {
-              message: 'No files selected!',
-              type: 'warning',
-            },
-          });
-        }
-      },
       validate() {
         this.$validator.validateAll().then((isValid) => {
           this.$emit('on-submit', this.registerForm, isValid);
@@ -303,14 +241,6 @@
         this.touched.firstName = true;
         this.touched.email = true;
         this.touched.phone = true;
-      },
-      createImage(file) {
-        const reader = new FileReader();
-        const vm = this;
-        reader.onload = (e) => {
-          vm.image = e.target.result;
-        };
-        reader.readAsDataURL(file);
       },
       updateProfile() {
         this.$validator
@@ -378,9 +308,6 @@
       },
     },
     watch: {
-      fd() {
-        this.updateUserAvatar(this.fd);
-      },
       email() {
         this.touched.email = true;
       },

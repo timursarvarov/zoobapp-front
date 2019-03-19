@@ -32,11 +32,15 @@
             icon: 'account_circle',
             img:patient.avatar? patient.avatar: '',
             avatarColor: patient.color,
-            acronim: acronim(patient.firstName+' '+patient.lastName)}"
+            acronim: patient.firstName+' '+patient.lastName}"
           class="separated-down"
         >
           <sidebar-item :link="{name: 'BIO', icon: 'image', path: `/patient/${patient.ID}/bio`}"></sidebar-item>
+          <sidebar-item :link="{name: 'Anamnes', path: `/patient/${patient.ID}/anamnes`}"> </sidebar-item>
+          <sidebar-item :link="{name: 'Diagnose', path: `/patient/${patient.ID}/diagnose`}"> </sidebar-item>
           <sidebar-item :link="{name: 'Treatment', path: `/patient/${patient.ID}/treatment`}"> </sidebar-item>
+          <sidebar-item :link="{name: 'Notes', path: `/patient/${patient.ID}/notes`}"> </sidebar-item>
+          <sidebar-item :link="{name: 'Files', path: `/patient/${patient.ID}/files`}"> </sidebar-item>
         </sidebar-item>
         <sidebar-item :link="{name: 'Clinics',
                 icon: 'business',
@@ -49,7 +53,7 @@
             icon: 'account_circle',
             img:selectedClinic.logo? selectedClinic.logo: '',
             avatarColor:selectedClinic.color,
-            acronim:acronim(selectedClinic.name)}"
+            acronim:selectedClinic.name}"
           class="separated-down"
         >
           <sidebar-item :link="{name: 'Profile', icon: 'image', path: `/clinic/${selectedClinic.ID}/profile`}"></sidebar-item>
@@ -66,7 +70,7 @@
             icon: 'account_circle',
             img:selectedClinic.logo? selectedClinic.logo: '',
             avatarColor:selectedClinic.color,
-            acronim: acronim(selectedClinic.name)}"
+            acronim: selectedClinic.name}"
           class="separated-down"
         >
           <sidebar-item :link="{name: 'Profile', path: `/collaborator/${selectedClinic.ID}/profile`}"> </sidebar-item>
@@ -282,11 +286,6 @@
       ZoomCenterTransition,
     },
     methods: {
-      acronim(words) {
-        if (!words) { return ''; }
-        const first_letter = function (x) { if (x) { return x[0]; } return ''; };
-        return words.split(' ').map(first_letter).join('');
-      },
       toggleSidebar() {
         if (this.$sidebar.showSidebar) {
           this.$sidebar.displaySidebar(false);

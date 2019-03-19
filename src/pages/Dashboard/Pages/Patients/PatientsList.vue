@@ -133,7 +133,7 @@
                   >
                     <div
                       class="md-layout-item md-layout"
-                      style="max-width:60px;"
+                      style="max-width:35px;"
                     >
                       <t-avatar
                         :small="true"

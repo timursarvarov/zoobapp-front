@@ -2,9 +2,9 @@ import Vue from 'vue';
 
 import VueRouter from 'vue-router';
 import Chartist from 'chartist';
-import Viewer from 'v-viewer';
 import store from './store';
 import DashboardPlugin from './material-dashboard';
+
 
 // Plugins
 import App from './App.vue';
@@ -21,7 +21,6 @@ import routes from './routes/routes';
 Vue.use(filters);
 Vue.use(VueRouter);
 Vue.use(DashboardPlugin);
-Vue.use(Viewer);
 
 Vue.use(require('vue-moment'));
 

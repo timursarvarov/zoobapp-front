@@ -12,8 +12,8 @@ import Widgets from '@/pages/Dashboard/Widgets.vue';
 const User = () => import('@/pages/Dashboard/Pages/User/UserProfile.vue');
 const Collaborators = () => import('@/pages/Dashboard/Pages/Collaborators/CollaboratorsList.vue');
 
-const PatientProfile = () => import('@/pages/Dashboard/Pages/Patient/PatientProfile.vue');
-const PatientTreatment = () => import('@/pages/Dashboard/Pages/Patient/PatientTreatment.vue');
+const PatientProfile = () => import('@/pages/Dashboard/Pages/Patient/PatientProfile/PatientProfile.vue');
+const PatientTreatment = () => import('@/pages/Dashboard/Pages/Patient/PatientTreatment/PatientTreatment.vue');
 const PatientsList = () => import('@/pages/Dashboard/Pages/Patients/PatientsList.vue');
 
 const ClinicsList = () => import('@/pages/Dashboard/Pages/Clinics/ClinicsList.vue');
@@ -345,7 +345,7 @@ const patientPages = {
   path: '/patient',
   component: DashboardLayout,
   name: 'Patient',
-  redirect: '/patient/:patientId/treatment/diagnose/',
+  redirect: '/patient/:patientId/diagnose/',
   beforeEnter: ifAuthenticated,
   children: [{
       path: '/patient/:patientId/bio',
@@ -356,33 +356,26 @@ const patientPages = {
       path: '/patient/:patientId/treatment',
       name: 'PatientTreatment',
       component: PatientTreatment,
-      redirect: '/patient/:patientId/treatment/anamnes',
-      children: [{
-          path: '/patient/:patientId/treatment/anamnes',
-          name: 'Anamnes',
-          component: PatientTreatment,
-        },
-        {
-          path: '/patient/:patientId/treatment/diagnose',
-          name: 'Diagnose',
-          component: PatientTreatment,
-        },
-        {
-          path: '/patient/:patientId/treatment/notes',
-          name: 'Notes',
-          component: PatientTreatment,
-        },
-        {
-          path: '/patient/:patientId/treatment/therapy',
-          name: 'Therapy',
-          component: PatientTreatment,
-        },
-        {
-          path: '/patient/:patientId/treatment/files',
-          name: 'Files',
-          component: PatientTreatment,
-        },
-      ],
+    },
+    {
+      path: '/patient/:patientId/anamnes',
+      name: 'Anamnes',
+      component: PatientTreatment,
+    },
+    {
+      path: '/patient/:patientId/diagnose',
+      name: 'Diagnose',
+      component: PatientTreatment,
+    },
+    {
+      path: '/patient/:patientId/notes',
+      name: 'Notes',
+      component: PatientTreatment,
+    },
+    {
+      path: '/patient/:patientId/files',
+      name: 'Files',
+      component: PatientTreatment,
     },
   ],
 };

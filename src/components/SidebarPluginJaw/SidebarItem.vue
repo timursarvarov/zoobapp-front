@@ -13,26 +13,39 @@
       data-toggle="collapse"
       @click.prevent="collapseMenu"
     >
-      <md-icon v-if="link.img">
-        <md-avatar class="md-avatar-icon">
+    
+      <t-avatar
+        class="md-avatar-icon"
+        v-if="link.acronim && link.img"
+        :color="link.avatarColor"
+        :imageSrc="link.img"
+        :title="link.acronim"
+      />
+
+      <!-- <md-icon v-if="link.img">
+        <md-avatar class="md-avatar-icon"
+        :style="{background: gradient}">
           <img
             :src="link.img"
             alt="avatar"
           />
         </md-avatar>
       </md-icon>
+
       <md-icon v-if="!link.img && acronimL ">
         <md-avatar
           class="md-avatar-icon acronim"
-          :style="[{'background-color':`${link.avatarColor}`}]"
+          :style="{background: gradient}"
         >
           {{acronimL}}
         </md-avatar>
-      </md-icon>
+      </md-icon> -->
 
-      <md-icon v-if="!link.acronim && !link.img && link.icon">{{link.icon}}</md-icon>
+      <md-icon v-else >{{link.icon}}</md-icon>
       <p>
+      <span class="nav-link-title" >  
         {{link.name | capitilize}}
+      </span>
         <b class="caret"></b>
       </p>
 
@@ -76,12 +89,13 @@
 </template>
 <script>
   import { CollapseTransition } from 'vue2-transitions';
-  import { mapFilters } from '@/filters/map-filters';
+  import { TAvatar } from '@/components';
 
   export default {
     name: 'sidebar-item',
     components: {
       CollapseTransition,
+      TAvatar
     },
     props: {
       menu: {
@@ -93,7 +107,7 @@
         default: () => ({
           name: '',
           path: '',
-          avatarColor: '',
+          avatarColor: '#43a047',
           acronim: '',
           children: [],
         }),
@@ -135,9 +149,37 @@
       isMenu() {
         return this.children.length > 0 || this.menu === true;
       },
+      // colorC(){
+      //   return this.link.avatarColor||'#43a047'
+      // },
+      // gradient() {
+      //   let colors = "linear-gradient(45deg";
+      //   const colorStart = this.colorLuminance(this.colorC, -0.3);
+      //   const colorEnd = this.colorLuminance(this.colorC, 0.3);
+      //   colors +=  "," + colorStart + "," + colorEnd;
+      //   colors += ")";
+      //   return colors;
+      // }
     },
     methods: {
-      ...mapFilters(['capitilize']),
+      colorLuminance(hex, lum) {
+        // validate hex string
+        hex = String(hex).replace(/[^0-9a-f]/gi, '');
+        if (hex.length < 6) {
+          hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+        }
+        lum = lum || 0;
+
+        // convert to decimal and change luminosity
+        var rgb = "#", c, i;
+        for (i = 0; i < 3; i++) {
+          c = parseInt(hex.substr(i*2,2), 16);
+          c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+          rgb += ("00"+c).substr(c.length);
+        }
+
+        return rgb;
+      },
       addChild(item) {
         const index = this.$slots.default.indexOf(item.$vnode);
         this.children.splice(index, 0, item);
@@ -214,13 +256,16 @@
 </script>
 <style lang="scss">
 .sidebar-menu-item {
+  cursor: pointer;
   p {
+    nav-link-title{
     overflow: hidden;
     text-overflow: ellipsis;
+    }
   }
-  cursor: pointer;
   .md-avatar-icon {
-    margin-top: -5px;
+    margin: -5px 15px -3px -6px;
+    float: left
   }
   .acronim {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;

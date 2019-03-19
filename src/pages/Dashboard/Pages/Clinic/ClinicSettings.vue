@@ -1,41 +1,14 @@
 <template>
   <md-card class="md-card-profile currentClinic-wrapper">
-    <div class="md-card-avatar">
-      <div class="picture-container">
-        <div class="picture">
-          <div class="picture-hint md-layout">
-            <md-icon class="md-layout-item md-size-2x">add_a_photo</md-icon>
-          </div>
-
-          <img
-            v-if="currentClinic.logo"
-            class="avatar"
-            :style="{'background-color': '#000' }"
-            :alt="currentClinic.name[0]"
-            :src="currentClinic.logo"
-          />
-
-          <div class="md-layout md-alignment-center-center picture-wrapper-acronim"
-          :style="{'background-color': '#000' }">
-            <div class="md-layout-item acronim"
-            >
-              <icon-base
-                class="icon-wrapper--item"
-                width="90"
-                height="90"
-                icon-name="icon-tooth-wings"
-              />
-            </div>
-            <input
-              type="file"
-              @change="onFileChange"
-              ref="imageInserter"
-              accept="image/*"
-            >
-          </div>
-        </div>
-      </div>
-    </div>
+    <t-avatar-input
+    :color="currentClinic.color"
+    :maxFilesize="2000"
+    :imageSrc="currentClinic.logo"
+    :title="currentClinic.name"
+    :formTitle="'Add clinic logo'"
+    :buttonColor="'green'"
+    @on-created="updateClinicLogo"
+    />
     <md-card-content>
       <div class="md-layout">
 
@@ -208,16 +181,6 @@
         </div>
 
       </div>
-      <image-cropper-form
-        v-model="fd"
-        :maxFilesize="2000"
-        buttonColor='green'
-        title="Add patient avatar"
-        :icon="'add_a_photo'"
-        :imageName="currentClinic.ID != null ? currentClinic.ID.toString() + '_' + Date.now(): ''"
-        :imageToCorp="image"
-        :showForm.sync="showForm"
-      ></image-cropper-form>
     </md-card-content>
     <md-card-actions>
       <md-button
@@ -235,17 +198,16 @@
     NOTIFY,
   } from '@/store/modules/constants';
   import { mapGetters } from 'vuex';
-  import { IconBase } from '@/components';
+  import { IconBase, TAvatarInput } from '@/components';
   import { SlideYDownTransition } from 'vue2-transitions';
   import commonCurrency from './Common-Currency.json';
   import timezones from './timezones.json';
-  import { ImageCropperForm } from '@/pages';
 
   export default {
     components: {
       SlideYDownTransition,
       IconBase,
-      ImageCropperForm,
+      TAvatarInput
     },
     name: 'currentClinic-settings',
     props: {
@@ -256,8 +218,6 @@
     },
     data() {
       return {
-        fd: null,
-        showForm: false,
         selectedTimezone: null,
         selectedCurrency: null,
         timeZoneForOptions: [],
@@ -286,11 +246,6 @@
       };
     },
     methods: {
-      clearImage() {
-        const input = this.$refs.imageInserter;
-        input.type = 'text';
-        input.type = 'file';
-      },
       copyObj(obj) {
         return JSON.parse(JSON.stringify(obj));
       },
@@ -314,34 +269,6 @@
           });
         }
       },
-      getColorButton(buttonColor) {
-        return `md-${buttonColor}`;
-      },
-
-      onFileChange(e) {
-        const files = e.target.files || e.dataTransfer.files;
-        if (files.length > 0) {
-          this.createImage(files[0]);
-          this.showForm = true;
-          this.clearImage();
-        } else {
-          this.$store.dispatch(NOTIFY, {
-            settings: {
-              message: 'No files selected!',
-              type: 'warning',
-            },
-          });
-        }
-      },
-
-      // creatClipingImage() {
-      //   const canvas = this.$refs.clipper.clip();
-      //   const dataURL = canvas.toDataURL('image/jpeg', 0.5);
-      //   const blob = this.dataURItoBlob(dataURL);
-      //   const fd = new FormData(document.forms[0]);
-      //   fd.append('file', blob, `${this.currentClinic.ID}.jpeg`);
-      //   this.updateClinicLogo(fd);
-      // },
       validate() {
         this.$validator.validate('url', 'email', 'phone').then((isValid) => {
           this.$emit('on-submit', this.registerForm, isValid);
@@ -349,35 +276,6 @@
         this.touched.url = true;
         this.touched.email = true;
         this.touched.phone = true;
-      },
-      dataURItoBlob(dataURI) {
-        // convert base64/URLEncoded data component to raw binary data held in a string
-        let byteString;
-        if (dataURI.split(',')[0].indexOf('base64') >= 0) {
-          byteString = atob(dataURI.split(',')[1]);
-        } else byteString = unescape(dataURI.split(',')[1]);
-
-        // separate out the mime component
-        const mimeString = dataURI
-          .split(',')[0]
-          .split(':')[1]
-          .split(';')[0];
-
-        // write the bytes of the string to a typed array
-        const ia = new Uint8Array(byteString.length);
-        for (let i = 0; i < byteString.length; i += 1) {
-          ia[i] = byteString.charCodeAt(i);
-        }
-
-        return new Blob([ia], { type: mimeString });
-      },
-      createImage(file) {
-        const reader = new FileReader();
-        const vm = this;
-        reader.onload = (e) => {
-          vm.image = e.target.result;
-        };
-        reader.readAsDataURL(file);
       },
       updateClinicLogo(fd) {
         this.$store
@@ -472,9 +370,6 @@
       this.setLocalCurrency();
     },
     watch: {
-      fd() {
-        this.updateClinicLogo(this.fd);
-      },
       url() {
         this.touched.url = true;
       },
