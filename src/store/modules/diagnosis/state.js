@@ -1,3 +1,4 @@
+
 export default {
   diagnosis: [{
       code: 'K00',
@@ -1343,6 +1344,32 @@ export default {
             coronaTop: true,
             gum: true,
           },
+          addLocation: (location, diagnose, toothId) => {
+            console.log(location, diagnose, toothId);
+            const d = diagnose;
+            const groupSwitch = (
+              location === 'coronaLingual'
+              || location === 'coronaLabial'
+              || location === 'coronaTop'
+              );
+
+            if (d.teeth[toothId][location]) {
+              delete d.teeth[toothId][location];
+              if (groupSwitch) {
+                delete d.teeth[toothId].coronaLingual;
+                delete d.teeth[toothId].coronaLabial;
+                delete d.teeth[toothId].coronaTop;
+              }
+            } else {
+              d.teeth[toothId][location] = true;
+              if (groupSwitch) {
+                 d.teeth[toothId].coronaLingual = true;
+                 d.teeth[toothId].coronaLabial = true;
+                 d.teeth[toothId].coronaTop = true;
+              }
+            }
+            return d;
+            },
         },
         {
           code: 'K04.3',

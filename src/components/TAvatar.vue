@@ -115,7 +115,7 @@
     background-color: transparent;
     margin: 0 auto;
     .fade-enter-active {
-        transition: opacity 3s ease-out!important;
+        transition: opacity 0.4s ease-out!important;
       }
       .fade-enter-to {
         opacity: 1!important;
@@ -127,7 +127,7 @@
   }
   .avatar-img{
     .fade-enter-active {
-        transition: opacity 3s ease-in!important;
+        transition: opacity 0.4s ease-in!important;
       }
       .fade-enter-to {
         opacity: 1!important;
@@ -148,7 +148,7 @@
       text-align: center;
     }
     .fade-enter-active {
-        transition: opacity 3s ease-in-out;
+        transition: opacity 0.4s ease-in-out;
       }
       .fade-enter-to {
         opacity: 1!important;

@@ -93,7 +93,7 @@ import IconToothWorld from './JawIcons/Icons/ToothWorld.vue';
 import IconToothRestovration from './JawIcons/Icons/ToothRestovration.vue';
 import JawCard from './Jaw/JawCard.vue';
 import Jaw from './Jaw/Jaw.vue';
-import JawAddDiagnose from './Jaw/JawAddDiagnose.vue';
+import JawAddDiagnose from './Jaw/Diagnose/JawAddDiagnose.vue';
 
 
 import MdtAutoComplite from './MdtAutoComplite.vue';

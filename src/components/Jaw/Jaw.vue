@@ -6,7 +6,26 @@
 
       <md-toolbar class="md-transparent">
       <div class="md-toolbar-section-start">
-        <h4 class="title" >Select tooth</h4>
+        <h4 class="title" >
+
+                <span v-show="selectedTeethLocal.length === 0" >
+                  Select tooth
+                </span>
+
+                <span v-show="selectedTeethLocal.length === 1" >
+                  Selected tooth:
+                </span>
+
+                <span v-show="selectedTeethLocal.length > 1" >
+                  Selected teeth:
+                </span>
+
+                <transition-group name="list">
+                  <span v-for="(item, key) in selectedTeethLocal" :key="key"  class="list-item">
+                      {{ item | toCurrentTeethSystem(teethSystem) }}
+                  </span>
+                </transition-group>
+        </h4>
       </div>
       <div class="md-toolbar-section-end">
           <md-button
@@ -152,10 +171,12 @@
 <script>
 import jawSVGjs from "./jawSVG";
 import { IconBase } from "@/components";
+import { SlideYDownTransition } from 'vue2-transitions';
 
 export default {
   components: {
-    IconBase
+    IconBase,
+    SlideYDownTransition,
   },
   props: {
     jaw: {
@@ -475,13 +496,13 @@ export default {
       if (this.windowWidth >= 600 && this.windowWidth < 960) {
         return ((this.windowWidth - 80) / 100) * toothWidth;
       }
-      if (this.windowWidth < 1280 && this.windowWidth > 960) {
+      if (this.windowWidth <= 1280 && this.windowWidth > 960) {
         return ((this.windowWidth - 240) / 2 / 100) * toothWidth;
       }
       if (this.windowWidth < 1920 && this.windowWidth > 1280) {
         return ((this.windowWidth - 280) / 2 / 100) * toothWidth;
       }
-      if (this.windowWidth > 1920) {
+      if (this.windowWidth >= 1920) {
         return ((this.windowWidth - 380) / 2 / 100) * toothWidth;
       } else {
         // return (this.windowWidth / 2 / 100) * toothWidth;
@@ -712,6 +733,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.jaw{
+  .title{
+    .list-item {
+        display: inline-block;
+        margin-right: 10px;
+      }
+      .list-enter-active, .list-leave-active {
+        transition: all 1s;
+      }
+      .list-enter, .list-leave-to /* .list-leave-active до версии 2.1.8 */ {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+  }
+}
 .jaw,
 .md-dialog-container {
   user-select: none;
