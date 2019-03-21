@@ -379,9 +379,8 @@
         });
       },
       handleEdit(item) {
-        this.selectedDiagnose = item
+        this.selectedDiagnose = item;
         this.showForm = true;
-
         // swal({
         //   title: `You want to edit ${item.title}`,
         //   buttonsStyling: false,

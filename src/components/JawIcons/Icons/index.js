@@ -57,7 +57,6 @@ import IconToothRestovration from './ToothRestovration.vue';
 export {
 
   IconAdult,
-  IconBase,
   IconAnalgesic,
   IconBaby,
   IconBrekets,

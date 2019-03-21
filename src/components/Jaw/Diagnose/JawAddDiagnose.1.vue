@@ -102,10 +102,10 @@
                         :d="jawSVG[toothId][key]['d']"
                       />
                     </g>
-                    <use
+                    <!-- <use
                       id="use"
                       xlink:href=".diagnose"
-                    />
+                    /> -->
                   </svg>
                   <span class="tooth-number">{{toCurrentTeethSystem(toothId)}}</span>
                 </div>
