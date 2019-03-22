@@ -283,7 +283,7 @@
 </template>
 
 <script>
-  import { mapFilters } from '@/filters/map-filters';
+  // import { mapFilters } from '@/filters/map-filters';
   import { Pagination, TAvatar } from '@/components';
   import { PatientsListSettings } from '@/pages';
   import CollaboratorAddForm from './CollaboratorAddForm.vue';

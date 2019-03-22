@@ -1,5 +1,4 @@
 export default {
- defaultLocations: {
     background: false,
     bridge: false,
     root: true,
@@ -42,6 +41,4 @@ export default {
     fdi: false,
     universal: false,
     palmer: false,
-  },
-};
-// export default { defaultLocations };
+  };

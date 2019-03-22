@@ -283,7 +283,7 @@
 </template>
 
 <script>
-  import { mapFilters } from '@/filters/map-filters';
+  // import { mapFilters } from '@/filters/map-filters';
   import { Pagination, TAvatar } from '@/components';
   import { PatientsListSettings } from '@/pages';
   import ClinicAddForm from './ClinicAddForm.vue';
@@ -318,7 +318,6 @@
       callbackLauncher: null,
     }),
     methods: {
-      ...mapFilters(['capitilize']),
       getFieldName(key) {
         const field = this.availablePatientsTableColumns.find(f => f.key === key);
         if (field) {

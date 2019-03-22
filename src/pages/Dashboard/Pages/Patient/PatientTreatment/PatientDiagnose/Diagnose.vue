@@ -6,7 +6,6 @@
         <div class="md-layout-item" ref="wrjaw">
           <jaw
             v-model="selectedTeeth"
-
             :jaw="jaw"
             :patientDiagnosis="patient.diagnosis"
             :prefer="'diagnose'"
@@ -123,7 +122,7 @@
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
   import { Collapse, Jaw, JawAddDiagnose } from '@/components';
-  import { diagnosis, defaultLocations } from '@/constants';
+  import { DIAGNOSIS, DEFAULT_TOOTH_LOCATIONS } from '@/constants';
   import Fuse from 'fuse.js';
   import DiagnoseList from './DiagnoseList.vue';
   import JawAddDiagnoseWizard from './JawAddDiagnoseWizard.vue';
@@ -191,15 +190,15 @@
       saveDiagnose(d){
         console.log(d)
         let diagnose = d;
-        diagnose.author= {
+        diagnoseL.author = {
           ID: this.user.ID,
           avatar: this.user.avatar,
           firstName: this.user.firstName,
           lastName: this.user.lastName,
-        }
-        diagnose.id = Math.random();
-       this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
-            diagnose: diagnose,
+        };
+        diagnoseL.id = Math.random();
+        this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
+            diagnoseL,
           });
       },
       toggleFormVisible(value) {
@@ -288,7 +287,7 @@
           this.favoriteDiagnosis.forEach((fDiagnose) => {
             Object.values(this.diagnosis).forEach((group) => {
               let favoriteD = null;
-              if (group.codes && group.code != '★') {
+              if (group.codes && group.code !== '★') {
                 favoriteD = group.codes.find(
                   diagnose => diagnose.code === fDiagnose,
                 );
@@ -399,12 +398,12 @@
       },
     },
     updated() {
-      this.$nextTick(function () {
+      this.$nextTick(() =>{
         this.matchHeight();
       });
     },
-     destroyed() {
-      window.removeEventListener('resize', this.matchHeight)
+    destroyed() {
+      window.removeEventListener('resize', this.matchHeight);
     },
     computed: {
       ...mapGetters({
@@ -417,13 +416,12 @@
         currentClinic: 'getCurrentClinic',
         user: 'getProfile',
       }),
-       defaultLocations() {
-         console.log(defaultLocations)
-         return defaultLocations.defaultLocations
-       },
-       diagnosis() {
-         return diagnosis.diagnosis
-       },
+      defaultLocations() {
+        return DEFAULT_TOOTH_LOCATIONS;
+      },
+      diagnosis() {
+        return DIAGNOSIS;
+      },
       patientDiagnosis() {
         return this.patient.diagnosis;
       },
@@ -450,7 +448,7 @@
     },
     mounted() {
       this.loadData();
-       window.addEventListener('resize', this.matchHeight)
+      window.addEventListener('resize', this.matchHeight);
       this.matchHeight();
       this.searched = this.copyObj(this.diagnoseOriginal);
     },
@@ -486,7 +484,7 @@
       border-radius: 7px;
     }
     .md-collapse-label {
-      padding: 0px 10px 25px 0;  
+      padding: 0px 10px 25px 0;
       overflow: hidden;
       .md-collapse-title {
         font-weight: 400;

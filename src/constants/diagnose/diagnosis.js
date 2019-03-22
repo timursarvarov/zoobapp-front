@@ -1,8 +1,7 @@
 import toggleLocation from './toggle-location';
 import setOnlyOneLocation from './set-only-one-location';
 
-export default {
-diagnosis: [{
+export default [{
   code: 'K00',
   title: 'Нарушения развития и прорезывания зубов',
   codes: [{
@@ -2164,5 +2163,4 @@ diagnosis: [{
   ],
 
 },
-],
-};
+];

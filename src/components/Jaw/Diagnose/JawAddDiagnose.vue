@@ -70,31 +70,31 @@
                   >
                     <g>
                       <path
-                        @click="chooseLocation(toothId, key)"
-                        v-for="(location, key) in defaultLocations"
-                        :key="`${toothId}${key}`"
+                        @click="chooseLocation(toothId, location)"
+                        v-for="(locationValue, location) in defaultLocations"
+                        :key="`${toothId}${location}`"
                         :class="[{
 
                   //класс 'has-in-locations' применяется для не выбранных парадонтитов
-                  'has-in-locations': getNestedProperty(selectedDiagnose, 'locations', key )  !== undefined,
+                  'has-in-locations': getNestedProperty(selectedDiagnose, 'locations', location )  !== undefined,
                  
                  //класс 'rejectable' применяется для локаций которые возможнор отметить для удаления
-                  rejectable: getNestedProperty(selectedDiagnose, 'locations', key ) === false,
+                  rejectable: getNestedProperty(selectedDiagnose, 'locations', location ) === false,
                   
                   //класс 'seleced' применяется для выбранной локации
-                  selected: getNestedProperty(diagnose, 'teeth', toothId,  key ) !== undefined,
+                  selected: getNestedProperty(diagnose, 'teeth', toothId,  location ) !== undefined,
 
                   // класс hide применяется если во view выбранного диагноза нет текущей локации
-                  hide: !getNestedProperty(selectedDiagnose, 'view', key )
+                  hide: !getNestedProperty(selectedDiagnose, 'view', location )
                   },
                   
                   // Название класса локации из высчитанной формуллы для отображеня в диагнозов анамнеза и лечения
-                  jawComputed[toothId][key].class,
+                  jawComputed[toothId][location].class,
 
                  // Название класса локации из svg для отображеня в норме
-                  jawSVG[toothId][key]['class']
+                  jawSVG[toothId][location]['class']
                   ] "
-                        :d="jawSVG[toothId][key]['d']"
+                        :d="jawSVG[toothId][location]['d']"
                       />
                     </g>
                     <!-- <use

@@ -10,7 +10,7 @@ import DashboardPlugin from './material-dashboard';
 import App from './App.vue';
 
 // Filters
-import filters from './filters';
+import filters from '@/utils/filters';
 
 
 // router setup

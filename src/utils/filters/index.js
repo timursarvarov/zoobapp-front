@@ -1,6 +1,6 @@
 import capitilize from './capitilize';
 import acronim from './acronim';
-import toCurrentTeethSystem from './current-system';
+import toCurrentTeethSystem from './current-teeth-system';
 import formatBytes from './format-bytes';
 
 

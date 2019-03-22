@@ -276,7 +276,7 @@
 
 <script>
 /* eslint-disable */
-import { mapFilters } from "@/filters/map-filters";
+// import { mapFilters } from "@/filters/map-filters";
 import { Pagination, TAvatar } from "@/components";
 import { PatientsListSettings } from "@/pages";
 import StarRating from "vue-star-rating";
