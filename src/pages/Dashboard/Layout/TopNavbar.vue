@@ -185,7 +185,7 @@ import {
   AUTH_LOGOUT,
   PATIENTS_REQUEST,
   AUTH_LOCK
-} from "@/store/modules/constants";
+} from "@/constants";
 import { mapGetters } from "vuex";
 import { MdtAutoComplite, TAvatar } from "@/components";
 

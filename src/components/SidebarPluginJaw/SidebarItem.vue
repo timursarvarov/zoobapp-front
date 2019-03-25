@@ -13,7 +13,7 @@
       data-toggle="collapse"
       @click.prevent="collapseMenu"
     >
-    
+
       <t-avatar
         class="md-avatar-icon"
         v-if="link.acronim && link.img"
@@ -43,7 +43,7 @@
 
       <md-icon v-else >{{link.icon}}</md-icon>
       <p>
-      <span class="nav-link-title" >  
+      <span class="nav-link-title" >
         {{link.name | capitilize}}
       </span>
         <b class="caret"></b>
@@ -95,7 +95,7 @@
     name: 'sidebar-item',
     components: {
       CollapseTransition,
-      TAvatar
+      TAvatar,
     },
     props: {
       menu: {
@@ -166,16 +166,18 @@
         // validate hex string
         hex = String(hex).replace(/[^0-9a-f]/gi, '');
         if (hex.length < 6) {
-          hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+          hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
         }
         lum = lum || 0;
 
         // convert to decimal and change luminosity
-        var rgb = "#", c, i;
+        let rgb = '#';
+        let c;
+        let i;
         for (i = 0; i < 3; i++) {
-          c = parseInt(hex.substr(i*2,2), 16);
+          c = parseInt(hex.substr(i * 2, 2), 16);
           c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-          rgb += ("00"+c).substr(c.length);
+          rgb += (`00${c}`).substr(c.length);
         }
 
         return rgb;

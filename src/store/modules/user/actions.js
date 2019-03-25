@@ -13,7 +13,7 @@ import {
   USER_LOGOUT,
   USER_REGISTER,
 
-} from '../constants';
+} from '@/constants';
 
 import axios from 'axios';
 

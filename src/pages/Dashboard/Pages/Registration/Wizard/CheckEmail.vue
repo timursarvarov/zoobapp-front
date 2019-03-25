@@ -71,10 +71,10 @@
       },
       error: {
         type: Object,
-        default: {
+        default: () => ({
           message: 'Wrong code',
           type: 'code',
-        },
+        }),
       },
     },
     data() {
@@ -129,7 +129,7 @@
     },
     watch: {
       error: {
-        handler(val, oldVal) {
+        handler(val) {
           if (val.message) {
             this.showErrorsValidate(val);
             this.error.message = '';

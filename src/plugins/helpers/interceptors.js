@@ -10,7 +10,7 @@ import {
     LOADER_STOP,
     LOADER_START,
     NOTIFY
-} from '@/store/modules/constants';
+} from '@/constants';
 
 export default function () {
     let isAlreadyFetchingAccessToken = false;

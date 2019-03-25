@@ -124,7 +124,7 @@
 </template>
 <script>
   import { LoginCard } from '@/components';
-  import { AUTH_REQUEST, NOTIFY } from '@/store/modules/constants';
+  import { AUTH_REQUEST, NOTIFY } from '@/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
   import ForgotPassword from './ForgotPassword.vue';
 

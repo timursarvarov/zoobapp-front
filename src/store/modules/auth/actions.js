@@ -12,7 +12,7 @@ import {
   USER_LOGOUT,
   CLINIC_SET,
   USER_SET_PARAM,
-} from '../constants';
+} from '@/constants';
 
 import axios from 'axios';
 export default {

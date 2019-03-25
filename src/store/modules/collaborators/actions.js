@@ -5,7 +5,7 @@ import {
   COLLABORATOR_CREATE,
   COLLABORATOR_ERROR,
 
-} from '../constants';
+} from '@/constants';
 
 import axios from 'axios';
 

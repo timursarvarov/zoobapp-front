@@ -61,7 +61,7 @@
 <script>
   import {
     COLLABORATOR_CREATE, NOTIFY,
-  } from '@/store/modules/constants';
+  } from '@/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
 
 

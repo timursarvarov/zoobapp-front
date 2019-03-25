@@ -158,8 +158,10 @@ export default {
     },
     hasFilteredItems() {
       return (
-        this.filteredStaticOptions.length > 0 ||
-        this.filteredAsyncOptions.length > 0
+       (this.filteredStaticOptions &&
+       this.filteredStaticOptions.length > 0) ||
+       (this.filteredAsyncOptions &&
+        this.filteredAsyncOptions.length > 0)
       );
     },
     hasScopedEmptySlot() {

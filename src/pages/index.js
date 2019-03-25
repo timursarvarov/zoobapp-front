@@ -1,4 +1,3 @@
-
 import ImageCropperForm from './Dashboard/Modals/ImageCropperForm.vue';
 import PatientsListSettings from './Dashboard/Modals/PatientsListSettings.vue';
 
@@ -17,11 +16,7 @@ import AnamnesList from './Dashboard/Pages/Patient/PatientTreatment/AnamnesList.
 import ClinicSettings from './Dashboard/Pages/Clinic/ClinicSettings.vue';
 import ClinicsList from './Dashboard/Pages/Clinics/ClinicsList.vue';
 
-
-export {
-  UserCard,
-  PasswordForm,
-};
+export { UserCard, PasswordForm };
 
 export {
   PatientsListSettings,

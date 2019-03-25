@@ -5,5 +5,4 @@ export default {
   favoriteDiagnosis: state => state.favoriteDiagnosis,
   diagnoseDescriptions: state => state.diagnoseDescriptions,
   availablePatientsTableColumns: state => state.availablePatientsTableColumns,
-
 };

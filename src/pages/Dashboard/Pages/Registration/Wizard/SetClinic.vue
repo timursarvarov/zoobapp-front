@@ -77,10 +77,8 @@
 </template>
 <script>
   import {
-    CLINIC_LOGO_UPLOAD,
-    CLINIC_UPDATE,
     NOTIFY,
-  } from '@/store/modules/constants';
+  } from '@/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
   import { IconBase } from '@/components';
   import { ImageCropperForm } from '@/pages';
@@ -95,11 +93,11 @@
     props: {
       error: {
         type: Object,
-        default: function() {
+        default() {
           return {
-          message: 'Wrong clinic name',
-          type: 'clinicName',
-        }
+            message: 'Wrong clinic name',
+            type: 'clinicName',
+          };
         },
       },
     },

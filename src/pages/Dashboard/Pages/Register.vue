@@ -215,7 +215,7 @@
 </template>
 <script>
   import { SignupCard } from '@/components';
-  import { USER_REGISTER, NOTIFY } from '@/store/modules/constants';
+  import { USER_REGISTER, NOTIFY } from '@/constants';
   import { SlideYDownTransition, SlideXLeftTransition } from 'vue2-transitions';
 
   export default {
@@ -365,7 +365,9 @@
           },
         }).then(
           (response) => {
-            this.$router.push('/');
+            if (response) {
+              this.$router.push('/');
+            }
           },
           (error) => {
             if (error.response.data.message === 'Wrong password') {

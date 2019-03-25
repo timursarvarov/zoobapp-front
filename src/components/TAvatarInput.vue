@@ -49,10 +49,11 @@
     </div>
 </template>
 <script>
-import  TImageCropperForm  from './TImageCropperForm.vue';
+  import TImageCropperForm from './TImageCropperForm.vue';
+
   export default {
-    components:{
-      TImageCropperForm
+    components: {
+      TImageCropperForm,
     },
     name: 't-avatar-inptut',
     props: {
@@ -85,19 +86,19 @@ import  TImageCropperForm  from './TImageCropperForm.vue';
         default: 2000,
       },
     },
-    data(){
-      return{
-        loaded:false,
+    data() {
+      return {
+        loaded: false,
         fd: null,
         showForm: false,
         image: '',
-      }
+      };
     },
     methods: {
-        onLoaded() {
-          this.loaded = true;
-        },
-       onFileChange(e) {
+      onLoaded() {
+        this.loaded = true;
+      },
+      onFileChange(e) {
         const files = e.target.files || e.dataTransfer.files;
         if (files.length > 0) {
           this.createImage(files[0]);
@@ -116,16 +117,18 @@ import  TImageCropperForm  from './TImageCropperForm.vue';
         // validate hex string
         hex = String(hex).replace(/[^0-9a-f]/gi, '');
         if (hex.length < 6) {
-          hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+          hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
         }
         lum = lum || 0;
 
         // convert to decimal and change luminosity
-        var rgb = "#", c, i;
+        let rgb = '#';
+        let c;
+        let i;
         for (i = 0; i < 3; i++) {
-          c = parseInt(hex.substr(i*2,2), 16);
+          c = parseInt(hex.substr(i * 2, 2), 16);
           c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-          rgb += ("00"+c).substr(c.length);
+          rgb += (`00${c}`).substr(c.length);
         }
 
         return rgb;
@@ -144,23 +147,23 @@ import  TImageCropperForm  from './TImageCropperForm.vue';
         input.type = 'file';
       },
     },
-    computed:{
-      colorC(){
-        return this.color||'#43a047'
+    computed: {
+      colorC() {
+        return this.color || '#43a047';
       },
-    gradient() {
-      let colors = "linear-gradient(45deg";
-      const colorStart = this.colorLuminance(this.colorC, -0.4);
-      const colorEnd = this.colorLuminance(this.colorC, 0.4);
-      colors +=  "," + colorStart + "," + colorEnd;
-      colors += ")";
-      return colors;
-      }
+      gradient() {
+        let colors = 'linear-gradient(45deg';
+        const colorStart = this.colorLuminance(this.colorC, -0.4);
+        const colorEnd = this.colorLuminance(this.colorC, 0.4);
+        colors += `,${colorStart},${colorEnd}`;
+        colors += ')';
+        return colors;
+      },
     },
-      watch: { 
+    watch: {
       fd(file) {
-        //emit
-        this.$emit('on-created',file)
+        // emit
+        this.$emit('on-created', file);
       },
     },
   };

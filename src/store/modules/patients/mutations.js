@@ -5,7 +5,7 @@ import {
   PATIENTS_SUCCESS,
   PATIENTS_SET,
   PATIENTS_UPDATE_PATIENT,
-} from '../constants';
+} from '@/constants';
 
 export default {
   [PATIENTS_REQUEST]: (state) => {

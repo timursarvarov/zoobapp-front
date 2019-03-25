@@ -5,17 +5,14 @@ import Chartist from 'chartist';
 import store from './store';
 import DashboardPlugin from './material-dashboard';
 
-
 // Plugins
 import App from './App.vue';
 
 // Filters
 import filters from '@/utils/filters';
 
-
 // router setup
 import routes from './routes/routes';
-
 
 // plugin setup
 Vue.use(filters);

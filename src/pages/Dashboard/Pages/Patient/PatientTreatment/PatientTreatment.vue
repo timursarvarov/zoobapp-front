@@ -1,18 +1,8 @@
 <template>
-
-  <nav-tabs-card
-    class="treatment-wrapper"
-    v-if="patient.ID"
-  >
+  <nav-tabs-card class="treatment-wrapper" v-if="patient.ID">
     <template slot="content">
-      <span class="md-nav-tabs-title">
-        Set new:
-      </span>
-      <md-tabs
-        :class="['md-' + currentTabColor()]"
-        md-alignment="left"
-        md-sync-route
-      >
+      <span class="md-nav-tabs-title">Set new:</span>
+      <md-tabs :class="['md-' + currentTabColor()]" md-alignment="left" md-sync-route>
         <md-tab
           id="tab-anamnes"
           md-icon="history"
@@ -20,16 +10,11 @@
           :to="`/patient/${patient.ID}/anamnes`"
         >
           <div class="md-layout md-gutter">
-            <div class="md-layout-item  md-small-size-100 md-xsmall-size-100">
-              <jaw
-                :prefer="'anamnes'"
-                :jaw="jaw"
-                v-model="selectedTeeth"
-              >
+            <div class="md-layout-item md-small-size-100 md-xsmall-size-100">
+              <jaw :prefer="'anamnes'" :jaw="jaw" v-model="selectedTeeth">
                 <div slot="bottom">
                   {{selectedTeeth}}
-
-                  <md-button class="md-simple  jaw-state">
+                  <md-button class="md-simple jaw-state">
                     <div class="icon-wrapper">
                       <icon-base
                         class="icon-wrapper--item"
@@ -40,19 +25,15 @@
                       <small class="icon-wrapper--item">Pulpit</small>
                     </div>
                   </md-button>
-
                 </div>
               </jaw>
-
             </div>
             <div
-              class="md-layout-item  md-small-size-100 md-xsmall-size-100"
+              class="md-layout-item md-small-size-100 md-xsmall-size-100"
               style="overflow:scroll; height:400px;"
             >
               <md-button @click="Implant(selectedTeeth[0])">Implant</md-button>
-
             </div>
-
           </div>
 
           <!-- <jaw-anamnes></jaw-anamnes> -->
@@ -64,14 +45,9 @@
           md-label="Diagnose"
           :to="`/patient/${patient.ID}/diagnose`"
         >
-          <div class="md-layout md-gutter ">
-            <diagnose
-              :selectedTeeth="selectedTeeth"
-              v-model="selectedDiagnose"
-            ></diagnose>
-
+          <div class="md-layout md-gutter">
+            <diagnose :selectedTeeth="selectedTeeth" v-model="selectedDiagnose"></diagnose>
           </div>
-
         </md-tab>
 
         <md-tab
@@ -94,13 +70,12 @@
           md-label="Files"
           :to="`/patient/${patient.ID}/files`"
         >
-          <patient-add-files-form />
+          <patient-add-files-form/>
           <patient-files></patient-files>
         </md-tab>
       </md-tabs>
     </template>
   </nav-tabs-card>
-
 </template>
 
 <script>
@@ -111,7 +86,7 @@ import {
   TEETH_INITIATION,
   PATIENT_GET,
   NOTIFY
-} from "@/store/modules/constants";
+} from "@/constants";
 
 import {
   AnamnesList,
@@ -148,14 +123,6 @@ export default {
     };
   },
   methods: {
-    isEmpty(obj) {
-      // eslint-disable-next-line
-      for (const key in obj) {
-        // eslint-disable-next-line
-        if (obj.hasOwnProperty(key)) return false;
-      }
-      return true;
-    },
     Implant() {
       console.log(this.selectedTeeth);
       for (let index = 0; index < this.selectedTeeth.length; index += 1) {
@@ -167,22 +134,12 @@ export default {
     },
     currentTabColor() {
       let color = "";
-      // if (this.$route.name === 'Anamnes') {
-      //   color = 'success';
-      // } else if (this.$route.name === 'Diagnose') {
-      //   color = 'success';
-      // } else if (this.$route.name === 'Therapy') {
-      //   color = 'success';
-      // } else if (this.$route.name === 'Notes') {
-      //   color = 'success';
-      // }
       color = "success";
       return color;
     }
   },
   computed: {
     ...mapGetters({
-  
       jaw: "jaw",
       patient: "getPatient"
     })
@@ -222,8 +179,6 @@ export default {
 </script>
 <style lang="scss" >
 .treatment-wrapper {
-
-
   .md-tabs-navigation {
     overflow-x: auto;
     overflow-y: auto;

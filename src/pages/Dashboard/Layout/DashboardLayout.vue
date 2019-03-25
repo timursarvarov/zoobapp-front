@@ -256,7 +256,7 @@
     COMPANY_LOGO_URL,
     COMPANY_COLOR,
     COMPANY_LINK,
-  } from '@/store/modules/constants';
+  } from '@/constants';
   import TopNavbar from './TopNavbar.vue';
   import ContentFooter from './ContentFooter.vue';
   import MobileMenu from './Extra/MobileMenu.vue';

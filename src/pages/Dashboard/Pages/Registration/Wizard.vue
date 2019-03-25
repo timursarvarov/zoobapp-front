@@ -69,7 +69,7 @@
     AUTH_REQUEST,
     CLINIC_LOGO_UPLOAD,
     CLINIC_UPDATE,
-  } from '@/store/modules/constants';
+  } from '@/constants';
 
   export default {
     name: 'refistration-wizard',
@@ -100,7 +100,6 @@
           message: '',
           exceptions: [],
         },
-        code: '',
         username: '',
         firstName: '',
         lastName: '',
@@ -189,6 +188,7 @@
             return res;
           });
         }
+        return false;
       },
       sendValidateCode() {
         // отправлям email в backend
@@ -234,6 +234,7 @@
                   },
                 });
               }
+              // eslint-disable-next-line
               reject(false);
               // return false;
             },
@@ -246,11 +247,14 @@
             username: this.account.username,
             password: this.account.password,
           }).then(
+            // (response) => {
             (response) => {
-              resolve(true);
+              if (response) {
+                resolve(true);
+              }
             },
             (error) => {
-              reject(false);
+              reject(new Error(error));
             },
           );
         });
@@ -269,8 +273,8 @@
                       resolve(true);
                     }
                   },
-                  (error) => {
-                    reject(false);
+                  () => {
+                    reject(new Error(false));
           });
         });
       },

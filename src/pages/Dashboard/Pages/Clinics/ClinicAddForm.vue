@@ -86,7 +86,7 @@
   </div>
 </template>
 <script>
-  import { CLINICS_CREATE, NOTIFY } from '@/store/modules/constants';
+  import { CLINICS_CREATE, NOTIFY } from '@/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
 
   const randomMC = require('random-material-color');

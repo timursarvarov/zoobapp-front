@@ -89,7 +89,8 @@ const componentsMenu = {
   redirect: '/components/buttons',
   beforeEnter: ifAuthenticated,
   name: 'Components',
-  children: [{
+  children: [
+    {
       path: 'buttons',
       name: 'Buttons',
       components: {
@@ -146,7 +147,8 @@ const formsMenu = {
   redirect: '/forms/regular',
   beforeEnter: ifAuthenticated,
   name: 'Forms',
-  children: [{
+  children: [
+    {
       path: 'regular',
       name: 'Regular Forms',
       components: {
@@ -183,7 +185,8 @@ const tablesMenu = {
   redirect: '/table-list/regular',
   beforeEnter: ifAuthenticated,
   name: 'Tables',
-  children: [{
+  children: [
+    {
       path: 'regular',
       name: 'Regular Tables',
       components: {
@@ -213,7 +216,8 @@ const mapsMenu = {
   name: 'Maps',
   redirect: '/maps/google',
   beforeEnter: ifAuthenticated,
-  children: [{
+  children: [
+    {
       path: 'google',
       name: 'Google Maps',
       components: {
@@ -248,7 +252,8 @@ const pagesMenu = {
   name: 'Pages',
   redirect: '/pages/user',
   beforeEnter: ifAuthenticated,
-  children: [{
+  children: [
+    {
       path: 'user',
       name: 'User Page',
       components: {
@@ -280,7 +285,8 @@ const Settings = {
   name: 'Settings',
   redirect: '/settings/user',
   beforeEnter: ifAuthenticated,
-  children: [{
+  children: [
+    {
       path: 'user',
       name: 'My Profile',
       components: {
@@ -315,7 +321,8 @@ const authPages = {
   path: '/',
   component: AuthLayout,
   name: 'Authentication',
-  children: [{
+  children: [
+    {
       path: '/login',
       name: 'Login',
       component: Login,
@@ -347,7 +354,8 @@ const patientPages = {
   name: 'Patient',
   redirect: '/patient/:patientId/diagnose/',
   beforeEnter: ifAuthenticated,
-  children: [{
+  children: [
+    {
       path: '/patient/:patientId/bio',
       name: 'BIO',
       component: PatientProfile,
@@ -386,7 +394,8 @@ const clinicPages = {
   name: 'Clinic',
   redirect: '/clinic/',
   beforeEnter: ifAuthenticated,
-  children: [{
+  children: [
+    {
       path: '/clinic/',
       name: 'Clinic Profile',
       component: ClinicProfile,
@@ -405,7 +414,8 @@ const collaboratorPages = {
   name: 'Collaborator',
   redirect: '/collaborator/:clinicId/profile/',
   beforeEnter: ifAuthenticated,
-  children: [{
+  children: [
+    {
       path: '/collaborator/:clinicId/profile',
       name: 'Collaborator Profile',
       component: ClinicProfile,
@@ -418,7 +428,8 @@ const collaboratorPages = {
   ],
 };
 
-const routes = [{
+const routes = [
+  {
     path: '/',
     redirect: '/dashboard',
     name: 'Home',
@@ -437,7 +448,8 @@ const routes = [{
     path: '/',
     component: DashboardLayout,
     beforeEnter: ifAuthenticated,
-    children: [{
+    children: [
+      {
         path: 'dashboard',
         name: 'Dashboard',
         components: {

@@ -50,10 +50,10 @@
     props: {
       error: {
         type: Object,
-        default: {
+        default: () => ({
           message: 'Wrong email',
           type: 'email',
-        },
+        }),
       },
     },
     data() {
@@ -108,7 +108,7 @@
     },
     watch: {
       error: {
-        handler(val, oldVal) {
+        handler(val) {
           if (val.message) {
             this.showErrorsValidate(val);
             this.error.message = '';

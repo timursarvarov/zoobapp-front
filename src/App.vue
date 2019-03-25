@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import { USER_INITIAL, AUTH_DECODE_TOKEN } from '@/store/modules/constants';
+  import { USER_INITIAL, AUTH_DECODE_TOKEN } from '@/constants';
   import { mapGetters } from 'vuex';
 
   export default {

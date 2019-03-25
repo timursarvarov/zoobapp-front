@@ -185,7 +185,7 @@
     PATIENT_AVATAR_UPLOAD,
     PATIENT_UPDATE,
     NOTIFY,
-  } from '@/store/modules/constants';
+  } from '@/constants';
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
   import StarRating from 'vue-star-rating';
@@ -197,7 +197,7 @@
     components: {
       SlideYDownTransition,
       StarRating,
-      TAvatarInput
+      TAvatarInput,
     },
     name: 'patient-card',
     props: {

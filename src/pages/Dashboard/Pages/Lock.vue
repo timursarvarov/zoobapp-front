@@ -82,7 +82,7 @@
   import { LockCard } from '@/components';
   import ForgotPassword from './ForgotPassword.vue';
   import { mapGetters } from 'vuex';
-  import { AUTH_REQUEST, NOTIFY } from '@/store/modules/constants';
+  import { AUTH_REQUEST, NOTIFY } from '@/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
 
   export default {

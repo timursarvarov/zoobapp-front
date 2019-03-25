@@ -1,5 +1,5 @@
 export default {
-    clinics: [],
-    selectedClinic: {},
-    status: '',
+  clinics: [],
+  selectedClinic: {},
+  status: '',
 };

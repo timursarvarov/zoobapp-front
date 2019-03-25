@@ -1,13 +1,8 @@
-import {
-  TEETH_INITIATION,
-  TEETH_INITIATION_ETHALON,
-} from '../constants';
+import { TEETH_INITIATION, TEETH_INITIATION_ETHALON } from '@/constants';
 import state from './state';
 
 export default {
-  [TEETH_INITIATION]: ({
-    commit,
-  }) => {
+  [TEETH_INITIATION]: ({ commit }) => {
     if (Object.keys(state.jaw).length === 0) {
       const jaw = {
         jawAnamnes: {},

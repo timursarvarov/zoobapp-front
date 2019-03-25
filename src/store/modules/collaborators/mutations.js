@@ -3,7 +3,7 @@ import {
   COLLABORATOR_REQUEST,
   COLLABORATOR_SUCCESS,
   COLLABORATOR_ERROR,
-} from '../constants';
+} from '@/constants';
 
 export default {
   [COLLABORATOR_REQUEST]: (state) => {

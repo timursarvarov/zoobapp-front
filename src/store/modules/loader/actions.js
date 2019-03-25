@@ -2,7 +2,7 @@
 import {
   LOADER_START,
   LOADER_STOP,
-} from '../constants';
+} from '@/constants';
 
 export default {
   [LOADER_START]: ({commit}) => {

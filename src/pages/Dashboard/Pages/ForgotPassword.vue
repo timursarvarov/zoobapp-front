@@ -63,7 +63,7 @@
     PATIENT_CREATE,
     NOTIFY,
     PATIENT_SET_PARAMS,
-  } from '@/store/modules/constants';
+  } from '@/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
 
   export default {

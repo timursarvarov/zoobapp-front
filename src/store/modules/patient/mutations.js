@@ -9,7 +9,7 @@ import {
   PATIENT_DIAGNOSE_UPDATE,
   PATIENT_GET,
   PATIENT_SET_PARAM,
-} from '../constants';
+} from '@/constants';
 
 export default {
   [PATIENT_REQUEST]: (state) => {

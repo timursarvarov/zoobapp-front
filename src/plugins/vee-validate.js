@@ -4,5 +4,5 @@ import VeeValidate from 'vee-validate';
 // Lib imports
 
 Vue.use(VeeValidate, {
-    fieldsBagName: 'veeFields',
+  fieldsBagName: 'veeFields',
 });

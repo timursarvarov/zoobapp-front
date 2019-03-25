@@ -5,7 +5,7 @@ import {
   USER_SUCCESS,
   USER_LOGOUT,
   USER_SET_PARAM,
-} from '../constants';
+} from '@/constants';
 
 export default {
   [USER_REQUEST]: (state) => {

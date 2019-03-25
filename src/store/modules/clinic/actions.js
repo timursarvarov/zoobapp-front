@@ -7,7 +7,7 @@ import {
   CLINIC_LOGO_UPLOAD,
   CLINIC_UPDATE,
   AUTH_REFRESH_TOKEN,
-} from '../constants';
+} from '@/constants';
 
 import axios from 'axios';
 export default {

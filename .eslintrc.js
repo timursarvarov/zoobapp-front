@@ -3,11 +3,20 @@ module.exports = {
 
   env: {
     node: true,
+    es6: true,
+    browser: true,
   },
 
-  extends: ['plugin:vue/essential', '@vue/airbnb'],
+  extends: ['plugin:vue/essential', 'airbnb-base'],
+   plugins: [
+     'babel',
+     'import',
+     'vue',
+     'prettier',
+   ],
 
   rules: {
+    ignoreTemplateLiterals: true,
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     indent: 'off',
@@ -16,10 +25,10 @@ module.exports = {
     }],
     'max-len': ['error', {
       code: 400,
+      ignorePattern: '^d=.*',
       ignoreTemplateLiterals: true,
       ignoreStrings: true,
-      // ignoreComments: true,
-      // ignorePattern: true,
+      ignoreComments: true,
     }],
     overrides: [{
       files: ['*.vue'],
@@ -32,9 +41,12 @@ module.exports = {
     }],
 
   },
+  parser: 'babel-eslint',
 
   parserOptions: {
     parser: 'babel-eslint',
+    ecmaVersion: 6,
+    sourceType: 'module',
   },
 
 };

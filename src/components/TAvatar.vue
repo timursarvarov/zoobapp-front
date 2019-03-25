@@ -58,46 +58,48 @@
         default: false,
       },
     },
-    data(){
-      return{
-        loaded:false,
-      }
+    data() {
+      return {
+        loaded: false,
+      };
     },
     methods: {
-      onLoaded(){
+      onLoaded() {
         this.loaded = true;
       },
       colorLuminance(hex, lum) {
         // validate hex string
         hex = String(hex).replace(/[^0-9a-f]/gi, '');
         if (hex.length < 6) {
-          hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+          hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
         }
         lum = lum || 0;
 
         // convert to decimal and change luminosity
-        var rgb = "#", c, i;
+        let rgb = '#';
+        let c;
+        let i;
         for (i = 0; i < 3; i++) {
-          c = parseInt(hex.substr(i*2,2), 16);
+          c = parseInt(hex.substr(i * 2, 2), 16);
           c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-          rgb += ("00"+c).substr(c.length);
+          rgb += (`00${c}`).substr(c.length);
         }
 
         return rgb;
       },
     },
-    computed:{
-      colorC(){
-        return this.color||'#43a047'
+    computed: {
+      colorC() {
+        return this.color || '#43a047';
       },
       gradient() {
-        let colors = "linear-gradient(45deg";
+        let colors = 'linear-gradient(45deg';
         const colorStart = this.colorLuminance(this.colorC, -0.4);
         const colorEnd = this.colorLuminance(this.colorC, 0.4);
-        colors +=  "," + colorStart + "," + colorEnd;
-        colors += ")";
+        colors += `,${colorStart},${colorEnd}`;
+        colors += ')';
         return colors;
-      }
+      },
     },
   };
 </script>

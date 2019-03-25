@@ -5,7 +5,7 @@ import {
   AUTH_SUCCESS,
   AUTH_LOGOUT,
   AUTH_REFRESH_ERROR,
-} from '../constants';
+} from '@/constants';
 
 export default {
   [AUTH_REQUEST]: (state) => {

@@ -6,7 +6,7 @@ import {
   PATIENTS_SUCCESS,
   PATIENTS_SET,
   PATIENTS_UPDATE_PATIENT,
-} from '../constants';
+} from '@/constants';
 
 const CancelToken = axios.CancelToken;
 let cancel;

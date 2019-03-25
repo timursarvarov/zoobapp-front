@@ -179,7 +179,7 @@
     USER_AVATAR_UPLOAD,
     USER_UPDATE,
     NOTIFY,
-  } from '@/store/modules/constants';
+  } from '@/constants';
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
   import { TAvatarInput } from '@/components';

@@ -114,15 +114,11 @@
 </template>
 
 <script>
-  import {
-    NOTIFY,
-    PATIENT_DIAGNOSE_SET,
-    USER_SET_PARAM,
-  } from '@/store/modules/constants';
+  import { NOTIFY, PATIENT_DIAGNOSE_SET, USER_SET_PARAM } from '@/constants';
   import { mapGetters } from 'vuex';
   import { SlideYDownTransition } from 'vue2-transitions';
-  import { Collapse, Jaw, JawAddDiagnose } from '@/components';
-  import { DIAGNOSIS, DEFAULT_TOOTH_LOCATIONS } from '@/constants';
+  import { Collapse, Jaw } from '@/components';
+  import { DIAGNOSIS, TEETH_DEFAULT_LOCATIONS } from '@/constants';
   import Fuse from 'fuse.js';
   import DiagnoseList from './DiagnoseList.vue';
   import JawAddDiagnoseWizard from './JawAddDiagnoseWizard.vue';
@@ -157,7 +153,6 @@
       Collapse,
       Jaw,
       SlideYDownTransition,
-      JawAddDiagnose,
       DiagnoseList,
       JawAddDiagnoseWizard,
     },
@@ -187,9 +182,8 @@
       };
     },
     methods: {
-      saveDiagnose(d){
-        console.log(d)
-        let diagnose = d;
+      saveDiagnose(d) {
+        const diagnoseL = d;
         diagnoseL.author = {
           ID: this.user.ID,
           avatar: this.user.avatar,
@@ -198,8 +192,8 @@
         };
         diagnoseL.id = Math.random();
         this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
-            diagnoseL,
-          });
+          diagnose: diagnoseL,
+        });
       },
       toggleFormVisible(value) {
         this.isFormVisible = value;
@@ -398,7 +392,7 @@
       },
     },
     updated() {
-      this.$nextTick(() =>{
+      this.$nextTick(() => {
         this.matchHeight();
       });
     },
@@ -417,13 +411,16 @@
         user: 'getProfile',
       }),
       defaultLocations() {
-        return DEFAULT_TOOTH_LOCATIONS;
+        return TEETH_DEFAULT_LOCATIONS;
       },
       diagnosis() {
         return DIAGNOSIS;
       },
       patientDiagnosis() {
-        return this.patient.diagnosis;
+        if (this.patient) {
+          return this.patient.diagnosis;
+        }
+        return [];
       },
       filteredDiagnosis() {
         return this.getFilteredDiagnosis();
@@ -458,6 +455,7 @@
       },
     },
   };
+
 </script>
 <style lang="scss">
 .set-diagnose-form {
@@ -504,13 +502,13 @@
     .highlight {
       background-color: rgba(255, 255, 21, 0.979);
     }
-    .md-list{
+    .md-list {
       .md-list-item {
-        margin: 0
+        margin: 0;
       }
       background-color: #f7f7f7d5;
       border-style: solid;
-      border-color:  #eeecec9c;
+      border-color: #eeecec9c;
       border-width: 1px;
       border-radius: 4px;
       margin-bottom: 15px;
@@ -523,7 +521,6 @@
       // background-color: rgba(238, 236, 236, 0.201);
     }
     .dental {
-
       .md-list-item-text {
         cursor: not-allowed;
       }

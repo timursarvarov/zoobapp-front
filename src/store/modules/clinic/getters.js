@@ -1,9 +1,9 @@
 import {
-COMPANY_NAME,
-COMPANY_LOGO_URL,
-COMPANY_COLOR,
-COMPANY_LINK,
-} from '../constants';
+  COMPANY_NAME,
+  COMPANY_LOGO_URL,
+  COMPANY_COLOR,
+  COMPANY_LINK,
+} from '@/constants';
 
 export default {
   getCurrentClinic: (state) => {

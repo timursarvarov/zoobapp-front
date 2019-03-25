@@ -191,7 +191,7 @@
 <script>
   import { TimeLine, TimeLineItem, Badge } from '@/components';
   import { mapGetters } from 'vuex';
-  import { PATIENT_CREATE_NOTE, NOTIFY } from '@/store/modules/constants';
+  import { PATIENT_CREATE_NOTE, NOTIFY } from '@/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
 
   export default {

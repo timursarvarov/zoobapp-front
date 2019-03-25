@@ -46,30 +46,8 @@ export default {
     universal: undefined,
     palmer: undefined,
   },
-  teethBabyBottom: [
-    85,
-    84,
-    83,
-    82,
-    81,
-    71,
-    72,
-    73,
-    74,
-    75,
-  ],
-  teethBabyTop: [
-    55,
-    54,
-    53,
-    52,
-    51,
-    61,
-    62,
-    63,
-    64,
-    65,
-  ],
+  teethBabyBottom: [85, 84, 83, 82, 81, 71, 72, 73, 74, 75],
+  teethBabyTop: [55, 54, 53, 52, 51, 61, 62, 63, 64, 65],
   teethBabyAll: [
     55,
     54,
@@ -538,5 +516,4 @@ export default {
       name: 'Lower left second molar',
     },
   },
-
 };

@@ -7,29 +7,22 @@
             <md-icon>people_outline</md-icon>
           </div>
 
-          <h4 class="title md-layout-item">
-            Collaborators
-          </h4>
+          <h4 class="title md-layout-item">Collaborators</h4>
 
-          <div class="  md-layout-item md-layout md-gutter md-alignment-bottom-right ">
-            <div class="table-settings md-layout-item md-layout md-alignment-bottom-right ">
+          <div class="md-layout-item md-layout md-gutter md-alignment-bottom-right">
+            <div class="table-settings md-layout-item md-layout md-alignment-bottom-right">
               <md-button
                 @click="showAddCollaborator=!showAddCollaborator"
-                class="md-just-icon md-simple "
+                class="md-just-icon md-simple"
               >
                 <md-icon>person_add</md-icon>
               </md-button>
 
-              <md-button
-                @click="showForm=!showForm"
-                class=" md-just-icon md-simple "
-              >
+              <md-button @click="showForm=!showForm" class="md-just-icon md-simple">
                 <md-icon>settings</md-icon>
               </md-button>
-
             </div>
           </div>
-
         </md-card-header>
         <md-card-content>
           <md-table
@@ -42,26 +35,20 @@
           >
             <md-table-toolbar>
               <div class="md-toolbar-row">
-                <div class="md-toolbar-section-end">
-                </div>
+                <div class="md-toolbar-section-end"></div>
               </div>
 
               <div class="md-toolbar-row">
                 <div class="md-toolbar-section-start">
                   <md-field>
                     <label for="pages">Per page</label>
-                    <md-select
-                      v-model="queryParams.pagination.perPage"
-                      name="pages"
-                    >
+                    <md-select v-model="queryParams.pagination.perPage" name="pages">
                       <md-option
                         v-for="item in perPageOptions"
                         :key="item"
                         :label="item"
                         :value="item"
-                      >
-                        {{ item }}
-                      </md-option>
+                      >{{ item }}</md-option>
                     </md-select>
                   </md-field>
                 </div>
@@ -74,8 +61,7 @@
                       style="width: 200px"
                       placeholder="Search records"
                       v-model="queryParams.searchQuery"
-                    >
-                    </md-input>
+                    ></md-input>
                   </md-field>
                 </div>
               </div>
@@ -94,21 +80,15 @@
               v-else
               md-label="Waiting for patients to load"
               :md-description="`Please be patient, just a few seconds...`"
-            >
-            </md-table-empty-state>
+            ></md-table-empty-state>
 
-            <md-table-row
-              slot="md-table-row"
-              slot-scope="{ item }"
-              md-selectable="multiple"
-            >
+            <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple">
               <md-table-cell
                 v-for="field  in patientsTableColumns"
                 :key="field.key"
                 :md-sort-by=" item[field.key] ? item[field.key].toString() : ''"
                 :md-label="getFieldName(field.key).toString()"
               >
-
                 <div v-if="field.key === 'avatar'">
                   <t-avatar
                     :color="item.color"
@@ -117,30 +97,17 @@
                   />
                 </div>
 
-                <div v-else-if="item[field.key] === null">
-
-                </div>
+                <div v-else-if="item[field.key] === null"></div>
                 <div v-else-if="(typeof item[field.key]) === 'array'">
                   111
-                  <div
-                    v-if="field.key === 'files'"
-                    class="md-layout md-alignment-left-center"
-                  >
-                    <span class="md-layout-item">
-                      {{item[field.key].length }}
-                    </span>
+                  <div v-if="field.key === 'files'" class="md-layout md-alignment-left-center">
+                    <span class="md-layout-item">{{item[field.key].length }}</span>
                   </div>
                 </div>
 
                 <div v-else-if="(typeof item[field.key]) === 'object'">
-                  <div
-                    v-if="field.key === 'createdBy'"
-                    class="md-layout md-alignment-left-center"
-                  >
-                    <div
-                      class="md-layout-item md-layout"
-                      style="max-width:60px;"
-                    >
+                  <div v-if="field.key === 'createdBy'" class="md-layout md-alignment-left-center">
+                    <div class="md-layout-item md-layout" style="max-width:60px;">
                       <t-avatar
                         :small="true"
                         :color="item[field.key].color"
@@ -149,33 +116,28 @@
                       />
                     </div>
                     <span class="md-layout-item">
-                      <span>
-                        {{item[field.key].lastName | capitilize}}
-                      </span>
-                      <br />
-                      <span>
-                        {{item[field.key].firstName | capitilize}}
-                      </span>
+                      <span>{{item[field.key].lastName | capitilize}}</span>
+                      <br>
+                      <span>{{item[field.key].firstName | capitilize}}</span>
                     </span>
                   </div>
-                  <div v-else-if="field.key === 'allergy'">
-                    {{item[field.key].join(', ') }}
-                  </div>
+                  <div v-else-if="field.key === 'allergy'">{{item[field.key].join(', ') }}</div>
                 </div>
                 <div v-else-if="(typeof item[field.key]) === 'string' || field.key === 'avatar'">
                   <span v-if="$moment(item[field.key], $moment.ISO_8601, true).isValid()">
-                    <span v-if="field.key==='birthday'">{{ $moment().diff(item[field.key], 'years') }} years </span>
+                    <span
+                      v-if="field.key==='birthday'"
+                    >{{ $moment().diff(item[field.key], 'years') }} years</span>
                     <div v-else>
-                      <span>{{ item[field.key] | moment("from") }}</span><br />
+                      <span>{{ item[field.key] | moment("from") }}</span>
+                      <br>
                       <small>{{ item[field.key] | moment("calendar")}}</small>
                     </div>
                   </span>
-                  <span v-else-if="field.key === 'firstName' || field.key === 'lastName'">
-                    {{item[field.key] | capitilize}}
-                  </span>
-                  <span v-else>
-                    {{item[field.key]}}
-                  </span>
+                  <span
+                    v-else-if="field.key === 'firstName' || field.key === 'lastName'"
+                  >{{item[field.key] | capitilize}}</span>
+                  <span v-else>{{item[field.key]}}</span>
                 </div>
                 <div v-else-if="(typeof item[field.key]) === 'number'">
                   <span v-if="field.key === 'phone'">
@@ -190,11 +152,8 @@
                       v-model="item.rating"
                     ></star-rating>
                   </div>
-                  <div v-else>
-                    {{item[field.key]}}
-                  </div>
+                  <div v-else>{{item[field.key]}}</div>
                 </div>
-
               </md-table-cell>
 
               <md-table-cell md-label="Actions">
@@ -226,27 +185,17 @@
                 <tr>
                   <th class="md-table-head">
                     <div class="md-table-head-container md-ripple md-disabled">
-                      <div class="md-table-head-label">
-                        Select
-                      </div>
+                      <div class="md-table-head-label">Select</div>
                     </div>
                   </th>
-                  <th
-                    v-for="item in patientsTableColumns"
-                    :key="item.key"
-                    class="md-table-head"
-                  >
+                  <th v-for="item in patientsTableColumns" :key="item.key" class="md-table-head">
                     <div class="md-table-head-container md-ripple md-disabled">
-                      <div class="md-table-head-label">
-                        {{item.title}}
-                      </div>
+                      <div class="md-table-head-label">{{item.title}}</div>
                     </div>
                   </th>
                   <th class="md-table-head">
                     <div class="md-table-head-container md-ripple md-disabled">
-                      <div class="md-table-head-label">
-                        Actions
-                      </div>
+                      <div class="md-table-head-label">Actions</div>
                     </div>
                   </th>
                 </tr>
@@ -262,11 +211,10 @@
             :showForml.sync="showForm"
             @selected="setColumns"
           ></patients-list-settings>
-          <collaborator-add-form :showForm.sync="showAddCollaborator">
-          </collaborator-add-form>
+          <collaborator-add-form :showForm.sync="showAddCollaborator"></collaborator-add-form>
         </md-card-content>
         <md-card-actions md-alignment="space-between">
-          <div class="">
+          <div class>
             <p class="card-category">Showing {{from + 1}} to {{to}} of {{totalPages}} entries</p>
           </div>
           <pagination
@@ -279,24 +227,21 @@
       </md-card>
     </div>
   </div>
-
 </template>
 
 <script>
-  // import { mapFilters } from '@/filters/map-filters';
+// import { mapFilters } from '@/filters/map-filters';
   import { Pagination, TAvatar } from '@/components';
   import { PatientsListSettings } from '@/pages';
   import CollaboratorAddForm from './CollaboratorAddForm.vue';
   import StarRating from 'vue-star-rating';
   import swal from 'sweetalert2';
   import { mapGetters } from 'vuex';
-  import {
-    PATIENTS_REQUEST,
-    AUTH_LOGOUT,
-    PATIENTS_LIST_COLUMNS,
-  } from '@/store/modules/constants';
+  import { PATIENTS_REQUEST, AUTH_LOGOUT } from '@/constants';
+  import { isEmpty } from '@/mixins';
 
   export default {
+    mixins: [isEmpty],
     components: {
       Pagination,
       StarRating,
@@ -344,14 +289,6 @@
       //    columns: e,
       //   },
       // });
-      },
-      isEmpty(obj) {
-        // eslint-disable-next-line
-      for (const key in obj) {
-          // eslint-disable-next-line
-        if (obj.hasOwnProperty(key)) return false;
-        }
-        return true;
       },
       openPatientProfile() {
         this.$store.dispatch(AUTH_LOGOUT, { params: '' });

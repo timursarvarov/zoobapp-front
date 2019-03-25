@@ -16,7 +16,7 @@ import {
   PATIENT_ADD_SUB_PROP,
   PATIENT_DOWNLOAD_FILE,
   PATIENT_DIAGNOSE_UPDATE,
-} from '../constants';
+} from '@/constants';
 
 export default {
   [PATIENT_AVATAR_UPLOAD]: ({

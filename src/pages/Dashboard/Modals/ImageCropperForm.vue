@@ -1,8 +1,5 @@
 <template>
-  <md-dialog
-    class="cropper-form"
-    :md-active.sync="showFormLocal"
-  >
+  <md-dialog class="cropper-form" :md-active.sync="showFormLocal">
     <div>
       <md-card>
         <md-card-header class="md-card-header-icon md-card-header-green">
@@ -10,10 +7,9 @@
             <md-icon>{{icon}}</md-icon>
           </div>
           <h4 class="title">{{title}}</h4>
-
         </md-card-header>
 
-        <md-card-content >
+        <md-card-content>
           <div
             @mouseup="mouseActions =!mouseActions"
             @mousewheel="mouseActions =!mouseActions"
@@ -33,11 +29,9 @@
             >
               <div slot="placeholder">No image</div>
             </clipper-fixed>
-
           </div>
 
-          <div >
-
+          <div>
             <div
               v-if="message !== 'Calculating...'"
               :class="[{'error': !correctSize(),
@@ -45,23 +39,16 @@
               class="md-size-100 md-layout-item"
             >
               {{message}}:
-              <animated-number
-                :value="size.num"
-                :toFix="2"
-                :duration="300"
-              ></animated-number>
-              {{size.type}}<br />
+              <animated-number :value="size.num" :toFix="2" :duration="300"></animated-number>
+              {{size.type}}
+              <br>
             </div>
 
-            <div
-              v-if="message === 'Calculating...'"
-              class="md-layout-item md-size-100"
-            >
-              {{message}} <br />
+            <div v-if="message === 'Calculating...'" class="md-layout-item md-size-100">
+              {{message}}
+              <br>
             </div>
-
           </div>
-
         </md-card-content>
         <md-card-actions md-alignment="right">
           <md-button
@@ -75,8 +62,8 @@
   </md-dialog>
 </template>
 <script>
-  import { Slider, AnimatedNumber } from '@/components';
-  import { NOTIFY } from '@/store/modules/constants';
+  import { AnimatedNumber } from '@/components';
+  import { NOTIFY } from '@/constants';
 
   export default {
     name: 'imageCropperForm',
@@ -100,7 +87,8 @@
       },
       imageName: {
         type: String,
-        default: () => 'imageName',
+        default: () => 'imageName'
+        ,
       },
       fd: {
         type: Object,
@@ -116,7 +104,6 @@
       },
     },
     components: {
-      Slider,
       AnimatedNumber,
     },
     data() {

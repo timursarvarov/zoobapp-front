@@ -1,7 +1,7 @@
 /* eslint-disable */
 import {
   NOTIFY,
-} from '../constants';
+} from '@/constants';
 
 export default {
   [NOTIFY]: (state, settings) => {

@@ -14,7 +14,7 @@
 <script>
   import { mapGetters } from 'vuex';
   import { PatientCard } from '@/pages';
-  import { PATIENT_GET } from '@/store/modules/constants';
+  import { PATIENT_GET } from '@/constants';
   // import { JawGenerator } from '@/components';
 
   export default {

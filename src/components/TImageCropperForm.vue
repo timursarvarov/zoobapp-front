@@ -75,7 +75,7 @@
 </template>
 <script>
   import { Slider, AnimatedNumber } from '@/components';
-  import { NOTIFY } from '@/store/modules/constants';
+  import { NOTIFY } from '@/constants';
 
   export default {
     name: 'TimageCropperForm',

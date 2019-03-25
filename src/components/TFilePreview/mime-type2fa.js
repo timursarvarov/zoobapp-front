@@ -1,5 +1,5 @@
+/* eslint-disable */
 
-/* eslint-disable */ 
 const mapping = [
     // Images
     ['file-image', /^image\//],

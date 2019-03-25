@@ -2,7 +2,7 @@
 import {
   TEETH_INITIATION,
   TEETH_INITIATION_ETHALON
-} from '../constants';
+} from '@/constants';
 
 export default {
   [TEETH_INITIATION]: (state, jaw) => {

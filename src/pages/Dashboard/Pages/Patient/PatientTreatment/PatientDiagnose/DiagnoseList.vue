@@ -1,8 +1,6 @@
+
 <template>
-  <div
-    class="md-layout md-gutter"
-    v-if="!isEmpty(originalDiagnosis)"
-  >
+  <div class="md-layout md-gutter" v-if="!isEmpty(originalDiagnosis)">
     <div class="md-layout-item">
       <md-toolbar class="md-transparent">
         <h3 class="md-title">All Diagnosis</h3>
@@ -18,18 +16,13 @@
         <md-table-toolbar>
           <md-field>
             <label for="pages">Per page</label>
-            <md-select
-              v-model="pagination.perPage"
-              name="pages"
-            >
+            <md-select v-model="pagination.perPage" name="pages">
               <md-option
                 v-for="item in pagination.perPageOptions"
                 :key="item"
                 :label="item"
                 :value="item"
-              >
-                {{ item }}
-              </md-option>
+              >{{ item }}</md-option>
             </md-select>
           </md-field>
 
@@ -41,76 +34,45 @@
               style="width: 200px"
               placeholder="Search patient diagnose"
               v-model="searchQuery"
-            >
-            </md-input>
+            ></md-input>
           </md-field>
         </md-table-toolbar>
 
-        <md-table-row
-          slot="md-table-row"
-          slot-scope="{ item }"
-        >
-          <md-table-cell
-            class="code"
-            md-label="Code"
-            md-sort-by="code"
-          >{{ item.code }}</md-table-cell>
-          <md-table-cell
-            md-label="Diagnose"
-            md-sort-by="title"
-          >{{ item.title }}</md-table-cell>
-          <md-table-cell
-            md-sort-by="teeth"
-            md-label="Teeth"
-          >
+        <md-table-row slot="md-table-row" slot-scope="{ item }">
+          <md-table-cell class="code" md-label="Code" md-sort-by="code">{{ item.code }}</md-table-cell>
+          <md-table-cell md-label="Diagnose" md-sort-by="title">{{ item.title }}</md-table-cell>
+          <md-table-cell md-sort-by="teeth" md-label="Teeth">
             <span
               v-for="toothId in Object.keys(item.teeth)"
               :key="toothId"
-            >
-              {{ toothId | toCurrentTeethSystem(teethSystem) }},
-            </span>
+            >{{ toothId | toCurrentTeethSystem(teethSystem) }},</span>
           </md-table-cell>
-          <md-table-cell
-            md-sort-by="author"
-            md-label="Diagnosed by"
-          >
-            <div
-                class="md-layout md-alignment-left-center"
-              >
-                <div
-                  class="md-layout-item md-layout"
-                  style="max-width:40px;"
-                >
-                  <t-avatar
-                    :small="true"
-                    :color="item.author.color"
-                    :imageSrc="item.author.avatar"
-                    :title="item.author.firstName + ' ' + item.author.lastName"
-                  />
-                </div>
-                <span class="md-layout-item">
-                  <span>
-                    {{item.author.lastName | capitilize}}
-                  </span>
-                  <br />
-                  <span>
-                    {{item.author.firstName | capitilize}}
-                  </span>
-                </span>
+          <md-table-cell md-sort-by="author" md-label="Diagnosed by">
+            <div class="md-layout md-alignment-left-center">
+              <div class="md-layout-item md-layout" style="max-width:40px;">
+                <t-avatar
+                  :small="true"
+                  :color="item.author.color"
+                  :imageSrc="item.author.avatar"
+                  :title="item.author.firstName + ' ' + item.author.lastName"
+                />
               </div>
+              <span class="md-layout-item">
+                <span>{{item.author.lastName | capitilize}}</span>
+                <br>
+                <span>{{item.author.firstName | capitilize}}</span>
+              </span>
+            </div>
           </md-table-cell>
-          <md-table-cell
-            md-sort-by="date"
-            class="date"
-            md-label="Date"
-          >
-            <span><br />{{ item.date | moment("from") }}</span><br />
+          <md-table-cell md-sort-by="date" class="date" md-label="Date">
+            <span>
+              <br>
+              {{ item.date | moment("from") }}
+            </span>
+            <br>
             <small>{{item.date | moment("calendar")}}</small>
           </md-table-cell>
-          <md-table-cell
-            class="actions"
-            md-label="Actions"
-          >
+          <md-table-cell class="actions" md-label="Actions">
             <md-button
               v-show="ifDiagnoseHasLocations(item.teeth)"
               class="md-just-icon md-simple"
@@ -119,16 +81,10 @@
               <md-icon v-show="isHidedDiagnose(item)">visibility</md-icon>
               <md-icon v-show="!isHidedDiagnose(item)">visibility_off</md-icon>
             </md-button>
-            <md-button
-              class="md-just-icon md-info md-simple"
-              @click.native="handleEdit(item)"
-            >
+            <md-button class="md-just-icon md-info md-simple" @click.native="handleEdit(item)">
               <md-icon>edit</md-icon>
             </md-button>
-            <md-button
-              class="md-just-icon md-danger md-simple"
-              @click.native="handleDelete(item)"
-            >
+            <md-button class="md-just-icon md-danger md-simple" @click.native="handleDelete(item)">
               <md-icon>close</md-icon>
             </md-button>
           </md-table-cell>
@@ -138,75 +94,61 @@
         <table>
           <tfoot>
             <tr>
-              <th
-                v-for="item in footerTable"
-                :key="item"
-                class="md-table-head"
-              >
+              <th v-for="item in footerTable" :key="item" class="md-table-head">
                 <div class="md-table-head-container md-ripple md-disabled">
-                  <div class="md-table-head-label">
-                    {{item}}
-                  </div>
+                  <div class="md-table-head-label">{{item}}</div>
                 </div>
               </th>
             </tr>
           </tfoot>
         </table>
       </div>
-      <div
-        class="md-layout"
-        md-alignment="space-between"
-      >
+      <div class="md-layout" md-alignment="space-between">
         <div class="md-layout-item">
           <p class="card-category">Showing {{from + 1}} to {{to}} of {{total}} entries</p>
         </div>
         <pagination
-          class=" mb-3 pagination-no-border pagination-success"
+          class="mb-3 pagination-no-border pagination-success"
           v-model="pagination.currentPage"
           :per-page="pagination.perPage"
           :total="total"
-        >
-        </pagination>
+        ></pagination>
       </div>
-       <jaw-add-diagnose-wizard
-          @on-created='saveDiagnose'
-          :selectedTeeth="setecltedTeeth"
-          :selectedDiagnose="selectedDiagnose"
-          :jaw='jaw'
-          :teethSchema="teethSchema"
-          :teethSystem="teethSystem"
-          :isDialogVisible.sync="showForm"
-          />
+      <jaw-add-diagnose-wizard
+        @on-created="saveDiagnose"
+        :selectedTeeth="setecltedTeeth"
+        :selectedDiagnose="selectedDiagnose"
+        :jaw="jaw"
+        :teethSchema="teethSchema"
+        :teethSystem="teethSystem"
+        :isDialogVisible.sync="showForm"
+      />
     </div>
   </div>
-
 </template>
-
+/* eslint-disable import/no-unresolved */
 <script>
- import {
-    NOTIFY,
-    PATIENT_DIAGNOSE_UPDATE,
-    USER_SET_PARAM,
-  } from '@/store/modules/constants';
+  import { PATIENT_DIAGNOSE_UPDATE } from '@/constants';
   import { Pagination, TAvatar } from '@/components';
   import { mapGetters } from 'vuex';
   import Fuse from 'fuse.js';
   import swal from 'sweetalert2';
   import JawAddDiagnoseWizard from './JawAddDiagnoseWizard.vue';
-
+  import { isEmpty } from '@/mixins';
 
   export default {
+    mixins: [isEmpty],
     components: {
       Pagination,
       TAvatar,
-      JawAddDiagnoseWizard
+      JawAddDiagnoseWizard,
     },
     props: {
       diagnosis: {
         type: Array,
         default: () => [],
       },
-     teethSystem: {
+      teethSystem: {
         type: Number,
         default: () => 1,
       },
@@ -245,8 +187,8 @@
         patient: 'getPatient',
       }),
       setecltedTeeth() {
-        if(!this.isEmpty(this.selectedDiagnose)){
-          return Object.keys(this.selectedDiagnose.teeth)
+        if (!this.isEmpty(this.selectedDiagnose)) {
+          return Object.keys(this.selectedDiagnose.teeth);
         }
         return [];
       },
@@ -281,21 +223,12 @@
     },
 
     methods: {
-      saveDiagnose(d){
-         console.log(d)
-        let diagnose = d;
-       this.$store.dispatch(PATIENT_DIAGNOSE_UPDATE, {
-            diagnose: diagnose,
-          });
-
-      },
-      isEmpty(obj) {
-        // eslint-disable-next-line
-      for (const key in obj) {
-          // eslint-disable-next-line
-        if (obj.hasOwnProperty(key)) return false;
-        }
-        return true;
+      saveDiagnose(d) {
+        console.log(d);
+        const diagnose = d;
+        this.$store.dispatch(PATIENT_DIAGNOSE_UPDATE, {
+          diagnose,
+        });
       },
       isHidedDiagnose(diagnose) {
         const OindexToDelete = this.tableData.findIndex(
@@ -307,7 +240,6 @@
         return OindexToDelete !== -1 && PindexToDelete !== -1;
       },
       showHidePatientDiagnose(diagnose) {
-
         const indexToDelete = this.patientDiagnosis.findIndex(
           pDiagnose => pDiagnose.id === diagnose.id,
         );
@@ -355,16 +287,18 @@
           }
           if (typeof a[thisLocal.currentSort] === 'number') {
             const orderLocal = thisLocal.currentSortOrder;
-            const dflt = orderLocal == 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
-            const aVal = a[sortBy] == null ? dflt : a[sortBy];
-            const bVal = b[sortBy] == null ? dflt : b[sortBy];
+            // eslint-disable-next-line no-multi-spaces
+            const dflt =            orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+            const aVal = a[sortBy] === null ? dflt : a[sortBy];
+            const bVal = b[sortBy] === null ? dflt : b[sortBy];
             return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
           }
           if (typeof a[thisLocal.currentSort] === 'object') {
             const orderLocal = thisLocal.currentSortOrder;
-            const dflt = orderLocal == 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
-            const aVal = a[sortBy] == null ? dflt : a[sortBy];
-            const bVal = b[sortBy] == null ? dflt : b[sortBy];
+            // eslint-disable-next-line no-multi-spaces
+            const dflt =            orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+            const aVal = a[sortBy] === null ? dflt : a[sortBy];
+            const bVal = b[sortBy] === null ? dflt : b[sortBy];
             return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
           }
         });
@@ -381,11 +315,11 @@
       handleEdit(item) {
         this.selectedDiagnose = item;
         this.showForm = true;
-        // swal({
-        //   title: `You want to edit ${item.title}`,
-        //   buttonsStyling: false,
-        //   confirmButtonClass: 'md-button md-info',
-        // });
+      // swal({
+      //   title: `You want to edit ${item.title}`,
+      //   buttonsStyling: false,
+      //   confirmButtonClass: 'md-button md-info',
+      // });
       },
       handleDelete(item) {
         swal({

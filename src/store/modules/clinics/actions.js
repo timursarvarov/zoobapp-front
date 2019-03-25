@@ -4,7 +4,7 @@ import {
   CLINICS_ERROR,
   CLINICS_SUCCESS,
   CLINICS_CREATE,
-} from '../constants';
+} from '@/constants';
 
 import axios from 'axios';
 export default {

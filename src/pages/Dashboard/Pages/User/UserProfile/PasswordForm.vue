@@ -104,7 +104,7 @@
 </template>
 <script>
   import { SlideYDownTransition } from 'vue2-transitions';
-  import { USER_UPDATE_PASSWORD, NOTIFY } from '@/store/modules/constants';
+  import { USER_UPDATE_PASSWORD, NOTIFY } from '@/constants';
 
   export default {
     name: 'PassworForm',

@@ -196,7 +196,7 @@
     CLINIC_LOGO_UPLOAD,
     CLINIC_UPDATE,
     NOTIFY,
-  } from '@/store/modules/constants';
+  } from '@/constants';
   import { mapGetters } from 'vuex';
   import { IconBase, TAvatarInput } from '@/components';
   import { SlideYDownTransition } from 'vue2-transitions';
@@ -207,7 +207,7 @@
     components: {
       SlideYDownTransition,
       IconBase,
-      TAvatarInput
+      TAvatarInput,
     },
     name: 'currentClinic-settings',
     props: {

@@ -4,7 +4,7 @@ import {
   CLINIC_REQUEST,
   CLINIC_SUCCESS,
   CLINIC_ERROR,
-} from '../constants';
+} from '@/constants';
 
 export default {
   [CLINIC_SET]: (

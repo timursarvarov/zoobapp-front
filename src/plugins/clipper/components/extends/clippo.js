@@ -1,7 +1,7 @@
 /*
-    * methods for calculating position layout,
-    * extended by clipper-basic-component
-*/
+ * methods for calculating position layout,
+ * extended by clipper-basic-component
+ */
 /* eslint-disable */
 import { fromEvent } from 'rxjs';
 import _commonMethods from './common/method';
