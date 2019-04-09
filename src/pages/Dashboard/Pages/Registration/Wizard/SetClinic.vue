@@ -76,142 +76,142 @@
   </div>
 </template>
 <script>
-  import {
-    NOTIFY,
-  } from '@/constants';
-  import { SlideYDownTransition } from 'vue2-transitions';
-  import { IconBase } from '@/components';
-  import { ImageCropperForm } from '@/pages';
-  import { mapGetters } from 'vuex';
+    import {
+      NOTIFY,
+    } from '@/constants';
+    import { SlideYDownTransition } from 'vue2-transitions';
+    import { IconBase } from '@/components';
+    import { ImageCropperForm } from '@/pages';
+    import { mapGetters } from 'vuex';
 
-  export default {
-    components: {
-      SlideYDownTransition,
-      ImageCropperForm,
-      IconBase,
-    },
-    props: {
-      error: {
-        type: Object,
-        default() {
-          return {
-            message: 'Wrong clinic name',
-            type: 'clinicName',
-          };
-        },
+    export default {
+      components: {
+        SlideYDownTransition,
+        ImageCropperForm,
+        IconBase,
       },
-    },
-    data() {
-      return {
-        fd: null,
-        showForm: false,
-        image: '',
-        clinicName: '',
-        touched: {
-          clinicName: false,
-        },
-        modelValidations: {
-          clinicName: {
-            required: true,
-            min: 5,
+      props: {
+        error: {
+          type: Object,
+          default() {
+            return {
+              message: 'Wrong clinic name',
+              type: 'clinicName',
+            };
           },
         },
-      };
-    },
-    methods: {
-      focusOn(ref) {
-        if (!this.$refs[ref]) {
-          return;
-        }
-        this.$refs[ref].$el.focus();
       },
-      clearImage() {
-        const input = this.$refs.imageInserter;
-        input.type = 'text';
-        input.type = 'file';
-      },
-      handlePreview(file) {
-        this.model.imageUrl = URL.createObjectURL(file.raw);
-      },
-      getError(fieldName) {
-        return this.errors.first(fieldName);
-      },
-      validate() {
-        return this.$validator.validateAll().then((res) => {
-          this.$emit('on-validated', res, 'step4');
-          this.$emit('validated-clinicName', this.clinicName);
-          return res;
-        });
-      },
-      onFileChange(e) {
-        const files = e.target.files || e.dataTransfer.files;
-        if (files.length > 0) {
-          this.createImage(files[0]);
-          this.showForm = true;
-          this.clearImage();
-        } else {
-          this.$store.dispatch(NOTIFY, {
-            settings: {
-              message: 'No files selected!',
-              type: 'warning',
+      data() {
+        return {
+          fd: null,
+          showForm: false,
+          image: '',
+          clinicName: '',
+          touched: {
+            clinicName: false,
+          },
+          modelValidations: {
+            clinicName: {
+              required: true,
+              min: 5,
             },
-          });
-        }
-      },
-      createImage(file) {
-        const reader = new FileReader();
-        const vm = this;
-
-        reader.onload = (e) => {
-          vm.image = e.target.result;
+          },
         };
-        reader.readAsDataURL(file);
       },
-      showErrorsValidate(error) {
-        if (error.message === '') {
-          return;
-        }
-        const field = this.$validator.fields.find({
-          name: error.type,
-          scope: this.$options.scope,
-        });
-        if (!field) return;
-        this.$validator.errors.add({
-          id: error.type,
-          field: error.type,
-          msg: error.message,
-          scope: this.$options.scope,
-        });
-        field.setFlags({
-          invalid: true,
-          valid: false,
-          validated: true,
-        });
-      },
-    },
-    computed: {
-      ...mapGetters({
-        currentClinic: 'getCurrentClinic',
-      }),
-    },
-    watch: {
-      error: {
-        handler(val) {
-          if (val.message) {
-            this.showErrorsValidate(val);
-            this.error.message = '';
+      methods: {
+        focusOn(ref) {
+          if (!this.$refs[ref]) {
+            return;
+          }
+          this.$refs[ref].$el.focus();
+        },
+        clearImage() {
+          const input = this.$refs.imageInserter;
+          input.type = 'text';
+          input.type = 'file';
+        },
+        handlePreview(file) {
+          this.model.imageUrl = URL.createObjectURL(file.raw);
+        },
+        getError(fieldName) {
+          return this.errors.first(fieldName);
+        },
+        validate() {
+          return this.$validator.validateAll().then((res) => {
+            this.$emit('on-validated', res, 'step4');
+            this.$emit('validated-clinicName', this.clinicName);
+            return res;
+          });
+        },
+        onFileChange(e) {
+          const files = e.target.files || e.dataTransfer.files;
+          if (files.length > 0) {
+            this.createImage(files[0]);
+            this.showForm = true;
+            this.clearImage();
+          } else {
+            this.$store.dispatch(NOTIFY, {
+              settings: {
+                message: 'No files selected!',
+                type: 'warning',
+              },
+            });
           }
         },
-        deep: true,
+        createImage(file) {
+          const reader = new FileReader();
+          const vm = this;
+
+          reader.onload = (e) => {
+            vm.image = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        },
+        showErrorsValidate(error) {
+          if (error.message === '') {
+            return;
+          }
+          const field = this.$validator.fields.find({
+            name: error.type,
+            scope: this.$options.scope,
+          });
+          if (!field) return;
+          this.$validator.errors.add({
+            id: error.type,
+            field: error.type,
+            msg: error.message,
+            scope: this.$options.scope,
+          });
+          field.setFlags({
+            invalid: true,
+            valid: false,
+            validated: true,
+          });
+        },
       },
-      clinicName() {
-        this.touched.clinicName = true;
+      computed: {
+        ...mapGetters({
+          currentClinic: 'getCurrentClinic',
+        }),
       },
-      fd() {
-        this.$emit('addedLogo', this.fd);
+      watch: {
+        error: {
+          handler(val) {
+            if (val.message) {
+              this.showErrorsValidate(val);
+              this.error.message = '';
+            }
+          },
+          deep: true,
+        },
+        clinicName() {
+          this.touched.clinicName = true;
+        },
+        fd() {
+          this.$emit('addedLogo', this.fd);
+        },
       },
-    },
-  };
+    };
 </script>
 <style lang="scss" scoped>
 .picture{

@@ -13,59 +13,29 @@
       data-toggle="collapse"
       @click.prevent="collapseMenu"
     >
-
       <t-avatar
         class="md-avatar-icon"
-        v-if="link.acronim && link.img"
+        v-if="link.acronim"
         :color="link.avatarColor"
         :imageSrc="link.img"
         :title="link.acronim"
       />
-
-      <!-- <md-icon v-if="link.img">
-        <md-avatar class="md-avatar-icon"
-        :style="{background: gradient}">
-          <img
-            :src="link.img"
-            alt="avatar"
-          />
-        </md-avatar>
-      </md-icon>
-
-      <md-icon v-if="!link.img && acronimL ">
-        <md-avatar
-          class="md-avatar-icon acronim"
-          :style="{background: gradient}"
-        >
-          {{acronimL}}
-        </md-avatar>
-      </md-icon> -->
-
-      <md-icon v-else >{{link.icon}}</md-icon>
+      <md-icon v-else>{{link.icon}}</md-icon>
       <p>
-      <span class="nav-link-title" >
-        {{link.name | capitilize}}
-      </span>
+        <span class="nav-link-title">{{link.name | capitilize}}</span>
         <b class="caret"></b>
       </p>
-
     </a>
 
     <collapse-transition>
-      <div
-        v-if="$slots.default || this.isMenu"
-        v-show="!collapsed"
-      >
+      <div v-if="$slots.default || this.isMenu" v-show="!collapsed">
         <ul class="nav">
           <slot></slot>
         </ul>
       </div>
     </collapse-transition>
 
-    <slot
-      name="title"
-      v-if="children.length === 0 && !$slots.default && link.path"
-    >
+    <slot name="title" v-if="children.length === 0 && !$slots.default && link.path">
       <component
         :to="link.path"
         @click.native="linkClick"
@@ -88,186 +58,178 @@
   </component>
 </template>
 <script>
-  import { CollapseTransition } from 'vue2-transitions';
-  import { TAvatar } from '@/components';
+    import { CollapseTransition } from 'vue2-transitions';
+    import { TAvatar } from '@/components';
 
-  export default {
-    name: 'sidebar-item',
-    components: {
-      CollapseTransition,
-      TAvatar,
-    },
-    props: {
-      menu: {
-        type: Boolean,
-        default: false,
+    export default {
+      name: 'sidebar-item',
+      components: {
+        CollapseTransition,
+        TAvatar,
       },
-      link: {
-        type: Object,
-        default: () => ({
-          name: '',
-          path: '',
-          avatarColor: '#43a047',
-          acronim: '',
+      props: {
+        menu: {
+          type: Boolean,
+          default: false,
+        },
+        link: {
+          type: Object,
+          default: () => ({
+            name: '',
+            path: '',
+            avatarColor: '#43a047',
+            acronim: '',
+            children: [],
+          }),
+        },
+      },
+      provide() {
+        return {
+          addLink: this.addChild,
+          removeLink: this.removeChild,
+        };
+      },
+      inject: {
+        addLink: { default: null },
+        removeLink: { default: null },
+        autoClose: {
+          default: true,
+        },
+      },
+      data() {
+        return {
           children: [],
-        }),
+          collapsed: true,
+        };
       },
-    },
-    provide() {
-      return {
-        addLink: this.addChild,
-        removeLink: this.removeChild,
-      };
-    },
-    inject: {
-      addLink: { default: null },
-      removeLink: { default: null },
-      autoClose: {
-        default: true,
+      computed: {
+        acronimL() {
+          return this.link.acronim;
+        },
+        baseComponent() {
+          return this.isMenu || this.link.isRoute ? 'li' : 'router-link';
+        },
+        linkPrefix() {
+          if (this.link.name) {
+            const words = this.link.name.split(' ');
+            return words.map(word => word.substring(0, 1)).join('');
+          }
+          return false;
+        },
+        isMenu() {
+          return this.children.length > 0 || this.menu === true;
+        },
       },
-    },
-    data() {
-      return {
-        children: [],
-        collapsed: true,
-      };
-    },
-    computed: {
-      acronimL() {
-        return this.link.acronim;
-      },
-      baseComponent() {
-        return this.isMenu || this.link.isRoute ? 'li' : 'router-link';
-      },
-      linkPrefix() {
-        if (this.link.name) {
-          const words = this.link.name.split(' ');
-          return words.map(word => word.substring(0, 1)).join('');
-        }
-        return false;
-      },
-      isMenu() {
-        return this.children.length > 0 || this.menu === true;
-      },
-      // colorC(){
-      //   return this.link.avatarColor||'#43a047'
-      // },
-      // gradient() {
-      //   let colors = "linear-gradient(45deg";
-      //   const colorStart = this.colorLuminance(this.colorC, -0.3);
-      //   const colorEnd = this.colorLuminance(this.colorC, 0.3);
-      //   colors +=  "," + colorStart + "," + colorEnd;
-      //   colors += ")";
-      //   return colors;
-      // }
-    },
-    methods: {
-      colorLuminance(hex, lum) {
-        // validate hex string
-        hex = String(hex).replace(/[^0-9a-f]/gi, '');
-        if (hex.length < 6) {
-          hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-        }
-        lum = lum || 0;
+      methods: {
+        colorLuminance(hex, lum) {
+          // eslint-disable-next-line no-unused-vars
+          let lumL = lum;
+          // eslint-disable-next-line no-unused-vars
+          let hexL = hex;
+          // validate hex string
+          hexL = String(hex).replace(/[^0-9a-f]/gi, '');
+          if (hex.length < 6) {
+            hexL = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+          }
+          lumL = lum || 0;
 
-        // convert to decimal and change luminosity
-        let rgb = '#';
-        let c;
-        let i;
-        for (i = 0; i < 3; i++) {
-          c = parseInt(hex.substr(i * 2, 2), 16);
-          c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-          rgb += (`00${c}`).substr(c.length);
-        }
-
-        return rgb;
-      },
-      addChild(item) {
-        const index = this.$slots.default.indexOf(item.$vnode);
-        this.children.splice(index, 0, item);
-      },
-      isActive(re) {
-        if (this.$route && this.$route.path) {
-          let matchingRoute = '';
-          if (this.children.length > 0) {
-            matchingRoute = this.children.find(c => this.$route.path.startsWith(c.link.path));
-          } else if (
-            re
-            && this.$route.path.split('/').length !== re.split('/').length
+          // convert to decimal and change luminosity
+          // eslint-disable-next-line no-unused-vars
+          let rgb = '#';
+          let c;
+          let i;
+          for (i = 0; i < 3; i += 1) {
+            c = parseInt(hexL.substr(i * 2, 2), 16);
+            c = Math.round(Math.min(Math.max(0, c + c * lumL), 255)).toString(16);
+            rgb += `00${c}`.substr(c.length);
+          }
+        },
+        addChild(item) {
+          const index = this.$slots.default.indexOf(item.$vnode);
+          this.children.splice(index, 0, item);
+        },
+        isActive(re) {
+          if (this.$route && this.$route.path) {
+            let matchingRoute = '';
+            if (this.children.length > 0) {
+              matchingRoute = this.children.find(c => this.$route.path.startsWith(c.link.path));
+            } else if (
+              re
+              && this.$route.path.split('/').length !== re.split('/').length
+            ) {
+              matchingRoute = this.$route.path.startsWith(re);
+            }
+            if (matchingRoute === true) {
+              return true;
+            }
+          }
+          return false;
+        },
+        removeChild(item) {
+          const tabs = this.children;
+          const index = tabs.indexOf(item);
+          tabs.splice(index, 1);
+        },
+        elementType(link, isParent = true) {
+          if (link.isRoute === false) {
+            return isParent ? 'li' : 'a';
+          }
+          return 'router-link';
+        },
+        linkAbbreviation(name) {
+          const matches = name.match(/\b(\w)/g);
+          return matches.join('');
+        },
+        linkClick() {
+          if (
+            this.autoClose
+            && this.$sidebar
+            && this.$sidebar.showSidebar === true
           ) {
-            matchingRoute = this.$route.path.startsWith(re);
+            this.$sidebar.displaySidebar(false);
           }
-          if (matchingRoute === true) {
-            return true;
-          }
+        },
+        collapseMenu() {
+          this.collapsed = !this.collapsed;
+        },
+        collapseSubMenu(link) {
+          const nlink = link;
+          nlink.collapsed = !link.collapsed;
+        },
+      },
+      mounted() {
+        if (this.addLink) {
+          this.addLink(this);
         }
-        return false;
-      },
-      removeChild(item) {
-        const tabs = this.children;
-        const index = tabs.indexOf(item);
-        tabs.splice(index, 1);
-      },
-      elementType(link, isParent = true) {
-        if (link.isRoute === false) {
-          return isParent ? 'li' : 'a';
+        if (this.link.collapsed !== undefined) {
+          this.collapsed = this.link.collapsed;
         }
-        return 'router-link';
-      },
-      linkAbbreviation(name) {
-        const matches = name.match(/\b(\w)/g);
-        return matches.join('');
-      },
-      linkClick() {
-        if (
-          this.autoClose
-          && this.$sidebar
-          && this.$sidebar.showSidebar === true
-        ) {
-          this.$sidebar.displaySidebar(false);
+        if (this.isActive && this.isMenu) {
+          this.collapsed = false;
         }
       },
-      collapseMenu() {
-        this.collapsed = !this.collapsed;
+      destroyed() {
+        if (this.$el && this.$el.parentNode) {
+          this.$el.parentNode.removeChild(this.$el);
+        }
+        if (this.removeLink) {
+          this.removeLink(this);
+        }
       },
-      collapseSubMenu(link) {
-        const nlink = link;
-        nlink.collapsed = !link.collapsed;
-      },
-    },
-    mounted() {
-      if (this.addLink) {
-        this.addLink(this);
-      }
-      if (this.link.collapsed !== undefined) {
-        this.collapsed = this.link.collapsed;
-      }
-      if (this.isActive && this.isMenu) {
-        this.collapsed = false;
-      }
-    },
-    destroyed() {
-      if (this.$el && this.$el.parentNode) {
-        this.$el.parentNode.removeChild(this.$el);
-      }
-      if (this.removeLink) {
-        this.removeLink(this);
-      }
-    },
-  };
+    };
 </script>
 <style lang="scss">
 .sidebar-menu-item {
   cursor: pointer;
   p {
-    nav-link-title{
-    overflow: hidden;
-    text-overflow: ellipsis;
+    nav-link-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
   .md-avatar-icon {
     margin: -5px 15px -3px -6px;
-    float: left
+    float: left;
   }
   .acronim {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;

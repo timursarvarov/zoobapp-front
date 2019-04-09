@@ -93,13 +93,15 @@ import IconToothWorld from './JawIcons/Icons/ToothWorld.vue';
 import IconToothRestovration from './JawIcons/Icons/ToothRestovration.vue';
 import JawCard from './Jaw/JawCard.vue';
 import Jaw from './Jaw/Jaw.vue';
-import JawAddDiagnose from './Jaw/Diagnose/JawAddDiagnose.vue';
+import JawAddDiagnose from './Jaw/JawAddDiagnose.vue';
+import JawAddTreatment from './Jaw/JawAddTreatment.vue';
 
 import MdtAutoComplite from './MdtAutoComplite.vue';
 import TAvatar from './TAvatar.vue';
 import TDropzone from './TDropzone.vue';
 import TAvatarInput from './TAvatarInput.vue';
 import TImageCropperForm from './TImageCropperForm.vue';
+import TCollapseSearch from './TCollapseSearch.vue';
 import TFilePreview from './TFilePreview/TFilePreview.vue';
 
 // For Dev Use Only
@@ -136,6 +138,7 @@ export {
   JawCard,
   Jaw,
   JawAddDiagnose,
+  JawAddTreatment,
   SidebarPluginJaw,
   // Icons
   IconAdult,
@@ -197,5 +200,6 @@ export {
   TImageCropperForm,
   TAvatarInput,
   TFilePreview,
+  TCollapseSearch,
   // JawGenerator,
 };

@@ -7,37 +7,37 @@
 </template>
 
 <script>
-  import { USER_INITIAL, AUTH_DECODE_TOKEN } from '@/constants';
-  import { mapGetters } from 'vuex';
+    import { USER_INITIAL, AUTH_DECODE_TOKEN } from '@/constants';
+    import { mapGetters } from 'vuex';
 
-  export default {
-    computed: {
-      ...mapGetters({
-        getNotify: 'getNotify',
-        refreshTokenExist: 'fetchRefreshToken',
-        isProfileLoaded: 'isProfileLoaded',
-      }),
-    },
-    mounted() {
-      if (this.refreshTokenExist) {
-        this.$store.dispatch(USER_INITIAL);
-        this.$store.dispatch(AUTH_DECODE_TOKEN);
-      }
-    },
-    watch: {
-      getNotify: {
-        handler() {
-          const newNotify = {};
-          const el = this;
-          Object.keys(el.getNotify).forEach((key) => {
-            newNotify[key] = el.getNotify[key];
-          });
-          this.$notify(newNotify);
-        },
-        deep: true,
+    export default {
+      computed: {
+        ...mapGetters({
+          getNotify: 'getNotify',
+          refreshTokenExist: 'fetchRefreshToken',
+          isProfileLoaded: 'isProfileLoaded',
+        }),
       },
-    },
-  };
+      mounted() {
+        if (this.refreshTokenExist) {
+          this.$store.dispatch(USER_INITIAL);
+          this.$store.dispatch(AUTH_DECODE_TOKEN);
+        }
+      },
+      watch: {
+        getNotify: {
+          handler() {
+            const newNotify = {};
+            const el = this;
+            Object.keys(el.getNotify).forEach((key) => {
+              newNotify[key] = el.getNotify[key];
+            });
+            this.$notify(newNotify);
+          },
+          deep: true,
+        },
+      },
+    };
 </script>
 <style lang="scss">
 .md-table-cell {
@@ -59,6 +59,7 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px rgb(255, 255, 255) inset;
+  box-shadow: 0 0 0px 1000px rgb(255, 255, 255) inset;
   transition: background-color 5000s ease-in-out 0s;
 }
 input[type="number"]::-webkit-inner-spin-button,
@@ -66,7 +67,7 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-div :not(.md-toolbar) > .md-field:not(.md-chips) {
+div :not(.md-toolbar) > .md-field:not(.md-chips):not(.no-margin) {
   margin-top: 24px;
   .md-error {
     position: absolute;

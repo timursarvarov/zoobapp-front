@@ -10,10 +10,11 @@
           <h4 class="title md-layout-item">Paginated Tables</h4>
 
           <div class="md-layout-item md-layout md-gutter md-alignment-bottom-right">
-            <div
-              class="table-settings md-layout-item md-layout md-gutter md-alignment-bottom-right"
-            >
-              <md-button @click="showForm=!showForm" class="md-just-icon md-simple">
+            <div class="table-settings md-layout-item md-layout md-gutter md-alignment-bottom-right">
+              <md-button
+                @click="showForm=!showForm"
+                class="md-just-icon md-simple"
+              >
                 <md-icon>settings</md-icon>
               </md-button>
             </div>
@@ -37,7 +38,10 @@
                 <div class="md-toolbar-section-start">
                   <md-field>
                     <label for="pages">Per page</label>
-                    <md-select v-model="queryParams.pagination.perPage" name="pages">
+                    <md-select
+                      v-model="queryParams.pagination.perPage"
+                      name="pages"
+                    >
                       <md-option
                         v-for="item in perPageOptions"
                         :key="item"
@@ -77,7 +81,11 @@
               :md-description="`Please be patient, just a few seconds...`"
             ></md-table-empty-state>
 
-            <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple">
+            <md-table-row
+              slot="md-table-row"
+              slot-scope="{ item }"
+              md-selectable="multiple"
+            >
               <md-table-cell
                 v-for="field  in patientsTableColumns"
                 :key="field.key"
@@ -95,14 +103,23 @@
                 <div v-else-if="item[field.key] === null"></div>
                 <div v-else-if="(typeof item[field.key]) === 'array'">
                   111
-                  <div v-if="field.key === 'files'" class="md-layout md-alignment-left-center">
+                  <div
+                    v-if="field.key === 'files'"
+                    class="md-layout md-alignment-left-center"
+                  >
                     <span class="md-layout-item">{{item[field.key].length }}</span>
                   </div>
                 </div>
 
                 <div v-else-if="(typeof item[field.key]) === 'object'">
-                  <div v-if="field.key === 'createdBy'" class="md-layout md-alignment-left-center">
-                    <div class="md-layout-item md-layout" style="max-width:35px;">
+                  <div
+                    v-if="field.key === 'createdBy'"
+                    class="md-layout md-alignment-left-center"
+                  >
+                    <div
+                      class="md-layout-item md-layout"
+                      style="max-width:35px;"
+                    >
                       <t-avatar
                         :small="true"
                         :color="item[field.key].color"
@@ -120,18 +137,14 @@
                 </div>
                 <div v-else-if="(typeof item[field.key]) === 'string' || field.key === 'avatar'">
                   <span v-if="$moment(item[field.key], $moment.ISO_8601, true).isValid()">
-                    <span
-                      v-if="field.key==='birthday'"
-                    >{{ $moment().diff(item[field.key], 'years') }} years</span>
+                    <span v-if="field.key==='birthday'">{{ $moment().diff(item[field.key], 'years') }} years</span>
                     <div v-else>
                       <span>{{ item[field.key] | moment("from") }}</span>
                       <br>
                       <small>{{ item[field.key] | moment("calendar")}}</small>
                     </div>
                   </span>
-                  <span
-                    v-else-if="field.key === 'firstName' || field.key === 'lastName'"
-                  >{{item[field.key] | capitilize}}</span>
+                  <span v-else-if="field.key === 'firstName' || field.key === 'lastName'">{{item[field.key] | capitilize}}</span>
                   <span v-else>{{item[field.key]}}</span>
                 </div>
                 <div v-else-if="(typeof item[field.key]) === 'number'">
@@ -183,7 +196,11 @@
                       <div class="md-table-head-label">Select</div>
                     </div>
                   </th>
-                  <th v-for="item in patientsTableColumns" :key="item.key" class="md-table-head">
+                  <th
+                    v-for="item in patientsTableColumns"
+                    :key="item.key"
+                    class="md-table-head"
+                  >
                     <div class="md-table-head-container md-ripple md-disabled">
                       <div class="md-table-head-label">{{item.title}}</div>
                     </div>
@@ -224,240 +241,229 @@
 </template>
 
 <script>
-/* eslint-disable */
-// import { mapFilters } from "@/filters/map-filters";
-import { Pagination, TAvatar } from "@/components";
-import { PatientsListSettings } from "@/pages";
-import StarRating from "vue-star-rating";
-import swal from "sweetalert2";
-import { mapGetters } from "vuex";
-import {
-  PATIENTS_REQUEST,
-  AUTH_LOGOUT,
-  PATIENTS_LIST_COLUMNS
-} from "@/constants";
-import { isEmpty } from "@/mixins";
+    import { Pagination, TAvatar } from '@/components';
+    import { PatientsListSettings } from '@/pages';
+    import StarRating from 'vue-star-rating';
+    import swal from 'sweetalert2';
+    import { mapGetters } from 'vuex';
+    import {
+      PATIENTS_REQUEST,
+      AUTH_LOGOUT,
+      PATIENTS_LIST_COLUMNS,
+    } from '@/constants';
+    import { tObjProp } from '@/mixins';
 
-export default {
-  name: "patients-list",
-  mixins: [isEmpty],
-  components: {
-    Pagination,
-    StarRating,
-    PatientsListSettings,
-    TAvatar
-  },
-  data: () => ({
-    showForm: false,
-    perPageOptions: [25, 50],
-    totalPages: 500,
-    queryParams: {
-      currentSort: "updated",
-      currentSortOrder: "asc",
-      pagination: {
-        perPage: 25,
-        currentPage: 1
+    export default {
+      name: 'patients-list',
+      mixins: [tObjProp],
+      components: {
+        Pagination,
+        StarRating,
+        PatientsListSettings,
+        TAvatar,
       },
-      searchQuery: ""
-    },
-    selected: [],
-    callbackLauncher: null
-  }),
-  methods: {
-    // ...mapFilters(["capitilize"]),
-    getFieldName(key) {
-      const field = this.availablePatientsTableColumns.find(f => f.key === key);
-      if (field) {
-        return field.title;
-      }
-      return "";
-    },
-    onSelect(items) {
-      if (this.selectedAllSearchedPatients) {
-        this.selectedAllSearchedPatients = false;
-      }
-      this.selected = items;
-    },
-    setColumns(e) {
-      // поменять после того как добавять соответствующие поля в беке
-      localStorage.setItem("USER_PARIENTS_COLUMS", JSON.stringify(e));
-      //  this.$store.dispatch(USER_UPDATE, {
-      //   user: {
-      //    columns: e,
-      //   },
-      // });
-    },
-    openPatientProfile() {
-      this.$store.dispatch(AUTH_LOGOUT, { params: "" });
-    },
-    customSort(value) {
-      console.log(value);
-      console.log(this.queryParams.currentSort);
-      console.log(this.queryParams.currentSortOrder);
-    },
-    handleLike(item) {
-      swal({
-        title: `You liked ${item.name}`,
-        buttonsStyling: false,
-        type: "success",
-        confirmButtonClass: "md-button md-success"
-      });
-    },
-    handleShowAllergy(item) {
-      swal({
-        title: "Attention!",
-        buttonsStyling: false,
-        html: ` ${item.firstName} ${
-          item.lastName
-        } has allergy! Please dont use: <h3> ${item.allergy.join(", ")} </h3>`,
-        type: "warning",
-        confirmButtonClass: "md-button md-success",
-        confirmButtonText: "OK, I will not use them!"
-      });
-    },
-    handleEdit(item) {
-      swal({
-        title: `You want to edit ${item.name}`,
-        buttonsStyling: false,
-        confirmButtonClass: "md-button md-info"
-      });
-    },
-    handleDelete(item) {
-      swal({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "md-button md-success btn-fill",
-        cancelButtonClass: "md-button md-danger btn-fill",
-        confirmButtonText: "Yes, delete it!",
-        buttonsStyling: false
-      }).then(result => {
-        if (result.value) {
-          this.deleteRow(item);
+      data: () => ({
+        showForm: false,
+        perPageOptions: [25, 50],
+        totalPages: 500,
+        queryParams: {
+          currentSort: 'updated',
+          currentSortOrder: 'asc',
+          pagination: {
+            perPage: 25,
+            currentPage: 1,
+          },
+          searchQuery: '',
+        },
+        selected: [],
+        callbackLauncher: null,
+      }),
+      methods: {
+        // ...mapFilters(["capitilize"]),
+        getFieldName(key) {
+          const field = this.availablePatientsTableColumns.find(f => f.key === key);
+          if (field) {
+            return field.title;
+          }
+          return '';
+        },
+        onSelect(items) {
+          if (this.selectedAllSearchedPatients) {
+            this.selectedAllSearchedPatients = false;
+          }
+          this.selected = items;
+        },
+        setColumns(e) {
+          // поменять после того как добавять соответствующие поля в беке
+          localStorage.setItem('USER_PARIENTS_COLUMS', JSON.stringify(e));
+          //  this.$store.dispatch(USER_UPDATE, {
+          //   user: {
+          //    columns: e,
+          //   },
+          // });
+        },
+        openPatientProfile() {
+          this.$store.dispatch(AUTH_LOGOUT, { params: '' });
+        },
+        customSort(value) {
+          console.log(value);
+          console.log(this.queryParams.currentSort);
+          console.log(this.queryParams.currentSortOrder);
+        },
+        handleLike(item) {
           swal({
-            title: "Deleted!",
-            text: `You deleted ${item.name}`,
-            type: "success",
-            confirmButtonClass: "md-button md-success btn-fill",
-            buttonsStyling: false
+            title: `You liked ${item.name}`,
+            buttonsStyling: false,
+            type: 'success',
+            confirmButtonClass: 'md-button md-success',
           });
-        }
-      });
-    },
-    deleteRow(item) {
-      const indexToDelete = this.tableData.findIndex(
-        tableRow => tableRow.id === item.id
-      );
-      if (indexToDelete >= 0) {
-        this.tableData.splice(indexToDelete, 1);
-      }
-    },
-    search() {
-      const vm = this;
-      const DELAY = 400;
-      if (this.callbackLauncher) {
-        clearTimeout(vm.callbackLauncher);
-      }
-      this.callbackLauncher = setTimeout(() => {
-        console.log(vm.queryParams);
-
-        vm.$store
-          .dispatch(PATIENTS_REQUEST, {
-            params: {
-              perPage: vm.queryParams.pagination.perPage,
-              page: vm.queryParams.pagination.currentPage,
-              search: vm.queryParams.searchQuery,
-              order: vm.queryParams.currentSortOrder,
-              orderBy: vm.queryParams.currentSort,
-              toStore: true
+        },
+        handleShowAllergy(item) {
+          swal({
+            title: 'Attention!',
+            buttonsStyling: false,
+            html: ` ${item.firstName} ${
+              item.lastName
+            } has allergy! Please dont use: <h3> ${item.allergy.join(', ')} </h3>`,
+            type: 'warning',
+            confirmButtonClass: 'md-button md-success',
+            confirmButtonText: 'OK, I will not use them!',
+          });
+        },
+        handleEdit(item) {
+          swal({
+            title: `You want to edit ${item.name}`,
+            buttonsStyling: false,
+            confirmButtonClass: 'md-button md-info',
+          });
+        },
+        handleDelete(item) {
+          swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'md-button md-success btn-fill',
+            cancelButtonClass: 'md-button md-danger btn-fill',
+            confirmButtonText: 'Yes, delete it!',
+            buttonsStyling: false,
+          }).then((result) => {
+            if (result.value) {
+              this.deleteRow(item);
+              swal({
+                title: 'Deleted!',
+                text: `You deleted ${item.name}`,
+                type: 'success',
+                confirmButtonClass: 'md-button md-success btn-fill',
+                buttonsStyling: false,
+              });
             }
-          })
-          .then(resp => {})
-          .catch(err => {});
-      }, DELAY);
-    }
-  },
-  created() {
-    if (this.isEmpty(this.patients)) {
-      this.$store.dispatch(PATIENTS_REQUEST, {
-        params: {
-          perPage: 30,
-          page: 1,
-          search: "",
-          toStore: true
-        }
-      });
-    } else {
-      this.tableData = this.patients;
-    }
-  },
-  computed: {
-    ...mapGetters({
-      patients: "getPatients",
-      status: "patientsStatus",
-      availablePatientsTableColumns: "availablePatientsTableColumns"
-    }),
-    patientsTableColumns() {
-      const columns1 = [
-        {
-          key: "ID",
-          title: "ID"
+          });
         },
-        {
-          key: "address",
-          title: "Address"
+        deleteRow(item) {
+          const indexToDelete = this.tableData.findIndex(
+            tableRow => tableRow.id === item.id,
+          );
+          if (indexToDelete >= 0) {
+            this.tableData.splice(indexToDelete, 1);
+          }
         },
-        {
-          key: "allergy",
-          title: "Allergy"
+        search() {
+          const vm = this;
+          const DELAY = 400;
+          if (this.callbackLauncher) {
+            clearTimeout(vm.callbackLauncher);
+          }
+          this.callbackLauncher = setTimeout(() => {
+            vm.$store
+              .dispatch(PATIENTS_REQUEST, {
+                params: {
+                  perPage: vm.queryParams.pagination.perPage,
+                  page: vm.queryParams.pagination.currentPage,
+                  search: vm.queryParams.searchQuery,
+                  order: vm.queryParams.currentSortOrder,
+                  orderBy: vm.queryParams.currentSort,
+                  toStore: true,
+                },
+              })
+              .then((resp) => { })
+              .catch((err) => { });
+          }, DELAY);
         },
-        {
-          key: "avatar",
-          title: "Avatar"
-        },
-        {
-          key: "birthday",
-          title: "Birthday"
-        },
-        {
-          key: "created",
-          title: "Created"
-        },
-        {
-          key: "createdBy",
-          title: "Created By"
-        }
-      ];
-      const columns2 = JSON.parse(localStorage.getItem("USER_PARIENTS_COLUMS"));
-      return columns2 || columns1;
-    },
-    to() {
-      let highBound = this.from + this.queryParams.pagination.perPage;
-      if (this.total < highBound) {
-        highBound = this.total;
-      }
-      return highBound;
-    },
-    from() {
-      return (
-        this.queryParams.pagination.perPage *
-        (this.queryParams.pagination.currentPage - 1)
-      );
-    }
-  },
-  watch: {
-    queryParams: {
-      handler() {
-        this.search();
       },
-      deep: true
-    },
-    patients() {
-      this.tableData = this.patients;
-    }
-  }
-};
+      created() {
+        if (this.patients.length === 0) {
+          this.search();
+        } else {
+          this.tableData = this.patients;
+        }
+      },
+      computed: {
+        ...mapGetters({
+          patients: 'getPatients',
+          status: 'patientsStatus',
+          availablePatientsTableColumns: 'availablePatientsTableColumns',
+        }),
+        patientsTableColumns() {
+          const columns1 = [
+            {
+              key: 'ID',
+              title: 'ID',
+            },
+            {
+              key: 'address',
+              title: 'Address',
+            },
+            {
+              key: 'allergy',
+              title: 'Allergy',
+            },
+            {
+              key: 'avatar',
+              title: 'Avatar',
+            },
+            {
+              key: 'birthday',
+              title: 'Birthday',
+            },
+            {
+              key: 'created',
+              title: 'Created',
+            },
+            {
+              key: 'createdBy',
+              title: 'Created By',
+            },
+          ];
+          const columns2 = JSON.parse(localStorage.getItem('USER_PARIENTS_COLUMS'));
+          return columns2 || columns1;
+        },
+        to() {
+          let highBound = this.from + this.queryParams.pagination.perPage;
+          if (this.total < highBound) {
+            highBound = this.total;
+          }
+          return highBound;
+        },
+        from() {
+          return (
+            this.queryParams.pagination.perPage
+        * (this.queryParams.pagination.currentPage - 1)
+          );
+        },
+      },
+      watch: {
+        queryParams: {
+          handler() {
+            this.search();
+          },
+          deep: true,
+        },
+        patients() {
+          this.tableData = this.patients;
+        },
+      },
+    };
 </script>
 
 <style lang="scss" scoped>

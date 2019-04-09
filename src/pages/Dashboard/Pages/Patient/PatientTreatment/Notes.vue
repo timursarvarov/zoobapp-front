@@ -189,102 +189,102 @@
   </div>
 </template>
 <script>
-  import { TimeLine, TimeLineItem, Badge } from '@/components';
-  import { mapGetters } from 'vuex';
-  import { PATIENT_CREATE_NOTE, NOTIFY } from '@/constants';
-  import { SlideYDownTransition } from 'vue2-transitions';
+    import { TimeLine, TimeLineItem, Badge } from '@/components';
+    import { mapGetters } from 'vuex';
+    import { PATIENT_CREATE_NOTE, NOTIFY } from '@/constants';
+    import { SlideYDownTransition } from 'vue2-transitions';
 
-  export default {
-    components: {
-      SlideYDownTransition,
-      TimeLine,
-      TimeLineItem,
-      Badge,
-    },
-    data() {
-      return {
-        noteText: null,
-        responsive: false,
-        touched: {
-          noteText: false,
-        },
-        modelValidations: {
-          noteText: {
-            required: true,
-            min: 10,
+    export default {
+      components: {
+        SlideYDownTransition,
+        TimeLine,
+        TimeLineItem,
+        Badge,
+      },
+      data() {
+        return {
+          noteText: null,
+          responsive: false,
+          touched: {
+            noteText: false,
           },
-        },
-      };
-    },
-    computed: {
-      ...mapGetters({
-        patient: 'getPatient',
-        user: 'getProfile',
-      }),
-      simpleTimeline() {
-        if (this.responsive) {
-          return 'simple';
-        }
-        return '';
+          modelValidations: {
+            noteText: {
+              required: true,
+              min: 10,
+            },
+          },
+        };
       },
-      noteTextL() {
-        return this.noteText;
-      },
-    },
-    methods: {
-      validate() {
-        this.$validator.validateAll().then((isValid) => {
-          this.$emit('on-submit', this.registerForm, isValid);
-        });
-        this.touched.noteText = true;
-      },
-      onResponsiveInverted() {
-        if (window.innerWidth < 768) {
-          this.responsive = true;
-        } else {
-          this.responsive = false;
-        }
-      },
-      createNote() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.$store
-              .dispatch(PATIENT_CREATE_NOTE, {
-                params: {
-                  note: this.noteText,
-                  patientId: this.patient.ID,
-                },
-              })
-              .then((response) => {
-                this.noteText = null;
-                this.$nextTick(() => this.$validator.reset());
-
-                if (response) {
-                  this.$store.dispatch(NOTIFY, {
-                    settings: {
-                      message: 'Note added!',
-                      type: 'primary',
-                    },
-                  });
-                }
-            });
+      computed: {
+        ...mapGetters({
+          patient: 'getPatient',
+          user: 'getProfile',
+        }),
+        simpleTimeline() {
+          if (this.responsive) {
+            return 'simple';
           }
-        });
+          return '';
+        },
+        noteTextL() {
+          return this.noteText;
+        },
       },
-    },
-    watch: {
-      noteTextL() {
-        this.touched.noteText = true;
+      methods: {
+        validate() {
+          this.$validator.validateAll().then((isValid) => {
+            this.$emit('on-submit', this.registerForm, isValid);
+          });
+          this.touched.noteText = true;
+        },
+        onResponsiveInverted() {
+          if (window.innerWidth < 768) {
+            this.responsive = true;
+          } else {
+            this.responsive = false;
+          }
+        },
+        createNote() {
+          this.$validator.validateAll().then((result) => {
+            if (result) {
+              this.$store
+                .dispatch(PATIENT_CREATE_NOTE, {
+                  params: {
+                    note: this.noteText,
+                    patientId: this.patient.ID,
+                  },
+                })
+                .then((response) => {
+                  this.noteText = null;
+                  this.$nextTick(() => this.$validator.reset());
+
+                  if (response) {
+                    this.$store.dispatch(NOTIFY, {
+                      settings: {
+                        message: 'Note added!',
+                        type: 'primary',
+                      },
+                    });
+                  }
+                });
+            }
+          });
+        },
       },
-    },
-    mounted() {
-      this.onResponsiveInverted();
-      window.addEventListener('resize', this.onResponsiveInverted);
-    },
-    beforeDestroy() {
-      window.removeEventListener('resize', this.onResponsiveInverted);
-    },
-  };
+      watch: {
+        noteTextL() {
+          this.touched.noteText = true;
+        },
+      },
+      mounted() {
+        this.onResponsiveInverted();
+        window.addEventListener('resize', this.onResponsiveInverted);
+      },
+      beforeDestroy() {
+        window.removeEventListener('resize', this.onResponsiveInverted);
+      },
+    };
 </script>
 <style lang="scss" >
 .history-notes-wrapper {

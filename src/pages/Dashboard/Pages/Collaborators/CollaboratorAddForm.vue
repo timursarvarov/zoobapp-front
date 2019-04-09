@@ -8,23 +8,23 @@
       <div>
         <md-card>
           <md-card-header class="md-card-header-icon md-card-header-green">
-            <div class="card-icon" >
+            <div class="card-icon">
               <md-icon>person_add</md-icon>
             </div>
             <h4 class="title">Invite New Collaborator</h4>
           </md-card-header>
 
-          <md-card-content  class="md-layout">
-
-            <div  autocomplete="off" class="md-layout-item md-size-100 ">
+          <md-card-content class="md-layout">
+            <div autocomplete="off" class="md-layout-item md-size-100">
               <md-field
-               autocomplete="off"
-               :class="[
+                autocomplete="off"
+                :class="[
                 {'md-valid': !errors.has('email') && touched.email},
-                {'md-error': errors.has('email')}]">
+                {'md-error': errors.has('email')}]"
+              >
                 <label>Email</label>
                 <md-input
-                   autocomplete="off"
+                  autocomplete="off"
                   v-model="email"
                   type="email"
                   data-vv-name="email"
@@ -32,26 +32,16 @@
                 ></md-input>
                 <span class="md-error">{{errors.first('email')}}</span>
                 <slide-y-down-transition>
-                  <md-icon
-                    class="error"
-                    v-show="errors.has('email')"
-                  >close</md-icon>
+                  <md-icon class="error" v-show="errors.has('email')">close</md-icon>
                 </slide-y-down-transition>
                 <slide-y-down-transition>
-                  <md-icon
-                    class="success"
-                    v-show="!errors.has('email') && touched.email"
-                  >done</md-icon>
+                  <md-icon class="success" v-show="!errors.has('email') && touched.email">done</md-icon>
                 </slide-y-down-transition>
               </md-field>
             </div>
-
           </md-card-content>
           <md-card-actions md-alignment="right">
-            <md-button
-              @click="addPatient()"
-              class=" md-success"
-            >Create</md-button>
+            <md-button @click="addPatient()" class="md-success">Create</md-button>
           </md-card-actions>
         </md-card>
       </div>
@@ -59,14 +49,8 @@
   </div>
 </template>
 <script>
-  import {
-    COLLABORATOR_CREATE, NOTIFY,
-  } from '@/constants';
+  import { COLLABORATOR_CREATE, NOTIFY } from '@/constants';
   import { SlideYDownTransition } from 'vue2-transitions';
-
-
-  const randomMC = require('random-material-color');
-
 
   export default {
     components: {
@@ -165,9 +149,9 @@
       text-align: left;
     }
   }
-    .card-icon{
-      transition: all 2.5s ease;
-    }
+  .card-icon {
+    transition: all 2.5s ease;
+  }
   .wrapper-chips {
     margin-top: -30px;
     .md-error {

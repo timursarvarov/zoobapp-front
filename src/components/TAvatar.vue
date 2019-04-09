@@ -6,15 +6,6 @@
     <div class=wrapper
     :style="{background: !loaded ? gradient: ''}"
     >
-      <!-- <transition name="fade">
-        <div
-          v-show="!noImgTag && imageSrc && loaded"
-          class="avatar-div"
-          :style="{'background-image':  'url(' + imageSrc + ')'}"
-          @load="onLoaded"
-            >
-        </div>
-      </transition> -->
       <transition name="fade">
         <img
           class="avatar-img"
@@ -68,21 +59,25 @@
         this.loaded = true;
       },
       colorLuminance(hex, lum) {
+        // eslint-disable-next-line no-unused-vars
+        let lumL = lum;
+        // eslint-disable-next-line no-unused-vars
+        let hexL = hex;
         // validate hex string
-        hex = String(hex).replace(/[^0-9a-f]/gi, '');
+        hexL = String(hex).replace(/[^0-9a-f]/gi, '');
         if (hex.length < 6) {
-          hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+          hexL = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
         }
-        lum = lum || 0;
+        lumL = lum || 0;
 
         // convert to decimal and change luminosity
         let rgb = '#';
         let c;
         let i;
-        for (i = 0; i < 3; i++) {
-          c = parseInt(hex.substr(i * 2, 2), 16);
-          c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-          rgb += (`00${c}`).substr(c.length);
+        for (i = 0; i < 3; i += 1) {
+          c = parseInt(hexL.substr(i * 2, 2), 16);
+          c = Math.round(Math.min(Math.max(0, c + c * lumL), 255)).toString(16);
+          rgb += `00${c}`.substr(c.length);
         }
 
         return rgb;

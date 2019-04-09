@@ -1,6 +1,6 @@
 
 <template>
-  <div class="md-layout md-gutter" v-if="!isEmpty(originalDiagnosis)">
+  <div class="md-layout md-gutter" v-if="!isEmpty(patientDiagnosis)">
     <div class="md-layout-item">
       <md-toolbar class="md-transparent">
         <h3 class="md-title">All Diagnosis</h3>
@@ -40,12 +40,15 @@
 
         <md-table-row slot="md-table-row" slot-scope="{ item }">
           <md-table-cell class="code" md-label="Code" md-sort-by="code">{{ item.code }}</md-table-cell>
-          <md-table-cell md-label="Diagnose" md-sort-by="title">{{ item.title }}</md-table-cell>
+          <md-table-cell md-label="Diagnose" md-sort-by="title">
+            {{ item.title }}<br/>
+          <small>{{item.explain}}</small>
+            </md-table-cell>
           <md-table-cell md-sort-by="teeth" md-label="Teeth">
             <span
               v-for="toothId in Object.keys(item.teeth)"
               :key="toothId"
-            >{{ toothId | toCurrentTeethSystem(teethSystem) }},</span>
+            >{{ toothId | toCurrentTeethSystem(teethSystem) }}, </span>
           </md-table-cell>
           <md-table-cell md-sort-by="author" md-label="Diagnosed by">
             <div class="md-layout md-alignment-left-center">
@@ -73,13 +76,14 @@
             <small>{{item.date | moment("calendar")}}</small>
           </md-table-cell>
           <md-table-cell class="actions" md-label="Actions">
+
             <md-button
-              v-show="ifDiagnoseHasLocations(item.teeth)"
+              v-if="ifDiagnoseHasLocations(item.teeth)"
               class="md-just-icon md-simple"
-              @click.native="showHidePatientDiagnose(item)"
+              @click.native="item.showInJaw=!item.showInJaw,recalculateJaw()"
             >
-              <md-icon v-show="isHidedDiagnose(item)">visibility</md-icon>
-              <md-icon v-show="!isHidedDiagnose(item)">visibility_off</md-icon>
+              <md-icon v-if="item.showInJaw">visibility</md-icon>
+              <md-icon v-else >visibility_off</md-icon>
             </md-button>
             <md-button class="md-just-icon md-info md-simple" @click.native="handleEdit(item)">
               <md-icon>edit</md-icon>
@@ -115,6 +119,7 @@
         ></pagination>
       </div>
       <jaw-add-diagnose-wizard
+        v-if="showForm"
         @on-created="saveDiagnose"
         :selectedTeeth="setecltedTeeth"
         :selectedDiagnose="selectedDiagnose"
@@ -126,265 +131,238 @@
     </div>
   </div>
 </template>
-/* eslint-disable import/no-unresolved */
 <script>
-  import { PATIENT_DIAGNOSE_UPDATE } from '@/constants';
-  import { Pagination, TAvatar } from '@/components';
-  import { mapGetters } from 'vuex';
-  import Fuse from 'fuse.js';
-  import swal from 'sweetalert2';
-  import JawAddDiagnoseWizard from './JawAddDiagnoseWizard.vue';
-  import { isEmpty } from '@/mixins';
+    import {
+      PATIENT_DIAGNOSE_UPDATE,
+      TEETH_DEFAULT_LOCATIONS,
+    } from '@/constants';
+    import { Pagination, TAvatar } from '@/components';
+    import { mapGetters } from 'vuex';
+    import Fuse from 'fuse.js';
+    import swal from 'sweetalert2';
+    import JawAddDiagnoseWizard from './JawAddDiagnoseWizard.vue';
+    import { tObjProp } from '@/mixins';
 
-  export default {
-    mixins: [isEmpty],
-    components: {
-      Pagination,
-      TAvatar,
-      JawAddDiagnoseWizard,
-    },
-    props: {
-      diagnosis: {
-        type: Array,
-        default: () => [],
+    export default {
+      mixins: [tObjProp],
+      components: {
+        Pagination,
+        TAvatar,
+        JawAddDiagnoseWizard,
       },
-      teethSystem: {
-        type: Number,
-        default: () => 1,
-      },
-    },
-    data() {
-      return {
-        showForm: false,
-        originalDiagnosis: [],
-        currentSort: 'date',
-        currentSortOrder: 'desc',
-        selectedDiagnose: {},
-        pagination: {
-          perPage: 10,
-          currentPage: 1,
-          perPageOptions: [10, 25, 50],
-          total: 0,
+      props: {
+        diagnosis: {
+          type: Array,
+          default: () => [],
         },
-        footerTable: [
-          'Code',
-          'Diagnose',
-          'Teeth',
-          'Diagnosed by',
-          'Date',
-          'Actions',
-        ],
-        searchQuery: '',
-        propsToSearch: ['code', 'diagnose', 'date', 'author', 'title'],
-        searchedData: [],
-        fuseSearch: null,
-      };
-    },
-    computed: {
-      ...mapGetters({
-        teethSchema: 'teethSchema',
-        jaw: 'jaw',
-        patient: 'getPatient',
-      }),
-      setecltedTeeth() {
-        if (!this.isEmpty(this.selectedDiagnose)) {
-          return Object.keys(this.selectedDiagnose.teeth);
-        }
-        return [];
+        teethSystem: {
+          type: Number,
+          default: () => 1,
+        },
       },
-      tableData() {
-        return this.originalDiagnosis;
-      },
-      patientDiagnosis() {
-        return this.patient.diagnosis;
-      },
-      queriedData() {
-        let result = this.tableData;
-        if (this.searchedData.length > 0) {
-          result = this.searchedData;
-        }
-        return result.slice(this.from, this.to);
-      },
-      to() {
-        let highBound = this.from + this.pagination.perPage;
-        if (this.total < highBound) {
-          highBound = this.total;
-        }
-        return highBound;
-      },
-      from() {
-        return this.pagination.perPage * (this.pagination.currentPage - 1);
-      },
-      total() {
-        return this.searchedData.length > 0
-          ? this.searchedData.length
-          : this.tableData.length;
-      },
-    },
-
-    methods: {
-      saveDiagnose(d) {
-        console.log(d);
-        const diagnose = d;
-        this.$store.dispatch(PATIENT_DIAGNOSE_UPDATE, {
-          diagnose,
-        });
-      },
-      isHidedDiagnose(diagnose) {
-        const OindexToDelete = this.tableData.findIndex(
-          tableRow => tableRow.id === diagnose.id,
-        );
-        const PindexToDelete = this.patientDiagnosis.findIndex(
-          pDiagnose => pDiagnose.id === diagnose.id,
-        );
-        return OindexToDelete !== -1 && PindexToDelete !== -1;
-      },
-      showHidePatientDiagnose(diagnose) {
-        const indexToDelete = this.patientDiagnosis.findIndex(
-          pDiagnose => pDiagnose.id === diagnose.id,
-        );
-        if (indexToDelete >= 0) {
-          this.patientDiagnosis.splice(indexToDelete, 1);
-        } else {
-          const indexToAdd = this.originalDiagnosis.findIndex(
-            oDiagnose => oDiagnose.id === diagnose.id,
-          );
-          this.patientDiagnosis.push(this.originalDiagnosis[indexToAdd]);
-        }
-      },
-      copyObj(obj) {
-        return JSON.parse(JSON.stringify(obj));
-      },
-      ifDiagnoseHasLocations(teeth) {
-        let show = false;
-        show = Object.keys(teeth)
-          .map(key => Object.keys(teeth[key]).length > 0)
-          .indexOf(true);
-        show = show !== -1;
-        return show;
-      },
-      getToothName(toothId) {
-        const tooth = {
-          num: this.teethSchema[toothId][this.teethSystem],
-          name: this.teethSchema[toothId].name,
+      data() {
+        return {
+          showForm: false,
+          currentSort: 'date',
+          currentSortOrder: 'desc',
+          selectedDiagnose: {},
+          pagination: {
+            perPage: 10,
+            currentPage: 1,
+            perPageOptions: [10, 25, 50],
+            total: 0,
+          },
+          footerTable: [
+            'Code',
+            'Diagnose',
+            'Teeth',
+            'Diagnosed by',
+            'Date',
+            'Actions',
+          ],
+          searchQuery: '',
+          propsToSearch: ['code', 'diagnose', 'date', 'author', 'title'],
+          searchedData: [],
+          fuseSearch: null,
         };
-        return tooth;
       },
-      customSort(value) {
-        const thisLocal = this;
-        const val = value.sort((a, b) => {
-          // console.log("ab+")
-          // console.log(typeof a);
-          // console.log("b")
-          // console.log(b)
-          const sortBy = thisLocal.currentSort;
-          if (typeof a[thisLocal.currentSort] === 'string') {
-            if (thisLocal.currentSortOrder === 'desc') {
-              return a[sortBy].localeCompare(b[sortBy]);
-            }
+      computed: {
+        ...mapGetters({
+          teethSchema: 'teethSchema',
+          jaw: 'jaw',
+          patient: 'getPatient',
+        }),
+        defaultLocations() {
+          return TEETH_DEFAULT_LOCATIONS;
+        },
+        setecltedTeeth() {
+          if (!this.isEmpty(this.selectedDiagnose)) {
+            return Object.keys(this.selectedDiagnose.teeth);
+          }
+          return [];
+        },
+        tableData() {
+          return this.patientDiagnosis;
+        },
+        patientDiagnosis() {
+          return this.patient.diagnosis || [];
+        },
+        queriedData() {
+          let result = this.tableData;
+          if (this.searchedData.length > 0) {
+            result = this.searchedData;
+          }
+          return result.slice(this.from, this.to);
+        },
+        to() {
+          let highBound = this.from + this.pagination.perPage;
+          if (this.total < highBound) {
+            highBound = this.total;
+          }
+          return highBound;
+        },
+        from() {
+          return this.pagination.perPage * (this.pagination.currentPage - 1);
+        },
+        total() {
+          return this.searchedData.length > 0
+            ? this.searchedData.length
+            : this.tableData.length;
+        },
+      },
 
-            return b[sortBy].localeCompare(a[sortBy]);
+      methods: {
+        recalculateJaw() {
+          this.$emit('onJawChanged');
+        },
+        saveDiagnose(d) {
+          const diagnoseEdited = this.selectedDiagnose;
+          diagnoseEdited.teeth = d.teeth;
+          diagnoseEdited.description = d.description;
+          this.$store.dispatch(PATIENT_DIAGNOSE_UPDATE, {
+            diagnose: diagnoseEdited,
+          });
+          this.recalculateJaw();
+        },
+        ifDiagnoseHasLocations(teeth) {
+          let show = false;
+          show = Object.keys(teeth)
+            .map(key => Object.keys(teeth[key]).length > 0)
+            .indexOf(true);
+          show = show !== -1;
+          return show;
+        },
+        getToothName(toothId) {
+          const tooth = {
+            num: this.teethSchema[toothId][this.teethSystem],
+            name: this.teethSchema[toothId].name,
+          };
+          return tooth;
+        },
+        customSort(value) {
+          const thisLocal = this;
+          const val = value.sort((a, b) => {
+            // console.log("ab+")
+            // console.log(typeof a);
+            // console.log("b")
+            // console.log(b)
+            const sortBy = thisLocal.currentSort;
+            if (typeof a[thisLocal.currentSort] === 'string') {
+              if (thisLocal.currentSortOrder === 'desc') {
+                return a[sortBy].localeCompare(b[sortBy]);
+              }
+              return b[sortBy].localeCompare(a[sortBy]);
+            }
+            if (typeof a[thisLocal.currentSort] === 'number') {
+              const orderLocal = thisLocal.currentSortOrder;
+              const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+              const aVal = a[sortBy] === null ? dflt : a[sortBy];
+              const bVal = b[sortBy] === null ? dflt : b[sortBy];
+              return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
+            }
+            if (typeof a[thisLocal.currentSort] === 'object') {
+              const orderLocal = thisLocal.currentSortOrder;
+              const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+              const aVal = a[sortBy] === null ? dflt : a[sortBy];
+              const bVal = b[sortBy] === null ? dflt : b[sortBy];
+              return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
+            }
+            return val;
+          });
+        },
+        handleLike(item) {
+          swal({
+            title: `You liked ${item.title}`,
+            buttonsStyling: false,
+            type: 'success',
+            confirmButtonClass: 'md-button md-success',
+          });
+        },
+        handleEdit(item) {
+          this.selectedDiagnose = item;
+          this.showForm = true;
+        },
+        handleDelete(item) {
+          swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'md-button md-success btn-fill',
+            cancelButtonClass: 'md-button md-danger btn-fill',
+            confirmButtonText: 'Yes, delete it!',
+            buttonsStyling: false,
+          }).then((result) => {
+            if (result.value) {
+              this.deleteRow(item);
+              swal({
+                title: 'Deleted!',
+                text: `You deleted ${item.title}`,
+                type: 'success',
+                confirmButtonClass: 'md-button md-success btn-fill',
+                buttonsStyling: false,
+              });
+            }
+          });
+        },
+        deleteRow(item) {
+          const indexToDelete = this.tableData.findIndex(
+            tableRow => tableRow.id === item.id,
+          );
+          if (indexToDelete >= 0) {
+            this.tableData.splice(indexToDelete, 1);
           }
-          if (typeof a[thisLocal.currentSort] === 'number') {
-            const orderLocal = thisLocal.currentSortOrder;
-            // eslint-disable-next-line no-multi-spaces
-            const dflt =            orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
-            const aVal = a[sortBy] === null ? dflt : a[sortBy];
-            const bVal = b[sortBy] === null ? dflt : b[sortBy];
-            return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
+          const indexToDeleteOrigin = this.patientDiagnosis.findIndex(
+            diagnose => diagnose.id === item.id,
+          );
+          if (indexToDeleteOrigin >= 0) {
+            this.patientDiagnosis.splice(indexToDeleteOrigin, 1);
           }
-          if (typeof a[thisLocal.currentSort] === 'object') {
-            const orderLocal = thisLocal.currentSortOrder;
-            // eslint-disable-next-line no-multi-spaces
-            const dflt =            orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
-            const aVal = a[sortBy] === null ? dflt : a[sortBy];
-            const bVal = b[sortBy] === null ? dflt : b[sortBy];
-            return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
-          }
+        },
+      },
+      mounted() {
+        // Fuse search initialization.
+        this.fuseSearch = new Fuse(this.tableData, {
+          keys: ['diagnose', 'code', 'author', 'date', 'title'],
+          threshold: 0.3,
         });
-        return val;
       },
-      handleLike(item) {
-        swal({
-          title: `You liked ${item.title}`,
-          buttonsStyling: false,
-          type: 'success',
-          confirmButtonClass: 'md-button md-success',
-        });
-      },
-      handleEdit(item) {
-        this.selectedDiagnose = item;
-        this.showForm = true;
-      // swal({
-      //   title: `You want to edit ${item.title}`,
-      //   buttonsStyling: false,
-      //   confirmButtonClass: 'md-button md-info',
-      // });
-      },
-      handleDelete(item) {
-        swal({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonClass: 'md-button md-success btn-fill',
-          cancelButtonClass: 'md-button md-danger btn-fill',
-          confirmButtonText: 'Yes, delete it!',
-          buttonsStyling: false,
-        }).then((result) => {
-          if (result.value) {
-            this.deleteRow(item);
-            swal({
-              title: 'Deleted!',
-              text: `You deleted ${item.title}`,
-              type: 'success',
-              confirmButtonClass: 'md-button md-success btn-fill',
-              buttonsStyling: false,
-            });
+      watch: {
+        searchQuery(value) {
+          let result = this.tableData;
+          if (value !== '') {
+            result = this.fuseSearch.search(this.searchQuery);
           }
-        });
+          this.searchedData = result;
+        },
+        // patientDiagnosis: {
+        //   handler() {
+        //     console.log('calculated');
+        //   },
+        //   deep: true,
+        // },
       },
-      deleteRow(item) {
-        const indexToDelete = this.tableData.findIndex(
-          tableRow => tableRow.id === item.id,
-        );
-        if (indexToDelete >= 0) {
-          this.tableData.splice(indexToDelete, 1);
-        }
-        const indexToDeleteOrigin = this.patientDiagnosis.findIndex(
-          diagnose => diagnose.id === item.id,
-        );
-        if (indexToDeleteOrigin >= 0) {
-          this.patientDiagnosis.splice(indexToDeleteOrigin, 1);
-        }
-      },
-    },
-    mounted() {
-      // Fuse search initialization.
-      this.fuseSearch = new Fuse(this.tableData, {
-        keys: ['diagnose', 'code', 'author', 'date', 'title'],
-        threshold: 0.3,
-      });
-      this.originalDiagnosis = this.copyObj(this.patientDiagnosis);
-    },
-    watch: {
-      searchQuery(value) {
-        let result = this.tableData;
-        if (value !== '') {
-          result = this.fuseSearch.search(this.searchQuery);
-        }
-        this.searchedData = result;
-      },
-      patientDiagnosis() {
-        if (
-          Object.keys(this.patientDiagnosis).length
-          > Object.keys(this.originalDiagnosis).length
-        ) {
-          this.originalDiagnosis = this.copyObj(this.patientDiagnosis);
-        }
-      },
-    },
-  };
+    };
 </script>
 
 <style lang="scss" >

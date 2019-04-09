@@ -1,6 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable vars-on-top */
-/* eslint-disable */
 <template>
   <div class="jaw">
     <md-button @click="print()">ok</md-button>
@@ -7179,141 +7176,150 @@
 </style>
 <script>
 /* eslint-disable max-len */
+/* eslint-disable no-undef */
+/* eslint-disable max-len */
+/* eslint-disable vars-on-top */
+/* eslint-disable */
 
-  export default {
-    name: 'AppMain',
-
-    data() {
-      return {};
+export default {
+  name: "AppMain",
+  data() {
+    return {};
+  },
+  methods: {
+    click(w) {
+      console.log(w);
     },
-    methods: {
-      click(w) {
-        console.log(w);
-      },
-      getClasses(cclass) {
-        const classes = {};
-        classes[cclass] = true;
-
-        return classes;
-      },
-      print() {
-        const SvgTeeth = {};
-        const teeth = [
-          18,
-          17,
-          16,
-          15,
-          14,
-          13,
-          12,
-          11,
-          21,
-          22,
-          23,
-          24,
-          25,
-          26,
-          27,
-          28,
-          48,
-          47,
-          46,
-          45,
-          44,
-          43,
-          42,
-          41,
-          31,
-          32,
-          33,
-          34,
-          35,
-          36,
-          37,
-          38,
-        ];
-        const locations = [
-          'palmer',
-          'fdi',
-          'universal',
-          'periodontit',
-          'paradontit4',
-          'paradontit3',
-          'paradontit2',
-          'paradontit1',
-          'gum',
-          'silant',
-          'coronaTopOclusial',
-          'coronaTopDistal',
-          'coronaTopLingual',
-          'coronaTopMedial',
-          'coronaTopBuccal',
-          'coronaTop',
-          'veneer',
-          'coronaLabialCervicalMesial',
-          'coronaLabialCervicalMiddle',
-          'coronaLabialCervicalDistal',
-          'coronaLabialMiddleMesial',
-          'coronaLabialMiddleMiddle',
-          'coronaLabialMiddleDistal',
-          'coronaLabialIncisionMesial',
-          'coronaLabialIncisalMiddle',
-          'coronaLabialIncisalDistal',
-          'coronaLabial',
-          'coronaLingualCervicalMesial',
-          'coronaLingualCervicalMiddle',
-          'coronaLingualCervicalDistal',
-          'coronaLingualMiddleMesial',
-          'coronaLingualMiddleMiddle',
-          'coronaLingualMiddleDistal',
-          'coronaLingualIncisionMesial',
-          'coronaLingualIncisalMiddle',
-          'coronaLingualIncisalDistal',
-          'coronaLingual',
-          'implant',
-          'rootCanal',
-          'root',
-          'bridge',
-          'background',
-        ];
-        let i = 0;
-        for (i = 0; i < teeth.length; i++) {
-          const _tooth = `_${teeth[i]}`;
-          const svg = this.$refs[_tooth].cloneNode(true).children[0];
-          // console.log(svg.childNodes[1]);
-          // let el = svg.childNodes[2];
-          const el = svg.childNodes[1].childNodes[0].childNodes[0].childNodes[0]
+    getClasses(cclass) {
+      const classes = {};
+      classes[cclass] = true;
+      return classes;
+    },
+    print() {
+      const SvgTeeth = {};
+      const teeth = [
+        18,
+        17,
+        16,
+        15,
+        14,
+        13,
+        12,
+        11,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        48,
+        47,
+        46,
+        45,
+        44,
+        43,
+        42,
+        41,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38
+      ];
+      const locations = [
+        "palmer",
+        "fdi",
+        "universal",
+        "periodontit",
+        "paradontit4",
+        "paradontit3",
+        "paradontit2",
+        "paradontit1",
+        "gum",
+        "silant",
+        "coronaTopOclusial",
+        "coronaTopDistal",
+        "coronaTopLingual",
+        "coronaTopMedial",
+        "coronaTopBuccal",
+        "coronaTop",
+        "veneer",
+        "coronaLabialCervicalMesial",
+        "coronaLabialCervicalMiddle",
+        "coronaLabialCervicalDistal",
+        "coronaLabialMiddleMesial",
+        "coronaLabialMiddleMiddle",
+        "coronaLabialMiddleDistal",
+        "coronaLabialIncisionMesial",
+        "coronaLabialIncisalMiddle",
+        "coronaLabialIncisalDistal",
+        "coronaLabial",
+        "coronaLingualCervicalMesial",
+        "coronaLingualCervicalMiddle",
+        "coronaLingualCervicalDistal",
+        "coronaLingualMiddleMesial",
+        "coronaLingualMiddleMiddle",
+        "coronaLingualMiddleDistal",
+        "coronaLingualIncisionMesial",
+        "coronaLingualIncisalMiddle",
+        "coronaLingualIncisalDistal",
+        "coronaLingual",
+        "implant",
+        "rootCanal",
+        "root",
+        "bridge",
+        "background"
+      ];
+      let i = 0;
+      for (i = 0; i < teeth.length; i += 1) {
+        // eslint-disable-next-line no-underscore-dangle
+        const _tooth = `_${teeth[i]}`;
+        // eslint-disable-next-line no-underscore-dangle
+        const svg = this.$refs[_tooth].cloneNode(true).children[0];
+        // console.log(svg.childNodes[1]);
+        // let el = svg.childNodes[2];
+        const el =
+          svg.childNodes[1].childNodes[0].childNodes[0].childNodes[0]
             .childNodes[0];
-          if (svg) var viewBox = svg.getAttribute('viewBox');
-          const height = viewBox.split(' ')[3];
-          const width_perc = (viewBox.split(' ')[2] / 600) * 100;
-          const width = viewBox.split(' ')[2];
-          // console.log(teeth[i]);
-          SvgTeeth[teeth[i]] = {
-            height,
-            width_perc,
-            width,
-            viewBox,
-          };
-          let l = 0;
-          for (l = 0; l < locations.length; l += 1) {
-            let currenLocation = '';
-            let elm;
-            console.log(el);
-            console.log(locations[l]);
-            currenLocation = el;
-            for (elm = currenLocation.firstChild; elm; elm = elm.nextSibling) {
-              if (elm.getAttribute('data') == locations[l]) {
-                SvgTeeth[teeth[i]][locations[l]] = {
-                  d: elm.getAttribute('d'),
-                  class: locations[l],
-                };
-              }
+        // eslint-disable-next-line vars-on-top
+        if (svg) {
+          const viewBox = svg.getAttribute("viewBox");
+          const height = viewBox.split(" ")[3];
+          // eslint-disable-next-line camelcase
+          const width_perc = (viewBox.split(" ")[2] / 600) * 100;
+          const width = viewBox.split(" ")[2];
+        }
+        // console.log(teeth[i]);
+        SvgTeeth[teeth[i]] = {
+          height,
+          width_perc,
+          width,
+          viewBox
+        };
+        let l = 0;
+        for (l = 0; l < locations.length; l += 1) {
+          let currenLocation = "";
+          let elm;
+          console.log(el);
+          console.log(locations[l]);
+          currenLocation = el;
+          for (elm = currenLocation.firstChild; elm; elm = elm.nextSibling) {
+            if (elm.getAttribute("data") === locations[l]) {
+              SvgTeeth[teeth[i]][locations[l]] = {
+                d: elm.getAttribute("d"),
+                class: locations[l]
+              };
             }
           }
         }
-        console.log(JSON.stringify(SvgTeeth));
-      },
-    },
-  };
+      }
+      console.log(JSON.stringify(SvgTeeth));
+    }
+  }
+};
 </script>

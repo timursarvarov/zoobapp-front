@@ -5,7 +5,6 @@ import {
   PATIENT_REQUEST,
   PATIENT_ERROR,
   PATIENT_SUCCESS,
-  PATIENT_DIAGNOSE_SET,
   PATIENT_GET,
   PATIENT_SET_PARAM,
   PATIENT_SET_PARAMS,
@@ -15,7 +14,14 @@ import {
   PATIENTS_UPDATE_PATIENT,
   PATIENT_ADD_SUB_PROP,
   PATIENT_DOWNLOAD_FILE,
+  PATIENT_PLAN_SET,
+  PATIENT_PLAN_DELETE,
+  PATIENT_DIAGNOSE_SET,
   PATIENT_DIAGNOSE_UPDATE,
+  PATIENT_DIAGNOSE_DELETE,
+  PATIENT_TREATMETS_SET,
+  PATIENT_TREATMETS_UPDATE,
+  PATIENT_TREATMETS_DELETE,
 } from '@/constants';
 
 export default {
@@ -182,6 +188,45 @@ export default {
 
   },
 
+  [PATIENT_PLAN_SET]: ({
+    commit
+  }, {
+    plan
+  }) => {
+    return new Promise((resolve, reject) => {
+    commit(PATIENT_PLAN_SET, plan);
+    }).then(resp => {
+      commit(PATIENT_SUCCESS);
+      resolve(true);
+    })
+    .catch(err => {
+      commit(PATIENT_ERROR);
+      reject(err);
+    });
+  },
+
+  [PATIENT_TREATMETS_SET]: ({
+    commit,
+    state
+  }, {
+    treatment,
+    planId
+  }) => {
+    const pIndex = state.patient.plans.findIndex(plan => plan.id === planId);
+    commit(PATIENT_TREATMETS_SET, {treatment, pIndex});
+  },
+  [PATIENT_PLAN_DELETE]: ({
+    commit,
+    state,
+  }, {
+    plan
+  }) => {
+    const pIndex = state.patient.plans.findIndex(pplan => pplan.id === plan.id);
+    if(pIndex !== -1){
+      commit(PATIENT_PLAN_DELETE, {pIndex, plan});
+    }
+  },
+
   [PATIENT_DIAGNOSE_SET]: ({
     commit
   }, {
@@ -190,12 +235,28 @@ export default {
     commit(PATIENT_DIAGNOSE_SET, diagnose);
   },
 
+  [PATIENT_TREATMETS_UPDATE]: ({
+    commit,
+    state,
+  }, {
+    treatment
+  }) => {
+    const dIndex = state.patient.treatments.findIndex(pTreatment => pTreatment.id === treatment.id);
+    if(dIndex !== -1){
+      commit(PATIENT_TREATMETS_UPDATE, {dIndex, diagnose});
+    }
+  },
   [PATIENT_DIAGNOSE_UPDATE]: ({
     commit,
+    state,
   }, {
     diagnose
   }) => {
-    commit(PATIENT_DIAGNOSE_UPDATE, diagnose);
+    const dIndex = state.patient.diagnosis.findIndex(pDiagnose => pDiagnose.id === diagnose.id);
+    if(dIndex !== -1){
+      commit(PATIENT_DIAGNOSE_UPDATE, {dIndex, diagnose});
+    }
+
   },
 
   [PATIENT_SET_PARAM]: ({

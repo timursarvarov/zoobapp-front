@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 <template>
   <div class="md-layout login-wrapper text-center">
     <div class="md-layout-item md-size-33 md-medium-size-50 md-small-size-70 md-xsmall-size-100">
@@ -186,6 +187,7 @@
           return;
         }
         this.$store.dispatch(AUTH_REQUEST, { username, password }).then(
+          // eslint-disable-next-line no-unused-vars
           (response) => {
             this.$router.push('/');
           },

@@ -7,6 +7,7 @@ import UserCard from './Dashboard/Pages/User/UserProfile/UserCard.vue';
 import PatientCard from './Dashboard/Pages/Patient/PatientProfile/PatientCard.vue';
 import JawAnamnes from './Dashboard/Pages/Patient/PatientTreatment/JawAnamnes.vue';
 import Diagnose from './Dashboard/Pages/Patient/PatientTreatment/PatientDiagnose/Diagnose.vue';
+import Treatments from './Dashboard/Pages/Patient/PatientTreatment/PatientTreatments/Treatments.vue';
 import DiagnoseList from './Dashboard/Pages/Patient/PatientTreatment/PatientDiagnose/DiagnoseList.vue';
 import Notes from './Dashboard/Pages/Patient/PatientTreatment/Notes.vue';
 import PatientFiles from './Dashboard/Pages/Patient/PatientTreatment/PatientFiles/PatientFiles.vue';
@@ -28,6 +29,7 @@ export {
   Notes,
   PatientFiles,
   TreatmentList,
+  Treatments,
   AnamnesList,
   ClinicSettings,
   PatientAddFilesForm,

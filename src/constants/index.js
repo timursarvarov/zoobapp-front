@@ -1,4 +1,5 @@
 import DIAGNOSISL from './diagnose';
+import TREATMETSL from './treatments';
 
 import TEETH_DEFAULT_LOCATIONSL from './tooth-default-locations';
 import TEETH_SCHEMAL from './teeth-schema';
@@ -14,6 +15,7 @@ import TEETH_BABY_BOTTOML from './teeth-baby-bottom';
 import TEETH_ALLL from './teeth-all';
 
 export const DIAGNOSIS = DIAGNOSISL;
+export const TREATMENTS = TREATMETSL;
 
 // Teeth schema locations
 
@@ -85,7 +87,13 @@ export const PATIENT_ERROR = 'PATIENT_ERROR';
 export const PATIENT_AVATAR_UPLOAD = 'PATIENT_AVATAR_UPLOAD';
 export const PATIENT_UPDATE = 'PATIENT_UPDATE';
 export const PATIENT_LOGOUT = 'PATIENT_LOGOUT';
+export const PATIENT_PLAN_SET = 'PATIENT_PLAN_SET';
+export const PATIENT_PLAN_DELETE = 'PATIENT_PLAN_DELETE';
+export const PATIENT_TREATMETS_SET = 'PATIENT_TREATMETS_SET';
+export const PATIENT_TREATMETS_DELETE = 'PATIENT_TREATMETS_DELETE';
+export const PATIENT_TREATMETS_UPDATE = 'PATIENT_TREATMETS_UPDATE';
 export const PATIENT_DIAGNOSE_SET = 'PATIENT_DIAGNOSE_SET';
+export const PATIENT_DIAGNOSE_DELETE = 'PATIENT_DIAGNOSE_DELETE';
 export const PATIENT_DIAGNOSE_UPDATE = 'PATIENT_DIAGNOSE_UPDATE';
 export const PATIENT_GET = 'PATIENT_GET';
 export const PATIENT_SET_PARAM = 'PATIENT_SET_PARAM';

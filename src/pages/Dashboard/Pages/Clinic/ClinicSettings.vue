@@ -198,7 +198,7 @@
     NOTIFY,
   } from '@/constants';
   import { mapGetters } from 'vuex';
-  import { IconBase, TAvatarInput } from '@/components';
+  import { TAvatarInput } from '@/components';
   import { SlideYDownTransition } from 'vue2-transitions';
   import commonCurrency from './Common-Currency.json';
   import timezones from './timezones.json';
@@ -206,7 +206,6 @@
   export default {
     components: {
       SlideYDownTransition,
-      IconBase,
       TAvatarInput,
     },
     name: 'currentClinic-settings',

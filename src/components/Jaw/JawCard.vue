@@ -13,7 +13,7 @@
         class="md-card-header-image jaw-wrapper s "
         :style="newHeigthStyleObj()"
       >
-        <div ref="jaw" >
+        <div ref="jaw">
           <!-- <jaw background-color="success" :jaw="jawp" ></jaw> -->
           <slot name="jaw"></slot>
         </div>
@@ -26,7 +26,7 @@
           v-if="headerAnimation === 'true'"
           :style="сardActionStyles"
         >
-            <slot name="actions"></slot>
+          <slot name="actions"></slot>
 
         </div>
         <slot name="title"></slot>
@@ -34,7 +34,7 @@
       </md-card-content>
 
       <md-card-actions md-alignment="space-between">
-        <slot name="footer"></slot>
+        <slot name="footer"></slot>s
       </md-card-actions>
     </md-card>
 
@@ -42,11 +42,11 @@
 </template>
 
 <script>
-  import Jaw from './Jaw.vue';
+// import Jaw from './Jaw.vue';
 
   export default {
     components: {
-      Jaw,
+      // Jaw,
     },
     name: 'jaw-card',
     props: {
@@ -56,10 +56,10 @@
       },
       actionSize: {
         type: Object,
-        // default: {
-        //   width: 30,
-        //   height: 30,
-        // }
+      // default: {
+      //   width: 30,
+      //   height: 30,
+      // }
       },
     },
     data() {
@@ -74,8 +74,7 @@
         сardActionStyles: {},
       };
     },
-    computed: {
-    },
+    computed: {},
     methods: {
       currentJawColor() {
         let color = '';
@@ -150,7 +149,7 @@
     },
     mounted() {
       // eslint-disable-next-line
-      this.$nextTick(function () {
+    this.$nextTick(function() {
         window.addEventListener('resize', this.setActionsSize);
       });
     },
@@ -167,16 +166,16 @@
 .jaw-card {
   z-index: 5;
   .md-card {
-    .md-card-action-buttons{
+    .md-card-action-buttons {
       width: calc(100% - 31px);
     }
     .md-card-action-buttons::-webkit-scrollbar {
-    width: 6px;
-    background-color: transparent;
+      width: 6px;
+      background-color: transparent;
     }
     .md-card-action-buttons::-webkit-scrollbar-thumb {
-    background-color: grey;
-    border-radius: 5px;
+      background-color: grey;
+      border-radius: 5px;
     }
     .jaw-state {
       min-width: 58px;

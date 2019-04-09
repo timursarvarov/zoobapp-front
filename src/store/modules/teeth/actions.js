@@ -9,13 +9,14 @@ export default {
         jawTreatment: {},
         jawDiagnose: {},
       };
+      // настраиваем челюсть
       Object.keys(jaw).forEach((jawType) => {
-        for (let i = 0; i < state.teethAll.length; i += 1) {
-          jaw[jawType][state.teethAll[i]] = {};
-          Object.keys(state.toothLocations).forEach((key) => {
-            jaw[jawType][state.teethAll[i]][key] = state.toothLocations[key];
+        state.teethAll.forEach((toothId) => {
+          jaw[jawType][toothId] = {};
+          Object.keys(state.toothLocations).forEach((location) => {
+            jaw[jawType][toothId][location] = state.toothLocations[location];
           });
-        }
+        });
       });
       commit(TEETH_INITIATION, jaw);
       const jawEthalon = {};

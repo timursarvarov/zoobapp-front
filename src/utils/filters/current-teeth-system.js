@@ -1,10 +1,13 @@
 /* eslint-disable consistent-return */
-import { TEETH_SCHEMA } from '@/constants';
+import {
+  TEETH_SCHEMA,
+} from '@/constants';
 
-export default function toCurrentTeethSystem(toothID, currentSystem) {
+export default function toCurrentTeethSystem(toothID, currentSystem, returnName = false) {
   if (typeof toothID === 'undefined' || !currentSystem) {
     return;
   }
+
   function getID(schema, id, system) {
     if (schema[id]) {
       if (schema[id][system]) {
@@ -13,6 +16,19 @@ export default function toCurrentTeethSystem(toothID, currentSystem) {
       return toothID;
     }
     return toothID;
+  }
+  function getName(schema, id) {
+    if (schema[id]) {
+      if (schema[id].name) {
+        return schema[id].name;
+      }
+      return toothID;
+    }
+    return toothID;
+  }
+  if (returnName) {
+    const name = getName(TEETH_SCHEMA, toothID) || toothID;
+    return name;
   }
   let system = 'fdi';
   if (currentSystem === 1) {

@@ -1,12 +1,12 @@
-export default function toggleLocation(location, diagnose, toothId) {
-  if (!location || !diagnose || !toothId) {
+export default function toggleLocation(location, diagnose, originalDiagnose, toothId) {
+  if (!location || !diagnose || !originalDiagnose || !toothId) {
     return diagnose;
   }
   const d = diagnose;
-  if (d.teeth[toothId][location]) {
+  if (location in d.teeth[toothId]) {
     delete d.teeth[toothId][location];
   } else {
-    d.teeth[toothId][location] = diagnose.locations[location];
+    d.teeth[toothId][location] = originalDiagnose.locations[location];
   }
   return d;
 }

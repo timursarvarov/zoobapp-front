@@ -230,7 +230,6 @@
 </template>
 
 <script>
-// import { mapFilters } from '@/filters/map-filters';
   import { Pagination, TAvatar } from '@/components';
   import { PatientsListSettings } from '@/pages';
   import CollaboratorAddForm from './CollaboratorAddForm.vue';
@@ -267,7 +266,6 @@
       callbackLauncher: null,
     }),
     methods: {
-      ...mapFilters(['capitilize']),
       getFieldName(key) {
         const field = this.availablePatientsTableColumns.find(f => f.key === key);
         if (field) {
@@ -373,14 +371,13 @@
                 search: vm.queryParams.searchQuery,
                 order: vm.queryParams.currentSortOrder,
                 orderBy: vm.queryParams.currentSort,
-                search: vm.queryParams.searchQuery,
                 toStore: true,
               },
             })
+            // eslint-disable-next-line no-unused-vars
             .then((resp) => {
-              if (resp) {
-              }
             })
+            // eslint-disable-next-line no-unused-vars
             .catch((err) => {});
         }, DELAY);
       },
@@ -455,7 +452,7 @@
     },
     watch: {
       queryParams: {
-        handler(newValue) {
+        handler() {
           this.search();
         },
         deep: true,

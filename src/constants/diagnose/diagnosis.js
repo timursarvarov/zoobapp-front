@@ -1,6 +1,7 @@
 import toggleLocation from './toggle-location';
 import setOnlyOneLocation from './set-only-one-location';
 import toggleAllLocations from './toggle-all-locations';
+import setOnlyOneLocationPlusFalse from './set-only-one-location-plus-false';
 
 export default [
   {
@@ -11,8 +12,7 @@ export default [
         code: 'K00.0',
         title: 'Адентия',
         explain: 'Congenitally missing teeth - complete or partial',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleAllLocations(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {
           root: false,
           coronaLingual: false,
@@ -24,7 +24,6 @@ export default [
           coronaLingual: false,
           coronaLabial: false,
           coronaTop: false,
-          gum: false,
         },
         view: {
           root: true,
@@ -38,17 +37,30 @@ export default [
         code: 'K00.1',
         title: 'Сверхкомплектные зубы',
         explain: 'Mesiodens',
-        setOnLoad: {},
-        type: 'oral',
+        setOnLoad: { background: true },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K00.2',
         title: 'Отклонения от размера и формы зуба',
         explain:
-          'Macr/micro-dontia, dens in dente, cocrescence,fusion, gemination, peg',
-        type: 'dental',
+          'Macr/micro-dontia, dens in dente, cocrescence, fusion, gemination, peg',
         setOnLoad: {},
-        locations: {},
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        locations: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+        },
         view: {
           root: true,
           coronaLingual: true,
@@ -61,10 +73,10 @@ export default [
         code: 'K00.3',
         title: 'Крапчатые  зубы',
         explain: 'Fluorosis',
-        type: 'dental',
         setOnLoad: {},
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
+          coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
           coronaLingualIncisionMesial: true,
           coronaLingualMiddleDistal: true,
@@ -94,6 +106,7 @@ export default [
           coronaLabial: true,
           coronaTop: true,
           gum: true,
+          coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
           coronaLingualIncisionMesial: true,
           coronaLingualMiddleDistal: true,
@@ -123,32 +136,12 @@ export default [
         title: 'Нарушение формирования зубов',
         explain: 'Enamel hypoplasia, dilaceration, Turner',
         setOnLoad: {},
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           root: true,
-          coronaLingualIncisalMiddle: true,
-          coronaLingualIncisionMesial: true,
-          coronaLingualMiddleDistal: true,
-          coronaLingualMiddleMiddle: true,
-          coronaLingualMiddleMesial: true,
-          coronaLingualCervicalDistal: true,
-          coronaLingualCervicalMiddle: true,
-          coronaLingualCervicalMesial: true,
-          coronaLabialIncisalDistal: true,
-          coronaLabialIncisalMiddle: true,
-          coronaLabialIncisionMesial: true,
-          coronaLabialMiddleDistal: true,
-          coronaLabialMiddleMiddle: true,
-          coronaLabialMiddleMesial: true,
-          coronaLabialCervicalDistal: true,
-          coronaLabialCervicalMiddle: true,
-          coronaLabialCervicalMesial: true,
-          coronaTopBuccal: true,
-          coronaTopMedial: true,
-          coronaTopLingual: true,
-          coronaTopDistal: true,
-          coronaTopOclusial: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
         },
         view: {
           root: true,
@@ -156,28 +149,6 @@ export default [
           coronaLabial: true,
           coronaTop: true,
           gum: true,
-          coronaLingualIncisalMiddle: true,
-          coronaLingualIncisionMesial: true,
-          coronaLingualMiddleDistal: true,
-          coronaLingualMiddleMiddle: true,
-          coronaLingualMiddleMesial: true,
-          coronaLingualCervicalDistal: true,
-          coronaLingualCervicalMiddle: true,
-          coronaLingualCervicalMesial: true,
-          coronaLabialIncisalDistal: true,
-          coronaLabialIncisalMiddle: true,
-          coronaLabialIncisionMesial: true,
-          coronaLabialMiddleDistal: true,
-          coronaLabialMiddleMiddle: true,
-          coronaLabialMiddleMesial: true,
-          coronaLabialCervicalDistal: true,
-          coronaLabialCervicalMiddle: true,
-          coronaLabialCervicalMesial: true,
-          coronaTopBuccal: true,
-          coronaTopMedial: true,
-          coronaTopLingual: true,
-          coronaTopDistal: true,
-          coronaTopOclusial: true,
         },
       },
       {
@@ -185,32 +156,12 @@ export default [
         title: 'Наследственные нарушения структуры зуба',
         setOnLoad: {},
         explain: 'Amylo/dentino-genisis imperfecta',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           root: true,
-          coronaLingualIncisalMiddle: true,
-          coronaLingualIncisionMesial: true,
-          coronaLingualMiddleDistal: true,
-          coronaLingualMiddleMiddle: true,
-          coronaLingualMiddleMesial: true,
-          coronaLingualCervicalDistal: true,
-          coronaLingualCervicalMiddle: true,
-          coronaLingualCervicalMesial: true,
-          coronaLabialIncisalDistal: true,
-          coronaLabialIncisalMiddle: true,
-          coronaLabialIncisionMesial: true,
-          coronaLabialMiddleDistal: true,
-          coronaLabialMiddleMiddle: true,
-          coronaLabialMiddleMesial: true,
-          coronaLabialCervicalDistal: true,
-          coronaLabialCervicalMiddle: true,
-          coronaLabialCervicalMesial: true,
-          coronaTopBuccal: true,
-          coronaTopMedial: true,
-          coronaTopLingual: true,
-          coronaTopDistal: true,
-          coronaTopOclusial: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
         },
         view: {
           root: true,
@@ -218,28 +169,6 @@ export default [
           coronaLabial: true,
           coronaTop: true,
           gum: true,
-          coronaLingualIncisalMiddle: true,
-          coronaLingualIncisionMesial: true,
-          coronaLingualMiddleDistal: true,
-          coronaLingualMiddleMiddle: true,
-          coronaLingualMiddleMesial: true,
-          coronaLingualCervicalDistal: true,
-          coronaLingualCervicalMiddle: true,
-          coronaLingualCervicalMesial: true,
-          coronaLabialIncisalDistal: true,
-          coronaLabialIncisalMiddle: true,
-          coronaLabialIncisionMesial: true,
-          coronaLabialMiddleDistal: true,
-          coronaLabialMiddleMiddle: true,
-          coronaLabialMiddleMesial: true,
-          coronaLabialCervicalDistal: true,
-          coronaLabialCervicalMiddle: true,
-          coronaLabialCervicalMesial: true,
-          coronaTopBuccal: true,
-          coronaTopMedial: true,
-          coronaTopLingual: true,
-          coronaTopDistal: true,
-          coronaTopOclusial: true,
         },
       },
       {
@@ -248,8 +177,9 @@ export default [
         setOnLoad: {},
         explain:
           'Natal/neonatal teeth, retained deciduous tooth, premature, late',
-        type: 'dental',
-        locations: {},
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
+        locations: {
+        },
         view: {
           root: true,
           coronaLingual: true,
@@ -262,8 +192,9 @@ export default [
         code: 'K00.7',
         title: 'Синдром прорезывания зубов',
         setOnLoad: {},
-        type: 'dental',
-        locations: {},
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
+        locations: {
+        },
         view: {
           root: true,
           coronaLingual: true,
@@ -278,10 +209,10 @@ export default [
         setOnLoad: {},
         explain:
           'Colour changes due to blood incompatability, biliary, porphyria, tetyracy',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           root: true,
+          coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
           coronaLingualIncisionMesial: true,
           coronaLingualMiddleDistal: true,
@@ -311,6 +242,7 @@ export default [
           coronaLabial: true,
           coronaTop: true,
           gum: true,
+          coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
           coronaLingualIncisionMesial: true,
           coronaLingualMiddleDistal: true,
@@ -339,6 +271,63 @@ export default [
         code: 'K00.9',
         title: 'Нарушение развития зубов неуточненные',
         setOnLoad: {},
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        locations: {
+          root: true,
+          coronaLingualIncisalDistal: true,
+          coronaLingualIncisalMiddle: true,
+          coronaLingualIncisionMesial: true,
+          coronaLingualMiddleDistal: true,
+          coronaLingualMiddleMiddle: true,
+          coronaLingualMiddleMesial: true,
+          coronaLingualCervicalDistal: true,
+          coronaLingualCervicalMiddle: true,
+          coronaLingualCervicalMesial: true,
+          coronaLabialIncisalDistal: true,
+          coronaLabialIncisalMiddle: true,
+          coronaLabialIncisionMesial: true,
+          coronaLabialMiddleDistal: true,
+          coronaLabialMiddleMiddle: true,
+          coronaLabialMiddleMesial: true,
+          coronaLabialCervicalDistal: true,
+          coronaLabialCervicalMiddle: true,
+          coronaLabialCervicalMesial: true,
+          coronaTopBuccal: true,
+          coronaTopMedial: true,
+          coronaTopLingual: true,
+          coronaTopDistal: true,
+          coronaTopOclusial: true,
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+          coronaLingualIncisalDistal: true,
+          coronaLingualIncisalMiddle: true,
+          coronaLingualIncisionMesial: true,
+          coronaLingualMiddleDistal: true,
+          coronaLingualMiddleMiddle: true,
+          coronaLingualMiddleMesial: true,
+          coronaLingualCervicalDistal: true,
+          coronaLingualCervicalMiddle: true,
+          coronaLingualCervicalMesial: true,
+          coronaLabialIncisalDistal: true,
+          coronaLabialIncisalMiddle: true,
+          coronaLabialIncisionMesial: true,
+          coronaLabialMiddleDistal: true,
+          coronaLabialMiddleMiddle: true,
+          coronaLabialMiddleMesial: true,
+          coronaLabialCervicalDistal: true,
+          coronaLabialCervicalMiddle: true,
+          coronaLabialCervicalMesial: true,
+          coronaTopBuccal: true,
+          coronaTopMedial: true,
+          coronaTopLingual: true,
+          coronaTopDistal: true,
+          coronaTopOclusial: true,
+        },
       },
     ],
   },
@@ -352,7 +341,6 @@ export default [
         title: 'Ретенированные зубы',
         setOnLoad: {},
         explain: 'Distinguish from impacted tooth',
-        type: 'dental',
         locations: {},
         view: {
           root: true,
@@ -367,7 +355,6 @@ export default [
         title: 'Импактные зубы',
         setOnLoad: {},
         explain: 'In contact with another tooth',
-        type: 'dental',
         locations: {},
         view: {
           root: true,
@@ -382,19 +369,17 @@ export default [
   {
     code: 'K02',
     title: 'Кариес зубов',
-    type: 'dental',
     codes: [
       {
         code: 'K02.0',
         title: 'Кариес эмали стадия белого (мелового) пятна',
         setOnLoad: {},
         explain: 'Restoration, amalgam, composite, resin',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
-          coronaLingualIncisalDistal: true,
           rootCanal: true,
           periodontit: true,
+          coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
           coronaLingualIncisionMesial: true,
           coronaLingualMiddleDistal: true,
@@ -403,7 +388,6 @@ export default [
           coronaLingualCervicalDistal: true,
           coronaLingualCervicalMiddle: true,
           coronaLingualCervicalMesial: true,
-
           coronaLabialIncisalDistal: true,
           coronaLabialIncisalMiddle: true,
           coronaLabialIncisionMesial: true,
@@ -456,12 +440,11 @@ export default [
         title: 'Кариес дентина',
         setOnLoad: {},
         explain: 'Restoration, amalgam, composite, resin',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
-          coronaLingualIncisalDistal: true,
           rootCanal: true,
           periodontit: true,
+          coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
           coronaLingualIncisionMesial: true,
           coronaLingualMiddleDistal: true,
@@ -470,7 +453,6 @@ export default [
           coronaLingualCervicalDistal: true,
           coronaLingualCervicalMiddle: true,
           coronaLingualCervicalMesial: true,
-
           coronaLabialIncisalDistal: true,
           coronaLabialIncisalMiddle: true,
           coronaLabialIncisionMesial: true,
@@ -523,12 +505,11 @@ export default [
         title: 'Кариес цемента',
         setOnLoad: {},
         explain: 'Restoration, amalgam, composite, resin, crown',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
-          coronaLingualIncisalDistal: true,
           rootCanal: true,
           periodontit: true,
+          coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
           coronaLingualIncisionMesial: true,
           coronaLingualMiddleDistal: true,
@@ -537,7 +518,6 @@ export default [
           coronaLingualCervicalDistal: true,
           coronaLingualCervicalMiddle: true,
           coronaLingualCervicalMesial: true,
-
           coronaLabialIncisalDistal: true,
           coronaLabialIncisalMiddle: true,
           coronaLabialIncisionMesial: true,
@@ -590,12 +570,11 @@ export default [
         title: 'Приостановившийся кариес зубов',
         setOnLoad: {},
         explain: 'Restoration, amalgam, composite, resin, crown',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
-          coronaLingualIncisalDistal: true,
           rootCanal: true,
           periodontit: true,
+          coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
           coronaLingualIncisionMesial: true,
           coronaLingualMiddleDistal: true,
@@ -604,7 +583,6 @@ export default [
           coronaLingualCervicalDistal: true,
           coronaLingualCervicalMiddle: true,
           coronaLingualCervicalMesial: true,
-
           coronaLabialIncisalDistal: true,
           coronaLabialIncisalMiddle: true,
           coronaLabialIncisionMesial: true,
@@ -657,12 +635,11 @@ export default [
         title: 'Одонтоклазия детская меланодентия, меланодонтоклазия',
         explain: 'Infantile meladontia',
         setOnLoad: {},
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
-          coronaLingualIncisalDistal: true,
           rootCanal: true,
           periodontit: true,
+          coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
           coronaLingualIncisionMesial: true,
           coronaLingualMiddleDistal: true,
@@ -671,7 +648,6 @@ export default [
           coronaLingualCervicalDistal: true,
           coronaLingualCervicalMiddle: true,
           coronaLingualCervicalMesial: true,
-
           coronaLabialIncisalDistal: true,
           coronaLabialIncisalMiddle: true,
           coronaLabialIncisionMesial: true,
@@ -722,13 +698,12 @@ export default [
       {
         code: 'K02.8',
         title: 'Другой уточненный кариес зубов',
-        type: 'dental',
         setOnLoad: {},
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
-          coronaLingualIncisalDistal: true,
           rootCanal: true,
           periodontit: true,
+          coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
           coronaLingualIncisionMesial: true,
           coronaLingualMiddleDistal: true,
@@ -737,7 +712,6 @@ export default [
           coronaLingualCervicalDistal: true,
           coronaLingualCervicalMiddle: true,
           coronaLingualCervicalMesial: true,
-
           coronaLabialIncisalDistal: true,
           coronaLabialIncisalMiddle: true,
           coronaLabialIncisionMesial: true,
@@ -789,12 +763,11 @@ export default [
         code: 'K02.9',
         title: 'Кариес зубов неуточненный',
         setOnLoad: {},
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
-          coronaLingualIncisalDistal: true,
           rootCanal: true,
           periodontit: true,
+          coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
           coronaLingualIncisionMesial: true,
           coronaLingualMiddleDistal: true,
@@ -803,7 +776,6 @@ export default [
           coronaLingualCervicalDistal: true,
           coronaLingualCervicalMiddle: true,
           coronaLingualCervicalMesial: true,
-
           coronaLabialIncisalDistal: true,
           coronaLabialIncisalMiddle: true,
           coronaLabialIncisionMesial: true,
@@ -861,8 +833,7 @@ export default [
         code: 'K03.0',
         title: 'Повышенное стирание зубов',
         setOnLoad: {},
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
@@ -873,7 +844,6 @@ export default [
           coronaLingualCervicalDistal: true,
           coronaLingualCervicalMiddle: true,
           coronaLingualCervicalMesial: true,
-
           coronaLabialIncisalDistal: true,
           coronaLabialIncisalMiddle: true,
           coronaLabialIncisionMesial: true,
@@ -922,9 +892,8 @@ export default [
       {
         code: 'K03.1',
         title: 'Сошлифовывание (абразивный знос) зубов',
-        type: 'dental',
         setOnLoad: {},
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
@@ -935,7 +904,6 @@ export default [
           coronaLingualCervicalDistal: true,
           coronaLingualCervicalMiddle: true,
           coronaLingualCervicalMesial: true,
-
           coronaLabialIncisalDistal: true,
           coronaLabialIncisalMiddle: true,
           coronaLabialIncisionMesial: true,
@@ -985,9 +953,8 @@ export default [
         code: 'K03.2',
         title: 'Эрозия зубов',
         explain: 'Vomiting, anorexia, bulhemia, acid, diet',
-        type: 'dental',
         setOnLoad: {},
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
@@ -1047,9 +1014,8 @@ export default [
         code: 'K03.3',
         title: 'Патологическая резорбция зубов',
         explain: 'Pink spot',
-        type: 'dental',
         setOnLoad: {},
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           root: true,
         },
@@ -1063,10 +1029,9 @@ export default [
       },
       {
         code: 'K03.4',
-        title: 'Гиперцементоз ',
-        type: 'dental',
-        setOnLoad: {},
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        title: 'Гиперцементоз',
+        setOnLoad: { root: true },
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           root: true,
         },
@@ -1082,8 +1047,8 @@ export default [
         code: 'K03.5',
         title: 'Анкилоз зубов',
         explain: 'Pink spot',
-        setOnLoad: {},
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        setOnLoad: { root: true },
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           root: true,
         },
@@ -1100,9 +1065,8 @@ export default [
         title: 'Отложения (наросты) на зубах',
         explain:
           'Pigmentation, tobacco, betel, plaque, calculus, scaling and polishing',
-        type: 'dental',
         setOnLoad: {},
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
@@ -1162,9 +1126,8 @@ export default [
         code: 'K03.7',
         title: 'Изменения цвета твердых тканей зубов после прорезывания',
         explain: 'Metal, pulpal bleeding, betel, tobacco',
-        type: 'dental',
         setOnLoad: {},
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
@@ -1224,9 +1187,8 @@ export default [
         code: 'K03.8',
         title: 'Другие  уточненные болезни твердых тканей зубов',
         explain: 'Sensitive dentine',
-        type: 'dental',
         setOnLoad: {},
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
@@ -1287,8 +1249,7 @@ export default [
         title: 'Болезнь твердых тканей зубов неуточненная',
         explain: '',
         setOnLoad: {},
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           coronaLingualIncisalDistal: true,
           coronaLingualIncisalMiddle: true,
@@ -1355,9 +1316,8 @@ export default [
         title: 'Пульпит',
         explain:
           'Pulp cap, root canal treatment,sedative dressing, endodontic,obturate',
-        type: 'dental',
-        setOnLoad: {},
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        setOnLoad: { rootCanal: true },
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           rootCanal: true,
         },
@@ -1375,8 +1335,7 @@ export default [
         title: 'Некроз пульпы (гангрена пульпы)',
         explain:
           'Gangrene, root canal treatment,sedative dressing, endodontic,obturate',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           rootCanal: true,
         },
@@ -1393,12 +1352,9 @@ export default [
         code: 'K04.2',
         title: 'Дегенерация пульпы дентикли, пульпарные камни',
         explain: 'Pulp stones, sclerosis',
-        type: 'dental',
+        setOnLoad: { rootCanal: true },
         locations: {
-          root: false,
-          coronaLingual: false,
-          coronaLabial: false,
-          coronaTop: false, // false = локация для удаления, true = для выбора области к лечению
+          rootCanal: true,
         },
         view: {
           root: true,
@@ -1407,38 +1363,14 @@ export default [
           coronaTop: true,
           gum: true,
         },
-        addLocation: (location, diagnose, toothId) => {
-          console.log(location, diagnose, toothId);
-          const d = diagnose;
-          const groupSwitch = location === 'coronaLingual'
-            || location === 'coronaLabial'
-            || location === 'coronaTop';
-
-          if (d.teeth[toothId][location]) {
-            delete d.teeth[toothId][location];
-            if (groupSwitch) {
-              delete d.teeth[toothId].coronaLingual;
-              delete d.teeth[toothId].coronaLabial;
-              delete d.teeth[toothId].coronaTop;
-            }
-          } else {
-            d.teeth[toothId][location] = true;
-            if (groupSwitch) {
-              d.teeth[toothId].coronaLingual = true;
-              d.teeth[toothId].coronaLabial = true;
-              d.teeth[toothId].coronaTop = true;
-            }
-          }
-          return d;
-        },
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
       },
       {
         code: 'K04.3',
         title: 'Неправильное формирование твердых тканей в пульпе',
         explain: '2ndary dentine - excludes pulp stones(K04.2)',
-
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        setOnLoad: { rootCanal: true },
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           rootCanal: true,
         },
@@ -1455,9 +1387,11 @@ export default [
         code: 'K04.4',
         title: 'Острый апикальный периодонтит пульпарного происхождения ',
         explain: 'Root canal treatment,endodontic,obturate, abcess',
-
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        setOnLoad: {
+          rootCanal: true,
+          periodontit: true,
+        },
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
           rootCanal: true,
           periodontit: true,
@@ -1476,8 +1410,11 @@ export default [
         code: 'K04.5',
         title: 'Хронический апикальный периодонтит (апикальная гранулема)',
         explain: 'Granuloma, root canal treatment,endodontic,obturate,abcess',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          rootCanal: true,
+          periodontit: true,
+        },
         locations: {
           rootCanal: true,
           periodontit: true,
@@ -1497,8 +1434,11 @@ export default [
         title: 'Периапикальный абсцесс со свищем  ',
         explain: 'Root canal treatment,endodontic,obturate,abcess',
 
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          rootCanal: true,
+          periodontit: true,
+        },
         locations: {
           rootCanal: true,
           periodontit: true,
@@ -1517,8 +1457,11 @@ export default [
         code: 'K04.7',
         title: 'Периапикальный абсцесс без свища',
         explain: 'Root canal treatment,endodontic,obturate,abcess',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          rootCanal: true,
+          periodontit: true,
+        },
         locations: {
           rootCanal: true,
           periodontit: true,
@@ -1537,8 +1480,11 @@ export default [
         code: 'K04.8',
         title: 'Корневая киста ',
         explain: 'Apical cyst, enucleate,apicectomy, apicoectomy',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          rootCanal: true,
+          periodontit: true,
+        },
         locations: {
           rootCanal: true,
           periodontit: true,
@@ -1556,8 +1502,11 @@ export default [
       {
         code: 'K04.9',
         title: 'Другие неуточненные болезни пульпы и периапикальных тканей',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          rootCanal: true,
+          periodontit: true,
+        },
         locations: {
           rootCanal: true,
           periodontit: true,
@@ -1582,8 +1531,9 @@ export default [
         code: 'K05.0',
         title: 'Острый гингивит',
         explain: 'Gingivitis, bleeding gums, scaling',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => setOnlyOneLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => setOnlyOneLocationPlusFalse(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+        },
         locations: {
           paradontit1: true,
           paradontit2: true,
@@ -1596,7 +1546,7 @@ export default [
           coronaLingual: true,
           coronaLabial: true,
           coronaTop: true,
-          gum: true,
+          gum: false,
           paradontit1: true,
           paradontit2: true,
           paradontit3: true,
@@ -1608,8 +1558,9 @@ export default [
         title: 'Хронический гингивит',
         explain:
           'Gingivitis, bleeding gums, scaling, ulcerative - excludes Vincent',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => setOnlyOneLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => setOnlyOneLocationPlusFalse(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+        },
         locations: {
           paradontit1: true,
           paradontit2: true,
@@ -1633,8 +1584,9 @@ export default [
         code: 'K05.2',
         title: 'Острый парадонтит',
         explain: 'Gingivitis, bleeding gums, scaling ',
-        addLocation: (location, diagnose, toothId) => setOnlyOneLocation(location, diagnose, toothId),
-        type: 'dental',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => setOnlyOneLocationPlusFalse(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+        },
         locations: {
           paradontit1: true,
           paradontit2: true,
@@ -1658,8 +1610,9 @@ export default [
         code: 'K05.3',
         title: 'Хронический пародонтит',
         explain: 'Gingivitis, chronic pericoronitis, bleeding gums, scaling',
-        addLocation: (location, diagnose, toothId) => setOnlyOneLocation(location, diagnose, toothId),
-        type: 'dental',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => setOnlyOneLocationPlusFalse(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+        },
         locations: {
           paradontit1: true,
           paradontit2: true,
@@ -1683,8 +1636,7 @@ export default [
         code: 'K05.4',
         title: 'Пародонтоз',
         explain: 'Juvenile,gingivitis, bleeding gums, scaling, curettage',
-        addLocation: (location, diagnose, toothId) => setOnlyOneLocation(location, diagnose, toothId),
-        type: 'dental',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => setOnlyOneLocationPlusFalse(location, diagnose, originalDiagnose, toothId),
         locations: {
           paradontit1: true,
           paradontit2: true,
@@ -1708,8 +1660,7 @@ export default [
         code: 'K05.5',
         title: 'Другие болезни пародонта',
         explain: 'Gingivitis, bleeding gums, scaling',
-        addLocation: (location, diagnose, toothId) => setOnlyOneLocation(location, diagnose, toothId),
-        type: 'dental',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => setOnlyOneLocationPlusFalse(location, diagnose, originalDiagnose, toothId),
         locations: {
           paradontit1: true,
           paradontit2: true,
@@ -1732,8 +1683,7 @@ export default [
       {
         code: 'K05.6',
         title: 'Другие болезни пародонта, неуточненные',
-        addLocation: (location, diagnose, toothId) => setOnlyOneLocation(location, diagnose, toothId),
-        type: 'dental',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => setOnlyOneLocationPlusFalse(location, diagnose, originalDiagnose, toothId),
         locations: {
           paradontit1: true,
           paradontit2: true,
@@ -1760,17 +1710,18 @@ export default [
     title: 'Другие изменения десны и беззубого альвеолярного края',
     codes: [
       {
-        addLocation: (location, diagnose, toothId) => setOnlyOneLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => setOnlyOneLocationPlusFalse(location, diagnose, originalDiagnose, toothId),
         code: 'K06.0',
         title: 'Рецессия десны',
         explain: 'Gingiva, recession',
-        type: 'dental',
+        setOnLoad: {
+        },
         locations: {
           paradontit1: true,
           paradontit2: true,
           paradontit3: true,
           paradontit4: true,
-          gum: false,
+          gum: true,
         },
         view: {
           root: true,
@@ -1788,8 +1739,10 @@ export default [
         code: 'K06.1',
         title: 'Гипертрофия десны',
         explain: 'Fibromatosis',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          gum: true,
+        },
         locations: {
           gum: true,
         },
@@ -1806,8 +1759,10 @@ export default [
         title:
           'Поражения десны и беззубого альвеолярного края, обусловленные травмой',
         explain: 'Denture hyperplasia occlusion, toothbrushing',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          gum: true,
+        },
         locations: {
           gum: true,
         },
@@ -1824,8 +1779,10 @@ export default [
         title:
           'Другие уточненные изменения десны и беззубого альвеолярного края',
         explain: 'Gingival cyst, epulis, pyogenic granuloma',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          gum: true,
+        },
         locations: {
           gum: true,
         },
@@ -1840,8 +1797,10 @@ export default [
       {
         code: 'K06.9',
         title: 'Изменения десны и беззубого альвеолярного края неуточненные',
-        type: 'dental',
-        addLocation: (location, diagnose, toothId) => toggleLocation(location, diagnose, toothId),
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          gum: true,
+        },
         locations: {
           gum: false,
         },
@@ -1863,46 +1822,154 @@ export default [
         code: 'K07.0',
         title: 'Основные аномалии размеров челюстей',
         explain: 'Gingiva, recession',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K07.1',
         title: 'Аномалии челюстно-черепных соотношений',
         explain:
           'Asymetry, pro/retrognathic, Cl 2, Cl 3, osteotomy, orthognathic, ortho',
+          addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+          setOnLoad: {
+          },
+          locations: {
+          },
+          view: {
+            root: true,
+            coronaLingual: true,
+            coronaLabial: true,
+            coronaTop: true,
+            gum: true,
+          },
       },
       {
         code: 'K07.2',
         title: 'Аномалии соотношения зубных дуг',
         explain:
           'Overjet, overbite, crossbite,midline deviation, orthodontic, banding',
+          addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+          setOnLoad: {
+          },
+          locations: {
+          },
+          view: {
+            root: true,
+            coronaLingual: true,
+            coronaLabial: true,
+            coronaTop: true,
+            gum: true,
+          },
       },
       {
         code: 'K07.3',
         title: 'Аномалии положения зубов',
         explain: 'Crowding, rotation, distema, transposition',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K07.4',
         title: 'Аномалии прикуса неуточненные',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K07.5',
         title: 'Челюстно-лицевые аномалии функционального происхождения',
         explain: 'Mouth breathing, abnormal swallowing, habits',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K07.6',
         title: 'Болезни ВЧНС',
         explain: 'Dislocation, TMJ, click, pain',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K07.8',
         title: 'Другие денто-лицевые аномалии',
         explain: 'Dislocation, TMJ, click, pain',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K07.9',
         title: 'Денто-лицевая аномалия, неуточненная',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
     ],
   },
@@ -1914,43 +1981,225 @@ export default [
         code: 'K08.0',
         title: 'Эксфолиация зубов из-за системных нарушений',
         explain: 'Hypophosphatasia, scurvy',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K08.1',
         title:
           'Потеря зубов вследствие несчастного случая, удаления или локализованного пародонтита',
         explain: 'Denture, bridge, implant, space maintainer',
-        type: 'dental',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          root: false,
+          coronaLingual: false,
+          coronaLabial: false,
+          coronaTop: false,
+        },
         locations: {
-          // rejected: true,
-          // root: false,
+          root: false,
+          coronaLingual: false,
+          coronaLabial: false,
+          coronaTop: false,
         },
         view: {
-          gum: true,
-          root: false,
+          root: true,
           coronaLingual: true,
           coronaLabial: true,
           coronaTop: true,
+          gum: true,
         },
       },
       {
         code: 'K08.2',
         title: 'Атрофия беззубого альвеолярного края',
         explain: 'Gingival mucosal graft',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          root: false,
+          coronaLingual: false,
+          coronaLabial: false,
+          coronaTop: false,
+          gum: true,
+        },
+        locations: {
+          root: false,
+          coronaLingual: false,
+          coronaLabial: false,
+          coronaTop: false,
+          gum: true,
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K08.3',
         title: 'Оставшийся корень зуба',
         explain: 'Root rest',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          root: undefined,
+          coronaLingual: false,
+          coronaLabial: false,
+          coronaTop: false,
+        },
+        locations: {
+          root: undefined,
+          coronaLingual: false,
+          coronaLabial: false,
+          coronaTop: false,
+        },
+        view: {
+          root: true,
+          coronaLingual: false,
+          coronaLabial: false,
+          coronaTop: false,
+          gum: true,
+        },
       },
       {
         code: 'K08.8',
         title: 'Другие уточненные изменения зубов и их опорного аппарата',
         explain: 'Toothache NOS',
+        setOnLoad: {},
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        locations: {
+          rootCanal: true,
+          periodontit: true,
+          coronaLingualIncisalDistal: true,
+          coronaLingualIncisalMiddle: true,
+          coronaLingualIncisionMesial: true,
+          coronaLingualMiddleDistal: true,
+          coronaLingualMiddleMiddle: true,
+          coronaLingualMiddleMesial: true,
+          coronaLingualCervicalDistal: true,
+          coronaLingualCervicalMiddle: true,
+          coronaLingualCervicalMesial: true,
+          coronaLabialIncisalDistal: true,
+          coronaLabialIncisalMiddle: true,
+          coronaLabialIncisionMesial: true,
+          coronaLabialMiddleDistal: true,
+          coronaLabialMiddleMiddle: true,
+          coronaLabialMiddleMesial: true,
+          coronaLabialCervicalDistal: true,
+          coronaLabialCervicalMiddle: true,
+          coronaLabialCervicalMesial: true,
+          coronaTopBuccal: true,
+          coronaTopMedial: true,
+          coronaTopLingual: true,
+          coronaTopDistal: true,
+          coronaTopOclusial: true,
+        },
+        view: {
+          coronaLingual: true,
+          periodontit: true,
+          rootCanal: true,
+          coronaLingualIncisalDistal: true,
+          coronaLingualIncisalMiddle: true,
+          coronaLingualIncisionMesial: true,
+          coronaLingualMiddleDistal: true,
+          coronaLingualMiddleMiddle: true,
+          coronaLingualMiddleMesial: true,
+          coronaLingualCervicalDistal: true,
+          coronaLingualCervicalMiddle: true,
+          coronaLingualCervicalMesial: true,
+          coronaLabial: true,
+          coronaLabialIncisalDistal: true,
+          coronaLabialIncisalMiddle: true,
+          coronaLabialIncisionMesial: true,
+          coronaLabialMiddleDistal: true,
+          coronaLabialMiddleMiddle: true,
+          coronaLabialMiddleMesial: true,
+          coronaLabialCervicalDistal: true,
+          coronaLabialCervicalMiddle: true,
+          coronaLabialCervicalMesial: true,
+          coronaTopBuccal: true,
+          coronaTopMedial: true,
+          coronaTopLingual: true,
+          coronaTopDistal: true,
+          coronaTopOclusial: true,
+          root: true,
+          gum: true,
+        },
       },
       {
         code: 'K08.9',
         title: 'Изменения зубов и их опорного аппарата неуточненное',
+        setOnLoad: {},
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
+        locations: {
+          rootCanal: true,
+          periodontit: true,
+          coronaLingualIncisalDistal: true,
+          coronaLingualIncisalMiddle: true,
+          coronaLingualIncisionMesial: true,
+          coronaLingualMiddleDistal: true,
+          coronaLingualMiddleMiddle: true,
+          coronaLingualMiddleMesial: true,
+          coronaLingualCervicalDistal: true,
+          coronaLingualCervicalMiddle: true,
+          coronaLingualCervicalMesial: true,
+          coronaLabialIncisalDistal: true,
+          coronaLabialIncisalMiddle: true,
+          coronaLabialIncisionMesial: true,
+          coronaLabialMiddleDistal: true,
+          coronaLabialMiddleMiddle: true,
+          coronaLabialMiddleMesial: true,
+          coronaLabialCervicalDistal: true,
+          coronaLabialCervicalMiddle: true,
+          coronaLabialCervicalMesial: true,
+          coronaTopBuccal: true,
+          coronaTopMedial: true,
+          coronaTopLingual: true,
+          coronaTopDistal: true,
+          coronaTopOclusial: true,
+        },
+        view: {
+          coronaLingual: true,
+          periodontit: true,
+          rootCanal: true,
+          coronaLingualIncisalDistal: true,
+          coronaLingualIncisalMiddle: true,
+          coronaLingualIncisionMesial: true,
+          coronaLingualMiddleDistal: true,
+          coronaLingualMiddleMiddle: true,
+          coronaLingualMiddleMesial: true,
+          coronaLingualCervicalDistal: true,
+          coronaLingualCervicalMiddle: true,
+          coronaLingualCervicalMesial: true,
+          coronaLabial: true,
+          coronaLabialIncisalDistal: true,
+          coronaLabialIncisalMiddle: true,
+          coronaLabialIncisionMesial: true,
+          coronaLabialMiddleDistal: true,
+          coronaLabialMiddleMiddle: true,
+          coronaLabialMiddleMesial: true,
+          coronaLabialCervicalDistal: true,
+          coronaLabialCervicalMiddle: true,
+          coronaLabialCervicalMesial: true,
+          coronaTopBuccal: true,
+          coronaTopMedial: true,
+          coronaTopLingual: true,
+          coronaTopDistal: true,
+          coronaTopOclusial: true,
+          root: true,
+          gum: true,
+        },
       },
     ],
   },
@@ -1963,25 +2212,80 @@ export default [
         title: 'Киста при прорезывании зубов',
         explain:
           'cyst, eruption, gingival, Kerato, dentigerous,lateral periodontal',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K09.1',
         title: 'Ростовые (неодонтогенные) кисты области рта',
         explain: 'Nasopalatine cyst',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K09.2',
         title: 'Другие кисты челюстей',
         explain: 'Nasopalatine cyst',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K09.8',
         title: 'Кисты полости рта, не классифицированные в других рубриках',
         explain: 'Dermoid cyst',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K09.9',
         title: 'Кисты полости рта, неуточненные',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
     ],
   },
@@ -1993,29 +2297,101 @@ export default [
         code: 'K10.0',
         title: 'Нарушения развития челюстей',
         explain: 'Tori',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K10.1',
         title: 'Гигантоклеточная гранулема центральная',
         explain: '',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K10.2',
         title: 'Воспалительные заболевания челюстей',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K10.3',
         title: 'Альвеолит челюстей альвеолярный остеит, сухая лунка',
         explain: 'Osteomyelitis, sequestra',
+        addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
+        setOnLoad: {
+          root: true,
+          coronaLingual: false,
+          coronaLabial: false,
+          coronaTop: false,
+        },
+        locations: {
+          root: true,
+          coronaLingual: false,
+          coronaLabial: false,
+          coronaTop: false,
+        },
+        view: {
+          root: true,
+          gum: true,
+        },
       },
       {
         code: 'K10.8',
         title: 'Другие уточненные болезни челюстей',
         explain: 'Dry socket',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K10.9',
         title: 'Болезнь челюстей неуточненная',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
     ],
   },
@@ -2026,45 +2402,155 @@ export default [
       {
         code: 'K11.0',
         title: 'Атрофия слюнной железы',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K11.1',
         title: 'Гипертрофия слюнной железы',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K11.2',
         title: 'Сиалоадеит',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K11.3',
         title: 'Абсцесс слюнной железы',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K11.4',
         title: 'Свищ слюнной железы',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K11.5',
         title: 'Сиалолитиаз, камни в слюнном протоке',
         explain: 'Salivary calculus, stone',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K11.6',
         title: 'Мукоцеле слюнной железы, ранула',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K11.7',
         title: 'Нарушение секреции слюнных желез',
         explain: 'Xerostoma, dry mouth',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K11.8',
         title: 'Другие болезни слюнных желез',
         explain: 'Miculicz',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K11.9',
         title: 'Заболевание слюнной железы неуточненное',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
     ],
   },
@@ -2075,14 +2561,47 @@ export default [
       {
         code: 'K12.0',
         title: 'Рецидивирующие афты полости рта',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K12.1',
         title: 'Другие формы стоматита',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K12.2',
         title: 'Флегмона и абсцесс области рта',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
     ],
   },
@@ -2094,35 +2613,121 @@ export default [
         code: 'K13.0',
         title: 'Болезни губ',
         explain: 'Angular chelitis',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K13.1',
         title: 'Прикусывание щеки и губ',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K13.2',
         title:
           'Лейкоплакия и другие изменения  эпителия  полости рта, включая язык',
+          setOnLoad: {
+          },
+          locations: {
+          },
+          view: {
+            root: true,
+            coronaLingual: true,
+            coronaLabial: true,
+            coronaTop: true,
+            gum: true,
+          },
       },
       {
         code: 'K13.3',
         title: 'Волосатая лейкоплакия',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K13.4',
-        title: 'Гранулема и гранулемоподобные поражения сопр',
+        title: 'Гранулема и гранулемоподобные поражения слизистой оболочки полости рта',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K13.5',
         title: 'Подслизистый фиброз полости рта',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K13.6',
         title: 'Гиперплазия СОПР вследствие раздражения',
+        setOnLoad: {
+        },
+        locations: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
       {
         code: 'K13.7',
-        title: 'Другие  и неуточненные поражения СОПР',
+        title: 'Другие и неуточненные поражения слизистой оболочки полости рта',
+        setOnLoad: {
+        },
+        view: {
+          root: true,
+          coronaLingual: true,
+          coronaLabial: true,
+          coronaTop: true,
+          gum: true,
+        },
       },
     ],
   },
@@ -2168,59 +2773,6 @@ export default [
       {
         code: 'K14.9',
         title: 'Болезнь языка неуточненная',
-      },
-    ],
-  },
-  {
-    code: 'Z',
-    title: 'Z codes',
-    codes: [
-      {
-        code: 'Z01.2',
-        title: 'Стоматологическое обследование',
-        explain:
-          'Replace amalgams with composites in absence of clinical need; teeth whitening etc',
-      },
-      {
-        code: 'Z41.8',
-        title:
-          'Другие процедуры для целей, отличных от устранения состояния здоровья',
-        explain: 'FLUORIDE Rx, FISSURE SEALANT, MOUTH GUARD, PROPHYLACT',
-      },
-      {
-        code: 'Z29.8',
-        title: 'Другие уточненные профилактические процедуры',
-        explain: 'All prosthetic laboratory procedures , Facing replacement',
-      },
-      {
-        code: 'Z46.3',
-        title: 'Установка и регулировка зубного протеза',
-        explain: 'Denture repair or adjustment',
-      },
-      {
-        code: 'Z46.4',
-        title:
-          'Установка и настройка стоматологического ортодонтического устройства',
-        explain: 'All orthodontic laboratory procedures',
-      },
-      {
-        code: 'Z48.0',
-        title: 'Внимание к хирургическим повязкам или швам',
-        explain:
-          'Removal of sutures when original surgery not done by person removing',
-      },
-      {
-        code: 'Z45.8',
-        title:
-          'Корректировка и управление другими имплантированными устройствами',
-        explain:
-          'Replacement of implant or implant-supported components, implant mainteanance',
-      },
-      {
-        code: 'Z53.2',
-        title:
-          'Процедура не выполнена из-за решения пациента по другим и неуказанным причинам',
-        explain: 'Failed or cancelled appouintment',
       },
     ],
   },

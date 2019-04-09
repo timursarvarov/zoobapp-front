@@ -46,7 +46,7 @@
           :to="`/patient/${patient.ID}/diagnose`"
         >
           <div class="md-layout md-gutter">
-            <diagnose :selectedTeeth="selectedTeeth" v-model="selectedDiagnose"></diagnose>
+            <diagnose />
           </div>
         </md-tab>
 
@@ -55,7 +55,11 @@
           md-icon="add"
           md-label="Treatment"
           :to="`/patient/${patient.ID}/treatment`"
-        ></md-tab>
+        >
+          <div class="md-layout md-gutter">
+            <treatments/>
+          </div>
+        </md-tab>
         <md-tab
           id="tab-notes"
           md-icon="question_answer"
@@ -96,7 +100,8 @@ import {
   JawAnamnes,
   TreatmentList,
   PatientFiles,
-  PatientAddFilesForm
+  PatientAddFilesForm,
+  Treatments,
 } from "@/pages";
 
 export default {
@@ -107,6 +112,7 @@ export default {
     JawAnamnes,
     Diagnose,
     DiagnoseList,
+    Treatments,
     Notes,
     TreatmentList,
     AnamnesList,

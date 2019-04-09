@@ -1,5 +1,9 @@
+/* eslint-disable import/no-unresolved */
 <template>
-  <md-dialog class="cropper-form" :md-active.sync="showFormLocal">
+  <md-dialog
+    class="cropper-form"
+    :md-active.sync="showFormLocal"
+  >
     <div>
       <md-card>
         <md-card-header class="md-card-header-icon md-card-header-green">
@@ -39,12 +43,19 @@
               class="md-size-100 md-layout-item"
             >
               {{message}}:
-              <animated-number :value="size.num" :toFix="2" :duration="300"></animated-number>
+              <animated-number
+                :value="size.num"
+                :toFix="2"
+                :duration="300"
+              ></animated-number>
               {{size.type}}
               <br>
             </div>
 
-            <div v-if="message === 'Calculating...'" class="md-layout-item md-size-100">
+            <div
+              v-if="message === 'Calculating...'"
+              class="md-layout-item md-size-100"
+            >
               {{message}}
               <br>
             </div>
@@ -87,8 +98,7 @@
       },
       imageName: {
         type: String,
-        default: () => 'imageName'
-        ,
+        default: () => 'imageName',
       },
       fd: {
         type: Object,

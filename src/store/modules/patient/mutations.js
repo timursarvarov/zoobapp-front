@@ -5,8 +5,12 @@ import {
   PATIENT_SUCCESS,
   PATIENT_LOGOUT,
   PATIENT_UPDATE,
+  PATIENT_PLAN_SET,
+  PATIENT_PLAN_DELETE,
   PATIENT_DIAGNOSE_SET,
   PATIENT_DIAGNOSE_UPDATE,
+  PATIENT_TREATMETS_SET,
+  PATIENT_TREATMETS_UPDATE,
   PATIENT_GET,
   PATIENT_SET_PARAM,
 } from '@/constants';
@@ -28,17 +32,23 @@ export default {
   [PATIENT_LOGOUT]: (state) => {
     state.patient = {};
   },
-  [PATIENT_DIAGNOSE_SET]: (state, diagnose) => {
-    state.patient.diagnosis.push(diagnose);
+  [PATIENT_PLAN_SET]: (state, plan) => {
+    state.patient.plans.unshift(plan);
   },
-  [PATIENT_DIAGNOSE_UPDATE]: (state, diagnose) => {
-    const dIndex = state.patient.diagnosis.findIndex(
-      pDiagnose => pDiagnose.id === diagnose.id
-    );
-    if(dIndex === -1){
-      return;
-    }
-    state.patient.diagnosis[dIndex] = diagnose;
+  [PATIENT_PLAN_DELETE]: (state, { dIndex, plan }) => {
+    state.patient.plans.splice(dIndex, 1);
+  },
+  [PATIENT_TREATMETS_SET]: (state, {treatment, pIndex}) => {
+    state.patient.plans[pIndex].treatments.unshift(treatment);
+  },
+  [PATIENT_TREATMETS_UPDATE]: (state, { dIndex, treatment }) => {
+    state.patient.treatments.splice(dIndex, 1, treatment);
+  },
+  [PATIENT_DIAGNOSE_SET]: (state, diagnose) => {
+    state.patient.diagnosis.unshift(diagnose);
+  },
+  [PATIENT_DIAGNOSE_UPDATE]: (state, { dIndex, diagnose }) => {
+    state.patient.diagnosis.splice(dIndex, 1, diagnose);
   },
   [PATIENT_GET]: (state, patient) => {
     state.patient = patient;
