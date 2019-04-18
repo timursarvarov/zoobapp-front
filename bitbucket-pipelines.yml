@@ -3,13 +3,23 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: node:6.9.4
+image: node
 
 pipelines:
   default:
     - step:
+        name: Build and test
         caches:
           - node
-        script: # Modify the commands below to build your repository.
+        script:
           - npm install
-          - npm test
+          - npm run build
+          - ls
+          - pwd
+    - step:
+        name: Deploy to production
+        deployment: production
+        script:
+           - echo "Deploying to prod environment"
+           - ls
+           - pwd
