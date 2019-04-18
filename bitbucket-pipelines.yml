@@ -6,20 +6,21 @@
 image: node
 
 pipelines:
-  default:
-    - step:
-        name: Build and test
-        caches:
-          - node
-        script:
-          - npm install
-          - npm run build
-          - ls
-          - pwd
-    - step:
-        name: Deploy to production
-        deployment: production
-        script:
-           - echo "Deploying to prod environment"
-           - ls
-           - pwd
+  custom:
+    default:
+      - step:
+          name: Build and test
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run build
+            - ls
+            - pwd
+      - step:
+          name: Deploy to production
+          deployment: production
+          script:
+             - echo "Deploying to prod environment"
+             - ls
+             - pwd
