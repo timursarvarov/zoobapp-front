@@ -8,19 +8,17 @@ image: node
 pipelines:
   custom:
     default:
-      - step:
-          name: Build and test
-          caches:
-            - node
-          script:
-            - npm install
-            - npm run build
-            - ls
-            - pwd
+      # - step:
+      #     name: Unit Test
+      #     caches:
+      #       - node
+      #     script:
+      #       - npm install
+      #       - npm test
       - step:
           name: Deploy to production
           deployment: production
           script:
-             - echo "Deploying to prod environment"
+             - npm install
+             - npm run build
              - ls
-             - pwd
