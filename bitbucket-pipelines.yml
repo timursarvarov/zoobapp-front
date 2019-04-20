@@ -24,6 +24,6 @@ pipelines:
               variables:
                   USER: 'root'
                   SERVER: '159.89.246.107'
-                  REMOTE_PATH: '/var/www/dental.owl.team/public_html/test/'
-                  LOCAL_PATH: 'public/*'
+                  REMOTE_PATH: '/var/www/dental.owl.team/public_html/'
+                  LOCAL_PATH: 'public'
                   DEBUG: 'true'
