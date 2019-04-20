@@ -6,19 +6,25 @@
 image: node
 
 pipelines:
-  custom:
-    default:
-      # - step:
-      #     name: Unit Test
-      #     caches:
-      #       - node
-      #     script:
-      #       - npm install
-      #       - npm test
-      - step:
-          name: Deploy to production
-          deployment: production
-          script:
-             - npm install
-             - npm run build
-             - ls
+  default:
+    # - step:
+    #     name: Unit Test
+    #     caches:
+    #       - node
+    #     script:
+    #       - npm install
+    #       - npm test
+    - step:
+        name: Deploy to production
+        deployment: production
+        script:
+            - npm install
+            - npm run build
+            - ls
+            - pipe: atlassian/sftp-deploy:0.3.1
+                variables:
+                  USER: 'root'
+                  SERVER: '159.89.246.107'
+                  REMOTE_PATH: '/var/www/dental.owl.team/public_html/test/'
+                  LOCAL_PATH: 'dist'
+                  DEBUG: 'true'
