@@ -18,13 +18,12 @@ pipelines:
         name: Deploy to production
         deployment: production
         script:
-            - npm install
-            - npm run build
-            - ls
+            # - npm install
+            # - npm run build
             - pipe: atlassian/sftp-deploy:0.3.1
               variables:
                   USER: 'root'
                   SERVER: '159.89.246.107'
                   REMOTE_PATH: '/var/www/dental.owl.team/public_html/test/'
-                  LOCAL_PATH: 'dist'
+                  LOCAL_PATH: 'public'
                   DEBUG: 'true'
