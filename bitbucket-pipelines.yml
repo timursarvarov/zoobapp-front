@@ -22,7 +22,7 @@ pipelines:
             - npm run build
             - ls
             - pipe: atlassian/sftp-deploy:0.3.1
-                variables:
+              variables:
                   USER: 'root'
                   SERVER: '159.89.246.107'
                   REMOTE_PATH: '/var/www/dental.owl.team/public_html/test/'
