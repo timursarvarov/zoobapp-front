@@ -126,193 +126,193 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
-  import { Pagination, TAvatar, TFilePreview } from '@/components';
-  import Fuse from 'fuse.js';
-  import swal from 'sweetalert2';
-  // eslint-disable-next-line
+        import { mapGetters } from 'vuex';
+        import { Pagination, TAvatar, TFilePreview } from '@/components';
+        import Fuse from 'fuse.js';
+        import swal from 'sweetalert2';
+        // eslint-disable-next-line
 import "viewerjs/dist/viewer.css";
-  import { isEmpty } from '@/mixins';
+        import { tObjProp } from '@/mixins';
 
-  export default {
-    name: 'patient-files',
-    mixins: [isEmpty],
-    components: {
-      Pagination,
-      TAvatar,
-      TFilePreview,
-    },
-    data() {
-      return {
-        options: {
-          filter(image) {
-            return image.classList.contains('img-to-preview');
-          },
-        },
-        currentSort: 'name',
-        currentSortOrder: 'asc',
-        pagination: {
-          perPage: 25,
-          currentPage: 1,
-          perPageOptions: [10, 25, 50],
-          total: 0,
-        },
-        footerTable: ['Name', 'Email', 'Age', 'Salary', 'Actions'],
-        searchQuery: '',
-        propsToSearch: ['name', 'email', 'age'],
-        searchedData: [],
-        fuseSearch: null,
-        extensions: 'gif,jpg,jpeg,png,webp',
-        addData: {
-          show: false,
-          name: '',
-          type: '',
-          content: '',
-        },
-      };
-    },
-    methods: {
-      downoladFile(url) {
-        window.location = `${url}?dl=1`;
-      },
-      show() {
-        // const vuer = this.$el.querySelector('.images').$vuer;
-        // console.log(this.$el.querySelector('.img-to-preview'));
-        // const vuer = this.$el.querySelector('.img-to-preview').$vuer
-        //  const vuer = this.$el.querySelector('.images').$vuer
-        // vuer.show()
-      },
-      customSort(value) {
-        if (this.currentSort === 'author') {
-          return value.sort((a, b) => {
-            const sortBy = this.currentSort;
-            if (this.currentSortOrder === 'desc') {
-              return a[sortBy].firstName.localeCompare(b[sortBy].firstName);
-            }
-            return b[sortBy].firstName.localeCompare(a[sortBy].firstName);
-          });
-        }
-        return value.sort((a, b) => {
-          const sortBy = this.currentSort;
-          if (this.currentSortOrder === 'desc') {
-            return a[sortBy].localeCompare(b[sortBy]);
-          }
-          return b[sortBy].localeCompare(a[sortBy]);
-        });
-      },
-      handleEdit(item) {
-        swal({
-          title: `You want to edit ${item.name}`,
-          buttonsStyling: false,
-          confirmButtonClass: 'md-button md-info',
-        });
-      },
-      handleDelete(item) {
-        swal({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonClass: 'md-button md-success btn-fill',
-          cancelButtonClass: 'md-button md-danger btn-fill',
-          confirmButtonText: 'Yes, delete it!',
-          buttonsStyling: false,
-        }).then((result) => {
-          if (result.value) {
-            this.deleteRow(item);
-            swal({
-              title: 'Deleted!',
-              text: `You deleted ${item.name}`,
-              type: 'success',
-              confirmButtonClass: 'md-button md-success btn-fill',
-              buttonsStyling: false,
-            });
-          }
-        });
-      },
-      deleteRow(item) {
-        const indexToDelete = this.files.findIndex(
-          tableRow => tableRow.id === item.id,
-        );
-        if (indexToDelete >= 0) {
-          this.files.splice(indexToDelete, 1);
-        }
-      },
-    },
-    computed: {
-      ...mapGetters({
-        access_token: 'fetchAccessToken',
-        patient: 'getPatient',
-      }),
-      totalFiles() {
-        return this.patient.files.reduce((a, b) => a + (b.size || 0), 0);
-      },
-      postAction() {
-        return `https://dental-api.owl.team/v1/patients/${
-          this.patient ? this.patient.ID : ''
-        }/files/`;
-      },
-      putAction() {
-        return `https://dental-api.owl.team/v1/patients/${
-          this.patient ? this.patient.ID : ''
-        }/files/`;
-      },
-      headers() {
-        return {
-          Authorization: this.access_token,
+        export default {
+            name: 'patient-files',
+            mixins: [tObjProp],
+            components: {
+                Pagination,
+                TAvatar,
+                TFilePreview,
+            },
+            data() {
+                return {
+                    options: {
+                        filter(image) {
+                            return image.classList.contains('img-to-preview');
+                        },
+                    },
+                    currentSort: 'name',
+                    currentSortOrder: 'asc',
+                    pagination: {
+                        perPage: 25,
+                        currentPage: 1,
+                        perPageOptions: [10, 25, 50],
+                        total: 0,
+                    },
+                    footerTable: ['Name', 'Email', 'Age', 'Salary', 'Actions'],
+                    searchQuery: '',
+                    propsToSearch: ['name', 'email', 'age'],
+                    searchedData: [],
+                    fuseSearch: null,
+                    extensions: 'gif,jpg,jpeg,png,webp',
+                    addData: {
+                        show: false,
+                        name: '',
+                        type: '',
+                        content: '',
+                    },
+                };
+            },
+            methods: {
+                downoladFile(url) {
+                    window.location = `${url}?dl=1`;
+                },
+                show() {
+                    // const vuer = this.$el.querySelector('.images').$vuer;
+                    // console.log(this.$el.querySelector('.img-to-preview'));
+                    // const vuer = this.$el.querySelector('.img-to-preview').$vuer
+                    //  const vuer = this.$el.querySelector('.images').$vuer
+                    // vuer.show()
+                },
+                customSort(value) {
+                    if (this.currentSort === 'author') {
+                        return value.sort((a, b) => {
+                            const sortBy = this.currentSort;
+                            if (this.currentSortOrder === 'desc') {
+                                return a[sortBy].firstName.localeCompare(b[sortBy].firstName);
+                            }
+                            return b[sortBy].firstName.localeCompare(a[sortBy].firstName);
+                        });
+                    }
+                    return value.sort((a, b) => {
+                        const sortBy = this.currentSort;
+                        if (this.currentSortOrder === 'desc') {
+                            return a[sortBy].localeCompare(b[sortBy]);
+                        }
+                        return b[sortBy].localeCompare(a[sortBy]);
+                    });
+                },
+                handleEdit(item) {
+                    swal({
+                        title: `You want to edit ${item.name}`,
+                        buttonsStyling: false,
+                        confirmButtonClass: 'md-button md-info',
+                    });
+                },
+                handleDelete(item) {
+                    swal({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonClass: 'md-button md-success btn-fill',
+                        cancelButtonClass: 'md-button md-danger btn-fill',
+                        confirmButtonText: 'Yes, delete it!',
+                        buttonsStyling: false,
+                    }).then((result) => {
+                        if (result.value) {
+                            this.deleteRow(item);
+                            swal({
+                                title: 'Deleted!',
+                                text: `You deleted ${item.name}`,
+                                type: 'success',
+                                confirmButtonClass: 'md-button md-success btn-fill',
+                                buttonsStyling: false,
+                            });
+                        }
+                    });
+                },
+                deleteRow(item) {
+                    const indexToDelete = this.files.findIndex(
+                        tableRow => tableRow.id === item.id,
+                    );
+                    if (indexToDelete >= 0) {
+                        this.files.splice(indexToDelete, 1);
+                    }
+                },
+            },
+            computed: {
+                ...mapGetters({
+                    access_token: 'fetchAccessToken',
+                    patient: 'getPatient',
+                }),
+                totalFiles() {
+                    return this.patient.files.reduce((a, b) => a + (b.size || 0), 0);
+                },
+                postAction() {
+                    return `https://dental-api.owl.team/v1/patients/${
+                        this.patient ? this.patient.ID : ''
+                    }/files/`;
+                },
+                putAction() {
+                    return `https://dental-api.owl.team/v1/patients/${
+                        this.patient ? this.patient.ID : ''
+                    }/files/`;
+                },
+                headers() {
+                    return {
+                        Authorization: this.access_token,
+                    };
+                },
+                data() {
+                    return {
+                        'Access-Control-Allow-Credentials': true,
+                    };
+                },
+                queriedData() {
+                    let result = this.patient.files ? this.patient.files : [];
+                    if (this.searchedData.length > 0) {
+                        result = this.searchedData;
+                    }
+                    return result.slice(this.from, this.to);
+                },
+                to() {
+                    let highBound = this.from + this.pagination.perPage;
+                    if (this.total < highBound) {
+                        highBound = this.total;
+                    }
+                    return highBound;
+                },
+                from() {
+                    return this.pagination.perPage * (this.pagination.currentPage - 1);
+                },
+                total() {
+                    return this.searchedData.length > 0
+                        ? this.searchedData.length
+                        : this.patient.files.length;
+                },
+            },
+            mounted() {
+                // Fuse search initialization.
+                this.fuseSearch = new Fuse(this.files, {
+                    keys: ['name', 'email'],
+                    threshold: 0.3,
+                });
+            },
+            watch: {
+                /**
+                 * Searches through the table data by a given query.
+                 * NOTE: If you have a lot of data, it's recommended to do
+                 * the search on the Server Side and only display the results here.
+                 * @param value of the query
+                 */
+                searchQuery(value) {
+                    let result = this.patient.files;
+                    if (value !== '') {
+                        result = this.fuseSearch.search(this.searchQuery);
+                    }
+                    this.searchedData = result;
+                },
+            },
         };
-      },
-      data() {
-        return {
-          'Access-Control-Allow-Credentials': true,
-        };
-      },
-      queriedData() {
-        let result = this.patient.files ? this.patient.files : [];
-        if (this.searchedData.length > 0) {
-          result = this.searchedData;
-        }
-        return result.slice(this.from, this.to);
-      },
-      to() {
-        let highBound = this.from + this.pagination.perPage;
-        if (this.total < highBound) {
-          highBound = this.total;
-        }
-        return highBound;
-      },
-      from() {
-        return this.pagination.perPage * (this.pagination.currentPage - 1);
-      },
-      total() {
-        return this.searchedData.length > 0
-          ? this.searchedData.length
-          : this.patient.files.length;
-      },
-    },
-    mounted() {
-      // Fuse search initialization.
-      this.fuseSearch = new Fuse(this.files, {
-        keys: ['name', 'email'],
-        threshold: 0.3,
-      });
-    },
-    watch: {
-      /**
-       * Searches through the table data by a given query.
-       * NOTE: If you have a lot of data, it's recommended to do
-       * the search on the Server Side and only display the results here.
-       * @param value of the query
-       */
-      searchQuery(value) {
-        let result = this.patient.files;
-        if (value !== '') {
-          result = this.fuseSearch.search(this.searchQuery);
-        }
-        this.searchedData = result;
-      },
-    },
-  };
 </script>
 
 <style lang="scss" >

@@ -1,5 +1,5 @@
 import DIAGNOSISL from './diagnose';
-import TREATMETSL from './treatments';
+import TREATMETSL from './procedures';
 
 import TEETH_DEFAULT_LOCATIONSL from './tooth-default-locations';
 import TEETH_SCHEMAL from './teeth-schema';
@@ -14,8 +14,11 @@ import TEETH_BABY_BOTTOML from './teeth-baby-bottom';
 
 import TEETH_ALLL from './teeth-all';
 
+import TIMEZONESL from './timezones';
+import COMMON_CURRENCYL from './common-currency';
+
 export const DIAGNOSIS = DIAGNOSISL;
-export const TREATMENTS = TREATMETSL;
+export const PROCEDURES = TREATMETSL;
 
 // Teeth schema locations
 
@@ -31,6 +34,10 @@ export const TEETH_BABY_ALL = TEETH_BABY_ALLL;
 export const TEETH_BABY_TOP = TEETH_BABY_TOPL;
 
 export const TEETH_ALL = TEETH_ALLL;
+
+export const TIMEZONES = TIMEZONESL;
+
+export const COMMON_CURRENCY = COMMON_CURRENCYL;
 
 // Constants Declaration
 
@@ -89,7 +96,8 @@ export const PATIENT_UPDATE = 'PATIENT_UPDATE';
 export const PATIENT_LOGOUT = 'PATIENT_LOGOUT';
 export const PATIENT_PLAN_SET = 'PATIENT_PLAN_SET';
 export const PATIENT_PLAN_DELETE = 'PATIENT_PLAN_DELETE';
-export const PATIENT_TREATMETS_SET = 'PATIENT_TREATMETS_SET';
+export const PATIENT_PLAN_EDIT = 'PATIENT_PLAN_EDIT';
+export const PATIENT_PROCEDURES_SET = 'PATIENT_PROCEDURESS_SET';
 export const PATIENT_TREATMETS_DELETE = 'PATIENT_TREATMETS_DELETE';
 export const PATIENT_TREATMETS_UPDATE = 'PATIENT_TREATMETS_UPDATE';
 export const PATIENT_DIAGNOSE_SET = 'PATIENT_DIAGNOSE_SET';

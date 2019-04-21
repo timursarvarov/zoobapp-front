@@ -1,0 +1,58 @@
+.tooth {
+    .set-diagnosis {
+        .diagnose {
+            opacity: 0.6;
+        }
+    } 
+    .diagnose {
+        &.tooth-number {
+            color: #8e24aa;
+        }
+        &.coronaLingualIncisalDistal,
+        &.coronaLingualIncisalMiddle,
+        &.coronaLingualIncisionMesial,
+        &.coronaLingualMiddleDistal,
+        &.coronaLingualMiddleMiddle,
+        &.coronaLingualMiddleMesial,
+        &.coronaLingualCervicalDistal,
+        &.coronaLingualCervicalMiddle,
+        &.coronaLingualCervicalMesial,
+        &.coronaLabialIncisalDistal,
+        &.coronaLabialIncisalMiddle,
+        &.coronaLabialIncisionMesial,
+        &.coronaLabialMiddleDistal,
+        &.coronaLabialMiddleMiddle,
+        &.coronaLabialMiddleMesial,
+        &.coronaLabialCervicalDistal,
+        &.coronaLabialCervicalMiddle,
+        &.coronaLabialCervicalMesial,
+        &.coronaTopBuccal,
+        &.coronaTopMedial,
+        &.coronaTopLingual,
+        &.coronaTopDistal,
+        &.coronaTopOclusial,
+        &.rootCanal,
+        &.periodontit,
+        &.implant,
+        &.veneer,
+        &.silant {
+            fill: #8e24aa !important;
+            stroke: #8e24aa;
+        }
+        &.periodontit,
+        &.rootCanal {
+            stroke-width: 2px;
+        }
+        &.gum,
+        &.paradontit1,
+        &.paradontit2,
+        &.paradontit3,
+        &.paradontit4 {
+            opacity: 1;
+            stroke: #f73403;
+            stroke-linejoin: round;
+            stroke-width: 4px;
+            fill: none !important;
+        }
+    }
+}

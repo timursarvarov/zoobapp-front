@@ -52,39 +52,39 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      flexColumn: Boolean,
-      navPillsIcons: Boolean,
-      plain: Boolean,
-      tabName: Array,
-      tabIcon: Array,
-      colorButton: {
-        type: String,
-        default: '',
+    export default {
+      props: {
+        flexColumn: Boolean,
+        navPillsIcons: Boolean,
+        plain: Boolean,
+        tabName: Array,
+        tabIcon: Array,
+        colorButton: {
+          type: String,
+          default: '',
+        },
       },
-    },
-    data() {
-      return {
-        activePanel: this.tabName[0],
-      };
-    },
-    computed: {},
-    methods: {
-      switchPanel(panel) {
-        this.activePanel = panel;
+      data() {
+        return {
+          activePanel: this.tabName[0],
+        };
       },
-      isActivePanel(panel) {
-        return this.activePanel === panel;
+      computed: {},
+      methods: {
+        switchPanel(panel) {
+          this.activePanel = panel;
+        },
+        isActivePanel(panel) {
+          return this.activePanel === panel;
+        },
+        getColorButton(colorButton) {
+          return `md-${colorButton}`;
+        },
+        getTabContent(index) {
+          return `tab-pane-${index}`;
+        },
       },
-      getColorButton(colorButton) {
-        return `md-${colorButton}`;
-      },
-      getTabContent(index) {
-        return `tab-pane-${index}`;
-      },
-    },
-  };
+    };
 </script>
 
 <style lang="scss">

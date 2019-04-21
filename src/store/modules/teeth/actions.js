@@ -1,32 +1,64 @@
+/* eslint-disable no-tabs */
 import { TEETH_INITIATION, TEETH_INITIATION_ETHALON } from '@/constants';
 import state from './state';
 
 export default {
-  [TEETH_INITIATION]: ({ commit }) => {
-    if (Object.keys(state.jaw).length === 0) {
-      const jaw = {
-        jawAnamnes: {},
-        jawTreatment: {},
-        jawDiagnose: {},
-      };
-      // настраиваем челюсть
-      Object.keys(jaw).forEach((jawType) => {
-        state.teethAll.forEach((toothId) => {
-          jaw[jawType][toothId] = {};
-          Object.keys(state.toothLocations).forEach((location) => {
-            jaw[jawType][toothId][location] = state.toothLocations[location];
-          });
-        });
-      });
-      commit(TEETH_INITIATION, jaw);
-      const jawEthalon = {};
-      // eslint-disable-next-line
-      for (let attr in jaw) {
-        // eslint-disable-next-line
-        if (jaw.hasOwnProperty(attr)) jawEthalon[attr] = jaw[attr];
-      }
+	[TEETH_INITIATION]: ({ commit }, { patient }) => {
+		const jaw = {
+			anamnesis: {},
+			procedures: {},
+			diagnosis: {},
+		};
+		// настраиваем челюсть
+		const patientJawProps = {};
+		if (patient.plans) {
+			const index = patient.plans.findIndex(planL => planL.showInJaw);
+			if (index > -1) {
+				patientJawProps.procedures = patient.plans[index];
+			}
+			commit(TEETH_INITIATION, { type: 'procedures', value: jaw.procedures });
+		}
+		if (patient.diagnosis) {
+			patientJawProps.diagnosis = patient.diagnosis;
+			// генерируем челюсь для отображения всех диагнозов и процедур
+			Object.keys(patientJawProps).forEach((jawType) => {
+				const { teeth } = patientJawProps[jawType];
+				if (teeth) {
+					Object.keys(teeth).forEach((toothId) => {
+						Object.keys(teeth[toothId]).forEach((location) => {
+							if (!(toothId in jaw[jawType])) {
+								jaw[jawType][toothId] = {};
+							}
+							jaw[jawType][toothId][location] = patientJawProps[jawType][location];
+						});
+					});
+				}
+			});
+		}
 
-      commit(TEETH_INITIATION_ETHALON, jawEthalon);
-    }
-  },
+		commit(TEETH_INITIATION, { type: 'diagnosis', value: jaw.diagnosis });
+	},
+	[TEETH_INITIATION_ETHALON]: ({ commit }) => {
+		const jaw = {
+			anamnesis: {},
+			procedures: {},
+			diagnosis: {},
+		};
+		// настраиваем челюсть
+		Object.keys(jaw).forEach((jawType) => {
+			state.teethAll.forEach((toothId) => {
+				jaw[jawType][toothId] = {};
+				Object.keys(state.toothLocations).forEach((location) => {
+					jaw[jawType][toothId][location] = state.toothLocations[location];
+				});
+			});
+		});
+		const jawEthalon = {};
+		// eslint-disable-next-line
+		for (let attr in jaw) {
+			// eslint-disable-next-line
+			if (jaw.hasOwnProperty(attr)) jawEthalon[attr] = jaw[attr];
+		}
+		commit(TEETH_INITIATION_ETHALON, jawEthalon);
+	},
 };

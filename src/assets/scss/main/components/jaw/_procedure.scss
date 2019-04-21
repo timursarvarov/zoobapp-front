@@ -1,0 +1,68 @@
+.tooth {
+    .set-procedures {
+        .procedure {
+            opacity: 0.6;
+        }
+    }
+    .procedure {
+        &.tooth-number {
+            color: #43a047;
+        }
+        &.coronaLingualIncisalDistal,
+        &.coronaLingualIncisalMiddle,
+        &.coronaLingualIncisionMesial,
+        &.coronaLingualMiddleDistal,
+        &.coronaLingualMiddleMiddle,
+        &.coronaLingualMiddleMesial,
+        &.coronaLingualCervicalDistal,
+        &.coronaLingualCervicalMiddle,
+        &.coronaLingualCervicalMesial,
+        &.coronaLabialIncisalDistal,
+        &.coronaLabialIncisalMiddle,
+        &.coronaLabialIncisionMesial,
+        &.coronaLabialMiddleDistal,
+        &.coronaLabialMiddleMiddle,
+        &.coronaLabialMiddleMesial,
+        &.coronaLabialCervicalDistal,
+        &.coronaLabialCervicalMiddle,
+        &.coronaLabialCervicalMesial,
+        &.coronaTopBuccal,
+        &.coronaTopMedial,
+        &.coronaTopLingual,
+        &.coronaTopDistal,
+        &.coronaTopOclusial,
+        &.periodontit,
+        &.rootCanal,
+        &.implant,
+        &.veneer,
+        &.silant {
+            fill: #43a047 !important;
+            stroke: #43a047;
+        }
+        &.periodontit{
+            stroke-width: 2px;
+        }
+        &.coronaLingual,
+        &.coronaTop,
+        &.coronaLabial{
+            stroke: #43a047;
+            stroke-width: 2px;
+        }
+
+        &.periodontit,
+        &.rootCanal {
+            stroke-width: 2px;
+        }
+        &.gum,
+        &.paradontit1,
+        &.paradontit2,
+        &.paradontit3,
+        &.paradontit4 {
+            opacity: 1;
+            stroke: #43a047;
+            stroke-linejoin: round;
+            stroke-width: 4px;
+            fill: none !important;
+        }
+    }
+}

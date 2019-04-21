@@ -202,7 +202,7 @@
               </tfoot>
             </table>
           </div>
-          <patients-list-settings
+          <t-table-editor
             icon="settings"
             color="success"
             title="Set patients table columns order"
@@ -210,7 +210,7 @@
             :tableColumns="patientsTableColumns"
             :showForml.sync="showForm"
             @selected="setColumns"
-          ></patients-list-settings>
+          ></t-table-editor>
           <clinic-add-form :showForm.sync="showAddClinicForm"></clinic-add-form>
         </md-card-content>
         <md-card-actions md-alignment="space-between">
@@ -231,232 +231,231 @@
 
 <script>
 // import { mapFilters } from '@/filters/map-filters';
-  import { Pagination, TAvatar } from '@/components';
-  import { PatientsListSettings } from '@/pages';
-  import ClinicAddForm from './ClinicAddForm.vue';
-  import StarRating from 'vue-star-rating';
-  import swal from 'sweetalert2';
-  import { mapGetters } from 'vuex';
-  import { PATIENTS_REQUEST } from '@/constants';
-  import { isEmpty } from '@/mixins';
+        import { Pagination, TAvatar, TTableEditor } from '@/components';
+        import ClinicAddForm from './ClinicAddForm.vue';
+        import StarRating from 'vue-star-rating';
+        import swal from 'sweetalert2';
+        import { mapGetters } from 'vuex';
+        import { PATIENTS_REQUEST } from '@/constants';
+        import { tObjProp } from '@/mixins';
 
-  export default {
-    mixins: [isEmpty],
-    components: {
-      Pagination,
-      StarRating,
-      PatientsListSettings,
-      TAvatar,
-      ClinicAddForm,
-    },
-    data: () => ({
-      showForm: false,
-      showAddClinicForm: false,
-      perPageOptions: [25, 50],
-      totalPages: 500,
-      queryParams: {
-        currentSort: 'updated',
-        currentSortOrder: 'asc',
-        pagination: {
-          perPage: 25,
-          currentPage: 1,
-        },
-        searchQuery: '',
-      },
-      selected: [],
-      callbackLauncher: null,
-    }),
-    methods: {
-      getFieldName(key) {
-        const field = this.availablePatientsTableColumns.find(f => f.key === key);
-        if (field) {
-          return field.title;
-        }
-        return '';
-      },
-      onSelect(items) {
-        if (this.selectedAllSearchedPatients) {
-          this.selectedAllSearchedPatients = false;
-        }
-        this.selected = items;
-      },
-      setColumns(e) {
-        // поменять после того как добавять соответствующие поля в беке
-        localStorage.setItem('USER_PARIENTS_COLUMS', JSON.stringify(e));
-      //  this.$store.dispatch(USER_UPDATE, {
-      //   user: {
-      //    columns: e,
-      //   },
-      // });
-      },
-      customSort(value) {
-        console.log(value);
-        console.log(this.queryParams.currentSort);
-        console.log(this.queryParams.currentSortOrder);
-      },
-      handleLike(item) {
-        swal({
-          title: `You liked ${item.name}`,
-          buttonsStyling: false,
-          type: 'success',
-          confirmButtonClass: 'md-button md-success',
-        });
-      },
-      handleShowAllergy(item) {
-        swal({
-          title: 'Attention!',
-          buttonsStyling: false,
-          html: ` ${item.firstName} ${
-            item.lastName
-          } has allergy! Please dont use: <h3> ${item.allergy.join(', ')} </h3>`,
-          type: 'warning',
-          confirmButtonClass: 'md-button md-success',
-          confirmButtonText: 'OK, I will not use them!',
-        });
-      },
-      handleEdit(item) {
-        swal({
-          title: `You want to edit ${item.name}`,
-          buttonsStyling: false,
-          confirmButtonClass: 'md-button md-info',
-        });
-      },
-      handleDelete(item) {
-        swal({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonClass: 'md-button md-success btn-fill',
-          cancelButtonClass: 'md-button md-danger btn-fill',
-          confirmButtonText: 'Yes, delete it!',
-          buttonsStyling: false,
-        }).then((result) => {
-          if (result.value) {
-            this.deleteRow(item);
-            swal({
-              title: 'Deleted!',
-              text: `You deleted ${item.name}`,
-              type: 'success',
-              confirmButtonClass: 'md-button md-success btn-fill',
-              buttonsStyling: false,
-            });
-          }
-        });
-      },
-      deleteRow(item) {
-        const indexToDelete = this.tableData.findIndex(
-          tableRow => tableRow.id === item.id,
-        );
-        if (indexToDelete >= 0) {
-          this.tableData.splice(indexToDelete, 1);
-        }
-      },
-      search() {
-        const vm = this;
-        const DELAY = 400;
-        if (this.callbackLauncher) {
-          clearTimeout(vm.callbackLauncher);
-        }
-        this.callbackLauncher = setTimeout(() => {
-          console.log(vm.queryParams);
-
-          vm.$store.dispatch(PATIENTS_REQUEST, {
-            params: {
-              perPage: vm.queryParams.pagination.perPage,
-              page: vm.queryParams.pagination.currentPage,
-              search: vm.queryParams.searchQuery,
-              order: vm.queryParams.currentSortOrder,
-              orderBy: vm.queryParams.currentSort,
-              toStore: true,
+        export default {
+            mixins: [tObjProp],
+            components: {
+                Pagination,
+                StarRating,
+                TTableEditor,
+                TAvatar,
+                ClinicAddForm,
             },
-          });
-        // .then((resp) => {
-        // })
-        // .catch((err) => {});
-        }, DELAY);
-      },
-    },
-    created() {
-      if (this.isEmpty(this.patients)) {
-        this.$store.dispatch(PATIENTS_REQUEST, {
-          params: {
-            perPage: 30,
-            page: 1,
-            search: '',
-            toStore: true,
-          },
-        });
-      } else {
-        this.tableData = this.patients;
-      }
-    },
-    computed: {
-      ...mapGetters({
-        patients: 'getPatients',
-        status: 'patientsStatus',
-        availablePatientsTableColumns: 'availablePatientsTableColumns',
-      }),
-      patientsTableColumns() {
-        const columns1 = [
-          {
-            key: 'ID',
-            title: 'ID',
-          },
-          {
-            key: 'address',
-            title: 'Address',
-          },
-          {
-            key: 'allergy',
-            title: 'Allergy',
-          },
-          {
-            key: 'avatar',
-            title: 'Avatar',
-          },
-          {
-            key: 'birthday',
-            title: 'Birthday',
-          },
-          {
-            key: 'created',
-            title: 'Created',
-          },
-          {
-            key: 'createdBy',
-            title: 'Created By',
-          },
-        ];
-        const columns2 = JSON.parse(localStorage.getItem('USER_PARIENTS_COLUMS'));
-        return columns2 || columns1;
-      },
-      to() {
-        let highBound = this.from + this.queryParams.pagination.perPage;
-        if (this.total < highBound) {
-          highBound = this.total;
-        }
-        return highBound;
-      },
-      from() {
-        return (
-          this.queryParams.pagination.perPage
-          * (this.queryParams.pagination.currentPage - 1)
-        );
-      },
-    },
-    watch: {
-      queryParams: {
-        handler() {
-          this.search();
-        },
-        deep: true,
-      },
-      patients() {
-        this.tableData = this.patients;
-      },
-    },
-  };
+            data: () => ({
+                showForm: false,
+                showAddClinicForm: false,
+                perPageOptions: [25, 50],
+                totalPages: 500,
+                queryParams: {
+                    currentSort: 'updated',
+                    currentSortOrder: 'asc',
+                    pagination: {
+                        perPage: 25,
+                        currentPage: 1,
+                    },
+                    searchQuery: '',
+                },
+                selected: [],
+                callbackLauncher: null,
+            }),
+            methods: {
+                getFieldName(key) {
+                    const field = this.availablePatientsTableColumns.find(f => f.key === key);
+                    if (field) {
+                        return field.title;
+                    }
+                    return '';
+                },
+                onSelect(items) {
+                    if (this.selectedAllSearchedPatients) {
+                        this.selectedAllSearchedPatients = false;
+                    }
+                    this.selected = items;
+                },
+                setColumns(e) {
+                    // поменять после того как добавять соответствующие поля в беке
+                    localStorage.setItem('USER_PARIENTS_COLUMS', JSON.stringify(e));
+                    //  this.$store.dispatch(USER_UPDATE, {
+                    //   user: {
+                    //    columns: e,
+                    //   },
+                    // });
+                },
+                customSort(value) {
+                    console.log(value);
+                    console.log(this.queryParams.currentSort);
+                    console.log(this.queryParams.currentSortOrder);
+                },
+                handleLike(item) {
+                    swal({
+                        title: `You liked ${item.name}`,
+                        buttonsStyling: false,
+                        type: 'success',
+                        confirmButtonClass: 'md-button md-success',
+                    });
+                },
+                handleShowAllergy(item) {
+                    swal({
+                        title: 'Attention!',
+                        buttonsStyling: false,
+                        html: ` ${item.firstName} ${
+                            item.lastName
+                        } has allergy! Please dont use: <h3> ${item.allergy.join(', ')} </h3>`,
+                        type: 'warning',
+                        confirmButtonClass: 'md-button md-success',
+                        confirmButtonText: 'OK, I will not use them!',
+                    });
+                },
+                handleEdit(item) {
+                    swal({
+                        title: `You want to edit ${item.name}`,
+                        buttonsStyling: false,
+                        confirmButtonClass: 'md-button md-info',
+                    });
+                },
+                handleDelete(item) {
+                    swal({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonClass: 'md-button md-success btn-fill',
+                        cancelButtonClass: 'md-button md-danger btn-fill',
+                        confirmButtonText: 'Yes, delete it!',
+                        buttonsStyling: false,
+                    }).then((result) => {
+                        if (result.value) {
+                            this.deleteRow(item);
+                            swal({
+                                title: 'Deleted!',
+                                text: `You deleted ${item.name}`,
+                                type: 'success',
+                                confirmButtonClass: 'md-button md-success btn-fill',
+                                buttonsStyling: false,
+                            });
+                        }
+                    });
+                },
+                deleteRow(item) {
+                    const indexToDelete = this.tableData.findIndex(
+                        tableRow => tableRow.id === item.id,
+                    );
+                    if (indexToDelete >= 0) {
+                        this.tableData.splice(indexToDelete, 1);
+                    }
+                },
+                search() {
+                    const vm = this;
+                    const DELAY = 400;
+                    if (this.callbackLauncher) {
+                        clearTimeout(vm.callbackLauncher);
+                    }
+                    this.callbackLauncher = setTimeout(() => {
+                        console.log(vm.queryParams);
+
+                        vm.$store.dispatch(PATIENTS_REQUEST, {
+                            params: {
+                                perPage: vm.queryParams.pagination.perPage,
+                                page: vm.queryParams.pagination.currentPage,
+                                search: vm.queryParams.searchQuery,
+                                order: vm.queryParams.currentSortOrder,
+                                orderBy: vm.queryParams.currentSort,
+                                toStore: true,
+                            },
+                        });
+                        // .then((resp) => {
+                        // })
+                        // .catch((err) => {});
+                    }, DELAY);
+                },
+            },
+            created() {
+                if (this.isEmpty(this.patients)) {
+                    this.$store.dispatch(PATIENTS_REQUEST, {
+                        params: {
+                            perPage: 30,
+                            page: 1,
+                            search: '',
+                            toStore: true,
+                        },
+                    });
+                } else {
+                    this.tableData = this.patients;
+                }
+            },
+            computed: {
+                ...mapGetters({
+                    patients: 'getPatients',
+                    status: 'patientsStatus',
+                    availablePatientsTableColumns: 'availablePatientsTableColumns',
+                }),
+                patientsTableColumns() {
+                    const columns1 = [
+                        {
+                            key: 'ID',
+                            title: 'ID',
+                        },
+                        {
+                            key: 'address',
+                            title: 'Address',
+                        },
+                        {
+                            key: 'allergy',
+                            title: 'Allergy',
+                        },
+                        {
+                            key: 'avatar',
+                            title: 'Avatar',
+                        },
+                        {
+                            key: 'birthday',
+                            title: 'Birthday',
+                        },
+                        {
+                            key: 'created',
+                            title: 'Created',
+                        },
+                        {
+                            key: 'createdBy',
+                            title: 'Created By',
+                        },
+                    ];
+                    const columns2 = JSON.parse(localStorage.getItem('USER_PARIENTS_COLUMS'));
+                    return columns2 || columns1;
+                },
+                to() {
+                    let highBound = this.from + this.queryParams.pagination.perPage;
+                    if (this.total < highBound) {
+                        highBound = this.total;
+                    }
+                    return highBound;
+                },
+                from() {
+                    return (
+                        this.queryParams.pagination.perPage
+                        * (this.queryParams.pagination.currentPage - 1)
+                    );
+                },
+            },
+            watch: {
+                queryParams: {
+                    handler() {
+                        this.search();
+                    },
+                    deep: true,
+                },
+                patients() {
+                    this.tableData = this.patients;
+                },
+            },
+        };
 </script>
 
 <style lang="scss" scoped>

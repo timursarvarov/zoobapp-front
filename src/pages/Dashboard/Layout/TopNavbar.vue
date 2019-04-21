@@ -44,7 +44,7 @@
 
         <div class="md-collapse">
           <div class="md-autocomplete">
-            <mdt-auto-complite
+            <t-auto-complite
               autocomplete="off"
               v-model="searchTerm"
               class="search"
@@ -65,13 +65,13 @@
                   :color="item.color"
                   :imageSrc="item.avatar"
                   :title="item.firstName + ' ' + item.lastName"
+                  :notification = "item.allergy ? 'A' : ''"
                 />
 
                 <span class="md-serched-list-item-text"> {{ item.firstName | capitilize}} {{ item.lastName | capitilize }}
                   <br>
                   <small v-if="item.phone">{{ "+" + item.phone }}</small>
                 </span>
-
               </template>
               <template
                 slot="md-autocomplete-empty"
@@ -104,7 +104,7 @@
                   Type to search by<br /> phone, email or name
                 </span>
               </template>
-            </mdt-auto-complite>
+            </t-auto-complite>
           </div>
           <md-list>
             <md-list-item to="/">
@@ -187,11 +187,11 @@ import {
   AUTH_LOCK
 } from "@/constants";
 import { mapGetters } from "vuex";
-import { MdtAutoComplite, TAvatar } from "@/components";
+import { TAutoComplite, TAvatar } from "@/components";
 
 export default {
   components: {
-    MdtAutoComplite,
+    TAutoComplite,
     TAvatar
   },
   data() {
@@ -243,6 +243,7 @@ export default {
                       }
                     })
                     .catch(err => {
+                      console.log(err)
                       vm.searching = false;
                     })
                 );
@@ -312,7 +313,8 @@ export default {
   position: relative !important;
 }
 .search-avatar {
-  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 .fade-enter-active,
 .fade-leave-active {

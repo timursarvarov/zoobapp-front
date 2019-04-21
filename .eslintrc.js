@@ -12,8 +12,8 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'import/no-unresolved': 'off',
     indent: 'off',
-    'vue/script-indent': ['warn', 2, {
-      baseIndent: 2,
+    'vue/script-indent': ['warn', 4, {
+      baseIndent: 1,
     }],
     'max-len': ['error', {
       code: 3400,
@@ -25,7 +25,7 @@ module.exports = {
       rules: {
         indent: 'off',
         'vue/script-indent': ['error', 4, {
-          baseIndent: 1,
+          baseIndent: 4,
         }],
       },
     }],

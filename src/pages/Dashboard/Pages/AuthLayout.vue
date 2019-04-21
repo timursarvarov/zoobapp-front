@@ -127,108 +127,108 @@
   </div>
 </template>
 <script>
-  import { ZoomCenterTransition } from 'vue2-transitions';
-  import { mapGetters } from 'vuex';
+        import { ZoomCenterTransition } from 'vue2-transitions';
+        import { mapGetters } from 'vuex';
 
-  export default {
-    components: {
-      ZoomCenterTransition,
-    },
-    props: {
-      backgroundColor: {
-        type: String,
-        default: 'black',
-      },
-    },
-    inject: {
-      autoClose: {
-        default: true,
-      },
-    },
-    data() {
-      return {
-        responsive: false,
-        showMenu: false,
-        menuTransitionDuration: 250,
-        pageTransitionDuration: 300,
-        year: new Date().getFullYear(),
-      };
-    },
-    computed: {
-      ...mapGetters({
-        isProfileLoaded: 'isProfileLoaded',
-        isAuthenticated: 'isAuthenticated',
-        loading: 'loading',
-      }),
-      setBgImage() {
-        const images = {
-          Pricing: './img/bg-pricing.jpg',
-          Login: './img/login.jpg',
-          Register: './img/register.jpg',
-          Lock: './img/lock.jpg',
+        export default {
+            components: {
+                ZoomCenterTransition,
+            },
+            props: {
+                backgroundColor: {
+                    type: String,
+                    default: 'black',
+                },
+            },
+            inject: {
+                autoClose: {
+                    default: true,
+                },
+            },
+            data() {
+                return {
+                    responsive: false,
+                    showMenu: false,
+                    menuTransitionDuration: 250,
+                    pageTransitionDuration: 300,
+                    year: new Date().getFullYear(),
+                };
+            },
+            computed: {
+                ...mapGetters({
+                    isProfileLoaded: 'isProfileLoaded',
+                    isAuthenticated: 'isAuthenticated',
+                    loading: 'loading',
+                }),
+                setBgImage() {
+                    const images = {
+                        Pricing: './img/bg-pricing.jpg',
+                        Login: './img/backround-register.jpg',
+                        Register: './img/register.jpg',
+                        Lock: './img/lock.jpg',
+                    };
+                    return {
+                        backgroundImage: `url(${images[this.$route.name]})`,
+                    };
+                },
+                setPageClass() {
+                    return `${this.$route.name}-page`.toLowerCase();
+                },
+            },
+            methods: {
+                toggleSidebarPage() {
+                    if (this.$sidebar.showSidebar) {
+                        this.$sidebar.displaySidebar(false);
+                    }
+                },
+                linkClick() {
+                    if (
+                        this.autoClose
+                        && this.$sidebar
+                        && this.$sidebar.showSidebar === true
+                    ) {
+                        this.$sidebar.displaySidebar(false);
+                    }
+                },
+                toggleSidebar() {
+                    this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+                },
+                toggleNavbar() {
+                    document.body.classList.toggle('nav-open');
+                    this.showMenu = !this.showMenu;
+                },
+                closeMenu() {
+                    document.body.classList.remove('nav-open');
+                    this.showMenu = false;
+                },
+                onResponsiveInverted() {
+                    if (window.innerWidth < 991) {
+                        this.responsive = true;
+                    } else {
+                        this.responsive = false;
+                    }
+                },
+            },
+            mounted() {
+                this.onResponsiveInverted();
+                window.addEventListener('resize', this.onResponsiveInverted);
+            },
+            beforeDestroy() {
+                this.closeMenu();
+                window.removeEventListener('resize', this.onResponsiveInverted);
+            },
+            beforeRouteUpdate(to, from, next) {
+                // Close the mobile menu first then transition to next page
+                if (this.showMenu) {
+                    this.closeMenu();
+                    setTimeout(() => {
+                        next();
+                    }, this.menuTransitionDuration);
+                } else {
+                    next();
+                }
+            },
         };
-        return {
-          backgroundImage: `url(${images[this.$route.name]})`,
-        };
-      },
-      setPageClass() {
-        return `${this.$route.name}-page`.toLowerCase();
-      },
-    },
-    methods: {
-      toggleSidebarPage() {
-        if (this.$sidebar.showSidebar) {
-          this.$sidebar.displaySidebar(false);
-        }
-      },
-      linkClick() {
-        if (
-          this.autoClose
-          && this.$sidebar
-          && this.$sidebar.showSidebar === true
-        ) {
-          this.$sidebar.displaySidebar(false);
-        }
-      },
-      toggleSidebar() {
-        this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
-      },
-      toggleNavbar() {
-        document.body.classList.toggle('nav-open');
-        this.showMenu = !this.showMenu;
-      },
-      closeMenu() {
-        document.body.classList.remove('nav-open');
-        this.showMenu = false;
-      },
-      onResponsiveInverted() {
-        if (window.innerWidth < 991) {
-          this.responsive = true;
-        } else {
-          this.responsive = false;
-        }
-      },
-    },
-    mounted() {
-      this.onResponsiveInverted();
-      window.addEventListener('resize', this.onResponsiveInverted);
-    },
-    beforeDestroy() {
-      this.closeMenu();
-      window.removeEventListener('resize', this.onResponsiveInverted);
-    },
-    beforeRouteUpdate(to, from, next) {
-      // Close the mobile menu first then transition to next page
-      if (this.showMenu) {
-        this.closeMenu();
-        setTimeout(() => {
-          next();
-        }, this.menuTransitionDuration);
-      } else {
-        next();
-      }
-    },
-  };
 </script>
 <style lang="scss" >
 $scaleSize: 0.1;

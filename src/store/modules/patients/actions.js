@@ -39,6 +39,7 @@ export default {
           if(params.toStore){
             commit(PATIENTS_SET, resp);
           }
+          console.log(resp)
           resolve(resp);
         })
         .catch(err => {

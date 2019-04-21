@@ -1,0 +1,115 @@
+.jaw-wrapper {
+  user-select: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: rgba(white, 0.4);
+  border-radius: 5px;
+  min-height: 30vh;
+  .dropdown-menu li {
+    padding: 0px 0px 0px 16px;
+    .md-radio {
+      margin: 8px 0 8px 0;
+    }
+  }
+  .jaw-scroll {
+    padding-bottom: 25px;
+    padding-top: 15px;
+    overflow-x: auto;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      height: 7px;
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: grey;
+      border-radius: 7px;
+    }
+  }
+
+  .jaw-top {
+    .selected {
+      background-image: linear-gradient(rgba(190, 184, 184, 0.33), rgba(116, 116, 116, 0.48));
+    }
+    .tooth-number {
+      bottom: 0;
+    }
+    .tooth-diagnosis {
+      top: 0;
+      transform: translate(-50%, -5px);
+      &:hover {
+        transform: translate(-50%, -10px) !important;
+        min-width: 10vmax;
+        width: 10vmax;
+      }
+    }
+    .tooth:nth-last-child(1) {
+      .tooth-diagnosis:hover {
+        left: 40%;
+        transform: translate(-90%, -10px) !important;
+      }
+    }
+    .tooth:nth-last-child(2) {
+      .tooth-diagnosis:hover {
+        transform: translate(-70%, -10px) !important;
+      }
+    }
+    .tooth:nth-child(1) {
+      .tooth-diagnosis:hover {
+        transform: translate(-6%, -10px) !important;
+      }
+    }
+    .tooth:nth-child(2) {
+      .tooth-diagnosis:hover {
+        transform: translate(-30%, -10px) !important;
+      }
+    }
+  }
+  .jaw-bottom {
+    .selected {
+      background-image: linear-gradient(rgba(116, 116, 116, 0.48), rgba(161, 161, 161, 0.73));
+    }
+    .tooth-number {
+      top: 0;
+    }
+    .tooth-diagnosis {
+      position: absolute;
+      transform: translate(-50%, 6px);
+      bottom: 0;
+      &:hover {
+        transform: translate(-50%, 10px) !important;
+        min-width: 10vmax;
+        width: 10vmax;
+      }
+    }
+    .tooth:nth-last-child(1) {
+      .tooth-diagnosis:hover {
+        left: 30%;
+        transform: translate(-90%, 10px) !important;
+      }
+    }
+    .tooth:nth-last-child(2) {
+      .tooth-diagnosis:hover {
+        transform: translate(-70%, 10px) !important;
+      }
+    }
+    .tooth:nth-child(1) {
+      .tooth-diagnosis:hover {
+        transform: translate(-6%, 10px) !important;
+      }
+    }
+    .tooth:nth-child(2) {
+      .tooth-diagnosis:hover {
+        transform: translate(-30%, 10px) !important;
+      }
+    }
+  }
+  .jaw-top,
+  .jaw-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+}
+}

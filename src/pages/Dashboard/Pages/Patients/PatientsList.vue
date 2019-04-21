@@ -97,6 +97,7 @@
                     :color="item.color"
                     :imageSrc="item.avatar"
                     :title="item.firstName + ' ' + item.lastName"
+                    :notification="item.allergy && item.allergy.length > 0 ? 'A' : ''"
                   />
                 </div>
 
@@ -214,15 +215,15 @@
               </tfoot>
             </table>
           </div>
-          <patients-list-settings
+          <t-table-editor
             icon="settings"
             color="success"
-            title="Set patients table columns order"
+            title="Set patients t columns order"
             :availableTableColumns="availablePatientsTableColumns"
             :tableColumns="patientsTableColumns"
             :showForm.sync="showForm"
             @selected="setColumns"
-          ></patients-list-settings>
+          ></t-table-editor>
         </md-card-content>
         <md-card-actions md-alignment="space-between">
           <div class>
@@ -241,8 +242,7 @@
 </template>
 
 <script>
-    import { Pagination, TAvatar } from '@/components';
-    import { PatientsListSettings } from '@/pages';
+    import { Pagination, TAvatar, TTableEditor } from '@/components';
     import StarRating from 'vue-star-rating';
     import swal from 'sweetalert2';
     import { mapGetters } from 'vuex';
@@ -257,9 +257,9 @@
       name: 'patients-list',
       mixins: [tObjProp],
       components: {
+        TTableEditor,
         Pagination,
         StarRating,
-        PatientsListSettings,
         TAvatar,
       },
       data: () => ({
@@ -392,6 +392,7 @@
         },
       },
       created() {
+        console.log(TTableEditor);
         if (this.patients.length === 0) {
           this.search();
         } else {
@@ -448,7 +449,7 @@
         from() {
           return (
             this.queryParams.pagination.perPage
-        * (this.queryParams.pagination.currentPage - 1)
+            * (this.queryParams.pagination.currentPage - 1)
           );
         },
       },
@@ -466,7 +467,7 @@
     };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .table-settings {
   position: absolute;
   margin-top: 15px;

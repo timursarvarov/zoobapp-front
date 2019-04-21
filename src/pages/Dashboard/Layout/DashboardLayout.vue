@@ -26,13 +26,15 @@
             icon: 'account_circle',
             img:patient.avatar? patient.avatar: '',
             avatarColor: patient.color,
-            acronim: patient.firstName+' '+patient.lastName}"
+            acronim: patient.firstName+' '+patient.lastName,
+            notification: patient.allergy.length > 0 ? 'A' : '',
+            }"
           class="separated-down"
         >
           <sidebar-item :link="{name: 'BIO', icon: 'image', path: `/patient/${patient.ID}/bio`}"></sidebar-item>
           <sidebar-item :link="{name: 'Anamnes', path: `/patient/${patient.ID}/anamnes`}"></sidebar-item>
           <sidebar-item :link="{name: 'Diagnose', path: `/patient/${patient.ID}/diagnose`}"></sidebar-item>
-          <sidebar-item :link="{name: 'Treatment', path: `/patient/${patient.ID}/treatment`}"></sidebar-item>
+          <sidebar-item :link="{name: 'Procedure', path: `/patient/${patient.ID}/procedure`}"></sidebar-item>
           <sidebar-item :link="{name: 'Notes', path: `/patient/${patient.ID}/notes`}"></sidebar-item>
           <sidebar-item :link="{name: 'Files', path: `/patient/${patient.ID}/files`}"></sidebar-item>
         </sidebar-item>
@@ -51,11 +53,11 @@
             acronim:selectedClinic.name}"
           class="separated-down"
         >
-          <sidebar-item
-            :link="{name: 'Profile', icon: 'image', path: `/clinic/${selectedClinic.ID}/profile`}"
-          ></sidebar-item>
-          <sidebar-item :link="{name: 'Statistic', path: `/clinic/${selectedClinic.ID}/statistic`}"></sidebar-item>
-        </sidebar-item>
+          <sidebar-item :link="{name: 'Clinic Settings', icon: 'image', path: `/clinic/${selectedClinic.ID}/settings`}"></sidebar-item>
+          <sidebar-item :link="{name: 'Procedures', path: `/clinic/${selectedClinic.ID}/procedures`}"></sidebar-item>
+          <sidebar-item :link="{name: 'Manipulations', path: `/clinic/${selectedClinic.ID}/manipulations`}"></sidebar-item>
+          <sidebar-item :link="{name: 'Consumables', path: `/clinic/${selectedClinic.ID}/consumables`}"></sidebar-item>
+
         <sidebar-item
           :link="{name: 'Collaborators',
                 icon: 'people_outline',
@@ -78,8 +80,8 @@
             :link="{name: 'Statistic', path: `/collaborator/${selectedClinic.ID}/statistic`}"
           ></sidebar-item>
         </sidebar-item>
+        </sidebar-item>
         <sidebar-item :link="{name: 'Settings', icon: 'settings', path: '/settings'}">
-          <sidebar-item :link="{name: 'My Clinic',  icon: 'account_circle', path: '/clinic'}"></sidebar-item>
           <sidebar-item
             :link="{name: 'My Profile',  icon: 'account_circle', path: '/settings/user'}"
           ></sidebar-item>
@@ -192,66 +194,66 @@
 </template>
 <script>
 /* eslint-disable no-new */
-  import PerfectScrollbar from 'perfect-scrollbar';
-  import 'perfect-scrollbar/css/perfect-scrollbar.css';
-  import { ZoomCenterTransition } from 'vue2-transitions';
-  import { mapGetters } from 'vuex';
-  import TopNavbar from './TopNavbar.vue';
-  import ContentFooter from './ContentFooter.vue';
-  import MobileMenu from './Extra/MobileMenu.vue';
-  // import UserMenu from './Extra/UserMenu.vue';
+    import PerfectScrollbar from 'perfect-scrollbar';
+    import 'perfect-scrollbar/css/perfect-scrollbar.css';
+    import { ZoomCenterTransition } from 'vue2-transitions';
+    import { mapGetters } from 'vuex';
+    import TopNavbar from './TopNavbar.vue';
+    import ContentFooter from './ContentFooter.vue';
+    import MobileMenu from './Extra/MobileMenu.vue';
+    // import UserMenu from './Extra/UserMenu.vue';
 
-  function hasElement(className) {
-    return document.getElementsByClassName(className).length > 0;
-  }
-
-  function initScrollbar(className) {
-    if (hasElement(className)) {
-      new PerfectScrollbar(`.${className}`);
-    } else {
-      // try to init it later in case this component is loaded async
-      setTimeout(() => {
-        initScrollbar(className);
-      }, 100);
+    function hasElement(className) {
+      return document.getElementsByClassName(className).length > 0;
     }
-  }
 
-  export default {
-    components: {
-      TopNavbar,
-      ContentFooter,
-      MobileMenu,
-      // UserMenu,
-      ZoomCenterTransition,
-    },
-    methods: {
-      toggleSidebar() {
-        if (this.$sidebar.showSidebar) {
-          this.$sidebar.displaySidebar(false);
+    function initScrollbar(className) {
+      if (hasElement(className)) {
+        new PerfectScrollbar(`.${className}`);
+      } else {
+        // try to init it later in case this component is loaded async
+        setTimeout(() => {
+          initScrollbar(className);
+        }, 100);
+      }
+    }
+
+    export default {
+      components: {
+        TopNavbar,
+        ContentFooter,
+        MobileMenu,
+        // UserMenu,
+        ZoomCenterTransition,
+      },
+      methods: {
+        toggleSidebar() {
+          if (this.$sidebar.showSidebar) {
+            this.$sidebar.displaySidebar(false);
+          }
+        },
+      },
+      mounted() {
+        const docClasses = document.body.classList;
+        const isWindows = navigator.platform.startsWith('Win');
+        if (isWindows) {
+          // if we are on windows OS we activate the perfectScrollbar function
+          initScrollbar('sidebar');
+          initScrollbar('sidebar-wrapper');
+          initScrollbar('main-panel');
+          docClasses.add('perfect-scrollbar-on');
+        } else {
+          docClasses.add('perfect-scrollbar-off');
         }
       },
-    },
-    mounted() {
-      const docClasses = document.body.classList;
-      const isWindows = navigator.platform.startsWith('Win');
-      if (isWindows) {
-        // if we are on windows OS we activate the perfectScrollbar function
-        initScrollbar('sidebar');
-        initScrollbar('sidebar-wrapper');
-        initScrollbar('main-panel');
-        docClasses.add('perfect-scrollbar-on');
-      } else {
-        docClasses.add('perfect-scrollbar-off');
-      }
-    },
-    computed: {
-      ...mapGetters({
-        patient: 'getPatient',
-        currentClinic: 'getCurrentClinic',
-        selectedClinic: 'getSelectedClinic',
-      }),
-    },
-  };
+      computed: {
+        ...mapGetters({
+          patient: 'getPatient',
+          currentClinic: 'getCurrentClinic',
+          selectedClinic: 'getCurrentClinic',
+        }),
+      },
+    };
 </script>
 <style lang="scss" scoped>
 $scaleSize: 0.95;

@@ -1,0 +1,195 @@
+.tooth {
+    .set-diagnosis {
+        .selected{
+            opacity: 1;
+            &.tooth-number {
+                color: #8e24aa;
+            }
+            &.coronaLingualIncisalDistal,
+            &.coronaLingualIncisalMiddle,
+            &.coronaLingualIncisionMesial,
+            &.coronaLingualMiddleDistal,
+            &.coronaLingualMiddleMiddle,
+            &.coronaLingualMiddleMesial,
+            &.coronaLingualCervicalDistal,
+            &.coronaLingualCervicalMiddle,
+            &.coronaLingualCervicalMesial,
+            &.coronaLabialIncisalDistal,
+            &.coronaLabialIncisalMiddle,
+            &.coronaLabialIncisionMesial,
+            &.coronaLabialMiddleDistal,
+            &.coronaLabialMiddleMiddle,
+            &.coronaLabialMiddleMesial,
+            &.coronaLabialCervicalDistal,
+            &.coronaLabialCervicalMiddle,
+            &.coronaLabialCervicalMesial,
+            &.coronaTopBuccal,
+            &.coronaTopMedial,
+            &.coronaTopLingual,
+            &.coronaTopDistal,
+            &.coronaTopOclusial,
+            &.rootCanal,
+            &.periodontit,
+            &.implant,
+            &.veneer,
+            &.silant,
+            &.root,
+            &.coronaLingual,
+            &.coronaTop,
+            &.coronaLabial {
+                fill: #8e24aa !important;
+                stroke: #8e24aa;
+                &:hover{
+                    stroke: #b07bbe;
+                    stroke-width: 2px;
+                    transition: all 0.2s ease-in-out;
+                }
+            }
+            &.gum,
+            &.paradontit1,
+            &.paradontit2,
+            &.paradontit3,
+            &.paradontit4 {
+                opacity: 1;
+                stroke: #f73403;
+                stroke-linejoin: round;
+                stroke-width: 4px;
+                fill: none !important;
+            }
+        }
+    }
+}
+.tooth {
+    .set-procedures {
+        .selected{
+            opacity: 1;
+            &.tooth-number {
+                color: #43a047;
+            }
+            &.coronaLingualIncisalDistal,
+            &.coronaLingualIncisalMiddle,
+            &.coronaLingualIncisionMesial,
+            &.coronaLingualMiddleDistal,
+            &.coronaLingualMiddleMiddle,
+            &.coronaLingualMiddleMesial,
+            &.coronaLingualCervicalDistal,
+            &.coronaLingualCervicalMiddle,
+            &.coronaLingualCervicalMesial,
+            &.coronaLabialIncisalDistal,
+            &.coronaLabialIncisalMiddle,
+            &.coronaLabialIncisionMesial,
+            &.coronaLabialMiddleDistal,
+            &.coronaLabialMiddleMiddle,
+            &.coronaLabialMiddleMesial,
+            &.coronaLabialCervicalDistal,
+            &.coronaLabialCervicalMiddle,
+            &.coronaLabialCervicalMesial,
+            &.coronaTopBuccal,
+            &.coronaTopMedial,
+            &.coronaTopLingual,
+            &.coronaTopDistal,
+            &.coronaTopOclusial,
+            &.rootCanal,
+            &.periodontit,
+            &.implant,
+            &.root,
+            &.coronaLingual,
+            &.coronaTop,
+            &.coronaLabial {
+                fill: #43a047 !important;
+                stroke: #43a047;
+                &:hover{
+                    stroke: #90ce93;
+                    stroke-width: 2px;
+                    transition: all 0.2s ease-in-out;
+                }
+            }
+            &.silant{
+                fill: #43a047 !important;
+                stroke: #000;
+                stroke-width: 0.25px;
+                &:hover{
+                    stroke: #90ce93;
+                    stroke-width: 1px;
+                    transition: all 0.2s ease-in-out;
+                }
+            }
+            &.veneer{
+                fill: #43a047 !important;
+            }
+            &.gum,
+            &.paradontit1,
+            &.paradontit2,
+            &.paradontit3,
+            &.paradontit4 {
+                opacity: 1;
+                stroke: #43a047;
+                stroke-linejoin: round;
+                stroke-width: 4px;
+                fill: none !important;
+            }
+        }
+    }
+}
+
+.tooth {
+    .set-anamnesis {
+        .selected{
+            opacity: 1;
+            &.tooth-number {
+                color: #636363;
+            }
+            &.coronaLingualIncisalDistal,
+            &.coronaLingualIncisalMiddle,
+            &.coronaLingualIncisionMesial,
+            &.coronaLingualMiddleDistal,
+            &.coronaLingualMiddleMiddle,
+            &.coronaLingualMiddleMesial,
+            &.coronaLingualCervicalDistal,
+            &.coronaLingualCervicalMiddle,
+            &.coronaLingualCervicalMesial,
+            &.coronaLabialIncisalDistal,
+            &.coronaLabialIncisalMiddle,
+            &.coronaLabialIncisionMesial,
+            &.coronaLabialMiddleDistal,
+            &.coronaLabialMiddleMiddle,
+            &.coronaLabialMiddleMesial,
+            &.coronaLabialCervicalDistal,
+            &.coronaLabialCervicalMiddle,
+            &.coronaLabialCervicalMesial,
+            &.coronaTopBuccal,
+            &.coronaTopMedial,
+            &.coronaTopLingual,
+            &.coronaTopDistal,
+            &.coronaTopOclusial,
+            &.rootCanal,
+            &.periodontit,
+            &.implant,
+            &.veneer,
+            &.silant,
+            &.root,
+            &.coronaLingual,
+            &.coronaTop,
+            &.coronaLabial {
+                fill: #636363 !important;
+                stroke: #636363;
+                &:hover{
+                    stroke: #b1b1b1;
+                    stroke-width: 2px;
+                    transition: all 0.2s ease-in-out;
+                }
+            }
+            &.gum,
+            &.paradontit1,
+            &.paradontit2,
+            &.paradontit3,
+            &.paradontit4 {
+                opacity: 1;
+                stroke: #f73403;
+                stroke-linejoin: round;
+                stroke-width: 4px;
+                fill: none !important;
+            }
+        }
+    }
+}

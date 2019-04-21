@@ -7,9 +7,10 @@ import {
   PATIENT_UPDATE,
   PATIENT_PLAN_SET,
   PATIENT_PLAN_DELETE,
+  PATIENT_PLAN_EDIT,
   PATIENT_DIAGNOSE_SET,
   PATIENT_DIAGNOSE_UPDATE,
-  PATIENT_TREATMETS_SET,
+  PATIENT_PROCEDURES_SET,
   PATIENT_TREATMETS_UPDATE,
   PATIENT_GET,
   PATIENT_SET_PARAM,
@@ -38,11 +39,14 @@ export default {
   [PATIENT_PLAN_DELETE]: (state, { dIndex, plan }) => {
     state.patient.plans.splice(dIndex, 1);
   },
-  [PATIENT_TREATMETS_SET]: (state, {treatment, pIndex}) => {
-    state.patient.plans[pIndex].treatments.unshift(treatment);
+  [PATIENT_PLAN_EDIT]: (state, { pIndex, key, value }) => {
+    state.patient.plans[pIndex][key] = value;
   },
-  [PATIENT_TREATMETS_UPDATE]: (state, { dIndex, treatment }) => {
-    state.patient.treatments.splice(dIndex, 1, treatment);
+  [PATIENT_PROCEDURES_SET]: (state, {procedure, pIndex}) => {
+    state.patient.plans[pIndex].procedures.unshift(procedure);
+  },
+  [PATIENT_TREATMETS_UPDATE]: (state, { dIndex, procedure }) => {
+    state.patient.procedures.splice(dIndex, 1, procedure);
   },
   [PATIENT_DIAGNOSE_SET]: (state, diagnose) => {
     state.patient.diagnosis.unshift(diagnose);

@@ -335,7 +335,7 @@
                       patient: response.data,
                     });
                     this.$router.push({
-                      name: 'PatientTreatment',
+                      name: 'PatientProcedure',
                       params: { patientId: response.data.ID },
                     });
                   }

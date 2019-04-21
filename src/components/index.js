@@ -91,18 +91,21 @@ import IconToothWash from './JawIcons/Icons/ToothWash.vue';
 import IconToothWings from './JawIcons/Icons/ToothWings.vue';
 import IconToothWorld from './JawIcons/Icons/ToothWorld.vue';
 import IconToothRestovration from './JawIcons/Icons/ToothRestovration.vue';
-import JawCard from './Jaw/JawCard.vue';
+// import JawCard from './Jaw/JawCard.vue';
 import Jaw from './Jaw/Jaw.vue';
-import JawAddDiagnose from './Jaw/JawAddDiagnose.vue';
-import JawAddTreatment from './Jaw/JawAddTreatment.vue';
+import JawAddLocations from './Jaw/JawAddLocations.vue';
+import JawAddProcedure from './Jaw/JawAddProcedure.vue';
+import Tooth from './Jaw/Tooth.vue';
 
-import MdtAutoComplite from './MdtAutoComplite.vue';
+import TAutoComplite from './TAutoComplite.vue';
 import TAvatar from './TAvatar.vue';
 import TDropzone from './TDropzone.vue';
 import TAvatarInput from './TAvatarInput.vue';
 import TImageCropperForm from './TImageCropperForm.vue';
 import TCollapseSearch from './TCollapseSearch.vue';
 import TFilePreview from './TFilePreview/TFilePreview.vue';
+import TTableEditor from './TTableEditor.vue';
+import TToothItems from './TToothItems.vue';
 
 // For Dev Use Only
 
@@ -135,10 +138,10 @@ export {
   AnimatedNumber,
   Collapse,
   AsyncWorldMap,
-  JawCard,
+  // JawCard,
   Jaw,
-  JawAddDiagnose,
-  JawAddTreatment,
+  JawAddLocations,
+  JawAddProcedure,
   SidebarPluginJaw,
   // Icons
   IconAdult,
@@ -194,12 +197,15 @@ export {
   IconToothWings,
   IconToothWorld,
   IconToothRestovration,
-  MdtAutoComplite,
+  TAutoComplite,
   TAvatar,
   TDropzone,
   TImageCropperForm,
   TAvatarInput,
   TFilePreview,
   TCollapseSearch,
+  TTableEditor,
+  Tooth,
+  TToothItems,
   // JawGenerator,
 };

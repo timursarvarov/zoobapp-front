@@ -1,5 +1,5 @@
-import isEmptyL from './is-empty';
+import jawFunctionsL from './jaw-functions';
 import tObjPropL from './t-obj-props';
 
-export const isEmpty = isEmptyL;
+export const jawFunctions = jawFunctionsL;
 export const tObjProp = tObjPropL;

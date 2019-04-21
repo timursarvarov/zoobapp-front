@@ -10,14 +10,18 @@ import Widgets from '@/pages/Dashboard/Widgets.vue';
 
 // Pages
 const User = () => import('@/pages/Dashboard/Pages/User/UserProfile.vue');
-const Collaborators = () => import('@/pages/Dashboard/Pages/Collaborators/CollaboratorsList.vue');
+const Collaborators = () => import('@/pages/Dashboard/Pages/Clinic/Collaborators/CollaboratorsList.vue');
 
 const PatientProfile = () => import('@/pages/Dashboard/Pages/Patient/PatientProfile/PatientProfile.vue');
 const PatientTreatment = () => import('@/pages/Dashboard/Pages/Patient/PatientTreatment/PatientTreatment.vue');
 const PatientsList = () => import('@/pages/Dashboard/Pages/Patients/PatientsList.vue');
 
 const ClinicsList = () => import('@/pages/Dashboard/Pages/Clinics/ClinicsList.vue');
+
 const ClinicProfile = () => import('@/pages/Dashboard/Pages/Clinic/ClinicSettings.vue');
+const ConsumablesList = () => import('@/pages/Dashboard/Pages/Clinic/ConsumablesList.vue');
+const ProceduresList = () => import('@/pages/Dashboard/Pages/Clinic/ProceduresList.vue');
+const ManipulationsList = () => import('@/pages/Dashboard/Pages/Clinic/ManipulationsList.vue');
 
 const Pricing = () => import('@/pages/Dashboard/Pages/Pricing.vue');
 const TimeLine = () => import('@/pages/Dashboard/Pages/TimeLinePage.vue');
@@ -361,7 +365,7 @@ const patientPages = {
       component: PatientProfile,
     },
     {
-      path: '/patient/:patientId/treatment',
+      path: '/patient/:patientId/procedure',
       name: 'PatientTreatment',
       component: PatientTreatment,
     },
@@ -392,18 +396,27 @@ const clinicPages = {
   path: '/clinic',
   component: DashboardLayout,
   name: 'Clinic',
-  redirect: '/clinic/',
   beforeEnter: ifAuthenticated,
   children: [
     {
-      path: '/clinic/',
-      name: 'Clinic Profile',
+      path: '/clinic/:clinicId/settings',
+      name: 'Clinic Settings',
       component: ClinicProfile,
     },
     {
-      path: '/clinic/:clinicId/statistic',
-      name: 'Clinic Statistic',
-      component: ClinicProfile,
+      path: '/clinic/:clinicId/consumables',
+      name: 'Consumables',
+      component: ConsumablesList,
+    },
+    {
+      path: '/clinic/:clinicId/procuders',
+      name: 'Procuders',
+      component: ProceduresList,
+    },
+    {
+      path: '/clinic/:clinicId/manipulations',
+      name: 'Manipulations',
+      component: ManipulationsList,
     },
   ],
 };

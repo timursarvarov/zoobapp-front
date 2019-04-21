@@ -1,5 +1,9 @@
 export default {
-  jaw: {},
+  jaw: {
+    anamnesis: {},
+    procedures: {},
+    diagnosis: {},
+  },
   jawEthalon: {},
   toothLocations: {
     rejected: undefined,

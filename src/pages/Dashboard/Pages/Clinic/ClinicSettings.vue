@@ -132,7 +132,7 @@
               type="number"
             ></md-input>
             <span class="md-helper-text">
-              Enter % that will be added to the total treatment price
+              Enter % that will be added to the total procedure price
             </span>
           </md-field>
         </div>
@@ -152,24 +152,63 @@
           </md-field>
         </div>
         <div class="md-layout md-layout-item ">
-          <md-autocomplete
+          {{currency.length}}
+          <t-auto-complite
             v-model="selectedCurrency"
-            :md-open-on-focus="false"
-            :md-options="currencyForOptions"
+            :md-options="currency"
             @md-selected="currencySelected"
+            @md-opened="selectedCurrency =''"
+            @blur="setLocalCurrency"
           >
+           <template
+                slot="md-autocomplete-item"
+                slot-scope="{ item }"
+              >
+              <span class="md-serched-list-item-text"> {{ `${item.symbol} ${item.name} ${item.code}` }}
+                </span>
+              </template>
+              <template
+                slot="md-autocomplete-empty"
+                slot-scope="{ term }"
+              >
+                  <span
+                    class="md-layout-item  md-size-100"
+                    style="white-space: pre-wrap;oveflow:hidden;"
+                  >
+                  No currency matching "{{ term }}" were found.
+                  </span>
+              </template>
             <label>Choose your Currency</label>
-          </md-autocomplete>
+          </t-auto-complite>
         </div>
         <div class="md-layout md-layout-item   md-size-100">
-          <md-autocomplete
+          <t-auto-complite
             v-model="selectedTimezone"
-            :md-open-on-focus="false"
-            :md-options="timeZoneForOptions"
+            :md-options="timezones"
             @md-selected="timezoneSelected"
+            @md-opened="selectedTimezone =''"
+            @blur="setLocalTimezone"
           >
+            <template
+                slot="md-autocomplete-item"
+                slot-scope="{ item }"
+              >
+                <span class="md-serched-list-item-text"> {{ item.UTC }} {{ item.cities }}
+                </span>
+              </template>
+              <template
+                slot="md-autocomplete-empty"
+                slot-scope="{ term }"
+              >
+                  <span
+                    class="md-layout-item  md-size-100"
+                    style="white-space: pre-wrap;oveflow:hidden;"
+                  >
+                  No timezone matching "{{ term }}" were found.
+                  </span>
+              </template>
             <label>Choose your timezone to specify sms sending time</label>
-          </md-autocomplete>
+          </t-auto-complite>
         </div>
 
         <div class="md-layout md-layout-item md-size-100">
@@ -192,194 +231,200 @@
   </md-card>
 </template>
     <script>
-  import {
-    CLINIC_LOGO_UPLOAD,
-    CLINIC_UPDATE,
-    NOTIFY,
-  } from '@/constants';
-  import { mapGetters } from 'vuex';
-  import { TAvatarInput } from '@/components';
-  import { SlideYDownTransition } from 'vue2-transitions';
-  import commonCurrency from './Common-Currency.json';
-  import timezones from './timezones.json';
+    import {
+      CLINIC_LOGO_UPLOAD,
+      CLINIC_UPDATE,
+      NOTIFY,
+      TIMEZONES,
+      COMMON_CURRENCY,
+    } from '@/constants';
+    import { mapGetters } from 'vuex';
+    import { TAvatarInput, TAutoComplite } from '@/components';
+    import { SlideYDownTransition } from 'vue2-transitions';
 
-  export default {
-    components: {
-      SlideYDownTransition,
-      TAvatarInput,
-    },
-    name: 'currentClinic-settings',
-    props: {
-      buttonColor: {
-        type: String,
-        default: '',
+    export default {
+      components: {
+        SlideYDownTransition,
+        TAvatarInput,
+        TAutoComplite,
       },
-    },
-    data() {
-      return {
-        selectedTimezone: null,
-        selectedCurrency: null,
-        timeZoneForOptions: [],
-        currencyForOptions: [],
-        image: '',
-        currency: {},
-        timezones: [],
-        touched: {
-          url: false,
-          email: false,
-          phone: false,
+      name: 'currentClinic-settings',
+      props: {
+        buttonColor: {
+          type: String,
+          default: '',
         },
-        modelValidations: {
-          url: {
-            url: true,
-          },
-          email: {
-            email: true,
-          },
-          phone: {
-            required: true,
-            min: 12,
-            max: 20,
-          },
-        },
-      };
-    },
-    methods: {
-      copyObj(obj) {
-        return JSON.parse(JSON.stringify(obj));
       },
-      timezoneSelected(timezoneL) {
-        if (timezoneL) {
+      data() {
+        return {
+          selectedTimezone: '',
+          selectedCurrency: '',
+          timeZoneForOptions: [],
+          currencyForOptions: [],
+          image: '',
+          touched: {
+            url: false,
+            email: false,
+            phone: false,
+          },
+          modelValidations: {
+            url: {
+              url: true,
+            },
+            email: {
+              email: true,
+            },
+            phone: {
+              required: true,
+              min: 12,
+              max: 20,
+            },
+          },
+        };
+      },
+      methods: {
+        copyObj(obj) {
+          return JSON.parse(JSON.stringify(obj));
+        },
+        timezoneSelected(timezoneL) {
+          if (timezoneL) {
+            this.timezones.forEach((element) => {
+              if (`${element.cities}` === timezoneL.cities) {
+                this.currentClinic.timezoneOffset = element.offset;
+                this.selectedTimezone = `${element.UTC} ${element.cities}`;
+              }
+            });
+          }
+        },
+        currencySelected(currency) {
+          console.log(currency);
+          if (currency) {
+            Object.values(this.currency).forEach((element) => {
+              if (element.code === currency.code) {
+                this.currentClinic.currencyCode = element.code;
+                this.selectedCurrency = `${element.symbol} ${element.name} ${element.code}`;
+              }
+            });
+          }
+        },
+        validate() {
+          this.$validator.validate('url', 'email', 'phone').then((isValid) => {
+            this.$emit('on-submit', this.registerForm, isValid);
+          });
+          this.touched.url = true;
+          this.touched.email = true;
+          this.touched.phone = true;
+        },
+        updateClinicLogo(fd) {
+          this.$store
+            .dispatch(CLINIC_LOGO_UPLOAD, {
+              fd,
+            })
+            .then((response) => {
+              console.log(response);
+              this.$store.dispatch(NOTIFY, {
+                settings: {
+                  message: 'Image uploaded',
+                  type: 'success',
+                },
+              });
+            });
+        },
+        updateClinicSettings() {
+          this.$validator.validateAll().then((result) => {
+            if (result) {
+              this.$store
+                .dispatch(CLINIC_UPDATE, {
+                  clinic: this.currentClinic,
+                })
+                .then((response) => {
+                  if (response) {
+                    this.$store.dispatch(NOTIFY, {
+                      settings: {
+                        message: 'Settings updated',
+                        type: 'primary',
+                      },
+                    });
+                  }
+                });
+            }
+          });
+        },
+        createArrayTimezones() {
+          const Ntimezones = {};
           this.timezones.forEach((element) => {
-            if (`${element.UTC} ${element.cities}` === timezoneL) {
-              this.currentClinic.timezoneOffset = element.offset;
-            }
+            this.timeZoneForOptions.unshift(`${element.UTC} ${element.cities}`);
           });
-        }
-      },
-      currencySelected(currency) {
-        if (currency) {
+
+          return Ntimezones;
+        },
+        createArrayCurrency() {
+          const Ncurrency = {};
           Object.values(this.currency).forEach((element) => {
-            if (
-              `${element.symbol} ${element.name} ${element.code}` === currency
-            ) {
-              this.currentClinic.currencyCode = element.code;
+            this.currencyForOptions.unshift(
+              `${element.symbol} ${element.name} ${element.code}`,
+            );
+          });
+
+          return Ncurrency;
+        },
+        setLocalTimezone() {
+          this.$nextTick(() => {
+            this.timezones.forEach((element) => {
+              if (element.offset === this.currentClinic.timezoneOffset) {
+                this.selectedTimezone = `${element.UTC} ${element.cities}`;
+              }
+            });
+          });
+        },
+        setLocalCurrency() {
+          Object.values(this.currency).forEach((element) => {
+            if (element.code === this.currentClinic.currencyCode) {
+              this.selectedCurrency = `${element.symbol} ${element.name} ${
+                element.code
+              }`;
             }
           });
-        }
+        },
       },
-      validate() {
-        this.$validator.validate('url', 'email', 'phone').then((isValid) => {
-          this.$emit('on-submit', this.registerForm, isValid);
-        });
-        this.touched.url = true;
-        this.touched.email = true;
-        this.touched.phone = true;
+      computed: {
+        ...mapGetters({
+          currentClinic: 'getCurrentClinic',
+        }),
+        email() {
+          return this.currentClinic.email;
+        },
+        url() {
+          return this.currentClinic.url;
+        },
+        phone() {
+          return this.currentClinic.phone;
+        },
+        timezones() {
+          return TIMEZONES;
+        },
+        currency() {
+          return COMMON_CURRENCY;
+        },
       },
-      updateClinicLogo(fd) {
-        this.$store
-          .dispatch(CLINIC_LOGO_UPLOAD, {
-            fd,
-          })
-          .then((response) => {
-            console.log(response);
-            this.$store.dispatch(NOTIFY, {
-              settings: {
-                message: 'Image uploaded',
-                type: 'success',
-              },
-            });
-        });
+      created() {
+        this.createArrayTimezones();
+        this.createArrayCurrency();
+        this.setLocalTimezone();
+        this.setLocalCurrency();
       },
-      updateClinicSettings() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.$store
-              .dispatch(CLINIC_UPDATE, {
-                clinic: this.currentClinic,
-              })
-              .then((response) => {
-                if (response) {
-                  this.$store.dispatch(NOTIFY, {
-                    settings: {
-                      message: 'Settings updated',
-                      type: 'primary',
-                    },
-                  });
-                }
-            });
-          }
-        });
+      watch: {
+        url() {
+          this.touched.url = true;
+        },
+        email() {
+          this.touched.email = true;
+        },
+        phone() {
+          this.touched.phone = true;
+        },
       },
-      createArrayTimezones() {
-        const Ntimezones = {};
-        this.timezones.forEach((element) => {
-          this.timeZoneForOptions.unshift(`${element.UTC} ${element.cities}`);
-        });
-
-        return Ntimezones;
-      },
-      createArrayCurrency() {
-        const Ncurrency = {};
-        Object.values(this.currency).forEach((element) => {
-          this.currencyForOptions.unshift(
-            `${element.symbol} ${element.name} ${element.code}`,
-          );
-        });
-
-        return Ncurrency;
-      },
-      setLocalTimezone() {
-        this.timezones.forEach((element) => {
-          if (element.offset === this.currentClinic.timezoneOffset) {
-            this.selectedTimezone = `${element.UTC} ${element.cities}`;
-          }
-        });
-      },
-      setLocalCurrency() {
-        Object.values(this.currency).forEach((element) => {
-          if (element.code === this.currentClinic.currencyCode) {
-            this.selectedCurrency = `${element.symbol} ${element.name} ${
-              element.code
-            }`;
-          }
-        });
-      },
-    },
-    computed: {
-      ...mapGetters({
-        currentClinic: 'getCurrentClinic',
-      }),
-      email() {
-        return this.currentClinic.email;
-      },
-      url() {
-        return this.currentClinic.url;
-      },
-      phone() {
-        return this.currentClinic.phone;
-      },
-    },
-    created() {
-      this.currency = this.copyObj(commonCurrency);
-      this.timezones = this.copyObj(timezones);
-      this.createArrayTimezones();
-      this.createArrayCurrency();
-      this.setLocalTimezone();
-      this.setLocalCurrency();
-    },
-    watch: {
-      url() {
-        this.touched.url = true;
-      },
-      email() {
-        this.touched.email = true;
-      },
-      phone() {
-        this.touched.phone = true;
-      },
-    },
-  };
+    };
 </script>
 <style lang="scss" scoped>
 .md-dialog.cropper-form {

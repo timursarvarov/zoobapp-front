@@ -5,8 +5,8 @@ import {
 } from '@/constants';
 
 export default {
-  [TEETH_INITIATION]: (state, jaw) => {
-    state.jaw = jaw;
+  [TEETH_INITIATION]: (state, {type, value}) => {
+    state.jaw[type] = value;
   },
   [TEETH_INITIATION_ETHALON]: (state, jaw) => {
     state.jawEthalon = jaw;

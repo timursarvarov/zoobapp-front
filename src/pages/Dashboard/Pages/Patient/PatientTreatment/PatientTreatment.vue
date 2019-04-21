@@ -1,5 +1,5 @@
 <template>
-  <nav-tabs-card class="treatment-wrapper" v-if="patient.ID">
+  <nav-tabs-card class="procedure-wrapper" v-if="patient.ID">
     <template slot="content">
       <span class="md-nav-tabs-title">Set new:</span>
       <md-tabs :class="['md-' + currentTabColor()]" md-alignment="left" md-sync-route>
@@ -11,7 +11,7 @@
         >
           <div class="md-layout md-gutter">
             <div class="md-layout-item md-small-size-100 md-xsmall-size-100">
-              <jaw :prefer="'anamnes'" :jaw="jaw" v-model="selectedTeeth">
+              <!-- <jaw :prefer="'anamnes'" :jaw="jaw" v-model="selectedTeeth">
                 <div slot="bottom">
                   {{selectedTeeth}}
                   <md-button class="md-simple jaw-state">
@@ -26,7 +26,7 @@
                     </div>
                   </md-button>
                 </div>
-              </jaw>
+              </jaw> -->
             </div>
             <div
               class="md-layout-item md-small-size-100 md-xsmall-size-100"
@@ -53,11 +53,11 @@
         <md-tab
           id="tab-therapy"
           md-icon="add"
-          md-label="Treatment"
-          :to="`/patient/${patient.ID}/treatment`"
+          md-label="Procedure"
+          :to="`/patient/${patient.ID}/procedure`"
         >
           <div class="md-layout md-gutter">
-            <treatments/>
+            <procedures/>
           </div>
         </md-tab>
         <md-tab
@@ -87,7 +87,7 @@
 import { mapGetters } from "vuex";
 import { NavTabsCard, Jaw, IconBase } from "@/components";
 import {
-  TEETH_INITIATION,
+  TEETH_INITIATION_ETHALON,
   PATIENT_GET,
   NOTIFY
 } from "@/constants";
@@ -98,23 +98,22 @@ import {
   DiagnoseList,
   Notes,
   JawAnamnes,
-  TreatmentList,
+  ProceduresList,
   PatientFiles,
   PatientAddFilesForm,
-  Treatments,
+  Procedures,
 } from "@/pages";
 
 export default {
   components: {
-    // JawCard,
     Jaw,
     NavTabsCard,
     JawAnamnes,
     Diagnose,
     DiagnoseList,
-    Treatments,
+    Procedures,
     Notes,
-    TreatmentList,
+    ProceduresList,
     AnamnesList,
     IconBase,
     PatientFiles,
@@ -132,11 +131,11 @@ export default {
     Implant() {
       console.log(this.selectedTeeth);
       for (let index = 0; index < this.selectedTeeth.length; index += 1) {
-        this.jaw.jawAnamnes[this.selectedTeeth[index]].implant = true;
-        this.jaw.jawAnamnes[this.selectedTeeth[index]].root = false;
+        this.jaw.anamnesis[this.selectedTeeth[index]].implant = true;
+        this.jaw.anamnesis[this.selectedTeeth[index]].root = false;
       }
-      // this.jaw.jawAnamnes[17].implant = true;
-      // this.jaw.jawAnamnes[17].root = false;
+      // this.jaw.anamnesis[17].implant = true;
+      // this.jaw.anamnesis[17].root = false;
     },
     currentTabColor() {
       let color = "";
@@ -151,7 +150,7 @@ export default {
     })
   },
   created() {
-    this.$store.dispatch(TEETH_INITIATION);
+    // this.$store.dispatch(TEETH_INITIATION_ETHALON);
     if (
       this.$route.params.patientId &&
       (this.patient.ID === null ||
@@ -184,7 +183,7 @@ export default {
 };
 </script>
 <style lang="scss" >
-.treatment-wrapper {
+.procedure-wrapper {
   .md-tabs-navigation {
     overflow-x: auto;
     overflow-y: auto;

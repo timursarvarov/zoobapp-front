@@ -1,6 +1,6 @@
 <template>
   <div ref="parent">
-    <jaw-add-diagnose
+    <jaw-add-locations
       ref="jawadddiagnose"
       :jaw="jaw"
       :prefer="prefer"
@@ -10,6 +10,8 @@
       :teethSchema="teethSchema"
       :teethSystem="teethSystem"
       :defaultLocations="defaultLocations"
+      locationType ='diagnosis'
+      :originalItemsGrouped="diagnosis"
     >
     <div slot="title" >
       <slide-y-down-transition>
@@ -20,7 +22,7 @@
       </slide-y-down-transition>
     </div>
 
-    </jaw-add-diagnose>
+    </jaw-add-locations>
     <div v-show="false">
       <md-field class="md-form-group" slot="inputs">
         <md-icon>lock_outline</md-icon>
@@ -48,137 +50,143 @@
   </div>
 </template>
 <script>
-    import { JawAddDiagnose } from '@/components';
+    import { JawAddLocations } from '@/components';
     import { SlideYDownTransition } from 'vue2-transitions';
-    import { isEmpty } from '@/mixins';
+    import { tObjProp } from '@/mixins';
+    import {
+        DIAGNOSIS,
+    } from '@/constants';
 
     export default {
-      mixins: [isEmpty],
-      components: {
-        SlideYDownTransition,
-        JawAddDiagnose,
-      },
-      model: {
-        prop: 'newDiagnoseParams',
-        event: 'updateDiagonoseParams',
-      },
-      props: {
-        error: {
-          type: Object,
-          default: () => ({
-            message: 'Choose tooth or disease location',
-            type: 'locations',
-            show: 'false',
-          }),
+        mixins: [tObjProp],
+        components: {
+            SlideYDownTransition,
+            JawAddLocations,
         },
-        jaw: {
-          type: Object,
-          default: () => {},
+        model: {
+            prop: 'newDiagnoseParams',
+            event: 'updateDiagonoseParams',
         },
-        defaultLocations: {
-          type: Object,
-          default: () => {},
-        },
-        // локации оригинального диагноза для проверки валидации
-        originalLocations: {
-          type: Object,
-          default: () => {},
-        },
-        prefer: {
-          type: String,
-          default: () => 'diagnose',
-        },
-        selectedDiagnose: {
-          type: Object,
-          default: () => ({
-            title: '',
-            code: '',
-          }),
-        },
-        selectedTeeth: {
-          type: Array,
-          default: () => [],
-        },
-        newDiagnoseParams: {
-          type: Object,
-          default: () => {},
-        },
-        teethSchema: {
-          type: Object,
-          default: () => {},
-        },
-        teethSystem: {
-          type: Number,
-          default: () => 1,
-          // 1 = FDI World Dental Federation notation
-          // 2 = Universal numbering system
-          // 3 = Palmer notation method
-        },
-      },
-      data() {
-        return {
-          diagnoseLocal: {},
-          modelValidations: {
-            locations: {
-              required: true,
+        props: {
+            error: {
+                type: Object,
+                default: () => ({
+                    message: 'Choose tooth or disease location',
+                    type: 'locations',
+                    show: 'false',
+                }),
             },
-          },
-          dialogWidth: '',
-          locations: '',
-          touched: {
-            locations: false,
-          },
-        };
-      },
-      methods: {
-        matchWidth() {
-          if (this.$refs.parent) {
-            this.dialogWidth = this.$refs.parent.clientWidth;
-            const size = {
-              width: this.$refs.parent.clientWidth,
-              height: this.$refs.parent.clientHeight,
+            jaw: {
+                type: Object,
+                default: () => {},
+            },
+            defaultLocations: {
+                type: Object,
+                default: () => {},
+            },
+            // локации оригинального диагноза для проверки валидации
+            originalLocations: {
+                type: Object,
+                default: () => {},
+            },
+            prefer: {
+                type: String,
+                default: () => 'diagnose',
+            },
+            selectedDiagnose: {
+                type: Object,
+                default: () => ({
+                    title: '',
+                    code: '',
+                }),
+            },
+            selectedTeeth: {
+                type: Array,
+                default: () => [],
+            },
+            newDiagnoseParams: {
+                type: Object,
+                default: () => {},
+            },
+            teethSchema: {
+                type: Object,
+                default: () => {},
+            },
+            teethSystem: {
+                type: Number,
+                default: () => 1,
+                // 1 = FDI World Dental Federation notation
+                // 2 = Universal numbering system
+                // 3 = Palmer notation method
+            },
+        },
+        data() {
+            return {
+                diagnoseLocal: {},
+                modelValidations: {
+                    locations: {
+                        required: true,
+                    },
+                },
+                dialogWidth: '',
+                locations: '',
+                touched: {
+                    locations: false,
+                },
             };
-            this.$emit('mounted-size', size);
-          }
         },
-        validate() {
-          return this.$validator.validateAll().then((res) => {
-            this.$emit('on-validated', res);
-            this.matchWidth();
-            return res;
-          });
+        methods: {
+            matchWidth() {
+                if (this.$refs.parent) {
+                    this.dialogWidth = this.$refs.parent.clientWidth;
+                    const size = {
+                        width: this.$refs.parent.clientWidth,
+                        height: this.$refs.parent.clientHeight,
+                    };
+                    this.$emit('mounted-size', size);
+                }
+            },
+            validate() {
+                return this.$validator.validateAll().then((res) => {
+                    this.$emit('on-validated', res);
+                    this.matchWidth();
+                    return res;
+                });
+            },
+            isValidLoctions() {
+                if (this.originalLocations === undefined) {
+                    return true;
+                }
+                if (this.isEmpty(this.originalLocations)) {
+                    return true;
+                }
+                return !this.isEmpty(this.diagnoseLocal.teeth);
+            },
         },
-        isValidLoctions() {
-          if (this.originalLocations === undefined) {
-            return true;
-          }
-          if (this.isEmpty(this.originalLocations)) {
-            return true;
-          }
-          return !this.isEmpty(this.diagnoseLocal.teeth);
+        computed: {
+            newDiagnoseParamsLocal: {
+                get() {
+                    return this.newDiagnoseParams;
+                },
+                set(newValue) {
+                    this.$emit('updateDiagonoseParams', newValue);
+                    this.diagnoseLocal = {};
+                    this.diagnoseLocal = newValue;
+                    this.locations = this.isValidLoctions() ? 1 : '';
+                },
+            },
+             diagnosis() {
+                return DIAGNOSIS;
+            },
         },
-      },
-      computed: {
-        newDiagnoseParamsLocal: {
-          get() {
-            return this.newDiagnoseParams;
-          },
-          set(newValue) {
-            this.$emit('updateDiagonoseParams', newValue);
-            this.diagnoseLocal = {};
-            this.diagnoseLocal = newValue;
+        created() {
             this.locations = this.isValidLoctions() ? 1 : '';
-          },
         },
-      },
-      created() {
-        this.locations = this.isValidLoctions() ? 1 : '';
-      },
-      watch: {
-        locations() {
-          this.touched.locations = true;
+        watch: {
+            locations() {
+                this.touched.locations = true;
+            },
         },
-      },
     };
 </script>
 <style>
