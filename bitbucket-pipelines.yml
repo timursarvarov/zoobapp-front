@@ -3,13 +3,28 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: node:6.9.4
+image: node
 
 pipelines:
   default:
+    # - step:
+    #     name: Unit Test
+    #     caches:
+    #       - node
+    #     script:
+    #       - npm install
+    #       - npm test
     - step:
-        caches:
-          - node
-        script: # Modify the commands below to build your repository.
-          - npm install
-          - npm test
+        name: Deploy to production
+        deployment: production
+        script:
+            - npm install
+            - npm run build
+            - ssh -T root@159.89.246.107 rm -fr $REMOTE_PATH*
+            - pipe: atlassian/sftp-deploy:0.3.1
+              variables:
+                  USER: 'root'
+                  SERVER: '159.89.246.107'
+                  REMOTE_PATH: $REMOTE_PATH
+                  LOCAL_PATH: 'dist/*'
+                  DEBUG: 'true'
