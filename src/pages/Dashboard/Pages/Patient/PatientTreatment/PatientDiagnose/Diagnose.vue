@@ -177,7 +177,6 @@
                 }
             },
             recalculateJawDiagnose() {
-                console.log(this.jawEthalon.diagnosis, this.jaw.diagnosis);
                 if (this.jawEthalon.diagnosis) {
                     this.jaw.diagnosis = JSON.parse(
                         JSON.stringify(this.jawEthalon.diagnosis),

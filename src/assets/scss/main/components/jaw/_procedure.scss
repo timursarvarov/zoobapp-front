@@ -39,12 +39,16 @@
             fill: #43a047 !important;
             stroke: #43a047;
         }
-        &.periodontit{
+        &.silant {
+            stroke: white;
+            stroke-width: 1px;
+        }
+        &.periodontit {
             stroke-width: 2px;
         }
         &.coronaLingual,
         &.coronaTop,
-        &.coronaLabial{
+        &.coronaLabial {
             stroke: #43a047;
             stroke-width: 2px;
         }

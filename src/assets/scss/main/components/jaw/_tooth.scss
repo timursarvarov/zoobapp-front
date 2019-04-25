@@ -22,7 +22,7 @@
     }
     .tooth-number {
         color: #3c4858 !important;
-        font-size: 0.9375rem;
+        font-size: 0.9375em;
         font-weight: 400;
         overflow: show;
         margin: auto;
@@ -57,9 +57,6 @@
         box-shadow: 0 4px 5px -2px rgba(0, 0, 0, 0.2), 0 7px 10px 1px rgba(0, 0, 0, 0.14),
             0 2px 16px 1px rgba(0, 0, 0, 0.12);
 
-        hr {
-            display: none;
-        }
         .tooth-diagnosis-content {
             flex-direction: row;
             position: relative;
@@ -69,8 +66,12 @@
             .tooth-diagnosis-code {
                 padding: 0 3px 0 3px;
             }
+            .md-list-item-text{
+                position: relative;
+            }
             .tooth-diagnosis-text {
                 padding: 0 3px 0 3px;
+                overflow: hidden;
 
                 .tooth-diagnosis-text-item {
                     padding-right: 30px;
@@ -78,23 +79,60 @@
                 }
             }
         }
-        &:hover {
-            background-color: black;
-            opacity: 0.7;
-            z-index: 50;
-            height: auto !important;
-            max-height: 100%;
-            min-width: 10%;
-            border-radius: 3px;
-            transform: scale(1.1);
-            position: absolute;
-            .tooth-diagnosis-content {
-                display: flex;
+    }
+    .tooth-diagnosis-button {
+        z-index: 100;
+        cursor: pointer;
+        .dropdown-menu-center{
+            // transform-origin: 50% 100%;
+            transform: translate(-50%, 0);
+        }
+       .has-item{
+            box-shadow: 0 3px 3px -2px rgba(0,0,0,.2), 0 3px 4px 0 rgba(0,0,0,.14), 0 1px 8px 0 rgba(0,0,0,.12);
+        }
+        .t-tooth-button{
+            font-size: 12px;
+            min-height: 20px;
+            max-height: 20px;
+            min-width: 20px;
+            max-width: 20px;
+            width: 4vh;
+            height: 4vh;
+            .md-ripple{
+                padding: 0!important;
+                &:after {
+                    display: none!important;
+                    // display: inline-block;
+                    // width: 0;
+                    // height: 0;
+                    // margin: 0!important;
+                }
             }
-            hr {
-                display: block;
-                opacity: 0.5;
-                margin: 0 15px 0 15px;
+        }
+        .tooth-diagnosis-content {
+            align-items: center;
+            // flex-direction: row;
+            position: relative;
+            max-width: 60%;
+            width: 20vw;
+            min-width: 300px;
+            .tooth-diagnosis-code {
+                padding: 0 3px 0 3px;
+            }
+            .md-list-item-text{
+                position: relative;
+            }
+            .tooth-diagnosis-text {
+                padding: 0 3px 0 3px;
+                overflow: hidden;
+
+                .tooth-diagnosis-text-item {
+                    padding-right: 30px;
+                    white-space: nowrap;
+                }
+            }
+            .tooth-diagnosis-actions{
+
             }
         }
     }

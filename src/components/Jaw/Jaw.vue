@@ -70,9 +70,9 @@
                 <slot name="top"></slot>
             </div>
 
-            <div class="jaw-scroll md-layout mx-auto">
-                <div class="jaw-top md-alignment-top-center mx-auto md-layout-item md-size-100">
-                    <div class="tooth" v-for="(toothId ) in topAdultTeeth" :key="toothId">
+            <div class="jaw-scroll mx-auto md-layout-item">
+                <div class="jaw-top md-alignment-top-center mx-auto  md-size-100">
+                    <div class="tooth" v-for="(toothId, topJawToothIndex) in topAdultTeeth" :key="toothId">
                         <div
                             v-ripple.click.100
                             :class="[
@@ -98,54 +98,66 @@
                                     </template>
                                 </g>
                             </svg>
-                            <span
-                                :class="[prefer,'tooth-number']"
-                            >{{toothId | toCurrentTeethSystem(teethSystem)}}</span>
                         </div>
-                        <div
-                            @click="$emit('showToothInfo', toothId)"
-                            v-if="separatedItems[toothId]"
-                            class="tooth-diagnosis"
-                            @mouseenter="mouseOverToothId = toothId"
-                            @mouseleave="mouseOverToothId = ''"
-                        >
-                            <div
-                                class="tooth-diagnosis-content"
+                        <div class="tooth-diagnosis-button">
+                            <!-- @click="$emit('showToothInfo', toothId)" -->
+                            <drop-down
+                                direction="down"
+                                @mouseenter="mouseOverToothId = toothId"
+                                @mouseleave="mouseOverToothId = ''"
                             >
-                                <div class="tooth-diagnosis-text" >
-                                    <div
-                                    >{{type | capitilize }} for {{toothId | toCurrentTeethSystem(teethSystem)}}</div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div
-                                class="tooth-diagnosis-content"
-                                @mouseenter="diagnoseOnHoverToggle(toothId, k)"
-                                @mouseleave="diagnoseOnHoverToggle(toothId, k)"
-                                v-for="(d, k) in separatedItems[toothId]"
-                                :key="k"
-                            >
-                                <div class="tooth-diagnosis-code">
-                                    <b>{{d.code}}</b>
-                                </div>
-                                <div class="tooth-diagnosis-text">
-                                    <marquee-text
-                                        :repeat="3"
-                                        :duration="4"
-                                        :paused="separatedItems[toothId][k].hover"
-                                        :key="`${toothId}${k}`"
+                                <md-button
+                                    slot="title"
+                                    class="md-button t-tooth-button md-just-icon md-simple md-round dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    :class="[{'has-item': separatedItems[toothId]}]"
+                                >
+                                {{toothId | toCurrentTeethSystem(teethSystem)}}
+                                </md-button>
+                                <ul v-if="separatedItems[toothId]"
+                                    class="dropdown-menu"
+                                    :class="[
+                                            {'dropdown-menu-right': 12 <= topJawToothIndex+1},
+                                            {'dropdown-menu-center': 6 < topJawToothIndex+1 && topJawToothIndex+1 < 12 },
+                                            {'dropdown-menu-left': 6 >=  topJawToothIndex+1  },
+                                            ]"
+                                >
+                                    <li
+                                        v-for="(d, k) in separatedItems[toothId]"
+                                        :key="k"
+                                        class="tooth-diagnosis-content md-layout"
+                                        @mouseenter="diagnoseOnHoverToggle(toothId, k)"
+                                        @mouseleave="diagnoseOnHoverToggle(toothId, k)"
                                     >
-                                        <span class="tooth-diagnosis-text-item">
-                                            <span>{{d.title}}</span>
-                                        </span>
-                                    </marquee-text>
-                                </div>
-                            </div>
+                                        <div class="tooth-diagnosis-code">
+                                            <b>{{d.code}}</b>
+                                        </div>
+                                        <div class="tooth-diagnosis-text md-layout-item">
+                                            <marquee-text
+                                                :repeat="3"
+                                                :duration="4"
+                                                :paused="separatedItems[toothId][k].hover"
+                                                :key="`${toothId}${k}`"
+                                            >
+                                                <span class="tooth-diagnosis-text-item">
+                                                    <span>{{d.title}}</span>
+                                                </span>
+                                            </marquee-text>
+                                        </div>
+
+                                        <div class="tooth-diagnosis-actions">
+                                            <md-button class="md-just-icon md-simple md-round">
+                                                <md-icon>visibility</md-icon>
+                                            </md-button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </drop-down>
                         </div>
                     </div>
                 </div>
-                <div class="jaw-bottom md-layout-item md-size-100">
-                    <div class="tooth" v-for="(toothId ) in bottomAdultTeeth" :key="toothId">
+                <div class="jaw-bottom  md-size-100">
+                    <div class="tooth" v-for="(toothId, bottomAdultTeethIndex ) in bottomAdultTeeth" :key="toothId">
                         <div
                             v-ripple.click.100
                             :class="[
@@ -172,25 +184,77 @@
                                     </template>
                                 </g>
                             </svg>
-                            <span
-                                class="tooth-number"
-                            >{{toothId | toCurrentTeethSystem(teethSystem)}}</span>
                         </div>
-                        <div
+
+                        <div  class="tooth-diagnosis-button">
+                            <!-- @click="$emit('showToothInfo', toothId)" -->
+                            <drop-down
+                                direction="up"
+                                @mouseenter="mouseOverToothId = toothId"
+                                @mouseleave="mouseOverToothId = ''"
+                            >
+                                <md-button
+                                    slot="title"
+                                    class="md-button t-tooth-button  md-simple md-round dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    :class="[{'has-item': separatedItems[toothId]}]"
+                                >
+                                {{toothId | toCurrentTeethSystem(teethSystem)}}
+                                </md-button>
+                                <ul v-if="separatedItems[toothId]"
+                                    class="dropdown-menu"
+                                    :class="[
+                                            {'dropdown-menu-right': 12 <= bottomAdultTeethIndex+1},
+                                            {'dropdown-menu-center': 6 < bottomAdultTeethIndex+1 && bottomAdultTeethIndex+1 < 12 },
+                                            {'dropdown-menu-left': 6 >=  bottomAdultTeethIndex+1  },
+                                            ]"
+                                >
+                                    <li
+                                        v-for="(d, k) in separatedItems[toothId]"
+                                        :key="k"
+                                        class="tooth-diagnosis-content md-layout"
+                                        @mouseenter="diagnoseOnHoverToggle(toothId, k)"
+                                        @mouseleave="diagnoseOnHoverToggle(toothId, k)"
+                                    >
+                                        <div class="tooth-diagnosis-code">
+                                            <b>{{d.code}}</b>
+                                        </div>
+                                        <div class="tooth-diagnosis-text md-layout-item">
+                                            <marquee-text
+                                                :repeat="3"
+                                                :duration="4"
+                                                :paused="separatedItems[toothId][k].hover"
+                                                :key="`${toothId}${k}`"
+                                            >
+                                                <span class="tooth-diagnosis-text-item">
+                                                    <span>{{d.title}}</span>
+                                                </span>
+                                            </marquee-text>
+                                        </div>
+
+                                        <div class="tooth-diagnosis-actions">
+                                            <md-button class="md-just-icon md-simple md-round">
+                                                <md-icon>visibility</md-icon>
+                                            </md-button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </drop-down>
+                        </div>
+
+                        <!-- <div
                             @click="$emit('showToothInfo', toothId)"
                             v-if="separatedItems[toothId]"
                             class="tooth-diagnosis"
                             @mouseenter="mouseOverToothId = toothId"
                             @mouseleave="mouseOverToothId = ''"
                         >
-                            <div
-                                class="tooth-diagnosis-content"
-                            >
-                                <div class="tooth-diagnosis-text">
+                            <div class="tooth-diagnosis-content">
+                                <div class="tooth-diagnosis-title-text">
                                     <div>
-                                        <span style=" transform: translate(50%); ">
-                                    {{type | capitilize }} for {{toothId | toCurrentTeethSystem(teethSystem)}}
-                                    </span>
+                                        <span
+                                            style=" transform: translate(50%); "
+                                        >{{type | capitilize }} for {{toothId | toCurrentTeethSystem(teethSystem)}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -212,13 +276,18 @@
                                         :paused="separatedItems[toothId][k].hover"
                                         :key="`${toothId}${k}`"
                                     >
-                                        <span class="tooth-diagnosis-text-item">
+                                    <span class="tooth-diagnosis-text-item">
                                             <span>{{d.title}}</span>
                                         </span>
                                     </marquee-text>
                                 </div>
+
+                                <span class="tooth-diagnosis-actions">
+                                    <md-icon >visibility</md-icon>
+                                </span>
+
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -232,20 +301,23 @@
                     <span>
                         <animated-number :value="selectedTeethLocal.length"></animated-number>
                     </span>
-                    <span v-show="selectedTeethLocal.length <= 1"> tooth selected</span>
-                    <span v-show="selectedTeethLocal.length > 1"> teeth selected</span>
+                    &nbsp;
+                    <span
+                        v-show="selectedTeethLocal.length <= 1"
+                    >tooth selected</span>
+                    <span v-show="selectedTeethLocal.length > 1">teeth selected</span>
                 </div>
-                <div class="text-danger">
-                    <span v-show="prefer.length < 3">
-                            <span v-show="!prefer.includes('anamnes')">Anamnes</span>
-                            <span v-show="prefer.length === 0">, </span>
-                            <span v-show="!prefer.includes('diagnose')">Diagnosis</span>
-                            <span v-show="prefer.length <= 1"> and</span>
-                            <span v-show="!prefer.includes('procedure')"> Procedures</span>
-                            <span v-show="prefer.length < 2"> are</span>
-                            <span v-show="prefer.length >= 2"> is</span>
-                        hided
-                    </span>
+                <div v-show="prefer.length < 3" class="text-danger hided-prefer">
+                    <transition-group name="list">
+                        <span
+                            v-for="(item, key) in hidedPrefer"
+                            :key="key + 0"
+                            class="list-item"
+                        >{{ item }}</span>
+                    </transition-group>
+                    <span v-if="hidedPrefer.length === 1 || prefer[0] == 'Anamnes'">is</span>
+                    <span v-else>are</span>
+                    hided
                 </div>
             </div>
             <div class="md-layout-item">
@@ -325,6 +397,22 @@
         },
 
         computed: {
+            hidedPrefer() {
+                const allPrefer = ['anamnes', 'procedure', 'diagnose'];
+                const found = [];
+                allPrefer.forEach((r) => {
+                    if (!this.prefer.includes(r)) {
+                        if (r === 'anamnes') {
+                            found.unshift('Anamnes');
+                        } else if (r === 'procedure') {
+                            found.unshift('Procedures');
+                        } else {
+                            found.unshift('Diagnosis');
+                        }
+                    }
+                });
+                return found;
+            },
             teeth() {
                 return TEETH_ALL;
             },
@@ -604,7 +692,7 @@
 
 <style lang="scss" scoped>
 .jaw-wrapper {
-    .title {
+    .hided-prefer {
         .list-item {
             display: inline-block;
             margin-right: 10px;
