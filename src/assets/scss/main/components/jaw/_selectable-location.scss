@@ -33,8 +33,12 @@
             &.rootCanal,
             &.periodontit,
             &.root,
+            &.bone,
+            &.bridge,
             &.coronaLingual,
             &.coronaTop,
+            &.crown,
+            &.implant,
             &.coronaLabial {
                 // fill: #8e24aa !important;
                 fill: #fff;
@@ -46,15 +50,12 @@
                     transition: all 0.2s ease-in-out;
                 }
             }
-
             &.implant {
                 fill: #3535ed;
             }
-
             &.veneer {
                 fill: #3535ed;
             }
-
             &.silant {
                 fill: #3535ed;
             }
@@ -63,7 +64,6 @@
                 stroke-linejoin: round;
                 stroke-width: 4px;
             }
-
             &.paradontit1,
             &.paradontit2,
             &.paradontit3,
@@ -114,6 +114,12 @@
             &.rootCanal,
             &.periodontit,
             &.root,
+            &.bone,
+            &.bridge,
+            &.crown,
+            &.braces,
+            &.implant,
+            &.bridge,
             &.coronaLingual,
             &.coronaTop,
             &.coronaLabial {
@@ -127,15 +133,12 @@
                     transition: all 0.2s ease-in-out;
                 }
             }
-
             &.implant {
                 fill: #3535ed;
             }
-
             &.veneer {
                 fill: #3535ed;
             }
-
             &.silant {
                 fill: #fff;
                 stroke: #000;
@@ -151,7 +154,6 @@
                 stroke-linejoin: round;
                 stroke-width: 4px;
             }
-
             &.paradontit1,
             &.paradontit2,
             &.paradontit3,
@@ -202,6 +204,10 @@
             &.rootCanal,
             &.periodontit,
             &.root,
+            &.bone,
+            &.bridge,
+            &.crown,
+            &.implant,
             &.coronaLingual,
             &.coronaTop,
             &.coronaLabial {
@@ -215,15 +221,12 @@
                     transition: all 0.2s ease-in-out;
                 }
             }
-
             &.implant {
                 fill: #3535ed;
             }
-
             &.veneer {
                 fill: #3535ed;
             }
-
             &.silant {
                 fill: #8e24aa;
                 stroke: #000;
@@ -239,7 +242,6 @@
                 stroke-linejoin: round;
                 stroke-width: 4px;
             }
-
             &.paradontit1,
             &.paradontit2,
             &.paradontit3,

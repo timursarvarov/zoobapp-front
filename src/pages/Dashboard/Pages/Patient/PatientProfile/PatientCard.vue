@@ -180,175 +180,177 @@
         </div>
       </div>
     </md-card-content>
-
+  <generator/>
   </md-card>
 </template>
 <script>
     import {
-      PATIENT_AVATAR_UPLOAD,
-      PATIENT_UPDATE,
-      NOTIFY,
+        PATIENT_AVATAR_UPLOAD,
+        PATIENT_UPDATE,
+        NOTIFY,
     } from '@/constants';
     import { mapGetters } from 'vuex';
     import { SlideYDownTransition } from 'vue2-transitions';
     import StarRating from 'vue-star-rating';
     import { TAvatarInput } from '@/components';
+    import generator from '@/svgImporter/jawSVGgenerator';
 
     const randomMC = require('random-material-color');
 
     export default {
-      components: {
-        SlideYDownTransition,
-        StarRating,
-        TAvatarInput,
-      },
-      name: 'patient-card',
-      props: {
-        cardpatientImage: {
-          type: String,
-          default: './img/faces/marc.jpg',
+        components: {
+            SlideYDownTransition,
+            StarRating,
+            TAvatarInput,
+            generator,
         },
-        buttonColor: {
-          type: String,
-          default: '',
-        },
-        avatar: {
-          type: String,
-          default: './img/default-avatar.png',
-        },
-      },
-      data() {
-        return {
-          showRating: false,
-          showForm: false,
-          image: '',
-          address: null,
-          touched: {
-            firstName: false,
-            lastName: false,
-            email: false,
-            phone: false,
-          },
-          modelValidations: {
-            lastName: {
-              required: true,
+        name: 'patient-card',
+        props: {
+            cardpatientImage: {
+                type: String,
+                default: './img/faces/marc.jpg',
             },
-            firstName: {
-              required: true,
-              min: 2,
+            buttonColor: {
+                type: String,
+                default: '',
             },
-            email: {
-              email: true,
+            avatar: {
+                type: String,
+                default: './img/default-avatar.png',
             },
-            phone: {
-              required: true,
-              min: 12,
+        },
+        data() {
+            return {
+                showRating: false,
+                showForm: false,
+                image: '',
+                address: null,
+                touched: {
+                    firstName: false,
+                    lastName: false,
+                    email: false,
+                    phone: false,
+                },
+                modelValidations: {
+                    lastName: {
+                        required: true,
+                    },
+                    firstName: {
+                        required: true,
+                        min: 2,
+                    },
+                    email: {
+                        email: true,
+                    },
+                    phone: {
+                        required: true,
+                        min: 12,
+                    },
+                },
+            };
+        },
+        methods: {
+            getColorButton(buttonColor) {
+                return `md-${buttonColor}`;
             },
-          },
-        };
-      },
-      methods: {
-        getColorButton(buttonColor) {
-          return `md-${buttonColor}`;
-        },
-        validate() {
-          this.$validator.validateAll().then((isValid) => {
-            this.$emit('on-submit', this.registerForm, isValid);
-          });
-          this.touched.lastName = true;
-          this.touched.firstName = true;
-          this.touched.email = true;
-          this.touched.phone = true;
-        },
-        updateProfile() {
-          this.patient.color = this.patientColor;
-          this.$validator
-            .validateAll('firstName', 'email', 'phone', 'lastName')
-            .then((result) => {
-              if (result) {
-                this.$store
-                  .dispatch(PATIENT_UPDATE, {
-                    patient: this.patient,
-                  })
-                  .then((response) => {
-                    if (response) {
-                      this.$store.dispatch(NOTIFY, {
-                        settings: {
-                          message: 'Settings updated successfully',
-                          type: 'success',
-                        },
-                      });
-                    }
-                  });
-              }
-            });
-        },
-
-        updatepatientAvatar(fd) {
-          const patient = {
-            ID: this.patient.ID,
-            fd,
-          };
-
-          this.$store
-            .dispatch(PATIENT_AVATAR_UPLOAD, {
-              patient,
-            })
-            .then(
-              (response) => {
-                console.log(response);
-                this.$store.dispatch(NOTIFY, {
-                  settings: {
-                    message: 'Image uploaded',
-                    type: 'success',
-                  },
+            validate() {
+                this.$validator.validateAll().then((isValid) => {
+                    this.$emit('on-submit', this.registerForm, isValid);
                 });
-              },
-              (err) => {
-                this.selectedFileUrl = null;
-                console.log(err);
-              },
-            );
-        },
-      },
+                this.touched.lastName = true;
+                this.touched.firstName = true;
+                this.touched.email = true;
+                this.touched.phone = true;
+            },
+            updateProfile() {
+                this.patient.color = this.patientColor;
+                this.$validator
+                    .validateAll('firstName', 'email', 'phone', 'lastName')
+                    .then((result) => {
+                        if (result) {
+                            this.$store
+                                .dispatch(PATIENT_UPDATE, {
+                                    patient: this.patient,
+                                })
+                                .then((response) => {
+                                    if (response) {
+                                        this.$store.dispatch(NOTIFY, {
+                                            settings: {
+                                                message: 'Settings updated successfully',
+                                                type: 'success',
+                                            },
+                                        });
+                                    }
+                                });
+                        }
+                    });
+            },
 
-      computed: {
-        ...mapGetters({
-          patient: 'getPatient',
-        }),
-        patientColor() {
-          const color = randomMC.getColor({
-            text: this.firstName + this.lastName + this.phone + this.email,
-          });
-          return color;
+            updatepatientAvatar(fd) {
+                const patient = {
+                    ID: this.patient.ID,
+                    fd,
+                };
+
+                this.$store
+                    .dispatch(PATIENT_AVATAR_UPLOAD, {
+                        patient,
+                    })
+                    .then(
+                        (response) => {
+                            console.log(response);
+                            this.$store.dispatch(NOTIFY, {
+                                settings: {
+                                    message: 'Image uploaded',
+                                    type: 'success',
+                                },
+                            });
+                        },
+                        (err) => {
+                            this.selectedFileUrl = null;
+                            console.log(err);
+                        },
+                    );
+            },
         },
-        email() {
-          return this.patient.email;
+
+        computed: {
+            ...mapGetters({
+                patient: 'getPatient',
+            }),
+            patientColor() {
+                const color = randomMC.getColor({
+                    text: this.firstName + this.lastName + this.phone + this.email,
+                });
+                return color;
+            },
+            email() {
+                return this.patient.email;
+            },
+            firstName() {
+                return this.patient.firstName;
+            },
+            lastName() {
+                return this.patient.lastName;
+            },
+            phone() {
+                return this.patient.phone;
+            },
         },
-        firstName() {
-          return this.patient.firstName;
+        watch: {
+            email() {
+                this.touched.email = true;
+            },
+            firstName() {
+                this.touched.firstName = true;
+            },
+            lastName() {
+                this.touched.lastName = true;
+            },
+            phone() {
+                this.touched.phone = true;
+            },
         },
-        lastName() {
-          return this.patient.lastName;
-        },
-        phone() {
-          return this.patient.phone;
-        },
-      },
-      watch: {
-        email() {
-          this.touched.email = true;
-        },
-        firstName() {
-          this.touched.firstName = true;
-        },
-        lastName() {
-          this.touched.lastName = true;
-        },
-        phone() {
-          this.touched.phone = true;
-        },
-      },
     };
 </script>
 <style lang="scss" >

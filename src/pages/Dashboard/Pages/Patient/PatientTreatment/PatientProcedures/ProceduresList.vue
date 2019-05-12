@@ -1,10 +1,10 @@
 
 <template>
-    <div class="md-layout md-gutter">
-        <div class="md-layout-item">
-            <md-toolbar class="md-transparent">
+    <div class="">
+        <div class="">
+            <!-- <md-toolbar class="md-transparent">
                 <h3 class="md-title">All Diagnosis</h3>
-            </md-toolbar>
+            </md-toolbar> -->
 
             <md-table
                 :value="queriedData"
@@ -50,13 +50,13 @@
                     <md-table-cell md-label="Procedure" md-sort-by="title">
                         {{ item.title }}
                         <br>
-                        <small>{{item.explain}}</small>
+                        <small v-if="item.manipulations">{{item.manipulations.length}} manipulations</small>
                     </md-table-cell>
                     <md-table-cell md-sort-by="teeth" md-label="Teeth">
                         <span
                             v-for="toothId in Object.keys(item.teeth)"
                             :key="toothId"
-                        >{{ toothId | toCurrentTeethSystem(teethSystem) }},</span>
+                        >{{ toothId | toCurrentTeethSystem(teethSystem) }}, </span>
                     </md-table-cell>
                     <md-table-cell md-sort-by="author" md-label="Procedured by">
                         <div class="md-layout md-alignment-left-center">
@@ -73,6 +73,11 @@
                                 <br>
                                 <span>{{item.author.firstName | capitilize}}</span>
                             </span>
+                        </div>
+                    </md-table-cell>
+                    <md-table-cell md-sort-by="Price" md-label="Price">
+                        <div class="md-layout md-alignment-left-center">
+                          {{totalPrice(item.manipulations)}}
                         </div>
                     </md-table-cell>
                     <md-table-cell md-sort-by="date" class="date" md-label="Date">
@@ -249,6 +254,13 @@
         },
 
         methods: {
+            totalPrice(manipulations) {
+                let sum = 0;
+                manipulations.forEach((manip) => {
+                    sum += manip.price * manip.num;
+                });
+                return sum;
+            },
             scrollToTop() {
                 window.scrollTo(0, 0);
             },

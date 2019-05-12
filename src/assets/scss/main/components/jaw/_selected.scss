@@ -1,6 +1,6 @@
 .tooth {
     .set-diagnosis {
-        .selected{
+        .selected {
             opacity: 1;
             &.tooth-number {
                 color: #8e24aa;
@@ -39,7 +39,7 @@
             &.coronaLabial {
                 fill: #8e24aa !important;
                 stroke: #8e24aa;
-                &:hover{
+                &:hover {
                     stroke: #b07bbe;
                     stroke-width: 2px;
                     transition: all 0.2s ease-in-out;
@@ -59,9 +59,10 @@
         }
     }
 }
+
 .tooth {
     .set-procedures {
-        .selected{
+        .selected {
             opacity: 1;
             &.tooth-number {
                 color: #43a047;
@@ -92,29 +93,33 @@
             &.rootCanal,
             &.periodontit,
             &.implant,
+            &.crown,
+            &.bridge,
             &.root,
             &.coronaLingual,
             &.coronaTop,
             &.coronaLabial {
                 fill: #43a047 !important;
                 stroke: #43a047;
-                &:hover{
+                &:hover {
                     stroke: #90ce93;
                     stroke-width: 2px;
                     transition: all 0.2s ease-in-out;
                 }
             }
-            &.silant{
+            &.bone,
+            &.braces,
+            &.silant {
                 fill: #43a047 !important;
                 stroke: #000;
                 stroke-width: 0.25px;
-                &:hover{
+                &:hover {
                     stroke: #90ce93;
                     stroke-width: 1px;
                     transition: all 0.2s ease-in-out;
                 }
             }
-            &.veneer{
+            &.veneer {
                 fill: #43a047 !important;
             }
             &.gum,
@@ -134,7 +139,7 @@
 
 .tooth {
     .set-anamnesis {
-        .selected{
+        .selected {
             opacity: 1;
             &.tooth-number {
                 color: #636363;
@@ -173,7 +178,7 @@
             &.coronaLabial {
                 fill: #636363 !important;
                 stroke: #636363;
-                &:hover{
+                &:hover {
                     stroke: #b1b1b1;
                     stroke-width: 2px;
                     transition: all 0.2s ease-in-out;

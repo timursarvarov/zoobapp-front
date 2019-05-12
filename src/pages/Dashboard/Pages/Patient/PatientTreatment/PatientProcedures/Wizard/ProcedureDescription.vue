@@ -1,6 +1,9 @@
 <template>
-  <div :style="[{'min-width': `${size.width}px`},
-          {'min-height': `${size.height}px`} ]">
+  <div
+   :style="[
+        {'min-width': size.width ? `${size.width}px`: `70vw`},
+        {'min-height': `${size.height}px`} ]"
+    >
     <h5 class="info-text">Write a diagnose description, or choose from templates.</h5>
     <div class="md-layout">
       <div class="md-layout-item md-size-100" ref="autocomplete">
@@ -45,106 +48,106 @@
     import { TAutoComplite } from '@/components';
 
     export default {
-      components: {
-        TAutoComplite,
-      },
-      model: {
-        prop: 'description',
-        event: 'updateDescription',
-      },
-      props: {
-        description: {
-          type: String,
-          default: () => '',
+        components: {
+            TAutoComplite,
         },
-        descriptions: {
-          type: Array,
-          default: () => [],
+        model: {
+            prop: 'description',
+            event: 'updateDescription',
         },
-        size: {
-          type: Object,
-          default: () => {},
-        },
-      },
-      data() {
-        return {
-          selectedDescription: '',
-          code: '',
-          touched: {
-            code: false,
-          },
-          modelValidations: {
+        props: {
             description: {
-              required: true,
-              min: 5,
+                type: String,
+                default: () => '',
             },
-          },
-        };
-      },
-      methods: {
-        focusOn(ref) {
-          if (!this.$refs[ref]) {
-            return;
-          }
-          this.$refs[ref].$el.focus();
+            descriptions: {
+                type: Array,
+                default: () => [],
+            },
+            size: {
+                type: Object,
+                default: () => {},
+            },
         },
-        showErrorsValidate(error) {
-          if (error.message === '') {
-            return;
-          }
-          const field = this.$validator.fields.find({
-            name: error.type,
-            scope: this.$options.scope,
-          });
-          if (!field) return;
-          this.$validator.errors.add({
-            id: error.type,
-            field: error.type,
-            msg: error.message,
-            scope: this.$options.scope,
-          });
-          field.setFlags({
-            invalid: true,
-            valid: false,
-            validated: true,
-          });
+        data() {
+            return {
+                selectedDescription: '',
+                code: '',
+                touched: {
+                    code: false,
+                },
+                modelValidations: {
+                    description: {
+                        required: true,
+                        min: 5,
+                    },
+                },
+            };
         },
-        validate() {
-          return this.$validator.validateAll().then((res) => {
-            this.$emit('on-validated', res, 'step2');
-            this.$emit('validated-code', this.code);
-            return res;
-          });
+        methods: {
+            focusOn(ref) {
+                if (!this.$refs[ref]) {
+                    return;
+                }
+                this.$refs[ref].$el.focus();
+            },
+            showErrorsValidate(error) {
+                if (error.message === '') {
+                    return;
+                }
+                const field = this.$validator.fields.find({
+                    name: error.type,
+                    scope: this.$options.scope,
+                });
+                if (!field) return;
+                this.$validator.errors.add({
+                    id: error.type,
+                    field: error.type,
+                    msg: error.message,
+                    scope: this.$options.scope,
+                });
+                field.setFlags({
+                    invalid: true,
+                    valid: false,
+                    validated: true,
+                });
+            },
+            validate() {
+                return this.$validator.validateAll().then((res) => {
+                    this.$emit('on-validated', res, 'step2');
+                    this.$emit('validated-code', this.code);
+                    return res;
+                });
+            },
+            setDescription(key) {
+                const desc = Object.values(this.descriptions).find(d => d.title === key);
+                this.descriptionL = desc ? desc.description : '';
+            },
         },
-        setDescription(key) {
-          const desc = Object.values(this.descriptions).find(d => d.title === key);
-          this.descriptionL = desc ? desc.description : '';
+        computed: {
+            descriptionHeaders: {
+                get() {
+                    const descriptionTitles = Object.values(this.descriptions).map(
+                        d => d.title,
+                    );
+                    return descriptionTitles || [];
+                },
+                set() {},
+            },
+            descriptionL: {
+                get() {
+                    return this.description;
+                },
+                set(value) {
+                    this.$emit('updateDescription', value);
+                },
+            },
         },
-      },
-      computed: {
-        descriptionHeaders: {
-          get() {
-            const descriptionTitles = Object.values(this.descriptions).map(
-              d => d.title,
-            );
-            return descriptionTitles || [];
-          },
-          set() {},
+        mounted() {
+            if (this.$refs.description) {
+                this.$refs.description.$el.focus();
+            }
         },
-        descriptionL: {
-          get() {
-            return this.description;
-          },
-          set(value) {
-            this.$emit('updateDescription', value);
-          },
-        },
-      },
-      mounted() {
-        if (this.$refs.description) {
-          this.$refs.description.$el.focus();
-        }
-      },
     };
 </script>
 <style lang="scss" >

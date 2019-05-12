@@ -1,14 +1,14 @@
 <template lang="html">
   <div class="md-layout md-gutter">
       <div class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
-        <div class="md-layout-item" ref="wrjaw">
+        <div class="mx-auto" style="flex-grow:1;" ref="wrjaw">
           <jaw
             :selectedTeeth="selectedTeeth"
             @onSelectedTeeth='onSelectedTeeth'
             @showToothInfo='showToothInfo'
+            @toggleItemVisibility='toggleDiagnoseVisibility'
             :jaw="jaw"
             :patientItems="patient.diagnosis"
-            :teethSchema="teethSchema"
             :teethSystem="currentClinic.teethSystem"
             type="diagnosis"
             >
@@ -19,48 +19,52 @@
       </div>
       <div class="md-layout-item md-layout md-small-size-100 md-xsmall-size-100 md-gutter md-medium-size-50 md-size-50">
         <t-collapse-search
-          :style="[{'max-height': jawHeight + 'px'}]" class=" md-layout-item md-size-100 set-procedure-form md-small-size-100 md-xsmall-size-100 md-size-50"
-          :items = "diagnosis"
-          :selectedTeeth = "selectedTeeth"
-          :favoriteItems = "favoriteDiagnosis"
-          itemType = "Diagnosis"
-          :jawHeight = "jawHeight"
-          @onSetFavoritem = "setFavoriteDiagnose"
-          @onSelected = "selectDiagnose"
+          :style="[{'max-height': jawHeight + 'px'}]" class="set-procedure-form"
+          :items="diagnosis"
+          :selectedTeeth="selectedTeeth"
+          :favoriteItems="favoriteDiagnosis"
+          itemType="Diagnosis"
+          :jawHeight="jawHeight"
+          @onSetFavoritem="setFavoriteDiagnose"
+          @onSelected="selectDiagnose"
           />
       </div>
 
-      <div class="md-layout-item md-layout md-size-100" >
-        <diagnose-list
-        @onJawChanged="recalculateJawDiagnose()"
-        :teethSystem="currentClinic.teethSystem"
-        class="md-layout-item  md-size-100"
-        ></diagnose-list>
-        </div>
-      <div class="md-layout-item md-layout md-size-100" >
+        <div class="md-layout-item md-layout md-size-100" >
+            <diagnose-list
+            @onJawChanged="recalculateJawDiagnose()"
+            @toggleDiagnoseVisibility="toggleDiagnoseVisibility"
+            @editDiagnose="editDiagnose"
+            :teethSystem="currentClinic.teethSystem"
+            class=""
+            ></diagnose-list>
+            </div>
+        <div class="md-layout-item md-layout md-size-100" >
 
         <jaw-add-diagnose-wizard
-          v-if="showAddDiagnoseWizard"
-          @on-created='saveDiagnose'
-          :selectedTeeth="selectedTeeth"
-          :selectedDiagnose="selectedDiagnoseLocal"
-          :jaw='jaw'
-          :teethSchema="teethSchema"
-          :teethSystem="currentClinic.teethSystem"
-          :isDialogVisible.sync="showAddDiagnoseWizard"
-          />
+            v-if="showAddDiagnoseWizard"
+            @on-created='saveDiagnose'
+            :selectedTeeth="selectedTeeth"
+            :selectedDiagnose="selectedDiagnoseLocal"
+            :jaw='jaw'
+            :teethSchema="teethSchema"
+            :teethSystem="currentClinic.teethSystem"
+            :isDialogVisible.sync="showAddDiagnoseWizard"
+        />
 
-          <t-tooth-Items
-          v-if="showToothDiagnosis"
-          :showForm.sync="showToothDiagnosis"
-          :toothId = "toothIdforDiagnosis"
-          :patientItems = "this.patient.diagnosis"
-          :originalItems = "diagnosis"
-          :teethSchema="teethSchema"
-          :teethSystem="currentClinic.teethSystem"
-          :jaw='jaw'
-          classType="diagnose"
-          />
+        <t-tooth-Items
+            v-if="showToothDiagnosis"
+            @editItem="editDiagnose"
+            :showForm.sync="showToothDiagnosis"
+            :toothId="toothIdtoShow"
+            :item="diagnoseToShow"
+            :patientItems="patient.diagnosis"
+            :originalItems="diagnosis"
+            :teethSchema="teethSchema"
+            :teethSystem="currentClinic.teethSystem"
+            :jaw='jaw'
+            classType="diagnose"
+        />
 
         </div>
   </div>
@@ -71,6 +75,8 @@
     import {
         NOTIFY,
         PATIENT_DIAGNOSE_SET,
+        PATIENT_TOGGLE_ITEM_VISIBILITY,
+        PATIENT_DIAGNOSE_UPDATE,
         USER_SET_PARAM,
         DIAGNOSIS,
     } from '@/constants';
@@ -94,13 +100,13 @@
                 showToothDiagnosis: false,
                 showAddDiagnoseWizard: false,
                 jawHeight: 0,
-                toothIdforDiagnosis: 0,
+                toothIdtoShow: 0,
+                diagnoseIdtoShow: 0,
                 search: '',
                 searched: [],
                 selectedTeeth: [],
                 firstTabs: [],
                 toggleAll: false,
-
                 fuse: false,
                 filter: {},
                 diagnoseOriginal: [],
@@ -109,8 +115,27 @@
             };
         },
         methods: {
-            showToothInfo(toothId) {
-                this.toothIdforDiagnosis = toothId;
+            editDiagnose(diagnose) {
+                if (!this.isEmpty(diagnose.teeth)) {
+                    this.selectedTeeth = Object.keys(diagnose.teeth);
+                }
+                this.selectedDiagnoseLocal = diagnose;
+                this.showAddDiagnoseWizard = true;
+            },
+            toggleDiagnoseVisibility(itemId) {
+                if (itemId) {
+                    this.$store.dispatch(PATIENT_TOGGLE_ITEM_VISIBILITY, {
+                        params: {
+                            itemId,
+                            type: 'diagnosis',
+                        },
+                    });
+                }
+                this.recalculateJawDiagnose();
+            },
+            showToothInfo(diagnoseId, toothId) {
+                this.toothIdtoShow = toothId;
+                this.diagnoseIdtoShow = diagnoseId;
                 this.showToothDiagnosis = true;
             },
             setFavoriteDiagnose(diagnose) {
@@ -130,7 +155,17 @@
             onSelectedTeeth(teeth) {
                 this.selectedTeeth = teeth;
             },
+            saveEditedDiagnose(d) {
+                this.$store.dispatch(PATIENT_DIAGNOSE_UPDATE, {
+                    diagnose: d,
+                });
+                this.recalculateJawDiagnose();
+            },
             saveDiagnose(d) {
+                if (d.id) {
+                    this.saveEditedDiagnose(d);
+                    return;
+                }
                 const diagnoseL = this.copyObj(d);
                 diagnoseL.date = new Date();
                 diagnoseL.author = {
@@ -144,7 +179,7 @@
                 this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
                     diagnose: diagnoseL,
                 });
-                this.selectedTeeth = [];
+                // this.selectedTeeth = [];
                 this.recalculateJawDiagnose();
             },
             selectDiagnose(diagnose) {
@@ -186,7 +221,21 @@
                             Object.keys(diagnose.teeth).forEach((toothId) => {
                                 Object.keys(diagnose.teeth[toothId]).forEach(
                                     (kLocation) => {
-                                        this.jaw.diagnosis[toothId][kLocation] = diagnose.teeth[toothId][kLocation];
+                                        if (
+                                            kLocation in this.jaw.diagnosis[toothId]
+                                        ) {
+                                            if (
+                                                !diagnose.teeth[toothId][kLocation]
+                                            ) {
+                                                this.jaw.diagnosis[toothId][
+                                                    kLocation
+                                                ] = diagnose.teeth[toothId][
+                                                    kLocation
+                                                ];
+                                            }
+                                        } else {
+                                            this.jaw.diagnosis[toothId][kLocation] = diagnose.teeth[toothId][kLocation];
+                                        }
                                     },
                                 );
                             });
@@ -213,6 +262,13 @@
                 currentClinic: 'getCurrentClinic',
                 user: 'getProfile',
             }),
+            diagnoseToShow() {
+                const d = this.patient.diagnosis.find(
+                    diagnose => diagnose.id === this.diagnoseIdtoShow,
+                );
+                console.log(d);
+                return d || {};
+            },
             diagnosis() {
                 return DIAGNOSIS;
             },
@@ -227,6 +283,9 @@
 </script>
 <style lang="scss">
 .set-diagnose-form {
+    .set-procedure-form {
+        margin-right: 15px;
+    }
     .diagnose-code {
         margin-right: 24px;
     }

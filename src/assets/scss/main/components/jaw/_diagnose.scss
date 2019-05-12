@@ -3,7 +3,7 @@
         .diagnose {
             opacity: 0.6;
         }
-    } 
+    }
     .diagnose {
         &.tooth-number {
             color: #8e24aa;
@@ -34,6 +34,7 @@
         &.rootCanal,
         &.periodontit,
         &.implant,
+        &.root,
         &.veneer,
         &.silant {
             fill: #8e24aa !important;

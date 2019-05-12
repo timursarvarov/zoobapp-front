@@ -4,7 +4,7 @@
             ref="jawadddiagnose"
             :jaw="jaw"
             :prefer="prefer"
-            :selectedDiagnose="selectedProcedure"
+            :selectedItem="selectedProcedure"
             :selectedTeeth="selectedTeeth"
             v-model="newProcedureParamsLocal"
             :teethSchema="teethSchema"
@@ -12,6 +12,7 @@
             :defaultLocations="defaultLocations"
             locationType="procedures"
             :originalItemsGrouped="procedures"
+            @onToothSelected="onToothSelected"
         >
             <div slot="title">
                 <slide-y-down-transition>
@@ -137,6 +138,9 @@
             };
         },
         methods: {
+            onToothSelected(selectedTeeth) {
+                this.$emit('onToothSelected', selectedTeeth);
+            },
             matchWidth() {
                 if (this.$refs.parent) {
                     this.dialogWidth = this.$refs.parent.clientWidth;
@@ -182,6 +186,11 @@
         },
         created() {
             this.locations = this.isValidLoctions() ? 1 : '';
+            window.addEventListener('resize', this.matchWidth);
+            this.matchWidth();
+        },
+        destroyed() {
+            window.removeEventListener('resize', this.matchWidth);
         },
         watch: {
             locations() {

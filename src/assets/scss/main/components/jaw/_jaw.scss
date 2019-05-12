@@ -1,70 +1,59 @@
 .jaw-wrapper {
-  user-select: none;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  background: rgba(white, 0.4);
-  border-radius: 5px;
-  min-height: 30vh;
-  .dropdown-menu li {
-    padding: 0px 0px 0px 16px;
-    .md-radio {
-      margin: 8px 0 8px 0;
-    }
-  }
-  .jaw-scroll {
-    padding-bottom: 10px;
-    padding-top: 10px;
-    overflow-x: auto;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-      height: 7px;
-      background-color: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: grey;
-      border-radius: 7px;
-    }
-  }
-
-  .jaw-top {
-    .tooth{
-    }
-    .selected {
-      background-image: linear-gradient(rgba(190, 184, 184, 0.33), rgba(116, 116, 116, 0.48));
-    }
-    .tooth-number {
-      bottom: 0;
-    }
-    .tooth-diagnosis-button {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translate(-50%, -10px);
-    }
-  }
-  .jaw-bottom {
-    .tooth{
-    }
-    .selected {
-      background-image: linear-gradient(rgba(116, 116, 116, 0.48), rgba(161, 161, 161, 0.73));
-    }
-    .tooth-number {
-      top: 0;
-    }
-    .tooth-diagnosis-button {
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%, 10px);
-      bottom: 0;
-    }
-  }
-  .jaw-top,
-  .jaw-bottom {
+    user-select: none;
+    width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-
-
-}
+    flex-direction: column;
+    background: rgba(white, 0.4);
+    border-radius: 5px;
+    min-height: 30vh;
+    .dropdown-menu li {
+        padding: 0px 0px 0px 16px;
+        .md-radio {
+            margin: 8px 0 8px 0;
+        }
+    }
+    .jaw-scroll {
+        border-radius: 5px;
+        max-width: calc(100vw - 40px);
+        // overflow-x: auto;
+        // overflow-y: auto;
+        &::-webkit-scrollbar {
+            height: 7px;
+            // background-color: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: grey;
+            border-radius: 7px;
+        }
+    }
+    .jaw-top {
+        .tooth {}
+        .tooth-content {
+            padding-top: 1.2vh;
+        }
+        .selected {
+            background-image: linear-gradient(rgba(161, 161, 161, 0.73), rgba(88, 88, 88, 0.788));
+        }
+        .tooth-number {
+            bottom: 0;
+        }
+    }
+    .jaw-bottom {
+        .tooth {}
+        .tooth-content {
+            padding-bottom: 1.2vh;
+        }
+        .selected {
+            background-image: linear-gradient(rgba(88, 88, 88, 0.788), rgba(161, 161, 161, 0.73));
+        }
+        .tooth-number {
+            top: 0;
+        }
+    }
+    .jaw-top,
+    .jaw-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

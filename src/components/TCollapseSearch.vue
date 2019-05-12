@@ -21,10 +21,10 @@
                 </md-button>
               </div>
             </md-toolbar>
-            <div class="collapse-wrapper md-layout-item md-layout md-gutter"  :style="[{'max-height': jawHeight - 120 + 'px'},{'min-height': jawHeight - 120 + 'px'}]" >
+            <div class="collapse-wrapper "  :style="[{'max-height': jawHeight - 120 + 'px'},{'min-height': jawHeight - 120 + 'px'}]" >
               <collapse
               v-if="showSlot"
-              class="md-layout-item md-size-100"
+              class=""
                     :collapse="itemsGroup"
                     icon="keyboard_arrow_down"
                     color-collapse="primary"
@@ -177,7 +177,7 @@
                 Object.values(this.searched).forEach((group) => {
                     group.codes.forEach((procedure) => {
                         // eslint-disable-next-line
-          procedure.constCode = this.copyObj(procedure.code).slice(0);
+                    procedure.constCode = this.copyObj(procedure.code).slice(0);
                     });
                 });
                 this.procedureOriginal = this.copyObj(this.searched);
@@ -221,17 +221,19 @@
                 }
             },
             namespace(object, path) {
-                return path.split('.').reduce((value, index) => value[index], object);
+                return path
+                    .split('.')
+                    .reduce((value, index) => value[index], object);
             },
             setValue(object, path, newValue) {
                 const paths = path.split('.');
                 let count = 0;
                 // eslint-disable-next-line
-             paths.reduce((value, index) => {
+            paths.reduce((value, index) => {
                     count += 1;
                     if (count >= paths.length) {
                         // eslint-disable-next-line
-          value[index] = newValue;
+                    value[index] = newValue;
                     } else {
                         const nValue = value[index];
                         return nValue;
@@ -251,9 +253,10 @@
                 this.searched = this.copyObj(this.procedureOriginal).slice(0);
                 const grooup = [];
                 this.searched.forEach((itemsGroupe) => {
-                    const fuseResults = new Fuse(itemsGroupe.codes, fuseOptions).search(
-                        this.search,
-                    );
+                    const fuseResults = new Fuse(
+                        itemsGroupe.codes,
+                        fuseOptions,
+                    ).search(this.search);
                     const results = [];
                     if (fuseResults.length > 0) {
                         Object.values(fuseResults).forEach((result) => {
@@ -294,9 +297,11 @@
                 this.patient.items.forEach((procedure) => {
                     if (procedure.showInJaw) {
                         Object.keys(procedure.teeth).forEach((toothId) => {
-                            Object.keys(procedure.teeth[toothId]).forEach((kLocation) => {
-                                this.jaw.procedures[toothId][kLocation] = procedure.teeth[toothId][kLocation];
-                            });
+                            Object.keys(procedure.teeth[toothId]).forEach(
+                                (kLocation) => {
+                                    this.jaw.procedures[toothId][kLocation] = procedure.teeth[toothId][kLocation];
+                                },
+                            );
                         });
                     }
                 });
@@ -332,93 +337,96 @@
 </script>
 <style lang="scss">
 .t-collapse-search-wrapper {
-  .md-icon {
-    transition: all 250ms ease-in;
-    transition-property: all;
-    transition-duration: 250ms;
-    transition-timing-function: ease-in;
-    transition-delay: 0s;
-  }
-  .rotate {
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
-  }
-  .procedure-code {
-    margin-right: 24px;
-  }
-  .collapse-wrapper {
-    border-style: solid;
-    border-color: rgba(128, 128, 128, 0.212);
-    border-width: 1px;
-    border-radius: 3px;
-    margin: 20px 0 20px 0;
-    overflow: hidden;
-    overflow-y: scroll;
-    padding: 20px 10px 20px 10px;
-    &::-webkit-scrollbar {
-      width: 7px;
-      background-color: transparent;
+    width: 100%;
+    .md-icon {
+        transition: all 250ms ease-in;
+        transition-property: all;
+        transition-duration: 250ms;
+        transition-timing-function: ease-in;
+        transition-delay: 0s;
     }
-    &::-webkit-scrollbar-thumb {
-      background-color: grey;
-      border-radius: 7px;
+    .rotate {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
     }
-    .md-collapse-label {
-      padding: 10px 10px 10px 0;
-      overflow: hidden;
-      &:after{
-        bottom: 0px;
-      }
-      .md-collapse-title {
-        font-weight: 400;
-        white-space: nowrap;
+    .procedure-code {
+        margin-right: 24px;
+    }
+    .collapse-wrapper {
+        border-style: solid;
+        border-color: rgba(128, 128, 128, 0.212);
+        border-width: 1px;
+        border-radius: 3px;
+        margin: 20px 0 20px 0;
         overflow: hidden;
-        text-overflow: ellipsis;
-        margin-right: 25px;
-        .md-icon {
-          top: px;
+        overflow-y: scroll;
+        padding: 20px 10px 20px 15px;
+        &::-webkit-scrollbar {
+            width: 7px;
+            // background-color: transparent;
         }
-      }
-    }
-      .md-collapse-content {
-          margin-top: 20px;
-      }
-    md-error .md-collapse-label:after {
-      bottom: 6px;
-    }
+        &::-webkit-scrollbar-thumb {
+            background-color: grey;
+            border-radius: 7px;
+        }
+        .md-collapse-label {
+            padding: 10px 10px 10px 0;
+            overflow: hidden;
+            &:after {
+                bottom: 0px;
+            }
+            .md-collapse-title {
+                padding-left: 15px;
+                font-weight: 400;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-right: 25px;
+                .md-icon {
+                    top: px;
+                }
+            }
+        }
+        .md-collapse-content {
+            margin-top: 20px;
+            padding: 0 1vw;
+        }
+        md-error .md-collapse-label:after {
+            bottom: 6px;
+        }
 
-    .highlight {
-      background-color: rgba(255, 255, 21, 0.979);
+        .highlight {
+            background-color: rgba(255, 255, 21, 0.979);
+        }
+        .md-list {
+            .md-list-item {
+                margin: 0;
+            }
+            background-color: #f7f7f7d5;
+            border-style: solid;
+            border-color: #eeecec9c;
+            border-width: 1px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .md-list-item-content {
+            max-height: 64px;
+            min-height: 44px;
+            height: 44px;
+            padding: 8px;
+            // background-color: rgba(238, 236, 236, 0.201);
+        }
+        .dental {
+            .md-list-item-text {
+                cursor: not-allowed;
+            }
+        }
+        .md-list-item-text {
+            cursor: pointer;
+        }
+        .md-list-action {
+            padding-right: 10px;
+        }
     }
-    .md-list {
-      .md-list-item {
-        margin: 0;
-      }
-      background-color: #f7f7f7d5;
-      border-style: solid;
-      border-color: #eeecec9c;
-      border-width: 1px;
-      border-radius: 4px;
-      margin-bottom: 15px;
-    }
-    .md-list-item-content {
-      max-height: 64px;
-      min-height: 44px;
-      height: 44px;
-      padding: 8px;
-      // background-color: rgba(238, 236, 236, 0.201);
-    }
-    .dental {
-      .md-list-item-text {
-        cursor: not-allowed;
-      }
-    }
-    .md-list-item-text {
-      cursor: pointer;
-    }
-    .md-list-action {
-      padding-right: 10px;
-    }
-  }
 }
 </style>

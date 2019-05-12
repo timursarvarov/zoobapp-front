@@ -49,7 +49,7 @@
                         <span
                             v-for="toothId in Object.keys(item.teeth)"
                             :key="toothId"
-                        >{{ toothId | toCurrentTeethSystem(teethSystem) }},</span>
+                        >{{ toothId | toCurrentTeethSystem(teethSystem) }},&nbsp; </span>
                     </md-table-cell>
                     <md-table-cell md-sort-by="author" md-label="Diagnosed by">
                         <div class="md-layout md-alignment-left-center">
@@ -75,9 +75,9 @@
                     </md-table-cell>
                     <md-table-cell class="actions" md-label="Actions">
                         <md-button
-                            v-if="ifDiagnoseHasLocations(item.teeth)"
+                            v-show="ifDiagnoseHasLocations(item.teeth)"
                             class="md-just-icon md-simple"
-                            @click.native="item.showInJaw=!item.showInJaw,recalculateJaw()"
+                            @click.native="$emit('toggleDiagnoseVisibility', item.id)"
                         >
                             <md-icon v-if="item.showInJaw">visibility</md-icon>
                             <md-icon v-else>visibility_off</md-icon>
@@ -121,26 +121,14 @@
                     :total="total"
                 ></pagination>
             </div>
-            <jaw-add-locations-wizard
-                v-if="showForm"
-                @on-created="saveDiagnose"
-                :selectedTeeth="setecltedTeeth"
-                :selectedDiagnose="selectedDiagnose"
-                :jaw="jaw"
-                :teethSchema="teethSchema"
-                :teethSystem="teethSystem"
-                :isDialogVisible.sync="showForm"
-            />
         </div>
     </div>
 </template>
 <script>
-    import { PATIENT_DIAGNOSE_UPDATE, TEETH_DEFAULT_LOCATIONS } from '@/constants';
     import { Pagination, TAvatar } from '@/components';
     import { mapGetters } from 'vuex';
     import Fuse from 'fuse.js';
     import swal from 'sweetalert2';
-    import JawAddDiagnoseWizard from './JawAddDiagnoseWizard.vue';
     import { tObjProp } from '@/mixins';
 
     export default {
@@ -148,7 +136,6 @@
         components: {
             Pagination,
             TAvatar,
-            JawAddDiagnoseWizard,
         },
         props: {
             diagnosis: {
@@ -192,9 +179,6 @@
                 jaw: 'jaw',
                 patient: 'getPatient',
             }),
-            defaultLocations() {
-                return TEETH_DEFAULT_LOCATIONS;
-            },
             setecltedTeeth() {
                 if (!this.isEmpty(this.selectedDiagnose)) {
                     return Object.keys(this.selectedDiagnose.teeth);
@@ -235,15 +219,6 @@
             recalculateJaw() {
                 this.$emit('onJawChanged');
             },
-            saveDiagnose(d) {
-                const diagnoseEdited = this.selectedDiagnose;
-                diagnoseEdited.teeth = d.teeth;
-                diagnoseEdited.description = d.description;
-                this.$store.dispatch(PATIENT_DIAGNOSE_UPDATE, {
-                    diagnose: diagnoseEdited,
-                });
-                this.recalculateJaw();
-            },
             ifDiagnoseHasLocations(teeth) {
                 let show = false;
                 show = Object.keys(teeth)
@@ -262,10 +237,6 @@
             customSort(value) {
                 const thisLocal = this;
                 const val = value.sort((a, b) => {
-                    // console.log("ab+")
-                    // console.log(typeof a);
-                    // console.log("b")
-                    // console.log(b)
                     const sortBy = thisLocal.currentSort;
                     if (typeof a[thisLocal.currentSort] === 'string') {
                         if (thisLocal.currentSortOrder === 'desc') {
@@ -275,18 +246,18 @@
                     }
                     if (typeof a[thisLocal.currentSort] === 'number') {
                         const orderLocal = thisLocal.currentSortOrder;
-                        const dflt =                        orderLocal === 'asc'
-                                ? Number.MAX_VALUE
-                                : -Number.MAX_VALUE;
+                        const dflt = orderLocal === 'asc'
+                            ? Number.MAX_VALUE
+                            : -Number.MAX_VALUE;
                         const aVal = a[sortBy] === null ? dflt : a[sortBy];
                         const bVal = b[sortBy] === null ? dflt : b[sortBy];
                         return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
                     }
                     if (typeof a[thisLocal.currentSort] === 'object') {
                         const orderLocal = thisLocal.currentSortOrder;
-                        const dflt =                        orderLocal === 'asc'
-                                ? Number.MAX_VALUE
-                                : -Number.MAX_VALUE;
+                        const dflt = orderLocal === 'asc'
+                            ? Number.MAX_VALUE
+                            : -Number.MAX_VALUE;
                         const aVal = a[sortBy] === null ? dflt : a[sortBy];
                         const bVal = b[sortBy] === null ? dflt : b[sortBy];
                         return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
@@ -302,9 +273,8 @@
                     confirmButtonClass: 'md-button md-success',
                 });
             },
-            handleEdit(item) {
-                this.selectedDiagnose = item;
-                this.showForm = true;
+            handleEdit(diagnose) {
+                this.$emit('editDiagnose', diagnose);
             },
             handleDelete(item) {
                 swal({
@@ -372,6 +342,9 @@
 <style lang="scss" >
 .md-tabs-content table thead {
     display: table-header-group !important;
+}
+.md-table-cell-container{
+     word-wrap: break-word;
 }
 .md-card .md-card-actions {
     border: 0;

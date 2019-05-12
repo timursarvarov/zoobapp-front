@@ -1,16 +1,15 @@
 <template>
-    <div class="jaw-list-wrapper">
-        <md-toolbar class="md-transparent">
-            <div class="md-toolbar-row">
+    <div class="jaw-list-wrapper noselect">
+        <md-toolbar class="toolbar-jaw md-transparent">
                 <div class="md-toolbar-section-start">
-                    <div>
+
                         <md-field>
-                            <label for="movies">Available Teeth</label>
+                            <label for="teeth">Available Teeth</label>
                             <md-select
                                 @md-selected="setSelectableTeeth(selectableTeethExtraChoose)"
                                 v-model="selectableTeethExtraChoose"
-                                name="movies"
-                                id="movies"
+                                name="teeth"
+                                id="teeth"
                                 multiple
                             >
                                 <md-option
@@ -20,7 +19,7 @@
                                 >{{value | toCurrentTeethSystem(teethSystem)}} - {{ value | toCurrentTeethSystem(teethSystem, true)}}</md-option>
                             </md-select>
                         </md-field>
-                    </div>
+
                 </div>
                 <div class="md-toolbar-section-end">
                     <md-button
@@ -53,10 +52,6 @@
                         </md-button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li>
-                                <md-subheader v-show="!!prefer">Prefer: {{prefer | capitilize }}</md-subheader>
-                                <md-subheader v-show="!prefer">All hided</md-subheader>
-                            </li>
-                            <li>
                                 <md-switch
                                     @change="preferChanged()"
                                     v-model="prefer"
@@ -80,18 +75,14 @@
                         </ul>
                     </drop-down>
                 </div>
-            </div>
         </md-toolbar>
-        <div class="error md-layout mx-auto md-gutter">
-            <slot class="md-layout-item" name="title"></slot>
-        </div>
 
         <div
             :style="[{'max-width': `${jawListWidth}px`}]"
-            class="md-layout md-layout-item md-gutter jaw-list-container"
+            class="jaw-list-container"
         >
             <div class="jaw md-layout-item">
-                <transition-group name="tooth" class="jaw-list mx-auto">
+                <transition-group name="tooth" class="jaw-list mx-auto noselect">
                     <div
                         v-ripple
                         @click="toothClick($event, toothId)"
@@ -101,12 +92,14 @@
                         v-for="(toothId) in selectableTeeth"
                         :key="toothId"
                         :ref="toothId"
-                        :style="{ 'width': jawSVG[toothId].width_perc * 8 + 'px' }"
                     >
+                    <div class="tooth-number" >
+                        <span >{{toothId | toCurrentTeethSystem(teethSystem)}}</span>
+                    </div>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             :viewBox="jawSVG[toothId].viewBox"
-                            :style="{ 'width':  jawSVG[toothId].width_perc * 8 + 'px'}"
+                            :style="{ 'width':  jawSVG[toothId].widthPerc * 1.6 + 'vh'}"
                         >
                             <g :class="`set-${locationType}`">
                                 <template v-for="(locationValue, location) in defaultLocations">
@@ -117,15 +110,17 @@
                                         :class="[
                                         // получаем объект классов диагноза
                                         jawComputed[toothId][location]]"
-                                        :d="jawSVG[toothId][location]['d']"
+                                        :d="jawSVG[toothId][location]"
                                     ></path>
                                 </template>
                             </g>
                         </svg>
-                        <span class="tooth-number">{{toothId | toCurrentTeethSystem(teethSystem)}}</span>
                     </div>
                 </transition-group>
             </div>
+        </div>
+           <div class="error md-layout mx-auto md-gutter">
+            <slot class="md-layout-item" name="title"></slot>
         </div>
     </div>
 </template>
@@ -161,7 +156,7 @@
                 default: () => [],
             },
             // Пропс выбранношо диагноза
-            selectedDiagnose: {
+            selectedItem: {
                 type: Object,
                 default: () => ({
                     code: '',
@@ -199,14 +194,14 @@
                 disabled: false,
                 jawComputed: {},
                 windowWidth: 1,
-                prefer: ['diagnose', 'anamnes', 'diagnose'],
+                prefer: ['diagnose', 'anamnes', 'procedure'],
                 SvgTeeth: [],
                 lastAction: {
                     location: null,
                     toothId: null,
                 },
                 teethSettngs: [],
-                diagnose: {
+                item: {
                     code: '',
                     title: '',
                     description: '',
@@ -234,10 +229,10 @@
                 }
             },
             toggleTooth(toothId) {
-                if (toothId in this.diagnose.teeth) {
-                    delete this.diagnose.teeth[`${toothId}`];
+                if (toothId in this.item.teeth) {
+                    delete this.item.teeth[`${toothId}`];
                 } else {
-                    this.diagnose.teeth[`${toothId}`] = {};
+                    this.item.teeth[`${toothId}`] = {};
                     const firstLocation = Object.keys(
                         this.originalItem.locations,
                     ).find(
@@ -250,7 +245,7 @@
                 this.calculateJaw();
             },
             isSelected(toothId) {
-                if (Object.keys(this.diagnose.teeth).includes(`${toothId}`)) {
+                if (Object.keys(this.item.teeth).includes(`${toothId}`)) {
                     return 'selected';
                 }
                 return false;
@@ -283,21 +278,21 @@
                     /* selected */
                     selected:
                         this.getNestedProperty(
-                            this.diagnose,
+                            this.item,
                             'teeth',
                             toothId,
                             location,
                         ) !== undefined,
 
                     // СВОЙСТВО hide применяется если во view выбранного диагноза нет текущей локации
-                    hide: this.CheckForHidingLocation(toothId, location),
+                    hide: this.checkForHidingLocation(toothId, location),
                 };
                 return toothClasses;
             },
 
 
             // Высчитывваем в какую очередь нужно прятать локацию в зависимости от выбронного приоретета показа(анамнез дигноз или лечение)
-            CheckForHidingLocation(toothId, location) {
+            checkForHidingLocation(toothId, location) {
                 // проверяем наличие локации в вычесленной челюсти
                 const hide = this.isHidingLocation(
                     toothId,
@@ -324,17 +319,17 @@
                 }
                 if (
                     // если зубы из диагноза не удалены
-                    this.selectedDiagnose.teeth
+                    this.selectedItem.teeth
                     // и данный зуб есть в диагнозе
-                    && toothId in this.selectedDiagnose.teeth
+                    && toothId in this.selectedItem.teeth
                 ) {
                     // const selecetedDiagnoseLocations = Object.keys(
-                    //     this.selectedDiagnose.teeth[toothId],
+                    //     this.selectedItem.teeth[toothId],
                     // );
                     // if (selecetedDiagnoseLocations.includes(location)) {
                     //     return false;
                     // }
-                    if (location in this.selectedDiagnose.teeth[toothId]) {
+                    if (location in this.selectedItem.teeth[toothId]) {
                         return false;
                     }
                 }
@@ -376,14 +371,14 @@
 
             // },
             dropAllLocations() {
-                this.diagnose.teeth = {};
+                this.item.teeth = {};
                 this.getDiagnose();
             },
             setTooth(toothId) {
-                this.diagnose.teeth[toothId] = {};
+                this.item.teeth[toothId] = {};
             },
             dropTooth(toothId) {
-                delete this.diagnose.teeth[toothId];
+                delete this.item.teeth[toothId];
             },
             //  Устанавливаем последнюю указанную локацию для всех выбранных зубов
             setLastLocationForAllTeeth() {
@@ -416,7 +411,7 @@
                 } else if (!this.isEmpty(this.selectedTeeth)) {
                     if (
                         this.selectableTeeth.length
-                        === this.numProps(this.diagnose.teeth)
+                        === this.numProps(this.item.teeth)
                     ) {
                         this.selectableTeeth.forEach((toothId) => {
                             this.dropTooth(toothId);
@@ -430,8 +425,8 @@
                 this.calculateJaw();
             },
             getTeethWithSameLocation(location) {
-                return Object.keys(this.diagnose.teeth).filter(
-                    toothId => location in this.diagnose.teeth[toothId],
+                return Object.keys(this.item.teeth).filter(
+                    toothId => location in this.item.teeth[toothId],
                 );
             },
             // выбираем область зуба и записываем ее в массив с зубами в дигнозе
@@ -444,23 +439,23 @@
                 // если выбранная область относиться к текущему диагнозу
                 if (this.hasProp(this.originalItem.locations, location)) {
                     // если выбранный зуб не находиться в списке зубов дигноза
-                    if (!this.hasProp(this.diagnose.teeth, toothId)) {
-                        this.diagnose.teeth[toothId] = {};
+                    if (!this.hasProp(this.item.teeth, toothId)) {
+                        this.item.teeth[toothId] = {};
                     }
                     // false = локация для удаления, true = для выбора области к лечению
 
                     // устанавливаем локацию диагноза в при помощи предустановленной функции
                     const { addLocation } = this.originalItem;
-                    this.diagnose = addLocation(
+                    this.item = addLocation(
                         location,
-                        this.diagnose,
+                        this.item,
                         this.originalItem,
                         toothId,
                     );
 
                     // удаляем зуб из диагноза если у него нет локациий
-                    if (this.isEmpty(this.diagnose.teeth[toothId])) {
-                        delete this.diagnose.teeth[toothId];
+                    if (this.isEmpty(this.item.teeth[toothId])) {
+                        delete this.item.teeth[toothId];
                     }
                 }
                 this.calculateJaw();
@@ -469,19 +464,19 @@
                 this.windowWidth = window.innerWidth;
             },
             getDiagnose() {
-                this.$emit('updateDiagonoseParams', this.diagnose);
+                this.$emit('updateDiagonoseParams', this.item);
             },
             setLocationOnLoad(location, toothId, value) {
                 if (value !== undefined) {
-                    if (!this.hasProp(this.diagnose.teeth, toothId)) {
-                        this.diagnose.teeth[toothId] = {};
+                    if (!this.hasProp(this.item.teeth, toothId)) {
+                        this.item.teeth[toothId] = {};
                     }
-                    this.diagnose.teeth[toothId][location] = value;
+                    this.item.teeth[toothId][location] = value;
                 }
             },
             setToothOnLoad(toothId) {
                 if (toothId !== undefined) {
-                    this.diagnose.teeth[toothId] = {};
+                    this.item.teeth[toothId] = {};
                 }
             },
             setAllTeethOnLoad() {
@@ -502,8 +497,8 @@
                 }
             },
             setAllEditableTeethOnLoad() {
-                Object.keys(this.selectedDiagnose.teeth).forEach((toothId) => {
-                    const tooth = this.selectedDiagnose.teeth[toothId];
+                Object.keys(this.selectedItem.teeth).forEach((toothId) => {
+                    const tooth = this.selectedItem.teeth[toothId];
                     // если нет локаций
                     if (!this.isEmpty(tooth)) {
                         Object.keys(tooth).forEach((location) => {
@@ -544,7 +539,7 @@
                     // устанавливаем локации setOnLoad локации
                     if (!this.isEmpty(this.originalItem.locations)) {
                         // если диагноз редактируемый
-                        if (!this.isEmpty(this.selectedDiagnose.teeth)) {
+                        if (!this.isEmpty(this.selectedItem.teeth)) {
                             this.setAllEditableTeethOnLoad();
                         } else {
                             this.setAllTeethOnLoad();
@@ -572,6 +567,7 @@
                 });
                 this.getDiagnose();
                 this.jawComputed = jaw;
+                this.$emit('onToothSelected', Object.keys(this.item.teeth));
             },
             getCurrentTeethSystemName() {
                 // 1 = FDI World Dental Federation notation
@@ -615,7 +611,7 @@
                 return TEETH_DEFAULT_LOCATIONS;
             },
             originalItem() {
-                const originalCode = this.selectedDiagnose.code;
+                const originalCode = this.selectedItem.code;
                 for (
                     let index = 0;
                     index < this.originalItemsGrouped.length;
@@ -635,13 +631,12 @@
             },
             jawListWidth() {
                 if (this.windowWidth < 600) {
-                    return (this.windowWidth / 100) * 80 - 40;
+                    return (this.windowWidth - 56);
                 }
                 return Math.round((this.windowWidth / 100) * 80 - 70);
             },
             jawSVG() {
-                const jawVG = JSON.parse(jawSVGjs);
-                return jawVG;
+                return jawSVGjs;
             },
         },
         destroyed() {
@@ -652,8 +647,12 @@
             this.selectableTeethExtraChoose = this.selectedTeeth;
             window.addEventListener('resize', this.handleResize);
             this.handleResize();
-            this.diagnose.code = this.selectedDiagnose.code;
-            this.diagnose.title = this.selectedDiagnose.title;
+            this.item.id = this.selectedItem.id;
+            this.item.author = this.selectedItem.author;
+            this.item.date = this.selectedItem.date;
+            this.item.showInJaw = this.selectedItem.showInJaw;
+            this.item.code = this.selectedItem.code;
+            this.item.title = this.selectedItem.title;
             this.setInitiallyLocations('', 'created');
         },
     };
@@ -661,6 +660,7 @@
 
 <style lang="scss"  >
 .jaw-list-wrapper {
+    min-width:  57vw;
     .error {
         position: absolute;
         color: red;
@@ -669,6 +669,8 @@
         text-align: center;
     }
     .md-toolbar {
+        padding: 0px 0px 0px 0;
+        margin-right: -15px;
         div :not(.md-toolbar) > .md-field:not(.md-chips) {
             margin-top: 0px;
         }
@@ -684,12 +686,11 @@
         overflow-y: auto;
         overflow-x: auto;
         margin: 0;
-        padding: 20px 0 20px 0;
-
-        // overflow: -webkit-paged-x;
+        padding: 15px 0 15px 0;
+        min-height:56vh;
         &::-webkit-scrollbar {
             height: 7px;
-            background-color: transparent;
+            // background-color: transparent;
         }
         &::-webkit-scrollbar-thumb {
             background-color: rgb(146, 146, 146);
@@ -697,20 +698,35 @@
         }
         .jaw {
             margin: 0 !important;
-            padding-top: 10px !important;
-            padding-bottom: 10px !important;
+            // padding-top: 10px !important;
+            // padding-bottom: 10px !important;
+            max-height: 52vh;
+            // min-height:  52vh;
 
             display: flex;
             flex-direction: column;
             // padding: 15px;
             border-radius: 5px;
-            .selected {
+            .tooth{
+
+                height: 100%;
+                display: block;
+                .tooth-number{
+                    border: none;
+                    padding-top: 1vh;
+                    font-size: 1.8em;
+                    font-weight: 400;
+                    overflow: show;
+                    left: 50%;
+                    text-align: center;
+                }
+            }
+
+             .tooth.selected {
                 transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 transition-property: all;
-                // transition-duration: 0.2s;
-                // transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                // transition-delay: 0s;
                 background-color: rgba(153, 153, 153, 0.37);
+                  border:0;
                 .tooth-number {
                     color: rgb(255, 255, 255);
                 }
@@ -720,33 +736,15 @@
                 transition-duration: 0.5s;
                 transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
                 transition-delay: 0s;
-                // .anamnes {
-                //     fill: #fb8c00 !important;
-                //     .tooth-number {
-                //         color: #fb8c00;
-                //     }
-                // }
-                // .diagnose:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
-                //     // fill: #8e24aa !important;
-                //     .tooth-number {
-                //         color: #8e24aa;
-                //     }
-                // }
-                // .diagnose.gum {
-                //     stroke-width: 4px !important;
-                // }
+                .tooth-number {
+                    color: #3c4858 !important;
 
-                // .procedure {
-                //     fill: #43a047 !important;
-                //     .tooth-number {
-                //         color: #43a047;
-                //     }
-                // }
+                }
             }
 
             .jaw-list {
-                max-height: 42vh;
-                min-height: 200px;
+                max-height: 52vh;
+                // min-height: 52vh;
                 display: flex;
                 .tooth-enter, .tooth-leave-to
           /* .tooth-leave-active for <2.1.8 */ {
@@ -766,246 +764,7 @@
                     opacity: 1;
                     transition: all 0.5s;
                 }
-                // .tooth {
-                //     -webkit-touch-callout: none; /* iOS Safari */
-                //     -webkit-user-select: none; /* Safari */
-                //     -khtml-user-select: none; /* Konqueror HTML */
-                //     -moz-user-select: none; /* Firefox */
-                //     -ms-user-select: none; /* Internet Explorer/Edge */
-                //     user-select: none; /* Non-prefixed version, currently
-                //                   supported by Chrome and Opera */
-                //     display: flex;
-                //     // transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                //     transition-property: all;
-                //     transition-duration: 0.4s;
-                //     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                //     transition-delay: 0s;
-                //     position: relative;
-                //     padding-bottom: 15px;
-                //     .tooth-number {
-                //         font-size: 1em;
-                //         overflow: show;
-                //         margin: auto;
-                //         position: absolute;
-                //         left: 50%;
-                //         bottom: -5px;
-                //         transform: translate(-50%, -6px);
-                //     }
-
-                //     svg {
-                //         flex-grow: 1;
-                //         flex-basis: 100%;
-                //         height: 100%;
-
-                //         .background {
-                //             fill: #9fdaff;
-                //         }
-
-                //         .bridge {
-                //             fill: #3535ed;
-                //         }
-
-                //         .root:not(.selectable-location) {
-                //             fill: #f8edc8;
-                //             stroke: #292320;
-                //             stroke-width: 0.25px;
-                //         }
-
-                //         // .rootCanal {
-                //         //   fill: #3535ed;
-                //         // }
-                //         .selected:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1):not(.gum) {
-                //             fill: #8e24aa !important;
-                //         }
-
-                //         .coronaLingual:not(.selectable-location),
-                //         .coronaTop:not(.selectable-location),
-                //         .coronaLabial:not(.selectable-location) {
-                //             fill: #fff;
-                //             stroke: #000;
-                //             stroke-width: 0.25px;
-                //         }
-                //         .selectable-location:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1):not(.gum) {
-                //             cursor: pointer;
-                //             stroke: #8e24aa;
-                //             stroke-width: 1.5px !important;
-                //         }
-                //         .selectable-location,
-                //         .rootCanal,
-                //         .periodontit,
-                //         .coronaLingualIncisalDistal,
-                //         .coronaLingualIncisalMiddle,
-                //         .coronaLingualIncisionMesial,
-                //         .coronaLingualMiddleDistal,
-                //         .coronaLingualMiddleMiddle,
-                //         .coronaLingualMiddleMesial,
-                //         .coronaLingualCervicalDistal,
-                //         .coronaLingualCervicalMiddle,
-                //         .coronaLingualCervicalMesial,
-                //         .coronaLabialIncisalDistal,
-                //         .coronaLabialIncisalMiddle,
-                //         .coronaLabialIncisionMesial,
-                //         .coronaLabialMiddleDistal,
-                //         .coronaLabialMiddleMiddle,
-                //         .coronaLabialMiddleMesial,
-                //         .coronaLabialCervicalDistal,
-                //         .coronaLabialCervicalMiddle,
-                //         .coronaLabialCervicalMesial,
-                //         .coronaTopBuccal,
-                //         .coronaTopMedial,
-                //         .coronaTopLingual,
-                //         .coronaTopDistal,
-                //         .coronaTopOclusial {
-                //             cursor: pointer;
-                //             fill: white;
-                //             stroke: #8d24aa70;
-                //             stroke-width: 0.45px;
-                //             &:active {
-                //                 opacity: 0.8;
-                //                 transition-property: all;
-                //                 transition-duration: 0.4s;
-                //                 transition-timing-function: cubic-bezier(
-                //                     0.4,
-                //                     0,
-                //                     0.2,
-                //                     1
-                //                 );
-                //                 transition-delay: 0s;
-                //             }
-                //         }
-
-                //         .implant {
-                //             fill: #3535ed;
-                //         }
-
-                //         .veneer {
-                //             fill: #3535ed;
-                //         }
-
-                //         .silant {
-                //             fill: #3535ed;
-                //         }
-
-                //         .gum {
-                //             stroke: #ffb900;
-                //         }
-
-                //         // .paradontit1 {
-                //         //     stroke: #ff822e;
-                //         //     fill: none;
-                //         //     // fill: rgba(56, 43, 37, 0.283);
-                //         // }
-
-                //         // .paradontit2 {
-                //         //     stroke: #f9610d;
-                //         //     fill: none;
-                //         //     // fill: rgba(56, 43, 37, 0.383);
-                //         // }
-
-                //         // .paradontit3 {
-                //         //     stroke: #f75403;
-                //         //     fill: none;
-                //         //     // fill: rgba(56, 43, 37, 0.483);
-                //         // }
-
-                //         // .paradontit4 {
-                //         //     stroke: #f73403;
-                //         //     fill: none;
-                //         //     // fill: rgba(56, 43, 37, 0.583);
-                //         // }
-
-                //         // .periodontit {
-                //         //   fill: #3535ed;
-                //         // }
-
-                //         .gum {
-                //             stroke: #ffb900;
-                //             stroke-linejoin: round;
-                //             stroke-width: 2px;
-                //             fill: none;
-                //         }
-
-                //         .gum.selectable-location,
-                //         .paradontit1.selectable-location,
-                //         .paradontit2.selectable-location,
-                //         .paradontit3.selectable-location,
-                //         .paradontit4.selectable-location,
-                //         .periodnotit.selectable-location {
-                //             opacity: 0.3;
-                //             stroke-linejoin: round;
-                //             stroke-width: 3px;
-                //             fill: none !important;
-                //             &:hover {
-                //                 opacity: 1;
-                //                 stroke-width: 4px !important;
-                //                 stroke: #8e24aa !important;
-                //                 fill: none !important;
-                //             }
-                //         }
-                //         .gum.selected,
-                //         .paradontit1.selected,
-                //         .paradontit2.selected,
-                //         .paradontit3.selected,
-                //         .paradontit4.selected,
-                //         .periodnotit.selected {
-                //             opacity: 1;
-                //             stroke-linejoin: round;
-                //             stroke-width: 3px;
-                //             stroke: #8e24aa;
-                //             fill: none !important;
-                //         }
-
-                //         .paradontit1,
-                //         .paradontit2,
-                //         .paradontit3,
-                //         .paradontit4,
-                //         .periodnotit {
-                //             stroke: #8e24aa;
-                //             stroke-linejoin: round;
-                //             stroke-width: 3px;
-                //             transition-property: all;
-                //             transition-duration: 0.4s;
-                //             transition-timing-function: cubic-bezier(
-                //                 0.4,
-                //                 0,
-                //                 0.2,
-                //                 1
-                //             );
-                //             transition-delay: 0s;
-                //             fill: none !important;
-                //         }
-                //         .hide {
-                //             display: none;
-                //         }
-                //     }
-                // }
             }
-            // .selectable-location:not(.paradontit4):not(.paradontit3):not(.paradontit2):not(.paradontit1) {
-            //   stroke: #8e24aa !important;
-            // }
-
-            // .selected {
-            // stroke: #8e24aa;
-            // opacity: 1 !important;
-            // }
-            // .anamnes {
-            //     fill: #fb8c00 !important;
-            //     .tooth-number {
-            //         color: #fb8c00;
-            //     }
-            // }
-            // .diagnose {
-            //     fill: #8d24aaa8 !important;
-            //     .tooth-number {
-            //         color: #8e24aa;
-            //     }
-            // }
-            // .procedure {
-            //     fill: #43a047 !important;
-            //     .tooth-number {
-            //         color: #43a047;
-            //     }
-            // }
         }
     }
 }

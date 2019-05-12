@@ -1,7 +1,7 @@
 .tooth {
     .set-procedures {
         .procedure {
-            opacity: 0.6;
+            opacity: 0.4;
         }
     }
     .procedure {
@@ -31,17 +31,16 @@
         &.coronaTopLingual,
         &.coronaTopDistal,
         &.coronaTopOclusial,
-        &.periodontit,
-        &.rootCanal,
         &.implant,
+        &.silant,
+        &.crown,
+        &.braces,
+        &.bridge,
         &.veneer,
         &.silant {
             fill: #43a047 !important;
-            stroke: #43a047;
-        }
-        &.silant {
-            stroke: white;
-            stroke-width: 1px;
+            stroke: #020202;
+            stroke-width: 0.25px;
         }
         &.periodontit {
             stroke-width: 2px;
@@ -52,10 +51,15 @@
             stroke: #43a047;
             stroke-width: 2px;
         }
-
-        &.periodontit,
         &.rootCanal {
             stroke-width: 2px;
+        }
+        &.periodontit,
+        &.rootCanal,
+        &.bone {
+            stroke-width: 2px;
+            fill: #43a047 !important;
+            // stroke: #43a047;
         }
         &.gum,
         &.paradontit1,

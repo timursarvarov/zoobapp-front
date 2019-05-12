@@ -1,5 +1,6 @@
 import DIAGNOSISL from './diagnose';
 import TREATMETSL from './procedures';
+import MANIPULATIONSl from './manipulations';
 
 import TEETH_DEFAULT_LOCATIONSL from './tooth-default-locations';
 import TEETH_SCHEMAL from './teeth-schema';
@@ -19,6 +20,7 @@ import COMMON_CURRENCYL from './common-currency';
 
 export const DIAGNOSIS = DIAGNOSISL;
 export const PROCEDURES = TREATMETSL;
+export const MANIPULATIONS = MANIPULATIONSl;
 
 // Teeth schema locations
 
@@ -103,6 +105,7 @@ export const PATIENT_TREATMETS_UPDATE = 'PATIENT_TREATMETS_UPDATE';
 export const PATIENT_DIAGNOSE_SET = 'PATIENT_DIAGNOSE_SET';
 export const PATIENT_DIAGNOSE_DELETE = 'PATIENT_DIAGNOSE_DELETE';
 export const PATIENT_DIAGNOSE_UPDATE = 'PATIENT_DIAGNOSE_UPDATE';
+export const PATIENT_TOGGLE_ITEM_VISIBILITY = 'PATIENT_TOGGLE_ITEM_VISIBILITY';
 export const PATIENT_GET = 'PATIENT_GET';
 export const PATIENT_SET_PARAM = 'PATIENT_SET_PARAM';
 export const PATIENT_SET_PARAMS = 'PATIENT_SET_PARAMS';

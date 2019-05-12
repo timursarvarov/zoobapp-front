@@ -1,20 +1,27 @@
 <template>
     <div
         class="tooth-wrapper"
-        :style="{ 'width': jawSVG[selectedToothId].width_perc * 8 + 'px' }"
+        :style="{
+            'width': jawSVG[selectedToothId].widthPerc * scaleSize + 'px',
+            'padding-top': 2 * scaleSize + 'px'
+            }"
     >
+        <div
+            :style="{'font-size': toothNumWidth+'em'}"
+            class="single-tooth-number">{{selectedToothId | toCurrentTeethSystem(teethSystem)}}
+            </div>
         <div
             :class="[
                     'tooth',
                     preferj
                     ]"
             :ref="selectedToothId"
-            :style="{ 'width': jawSVG[selectedToothId].width_perc * 8 + 'px' }"
+            :style="{ 'width': jawSVG[selectedToothId].widthPerc * scaleSize + 'px' }"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 :viewBox="jawSVG[selectedToothId].viewBox"
-                :style="{ 'width':  jawSVG[selectedToothId].width_perc * 8 + 'px'}"
+                :style="{ 'width':  jawSVG[selectedToothId].widthPerc * scaleSize + 'px'}"
             >
                 <g>
                     <path
@@ -28,16 +35,15 @@
                             toothComputed[location].class,
 
                             // Название класса локации из svg для отображеня в норме
-                            jawSVG[selectedToothId][location]['class']
+                            {[location]:true},
 
                             // путь для SVG атрибута patth
                             ]"
-                        :d="jawSVG[selectedToothId][location]['d']"
+                        :d="jawSVG[selectedToothId][location]"
                     ></path>
                 </g>
 
             </svg>
-            <span class="tooth-number">{{selectedToothId | toCurrentTeethSystem(teethSystem)}}</span>
         </div>
     </div>
 </template>
@@ -74,6 +80,10 @@
             selectedToothId: {
                 type: String,
                 default: () => '0',
+            },
+            scaleSize: {
+                type: Number,
+                default: () => 8,
             },
             originalItems: {
                 type: Array,
@@ -357,6 +367,13 @@
         },
 
         computed: {
+            toothNumWidth() {
+                const width = this.scaleSize / 5;
+                if (width < 1) {
+                    return 1;
+                }
+                return width;
+            },
             teethToSearch() {
                 const firstSelectedTeeth = this.selectableTeeth[0];
                 let JawType = null;
@@ -403,8 +420,7 @@
                 return Math.round((this.windowWidth / 100) * 80 - 70);
             },
             jawSVG() {
-                const jawVG = JSON.parse(jawSVGjs);
-                return jawVG;
+                return jawSVGjs;
             },
             preferLocal: {
                 // геттер:
@@ -424,4 +440,12 @@
 </script>
 
 <style lang="scss"  >
+.tooth-wrapper{
+    .single-tooth-number{
+        display: block;
+        position: relative;
+        text-align: center;
+    font-size: calc(7px + .5vw);
+    }
+}
 </style>

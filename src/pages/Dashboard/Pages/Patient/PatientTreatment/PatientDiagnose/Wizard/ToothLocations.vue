@@ -4,7 +4,7 @@
       ref="jawadddiagnose"
       :jaw="jaw"
       :prefer="prefer"
-      :selectedDiagnose="selectedDiagnose"
+      :selectedItem="selectedDiagnose"
       :selectedTeeth="selectedTeeth"
       v-model="newDiagnoseParamsLocal"
       :teethSchema="teethSchema"

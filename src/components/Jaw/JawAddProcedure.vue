@@ -123,12 +123,12 @@
             v-for="(toothId) in selectableTeeth"
             :key="toothId"
             :ref="toothId"
-            :style="{ 'width': jawSVG[toothId].width_perc * 8 + 'px' }"
+            :style="{ 'width': jawSVG[toothId].widthPerc * 8 + 'px' }"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               :viewBox="jawSVG[toothId].viewBox"
-              :style="{ 'width':  jawSVG[toothId].width_perc * 8 + 'px'}"
+              :style="{ 'width':  jawSVG[toothId].widthPerc * 8 + 'px'}"
             >
               <g>
                 <path
@@ -727,7 +727,7 @@
     // overflow: -webkit-paged-x;
     &::-webkit-scrollbar {
       height: 7px;
-      background-color: transparent;
+    //   background-color: transparent;
     }
     &::-webkit-scrollbar-thumb {
       background-color: rgb(146, 146, 146);

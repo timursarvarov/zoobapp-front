@@ -2,14 +2,14 @@
 
   <div class="md-layout md-gutter procedure-wrapper">
       <div class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
-        <div class="md-layout-item" ref="wrjaw">
+        <div class="mx-auto" style="flex-grow:1;"  ref="wrjaw">
           <jaw
             :selectedTeeth="selectedTeeth"
             @onSelectedTeeth='onSelectedTeeth'
             @showToothInfo='showToothInfo'
+            @toggleItemVisibility='toggleProcedureVisibility'
             :jaw="jaw"
             :patientItems="currentPlan.procedures"
-            :prefer="['procedure']"
             :teethSchema="teethSchema"
             :teethSystem="currentClinic.teethSystem"
             type="procedures"
@@ -46,15 +46,15 @@
       </div>
       <div class="md-layout-item md-layout md-small-size-100 md-xsmall-size-100 md-gutter md-medium-size-50 md-size-50">
           <t-collapse-search
-          :style="[{'max-height': jawHeight + 'px'}, {'min-height': jawHeight + 'px'}]" class=" md-layout-item md-size-100 set-procedure-form md-small-size-100 md-xsmall-size-100 md-size-50"
-          :items = "procedures"
-          :selectedTeeth = "selectedTeeth"
-          :favoriteItems = "favoriteProcedures"
-          itemType = "Procedures"
-          :jawHeight = "jawHeight"
-          :showSlot = "patient.plans.length > 0 && !!currentPlanId"
-          @onSetFavoritem = "setFavoriteProcedure"
-          @onSelected = "selectProcedure"
+          :style="[{'max-height': jawHeight + 'px'}]" class="set-procedure-form"
+          :items="procedures"
+          :selectedTeeth="selectedTeeth"
+          :favoriteItems="favoriteProcedures"
+          itemType="Procedures"
+          :jawHeight="jawHeight"
+          :showSlot="patient.plans.length > 0 && !!currentPlanId"
+          @onSetFavoritem="setFavoriteProcedure"
+          @onSelected="selectProcedure"
           >
           <md-empty-state
             slot="empty-space"
@@ -65,16 +65,18 @@
           </t-collapse-search>
       </div>
 
-      <div class="md-layout-item md-layout md-size-100" >
+
       <tabs
+      v-if="patient.plans.length > 0"
         ref="tabs"
         :tab-name="Object.values(patient.plans).map(e=>e.title)"
         color-button="warning"
+        class="procedures-tabs"
       >
-        <h4
+        <!-- <h4
           class="title"
           slot="header-title"
-        >Navigation Pills - <small class="description">Horizontal Tabs</small></h4>
+        >Navigation Pills - <small class="description">Horizontal Tabs</small></h4> -->
           <template
            v-for="(plan, index) in patient.plans"
           :slot="`tab-pane-${index+1}`">
@@ -87,7 +89,7 @@
             </div>
           </template>
       </tabs>
-      <div class="md-layout-item md-layout md-size-100" >
+
 
         <jaw-add-procedure-wizard
           v-if="showForm"
@@ -110,16 +112,63 @@
         <t-tooth-Items
         v-if="showToothProcedures"
         :showForm.sync="showToothProcedures"
-        :toothId = "toothIdforProcedures"
+         @editItem="editProcedure"
+        :item="procedureToShow"
+        :toothId="toothIdforProcedures"
         :patientItems = "currentPlan.procedures"
         :originalItems = "procedures"
+        :teethSchema="teethSchema"
         :teethSystem="currentClinic.teethSystem"
         :jaw='jaw'
         classType="procedure"
-        />
+        >
+            <div slot="content" v-if="procedureToShow.manipulations.length > 0">
+                <md-subheader>
+                    Manipulations
+                </md-subheader>
+                <div class="md-layout-item">
 
-        </div>
-        </div>
+                    <md-table v-model="procedureToShow.manipulations" table-header-color="green" >
+                        <md-table-empty-state
+                            md-label="No manipulations found"
+                            md-description="please select manipilation">
+                        </md-table-empty-state>
+                        <md-table-row slot="md-table-row" slot-scope="{ item }">
+                            <md-table-cell md-label="Code">{{ item.manipulation.code }}</md-table-cell>
+                            <md-table-cell md-label="Title">{{ item.manipulation.title }}</md-table-cell>
+                            <md-table-cell  md-label="Qty" class="manipulations-input" >{{item.num}}</md-table-cell>
+                            <md-table-cell >*</md-table-cell>
+                            <md-table-cell md-label="Price">{{ item.price }}</md-table-cell>
+                            <md-table-cell md-label="Total">{{ item.price * item.num }}</md-table-cell>
+                        </md-table-row>
+                    </md-table>
+                    <div class="footer-table md-table">
+                    <table>
+                        <tfoot>
+                            <tr>
+                                <th class="md-table-head">
+                                    <div class="md-table-head-container md-ripple md-disabled">
+                                        <div class="md-table-head-label">
+                                            Total manipulations: {{procedureToShow.manipulations.length}}
+                                        </div>
+                                    </div>
+                                </th>
+                                <th class="md-table-head">
+                                    <div class="md-table-head-container md-ripple md-disabled">
+                                        <div class="md-table-head-label">
+                                            Total price:
+                                            <!-- {{currencyCode}} -->
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            </div>
+        </t-tooth-items>
   </div>
 
 </template>
@@ -130,6 +179,7 @@
         PATIENT_PROCEDURES_SET,
         PATIENT_PLAN_SET,
         PATIENT_PLAN_DELETE,
+        PATIENT_TOGGLE_ITEM_VISIBILITY,
         PATIENT_PLAN_EDIT,
         USER_SET_PARAM,
         PROCEDURES,
@@ -159,6 +209,7 @@
             return {
                 showToothProcedures: false,
                 toothIdforProcedures: 0,
+                procedureIdtoShow: 0,
                 currentPlanId: null,
                 showAddPlan: false,
                 showForm: false,
@@ -177,8 +228,30 @@
             };
         },
         methods: {
-            showToothInfo(toothId) {
+            editProcedure(diagnose) {
+                console.log(diagnose)
+                // if (!this.isEmpty(diagnose.teeth)) {
+                //     this.selectedTeeth = Object.keys(diagnose.teeth);
+                // }
+                // this.selectedDiagnoseLocal = diagnose;
+                // this.showAddDiagnoseWizard = true;
+            },
+            toggleProcedureVisibility(itemId) {
+                if (itemId) {
+                    this.$store.dispatch(PATIENT_TOGGLE_ITEM_VISIBILITY, {
+                        params: {
+                            itemId,
+                            type: 'procedure',
+                            planId: this.currentPlanId,
+                        },
+                    });
+                }
+                this.recalculateJawProcedure();
+            },
+            showToothInfo(procedureId, toothId) {
+                // console.log(typeof toothId )
                 this.toothIdforProcedures = toothId;
+                this.procedureIdtoShow = procedureId;
                 this.showToothProcedures = true;
             },
             changePLan(planId) {
@@ -201,7 +274,9 @@
                 }
             },
             focusOnLastTab(name) {
-                this.$refs.tabs.switchPanel(name);
+                if (this.$refs.tabs) {
+                    this.$refs.tabs.switchPanel(name);
+                }
             },
             selectPlan(p) {
                 if (this.patient.plans.findIndex(plan => plan.id === p.id) > -1) {
@@ -226,7 +301,7 @@
                     planId: this.currentPlanId,
                     procedure: procedureL,
                 });
-                this.selectedTeeth = [];
+                // this.selectedTeeth = [];
                 this.recalculateJawProcedure();
             },
             setPlan(p) {
@@ -308,9 +383,29 @@
                                 Object.keys(procedure.teeth).forEach((toothId) => {
                                     Object.keys(procedure.teeth[toothId]).forEach(
                                         (kLocation) => {
-                                            this.jaw.procedures[toothId][
+                                            // console.log(toothId, kLocation, procedure.teeth[toothId][kLocation]);
+                                            if (
                                                 kLocation
-                                            ] = procedure.teeth[toothId][kLocation];
+                                                in this.jaw.procedures[toothId]
+                                            ) {
+                                                if (
+                                                    !procedure.teeth[toothId][
+                                                        kLocation
+                                                    ]
+                                                ) {
+                                                    this.jaw.procedures[toothId][
+                                                        kLocation
+                                                    ] = procedure.teeth[toothId][
+                                                        kLocation
+                                                    ];
+                                                }
+                                            } else {
+                                                this.jaw.procedures[toothId][
+                                                    kLocation
+                                                ] = procedure.teeth[toothId][
+                                                    kLocation
+                                                ];
+                                            }
                                         },
                                     );
                                 });
@@ -338,6 +433,14 @@
                 currentClinic: 'getCurrentClinic',
                 user: 'getProfile',
             }),
+             procedureToShow() {
+            //    const d = Object.values(this.currentPlan).find( procedure => procedure.id === this.procedureIdtoShow,)
+                const d = this.currentPlan.procedures.find(
+                    procedure => procedure.id === this.procedureIdtoShow,
+                );
+                console.log(d);
+                return d || {};
+            },
             currentPlan() {
                 let plan = {};
                 const index = this.patient.plans.findIndex(
@@ -363,6 +466,10 @@
 </script>
 <style lang="scss">
 .procedure-wrapper {
+    .procedures-tabs{
+        padding-left: 0;
+        padding-right: 0;
+    }
     .md-card {
         box-shadow: none;
         .tab-pane-1,
@@ -406,7 +513,7 @@
             padding: 20px 10px 20px 10px;
             &::-webkit-scrollbar {
                 width: 7px;
-                background-color: transparent;
+                // background-color: transparent;
             }
             &::-webkit-scrollbar-thumb {
                 background-color: grey;

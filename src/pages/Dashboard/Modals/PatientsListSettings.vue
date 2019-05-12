@@ -74,115 +74,115 @@
   </md-dialog>
 </template>
 <script>
-        import { Container, Draggable } from 'vue-smooth-dnd';
-        import { applyDrag, generateItems } from '@/utils/helpers';
+    import { Container, Draggable } from 'vue-smooth-dnd';
+    import { applyDrag, generateItems } from '@/utils/helpers';
 
-        export default {
-            name: 'table-settings',
-            prop: 'Columns',
-            props: {
-                buttonColor: {
-                    type: String,
-                    default: '',
-                },
-                icon: {
-                    type: String,
-                    default: 'add_a_photo',
-                },
-                showForm: {
-                    type: Boolean,
-                    default: () => false,
-                },
-                title: {
-                    type: String,
-                    default: '',
-                },
-                availableTableColumns: {
-                    type: Array,
-                    default: () => [],
-                },
-                tableColumns: {
-                    type: Array,
-                    default: () => [],
-                },
-                Columns: {
-                    type: Object,
-                    default: () => {},
-                },
+    export default {
+        name: 'table-settings',
+        prop: 'Columns',
+        props: {
+            buttonColor: {
+                type: String,
+                default: '',
             },
-            components: {
-                Container,
-                Draggable,
+            icon: {
+                type: String,
+                default: 'add_a_photo',
             },
-            data() {
-                return {
-                    items1: generateItems(15, i => ({
-                        id: `1${i}`,
-                        data: `Draggable 1 - ${i}`,
-                    })),
-                    items2: generateItems(15, i => ({
-                        id: `2${i}`,
-                        data: `Draggable 2 - ${i}`,
-                    })),
-                    newTableColumn: null,
-                    newColumns: [
-                        {
-                            key: 'ID1',
-                            title: 'ID',
-                        },
-                        {
-                            key: 'address1',
-                            title: 'Address',
-                        },
-                    ],
-                    availableColumns: [],
-                };
+            showForm: {
+                type: Boolean,
+                default: () => false,
             },
-            methods: {
-                shouldAcceptDrop() {
-                    return true;
-                },
-                copyObj(obj) {
-                    return JSON.parse(JSON.stringify(obj));
-                },
-                onDrop(collection, dropResult) {
-                    this[collection] = applyDrag(this[collection], dropResult);
-                },
-                getChildPayload1(index) {
-                    return this.newColumns[index];
-                },
-                getChildPayload2(index) {
-                    return this.availableColumns[index];
-                },
-                getColorButton(buttonColor) {
-                    return `md-${buttonColor}`;
-                },
-                setColumns() {
-                    this.$emit('selected', this.newColumns);
-                },
+            title: {
+                type: String,
+                default: '',
             },
-            mounted() {
-                this.newColumns = Object.keys(this.tableColumns).map(
-                    i => this.tableColumns[i],
-                );
-                const vm = this;
-                this.availableColumns = this.availableTableColumns.filter(
-                    el => !vm.newColumns.some(f => f.key === el.key),
-                );
+            availableTableColumns: {
+                type: Array,
+                default: () => [],
             },
-            computed: {
-                showFormLocal: {
-                    // геттер:
-                    get() {
-                        return this.showForm;
+            tableColumns: {
+                type: Array,
+                default: () => [],
+            },
+            Columns: {
+                type: Object,
+                default: () => {},
+            },
+        },
+        components: {
+            Container,
+            Draggable,
+        },
+        data() {
+            return {
+                items1: generateItems(15, i => ({
+                    id: `1${i}`,
+                    data: `Draggable 1 - ${i}`,
+                })),
+                items2: generateItems(15, i => ({
+                    id: `2${i}`,
+                    data: `Draggable 2 - ${i}`,
+                })),
+                newTableColumn: null,
+                newColumns: [
+                    {
+                        key: 'ID1',
+                        title: 'ID',
                     },
-                    // сеттер:
-                    set(newValue) {
-                        this.$emit('update:showForm', newValue);
+                    {
+                        key: 'address1',
+                        title: 'Address',
                     },
+                ],
+                availableColumns: [],
+            };
+        },
+        methods: {
+            shouldAcceptDrop() {
+                return true;
+            },
+            copyObj(obj) {
+                return JSON.parse(JSON.stringify(obj));
+            },
+            onDrop(collection, dropResult) {
+                this[collection] = applyDrag(this[collection], dropResult);
+            },
+            getChildPayload1(index) {
+                return this.newColumns[index];
+            },
+            getChildPayload2(index) {
+                return this.availableColumns[index];
+            },
+            getColorButton(buttonColor) {
+                return `md-${buttonColor}`;
+            },
+            setColumns() {
+                this.$emit('selected', this.newColumns);
+            },
+        },
+        mounted() {
+            this.newColumns = Object.keys(this.tableColumns).map(
+                i => this.tableColumns[i],
+            );
+            const vm = this;
+            this.availableColumns = this.availableTableColumns.filter(
+                el => !vm.newColumns.some(f => f.key === el.key),
+            );
+        },
+        computed: {
+            showFormLocal: {
+                // геттер:
+                get() {
+                    return this.showForm;
+                },
+                // сеттер:
+                set(newValue) {
+                    this.$emit('update:showForm', newValue);
                 },
             },
-        };
+        },
+    };
 </script>
 <style lang="scss">
 .group-wrapper {
@@ -276,7 +276,7 @@
     overflow-x: auto;
     &::-webkit-scrollbar {
       width: 7px;
-      background-color: transparent;
+      // background-color: transparent;
     }
     &::-webkit-scrollbar-thumb {
       background-color: grey;
