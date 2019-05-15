@@ -30,29 +30,39 @@ const jawFunctions = {
             }
             // полчаем дефолтное значение локации
             const defaultLocation = !defaultLocations[location];
+            let anamnes;
+            let procedure;
+            let diagnose;
+            let hide;
 
             // получаем значенин локации в типах челюсти
-            const anamnes = this.getNestedProperty(
-                jaw.anamnesis,
-                toothId,
-                location,
-            );
-            const procedure = this.getNestedProperty(
-                this.jaw.procedures,
-                toothId,
-                location,
-            );
-            const diagnose = this.getNestedProperty(
-                this.jaw.diagnosis,
-                toothId,
-                location,
-            );
+            if (toothId in jaw.anamnesis && location in jaw.anamnesis[toothId]) {
+                anamnes = this.getNestedProperty(
+                    jaw.anamnesis,
+                    toothId,
+                    location,
+                );
+            }
+            if (toothId in jaw.procedures && location in jaw.procedures[toothId]) {
+                procedure = this.getNestedProperty(
+                    jaw.procedures,
+                    toothId,
+                    location,
+                );
+            }
+            if (toothId in jaw.diagnosis && location in jaw.diagnosis[toothId]) {
+                diagnose = this.getNestedProperty(
+                    jaw.diagnosis,
+                    toothId,
+                    location,
+                );
+            }
             /* определяем необходимость скрывать локацию(если ее нет
             	ни в одном поле вычесленной челюсти (процедуры, анамнез, или лечение))
             	в зависимости от предпочитаемого вида отображения, если prefer не определен,
             	то возвращай все дефолтное значенин
             */
-            let hide = defaultLocation;
+            // hide = defaultLocation;
             if (prefer.includes('anamnes')) {
                 if (anamnes !== undefined) {
                     hide = !anamnes;
@@ -60,18 +70,74 @@ const jawFunctions = {
             }
             if (prefer.includes('diagnose')) {
                 if (diagnose !== undefined) {
-                    hide = !diagnose;
+                    hide = hide === true ? hide : !diagnose;
                 }
             }
             if (prefer.includes('procedure')) {
                 if (procedure !== undefined) {
-                    hide = !procedure;
+                    hide = hide === true ? hide : !procedure;
                 }
             }
-            if (toothId == 28 && location === 'coronaLabialMiddleMiddle') {
-                // console.log(toothId, hide);
+            if (hide === undefined) {
+                return defaultLocation;
             }
+            return hide;
+        },
+        isHidingClicableLocation(toothId, location, jaw, prefer, defaultLocations) {
+            // если не установлен прдедпочитаемы вид (prefer) то возвращаем значение по умолчанию
+            if (prefer.length === 0) {
+                return !defaultLocations[location];
+            }
+            // полчаем дефолтное значение локации
+            const defaultLocation = !defaultLocations[location];
+            let anamnes;
+            let procedure;
+            let diagnose;
+            let hide;
 
+            // получаем значенин локации в типах челюсти
+            if (toothId in jaw.anamnesis && location in jaw.anamnesis[toothId]) {
+                anamnes = this.getNestedProperty(
+                    jaw.anamnesis,
+                    toothId,
+                    location,
+                );
+            }
+            if (toothId in jaw.procedures && location in jaw.procedures[toothId]) {
+                procedure = this.getNestedProperty(
+                    jaw.procedures,
+                    toothId,
+                    location,
+                );
+            }
+            if (toothId in jaw.diagnosis && location in jaw.diagnosis[toothId]) {
+                diagnose = this.getNestedProperty(
+                    jaw.diagnosis,
+                    toothId,
+                    location,
+                );
+            }
+            /* определяем необходимость скрывать локацию(если ее нет
+            	ни в одном поле вычесленной челюсти (процедуры, анамнез, или лечение))
+            	в зависимости от предпочитаемого вида отображения, если prefer не определен,
+            	то возвращай все дефолтное значенин
+            */
+            // hide = defaultLocation;
+            if (prefer.includes('anamnes')) {
+                if (anamnes !== undefined) {
+                    hide = !anamnes;
+                }
+            }
+            if (prefer.includes('diagnose')) {
+                if (diagnose !== undefined) {
+                    hide = hide === true ? hide : !diagnose;
+                }
+            }
+            if (prefer.includes('procedure')) {
+                if (procedure !== undefined) {
+                    hide = hide === true ? hide : !procedure;
+                }
+            }
             return hide;
         },
         hasProp(obj, prop) {

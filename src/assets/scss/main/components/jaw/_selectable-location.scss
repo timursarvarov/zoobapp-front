@@ -3,9 +3,9 @@
         .selectable-location:not(.tooth-number) {
             cursor: pointer;
         }
-        .selectable-location {
+        .selectable-location:not(.selected) {
             &.tooth-number {
-                color: #636363;
+                color: grey;
             }
             &.coronaLingualIncisalDistal,
             &.coronaLingualIncisalMiddle,
@@ -35,17 +35,19 @@
             &.root,
             &.bone,
             &.bridge,
+            &.crown,
+            &.braces,
+            &.implant,
+            &.bridge,
             &.coronaLingual,
             &.coronaTop,
-            &.crown,
-            &.implant,
             &.coronaLabial {
                 // fill: #8e24aa !important;
                 fill: #fff;
                 stroke: #000;
                 stroke-width: 0.25px;
                 &:hover {
-                    stroke: #636363;
+                    stroke: grey;
                     stroke-width: 2px;
                     transition: all 0.2s ease-in-out;
                 }
@@ -57,7 +59,14 @@
                 fill: #3535ed;
             }
             &.silant {
-                fill: #3535ed;
+                fill: #fff;
+                stroke: #000;
+                stroke-width: 1px;
+                &:hover {
+                    stroke: grey;
+                    stroke-width: 1px;
+                    transition: all 0.2s ease-in-out;
+                }
             }
             &.gum {
                 stroke: #ffb900;

@@ -156,6 +156,10 @@
                 type: Object,
                 default: () => {},
             },
+            manipulationsToEdit: {
+                type: Array,
+                default: () => [],
+            },
         },
         data() {
             return {
@@ -295,6 +299,11 @@
             if (this.$refs.description) {
                 this.$refs.description.$el.focus();
             }
+            this.$nextTick(() => {
+                if (this.manipulationsToEdit.length > 0) {
+                    this.manipulationsToAdd = this.manipulationsToEdit;
+                }
+            });
         },
         watch: {
             manipulationsNum() {

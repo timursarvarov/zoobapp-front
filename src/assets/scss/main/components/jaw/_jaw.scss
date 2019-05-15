@@ -15,7 +15,7 @@
     .jaw-scroll {
         border-radius: 5px;
         max-width: calc(100vw - 40px);
-        // overflow-x: auto;
+        overflow-x: auto;
         // overflow-y: auto;
         &::-webkit-scrollbar {
             height: 7px;

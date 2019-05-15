@@ -121,6 +121,7 @@
                                 </svg>
                             </div>
                             <jaw-menu
+                                :hasOtherTypes="teethWithOtherTypes.includes(toothId)"
                                 :btnClass="btnClass"
                                 :selected="isToothSelected(toothId)"
                                 :windowWidth="windowWidth"
@@ -173,6 +174,7 @@
                             </div>
 
                             <jaw-menu
+                                :hasOtherTypes="teethWithOtherTypes.includes(toothId)"
                                 :btnClass="btnClass"
                                 :selected="isToothSelected(toothId)"
                                 :windowWidth="windowWidth"
@@ -227,6 +229,7 @@
                             </div>
 
                             <jaw-menu
+                                :hasOtherTypes="teethWithOtherTypes.includes(toothId)"
                                 :btnClass="btnClass"
                                 :selected="isToothSelected(toothId)"
                                 :windowWidth="windowWidth"
@@ -279,6 +282,7 @@
                             </div>
 
                             <jaw-menu
+                                :hasOtherTypes="teethWithOtherTypes.includes(toothId)"
                                 :btnClass="btnClass"
                                 :selected="isToothSelected(toothId)"
                                 :windowWidth="windowWidth"
@@ -405,6 +409,21 @@
         },
 
         computed: {
+            teethWithOtherTypes() {
+                const teeth = [];
+                Object.keys(this.jaw).forEach((type) => {
+                    if (type !== this.type) {
+                        Object.keys(this.jaw[type]).forEach((toothId) => {
+                            if (!teeth.includes(toothId)) {
+                                if (!this.isEmpty(this.jaw[type][toothId])) {
+                                    teeth.push(toothId);
+                                }
+                            }
+                        });
+                    }
+                });
+                return teeth;
+            },
             btnClass() {
                 if (this.type === 'diagnosis') {
                     return 'md-primary';
@@ -563,7 +582,7 @@
                                 .indexOf(true);
                             show = show !== -1;
                             Object.keys(item.teeth).forEach((toothId) => {
-                                console.log()
+                                console.log();
                                 if (this.separatedItems[toothId]) {
                                     this.separatedItems[toothId].push({
                                         title: item.title,
@@ -571,7 +590,7 @@
                                         showInJaw: item.showInJaw,
                                         id: item.id,
                                         hover: true,
-                                        hasLocations:show,
+                                        hasLocations: show,
                                     });
                                 } else {
                                     this.separatedItems[toothId] = [];
@@ -581,7 +600,7 @@
                                         showInJaw: item.showInJaw,
                                         id: item.id,
                                         hover: true,
-                                        hasLocations:show,
+                                        hasLocations: show,
                                     });
                                 }
                             });

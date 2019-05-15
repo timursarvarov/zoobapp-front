@@ -8,6 +8,7 @@ import {
     PATIENT_PLAN_SET,
     PATIENT_PLAN_DELETE,
     PATIENT_PLAN_EDIT,
+    PATIENT_ANAMNES_SET,
     PATIENT_DIAGNOSE_SET,
     PATIENT_DIAGNOSE_UPDATE,
     PATIENT_PROCEDURES_SET,
@@ -66,6 +67,9 @@ export default {
     },
     [PATIENT_DIAGNOSE_SET]: (state, diagnose) => {
         state.patient.diagnosis.unshift(diagnose);
+    },
+    [PATIENT_ANAMNES_SET]: (state, anamnes) => {
+        state.patient.anamnesis.unshift(anamnes);
     },
     [PATIENT_DIAGNOSE_UPDATE]: (state, { dIndex, diagnose }) => {
         state.patient.diagnosis.splice(dIndex, 1, diagnose);

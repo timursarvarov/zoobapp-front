@@ -61,9 +61,9 @@
                         <manipulations
                             ref="step2"
                             v-model="description"
+                            :manipulationsToEdit="selectedProcedure.manipulations"
                             :selectedTeeth="selectedTeethLocalJaw"
                             :size="jawListSize"
-                            :descriptions="procedureDescriptions"
                             @addManipulations="manipulationsCreated"
                             :currencyCode="clinic.currencyCode"
                         />
@@ -118,6 +118,7 @@
                 default: () => ({
                     code: '',
                     title: '',
+                    manipulations: [],
                 }),
             },
             selectedTeeth: {
@@ -266,7 +267,7 @@
         computed: {
             ...mapGetters({
                 procedureDescriptions: 'procedureDescriptions',
-                clinic:'getCurrentClinic',
+                clinic: 'getCurrentClinic',
             }),
             originalProcedure() {
                 const originalCode = this.selectedProcedure.code;
@@ -309,6 +310,7 @@
             this.selectedTeethL = this.copyObj(this.selectedTeeth);
             this.hasLoctionsKey(this.selectedProcedure.code);
             this.initiateLocalDiagnose();
+            this.description = this.selectedProcedure.description;
         },
     };
 </script>

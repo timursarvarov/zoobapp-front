@@ -1,6 +1,77 @@
-  .anamnes {
-        fill: #fb8c00 !important;
-        .tooth-number {
-            color: #fb8c00;
+.tooth {
+    .set-anamnesis {
+        .procedure {
+            opacity: 0.4;
         }
     }
+    .anamnes {
+        &.tooth-number {
+            color: grey;
+        }
+        &.coronaLingualIncisalDistal,
+        &.coronaLingualIncisalMiddle,
+        &.coronaLingualIncisionMesial,
+        &.coronaLingualMiddleDistal,
+        &.coronaLingualMiddleMiddle,
+        &.coronaLingualMiddleMesial,
+        &.coronaLingualCervicalDistal,
+        &.coronaLingualCervicalMiddle,
+        &.coronaLingualCervicalMesial,
+        &.coronaLabialIncisalDistal,
+        &.coronaLabialIncisalMiddle,
+        &.coronaLabialIncisionMesial,
+        &.coronaLabialMiddleDistal,
+        &.coronaLabialMiddleMiddle,
+        &.coronaLabialMiddleMesial,
+        &.coronaLabialCervicalDistal,
+        &.coronaLabialCervicalMiddle,
+        &.coronaLabialCervicalMesial,
+        &.coronaTopBuccal,
+        &.coronaTopMedial,
+        &.coronaTopLingual,
+        &.coronaTopDistal,
+        &.coronaTopOclusial,
+        &.implant,
+        &.silant,
+        &.crown,
+        &.braces,
+        &.root,
+        &.bridge,
+        &.veneer,
+        &.silant {
+            fill: grey !important;
+            stroke: #020202;
+            stroke-width: 0.25px;
+        }
+        &.periodontit {
+            stroke-width: 2px;
+        }
+        &.coronaLingual,
+        &.coronaTop,
+        &.coronaLabial {
+            stroke: grey;
+            stroke-width: 2px;
+        }
+        &.rootCanal {
+            stroke-width: 2px;
+        }
+        &.periodontit,
+        &.rootCanal,
+        &.bone {
+            stroke-width: 2px;
+            fill: grey !important;
+            // stroke: grey;
+        }
+        &.gum,
+        &.paradontit1,
+        &.paradontit2,
+        &.paradontit3,
+        &.paradontit4 {
+            opacity: 1;
+            stroke: grey;
+            stroke-linejoin: round;
+            stroke-width: 4px;
+            fill: none !important;
+        }
+    }
+}

@@ -1,65 +1,65 @@
 <template>
-    <md-dialog :md-active.sync="isDialogVisibleL" class="jaw-dialog-wrapper noselect">
+    <md-dialog :md-active.sync="isDialogVisibleL" class="jaw-dialog-wrapper">
         <div class="wizard-add-diagnose-form">
             <div>
-                <simple-wizard finishButtonText="Save Diagnose">
+                <simple-wizard finishButtonText="Save Anamnes">
                     <template slot="header">
                         <h5 class="title">
-                            <b>{{selectedDiagnose.code}}</b>
-                            {{selectedDiagnose.title}}
+                            <b>{{selectedAnamnes.code}}</b>
+                            {{selectedAnamnes.title}}
                         </h5>
                         <span>
                             <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
-                                <span v-if="isEmpty(diagnoseToCreate.teeth)">Please selesct tooth</span>
+                                <span v-if="isEmpty(itemToCreate.teeth)">Please selesct tooth</span>
                                 <span v-else>
                                     <slide-y-down-transition>
-                                        <span v-show="!isEmpty(originalDiagnose.locations)">For:</span>
+                                        <span v-show="!isEmpty(originalAnamnes.locations)">For:</span>
                                     </slide-y-down-transition>
                                     <slide-y-down-transition>
                                         <span
-                                            v-show="isEmpty(originalDiagnose.locations)"
+                                            v-show="isEmpty(originalAnamnes.locations)"
                                         >Disease area:</span>
                                     </slide-y-down-transition>
                                 </span>
                                 <transition-group name="list">
                                     <span
-                                        v-for="(item, key) in diagnoseToCreate.teeth"
+                                        v-for="(item, key) in itemToCreate.teeth"
                                         :key="key + 0"
                                         class="list-item"
                                     >{{ key | toCurrentTeethSystem(teethSystem) }}</span>
                                 </transition-group>
                             </span>
-                            <span v-else class="category">{{selectedDiagnose.explain}}</span>
+                            <span v-else class="category">{{selectedAnamnes.explain}}</span>
                         </span>
                     </template>
                     <wizard-tab
                         v-if="hasLocationKeyOrSelectedTeeth()"
                         :before-change="() => validateStep('step1')"
                     >
-                        <template slot="label">Location</template>
+                        <template slot="label">Locations</template>
                         <tooth-locations
                             ref="step1"
                             :jaw="jaw"
                             :prefer="prefer"
                             :error.sync="errorLocations"
-                            :selectedDiagnose="selectedDiagnose"
-                            :originalLocations="originalDiagnose.locations"
+                            :selectedAnamnes="selectedAnamnes"
+                            :originalLocations="originalAnamnes.locations"
                             :selectedTeeth="selectedTeeth"
-                            v-model="selectedDiagnoseLocal"
+                            v-model="selectedAnamnesLocal"
                             :teethSchema="teethSchema"
                             :teethSystem="teethSystem"
                             @mounted-size="setSize"
+                            @onToothSelected="onToothSelected"
                         />
                     </wizard-tab>
-
                     <wizard-tab :before-change="() => validateStep('step2')">
-                        <template slot="label">Add description</template>
-                        <diagnose-description
+                        <template slot="label">Description</template>
+                        <anamnes-description
                             ref="step2"
                             v-model="description"
                             :size="jawListSize"
-                            :descriptions="diagnoseDescriptions"
-                            @on-validated="diagnoseCreated"
+                            :descriptions="anamnesDescriptions"
+                            @on-validated="anamnesCreated"
                         />
                     </wizard-tab>
                 </simple-wizard>
@@ -70,16 +70,20 @@
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
     import ToothLocations from './Wizard/ToothLocations.vue';
-    import DiagnoseDescription from './Wizard/DiagnoseDescription.vue';
+    import AnamnesDescription from './Wizard/AnamnesDescription.vue';
     import { SimpleWizard, WizardTab } from '@/components';
     import { mapGetters } from 'vuex';
-    import { NOTIFY, DIAGNOSIS } from '@/constants';
+    import { NOTIFY, PROCEDURES } from '@/constants';
     import { tObjProp } from '@/mixins';
 
     export default {
         name: 'refistration-wizard',
         mixins: [tObjProp],
         props: {
+            currentPlan: {
+                type: Object,
+                default: () => {},
+            },
             isDialogVisible: {
                 type: Boolean,
                 default: false,
@@ -92,7 +96,7 @@
                 type: String,
                 default: () => 'diagnose',
             },
-            selectedDiagnose: {
+            selectedAnamnes: {
                 type: Object,
                 default: () => ({
                     code: '',
@@ -125,7 +129,8 @@
                 jawListSize: {},
                 description: '',
                 selectedTeethL: [],
-                diagnoseToCreate: {
+                selectedTeethLocalJaw: [],
+                itemToCreate: {
                     teeth: {},
                     description: '',
                     explain: '',
@@ -135,35 +140,42 @@
             };
         },
         components: {
-            DiagnoseDescription,
+            AnamnesDescription,
             SimpleWizard,
             WizardTab,
             ToothLocations,
             SlideYDownTransition,
         },
         methods: {
+            onToothSelected(selectedTeethLocalJaw) {
+                this.selectedTeethLocalJaw = [];
+                this.selectedTeethLocalJaw = selectedTeethLocalJaw;
+            },
             // инициируем локальный диагноз
             initiateLocalDiagnose() {
-                Object.keys(this.selectedDiagnose).forEach((key) => {
-                    this.diagnoseToCreate[key] = this.selectedDiagnose[key];
+                Object.keys(this.selectedAnamnes).forEach((key) => {
+                    this.itemToCreate[key] = this.selectedAnamnes[key];
                 });
-                this.diagnoseToCreate.date = new Date();
+                this.itemToCreate.date = new Date();
             },
-            diagnoseCreated() {
-                this.diagnoseToCreate.description = this.description;
-                this.$emit('on-created', this.diagnoseToCreate);
+            manipulationsCreated(manipulations) {
+                this.itemToCreate.manipulations = manipulations;
+            },
+            anamnesCreated() {
+                this.itemToCreate.description = this.description;
+                this.$emit('on-created', this.itemToCreate);
             },
             unsetLocalDiagnose() {
-                this.diagnoseToCreate.teeth = {};
-                this.diagnoseToCreate.description = '';
-                this.diagnoseToCreate.explain = '';
-                this.diagnoseToCreate.type = '';
-                this.diagnoseToCreate.code = '';
-                this.diagnoseToCreate.title = '';
+                this.itemToCreate.teeth = {};
+                this.itemToCreate.description = '';
+                this.itemToCreate.explain = '';
+                this.itemToCreate.type = '';
+                this.itemToCreate.code = '';
+                this.itemToCreate.title = '';
             },
             hasLoctionsKey() {
-                if (this.originalDiagnose) {
-                    return 'locations' in this.originalDiagnose;
+                if (this.originalAnamnes) {
+                    return 'locations' in this.originalAnamnes;
                 }
                 return false;
             },
@@ -220,12 +232,13 @@
         },
         computed: {
             ...mapGetters({
-                diagnoseDescriptions: 'diagnoseDescriptions',
+                anamnesDescriptions: 'procedureDescriptions',
+                clinic: 'getCurrentClinic',
             }),
-            originalDiagnose() {
-                const originalCode = this.selectedDiagnose.code;
-                for (let index = 0; index < this.diagnosis.length; index += 1) {
-                    const dGrooup = this.diagnosis[index];
+            originalAnamnes() {
+                const originalCode = this.selectedAnamnes.code;
+                for (let index = 0; index < this.anamnesis.length; index += 1) {
+                    const dGrooup = this.anamnesis[index];
                     if (dGrooup.codes) {
                         const dIndex = dGrooup.codes
                             .map(d => d.code)
@@ -237,17 +250,17 @@
                 }
                 return false;
             },
-            diagnosis() {
-                return DIAGNOSIS;
+            anamnesis() {
+                return PROCEDURES;
             },
-            selectedDiagnoseLocal: {
+            selectedAnamnesLocal: {
                 get() {
-                    return this.selectedDiagnose;
+                    return this.selectedAnamnes;
                 },
                 set(newValue) {
                     // необходимо для реактивности создоваемого диагногза внутри данного компонента
                     this.unsetLocalDiagnose();
-                    this.diagnoseToCreate = this.copyObj(newValue);
+                    this.itemToCreate = this.copyObj(newValue);
                 },
             },
             isDialogVisibleL: {
@@ -261,9 +274,9 @@
         },
         created() {
             this.selectedTeethL = this.copyObj(this.selectedTeeth);
-            this.hasLoctionsKey(this.selectedDiagnose.code);
+            this.hasLoctionsKey(this.selectedAnamnes.code);
             this.initiateLocalDiagnose();
-            this.description = this.selectedDiagnose.description;
+            this.description = this.selectedAnamnes.description;
         },
     };
 </script>

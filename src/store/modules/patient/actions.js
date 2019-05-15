@@ -20,9 +20,10 @@ import {
     PATIENT_PLAN_EDIT,
     PATIENT_DIAGNOSE_SET,
     PATIENT_DIAGNOSE_UPDATE,
+    PATIENT_PROCEDURE_UPDATE,
     PATIENT_TOGGLE_ITEM_VISIBILITY,
     PATIENT_PROCEDURES_SET,
-    PATIENT_TREATMETS_UPDATE,
+    PATIENT_ANAMNES_SET,
     TEETH_INITIATION,
 } from '@/constants';
 
@@ -182,6 +183,7 @@ export default {
     }, {
         patient,
     }) => new Promise((resolve, reject) => {
+        console.log(patient);
         commit(PATIENT_REQUEST);
         axios.post('/patients/',
                 JSON.stringify({
@@ -240,6 +242,13 @@ export default {
     }) => {
         commit(PATIENT_DIAGNOSE_SET, diagnose);
     },
+    [PATIENT_ANAMNES_SET]: ({
+        commit,
+    }, {
+        anamnes,
+    }) => {
+        commit(PATIENT_ANAMNES_SET, anamnes);
+    },
 
     [PATIENT_PLAN_EDIT]: ({
         commit,
@@ -255,17 +264,30 @@ export default {
         }
     },
 
-    [PATIENT_TREATMETS_UPDATE]: ({
+    [PATIENT_PROCEDURE_UPDATE]: ({
         commit,
         state,
     }, {
-        procedure,
+        params,
     }) => {
-        const dIndex = state.patient.procedures.findIndex(pProcedure => pProcedure.id === procedure.id);
-        if (dIndex !== -1) {
-            commit(PATIENT_TREATMETS_UPDATE, { dIndex, diagnose });
+        const { procedure, planId } = params;
+        let procedureIndex = -1;
+        let planIndex = -1;
+        if (planId) {
+            planIndex = state.patient.plans.findIndex(plan => plan.id === planId);
+            if (planIndex > -1) {
+                procedureIndex = state.patient.plans[planIndex].procedures.findIndex(item => item.id === procedure.id);
+            }
+            commit(PATIENT_PROCEDURE_UPDATE, {
+                params: {
+                    procedureIndex,
+                    planIndex,
+                    procedure,
+                },
+            });
         }
     },
+
     [PATIENT_DIAGNOSE_UPDATE]: ({
         commit,
         state,
@@ -347,4 +369,4 @@ export default {
                 reject(err);
             });
     }),
-}
+};

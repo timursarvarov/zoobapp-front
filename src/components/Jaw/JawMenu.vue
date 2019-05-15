@@ -15,7 +15,8 @@
                 :class="[
                     { [btnClass]: items.length > 0},
                     { 'md-simple': items.length === 0},
-                    { 'tooth-selected': selected}
+                    { 'tooth-selected': selected},
+                    { 'circle': hasOtherTypes}
                 ]"
                 class="md-button t-tooth-button md-round dropdown-toggle"
                 :style="{
@@ -113,6 +114,10 @@
                 type: Number,
                 default: () => 5,
             },
+            hasOtherTypes: {
+                type: Boolean,
+                default: () => false,
+            },
         },
         data() {
             return {
@@ -174,17 +179,23 @@
         color: white !important;
         // font-weight: 600;
     }
-    // .t-tooth-button:after {
-    //     content: '';
-    //     display: block;
-    //     position: absolute;
-    //     top: -0.2px;
-    //     bottom: -0.2px;
-    //     left: -0.2px;
-    //     right: -0.2px;
-    //     border-radius: 15px;
-    //     border: 2px solid white;
-    // }
+    .tooth-selected.circle {
+        // cursor: pointer;
+        // color: white !important;
+           border: 1px solid rgb(255, 255, 255);
+        // font-weight: 600;
+    }
+    .circle:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top:0px;
+        bottom:0px;
+        left:0px;
+        right:0px;
+        border-radius: 15px;
+          border: 1px solid rgb(146, 143, 143);
+    }
     .t-tooth-button {
         position: relative;
         .md-ripple {

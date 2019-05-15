@@ -1,27 +1,40 @@
 <template>
-  <div
-    class="wrapper"
-    :class="[{'nav-open': $sidebar.showSidebar}, {'rtl': $route.meta.rtlActive}]"
-  >
-    <side-bar-jaw
-      :logo="currentClinic.logo"
-      :title="currentClinic.name"
-      :logoColor="currentClinic.color"
-      :link="currentClinic.link"
+    <div
+        class="wrapper"
+        :class="[{'nav-open': $sidebar.showSidebar}, {'rtl': $route.meta.rtlActive}]"
     >
-      <!-- <user-menu></user-menu> -->
-      <mobile-menu></mobile-menu>
-      <template slot="links">
-        <sidebar-item
-          v-if="$route.meta.rtlActive"
-          :link="{name: 'لوحة القيادةة', icon: 'dashboard', path: '/dashboard'}"
-        ></sidebar-item>
-        <sidebar-item v-else :link="{name: 'Dashboard', icon: 'dashboard', path: '/dashboard'}"></sidebar-item>
+        <side-bar-jaw
+            :logo="currentClinic.logo"
+            :title="currentClinic.name"
+            :logoColor="currentClinic.color"
+            :link="currentClinic.link"
+        >
+            <!-- <user-menu></user-menu> -->
+            <mobile-menu></mobile-menu>
+            <template slot="links">
+                <sidebar-item
+                    v-if="$route.meta.rtlActive"
+                    :link="{name: 'لوحة القيادةة', icon: 'dashboard', path: '/dashboard'}"
+                ></sidebar-item>
+                <sidebar-item
+                    v-else
+                    :link="{name: 'Dashboard', icon: 'dashboard', path: '/dashboard'}"
+                ></sidebar-item>
+				<sidebar-item
+                    v-if="$route.meta.rtlActive"
+                    :link="{name: 'التقويم', icon: 'date_range', path: '/calendar'}"
+                ></sidebar-item>
+                <sidebar-item
+                    v-else
+                    :link="{name: 'Calendar', icon: 'date_range', path: '/calendar'}"
+                ></sidebar-item>
 
-        <sidebar-item :link="{name: 'Patients', icon: 'supervised_user_circle', path: '/patients'}"></sidebar-item>
-        <sidebar-item
-          v-if="patient.ID !== null"
-          :link="{
+                <sidebar-item
+                    :link="{name: 'Patients', icon: 'supervised_user_circle', path: '/patients'}"
+                ></sidebar-item>
+                <sidebar-item
+                    v-if="patient.ID !== null"
+                    :link="{
             name: `${patient.firstName} ${patient.lastName}`,
             icon: 'account_circle',
             img:patient.avatar? patient.avatar: '',
@@ -29,168 +42,160 @@
             acronim: patient.firstName+' '+patient.lastName,
             notification: patient.allergy.length > 0 ? 'A' : '',
             }"
-          class="separated-down"
-        >
-          <sidebar-item :link="{name: 'BIO', icon: 'image', path: `/patient/${patient.ID}/bio`}"></sidebar-item>
-          <sidebar-item :link="{name: 'Anamnes', path: `/patient/${patient.ID}/anamnes`}"></sidebar-item>
-          <sidebar-item :link="{name: 'Diagnose', path: `/patient/${patient.ID}/diagnose`}"></sidebar-item>
-          <sidebar-item :link="{name: 'Procedure', path: `/patient/${patient.ID}/procedure`}"></sidebar-item>
-          <sidebar-item :link="{name: 'Notes', path: `/patient/${patient.ID}/notes`}"></sidebar-item>
-          <sidebar-item :link="{name: 'Files', path: `/patient/${patient.ID}/files`}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item
-          :link="{name: 'Clinics',
-                icon: 'business',
-                path: '/clinics'}"
-        ></sidebar-item>
-        <sidebar-item
-          v-if="selectedClinic.ID "
-          :link="{
-            name: `${selectedClinic.name}`,
-            icon: 'account_circle',
-            img:selectedClinic.logo? selectedClinic.logo: '',
-            avatarColor:selectedClinic.color,
-            acronim:selectedClinic.name}"
-          class="separated-down"
-        >
-          <sidebar-item :link="{name: 'Clinic Settings', icon: 'image', path: `/clinic/${selectedClinic.ID}/settings`}"></sidebar-item>
-          <sidebar-item :link="{name: 'Procedures', path: `/clinic/${selectedClinic.ID}/procedures`}"></sidebar-item>
-          <sidebar-item :link="{name: 'Manipulations', path: `/clinic/${selectedClinic.ID}/manipulations`}"></sidebar-item>
-          <sidebar-item :link="{name: 'Consumables', path: `/clinic/${selectedClinic.ID}/consumables`}"></sidebar-item>
+                    class="separated-down"
+                >
+                    <sidebar-item
+                        :link="{name: 'BIO', icon: 'image', path: `/patient/${patient.ID}/bio`}"
+                    ></sidebar-item>
+                    <sidebar-item :link="{name: 'Anamnes', path: `/patient/${patient.ID}/anamnes`}"></sidebar-item>
+                    <sidebar-item
+                        :link="{name: 'Diagnose', path: `/patient/${patient.ID}/diagnose`}"
+                    ></sidebar-item>
+                    <sidebar-item
+                        :link="{name: 'Procedure', path: `/patient/${patient.ID}/procedure`}"
+                    ></sidebar-item>
+                    <sidebar-item :link="{name: 'Notes', path: `/patient/${patient.ID}/notes`}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Files', path: `/patient/${patient.ID}/files`}"></sidebar-item>
+                </sidebar-item>
+                <sidebar-item :link="{name: 'Settings', icon: 'settings', path: '/settings'}" class="separated-down">
+                    <sidebar-item
+                        :link="{name: 'Clinic Settings', icon: 'image', path: `/clinic/${selectedClinic.ID}/settings`}"
+                    ></sidebar-item>
+                    <sidebar-item
+                        :link="{name: 'Procedures', path: `/clinic/${selectedClinic.ID}/procedures`}"
+                    ></sidebar-item>
+                    <sidebar-item
+                        :link="{name: 'Manipulations', path: `/clinic/${selectedClinic.ID}/manipulations`}"
+                    ></sidebar-item>
+                    <sidebar-item
+                        :link="{name: 'Consumables', path: `/clinic/${selectedClinic.ID}/consumables`}"
+                    ></sidebar-item>
+                    <sidebar-item :link="{name: 'Services', path: '/settings/services'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Payment', path: '/settings/payment'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Collaborators', path: '/settings/collaborators'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Notifications', path: '/settings/notifications'}"></sidebar-item>
 
-        <sidebar-item
-          :link="{name: 'Collaborators',
+                    <sidebar-item
+                        :link="{name: 'Collaborators',
                 icon: 'people_outline',
                 path: '/collaborators'}"
-        ></sidebar-item>
-        <sidebar-item
-          v-if="selectedClinic.ID"
-          :link="{
-            name: `${selectedClinic.name}`,
-            icon: 'account_circle',
-            img:selectedClinic.logo? selectedClinic.logo: '',
-            avatarColor:selectedClinic.color,
-            acronim: selectedClinic.name}"
-          class="separated-down"
-        >
-          <sidebar-item
-            :link="{name: 'Profile', path: `/collaborator/${selectedClinic.ID}/profile`}"
-          ></sidebar-item>
-          <sidebar-item
-            :link="{name: 'Statistic', path: `/collaborator/${selectedClinic.ID}/statistic`}"
-          ></sidebar-item>
-        </sidebar-item>
-        </sidebar-item>
-        <sidebar-item :link="{name: 'Settings', icon: 'settings', path: '/settings'}">
-          <sidebar-item
-            :link="{name: 'My Profile',  icon: 'account_circle', path: '/settings/user'}"
-          ></sidebar-item>
-          <sidebar-item :link="{name: 'Services', path: '/settings/services'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Payment', path: '/settings/payment'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Collaborators', path: '/settings/collaborators'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Notifications', path: '/settings/notifications'}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'صفحات', icon: 'image'}">
-          <sidebar-item :link="{name: 'التسعير', path: '/pricing'}"></sidebar-item>
-          <sidebar-item :link="{name: 'دعم رتل', path: '/pages/rtl'}"></sidebar-item>
-          <sidebar-item :link="{name: 'الجدول الزمني', path: '/pages/timeline'}"></sidebar-item>
-          <sidebar-item :link="{name: 'صفحة تسجيل الدخول', path: '/login'}"></sidebar-item>
-          <sidebar-item :link="{name: 'سجل الصفحة', path: '/register'}"></sidebar-item>
-          <sidebar-item :link="{name: 'قفل صفحة الشاشة', path: '/lock'}"></sidebar-item>
-          <sidebar-item :link="{name: 'ملف تعريفي للمستخدم', path: '/pages/user'}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item v-else :link="{name: 'Pages', icon: 'image'}">
-          <sidebar-item :link="{name: 'Pricing', path: '/pricing'}"></sidebar-item>
-          <sidebar-item :link="{name: 'RTL Support', path: '/pages/rtl'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Timeline', path: '/pages/timeline'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Login', path: '/login'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Register', path: '/register'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Lock Screen', path: '/lock'}"></sidebar-item>
-          <sidebar-item :link="{name: 'User Profile', path: '/pages/user'}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'المكونات', icon: 'apps'}">
-          <sidebar-item :link="{name: 'وصفتت', path: '/components/buttons'}"></sidebar-item>
-          <sidebar-item :link="{name: 'نظام الشبكةو', path: '/components/grid-system'}"></sidebar-item>
-          <sidebar-item :link="{name: 'لوحات', path: '/components/panels'}"></sidebar-item>
-          <sidebar-item :link="{name: 'التنبيه الحلو', path: '/components/sweet-alert'}"></sidebar-item>
-          <sidebar-item :link="{name: 'إخطارات', path: '/components/notifications'}"></sidebar-item>
-          <sidebar-item :link="{name: 'الرموز', path: '/components/icons'}"></sidebar-item>
-          <sidebar-item :link="{name: 'طباعة', path: '/components/typography'}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item v-else :link="{name: 'Components', icon: 'apps'}">
-          <sidebar-item :link="{name: 'Buttons', path: '/components/buttons'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Grid System', path: '/components/grid-system'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Panels', path: '/components/panels'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Sweet Alert', path: '/components/sweet-alert'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Notifications', path: '/components/notifications'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Icons', path: '/components/icons'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Typography', path: '/components/typography'}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item
-          v-if="$route.meta.rtlActive"
-          :link="{name: 'إستمارات', icon: 'content_paste'}"
-        >
-          <sidebar-item :link="{name: 'أشكال منتظمة', path: '/forms/regular'}"></sidebar-item>
-          <sidebar-item :link="{name: 'أشكال موسعة', path: '/forms/extended'}"></sidebar-item>
-          <sidebar-item :link="{name: 'نماذج التحقق', path: '/forms/validation'}"></sidebar-item>
-          <sidebar-item :link="{name: 'ساحر', path: '/forms/wizard'}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item v-else :link="{name: 'Forms', icon: 'content_paste'}">
-          <sidebar-item :link="{name: 'Regular Forms', path: '/forms/regular'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Extended Forms', path: '/forms/extended'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Validation Forms', path: '/forms/validation'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Wizard', path: '/forms/wizard'}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'الجداول', icon: 'grid_on'}">
-          <sidebar-item :link="{name: 'الجداول العادية', path: '/table-list/regular'}"></sidebar-item>
-          <sidebar-item :link="{name: 'الجداول الموسعة', path: '/table-list/extended'}"></sidebar-item>
-          <sidebar-item :link="{name: 'جداول البيانات صافي', path: '/table-list/paginated'}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item v-else :link="{name: 'Tables', icon: 'grid_on'}">
-          <sidebar-item :link="{name: 'Regular Tables', path: '/table-list/regular'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Extended Tables', path: '/table-list/extended'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Paginated Tables', path: '/table-list/paginated'}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'خرائط', icon: 'place'}">
-          <sidebar-item :link="{name: 'خرائط جوجل', path: '/maps/google'}"></sidebar-item>
-          <sidebar-item :link="{name: 'خريطة كاملة الشاشة', path: '/maps/full-screen'}"></sidebar-item>
-          <sidebar-item :link="{name: 'سهم التوجيه، الخريطة', path: '/maps/vector-map'}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item v-else :link="{name: 'Maps', icon: 'place'}">
-          <sidebar-item :link="{name: 'Google Maps', path: '/maps/google'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Full Screen Maps', path: '/maps/full-screen'}"></sidebar-item>
-          <sidebar-item :link="{name: 'Vector Maps', path: '/maps/vector-map'}"></sidebar-item>
-        </sidebar-item>
-        <sidebar-item
-          v-if="$route.meta.rtlActive"
-          :link="{name: 'الحاجيات', icon: 'widgets', path: '/widgets'}"
-        ></sidebar-item>
-        <sidebar-item v-else :link="{name: 'Widgets', icon: 'widgets', path: '/widgets'}"></sidebar-item>
-        <sidebar-item
-          v-if="$route.meta.rtlActive"
-          :link="{name: 'الرسوم البيانية', icon: 'timeline', path: '/charts'}"
-        ></sidebar-item>
-        <sidebar-item v-else :link="{name: 'Charts', icon: 'timeline', path: '/charts'}"></sidebar-item>
-        <sidebar-item
-          v-if="$route.meta.rtlActive"
-          :link="{name: 'التقويم', icon: 'date_range', path: '/calendar'}"
-        ></sidebar-item>
-        <sidebar-item v-else :link="{name: 'Calendar', icon: 'date_range', path: '/calendar'}"></sidebar-item>
-      </template>
-    </side-bar-jaw>
-    <div class="main-panel">
-      <top-navbar></top-navbar>
+                    ></sidebar-item>
+                </sidebar-item>
+                <sidebar-item
+                    :link="{name: 'My Profile',  icon: 'account_circle', path: '/settings/user'}"
+                ></sidebar-item>
+                <sidebar-item
+                    :link="{name: 'Clinics',
+                icon: 'business',
+                path: '/clinics'}"
+                >
+                    <sidebar-item :link="{name: 'clinic1', path: '/settings/notifications'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'clinic2', path: '/settings/notifications'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'clinic3', path: '/settings/notifications'}"></sidebar-item>
+                </sidebar-item>
+                <!-- <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'صفحات', icon: 'image'}">
+                    <sidebar-item :link="{name: 'التسعير', path: '/pricing'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'دعم رتل', path: '/pages/rtl'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'الجدول الزمني', path: '/pages/timeline'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'صفحة تسجيل الدخول', path: '/login'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'سجل الصفحة', path: '/register'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'قفل صفحة الشاشة', path: '/lock'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'ملف تعريفي للمستخدم', path: '/pages/user'}"></sidebar-item>
+                </sidebar-item>
+                <sidebar-item v-else :link="{name: 'Pages', icon: 'image'}">
+                    <sidebar-item :link="{name: 'Pricing', path: '/pricing'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'RTL Support', path: '/pages/rtl'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Timeline', path: '/pages/timeline'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Login', path: '/login'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Register', path: '/register'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Lock Screen', path: '/lock'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'User Profile', path: '/pages/user'}"></sidebar-item>
+                </sidebar-item>
+                <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'المكونات', icon: 'apps'}">
+                    <sidebar-item :link="{name: 'وصفتت', path: '/components/buttons'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'نظام الشبكةو', path: '/components/grid-system'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'لوحات', path: '/components/panels'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'التنبيه الحلو', path: '/components/sweet-alert'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'إخطارات', path: '/components/notifications'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'الرموز', path: '/components/icons'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'طباعة', path: '/components/typography'}"></sidebar-item>
+                </sidebar-item>
+                <sidebar-item v-else :link="{name: 'Components', icon: 'apps'}">
+                    <sidebar-item :link="{name: 'Buttons', path: '/components/buttons'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Grid System', path: '/components/grid-system'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Panels', path: '/components/panels'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Sweet Alert', path: '/components/sweet-alert'}"></sidebar-item>
+                    <sidebar-item
+                        :link="{name: 'Notifications', path: '/components/notifications'}"
+                    ></sidebar-item>
+                    <sidebar-item :link="{name: 'Icons', path: '/components/icons'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Typography', path: '/components/typography'}"></sidebar-item>
+                </sidebar-item>
+                <sidebar-item
+                    v-if="$route.meta.rtlActive"
+                    :link="{name: 'إستمارات', icon: 'content_paste'}"
+                >
+                    <sidebar-item :link="{name: 'أشكال منتظمة', path: '/forms/regular'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'أشكال موسعة', path: '/forms/extended'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'نماذج التحقق', path: '/forms/validation'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'ساحر', path: '/forms/wizard'}"></sidebar-item>
+                </sidebar-item>
+                <sidebar-item v-else :link="{name: 'Forms', icon: 'content_paste'}">
+                    <sidebar-item :link="{name: 'Regular Forms', path: '/forms/regular'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Extended Forms', path: '/forms/extended'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Validation Forms', path: '/forms/validation'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Wizard', path: '/forms/wizard'}"></sidebar-item>
+                </sidebar-item>
+                <sidebar-item
+                    v-if="$route.meta.rtlActive"
+                    :link="{name: 'الجداول', icon: 'grid_on'}"
+                >
+                    <sidebar-item :link="{name: 'الجداول العادية', path: '/table-list/regular'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'الجداول الموسعة', path: '/table-list/extended'}"></sidebar-item>
+                    <sidebar-item
+                        :link="{name: 'جداول البيانات صافي', path: '/table-list/paginated'}"
+                    ></sidebar-item>
+                </sidebar-item>
+                <sidebar-item v-else :link="{name: 'Tables', icon: 'grid_on'}">
+                    <sidebar-item :link="{name: 'Regular Tables', path: '/table-list/regular'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Extended Tables', path: '/table-list/extended'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Paginated Tables', path: '/table-list/paginated'}"></sidebar-item>
+                </sidebar-item>
+                <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'خرائط', icon: 'place'}">
+                    <sidebar-item :link="{name: 'خرائط جوجل', path: '/maps/google'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'خريطة كاملة الشاشة', path: '/maps/full-screen'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'سهم التوجيه، الخريطة', path: '/maps/vector-map'}"></sidebar-item>
+                </sidebar-item>
+                <sidebar-item v-else :link="{name: 'Maps', icon: 'place'}">
+                    <sidebar-item :link="{name: 'Google Maps', path: '/maps/google'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Full Screen Maps', path: '/maps/full-screen'}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Vector Maps', path: '/maps/vector-map'}"></sidebar-item>
+                </sidebar-item>
+                <sidebar-item
+                    v-if="$route.meta.rtlActive"
+                    :link="{name: 'الحاجيات', icon: 'widgets', path: '/widgets'}"
+                ></sidebar-item>
+                <sidebar-item v-else :link="{name: 'Widgets', icon: 'widgets', path: '/widgets'}"></sidebar-item>
+                <sidebar-item
+                    v-if="$route.meta.rtlActive"
+                    :link="{name: 'الرسوم البيانية', icon: 'timeline', path: '/charts'}"
+                ></sidebar-item>
+                <sidebar-item v-else :link="{name: 'Charts', icon: 'timeline', path: '/charts'}"></sidebar-item> -->
+            </template>
+        </side-bar-jaw>
+        <div class="main-panel">
+            <top-navbar></top-navbar>
 
-      <div :class="{content: !$route.meta.hideContent}" @click="toggleSidebar">
-        <zoom-center-transition :duration="200" mode="out-in">
-          <!-- your content here -->
-          <router-view></router-view>
-        </zoom-center-transition>
-      </div>
-      <content-footer v-if="!$route.meta.hideFooter"></content-footer>
+            <div :class="{content: !$route.meta.hideContent}" @click="toggleSidebar">
+                <zoom-center-transition :duration="200" mode="out-in">
+                    <!-- your content here -->
+                    <router-view></router-view>
+                </zoom-center-transition>
+            </div>
+            <content-footer v-if="!$route.meta.hideFooter"></content-footer>
+        </div>
+        <patient-add-form/>
     </div>
-    <patient-add-form/>
-  </div>
 </template>
 <script>
 /* eslint-disable no-new */
@@ -204,107 +209,107 @@
     // import UserMenu from './Extra/UserMenu.vue';
 
     function hasElement(className) {
-      return document.getElementsByClassName(className).length > 0;
+        return document.getElementsByClassName(className).length > 0;
     }
 
     function initScrollbar(className) {
-      if (hasElement(className)) {
-        new PerfectScrollbar(`.${className}`);
-      } else {
-        // try to init it later in case this component is loaded async
-        setTimeout(() => {
-          initScrollbar(className);
-        }, 100);
-      }
+        if (hasElement(className)) {
+            new PerfectScrollbar(`.${className}`);
+        } else {
+            // try to init it later in case this component is loaded async
+            setTimeout(() => {
+                initScrollbar(className);
+            }, 100);
+        }
     }
 
     export default {
-      components: {
-        TopNavbar,
-        ContentFooter,
-        MobileMenu,
-        // UserMenu,
-        ZoomCenterTransition,
-      },
-      methods: {
-        toggleSidebar() {
-          if (this.$sidebar.showSidebar) {
-            this.$sidebar.displaySidebar(false);
-          }
+        components: {
+            TopNavbar,
+            ContentFooter,
+            MobileMenu,
+            // UserMenu,
+            ZoomCenterTransition,
         },
-      },
-      mounted() {
-        const docClasses = document.body.classList;
-        const isWindows = navigator.platform.startsWith('Win');
-        if (isWindows) {
-          // if we are on windows OS we activate the perfectScrollbar function
-          initScrollbar('sidebar');
-          initScrollbar('sidebar-wrapper');
-          initScrollbar('main-panel');
-          docClasses.add('perfect-scrollbar-on');
-        } else {
-          docClasses.add('perfect-scrollbar-off');
-        }
-      },
-      computed: {
-        ...mapGetters({
-          patient: 'getPatient',
-          currentClinic: 'getCurrentClinic',
-          selectedClinic: 'getCurrentClinic',
-        }),
-      },
+        methods: {
+            toggleSidebar() {
+                if (this.$sidebar.showSidebar) {
+                    this.$sidebar.displaySidebar(false);
+                }
+            },
+        },
+        mounted() {
+            const docClasses = document.body.classList;
+            const isWindows = navigator.platform.startsWith('Win');
+            if (isWindows) {
+                // if we are on windows OS we activate the perfectScrollbar function
+                initScrollbar('sidebar');
+                initScrollbar('sidebar-wrapper');
+                initScrollbar('main-panel');
+                docClasses.add('perfect-scrollbar-on');
+            } else {
+                docClasses.add('perfect-scrollbar-off');
+            }
+        },
+        computed: {
+            ...mapGetters({
+                patient: 'getPatient',
+                currentClinic: 'getCurrentClinic',
+                selectedClinic: 'getCurrentClinic',
+            }),
+        },
     };
 </script>
 <style lang="scss" scoped>
 $scaleSize: 0.95;
 @keyframes zoomIn95 {
-  from {
-    opacity: 0;
-    transform: scale3d($scaleSize, $scaleSize, $scaleSize);
-  }
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+        transform: scale3d($scaleSize, $scaleSize, $scaleSize);
+    }
+    to {
+        opacity: 1;
+    }
 }
 .main-panel .zoomIn {
-  animation-name: zoomIn95;
+    animation-name: zoomIn95;
 }
 @keyframes zoomOut95 {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-    transform: scale3d($scaleSize, $scaleSize, $scaleSize);
-  }
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        transform: scale3d($scaleSize, $scaleSize, $scaleSize);
+    }
 }
 .main-panel .zoomOut {
-  animation-name: zoomOut95;
+    animation-name: zoomOut95;
 }
 .wrapper {
-  .separated-down:after {
-    content: "";
-    position: absolute;
-    margin: 15px 0 15px 0;
-    right: 15px;
-    height: 1px;
-    width: calc(100% - 30px);
-    background: rgba(180, 180, 180, 0.3) !important;
-  }
-  .separated-top:before {
-    content: "";
-    position: absolute;
-    margin: -8px 0 15px 0;
-    right: 15px;
-    height: 1px;
-    width: calc(100% - 30px);
-    background: rgba(180, 180, 180, 0.3) !important;
-  }
-  .separated-top {
-    padding-top: 20px;
-  }
-  .separated-down {
-    padding-bottom: 20px;
-  }
+    .separated-down:after {
+        content: "";
+        position: absolute;
+        margin: 15px 0 15px 0;
+        right: 15px;
+        height: 1px;
+        width: calc(100% - 30px);
+        background: rgba(180, 180, 180, 0.3) !important;
+    }
+    .separated-top:before {
+        content: "";
+        position: absolute;
+        margin: -8px 0 15px 0;
+        right: 15px;
+        height: 1px;
+        width: calc(100% - 30px);
+        background: rgba(180, 180, 180, 0.3) !important;
+    }
+    .separated-top {
+        padding-top: 20px;
+    }
+    .separated-down {
+        padding-bottom: 20px;
+    }
 }
 </style>

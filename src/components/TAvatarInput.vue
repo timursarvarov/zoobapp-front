@@ -47,124 +47,124 @@
     import { NOTIFY } from '@/constants';
 
     export default {
-      components: {
-        TImageCropperForm,
-      },
-      name: 't-avatar-inptut',
-      props: {
-        color: {
-          type: String,
-          default: '#43a047',
+        components: {
+            TImageCropperForm,
         },
-        imageSrc: {
-          type: String,
-          default: '',
+        name: 't-avatar-inptut',
+        props: {
+            color: {
+                type: String,
+                default: '#43a047',
+            },
+            imageSrc: {
+                type: String,
+                default: '',
+            },
+            noImgTag: {
+                type: Boolean,
+                default: false,
+            },
+            title: {
+                type: String,
+                default: 'pic',
+            },
+            formTitle: {
+                type: String,
+                default: 'Add a picture',
+            },
+            buttonColor: {
+                type: String,
+                default: 'green',
+            },
+            maxFilesize: {
+                type: Number,
+                default: 2000,
+            },
         },
-        noImgTag: {
-          type: Boolean,
-          default: false,
+        data() {
+            return {
+                loaded: false,
+                fd: null,
+                showForm: false,
+                image: '',
+            };
         },
-        title: {
-          type: String,
-          default: 'pic',
-        },
-        formTitle: {
-          type: String,
-          default: 'Add a picture',
-        },
-        buttonColor: {
-          type: String,
-          default: 'green',
-        },
-        maxFilesize: {
-          type: Number,
-          default: 2000,
-        },
-      },
-      data() {
-        return {
-          loaded: false,
-          fd: null,
-          showForm: false,
-          image: '',
-        };
-      },
-      methods: {
-        onLoaded() {
-          this.loaded = true;
-        },
-        onFileChange(e) {
-          const files = e.target.files || e.dataTransfer.files;
-          if (files.length > 0) {
-            this.createImage(files[0]);
-            this.showForm = true;
-            this.clearImage();
-          } else {
-            this.$store.dispatch(NOTIFY, {
-              settings: {
-                message: 'No files selected!',
-                type: 'warning',
-              },
-            });
-          }
-        },
-        colorLuminance(hex, lum) {
-          // eslint-disable-next-line no-unused-vars
-          let lumL = lum;
-          // eslint-disable-next-line no-unused-vars
-          let hexL = hex;
-          // validate hex string
-          hexL = String(hex).replace(/[^0-9a-f]/gi, '');
-          if (hex.length < 6) {
-            hexL = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-          }
-          lumL = lum || 0;
+        methods: {
+            onLoaded() {
+                this.loaded = true;
+            },
+            onFileChange(e) {
+                const files = e.target.files || e.dataTransfer.files;
+                if (files.length > 0) {
+                    this.createImage(files[0]);
+                    this.showForm = true;
+                    this.clearImage();
+                } else {
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: 'No files selected!',
+                            type: 'warning',
+                        },
+                    });
+                }
+            },
+            colorLuminance(hex, lum) {
+                // eslint-disable-next-line no-unused-vars
+                let lumL = lum;
+                // eslint-disable-next-line no-unused-vars
+                let hexL = hex;
+                // validate hex string
+                hexL = String(hex).replace(/[^0-9a-f]/gi, '');
+                if (hex.length < 6) {
+                    hexL = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+                }
+                lumL = lum || 0;
 
-          // convert to decimal and change luminosity
-          let rgb = '#';
-          let c;
-          let i;
-          for (i = 0; i < 3; i += 1) {
-            c = parseInt(hexL.substr(i * 2, 2), 16);
-            c = Math.round(Math.min(Math.max(0, c + c * lumL), 255)).toString(16);
-            rgb += `00${c}`.substr(c.length);
-          }
+                // convert to decimal and change luminosity
+                let rgb = '#';
+                let c;
+                let i;
+                for (i = 0; i < 3; i += 1) {
+                    c = parseInt(hexL.substr(i * 2, 2), 16);
+                    c = Math.round(Math.min(Math.max(0, c + c * lumL), 255)).toString(16);
+                    rgb += `00${c}`.substr(c.length);
+                }
 
-          return rgb;
+                return rgb;
+            },
+            createImage(file) {
+                const reader = new FileReader();
+                const vm = this;
+                reader.onload = (e) => {
+                    vm.image = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            },
+            clearImage() {
+                const input = this.$refs.imageInserter;
+                input.type = 'text';
+                input.type = 'file';
+            },
         },
-        createImage(file) {
-          const reader = new FileReader();
-          const vm = this;
-          reader.onload = (e) => {
-            vm.image = e.target.result;
-          };
-          reader.readAsDataURL(file);
+        computed: {
+            colorC() {
+                return this.color || '#43a047';
+            },
+            gradient() {
+                let colors = 'linear-gradient(45deg';
+                const colorStart = this.colorLuminance(this.colorC, -0.4);
+                const colorEnd = this.colorLuminance(this.colorC, 0.4);
+                colors += `,${colorStart},${colorEnd}`;
+                colors += ')';
+                return colors;
+            },
         },
-        clearImage() {
-          const input = this.$refs.imageInserter;
-          input.type = 'text';
-          input.type = 'file';
+        watch: {
+            fd(file) {
+                // emit
+                this.$emit('on-created', file);
+            },
         },
-      },
-      computed: {
-        colorC() {
-          return this.color || '#43a047';
-        },
-        gradient() {
-          let colors = 'linear-gradient(45deg';
-          const colorStart = this.colorLuminance(this.colorC, -0.4);
-          const colorEnd = this.colorLuminance(this.colorC, 0.4);
-          colors += `,${colorStart},${colorEnd}`;
-          colors += ')';
-          return colors;
-        },
-      },
-      watch: {
-        fd(file) {
-          // emit
-          this.$emit('on-created', file);
-        },
-      },
     };
 </script>
 <style lang="scss">

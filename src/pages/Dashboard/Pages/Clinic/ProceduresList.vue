@@ -1,5 +1,5 @@
 <template>
-  <div class="md-layout">
+  <div class="md-layout procedures-list-wrapper">
     <div class="md-layout-item">
       <md-card>
         <md-card-header class="md-card-header-icon md-card-header-green">
@@ -139,150 +139,152 @@
     import swal from 'sweetalert2';
 
     export default {
-      components: {
-        Pagination,
-      },
-      computed: {
-        /** *
-         * Returns a page from the searched data or the whole data.
-         * Search is performed in the watch section below
-         */
-        queriedData() {
-          let result = this.tableData;
-          if (this.searchedData.length > 0) {
-            result = this.searchedData;
-          }
-          return result.slice(this.from, this.to);
+        components: {
+            Pagination,
         },
-        tableData() {
-          // eslint-disable-next-line prefer-const
-          let procedures = [];
-          PROCEDURES.forEach((procedureGroup) => {
-            procedureGroup.codes.forEach((tretment) => {
-              procedures.push(tretment);
+        computed: {
+            /** *
+             * Returns a page from the searched data or the whole data.
+             * Search is performed in the watch section below
+             */
+            queriedData() {
+                let result = this.tableData;
+                if (this.searchedData.length > 0) {
+                    result = this.searchedData;
+                }
+                return result.slice(this.from, this.to);
+            },
+            tableData() {
+                // eslint-disable-next-line prefer-const
+                let procedures = [];
+                PROCEDURES.forEach((procedureGroup) => {
+                    procedureGroup.codes.forEach((tretment) => {
+                        procedures.push(tretment);
+                    });
+                });
+                return procedures;
+            },
+            to() {
+                let highBound = this.from + this.pagination.perPage;
+                if (this.total < highBound) {
+                    highBound = this.total;
+                }
+                return highBound;
+            },
+            from() {
+                return this.pagination.perPage * (this.pagination.currentPage - 1);
+            },
+            total() {
+                return this.searchedData.length > 0
+                    ? this.searchedData.length
+                    : this.tableData.length;
+            },
+        },
+        data() {
+            return {
+                currentSort: 'name',
+                currentSortOrder: 'asc',
+                pagination: {
+                    perPage: 25,
+                    currentPage: 1,
+                    perPageOptions: [25, 50, 100],
+                    total: 0,
+                },
+                footerTable: ['Name', 'Email', 'Age', 'Salary', 'Actions'],
+                searchQuery: '',
+                propsToSearch: ['name', 'email', 'age'],
+                searchedData: [],
+                fuseSearch: null,
+            };
+        },
+        methods: {
+            customSort(value) {
+                return value.sort((a, b) => {
+                    const sortBy = this.currentSort;
+                    if (this.currentSortOrder === 'desc') {
+                        return a[sortBy].localeCompare(b[sortBy]);
+                    }
+                    return b[sortBy].localeCompare(a[sortBy]);
+                });
+            },
+            handleLike(item) {
+                swal({
+                    title: `You liked ${item.name}`,
+                    buttonsStyling: false,
+                    type: 'success',
+                    confirmButtonClass: 'md-button md-success',
+                });
+            },
+            handleEdit(item) {
+                swal({
+                    title: `You want to edit ${item.name}`,
+                    buttonsStyling: false,
+                    confirmButtonClass: 'md-button md-info',
+                });
+            },
+            handleDelete(item) {
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonClass: 'md-button md-success btn-fill',
+                    cancelButtonClass: 'md-button md-danger btn-fill',
+                    confirmButtonText: 'Yes, delete it!',
+                    buttonsStyling: false,
+                }).then((result) => {
+                    if (result.value) {
+                        this.deleteRow(item);
+                        swal({
+                            title: 'Deleted!',
+                            text: `You deleted ${item.name}`,
+                            type: 'success',
+                            confirmButtonClass: 'md-button md-success btn-fill',
+                            buttonsStyling: false,
+                        });
+                    }
+                });
+            },
+            deleteRow(item) {
+                const indexToDelete = this.tableData.findIndex(
+                    tableRow => tableRow.id === item.id,
+                );
+                if (indexToDelete >= 0) {
+                    this.tableData.splice(indexToDelete, 1);
+                }
+            },
+        },
+        mounted() {
+            // Fuse search initialization.
+            this.fuseSearch = new Fuse(this.tableData, {
+                keys: ['name', 'email'],
+                threshold: 0.3,
             });
-          });
-          return procedures;
         },
-        to() {
-          let highBound = this.from + this.pagination.perPage;
-          if (this.total < highBound) {
-            highBound = this.total;
-          }
-          return highBound;
+        watch: {
+            /**
+             * Searches through the table data by a given query.
+             * NOTE: If you have a lot of data, it's recommended to do
+             * the search on the Server Side and only display the results here.
+             * @param value of the query
+             */
+            searchQuery(value) {
+                let result = this.tableData;
+                if (value !== '') {
+                    result = this.fuseSearch.search(this.searchQuery);
+                }
+                this.searchedData = result;
+            },
         },
-        from() {
-          return this.pagination.perPage * (this.pagination.currentPage - 1);
-        },
-        total() {
-          return this.searchedData.length > 0
-            ? this.searchedData.length
-            : this.tableData.length;
-        },
-      },
-      data() {
-        return {
-          currentSort: 'name',
-          currentSortOrder: 'asc',
-          pagination: {
-            perPage: 25,
-            currentPage: 1,
-            perPageOptions: [25, 50, 100],
-            total: 0,
-          },
-          footerTable: ['Name', 'Email', 'Age', 'Salary', 'Actions'],
-          searchQuery: '',
-          propsToSearch: ['name', 'email', 'age'],
-          searchedData: [],
-          fuseSearch: null,
-        };
-      },
-      methods: {
-        customSort(value) {
-          return value.sort((a, b) => {
-            const sortBy = this.currentSort;
-            if (this.currentSortOrder === 'desc') {
-              return a[sortBy].localeCompare(b[sortBy]);
-            }
-            return b[sortBy].localeCompare(a[sortBy]);
-          });
-        },
-        handleLike(item) {
-          swal({
-            title: `You liked ${item.name}`,
-            buttonsStyling: false,
-            type: 'success',
-            confirmButtonClass: 'md-button md-success',
-          });
-        },
-        handleEdit(item) {
-          swal({
-            title: `You want to edit ${item.name}`,
-            buttonsStyling: false,
-            confirmButtonClass: 'md-button md-info',
-          });
-        },
-        handleDelete(item) {
-          swal({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonClass: 'md-button md-success btn-fill',
-            cancelButtonClass: 'md-button md-danger btn-fill',
-            confirmButtonText: 'Yes, delete it!',
-            buttonsStyling: false,
-          }).then((result) => {
-            if (result.value) {
-              this.deleteRow(item);
-              swal({
-                title: 'Deleted!',
-                text: `You deleted ${item.name}`,
-                type: 'success',
-                confirmButtonClass: 'md-button md-success btn-fill',
-                buttonsStyling: false,
-              });
-            }
-          });
-        },
-        deleteRow(item) {
-          const indexToDelete = this.tableData.findIndex(
-            tableRow => tableRow.id === item.id,
-          );
-          if (indexToDelete >= 0) {
-            this.tableData.splice(indexToDelete, 1);
-          }
-        },
-      },
-      mounted() {
-        // Fuse search initialization.
-        this.fuseSearch = new Fuse(this.tableData, {
-          keys: ['name', 'email'],
-          threshold: 0.3,
-        });
-      },
-      watch: {
-        /**
-         * Searches through the table data by a given query.
-         * NOTE: If you have a lot of data, it's recommended to do
-         * the search on the Server Side and only display the results here.
-         * @param value of the query
-         */
-        searchQuery(value) {
-          let result = this.tableData;
-          if (value !== '') {
-            result = this.fuseSearch.search(this.searchQuery);
-          }
-          this.searchedData = result;
-        },
-      },
     };
 </script>
 
-<style lang="css" scoped>
-.md-card .md-card-actions {
-  border: 0;
-  margin-left: 20px;
-  margin-right: 20px;
+<style lang="css" >
+.procedures-list-wrapper{
+  .md-card .md-card-actions {
+    border: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <h5 class="info-text">Set your clinic</h5>
-        <div class="md-layout">
+        <div class="md-layout md-gutter">
             <div class="md-layout-item md-size-100 md-small-size-100">
                 <div class="picture-container">
                     <div class="picture">

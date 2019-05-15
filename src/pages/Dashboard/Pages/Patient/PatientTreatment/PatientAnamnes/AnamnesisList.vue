@@ -1,7 +1,7 @@
 
 <template>
-    <div class="procedures-list-wrapper">
-        <div >
+    <div class="md-layout md-gutter anamnesis-list-wrapper" v-if="tableData.length>0">
+        <div class="md-layout-item">
             <!-- <md-toolbar class="md-transparent">
                 <h3 class="md-title">All Diagnosis</h3>
             </md-toolbar>-->
@@ -32,22 +32,22 @@
                             class="mb-3"
                             clearable
                             style="width: 200px"
-                            placeholder="Search patient procedure"
+                            placeholder="Search patient anamnes"
                             v-model="searchQuery"
                         ></md-input>
                     </md-field>
                 </md-table-toolbar>
 
                 <md-table-empty-state
-                    md-label="No procedure found"
-                    :md-description="`No procedure found. Scroll top, and create new procedure.`"
+                    md-label="No anamnes found"
+                    :md-description="`No anamnes found. Scroll top, and create new anamnes.`"
                 >
                     <md-button class="md-primary md-raised" @click="scrollToTop()">Scroll Top</md-button>
                 </md-table-empty-state>
 
                 <md-table-row slot="md-table-row" slot-scope="{ item }">
                     <md-table-cell class="code" md-label="Code" md-sort-by="code">{{ item.code }}</md-table-cell>
-                    <md-table-cell md-label="Procedure" md-sort-by="title">
+                    <md-table-cell md-label="Anamnes" md-sort-by="title">
                         {{ item.title }}
                         <br>
                         <small v-if="item.manipulations">{{item.manipulations.length}} manipulations</small>
@@ -58,7 +58,7 @@
                             :key="toothId"
                         >{{ toothId | toCurrentTeethSystem(teethSystem) }},</span>
                     </md-table-cell>
-                    <md-table-cell md-sort-by="author" md-label="Procedured by">
+                    <md-table-cell md-sort-by="author" md-label="Anamnesd by">
                         <div class="md-layout md-alignment-left-center">
                             <div class="md-layout-item md-layout" style="max-width:40px;">
                                 <t-avatar
@@ -87,7 +87,7 @@
                     </md-table-cell>
                     <md-table-cell class="actions" md-label="Actions">
                         <md-button
-                            v-if="ifProcedureHasLocations(item.teeth)"
+                            v-if="ifAnamnesHasLocations(item.teeth)"
                             class="md-just-icon md-simple"
                             :class="[{'md-info':item.showInJaw},{'md-danger':!item.showInJaw}]"
                             @click.native="item.showInJaw=!item.showInJaw,recalculateJaw()"
@@ -151,7 +151,7 @@
 
     export default {
         mixins: [tObjProp],
-        name: 'procedures-list',
+        name: 'anamnesis-list',
         components: {
             Pagination,
             TAvatar,
@@ -182,14 +182,14 @@
                 },
                 footerTable: [
                     'Code',
-                    'Procedure',
+                    'Anamnes',
                     'Teeth',
                     'Author by',
                     'Date',
                     'Actions',
                 ],
                 searchQuery: '',
-                propsToSearch: ['code', 'procedure', 'date', 'author', 'title'],
+                propsToSearch: ['code', 'anamnes', 'date', 'author', 'title'],
                 searchedData: [],
                 fuseSearch: null,
             };
@@ -204,11 +204,11 @@
                 return TEETH_DEFAULT_LOCATIONS;
             },
             tableData() {
-                return this.patientProcedures;
+                return this.patient.anamnesis;
             },
-            patientProcedures() {
-                return this.items;
-            },
+            // patientAnamnesis() {
+            //     return this.items;
+            // },
             queriedData() {
                 let result = this.tableData;
                 if (this.searchedData.length > 0) {
@@ -236,9 +236,11 @@
         methods: {
             totalPrice(manipulations) {
                 let sum = 0;
-                manipulations.forEach((manip) => {
-                    sum += manip.price * manip.num;
-                });
+                if (manipulations) {
+                    manipulations.forEach((manip) => {
+                        sum += manip.price * manip.num;
+                    });
+                }
                 return sum;
             },
             scrollToTop() {
@@ -247,16 +249,16 @@
             recalculateJaw() {
                 this.$emit('onJawChanged');
             },
-            saveProcedure(d) {
-                const procedureEdited = this.selectedProcedure;
-                procedureEdited.teeth = d.teeth;
-                procedureEdited.description = d.description;
+            saveAnamnes(d) {
+                const anamnesEdited = this.selectedAnamnes;
+                anamnesEdited.teeth = d.teeth;
+                anamnesEdited.description = d.description;
                 this.$store.dispatch(PATIENT_TREATMETS_UPDATE, {
-                    procedure: procedureEdited,
+                    anamnes: anamnesEdited,
                 });
                 this.recalculateJaw();
             },
-            ifProcedureHasLocations(teeth) {
+            ifAnamnesHasLocations(teeth) {
                 let show = false;
                 show = Object.keys(teeth)
                     .map(key => Object.keys(teeth[key]).length > 0)
@@ -287,18 +289,18 @@
                     }
                     if (typeof a[thisLocal.currentSort] === 'number') {
                         const orderLocal = thisLocal.currentSortOrder;
-                        const dflt = orderLocal === 'asc'
-                            ? Number.MAX_VALUE
-                            : -Number.MAX_VALUE;
+                        const dflt =                        orderLocal === 'asc'
+                                ? Number.MAX_VALUE
+                                : -Number.MAX_VALUE;
                         const aVal = a[sortBy] === null ? dflt : a[sortBy];
                         const bVal = b[sortBy] === null ? dflt : b[sortBy];
                         return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
                     }
                     if (typeof a[thisLocal.currentSort] === 'object') {
                         const orderLocal = thisLocal.currentSortOrder;
-                        const dflt = orderLocal === 'asc'
-                            ? Number.MAX_VALUE
-                            : -Number.MAX_VALUE;
+                        const dflt =                        orderLocal === 'asc'
+                                ? Number.MAX_VALUE
+                                : -Number.MAX_VALUE;
                         const aVal = a[sortBy] === null ? dflt : a[sortBy];
                         const bVal = b[sortBy] === null ? dflt : b[sortBy];
                         return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
@@ -315,7 +317,7 @@
                 });
             },
             handleEdit(item) {
-                this.$emit('editProcedure', item);
+                this.$emit('editAnamnes', item);
             },
             handleDelete(item) {
                 swal({
@@ -347,18 +349,18 @@
                 if (indexToDelete >= 0) {
                     this.tableData.splice(indexToDelete, 1);
                 }
-                const indexToDeleteOrigin = this.patientProcedures.findIndex(
-                    procedure => procedure.id === item.id,
-                );
-                if (indexToDeleteOrigin >= 0) {
-                    this.patientProcedures.splice(indexToDeleteOrigin, 1);
-                }
+            // const indexToDeleteOrigin = this.patientAnamnesis.findIndex(
+            //     anamnes => anamnes.id === item.id,
+            // );
+            // if (indexToDeleteOrigin >= 0) {
+            //     this.patientAnamnesis.splice(indexToDeleteOrigin, 1);
+            // }
             },
         },
         mounted() {
             // Fuse search initialization.
             this.fuseSearch = new Fuse(this.tableData, {
-                keys: ['procedure', 'code', 'author', 'date', 'title'],
+                keys: ['anamnes', 'code', 'author', 'date', 'title'],
                 threshold: 0.3,
             });
         },
@@ -370,7 +372,7 @@
                 }
                 this.searchedData = result;
             },
-        // patientProcedures: {
+        // patientAnamnesis: {
         //   handler() {
         //     console.log('calculated');
         //   },
@@ -380,8 +382,10 @@
     };
 </script>
 
-<style lang="scss">
-.procedures-list-wrapper{
+<style lang="scss" >
+.anamnesis-list-wrapper{
+
+
 .md-tabs-content table thead {
     display: table-header-group !important;
 }

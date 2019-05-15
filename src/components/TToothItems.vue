@@ -31,14 +31,14 @@
                             }"
                                 class="content-body"
                             >
-                                <div class="content" v-if="item.description">
-                                    <div>
+                                <div class="content" v-if="item.description || (item.manipulations && item.manipulations.length > 0)" >
+                                    <div v-if="item.description" >
                                         <md-subheader>
                                             Description
-                                        </md-subheader> 
-                                        <div class="md-layout-item">   
+                                        </md-subheader>
+                                        <div class="md-layout-item">
                                             {{item.description}}
-                                        </div>   
+                                        </div>
                                     </div>
                                       <slot name="content"></slot>
                                     </div>
@@ -279,6 +279,7 @@
             position: relative;
             // max-width: fit-content;
             padding: 0 15px 0 15px;
+            margin-top: 15px;
 
             .teeth-content__wrapper {
                 border-style: solid;

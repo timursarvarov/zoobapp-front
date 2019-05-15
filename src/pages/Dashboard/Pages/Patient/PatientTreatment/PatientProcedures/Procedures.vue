@@ -4,15 +4,15 @@
       <div class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
         <div class="mx-auto" style="flex-grow:1;"  ref="wrjaw">
           <jaw
-            :selectedTeeth="selectedTeeth"
-            @onSelectedTeeth='onSelectedTeeth'
-            @showToothInfo='showToothInfo'
-            @toggleItemVisibility='toggleProcedureVisibility'
-            :jaw="jaw"
-            :patientItems="currentPlan.procedures"
-            :teethSchema="teethSchema"
-            :teethSystem="currentClinic.teethSystem"
-            type="procedures"
+                :selectedTeeth="selectedTeeth"
+                @onSelectedTeeth='onSelectedTeeth'
+                @showToothInfo='showToothInfo'
+                @toggleItemVisibility='toggleProcedureVisibility'
+                :jaw="jaw"
+                :patientItems="currentPlan.procedures"
+                :teethSchema="teethSchema"
+                :teethSystem="currentClinic.teethSystem"
+                type="procedures"
             >
             <div slot="title-start">
               <md-field class="md-layout-item no-margin"
@@ -24,7 +24,7 @@
                     name="plan" id="plan"
                     :disabled="patient.plans.length<1"
                     >
-                      <md-option
+                    <md-option
                       v-for="(plan, index) in patient.plans"
                       :key="index"
                       :value="plan.id">{{plan.title}}</md-option>
@@ -46,22 +46,22 @@
       </div>
       <div class="md-layout-item md-layout md-small-size-100 md-xsmall-size-100 md-gutter md-medium-size-50 md-size-50">
           <t-collapse-search
-          :style="[{'max-height': jawHeight + 'px'}]" class="set-procedure-form"
-          :items="procedures"
-          :selectedTeeth="selectedTeeth"
-          :favoriteItems="favoriteProcedures"
-          itemType="Procedures"
-          :jawHeight="jawHeight"
-          :showSlot="patient.plans.length > 0 && !!currentPlanId"
-          @onSetFavoritem="setFavoriteProcedure"
-          @onSelected="selectProcedure"
-          >
-          <md-empty-state
-            slot="empty-space"
-            md-label="No created plans"
-            md-description="To implemet a procedure, you should firstly create a plan">
-            <md-button class="md-primary md-raised" @click="showAddPlan = true">Create New Plan</md-button>
-          </md-empty-state>
+            :style="[{'max-height': jawHeight + 'px'}]" class="set-procedure-form"
+            :items="procedures"
+            :selectedTeeth="selectedTeeth"
+            :favoriteItems="favoriteProcedures"
+            itemType="Procedures"
+            :jawHeight="jawHeight"
+            :showSlot="patient.plans.length > 0 && !!currentPlanId"
+            @onSetFavoritem="setFavoriteProcedure"
+            @onSelected="selectProcedure"
+            >
+                <md-empty-state
+                    slot="empty-space"
+                    md-label="No created plans"
+                    md-description="To implemet a procedure, you should firstly create a plan">
+                    <md-button class="md-primary md-raised" @click="showAddPlan = true">Create New Plan</md-button>
+                </md-empty-state>
           </t-collapse-search>
       </div>
 
@@ -81,46 +81,47 @@
            v-for="(plan, index) in patient.plans"
           :slot="`tab-pane-${index+1}`">
             <div :key="index" >
-               <procedures-list
-               :items="plan.procedures"
-              @onJawChanged="recalculateJawProcedure()"
-              :teethSystem="currentClinic.teethSystem"
-            ></procedures-list>
+                <procedures-list
+                    :items="plan.procedures"
+                    @editProcedure="editProcedure"
+                    @onJawChanged="recalculateJawProcedure()"
+                    :teethSystem="currentClinic.teethSystem"
+                ></procedures-list>
             </div>
           </template>
       </tabs>
 
 
         <jaw-add-procedure-wizard
-          v-if="showForm"
-          @on-created='saveProcedure'
-          :currentPlan="currentPlan"
-          :selectedTeeth="selectedTeeth"
-          :selectedProcedure="selectedProcedure"
-          :jaw='jaw'
-          :teethSchema="teethSchema"
-          :teethSystem="currentClinic.teethSystem"
-          :isDialogVisible.sync="showForm"
-          />
+            v-if="showAddProcedureWizard"
+            @on-created='saveProcedure'
+            :currentPlan="currentPlan"
+            :selectedTeeth="selectedTeeth"
+            :selectedProcedure="selectedProcedure"
+            :jaw='jaw'
+            :teethSchema="teethSchema"
+            :teethSystem="currentClinic.teethSystem"
+            :isDialogVisible.sync="showAddProcedureWizard"
+        />
 
         <plan-add-form
-        :showForm.sync="showAddPlan"
-        :plans="patient.plans"
-        @onPlanCreated="setPlan"
+            :showForm.sync="showAddPlan"
+            :plans="patient.plans"
+            @onPlanCreated="setPlan"
         />
 
         <t-tooth-Items
-        v-if="showToothProcedures"
-        :showForm.sync="showToothProcedures"
-         @editItem="editProcedure"
-        :item="procedureToShow"
-        :toothId="toothIdforProcedures"
-        :patientItems = "currentPlan.procedures"
-        :originalItems = "procedures"
-        :teethSchema="teethSchema"
-        :teethSystem="currentClinic.teethSystem"
-        :jaw='jaw'
-        classType="procedure"
+            v-if="showToothProcedures"
+            :showForm.sync="showToothProcedures"
+            @editItem="editProcedure"
+            :item="procedureToShow"
+            :toothId="toothIdforProcedures"
+            :patientItems = "currentPlan.procedures"
+            :originalItems = "procedures"
+            :teethSchema="teethSchema"
+            :teethSystem="currentClinic.teethSystem"
+            :jaw='jaw'
+            classType="procedure"
         >
             <div slot="content" v-if="procedureToShow.manipulations.length > 0">
                 <md-subheader>
@@ -177,6 +178,7 @@
     import {
         NOTIFY,
         PATIENT_PROCEDURES_SET,
+        PATIENT_PROCEDURE_UPDATE,
         PATIENT_PLAN_SET,
         PATIENT_PLAN_DELETE,
         PATIENT_TOGGLE_ITEM_VISIBILITY,
@@ -212,7 +214,7 @@
                 procedureIdtoShow: 0,
                 currentPlanId: null,
                 showAddPlan: false,
-                showForm: false,
+                showAddProcedureWizard: false,
                 jawHeight: 0,
                 showSelectedToothDialog: false,
                 search: '',
@@ -228,13 +230,12 @@
             };
         },
         methods: {
-            editProcedure(diagnose) {
-                console.log(diagnose)
-                // if (!this.isEmpty(diagnose.teeth)) {
-                //     this.selectedTeeth = Object.keys(diagnose.teeth);
-                // }
-                // this.selectedDiagnoseLocal = diagnose;
-                // this.showAddDiagnoseWizard = true;
+            editProcedure(procedure) {
+                if (!this.isEmpty(procedure.teeth)) {
+                    this.selectedTeeth = Object.keys(procedure.teeth);
+                }
+                this.selectedProcedure = procedure;
+                this.showAddProcedureWizard = true;
             },
             toggleProcedureVisibility(itemId) {
                 if (itemId) {
@@ -249,7 +250,6 @@
                 this.recalculateJawProcedure();
             },
             showToothInfo(procedureId, toothId) {
-                // console.log(typeof toothId )
                 this.toothIdforProcedures = toothId;
                 this.procedureIdtoShow = procedureId;
                 this.showToothProcedures = true;
@@ -286,8 +286,21 @@
             onSelectedTeeth(teeth) {
                 this.selectedTeeth = teeth;
             },
-            saveProcedure(t) {
-                const procedureL = this.copyObj(t);
+            saveEditedProcedure(p) {
+                this.$store.dispatch(PATIENT_PROCEDURE_UPDATE, {
+                    params: {
+                        procedure: p,
+                        planId: this.currentPlanId,
+                    },
+                });
+                this.recalculateJawProcedure();
+            },
+            saveProcedure(p) {
+                if (p.id) {
+                    this.saveEditedProcedure(p);
+                    return;
+                }
+                const procedureL = this.copyObj(p);
                 procedureL.date = new Date();
                 procedureL.author = {
                     ID: this.user.ID,
@@ -343,7 +356,7 @@
                                 }
                             });
                         });
-                        this.showForm = true;
+                        this.showAddProcedureWizard = true;
                     }
                 }
             },
@@ -383,7 +396,6 @@
                                 Object.keys(procedure.teeth).forEach((toothId) => {
                                     Object.keys(procedure.teeth[toothId]).forEach(
                                         (kLocation) => {
-                                            // console.log(toothId, kLocation, procedure.teeth[toothId][kLocation]);
                                             if (
                                                 kLocation
                                                 in this.jaw.procedures[toothId]
@@ -433,12 +445,11 @@
                 currentClinic: 'getCurrentClinic',
                 user: 'getProfile',
             }),
-             procedureToShow() {
-            //    const d = Object.values(this.currentPlan).find( procedure => procedure.id === this.procedureIdtoShow,)
+            procedureToShow() {
+                //    const d = Object.values(this.currentPlan).find( procedure => procedure.id === this.procedureIdtoShow,)
                 const d = this.currentPlan.procedures.find(
                     procedure => procedure.id === this.procedureIdtoShow,
                 );
-                console.log(d);
                 return d || {};
             },
             currentPlan() {
@@ -466,7 +477,7 @@
 </script>
 <style lang="scss">
 .procedure-wrapper {
-    .procedures-tabs{
+    .procedures-tabs {
         padding-left: 0;
         padding-right: 0;
     }

@@ -1,10 +1,10 @@
 
 <template>
-    <div class="md-layout md-gutter" v-if="!isEmpty(patientDiagnosis)">
+    <div class="md-layout md-gutter diagnose-list-wrapper" v-if="!isEmpty(patientDiagnosis)">
         <div class="md-layout-item">
-            <md-toolbar class="md-transparent">
+            <!-- <md-toolbar class="md-transparent">
                 <h3 class="md-title">All Diagnosis</h3>
-            </md-toolbar>
+            </md-toolbar> -->
 
             <md-table
                 :value="queriedData"
@@ -339,10 +339,13 @@
     };
 </script>
 
-<style lang="scss" >
-.md-tabs-content table thead {
-    display: table-header-group !important;
-}
+<style lang="scss"  >
+    .md-tabs-content table thead {
+        display: table-header-group !important;
+    }
+.diagnose-list-wrapper{
+
+
 .md-table-cell-container{
      word-wrap: break-word;
 }
@@ -366,5 +369,6 @@
 }
 .footer-table table > tfoot > tr > th:nth-last-child(-n + 2) {
     width: 40px;
+}
 }
 </style>

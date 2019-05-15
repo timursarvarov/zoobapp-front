@@ -294,45 +294,35 @@
             // Высчитывваем в какую очередь нужно прятать локацию в зависимости от выбронного приоретета показа(анамнез дигноз или лечение)
             checkForHidingLocation(toothId, location) {
                 // проверяем наличие локации в вычесленной челюсти
-                const hide = this.isHidingLocation(
+                const hide = this.isHidingClicableLocation(
                     toothId,
                     location,
                     this.jaw,
                     this.prefer,
                     this.defaultLocations,
                 );
-                // if (this.prefer.length === 0) {
-                //     console.log('return veiw',location);
-
-                //     return this.getNestedProperty(
-                //         this.originalItem,
-                //         'view',
-                //         location,
-                //     );
-                // }
-                // если локацию надо отобразить, то проверяем скрываема ли она во view originalItems
-                if (!hide) {
-                    if ((location in this.originalItem.view) && this.originalItem.view[location] === false) {
-                        return true;
-                    }
+                if (hide === true) {
                     return hide;
                 }
+                // если локацию надо отобразить, то проверяем скрываема ли она во view originalItems
+
+                // if ((location in this.originalItem.view) && this.originalItem.view[location] === false) {
+                //     return true;
+                // }
+
                 if (
                     // если зубы из диагноза не удалены
                     this.selectedItem.teeth
                     // и данный зуб есть в диагнозе
                     && toothId in this.selectedItem.teeth
                 ) {
-                    // const selecetedDiagnoseLocations = Object.keys(
-                    //     this.selectedItem.teeth[toothId],
-                    // );
-                    // if (selecetedDiagnoseLocations.includes(location)) {
-                    //     return false;
-                    // }
                     if (location in this.selectedItem.teeth[toothId]) {
                         return false;
                     }
                 }
+                // if (toothId === '25') {
+                //     console.log(location, hide);
+                // }
                 const computedLocaton = this.getNestedProperty(
                     this.jaw,
                     [this.locationType],
@@ -359,11 +349,12 @@
                         'view',
                         location,
                     );
-                    if (location === 'implant') {
-                    }
                     return !value;
                 }
-                return true;
+                if (hide === undefined) {
+                    return !this.defaultLocations[location];
+                }
+                return hide;
             },
             // если в предыдуших диагнозах есть локации для показа или скрытия то
             // в зависимости от переклчатея показываем приореттные локации
@@ -555,7 +546,6 @@
             },
             calculateJaw() {
                 const jaw = {};
-                // for (let i = 0; i < this.selectableTeeth.length; i += 1) {
                 this.selectableTeeth.forEach((toothId) => {
                     jaw[toothId] = {};
                     Object.keys(this.defaultLocations).forEach((location) => {
