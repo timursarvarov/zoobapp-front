@@ -3,18 +3,12 @@
     <div>
         <div class="jaw-wrapper">
             <md-toolbar class="md-transparent jaw-toolbar">
-                <div class="md-toolbar-section-start">
-                    <slot name="title-start"></slot>
+                <div class="t">
+                    <slot name="title-start">
+                    </slot>
                 </div>
                 <div class="md-toolbar-section-end">
                     <slot name="title-end"></slot>
-                    <md-button
-                        @click="jawType==='babyTeeth' ? toggleTeeth(babyTeeth): toggleTeeth(adultTeeth)"
-                        class="md-just-icon md-primary md-round md-simple"
-                    >
-                        <md-icon>done_all</md-icon>
-                        <md-tooltip md-delay="1000">Toggle all teeth</md-tooltip>
-                    </md-button>
                     <md-menu
                         :md-offset-x="127"
                         :md-close-on-select="false"
@@ -61,6 +55,12 @@
                             </md-menu-item>
                             <md-menu-item>
                                 <md-switch
+                                    v-model="toggleAll"
+                                    @change="jawType==='babyTeeth' ? toggleTeeth(babyTeeth): toggleTeeth(adultTeeth)"
+                                >Toggle all</md-switch>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-switch
                                     v-model="toggleAdultTop"
                                     @change="jawType==='babyTeeth' ? toggleTeeth(topBabyTeeth): toggleTeeth(topAdultTeeth)"
                                 >Toggle Top</md-switch>
@@ -79,11 +79,7 @@
                 <slot name="top"></slot>
             </div>
             <transition name="fade" mode="out-in">
-                <div
-                    v-if="jawType === 'babyTeeth'"
-                    key="babyTeeth"
-                    class="jaw-scroll mx-auto"
-                >
+                <div v-if="jawType === 'babyTeeth'" key="babyTeeth" class="jaw-scroll mx-auto">
                     <div class="jaw-top md-alignment-top-center mx-auto md-size-100">
                         <div
                             class="tooth"
@@ -121,7 +117,6 @@
                                 </svg>
                             </div>
                             <jaw-menu
-                                :hasOtherTypes="teethWithOtherTypes.includes(toothId)"
                                 :btnClass="btnClass"
                                 :selected="isToothSelected(toothId)"
                                 :windowWidth="windowWidth"
@@ -129,7 +124,8 @@
                                 :toothId="toothId"
                                 direction="top"
                                 :align="getMenuAlign('adult', topJawToothIndex)"
-                                :items="separatedItems[toothId]"
+                                :items="separatedItems[toothId] || {}"
+                                :type="type"
                                 :offset="getCustomWidth(toothId)"
                                 @toggleItemVisibility="toggleItemVisibility"
                                 @showItem="showToothInfo"
@@ -174,7 +170,6 @@
                             </div>
 
                             <jaw-menu
-                                :hasOtherTypes="teethWithOtherTypes.includes(toothId)"
                                 :btnClass="btnClass"
                                 :selected="isToothSelected(toothId)"
                                 :windowWidth="windowWidth"
@@ -182,7 +177,8 @@
                                 :toothId="toothId"
                                 direction="bottom"
                                 :align="getMenuAlign('adult', bottomAdultTeethIndex)"
-                                :items="separatedItems[toothId]"
+                                :items="separatedItems[toothId] || {}"
+                                :type="type"
                                 :offset="getCustomWidth(toothId)"
                                 @toggleItemVisibility="toggleItemVisibility"
                                 @showItem="showToothInfo"
@@ -229,7 +225,6 @@
                             </div>
 
                             <jaw-menu
-                                :hasOtherTypes="teethWithOtherTypes.includes(toothId)"
                                 :btnClass="btnClass"
                                 :selected="isToothSelected(toothId)"
                                 :windowWidth="windowWidth"
@@ -237,7 +232,8 @@
                                 :toothId="toothId"
                                 direction="top"
                                 :align="getMenuAlign('adult', topJawToothIndex)"
-                                :items="separatedItems[toothId]"
+                                :items="separatedItems[toothId] || {}"
+                                :type="type"
                                 :offset="getCustomWidth(toothId)"
                                 @toggleItemVisibility="toggleItemVisibility"
                                 @showItem="showToothInfo"
@@ -282,7 +278,6 @@
                             </div>
 
                             <jaw-menu
-                                :hasOtherTypes="teethWithOtherTypes.includes(toothId)"
                                 :btnClass="btnClass"
                                 :selected="isToothSelected(toothId)"
                                 :windowWidth="windowWidth"
@@ -290,7 +285,8 @@
                                 :toothId="toothId"
                                 direction="bottom"
                                 :align="getMenuAlign('adult', bottomAdultTeethIndex)"
-                                :items="separatedItems[toothId]"
+                                :items="separatedItems[toothId] || {} "
+                                :type="type"
                                 :offset="getCustomWidth(toothId)"
                                 @toggleItemVisibility="toggleItemVisibility"
                                 @showItem="showToothInfo"
@@ -323,12 +319,13 @@
                                 v-for="(item, key) in hidedPrefer"
                                 :key="key + 0"
                                 class="list-item"
-                            > {{` ${item},` }}</span>
+                            >{{` ${item},` }}</span>
                         </transition-group>
                     </small>
-                    <small v-show="prefer.length === 3" class="hint">
-                        'ctrl + click' or 'shift + click' to multiple choose
-                    </small>
+                    <small
+                        v-show="prefer.length === 3"
+                        class="hint"
+                    >'ctrl + click' or 'shift + click' to multiple choose</small>
                 </div>
             </transition>
             <div class="md-layout-item">
@@ -365,12 +362,12 @@
                 default: () => {},
             },
             patientItems: {
-                type: Array,
-                default: () => [],
-            },
-            patientProcedures: {
-                type: Array,
-                default: () => [],
+                type: Object,
+                default: () => ({
+                    diagnosis: [],
+                    procedures: [],
+                    anamnesis: [],
+                }),
             },
             selectedTeeth: {
                 type: Array,
@@ -392,11 +389,13 @@
         name: 'AppMain',
         data() {
             return {
+
                 jawType: '',
                 mouseOverToothId: '',
                 separatedItems: {},
                 separatedProcedures: {},
                 windowWidth: 0,
+                toggleAll: false,
                 toggleAdultTop: false,
                 toggleAdultBottom: false,
                 prefer: ['anamnes', 'procedure', 'diagnose'],
@@ -507,12 +506,11 @@
         },
 
         methods: {
-            toggleItemVisibility(itemId) {
-                console.log(itemId);
-                this.$emit('toggleItemVisibility', itemId);
+            toggleItemVisibility(itemId, type) {
+                this.$emit('toggleItemVisibility', itemId, type);
             },
-            showToothInfo(itemId, toothId) {
-                this.$emit('showToothInfo', itemId, toothId);
+            showToothInfo(params) {
+                this.$emit('showToothInfo', params);
             },
             toggleAllTeeth() {
                 if (this.jawType === 'babyTeeth') {
@@ -563,50 +561,59 @@
                 };
                 return toothClasses;
             },
-            diagnoseOnHoverToggle(toothId, index) {
-                const item = this.separatedItems[toothId][index];
-                item.hover = !item.hover;
-                const d = this.copyObj(this.separatedItems);
-                this.separatedItems = {};
-                d.toothId = d[toothId].splice(index, 1, item);
-                this.separatedItems = d;
-            },
-            getDiagnoseForEachTooth() {
-                if (this.patientItems) {
-                    this.separatedItems = {};
-                    this.patientItems.forEach((item) => {
-                        if (!this.isEmpty(item.teeth)) {
-                            let show = false;
-                            show = Object.keys(item.teeth)
-                                .map(key => Object.keys(item.teeth[key]).length > 0)
-                                .indexOf(true);
-                            show = show !== -1;
-                            Object.keys(item.teeth).forEach((toothId) => {
-                                console.log();
-                                if (this.separatedItems[toothId]) {
-                                    this.separatedItems[toothId].push({
-                                        title: item.title,
-                                        code: item.code,
-                                        showInJaw: item.showInJaw,
-                                        id: item.id,
-                                        hover: true,
-                                        hasLocations: show,
-                                    });
-                                } else {
-                                    this.separatedItems[toothId] = [];
-                                    this.separatedItems[toothId].push({
-                                        title: item.title,
-                                        code: item.code,
-                                        showInJaw: item.showInJaw,
-                                        id: item.id,
-                                        hover: true,
-                                        hasLocations: show,
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
+            // diagnoseOnHoverToggle(toothId, index) {
+            //     const item = this.separatedItems[toothId][index];
+            //     item.hover = !item.hover;
+            //     const d = this.copyObj(this.separatedItems);
+            //     this.separatedItems = {};
+            //     d.toothId = d[toothId].splice(index, 1, item);
+            //     this.separatedItems = d;
+            // },
+            getSeparatedItemsForEachTooth() {
+                this.teeth.forEach((toothId) => {
+                    this.separatedItems[toothId] = {};
+                });
+                Object.keys(this.patientItems).forEach((itemType) => {
+                    if (this.patientItems[itemType]) {
+                        this.patientItems[itemType].forEach((item) => {
+                            if (!this.isEmpty(item.teeth)) {
+                                let show = false;
+                                show = Object.keys(item.teeth)
+                                    .map(
+                                        key => Object.keys(item.teeth[key]).length > 0,
+                                    )
+                                    .indexOf(true);
+                                show = show !== -1;
+                                Object.keys(item.teeth).forEach((toothId) => {
+                                    if (this.separatedItems[toothId][itemType]) {
+                                        this.separatedItems[toothId][itemType].push(
+                                            {
+                                                title: item.title,
+                                                code: item.code,
+                                                showInJaw: item.showInJaw,
+                                                id: item.id,
+                                                // hover: true,
+                                                hasLocations: show,
+                                            },
+                                        );
+                                    } else {
+                                        this.separatedItems[toothId][itemType] = [];
+                                        this.separatedItems[toothId][itemType].push(
+                                            {
+                                                title: item.title,
+                                                code: item.code,
+                                                showInJaw: item.showInJaw,
+                                                id: item.id,
+                                                // hover: true,
+                                                hasLocations: show,
+                                            },
+                                        );
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
             },
             getCustomWidth(toothId) {
                 const toothWidth = this.jawSVG[toothId].widthPerc;
@@ -698,7 +705,7 @@
                     });
                 });
                 this.jawComputed = jaw;
-                this.getDiagnoseForEachTooth();
+                this.getSeparatedItemsForEachTooth();
             },
 
             setTeeth() {
@@ -862,7 +869,7 @@
             },
             // пересчитывам диагнозы для зубов при из изменении
             computedDiagnosis() {
-                this.getDiagnoseForEachTooth();
+                this.getSeparatedItemsForEachTooth();
             },
         },
     };
@@ -883,7 +890,7 @@
     .fade-leave-active {
         opacity: 0;
     }
-    .hint{
+    .hint {
         opacity: 0.2;
     }
 

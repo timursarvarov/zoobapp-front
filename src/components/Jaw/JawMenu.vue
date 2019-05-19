@@ -7,20 +7,24 @@
             :md-close-on-select="false"
             md-align-trigger
             md-size="medium"
-            :disabled="items.length === 0"
             :md-direction="`${direction}-start`"
+            @md-opened="opened = !opened"
+            @md-closed="opened = !opened"
         >
+            <!-- :disabled="items.length === 0 && !hasOtherItemTypes" -->
             <md-button
-                :disabled="items.length === 0"
+                :disabled="isEmpty(items)"
                 :class="[
-                    { [btnClass]: items.length > 0},
-                    { 'md-simple': items.length === 0},
+                    { 'has-items': items[type] && items[type].length > 0},
+                    { [type]: items[type] && items[type].length > 0},
+                    { [btnClass]: items[type] && items[type].length > 0},
+                    { 'md-simple': (items[type] && items[type].length == 0) && hasOtherItemTypes},
                     { 'tooth-selected': selected},
-                    { 'circle': hasOtherTypes}
+                    { 'has-other-items': hasOtherItemTypes},
+                    { 'circle': opened}
                 ]"
                 class="md-button t-tooth-button md-round dropdown-toggle"
                 :style="{
-                    color: selected ? 'white !important': '',
                     maxWidth: buttonWidth + 'em',
                     minWidth: buttonWidth + 'em',
                     maxHeight: buttonWidth + 'em',
@@ -28,45 +32,53 @@
                     fontSize:'0.8em',
                     }"
                 md-menu-trigger
-                 >
-                 {{toothId | toCurrentTeethSystem(teethSystem)}}
-            </md-button>
+            >{{toothId | toCurrentTeethSystem(teethSystem)}}</md-button>
 
-            <md-menu-content>
-                <md-menu-item
-                    @click="menuClick($event, item, toothId)"
-                    class="tooth-diagnosis-content"
-                    v-for="(item, key) in items"
-                    :key="key"
-                    :md-ripple="false"
-                    :style="{'padding-right': item.hasLocations ? '35px' : '0px'}"
-                >
-                    <div class="tooth-diagnosis-content__item">
-                        <div class="tooth-diagnosis-code">
-                            <span>
-                                <b>{{item.code}}</b>
-                            </span>
+            <md-menu-content
+                class="md-select-menu">
+                <template v-for="(subItems, name, index) in items">
+                    <md-menu-item :key="index"
+                    class="tooth-menu-item item-categoty">
+                      <b>{{name | capitilize}}:</b>
+                    </md-menu-item>
+                    <md-menu-item
+                        class="tooth-menu-item"
+                        @click="menuClick($event, item, toothId, name)"
+                        v-for="(item, key) in subItems"
+                        :key="`${key}${index}`"
+                        :md-ripple="false"
+                        :class="[
+                        {'no-locations': item.hasLocations},
+                        {[`tooth-${name}-content`]: true}
+                        ]"
+                    >
+                        <div class="tooth-diagnosis-content__item">
+                            <div class="tooth-items-code">
+                                <span>
+                                    <b>{{item.code}}</b>
+                                </span>
+                            </div>
+                            <div class="tooth-diagnosis-text">
+                                <span class="tooth-diagnosis-text-item">
+                                    <span>{{item.title}}</span>
+                                </span>
+                            </div>
                         </div>
-                        <div class="tooth-diagnosis-text">
-                            <span class="tooth-diagnosis-text-item">
-                                <span>{{item.title}}</span>
-                            </span>
-                        </div>
-                    </div>
 
-                    <div v-show="item.hasLocations" class="tooth-diagnosis-actions">
-                        <md-button
-                            @click.stop="toggleItemVisibility(item)"
-                            :class="[
+                        <div v-show="item.hasLocations" class="tooth-diagnosis-actions">
+                            <md-button
+                                @click.stop="toggleItemVisibility(item, name)"
+                                :class="[
                             {'md-info': item.showInJaw}
                             ]"
-                            class="md-just-icon md-simple md-round"
-                        >
-                            <md-icon v-if="item.showInJaw">visibility</md-icon>
-                            <md-icon v-else>visibility_off</md-icon>
-                        </md-button>
-                    </div>
-                </md-menu-item>
+                                class="md-just-icon md-simple md-round"
+                            >
+                                <md-icon v-if="item.showInJaw">visibility</md-icon>
+                                <md-icon v-else>visibility_off</md-icon>
+                            </md-button>
+                        </div>
+                    </md-menu-item>
+                </template>
             </md-menu-content>
         </md-menu>
     </div>
@@ -79,8 +91,8 @@
         mixins: [tObjProp],
         props: {
             items: {
-                type: Array,
-                default: () => [],
+                type: Object,
+                default: () => {},
             },
             selected: {
                 type: Boolean,
@@ -110,35 +122,54 @@
                 type: String,
                 default: () => 'center',
             },
+            type: {
+                type: String,
+                default: () => 'diagnosis',
+            },
             offset: {
                 type: Number,
                 default: () => 5,
             },
-            hasOtherTypes: {
-                type: Boolean,
-                default: () => false,
-            },
+            // hasOtherItemTypes: {
+            //     type: Boolean,
+            //     default: () => false,
+            // },
         },
         data() {
             return {
-                isDropped: false,
+                opened: false,
+                hover: '',
             };
         },
         methods: {
-            toggleItemVisibility(item) {
-                this.$emit('toggleItemVisibility', item.id);
+            toggleItemVisibility(item, type) {
+                this.$emit('toggleItemVisibility', item.id, type);
             },
-            menuClick(event, item, toothId) {
-                this.$emit('showItem', item.id, `${toothId}`);
+            menuClick(event, item, toothId, type) {
+                const params = {
+                    itemId: item.id,
+                    toothId,
+                    type,
+                };
+                this.$emit('showItem', params);
             },
         },
         computed: {
+            hasOtherItemTypes() {
+                let hasItems = false;
+                Object.keys(this.items).forEach((category) => {
+                    if (category !== this.type && this.items[category].length > 0) {
+                        hasItems = true;
+                    }
+                });
+                return hasItems;
+            },
             buttonWidth() {
                 if (this.windowWidth < 600) {
                     return 2;
                 }
                 if (this.windowWidth >= 600 && this.windowWidth < 960) {
-                    return 2.2;
+                    return 2;
                 }
                 if (this.windowWidth <= 1280 && this.windowWidth > 960) {
                     return 1.8;
@@ -176,31 +207,67 @@
     }
     .tooth-selected {
         cursor: pointer;
+    }
+    .t-tooth-button.tooth-selected {
         color: white !important;
-        // font-weight: 600;
+        // background-color: white!important;
     }
-    .tooth-selected.circle {
-        // cursor: pointer;
-        // color: white !important;
-           border: 1px solid rgb(255, 255, 255);
-        // font-weight: 600;
+    .tooth-selected{
+        .t-tooth-button{
+            color: white !important;
+            background-color:none !important;
+        }
+        // color: grey!important;
     }
-    .circle:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top:0px;
-        bottom:0px;
-        left:0px;
-        right:0px;
-        border-radius: 15px;
-          border: 1px solid rgb(146, 143, 143);
+    .has-items {
+           box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2),
+            0 2px 5px 1px rgba(0, 0, 0, 0.14),
+            0 3px 7px 2px rgba(0, 0, 0, 0.12) !important;
+    }
+    .anamnesis .anamnesis:active{
+        background-color: #00bcd4!important;
+    }
+    .diagnosis {
+        background-color: #9c27b0!important;
+    }
+    .diagnosis:active{
+        background-color: #9c27b0!important;
+    }
+    .procedures .procedures:active {
+        background-color: #4caf50!important;
+    }
+    .tooth-selected.t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures)   {
+        // box-shadow:none;
+        background-color: transparent !important;
+        color: white!important;
+        box-shadow:none;
+        font-weight: 800;
+    }
+    .t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures):not(.tooth-selected)   {
+        // box-shadow:none;
+        background-color: white!important;
+        color: grey!important;
+    }
+    .t-tooth-button:hover {
+        box-shadow: 0 3px 3px -2px rgba(0,0,0,.2), 0 3px 4px 0 rgba(0,0,0,.14), 0 1px 8px 0 rgba(0,0,0,.12)!important;
+    }
+    .t-tooth-button.circle {
+           box-shadow: 0 3px 3px -2px rgba(0,0,0,.2), 0 3px 4px 0 rgba(0,0,0,.14), 0 1px 8px 0 rgba(0,0,0,.12)!important;
+    }
+    .t-tooth-button.has-other-items:not(.anamnesis):not(.diagnosis):not(.procedures) {
+          background-color: white!important;
+        color: grey!important;
+           box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2),
+            0 2px 5px 1px rgba(0, 0, 0, 0.14),
+            0 3px 7px 2px rgba(0, 0, 0, 0.12) ;
     }
     .t-tooth-button {
+        // background-color: white!important;
+       box-shadow: 0 3px 3px -2px rgba(0,0,0,.2), 0 3px 4px 0 rgba(0,0,0,.14), 0 1px 8px 0 rgba(0,0,0,.12);
         position: relative;
         .md-ripple {
-            min-height: inherit;
-            min-width: inherit;
+            min-height: 0;
+            min-width: 0;
             max-height: inherit;
             max-width: inherit;
             padding: 0 !important;
@@ -212,7 +279,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                align-self: center!important;
+                align-self: center !important;
                 margin: auto;
                 span {
                     align-self: center;
@@ -229,12 +296,57 @@
     }
 }
 .tooth-diagnosis-content {
-    padding-right: 35px;
+    .md-list-item-button:hover {
+        color: white!important;
+        background-color: #4caf50 !important;
+        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14),
+            0 3px 1px -2px rgba(76, 175, 80, 0.2),
+            0 1px 5px 0 rgba(76, 175, 80, 0.12);
+    }
+}
+.tooth-anamnesis-content {
+    .md-list-item-button:hover {
+        color: white!important;
+        background-color: #808080 !important;
+        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14),
+            0 3px 1px -2px rgba(76, 175, 80, 0.2),
+            0 1px 5px 0 rgba(76, 175, 80, 0.12);
+    }
+}
+.tooth-procedures-content {
+    .md-list-item-button:hover {
+        color: white!important;
+        background-color: #9c27b0 !important;
+        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14),
+            0 3px 1px -2px rgba(76, 175, 80, 0.2),
+            0 1px 5px 0 rgba(76, 175, 80, 0.12);
+    }
+}
+ .item-categoty{
+    min-height: 20px !important;
+    padding: 5px 5px;
+    margin: 0 .3125rem!important;
+    align-items: center;
+    position: relative;
+        .md-list-item-container {
+            .md-list-item-content.md-ripple{
+            min-height: 15px!important;
+            padding: 5px !important;
+            // border-radius: 3px;
+            }
+        }
+    }
+     .no-locations{
+        padding-right: 35px;
+    }
+.tooth-menu-item:not(.item-categoty) {
+     margin: 0 .3125rem!important;
     align-items: center;
     position: relative;
     .md-list-item-button {
         overflow: visible;
     }
+
     .md-list-item-container {
         .md-list-item-content.md-ripple {
             padding: 5px !important;
@@ -255,7 +367,7 @@
                 overflow: hidden;
                 // margin-right: 30px;
             }
-            .tooth-diagnosis-code {
+            .tooth-items-code {
                 padding-right: 5px;
             }
             .md-list-item-text {

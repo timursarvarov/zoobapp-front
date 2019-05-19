@@ -26,6 +26,41 @@
             stroke: #000;
             stroke-width: 0.45px;
         }
+        .coronaLingualIncisalDistal,
+        .coronaLingualIncisalMiddle,
+        .coronaLingualIncisionMesial,
+        .coronaLingualMiddleDistal,
+        .coronaLingualMiddleMiddle,
+        .coronaLingualMiddleMesial,
+        .coronaLingualCervicalDistal,
+        .coronaLingualCervicalMiddle,
+        .coronaLingualCervicalMesial,
+        .coronaLabialIncisalDistal,
+        .coronaLabialIncisalMiddle,
+        .coronaLabialIncisionMesial,
+        .coronaLabialMiddleDistal,
+        .coronaLabialMiddleMiddle,
+        .coronaLabialMiddleMesial,
+        .coronaLabialCervicalDistal,
+        .coronaLabialCervicalMiddle,
+        .coronaLabialCervicalMesial,
+        .coronaTopBuccal,
+        .coronaTopMedial,
+        .coronaTopLingual,
+        .coronaTopDistal,
+        .coronaTopOclusial,
+        .rootCanal,
+        .periodontit,
+        .root,
+        .bone,
+        .bridge,
+        .crown,
+        .braces,
+        .implant,
+        .bridge,
+        .coronaLingual,
+        .coronaTop,
+        .coronaLabial,
         .coronaLingual,
         .coronaTop,
         .coronaLabial {
@@ -41,6 +76,16 @@
         }
         .hide {
             display: none;
+        }
+        .paradontit1,
+        .paradontit2,
+        .paradontit3,
+        .paradontit4 {
+            opacity: 1;
+            stroke: #f73403;
+            stroke-linejoin: round;
+            stroke-width: 4px;
+            fill: none !important;
         }
     }
 }

@@ -35,16 +35,17 @@
                 <sidebar-item
                     v-if="patient.ID !== null"
                     :link="{
-            name: `${patient.firstName} ${patient.lastName}`,
-            icon: 'account_circle',
-            img:patient.avatar? patient.avatar: '',
-            avatarColor: patient.color,
-            acronim: patient.firstName+' '+patient.lastName,
-            notification: patient.allergy.length > 0 ? 'A' : '',
-            }"
+                            name: `${patient.firstName} ${patient.lastName}`,
+                            icon: 'account_circle',
+                            img:patient.avatar? patient.avatar: '',
+                            avatarColor: patient.color,
+                            acronim: patient.firstName+' '+patient.lastName,
+                            notification: patient.allergy.length > 0 ? 'A' : '',
+                            path: `/patient/${patient.ID}/profile/`
+                            }"
                     class="separated-down"
                 >
-                    <sidebar-item
+                    <!-- <sidebar-item
                         :link="{name: 'BIO', icon: 'image', path: `/patient/${patient.ID}/bio`}"
                     ></sidebar-item>
                     <sidebar-item :link="{name: 'Anamnes', path: `/patient/${patient.ID}/anamnes`}"></sidebar-item>
@@ -55,7 +56,7 @@
                         :link="{name: 'Procedure', path: `/patient/${patient.ID}/procedure`}"
                     ></sidebar-item>
                     <sidebar-item :link="{name: 'Notes', path: `/patient/${patient.ID}/notes`}"></sidebar-item>
-                    <sidebar-item :link="{name: 'Files', path: `/patient/${patient.ID}/files`}"></sidebar-item>
+                    <sidebar-item :link="{name: 'Files', path: `/patient/${patient.ID}/files`}"></sidebar-item> -->
                 </sidebar-item>
                 <sidebar-item :link="{name: 'Settings', icon: 'settings', path: '/settings'}" class="separated-down">
                     <sidebar-item
@@ -93,7 +94,7 @@
                     <sidebar-item :link="{name: 'clinic2', path: '/settings/notifications'}"></sidebar-item>
                     <sidebar-item :link="{name: 'clinic3', path: '/settings/notifications'}"></sidebar-item>
                 </sidebar-item>
-                <!-- <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'صفحات', icon: 'image'}">
+                <sidebar-item v-if="$route.meta.rtlActive" :link="{name: 'صفحات', icon: 'image'}">
                     <sidebar-item :link="{name: 'التسعير', path: '/pricing'}"></sidebar-item>
                     <sidebar-item :link="{name: 'دعم رتل', path: '/pages/rtl'}"></sidebar-item>
                     <sidebar-item :link="{name: 'الجدول الزمني', path: '/pages/timeline'}"></sidebar-item>
@@ -180,7 +181,7 @@
                     v-if="$route.meta.rtlActive"
                     :link="{name: 'الرسوم البيانية', icon: 'timeline', path: '/charts'}"
                 ></sidebar-item>
-                <sidebar-item v-else :link="{name: 'Charts', icon: 'timeline', path: '/charts'}"></sidebar-item> -->
+                <sidebar-item v-else :link="{name: 'Charts', icon: 'timeline', path: '/charts'}"></sidebar-item>
             </template>
         </side-bar-jaw>
         <div class="main-panel">

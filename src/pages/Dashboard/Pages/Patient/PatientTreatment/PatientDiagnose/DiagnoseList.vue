@@ -1,10 +1,9 @@
 
 <template>
-    <div class="md-layout md-gutter diagnose-list-wrapper" v-if="!isEmpty(patientDiagnosis)">
-        <div class="md-layout-item">
-            <!-- <md-toolbar class="md-transparent">
-                <h3 class="md-title">All Diagnosis</h3>
-            </md-toolbar> -->
+    <div class="md-layout-item diagnose-list-wrapper" v-if="items.length > 0">
+            <md-toolbar class="md-transparent">
+                <h3 class="md-title">All {{type | capitilize}}</h3>
+            </md-toolbar>
 
             <md-table
                 :value="queriedData"
@@ -38,9 +37,16 @@
                     </md-field>
                 </md-table-toolbar>
 
+                <md-table-empty-state
+                    :md-label="`No ${type} found`"
+                    :md-description="`No ${type}  found. Scroll top, and create new ${type} .`"
+                >
+                    <md-button class="md-primary md-raised" @click="scrollToTop()">Scroll Top</md-button>
+                </md-table-empty-state>
+
                 <md-table-row slot="md-table-row" slot-scope="{ item }">
                     <md-table-cell class="code" md-label="Code" md-sort-by="code">{{ item.code }}</md-table-cell>
-                    <md-table-cell md-label="Diagnose" md-sort-by="title">
+                    <md-table-cell md-label="Title" md-sort-by="title">
                         {{ item.title }}
                         <br>
                         <small>{{item.explain}}</small>
@@ -51,7 +57,7 @@
                             :key="toothId"
                         >{{ toothId | toCurrentTeethSystem(teethSystem) }},&nbsp; </span>
                     </md-table-cell>
-                    <md-table-cell md-sort-by="author" md-label="Diagnosed by">
+                    <md-table-cell md-sort-by="author" md-label="Created by">
                         <div class="md-layout md-alignment-left-center">
                             <div class="md-layout-item md-layout" style="max-width:40px;">
                                 <t-avatar
@@ -121,7 +127,6 @@
                     :total="total"
                 ></pagination>
             </div>
-        </div>
     </div>
 </template>
 <script>
@@ -138,13 +143,17 @@
             TAvatar,
         },
         props: {
-            diagnosis: {
+            items: {
                 type: Array,
                 default: () => [],
             },
             teethSystem: {
                 type: Number,
                 default: () => 1,
+            },
+            type: {
+                type: String,
+                default: () => 'diagnosis',
             },
         },
         data() {
@@ -161,7 +170,7 @@
                 },
                 footerTable: [
                     'Code',
-                    'Diagnose',
+                    'Title',
                     'Teeth',
                     'Diagnosed by',
                     'Date',
@@ -186,10 +195,7 @@
                 return [];
             },
             tableData() {
-                return this.patientDiagnosis;
-            },
-            patientDiagnosis() {
-                return this.patient.diagnosis || [];
+                return this.items;
             },
             queriedData() {
                 let result = this.tableData;
@@ -216,6 +222,9 @@
         },
 
         methods: {
+            scrollToTop() {
+                window.scrollTo(0, 0);
+            },
             recalculateJaw() {
                 this.$emit('onJawChanged');
             },
@@ -300,18 +309,6 @@
                 });
             },
             deleteRow(item) {
-                const indexToDelete = this.tableData.findIndex(
-                    tableRow => tableRow.id === item.id,
-                );
-                if (indexToDelete >= 0) {
-                    this.tableData.splice(indexToDelete, 1);
-                }
-                const indexToDeleteOrigin = this.patientDiagnosis.findIndex(
-                    diagnose => diagnose.id === item.id,
-                );
-                if (indexToDeleteOrigin >= 0) {
-                    this.patientDiagnosis.splice(indexToDeleteOrigin, 1);
-                }
             },
         },
         mounted() {
@@ -329,12 +326,6 @@
                 }
                 this.searchedData = result;
             },
-        // patientDiagnosis: {
-        //   handler() {
-        //     console.log('calculated');
-        //   },
-        //   deep: true,
-        // },
         },
     };
 </script>

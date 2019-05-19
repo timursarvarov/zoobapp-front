@@ -1,17 +1,17 @@
 <template>
-    <div class="tooth-locations-wrapper" ref="parent">
+    <div ref="parent">
         <jaw-add-locations
             ref="jawadddiagnose"
             :jaw="jaw"
             :prefer="prefer"
-            :selectedItem="selectedProcedure"
+            :selectedItem="selectedAnamnes"
             :selectedTeeth="selectedTeeth"
-            v-model="newProcedureParamsLocal"
+            v-model="newAnamnesParamsLocal"
             :teethSchema="teethSchema"
             :teethSystem="teethSystem"
             :defaultLocations="defaultLocations"
-            locationType="procedures"
-            :originalItemsGrouped="procedures"
+            locationType="anamnesis"
+            :originalItemsGrouped="anamnesis"
             @onToothSelected="onToothSelected"
         >
             <div slot="title">
@@ -73,7 +73,7 @@
             error: {
                 type: Object,
                 default: () => ({
-                    message: 'Choose tooth or procedure location',
+                    message: 'Choose tooth or anamnes location',
                     type: 'locations',
                     show: 'false',
                 }),
@@ -95,7 +95,7 @@
                 type: String,
                 default: () => 'diagnose',
             },
-            selectedProcedure: {
+            selectedAnamnes: {
                 type: Object,
                 default: () => ({
                     title: '',
@@ -124,7 +124,7 @@
         },
         data() {
             return {
-                procedureLocal: {},
+                anamnesLocal: {},
                 modelValidations: {
                     locations: {
                         required: true,
@@ -135,7 +135,6 @@
                 touched: {
                     locations: false,
                 },
-                size:{},
             };
         },
         methods: {
@@ -145,11 +144,11 @@
             matchWidth() {
                 if (this.$refs.parent) {
                     this.dialogWidth = this.$refs.parent.clientWidth;
-                    this.size = {
+                    const size = {
                         width: this.$refs.parent.clientWidth,
                         height: this.$refs.parent.clientHeight,
                     };
-                    this.$emit('mounted-size', this.size);
+                    this.$emit('mounted-size', size);
                 }
             },
             validate() {
@@ -166,22 +165,22 @@
                 if (this.isEmpty(this.originalLocations)) {
                     return true;
                 }
-                return !this.isEmpty(this.procedureLocal.teeth);
+                return !this.isEmpty(this.anamnesLocal.teeth);
             },
         },
         computed: {
-            newProcedureParamsLocal: {
+            newAnamnesParamsLocal: {
                 get() {
                     return this.newDiagnoseParams;
                 },
                 set(newValue) {
                     this.$emit('updateDiagonoseParams', newValue);
-                    this.procedureLocal = {};
-                    this.procedureLocal = newValue;
+                    this.anamnesLocal = {};
+                    this.anamnesLocal = newValue;
                     this.locations = this.isValidLoctions() ? 1 : '';
                 },
             },
-            procedures() {
+            anamnesis() {
                 return PROCEDURES;
             },
         },
@@ -201,7 +200,4 @@
     };
 </script>
 <style>
-.tooth-locations-wrapper{
-    min-width: 70vw;
-}
 </style>

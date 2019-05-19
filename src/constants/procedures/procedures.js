@@ -48,6 +48,7 @@ export default [{
                 locations: {},
                 view: {
                     coronaLingual: true,
+                    coronaTop: true,
                     coronaLabial: true,
                     root: true,
                     gum: true,
@@ -1050,7 +1051,7 @@ export default [{
                     silant: false,
                 },
                 view: {
-                    root: undefined,
+                    root: true,
                     gum: true,
                 },
                 setOnLoad: {
@@ -1126,7 +1127,7 @@ export default [{
                 view: {
                     crown: true,
                     bridge: true,
-                    root: undefined,
+                    root: true,
                     gum: true,
                 },
                 setOnLoad: {
@@ -1202,7 +1203,7 @@ export default [{
                 view: {
                     crown: true,
                     bridge: true,
-                    root: undefined,
+                    root: true,
                     gum: true,
                 },
                 setOnLoad: {
@@ -1436,7 +1437,7 @@ export default [{
                     // silant: false,
                     crown: true,
                     bridge: true,
-                    root: undefined,
+                    root: true,
                     gum: true,
                 },
                 setOnLoad: {
@@ -1603,21 +1604,15 @@ export default [{
                 addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
                 setOnLoad: {
                     bone: true,
-                    coronaLingual: undefined,
-                    coronaLabial: undefined,
-                    coronaTop: undefined,
                 },
                 locations: {
                     bone: true,
-                    coronaLingual: undefined,
-                    coronaLabial: undefined,
-                    coronaTop: undefined,
                 },
                 view: {
                     bone: true,
-                    coronaLingual: undefined,
-                    coronaLabial: undefined,
-                    coronaTop: undefined,
+                    coronaLingual: true,
+                    coronaLabial: true,
+                    coronaTop: true,
                     gum: true,
                 },
             },
@@ -1629,22 +1624,16 @@ export default [{
                 functionType: 'toggleAll',
                 addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
                 setOnLoad: {
-                    root: true,
-                    coronaLingual: undefined,
-                    coronaLabial: undefined,
-                    coronaTop: undefined,
+                    bone: true,
                 },
                 locations: {
-                    root: true,
-                    coronaLingual: undefined,
-                    coronaLabial: undefined,
-                    coronaTop: undefined,
+                    bone: true,
                 },
                 view: {
                     root: true,
-                    coronaLingual: undefined,
-                    coronaLabial: undefined,
-                    coronaTop: undefined,
+                    coronaLingual: true,
+                    coronaLabial: true,
+                    coronaTop: true,
                     gum: true,
                 },
             },
@@ -1658,21 +1647,15 @@ export default [{
                 addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
                 setOnLoad: {
                     bone: true,
-                    coronaLingual: undefined,
-                    coronaLabial: undefined,
-                    coronaTop: undefined,
                 },
                 locations: {
                     bone: true,
-                    coronaLingual: undefined,
-                    coronaLabial: undefined,
-                    coronaTop: undefined,
                 },
                 view: {
                     bone: true,
-                    coronaLingual: undefined,
-                    coronaLabial: undefined,
-                    coronaTop: undefined,
+                    coronaLingual: true,
+                    coronaLabial: true,
+                    coronaTop: true,
                     gum: true,
                 },
             },
@@ -1686,21 +1669,16 @@ export default [{
                 addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
                 setOnLoad: {
                     bone: true,
-                    coronaLingual: undefined,
-                    coronaLabial: undefined,
-                    coronaTop: undefined,
                 },
                 locations: {
                     bone: true,
-                    coronaLingual: undefined,
-                    coronaLabial: undefined,
-                    coronaTop: undefined,
+
                 },
                 view: {
                     bone: true,
-                    coronaLingual: undefined,
-                    coronaLabial: undefined,
-                    coronaTop: undefined,
+                    coronaLingual: true,
+                    coronaLabial: true,
+                    coronaTop: true,
                     gum: true,
                 },
             },

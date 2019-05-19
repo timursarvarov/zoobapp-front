@@ -8,13 +8,14 @@
             @showToothInfo='showToothInfo'
             @toggleItemVisibility='toggleAnamnesVisibility'
             :jaw="jaw"
-            :patientItems="patient.anamnesis"
+            :patientItems="{
+                            diagnosis: patient.diagnosis,
+                            procedures: currentPlanProcedures.procedures,
+                            anamnesis: patient.anamnesis,
+                            }"
             :teethSystem="currentClinic.teethSystem"
             type="anamnesis"
-            >
-            <div slot="bottom">
-            </div>
-          </jaw>
+            />
         </div>
       </div>
       <div class="md-layout-item md-layout md-small-size-100 md-xsmall-size-100 md-gutter md-medium-size-50 md-size-50">
@@ -260,6 +261,13 @@
                 currentClinic: 'getCurrentClinic',
                 user: 'getProfile',
             }),
+            currentPlanProcedures() {
+                const index = this.patient.plans.findIndex(p => p.showInJaw);
+                if (index > -1) {
+                    return this.patient.plans[index].procedures;
+                }
+                return [];
+            },
             anamnesToShow() {
                 const a = this.patient.anamnesis.find(
                     anamnes => anamnes.id === this.anamnesIdtoShow,

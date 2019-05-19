@@ -2,23 +2,21 @@
     <nav-tabs-card class="procedure-wrapper" v-if="patient.ID">
         <template slot="content">
             <!-- <span class="md-nav-tabs-title">Set new:</span> -->
-            <md-tabs :class="['md-' + currentTabColor()]" md-alignment="left" md-sync-route>
+            <md-tabs :class="['md-' + currentTabColor()]" md-alignment="left">
                 <md-tab
                     id="tab-anamnes"
                     md-icon="history"
-                    md-label="Anamnes"
-                    :to="`/patient/${patient.ID}/anamnes`"
+                    md-label="BIO"
                 >
                      <div class="md-layout ">
-                        <anamnes/>
+                        <patient-card/>
                     </div>
                 </md-tab>
 
                 <md-tab
                     id="tab-diagnose"
                     md-icon="create"
-                    md-label="Diagnose"
-                    :to="`/patient/${patient.ID}/diagnose`"
+                    md-label="Treatment"
                 >
                     <div class="md-layout ">
                         <diagnose/>
@@ -26,20 +24,9 @@
                 </md-tab>
 
                 <md-tab
-                    id="tab-therapy"
-                    md-icon="add"
-                    md-label="Procedure"
-                    :to="`/patient/${patient.ID}/procedure`"
-                >
-                    <div class="md-layout">
-                        <procedures/>
-                    </div>
-                </md-tab>
-                <md-tab
                     id="tab-notes"
                     md-icon="question_answer"
                     md-label="Notes"
-                    :to="`/patient/${patient.ID}/notes`"
                 >
                     <notes></notes>
                 </md-tab>
@@ -47,7 +34,6 @@
                     id="tab-files"
                     md-icon="folder_shared"
                     md-label="Files"
-                    :to="`/patient/${patient.ID}/files`"
                 >
                     <patient-add-files-form/>
                     <patient-files></patient-files>
@@ -69,6 +55,8 @@
         PatientFiles,
         PatientAddFilesForm,
         Procedures,
+        PatientCard
+
     } from '@/pages';
 
     export default {
@@ -80,6 +68,7 @@
             Notes,
             PatientFiles,
             PatientAddFilesForm,
+            PatientCard,
         },
         data() {
             return {

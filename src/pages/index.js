@@ -3,7 +3,7 @@ import ImageCropperForm from './Dashboard/Modals/ImageCropperForm.vue';
 import PasswordForm from './Dashboard/Pages/User/UserProfile/PasswordForm.vue';
 import UserCard from './Dashboard/Pages/User/UserProfile/UserCard.vue';
 
-import PatientCard from './Dashboard/Pages/Patient/PatientProfile/PatientCard.vue';
+import PatientCard from './Dashboard/Pages/Patient/PatientTreatment/PatientProfile/PatientCard.vue';
 import JawAnamnes from './Dashboard/Pages/Patient/PatientTreatment/JawAnamnes.vue';
 import Anamnes from './Dashboard/Pages/Patient/PatientTreatment/PatientAnamnes/Anamnes.vue';
 import Diagnose from './Dashboard/Pages/Patient/PatientTreatment/PatientDiagnose/Diagnose.vue';

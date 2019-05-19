@@ -1,5 +1,5 @@
 <template>
-    <md-dialog class="tooth-diagnosis-form" :md-active.sync="showFormLocal">
+    <md-dialog v-if="showForm" class="tooth-diagnosis-form" :md-active.sync="showFormLocal">
         <div>
             <md-card>
                 <md-card-header class="md-card-header-icon md-card-header-green">
@@ -13,26 +13,22 @@
                 </md-card-header>
                 <md-card-content>
                     <div ref="contentWrapper" class="content-wrapper">
-                        <div v-if="item" class="content-wrapper__tooth">
+                        <div  class="content-wrapper__tooth">
                             <div ref="toothWrapper" class="tooth-wrapper md-layout-item">
                                 <tooth
-                                    :selectedToothId="toothId"
+                                    :toothId="toothId"
                                     :jaw="jaw"
-                                    :selectedDiagnose="item"
+                                    :selectedItem="item"
                                     :teethSystem="teethSystem"
                                     :originalItems="originalItems"
-                                    :classType="classType"
+                                    :type="type"
                                     :scaleSize="7"
                                 />
                             </div>
-                            <div
-                                :style="{
-                                'max-height': height + 'px',
-                            }"
-                                class="content-body"
-                            >
-                                <div class="content" v-if="item.description || (item.manipulations && item.manipulations.length > 0)" >
-                                    <div v-if="item.description" >
+                            <div class="content-body">
+                                <div class="content" v-if="showEmptyState()" >
+                                    <div >
+                                        <slot name="content"></slot>
                                         <md-subheader>
                                             Description
                                         </md-subheader>
@@ -40,8 +36,7 @@
                                             {{item.description}}
                                         </div>
                                     </div>
-                                      <slot name="content"></slot>
-                                    </div>
+                                </div>
                                 <div v-else>
                                     <md-empty-state
                                         class="md-primary"
@@ -49,7 +44,7 @@
                                         md-label="No description to show"
                                         md-description="No description was created"
                                     >
-                                        <md-button  @click="$emit('editItem', item), showFormLocal=false"
+                                        <md-button  @click="$emit('editItem', item, type), showFormLocal=false"
                                         class="md-primary md-raised">Add Description</md-button>
                                     </md-empty-state>
                                 </div>
@@ -62,12 +57,12 @@
                                     <tooth
                                         v-for="toothId in otherTeeth"
                                         :key="toothId"
-                                        :selectedToothId="toothId"
+                                        :toothId="toothId"
                                         :jaw="jaw"
-                                        :selectedDiagnose="item"
+                                        :selectedItem="item"
                                         :teethSystem="teethSystem"
                                         :originalItems="originalItems"
-                                        :classType="classType"
+                                        :type="type"
                                         :scaleSize="4"
                                     />
                                 </div>
@@ -92,7 +87,7 @@
                             <small>{{item.date | moment("calendar")}}</small>)
                         </div>
                     </div>
-                    <md-button class="md-info" @click="$emit('editItem', item), showFormLocal=false">Edit</md-button>
+                    <md-button class="md-info" @click="$emit('editItem', item, type), showFormLocal=false">Edit</md-button>
                     <md-button class="md-success" @click="showFormLocal = !showFormLocal">OK</md-button>
                 </md-card-actions>
             </md-card>
@@ -123,7 +118,11 @@
             },
             item: {
                 type: Object,
-                default: () => {},
+                default: () => ({
+                    description: '',
+                    manipulations: [],
+                    otherTeeth: [],
+                }),
             },
             toothId: {
                 type: String,
@@ -137,7 +136,7 @@
                 type: Array,
                 default: () => [],
             },
-            classType: {
+            type: {
                 type: String,
                 default: () => 'diagnosis',
             },
@@ -156,20 +155,21 @@
         },
         data() {
             return {
-                height: 0,
-                width: 0,
             };
         },
         methods: {
-            calculateHeight() {
-                if (this.$refs.toothWrapper) {
-                    this.height = this.$refs.toothWrapper.clientHeight;
-                    this.width = this.$refs.contentWrapper.clientWidth - this.$refs.toothWrapper.clientWidth - 30;
+            showEmptyState() {
+                if (this.type === 'procedures') {
+                    if ((this.item.description && this.item.description.length > 0) || (this.item.manipulations && this.item.manipulations.length > 0)) {
+                        return true;
+                    }
+                    return false;
                 }
+                if (this.item.description && this.item.description.length > 0) {
+                    return true;
+                }
+                return false;
             },
-        },
-        mounted() {
-            this.calculateHeight();
         },
         computed: {
             otherTeeth() {

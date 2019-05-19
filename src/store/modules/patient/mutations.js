@@ -9,10 +9,11 @@ import {
     PATIENT_PLAN_DELETE,
     PATIENT_PLAN_EDIT,
     PATIENT_ANAMNES_SET,
+    PATIENT_ANAMNES_UPDATE,
     PATIENT_DIAGNOSE_SET,
     PATIENT_DIAGNOSE_UPDATE,
     PATIENT_PROCEDURES_SET,
-    PATIENT_TREATMETS_UPDATE,
+    PATIENT_PROCEDURE_UPDATE,
     PATIENT_GET,
     PATIENT_SET_PARAM,
     PATIENT_TOGGLE_ITEM_VISIBILITY,
@@ -45,7 +46,7 @@ export default {
         state.patient.plans[pIndex][key] = value;
     },
     [PATIENT_TOGGLE_ITEM_VISIBILITY]: (state, { params: params }) => {
-        if (params.planIndex >= 0) {
+        if (params.planIndex >= 0 && params.type === "procedures") {
             if (state.patient.plans[params.planIndex].procedures[params.itemIndex].showInJaw) {
                 state.patient.plans[params.planIndex].procedures[params.itemIndex].showInJaw = false;
             } else {
@@ -62,8 +63,8 @@ export default {
     [PATIENT_PROCEDURES_SET]: (state, { procedure, pIndex }) => {
         state.patient.plans[pIndex].procedures.unshift(procedure);
     },
-    [PATIENT_TREATMETS_UPDATE]: (state, { dIndex, procedure }) => {
-        state.patient.procedures.splice(dIndex, 1, procedure);
+    [PATIENT_PROCEDURE_UPDATE]: (state, { procedureIndex, planIndex, procedure, }) => {
+        state.patient.plans[planIndex].procedures.splice(procedureIndex, 1, procedure);
     },
     [PATIENT_DIAGNOSE_SET]: (state, diagnose) => {
         state.patient.diagnosis.unshift(diagnose);
@@ -73,6 +74,9 @@ export default {
     },
     [PATIENT_DIAGNOSE_UPDATE]: (state, { dIndex, diagnose }) => {
         state.patient.diagnosis.splice(dIndex, 1, diagnose);
+    },
+    [PATIENT_ANAMNES_UPDATE]: (state, { aIndex, anamnes }) => {
+        state.patient.anamnesis.splice(aIndex, 1, anamnes);
     },
     [PATIENT_GET]: (state, patient) => {
         state.patient = patient;

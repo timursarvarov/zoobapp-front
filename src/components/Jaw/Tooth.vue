@@ -2,34 +2,35 @@
     <div
         class="tooth-wrapper"
         :style="{
-            'width': jawSVG[selectedToothId].widthPerc * scaleSize + 'px',
+            'width': jawSVG[toothId].widthPerc * scaleSize + 'px',
             'padding-top': 2 * scaleSize + 'px'
             }"
     >
         <div
             :style="{'font-size': toothNumWidth+'em'}"
-            class="single-tooth-number">{{selectedToothId | toCurrentTeethSystem(teethSystem)}}
+            class="single-tooth-number">{{toothId | toCurrentTeethSystem(teethSystem)}}
             </div>
         <div
             :class="[
                     'tooth',
-                    preferj
+                    classTypeComputed
                     ]"
-            :ref="selectedToothId"
-            :style="{ 'width': jawSVG[selectedToothId].widthPerc * scaleSize + 'px' }"
+            :ref="toothId"
+            :style="{ 'width': jawSVG[toothId].widthPerc * scaleSize + 'px' }"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                :viewBox="jawSVG[selectedToothId].viewBox"
-                :style="{ 'width':  jawSVG[selectedToothId].widthPerc * scaleSize + 'px'}"
+                :viewBox="jawSVG[toothId].viewBox"
+                :style="{ 'width':  jawSVG[toothId].widthPerc * scaleSize + 'px'}"
             >
-                <g>
+                <g :class="`set-${type}`">
+                    <template  v-for="(locationValue, location) in defaultLocations">
                     <path
-                        v-for="(locationValue, location) in defaultLocations"
-                        :key="`${selectedToothId}${location}`"
+                        v-if="!shouldHideLocation(location)"
+                        :key="`${toothId}${location}`"
                         :class="[
                           // получаем объект классов диагноза
-                          getToothClasses(selectedToothId, location),
+                          getToothClasses(toothId, location),
 
                             // Название класса локации из высчитанной формуллы для отображеня в диагнозов анамнеза и лечения
                             toothComputed[location].class,
@@ -39,8 +40,9 @@
 
                             // путь для SVG атрибута patth
                             ]"
-                        :d="jawSVG[selectedToothId][location]"
+                        :d="jawSVG[toothId][location]"
                     ></path>
+                    </template>
                 </g>
 
             </svg>
@@ -66,18 +68,18 @@
                 type: String,
                 default: () => 'diagnose',
             },
-            classType: {
+            type: {
                 type: String,
-                default: () => 'diagnose',
+                default: () => '',
             },
-            selectedDiagnose: {
+            selectedItem: {
                 type: Object,
                 default: () => ({
                     code: '',
                     title: '',
                 }),
             },
-            selectedToothId: {
+            toothId: {
                 type: String,
                 default: () => '0',
             },
@@ -110,12 +112,7 @@
                 disabled: false,
                 toothComputed: {},
                 windowWidth: 1,
-                preferj: 'diagnose',
                 SvgTeeth: [],
-                lastAction: {
-                    location: null,
-                    toothId: null,
-                },
                 teethSettngs: [],
                 diagnose: {
                     code: '',
@@ -127,160 +124,43 @@
         },
         methods: {
             getToothClasses(toothId, location) {
-                // console.log(location, this.originalDiagnose.locations[location]);
                 const toothClasses = {
                     // класс 'seleced' применяется для выбранной локации
-                    [this.classType]: location in this.selectedDiagnose.teeth[toothId],
-                    selected:
-                        this.getNestedProperty(this.selectedDiagnose, 'teeth', toothId, location)
-                        !== undefined,
-
-                    // класс hide применяется если во view выбранного диагноза нет текущей локации
-                    hide: this.shouldHideLocation(toothId, location),
+                    [this.classTypeComputed]: location in this.selectedItem.teeth[toothId],
+                    selected: (location in this.selectedItem.teeth[toothId]),
                 };
                 return toothClasses;
             },
             // если в предыдуших диагнозах есть локации для показа или скрытия то
             // в зависимости от переклчатея показываем приореттные локации
-            shouldHideLocation(toothId, location) {
+            shouldHideLocation(location) {
                 // если если локация есть в разделе view оригинального диагноза
-                const hasInSelectedD = this.getNestedProperty(this.selectedDiagnose, 'teeth', toothId, location);
-                const hasInDiagnoseView = this.getNestedProperty(this.originalDiagnose, 'view', location);
-                const selectedDiagnoseLocations = Object.keys(this.selectedDiagnose.teeth[toothId]);
-                const originalDiagnoseLocations = Object.keys(this.originalDiagnose.locations);
-                const originalDiagnoseLocationsUndefined = Object.keys(this.originalDiagnose.locations).filter(l => this.originalDiagnose.locations[l] === undefined);
+                // const InSelectedItemValue = this.getNestedProperty(this.selectedItem, 'teeth', this.toothId, location);
+                const hasKeyInSelectedD = this.selectedItem && this.selectedItem.teeth && this.selectedItem.teeth[this.toothId] ? location in this.selectedItem.teeth[this.toothId] : undefined;
+                const InOriginalItemViewValue = this.getNestedProperty(this.originalItem, 'view', location);
+                const hasKeyInDiagnoseView = this.originalItem.view ? (location in this.originalItem.view) : false;
+                const selectedDiagnoseLocations = Object.keys(this.selectedItem.teeth[this.toothId]);
+                const originalDiagnoseLocations = Object.keys(this.originalItem.locations);
+                // const originalDiagnoseLocationsTrue = Object.keys(this.originalItem.locations).filter(l => this.originalItem.locations[l] === true);
+                // фильтруем локации из оригинального диагноза. оставив лишь выбранные
                 const locationsToHide = originalDiagnoseLocations.filter(x => !selectedDiagnoseLocations.includes(x));
-                if (originalDiagnoseLocationsUndefined.includes(location)) {
-                    return false;
-                }
-                if (hasInDiagnoseView !== undefined) {
+                if (hasKeyInDiagnoseView) {
+                    // return !hasKeyInSelectedD || locationsToHide.includes(location);
                     if (locationsToHide.includes(location)) {
                         return true;
                     }
-                    if (hasInSelectedD !== undefined) {
-                        return !hasInSelectedD;
+                    if (InOriginalItemViewValue) {
+                        return false;
+                    }
+                    if (hasKeyInSelectedD === false) {
+                        return !hasKeyInSelectedD;
                     }
                     // return false;
-                    return this.originalDiagnose.view.location;
+                    return !this.originalItem.view.location;
                 }
-
                 return true;
             },
-            isHidingLocation(toothId, location) {
-                const anamnes = this.getNestedProperty(
-                    this.jaw,
-                    'anamnesis',
-                    toothId,
-                    location,
-                );
-                const procedure = this.getNestedProperty(
-                    this.jaw,
-                    'procedures',
-                    toothId,
-                    location,
-                );
-                const diagnose = this.getNestedProperty(
-                    this.jaw,
-                    'diagnosis',
-                    toothId,
-                    location,
-                );
-                const defaultLocation = !this.defaultLocations[location];
-
-                let hide = defaultLocation;
-                if (this.preferj) {
-                    if (this.preferj === 'anamnes') {
-                        if (diagnose === true || diagnose === false) {
-                            hide = !diagnose;
-                        }
-                        if (procedure === true || procedure === false) {
-                            hide = !procedure;
-                        }
-                        if (anamnes === true || anamnes === false) {
-                            hide = !anamnes;
-                        }
-                    }
-                    if (this.preferj === 'procedure') {
-                        if (diagnose === true || diagnose === false) {
-                            hide = !diagnose;
-                        }
-                        if (anamnes === true || anamnes === false) {
-                            hide = !anamnes;
-                        }
-                        if (procedure === true || procedure === false) {
-                            hide = !procedure;
-                        }
-                    }
-                    if (this.preferj === 'diagnose') {
-                        if (anamnes === true || anamnes === false) {
-                            hide = !anamnes;
-                        }
-                        if (procedure === true || procedure === false) {
-                            hide = !procedure;
-                        }
-                        if (diagnose === true || diagnose === false) {
-                            hide = !diagnose;
-                        }
-                    }
-                } else {
-                    return true;
-                }
-
-                return hide;
-            },
             // Высчитывваем в какую очередь нужно присвоить класс для показа локации в зависимости от выбронного приоретета показа(анамнез дигноз или лечение)
-            preferableJawClasses(toothId, location) {
-                const toothClass = {};
-                if (this.preferj === 'anamnes') {
-                    if (this.jaw.anamnesis[toothId][location]) {
-                        toothClass.anamnes = true;
-                        return toothClass;
-                    }
-                    if (this.jaw.procedures[toothId][location]) {
-                        toothClass.procedure = true;
-                        return toothClass;
-                    }
-                    if (this.jaw.diagnosis[toothId][location]) {
-                        toothClass.diagnose = true;
-                        return toothClass;
-                    }
-                    return toothClass;
-                }
-                if (this.preferj === 'diagnose') {
-                    const hasInDiagnose = location in this.selectedDiagnose.teeth[toothId];
-                    toothClass.diagnose = hasInDiagnose;
-
-                    // if (this.jaw.diagnosis[toothId][location]) {
-                    //     toothClass.diagnose = true;
-                    //     return toothClass;
-                    // }
-                    // if (this.jaw.procedures[toothId][location]) {
-                    //     toothClass.procedure = true;
-                    //     return toothClass;
-                    // }
-                    // if (this.jaw.anamnesis[toothId][location]) {
-                    //     toothClass.anamnes = true;
-                    //     return toothClass;
-                    // }
-                    return toothClass;
-                }
-                if (this.preferj === 'procedure') {
-                    if (this.jaw.procedures[toothId][location]) {
-                        toothClass.procedure = true;
-                        return toothClass;
-                    }
-                    if (this.jaw.anamnesis[toothId][location]) {
-                        toothClass.anamnes = true;
-                        return toothClass;
-                    }
-                    if (this.jaw.diagnosis[toothId][location]) {
-                        toothClass.diagnose = true;
-                        return toothClass;
-                    }
-                    return toothClass;
-                }
-                return toothClass;
-            },
             setLocationOnLoad(location, toothId, value) {
                 if (value !== undefined) {
                     if (!this.hasProp(this.diagnose.teeth, toothId)) {
@@ -295,7 +175,7 @@
                 }
             },
             setAllTeethOnLoad() {
-                const { setOnLoad } = this.originalDiagnose;
+                const { setOnLoad } = this.originalItem;
                 // если нет локаций
                 if (!this.isEmpty(setOnLoad)) {
                     Object.keys(setOnLoad).forEach((location) => {
@@ -308,8 +188,8 @@
                 }
             },
             setAllEditableTeethOnLoad() {
-                Object.keys(this.selectedDiagnose.teeth).forEach((toothId) => {
-                    const tooth = this.selectedDiagnose.teeth[toothId];
+                Object.keys(this.selectedItem.teeth).forEach((toothId) => {
+                    const tooth = this.selectedItem.teeth[toothId];
                     // если нет локаций
                     if (!this.isEmpty(tooth)) {
                         Object.keys(tooth).forEach((location) => {
@@ -337,9 +217,9 @@
                 }
                 if (this.selectableTeeth.length > 0) {
                     // устанавливаем локации setOnLoad локации
-                    if (!this.isEmpty(this.originalDiagnose.locations)) {
+                    if (!this.isEmpty(this.originalItem.locations)) {
                         // если диагноз редактируемый
-                        if (!this.isEmpty(this.selectedDiagnose.teeth)) {
+                        if (!this.isEmpty(this.selectedItem.teeth)) {
                             this.setAllEditableTeethOnLoad();
                         } else {
                             this.setAllTeethOnLoad();
@@ -357,8 +237,8 @@
                 const tooth = {};
                 Object.keys(this.defaultLocations).forEach((location) => {
                     tooth[location] = {
-                        // hide: this.isHidingLocation(this.selectedToothId, location),
-                        class: this.preferableJawClasses(this.selectedToothId, location),
+                        class: this.jaw[this.type][this.toothId][location] ? this.classTypeComputed : '',
+                        // this.preferableJawClasses(this.toothId, location),
                     };
                 });
 
@@ -367,6 +247,15 @@
         },
 
         computed: {
+            classTypeComputed() {
+                if (this.type === 'diagnosis') {
+                    return 'diagnose';
+                }
+                if (this.type === 'procedures') {
+                    return 'procedure';
+                }
+                return 'anamnes';
+            },
             toothNumWidth() {
                 const width = this.scaleSize / 5;
                 if (width < 1) {
@@ -397,8 +286,8 @@
             defaultLocations() {
                 return TEETH_DEFAULT_LOCATIONS;
             },
-            originalDiagnose() {
-                const originalCode = this.selectedDiagnose.code;
+            originalItem() {
+                const originalCode = this.selectedItem.code;
                 for (let index = 0; index < this.diagnosis.length; index += 1) {
                     const dGrooup = this.diagnosis[index];
                     if (dGrooup.codes) {
@@ -425,11 +314,11 @@
             preferLocal: {
                 // геттер:
                 get() {
-                    return this.prefer;
+                    return this.classTypeComputed;
                 },
                 // сеттер:
                 set(newValue) {
-                    this.preferj = newValue;
+                    this.classTypeComputed = newValue;
                 },
             },
         },

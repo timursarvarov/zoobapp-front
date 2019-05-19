@@ -1,5 +1,5 @@
 <template>
-    <div class="md-layout patient-list-wrapper">
+    <div class="md-layout patients-list-wrapper">
         <div class="md-layout-item">
             <md-card>
                 <md-card-header
@@ -468,7 +468,7 @@
             from() {
                 return (
                     this.queryParams.pagination.perPage
-                * (this.queryParams.pagination.currentPage - 1)
+                    * (this.queryParams.pagination.currentPage - 1)
                 );
             },
         },
@@ -487,7 +487,17 @@
 </script>
 
 <style lang="scss" >
-.patient-list-wrapper {
+.patients-list-wrapper {
+    .md-table .md-table-row .md-table-cell-selection {
+        .md-table-cell-container{
+
+        width: 40px;
+        }
+    }
+    table > thead > tr > th.md-table-head.md-table-cell-selection > div{
+            width: 30px;
+    margin-left: 14px;
+    }
     .table-settings {
         position: absolute;
         margin-top: 15px;

@@ -2,25 +2,22 @@
     <md-dialog :md-active.sync="isDialogVisibleL" class="jaw-dialog-wrapper">
         <div class="wizard-add-diagnose-form">
             <div>
-                <simple-wizard finishButtonText="Save Procedure">
+                <simple-wizard finishButtonText="Save Anamnes">
                     <template slot="header">
                         <h5 class="title">
-                            <b>{{selectedProcedure.code}}</b>
-                            {{selectedProcedure.title}}
-                            <span
-                                class="category"
-                            >– {{currentPlan.title | capitilize}}</span>
+                            <b>{{selectedAnamnes.code}}</b>
+                            {{selectedAnamnes.title}}
                         </h5>
                         <span>
                             <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
                                 <span v-if="isEmpty(itemToCreate.teeth)">Please selesct tooth</span>
                                 <span v-else>
                                     <slide-y-down-transition>
-                                        <span v-show="!isEmpty(originalProcedure.locations)">For:</span>
+                                        <span v-show="!isEmpty(originalAnamnes.locations)">For:</span>
                                     </slide-y-down-transition>
                                     <slide-y-down-transition>
                                         <span
-                                            v-show="isEmpty(originalProcedure.locations)"
+                                            v-show="isEmpty(originalAnamnes.locations)"
                                         >Disease area:</span>
                                     </slide-y-down-transition>
                                 </span>
@@ -32,7 +29,7 @@
                                     >{{ key | toCurrentTeethSystem(teethSystem) }}</span>
                                 </transition-group>
                             </span>
-                            <span v-else class="category">{{selectedProcedure.explain}}</span>
+                            <span v-else class="category">{{selectedAnamnes.explain}}</span>
                         </span>
                     </template>
                     <wizard-tab
@@ -45,37 +42,24 @@
                             :jaw="jaw"
                             :prefer="prefer"
                             :error.sync="errorLocations"
-                            :selectedProcedure="selectedProcedure"
-                            :originalLocations="originalProcedure.locations"
+                            :selectedAnamnes="selectedAnamnes"
+                            :originalLocations="originalAnamnes.locations"
                             :selectedTeeth="selectedTeeth"
-                            v-model="selectedProcedureLocal"
+                            v-model="selectedAnamnesLocal"
                             :teethSchema="teethSchema"
                             :teethSystem="teethSystem"
                             @mounted-size="setSize"
                             @onToothSelected="onToothSelected"
                         />
                     </wizard-tab>
-
                     <wizard-tab :before-change="() => validateStep('step2')">
-                        <template slot="label">Manipulations</template>
-                        <manipulations
+                        <template slot="label">Description</template>
+                        <anamnes-description
                             ref="step2"
                             v-model="description"
-                            :manipulationsToEdit="selectedProcedure.manipulations"
-                            :selectedTeeth="selectedTeethLocalJaw"
                             :size="jawListSize"
-                            @addManipulations="manipulationsCreated"
-                            :currencyCode="clinic.currencyCode"
-                        />
-                    </wizard-tab>
-                    <wizard-tab :before-change="() => validateStep('step3')">
-                        <template slot="label">Description</template>
-                        <procedure-description
-                            ref="step3"
-                            v-model="description"
-                            :size="jawListSize"
-                            :descriptions="procedureDescriptions"
-                            @on-validated="procedureCreated"
+                            :descriptions="anamnesDescriptions"
+                            @on-validated="anamnesCreated"
                         />
                     </wizard-tab>
                 </simple-wizard>
@@ -86,8 +70,7 @@
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
     import ToothLocations from './Wizard/ToothLocations.vue';
-    import ProcedureDescription from './Wizard/ProcedureDescription.vue';
-    import Manipulations from './Wizard/Manipulations.vue';
+    import AnamnesDescription from './Wizard/AnamnesDescription.vue';
     import { SimpleWizard, WizardTab } from '@/components';
     import { mapGetters } from 'vuex';
     import { NOTIFY, PROCEDURES } from '@/constants';
@@ -113,12 +96,11 @@
                 type: String,
                 default: () => 'diagnose',
             },
-            selectedProcedure: {
+            selectedAnamnes: {
                 type: Object,
                 default: () => ({
                     code: '',
                     title: '',
-                    manipulations: [],
                 }),
             },
             selectedTeeth: {
@@ -150,6 +132,7 @@
                 selectedTeethLocalJaw: [],
                 itemToCreate: {
                     teeth: {},
+                    manipulations: [],
                     description: '',
                     explain: '',
                     code: '',
@@ -158,8 +141,7 @@
             };
         },
         components: {
-            ProcedureDescription,
-            Manipulations,
+            AnamnesDescription,
             SimpleWizard,
             WizardTab,
             ToothLocations,
@@ -172,16 +154,16 @@
             },
             // инициируем локальный диагноз
             initiateLocalDiagnose() {
-                Object.keys(this.selectedProcedure).forEach((key) => {
-                    this.itemToCreate[key] = this.selectedProcedure[key];
+                Object.keys(this.selectedAnamnes).forEach((key) => {
+                    this.itemToCreate[key] = this.selectedAnamnes[key];
                 });
                 this.itemToCreate.date = new Date();
             },
             manipulationsCreated(manipulations) {
                 this.itemToCreate.manipulations = manipulations;
             },
-            procedureCreated() {
-                this.itemToCreate.description = this.description;
+            anamnesCreated() {
+                this.itemToCreate.description = this.description || '';
                 this.$emit('on-created', this.itemToCreate);
             },
             unsetLocalDiagnose() {
@@ -193,8 +175,8 @@
                 this.itemToCreate.title = '';
             },
             hasLoctionsKey() {
-                if (this.originalProcedure) {
-                    return 'locations' in this.originalProcedure;
+                if (this.originalAnamnes) {
+                    return 'locations' in this.originalAnamnes;
                 }
                 return false;
             },
@@ -230,20 +212,6 @@
                         if (!res) {
                             this.$store.dispatch(NOTIFY, {
                                 settings: {
-                                    message: 'Please add manipulation',
-                                    type: 'warning',
-                                },
-                            });
-                            return false;
-                        }
-                        return res;
-                    });
-                }
-                if (ref === 'step3') {
-                    return this.$refs[ref].validate().then((res) => {
-                        if (!res) {
-                            this.$store.dispatch(NOTIFY, {
-                                settings: {
                                     message: 'Please add dignose description',
                                     type: 'warning',
                                 },
@@ -265,13 +233,13 @@
         },
         computed: {
             ...mapGetters({
-                procedureDescriptions: 'procedureDescriptions',
+                anamnesDescriptions: 'procedureDescriptions',
                 clinic: 'getCurrentClinic',
             }),
-            originalProcedure() {
-                const originalCode = this.selectedProcedure.code;
-                for (let index = 0; index < this.procedures.length; index += 1) {
-                    const dGrooup = this.procedures[index];
+            originalAnamnes() {
+                const originalCode = this.selectedAnamnes.code;
+                for (let index = 0; index < this.anamnesis.length; index += 1) {
+                    const dGrooup = this.anamnesis[index];
                     if (dGrooup.codes) {
                         const dIndex = dGrooup.codes
                             .map(d => d.code)
@@ -283,12 +251,12 @@
                 }
                 return false;
             },
-            procedures() {
+            anamnesis() {
                 return PROCEDURES;
             },
-            selectedProcedureLocal: {
+            selectedAnamnesLocal: {
                 get() {
-                    return this.selectedProcedure;
+                    return this.selectedAnamnes;
                 },
                 set(newValue) {
                     // необходимо для реактивности создоваемого диагногза внутри данного компонента
@@ -307,9 +275,9 @@
         },
         created() {
             this.selectedTeethL = this.copyObj(this.selectedTeeth);
-            this.hasLoctionsKey(this.selectedProcedure.code);
+            this.hasLoctionsKey(this.selectedAnamnes.code);
             this.initiateLocalDiagnose();
-            this.description = this.selectedProcedure.description;
+            this.description = this.selectedAnamnes.description;
         },
     };
 </script>
@@ -328,6 +296,7 @@
     }
     .tab-content {
         padding: 0;
+        min-height: 65vh;
     }
     .wizard-add-diagnose-form {
         .md-card-header {

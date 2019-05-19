@@ -1,75 +1,88 @@
 <template lang="html">
             <div class="t-collapse-search-wrapper noselect">
-            <md-toolbar class="md-transparent" >
-              <div class="md-toolbar-section-end ">
-              <md-field class="no-margin md-layout-item ml-auto md-size-50 md-small-size-90" >
-                <label>Type to search procedure</label>
-                <md-input v-model="search"  > </md-input>
-                <slide-y-down-transition>
-                  <md-button @click="search = ''"  v-show="search.length > 0" class="md-simple md-icon-button md-dense md-input-action ">
-                    <md-icon :style="{ color: getItems.length === 0 ? '#9c27b0 !important': '' }"
-                    >close</md-icon>
-                </md-button>
-                </slide-y-down-transition>
-              </md-field>
-                 <md-button
-                 @click="toggleAll=!toggleAll"
-                  class="md-mini md-just-icon md-simple md-round"
-                >
-                  <md-icon :class="[{rotate:toggleAll }]" >keyboard_arrow_down</md-icon>
-                  <md-tooltip md-delay="500">Show all Procedures</md-tooltip>
-                </md-button>
-              </div>
+            <md-toolbar class=" md-gutter md-transparent no-side-padding md-layout" >
+                    <div class="md-layout-item collapse-toolbar__items md-gutter">
+                        <div class="collapse-toolbar__grow">
+                            <slot name="title-start-1"></slot>
+                        </div>
+                        <div class=" ml-auto  action-button collapse-toolbar__nogrow">
+                            <slot name="title-start-2"></slot>
+                        </div>
+                    </div>
+                    <div class="md-layout-item collapse-toolbar__items md-gutter">
+                        <div class=" collapse-toolbar__grow">
+                            <md-field class="no-margin " >
+                                <label>Search {{itemType}}</label>
+                                <md-input v-model="search"  > </md-input>
+                                <slide-y-down-transition>
+                                <md-button @click="search = ''"  v-show="search.length > 0" class="md-simple md-icon-button md-dense md-input-action ">
+                                    <md-icon :style="{ color: getItems.length === 0 ? '#9c27b0 !important': '' }"
+                                    >close</md-icon>
+                                </md-button>
+                                </slide-y-down-transition>
+                            </md-field>
+                        </div>
+
+                        <div class="ml-auto  action-button collapse-toolbar__nogrow">
+                            <md-button
+                                @click="toggleAll=!toggleAll"
+                                class="md-mini md-just-icon md-simple md-round"
+                            >
+                                <md-icon :class="[{rotate:toggleAll }]" >keyboard_arrow_down</md-icon>
+                                <md-tooltip md-delay="500">Show all {{itemType}}</md-tooltip>
+                            </md-button>
+                        </div>
+                    </div>
             </md-toolbar>
-            <div class="collapse-wrapper "  :style="[{'max-height': jawHeight - 120 + 'px'},{'min-height': jawHeight - 120 + 'px'}]" >
-              <collapse
-              v-if="showSlot"
-              class=""
+            <div class="collapse-wrapper "  :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
+            <collapse
+                v-if="!hideSlot"
+                class=""
                     :collapse="itemsGroup"
                     icon="keyboard_arrow_down"
                     color-collapse="primary"
                     :toggleAll = "getToggleAll"
-                  >
+            >
 
-                <template  v-for="(procedureGroup, key) in getItems" :slot="'md-collapse-pane-'+(parseInt(key) + 1)" >
-                  <div   :key="key">
-                    <md-list class=" md-dense" >
-                        <md-list-item  @click="procedureClick($event, procedure)"
-                        :class="[{dental: !isEmpty(procedure.locations) && selectedTeeth.length == 0 }]"
-                        class="item"
-                        v-ripple v-for="(procedure, keyd) in procedureGroup.codes" :key="keyd" >
-
-
-                          <div class="procedure-code" >
-                            <h6  v-html="procedure.code"></h6>
-                          </div>
-
-                          <div class="md-list-item-text" >
-
-                            <span  v-html="procedure.title"></span>
-                            <small class="description text-warning" v-if="!isEmpty(procedure.locations) && selectedTeeth.length == 0" > Please firstly choose a tooth  </small>
-                            <small class="description" v-else  v-html="procedure.explain">Horizontal Tabs</small>
-
-                          </div>
-
-                          <md-button  :class="[{'md-primary' : isFavorite(procedure)}, 'md-simple', 'md-list-action', 'md-icon-button']"   :md-ripple="false" >
-                            <md-icon >star</md-icon>
-                            <md-tooltip  md-delay="700">Add to Favorite</md-tooltip>
-                          </md-button>
+            <template  v-for="(procedureGroup, key) in getItems" :slot="'md-collapse-pane-'+(parseInt(key) + 1)" >
+                <div   :key="key">
+                <md-list class=" md-dense" >
+                    <md-list-item  @click="procedureClick($event, procedure)"
+                    :class="[{dental: !isEmpty(procedure.locations) && selectedTeeth.length == 0 }]"
+                    class="item"
+                    v-ripple v-for="(procedure, keyd) in procedureGroup.codes" :key="keyd" >
 
 
-                        </md-list-item>
-                      </md-list>
-                      </div>
-                </template>
-              </collapse>
+                        <div class="procedure-code" >
+                        <h6  v-html="procedure.code"></h6>
+                        </div>
+
+                        <div class="md-list-item-text" >
+
+                        <span  v-html="procedure.title"></span>
+                        <small class="description text-warning" v-if="!isEmpty(procedure.locations) && selectedTeeth.length == 0" > Please firstly choose a tooth  </small>
+                        <small class="description" v-else  v-html="procedure.explain">Horizontal Tabs</small>
+
+                        </div>
+
+                        <md-button  :class="[{'md-primary' : isFavorite(procedure)}, 'md-simple', 'md-list-action', 'md-icon-button']"   :md-ripple="false" >
+                        <md-icon >star</md-icon>
+                        <md-tooltip  md-delay="700">Add to Favorite</md-tooltip>
+                        </md-button>
+
+
+                    </md-list-item>
+                    </md-list>
+                    </div>
+            </template>
+            </collapse>
 
               <!-- <div> -->
-                <slot v-if="!showSlot" name="empty-space"></slot>
+                <slot v-if="hideSlot" name="empty-space"></slot>
               <!-- <div/> -->
 
               <md-empty-state
-                v-if="getItems.length == 0 && showSlot"
+                v-if="getItems.length == 0 && !hideSlot"
                 class="md-primary"
                 md-icon="sentiment_dissatisfied"
                 :md-label="`No matching '${this.itemType}'`"
@@ -139,7 +152,7 @@
                 type: String,
                 default: () => 'Items',
             },
-            showSlot: {
+            hideSlot: {
                 type: Boolean,
                 default: () => true,
             },
@@ -333,10 +346,30 @@
             this.loadData();
             this.searched = this.copyObj(this.procedureOriginal);
         },
+        watch: {
+            itemType() {
+                this.loadData();
+                this.searched = this.copyObj(this.procedureOriginal);
+            },
+        },
     };
 </script>
 <style lang="scss">
 .t-collapse-search-wrapper {
+    .collapse-toolbar__items{
+        display:flex;
+        .collapse-toolbar__grow{
+            flex-grow: 1;
+        }
+        .collapse-toolbar__nogrow{
+            // padding-left: 15px
+
+        }
+    }
+    .no-side-padding {
+        padding-left: 0;
+        padding-right: 0;
+    }
     width: 100%;
     .md-icon {
         transition: all 250ms ease-in;
@@ -352,15 +385,24 @@
     .procedure-code {
         margin-right: 24px;
     }
+    .action-start{
+        max-width: 170px;
+    }
+    .action-button{
+        // max-width: 42px;
+        // min-width: 42px;
+    }
     .collapse-wrapper {
-        border-style: solid;
-        border-color: rgba(128, 128, 128, 0.212);
-        border-width: 1px;
-        border-radius: 3px;
-        margin: 20px 0 20px 0;
+       background-color: rgba(233, 233, 233, 0.459);
+        border-radius: 10px;
+        margin-bottom: 3vh;
+        margin-top: 3vh;
+        margin: 20px 0 0 0;
         overflow: hidden;
         overflow-y: scroll;
-        padding: 20px 10px 20px 15px;
+        // max-height: 40vh;
+        // min-height: 30vh;
+        padding: 20px 10px 20px 10px;
         &::-webkit-scrollbar {
             width: 7px;
             // background-color: transparent;
@@ -383,10 +425,47 @@
                 text-overflow: ellipsis;
                 margin-right: 25px;
                 .md-icon {
-                    top: px;
+                    top: 7px;
                 }
             }
         }
+        md-error .md-collapse-label:after {
+            bottom: 6px;
+        }
+
+        .highlight {
+            background-color: rgba(255, 255, 21, 0.979);
+        }
+        .md-list {
+            .md-list-item {
+                margin: 0;
+            }
+            background-color: #f7f7f7d5;
+            border-style: solid;
+            border-color: #eeecec9c;
+            border-width: 1px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .md-list-item-content {
+            max-height: 64px;
+            min-height: 44px;
+            height: 44px;
+            padding: 8px;
+            // background-color: rgba(238, 236, 236, 0.201);
+        }
+        .dental {
+            .md-list-item-text {
+                cursor: not-allowed;
+            }
+        }
+        .md-list-item-text {
+            cursor: pointer;
+        }
+        .md-list-action {
+            padding-right: 10px;
+        }
+        // }
         .md-collapse-content {
             margin-top: 20px;
             padding: 0 1vw;

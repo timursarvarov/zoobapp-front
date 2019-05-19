@@ -1,19 +1,23 @@
 <template lang="html">
 
   <div class="md-layout md-gutter procedure-wrapper">
-      <div class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
+        <div class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
         <div class="mx-auto" style="flex-grow:1;"  ref="wrjaw">
-          <jaw
-                :selectedTeeth="selectedTeeth"
-                @onSelectedTeeth='onSelectedTeeth'
-                @showToothInfo='showToothInfo'
-                @toggleItemVisibility='toggleProcedureVisibility'
-                :jaw="jaw"
-                :patientItems="currentPlan.procedures"
-                :teethSchema="teethSchema"
-                :teethSystem="currentClinic.teethSystem"
-                type="procedures"
-            >
+            <jaw
+                    :selectedTeeth="selectedTeeth"
+                    @onSelectedTeeth='onSelectedTeeth'
+                    @showToothInfo='showToothInfo'
+                    @toggleItemVisibility='toggleProcedureVisibility'
+                    :jaw="jaw"
+                    :patientItems="{
+                                diagnosis: patient.diagnosis,
+                                procedures: currentPlan.procedures,
+                                anamnesis: patient.anamnesis,
+                                }"
+                    :teethSchema="teethSchema"
+                    :teethSystem="currentClinic.teethSystem"
+                    type="procedures"
+                >
             <div slot="title-start">
               <md-field class="md-layout-item no-margin"
               >
@@ -511,76 +515,76 @@
         .procedure-code {
             margin-right: 24px;
         }
-        .collapse-wrapper {
-            border-style: solid;
-            border-color: rgba(128, 128, 128, 0.212);
-            border-width: 1px;
-            border-radius: 3px;
-            margin: 20px 0 20px 0;
-            overflow: hidden;
-            overflow-y: scroll;
-            // max-height: 40vh;
-            // min-height: 30vh;
-            padding: 20px 10px 20px 10px;
-            &::-webkit-scrollbar {
-                width: 7px;
-                // background-color: transparent;
-            }
-            &::-webkit-scrollbar-thumb {
-                background-color: grey;
-                border-radius: 7px;
-            }
-            .md-collapse-label {
-                // padding: 0px 10px 25px 0;
-                overflow: hidden;
-                .md-collapse-title {
-                    font-weight: 400;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    margin-right: 25px;
-                    .md-icon {
-                        top: 9px;
-                    }
-                }
-            }
-            md-error .md-collapse-label:after {
-                bottom: 6px;
-            }
+        // .collapse-wrapper {
+        //     border-style: solid;
+        //     border-color: rgba(128, 128, 128, 0.212);
+        //     border-width: 1px;
+        //     border-radius: 3px;
+        //     // margin: 20px 0 20px 0;
+        //     overflow: hidden;
+        //     overflow-y: scroll;
+        //     // max-height: 40vh;
+        //     // min-height: 30vh;
+        //     padding: 20px 10px 20px 10px;
+        //     &::-webkit-scrollbar {
+        //         width: 7px;
+        //         // background-color: transparent;
+        //     }
+        //     &::-webkit-scrollbar-thumb {
+        //         background-color: grey;
+        //         border-radius: 7px;
+        //     }
+        //     .md-collapse-label {
+        //         // padding: 0px 10px 25px 0;
+        //         overflow: hidden;
+        //         .md-collapse-title {
+        //             font-weight: 400;
+        //             white-space: nowrap;
+        //             overflow: hidden;
+        //             text-overflow: ellipsis;
+        //             margin-right: 25px;
+        //             .md-icon {
+        //                 top: 9px;
+        //             }
+        //         }
+        //     }
+        //     md-error .md-collapse-label:after {
+        //         bottom: 6px;
+        //     }
 
-            .highlight {
-                background-color: rgba(255, 255, 21, 0.979);
-            }
-            .md-list {
-                .md-list-item {
-                    margin: 0;
-                }
-                background-color: #f7f7f7d5;
-                border-style: solid;
-                border-color: #eeecec9c;
-                border-width: 1px;
-                border-radius: 4px;
-                margin-bottom: 15px;
-            }
-            .md-list-item-content {
-                max-height: 64px;
-                min-height: 44px;
-                height: 44px;
-                padding: 8px;
-                // background-color: rgba(238, 236, 236, 0.201);
-            }
-            .dental {
-                .md-list-item-text {
-                    cursor: not-allowed;
-                }
-            }
-            .md-list-item-text {
-                cursor: pointer;
-            }
-            .md-list-action {
-                padding-right: 10px;
-            }
-        }
+        //     .highlight {
+        //         background-color: rgba(255, 255, 21, 0.979);
+        //     }
+        //     .md-list {
+        //         .md-list-item {
+        //             margin: 0;
+        //         }
+        //         background-color: #f7f7f7d5;
+        //         border-style: solid;
+        //         border-color: #eeecec9c;
+        //         border-width: 1px;
+        //         border-radius: 4px;
+        //         margin-bottom: 15px;
+        //     }
+        //     .md-list-item-content {
+        //         max-height: 64px;
+        //         min-height: 44px;
+        //         height: 44px;
+        //         padding: 8px;
+        //         // background-color: rgba(238, 236, 236, 0.201);
+        //     }
+        //     .dental {
+        //         .md-list-item-text {
+        //             cursor: not-allowed;
+        //         }
+        //     }
+        //     .md-list-item-text {
+        //         cursor: pointer;
+        //     }
+        //     .md-list-action {
+        //         padding-right: 10px;
+        //     }
+        // }
         .noresult {
             color: red !important;
         }

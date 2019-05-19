@@ -135,7 +135,6 @@
                 touched: {
                     locations: false,
                 },
-                size:{},
             };
         },
         methods: {
@@ -145,11 +144,11 @@
             matchWidth() {
                 if (this.$refs.parent) {
                     this.dialogWidth = this.$refs.parent.clientWidth;
-                    this.size = {
+                    const size = {
                         width: this.$refs.parent.clientWidth,
                         height: this.$refs.parent.clientHeight,
                     };
-                    this.$emit('mounted-size', this.size);
+                    this.$emit('mounted-size', size);
                 }
             },
             validate() {
@@ -202,6 +201,6 @@
 </script>
 <style>
 .tooth-locations-wrapper{
-    min-width: 70vw;
+    min-width: 70vw !important;
 }
 </style>

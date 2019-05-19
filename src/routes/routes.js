@@ -17,8 +17,8 @@ const User = () =>
 const Collaborators = () =>
     import ('@/pages/Dashboard/Pages/Clinic/Collaborators/CollaboratorsList.vue');
 
-const PatientProfile = () =>
-    import ('@/pages/Dashboard/Pages/Patient/PatientProfile/PatientProfile.vue');
+// const PatientProfile = () =>
+//     import ('@/pages/Dashboard/Pages/Patient/PatientProfile/PatientProfile.vue');
 const PatientTreatment = () =>
     import ('@/pages/Dashboard/Pages/Patient/PatientTreatment/PatientTreatment.vue');
 const PatientsList = () =>
@@ -384,41 +384,41 @@ const authPages = {
 };
 
 const patientPages = {
-    path: '/patient',
+    path: '/patient/:patientId',
     component: DashboardLayout,
-    name: 'Patient',
-    redirect: '/patient/:patientId/diagnose/',
+    name: 'PatiPatientTreatmentent',
+    redirect: '/patient/:patientId/profile/',
     beforeEnter: ifAuthenticated,
     children: [{
-            path: '/patient/:patientId/bio',
-            name: 'BIO',
-            component: PatientProfile,
-        },
-        {
-            path: '/patient/:patientId/procedure',
-            name: 'PatientTreatment',
+            path: '/patient/:patientId/profile',
+            name: 'Profile',
             component: PatientTreatment,
         },
-        {
-            path: '/patient/:patientId/anamnes',
-            name: 'Anamnes',
-            component: PatientTreatment,
-        },
-        {
-            path: '/patient/:patientId/diagnose',
-            name: 'Diagnose',
-            component: PatientTreatment,
-        },
-        {
-            path: '/patient/:patientId/notes',
-            name: 'Notes',
-            component: PatientTreatment,
-        },
-        {
-            path: '/patient/:patientId/files',
-            name: 'Files',
-            component: PatientTreatment,
-        },
+        //     {
+        //         path: '/patient/:patientId/treatment',
+        //         name: 'PatientTreatment',
+        //         component: PatientTreatment,
+        //     },
+        //     // {
+        //     //     path: '/patient/:patientId/anamnes',
+        //     //     name: 'Anamnes',
+        //     //     component: PatientTreatment,
+        //     // },
+        //     // {
+        //     //     path: '/patient/:patientId/diagnose',
+        //     //     name: 'Diagnose',
+        //     //     component: PatientTreatment,
+        //     // },
+        //     {
+        //         path: '/patient/:patientId/notes',
+        //         name: 'Notes',
+        //         component: PatientTreatment,
+        //     },
+        //     {
+        //         path: '/patient/:patientId/files',
+        //         name: 'Files',
+        //         component: PatientTreatment,
+        //     },
     ],
 };
 

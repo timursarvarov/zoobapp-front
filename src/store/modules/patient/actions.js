@@ -24,6 +24,7 @@ import {
     PATIENT_TOGGLE_ITEM_VISIBILITY,
     PATIENT_PROCEDURES_SET,
     PATIENT_ANAMNES_SET,
+    PATIENT_ANAMNES_UPDATE,
     TEETH_INITIATION,
 } from '@/constants';
 
@@ -278,12 +279,15 @@ export default {
             if (planIndex > -1) {
                 procedureIndex = state.patient.plans[planIndex].procedures.findIndex(item => item.id === procedure.id);
             }
+            console.log(
+                'planId', planId,
+                'procedureIndex', procedureIndex,
+                'planIndex', planIndex,
+                'procedure', procedure)
             commit(PATIENT_PROCEDURE_UPDATE, {
-                params: {
-                    procedureIndex,
-                    planIndex,
-                    procedure,
-                },
+                procedureIndex,
+                planIndex,
+                procedure,
             });
         }
     },
@@ -297,6 +301,17 @@ export default {
         const dIndex = state.patient.diagnosis.findIndex(pDiagnose => pDiagnose.id === diagnose.id);
         if (dIndex !== -1) {
             commit(PATIENT_DIAGNOSE_UPDATE, { dIndex, diagnose });
+        }
+    },
+    [PATIENT_ANAMNES_UPDATE]: ({
+        commit,
+        state,
+    }, {
+        anamnes,
+    }) => {
+        const aIndex = state.patient.anamnesis.findIndex(pAnamnes => pAnamnes.id === anamnes.id);
+        if (aIndex !== -1) {
+            commit(PATIENT_ANAMNES_UPDATE, { aIndex, anamnes });
         }
     },
 

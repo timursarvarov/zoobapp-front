@@ -2,6 +2,7 @@
     <div class="jaw-list-wrapper noselect">
         <md-toolbar class="toolbar-jaw md-transparent">
                 <div class="md-toolbar-section-start">
+                    <div>
 
                         <md-field>
                             <label for="teeth">Available Teeth</label>
@@ -20,6 +21,7 @@
                             </md-select>
                         </md-field>
 
+                    </div>
                 </div>
                 <div class="md-toolbar-section-end">
                     <md-button

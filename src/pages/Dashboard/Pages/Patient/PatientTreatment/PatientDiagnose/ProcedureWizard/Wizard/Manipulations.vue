@@ -1,5 +1,5 @@
 <template>
-    <div class="manipulations-wrapper"
+    <div class="manipulations-wrapper md-layout-item"
     :style="[
         {'min-width': size.width ? `${size.width}px`: `70vw`},
       ]"
@@ -37,7 +37,7 @@
                         </template>
                     </t-auto-complite>
                 </div>
-                <div class="manipulations-input md-layout-item  md-size-15 md-small-size-50 ">
+                <div class="manipulations-input md-layout-item md-size-15 md-small-size-50  ">
                     <md-field>
                         <label>Qty</label>
                         <md-input
@@ -69,7 +69,7 @@
                     <md-button
                         :disabled="!selectedManipulations"
                         :class="[{'md-primary': manipulationsNum}]"
-                        class="md-button ml-auto   md-just-icon md-round"
+                        class="md-button  md-just-icon md-round"
                         @click="addManipulation()"
                         >
                             <md-icon>add</md-icon>
@@ -79,7 +79,7 @@
             </div>
             <div class="content-wrapper">
 
-                <md-table v-model="manipulationsToAdd" table-header-color="green" md-fixed-header>
+                <md-table v-model="manipulationsToAdd" table-header-color="green">
                     <md-table-empty-state
                         md-label="No manipulations found"
                         md-description="please select manipilation">
@@ -321,9 +321,18 @@
 </script>
 <style lang="scss" >
 .manipulations-wrapper{
+
     overflow-y: scroll;
     max-height: 60vh;
     max-width: calc(100vw - 60px);
+      &::-webkit-scrollbar {
+            width: 7px;
+            // background-color: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: grey;
+            border-radius: 7px;
+        }
     .md-tabs-content table thead {
     display: table-header-group !important;
 }
@@ -376,9 +385,8 @@
     }
     .content-wrapper{
         .md-table-content{
-
-        // max-height: calc(100vh - 520px)!important;
-        // min-height: 35vh;
+        // max-height: calc(100vh - 720px)!important;
+        max-height: 34vh!important;
         }
     }
 
