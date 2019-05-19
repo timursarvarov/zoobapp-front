@@ -204,7 +204,7 @@ export default {
         goToPatient(patient) {
             if (patient) {
                 this.$router.push({
-                    name: "Patient",
+                    name: "Profile",
                     params: { patientId: patient.ID }
                 });
             }

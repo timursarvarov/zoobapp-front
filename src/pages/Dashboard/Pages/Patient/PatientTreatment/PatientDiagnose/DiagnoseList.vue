@@ -338,7 +338,7 @@
 
 
 .md-table-cell-container{
-     word-wrap: break-word;
+    word-wrap: break-word;
 }
 .md-card .md-card-actions {
     border: 0;
@@ -353,7 +353,7 @@
     width: 50px;
 }
 .paginated-table table > tbody > tr > td {
-    width: auto;
+    width: fit-content;
 }
 .footer-table table > tfoot > tr > th:first-child {
     width: 20px;

@@ -107,10 +107,6 @@ export default {
             title: 'Allergy',
         },
         {
-            key: 'avatar',
-            title: 'Avatar',
-        },
-        {
             key: 'birthday',
             title: 'Birthday',
         },
@@ -131,12 +127,8 @@ export default {
             title: 'Files',
         },
         {
-            key: 'firstName',
-            title: 'First Name',
-        },
-        {
-            key: 'lastName',
-            title: 'Last Name',
+            key: 'name',
+            title: 'Name',
         },
         {
             key: 'phone',
