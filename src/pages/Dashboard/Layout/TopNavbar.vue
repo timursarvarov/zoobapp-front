@@ -1,7 +1,7 @@
 <template>
     <md-toolbar
         md-elevation="0"
-        class="md-transparent"
+        class="md-transparent top-navbar-wrapper"
         :class="{'md-toolbar-absolute md-white md-fixed-top': $route.meta.navbarAbsolute}"
     >
         <div class="wrapper-progress-bar">
@@ -9,12 +9,24 @@
         </div>
         <div class="md-toolbar-row">
             <div class="md-toolbar-section-start">
-                <h3 class="md-title">{{$route.name}}</h3>
-            </div>
-
-            <div v-if="$route.path.startsWith('/patient/')">
                 <h3 class="md-title">
-                    {{patient.firstName}} {{patient.lastName}}
+                    <template class="md-layout md-alignment-left-center" v-if="$route.name === 'Profile' && (patient.firstName || patient.secondName) " >
+                       <t-avatar
+                       class=' patient-header-avatar'
+                            :color="patient.color"
+                            :imageSrc="patient.avatar"
+                            :title="patient.firstName + ' ' + patient.lastName"
+                        />
+                        <span class="patient_header_title md-layout-item" >
+                            {{ `${patient.firstName }` | capitilize }}
+                            {{ `${patient.lastName }` | capitilize }}
+                        </span>
+                    </template>
+                    <span v-else >
+                        {{$route.name}}
+                    </span>
+                </h3>
+                <div v-if="$route.name === 'Profile'" >
                     <md-button
                         @click="handleAllergy(patient.allergy)"
                         v-if="patient.allergy &&  patient.allergy.length>0"
@@ -24,8 +36,22 @@
                         <!-- <span class="notification">{{patient.allergy.length}}</span> -->
                         <md-tooltip>Attention allergy!</md-tooltip>
                     </md-button>
-                </h3>
+                </div>
             </div>
+
+            <!-- <div v-if="$route.path.startsWith('/patient/')">
+                <h3 class="md-title">
+                    {{patient.firstName}} {{patient.lastName}}
+                    <md-button
+                        @click="handleAllergy(patient.allergy)"
+                        v-if="patient.allergy &&  patient.allergy.length>0"
+                        class="md-icon-button md-simple md-danger md-round md-just-icon"
+                    >
+                        <md-icon>report_problem</md-icon>
+                        <md-tooltip>Attention allergy!</md-tooltip>
+                    </md-button>
+                </h3>
+            </div> -->
             <div class="md-toolbar-section-end">
                 <md-button
                     class="md-just-icon md-round md-round md-simple md-toolbar-toggle"
@@ -293,34 +319,43 @@ export default {
 </script>
 
 <style style="scss" >
-.wrapper-progress-bar {
-    position: fixed;
-    top: 1px;
-    right: 0;
-    width: 100%;
-    height: 5px;
-}
 
-.search {
-    min-width: 250px;
-    width: 20vh;
-    margin: 0 !important;
-}
-.for-loader {
-    height: 40px;
-}
-.md-serched-list-item-text {
-    position: relative !important;
-}
-.search-avatar {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-}
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
-    opacity: 0;
-}
+    .patient-header-avatar {
+        width: 40px;
+    }
+    .wrapper-progress-bar {
+        position: fixed;
+        top: 1px;
+        right: 0;
+        width: 100%;
+        height: 5px;
+    }
+    .patient_header_title{
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .search {
+        min-width: 250px;
+        width: 20vh;
+        margin: 0 !important;
+    }
+    .for-loader {
+        height: 40px;
+    }
+    .md-serched-list-item-text {
+        position: relative !important;
+    }
+    .search-avatar {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+        opacity: 0;
+    }
+
 </style>

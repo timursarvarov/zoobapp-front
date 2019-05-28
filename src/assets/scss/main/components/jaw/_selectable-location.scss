@@ -5,7 +5,8 @@
         }
         .selectable-location:not(.selected) {
             &.tooth-number {
-                color: grey;
+                color: #00bcd4;
+                ;
             }
             &.coronaLingualIncisalDistal,
             &.coronaLingualIncisalMiddle,
@@ -47,7 +48,8 @@
                 stroke: #000;
                 stroke-width: 0.25px;
                 &:hover {
-                    stroke: grey;
+                    stroke: #00bcd4;
+                    ;
                     stroke-width: 2px;
                     transition: all 0.2s ease-in-out;
                 }
@@ -63,7 +65,8 @@
                 stroke: #000;
                 stroke-width: 1px;
                 &:hover {
-                    stroke: grey;
+                    stroke: #00bcd4;
+                    ;
                     stroke-width: 1px;
                     transition: all 0.2s ease-in-out;
                 }

@@ -16,7 +16,7 @@
                 </transition>
                 <transition name="fade">
                     <div
-                        v-show="!loaded"
+                        v-show="!loaded || !imageSrc"
                         class="md-layout md-alignment-center-center picture-wrapper-acronim"
                         :style="{background: gradient}"
                     >

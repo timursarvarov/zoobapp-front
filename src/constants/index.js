@@ -1,5 +1,6 @@
-import DIAGNOSISL from './diagnose';
-import TREATMETSL from './procedures';
+import DIAGNOSISL from './diagnosis';
+import PROCEDURESL from './procedures';
+import LOCATIONSL from './locations';
 import MANIPULATIONSl from './manipulations';
 
 import TEETH_DEFAULT_LOCATIONSL from './tooth-default-locations';
@@ -19,7 +20,8 @@ import TIMEZONESL from './timezones';
 import COMMON_CURRENCYL from './common-currency';
 
 export const DIAGNOSIS = DIAGNOSISL;
-export const PROCEDURES = TREATMETSL;
+export const PROCEDURES = PROCEDURESL;
+export const LOCATIONS = LOCATIONSL;
 export const MANIPULATIONS = MANIPULATIONSl;
 
 // Teeth schema locations

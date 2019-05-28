@@ -45,7 +45,7 @@
             >
 
             <template  v-for="(procedureGroup, key) in getItems" :slot="'md-collapse-pane-'+(parseInt(key) + 1)" >
-                <div   :key="key">
+                <div class="list-wrapper"   :key="key">
                 <md-list class=" md-dense" >
                     <md-list-item  @click="procedureClick($event, procedure)"
                     :class="[{dental: !isEmpty(procedure.locations) && selectedTeeth.length == 0 }]"
@@ -152,6 +152,10 @@
                 type: String,
                 default: () => 'Items',
             },
+            recalculateItems: {
+                type: Boolean,
+                default: () => false,
+            },
             hideSlot: {
                 type: Boolean,
                 default: () => true,
@@ -185,6 +189,7 @@
                 }
             },
             loadData() {
+                this.search = '';
                 this.unshiftFavoriteItems();
                 this.searched = this.copyObj(this.items);
                 Object.values(this.searched).forEach((group) => {
@@ -351,6 +356,10 @@
                 this.loadData();
                 this.searched = this.copyObj(this.procedureOriginal);
             },
+            recalculateItems() {
+                this.loadData();
+                this.searched = this.copyObj(this.procedureOriginal);
+            },
         },
     };
 </script>
@@ -393,7 +402,7 @@
         // min-width: 42px;
     }
     .collapse-wrapper {
-       background-color: rgba(233, 233, 233, 0.459);
+        background-color: rgba(0, 4, 248, 0.048);
         border-radius: 10px;
         margin-bottom: 3vh;
         margin-top: 3vh;
@@ -429,7 +438,7 @@
                 }
             }
         }
-        md-error .md-collapse-label:after {
+        .md-error .md-collapse-label:after {
             bottom: 6px;
         }
 
@@ -437,15 +446,17 @@
             background-color: rgba(255, 255, 21, 0.979);
         }
         .md-list {
+            border-radius: 4px;
             .md-list-item {
                 margin: 0;
             }
-            background-color: #f7f7f7d5;
-            border-style: solid;
-            border-color: #eeecec9c;
+            background-color: transparent;
+            // border-style: solid;
+            // border-color: #9b9b9b28;
+            // box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
             border-width: 1px;
-            border-radius: 4px;
             margin-bottom: 15px;
+            padding: 0;
         }
         .md-list-item-content {
             max-height: 64px;
@@ -469,24 +480,13 @@
         .md-collapse-content {
             margin-top: 20px;
             padding: 0 1vw;
-        }
-        md-error .md-collapse-label:after {
-            bottom: 6px;
+            .list-wrapper{
+               background-color: transparent;
+            }
         }
 
         .highlight {
             background-color: rgba(255, 255, 21, 0.979);
-        }
-        .md-list {
-            .md-list-item {
-                margin: 0;
-            }
-            background-color: #f7f7f7d5;
-            border-style: solid;
-            border-color: #eeecec9c;
-            border-width: 1px;
-            border-radius: 4px;
-            margin-bottom: 15px;
         }
         .md-list-item-content {
             max-height: 64px;

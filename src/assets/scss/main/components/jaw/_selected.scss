@@ -45,6 +45,11 @@
                     transition: all 0.2s ease-in-out;
                 }
             }
+            &.silant,
+            &.veneer {
+                stroke: #000;
+                stroke-width: 0.45px;
+            }
             &.gum,
             &.paradontit1,
             &.paradontit2,
@@ -122,6 +127,11 @@
             &.veneer {
                 fill: #43a047 !important;
             }
+            &.silant,
+            &.veneer {
+                stroke: #000;
+                stroke-width: 0.45px;
+            }
             &.gum,
             &.paradontit1,
             &.paradontit2,
@@ -142,7 +152,7 @@
         .selected {
             opacity: 1;
             &.tooth-number {
-                color: #636363;
+                color: #00bcd4;
             }
             &.coronaLingualIncisalDistal,
             &.coronaLingualIncisalMiddle,
@@ -172,15 +182,30 @@
             &.implant,
             &.veneer,
             &.silant,
+            &.crown,
+            &.bridge,
             &.root,
             &.coronaLingual,
             &.coronaTop,
             &.coronaLabial {
-                fill: #636363 !important;
-                stroke: #636363;
+                fill: #00bcd4 !important;
+                stroke: #00bcd4;
                 &:hover {
-                    stroke: #b1b1b1;
+                    stroke: #02d7f3;
                     stroke-width: 2px;
+                    transition: all 0.2s ease-in-out;
+                }
+            }
+            &.bone,
+            &.veneer,
+            &.braces,
+            &.silant {
+                fill: #02d7f3 !important;
+                stroke: #000;
+                stroke-width: 0.25px;
+                &:hover {
+                    stroke: #02d7f3;
+                    stroke-width: 1px;
                     transition: all 0.2s ease-in-out;
                 }
             }

@@ -96,13 +96,13 @@
                                 :key="field.key"
                                 :md-sort-by=" item[field.key] ? item[field.key].toString() : ''"
                                 :md-label="getFieldName(field.key).toString()"
+                                @click="goToPatient(item)"
                             >
                                 <div class="pointer"
                                     @click="goToPatient(item)">
                                     <div class="md-layout md-alignment-center-left md-gutter patient-name"
                                         v-if="field.key === 'name'">
 
-                                       
 
                                                 <t-avatar
                                                     :color="item.color"
@@ -307,8 +307,8 @@
             perPageOptions: [25, 50],
             totalPages: 500,
             queryParams: {
-                currentSort: 'updated',
-                currentSortOrder: 'asc',
+                currentSort: 'created',
+                currentSortOrder: 'desc',
                 pagination: {
                     perPage: 25,
                     currentPage: 1,
@@ -523,7 +523,7 @@
 <style lang="scss" >
 .patients-list-wrapper {
     // .md-table .md-table-row .md-table-cell-selection {
-       
+
     // }
      .md-table-cell-container{
         // max-width: 40px;

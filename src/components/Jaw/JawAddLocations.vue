@@ -57,21 +57,21 @@
                                 <md-switch
                                     @change="preferChanged()"
                                     v-model="prefer"
-                                    value="anamnes"
+                                    value="anamnesis"
                                 >Anamnes</md-switch>
                             </li>
                             <li>
                                 <md-switch
                                     @change="preferChanged()"
                                     v-model="prefer"
-                                    value="diagnose"
+                                    value="diagnosis"
                                 >Diagnose</md-switch>
                             </li>
                             <li>
                                 <md-switch
                                     @change="preferChanged()"
                                     v-model="prefer"
-                                    value="procedure"
+                                    value="procedures"
                                 >Procedure</md-switch>
                             </li>
                         </ul>
@@ -196,7 +196,7 @@
                 disabled: false,
                 jawComputed: {},
                 windowWidth: 1,
-                prefer: ['diagnose', 'anamnes', 'procedure'],
+                prefer: ['diagnosis', 'anamnesis', 'procedures'],
                 SvgTeeth: [],
                 lastAction: {
                     location: null,
@@ -264,7 +264,7 @@
                         ) !== undefined,
 
                     // Название класса локации из высчитанной формуллы для отображеня в диагнозов анамнеза и лечения
-                    /* anamnes || procedure|| diagnose */
+                    /* anamnesis || procedures|| diagnosis */
                     [this.preferableJawClasses(
                         toothId,
                         location,
@@ -302,6 +302,8 @@
                     this.jaw,
                     this.prefer,
                     this.defaultLocations,
+                    this.locationType,
+                    this.originalItem,
                 );
                 if (hide === true) {
                     return hide;
@@ -322,27 +324,6 @@
                         return false;
                     }
                 }
-                // if (toothId === '25') {
-                //     console.log(location, hide);
-                // }
-                const computedLocaton = this.getNestedProperty(
-                    this.jaw,
-                    [this.locationType],
-                    toothId,
-                    location,
-                );
-                // если приорет локаций отключен то показывай все локции согласно диагнозу
-                // if (!this.prefer) {
-                //     return !this.getNestedProperty(
-                //         this.originalItem,
-                //         'view',
-                //         location,
-                //     );
-                // }
-                // если приорет локаций включен то показывай все локции согласно диагнозу
-                if (computedLocaton !== undefined) {
-                    return !computedLocaton;
-                }
                 // если приорет локаций включен и нет локаций от предыдущиих диагнозов
                 //  то показывай все локции согласно диагнозу
                 if (location in this.originalItem.view) {
@@ -358,11 +339,6 @@
                 }
                 return hide;
             },
-            // если в предыдуших диагнозах есть локации для показа или скрытия то
-            // в зависимости от переклчатея показываем приореттные локации
-            // shouldHideLocation(toothId, location) {
-
-            // },
             dropAllLocations() {
                 this.item.teeth = {};
                 this.getDiagnose();

@@ -6,19 +6,19 @@ const jawFunctions = {
             if (prefer.length === 0) {
                 return toothClass;
             }
-            if (prefer.includes('anamnes')) {
+            if (prefer.includes('anamnesis')) {
                 if (jaw.anamnesis[toothId] && location in jaw.anamnesis[toothId]) {
-                    toothClass = 'anamnes';
+                    toothClass = 'anamnesis';
                 }
             }
-            if (prefer.includes('diagnose')) {
+            if (prefer.includes('diagnosis')) {
                 if (jaw.diagnosis[toothId] && location in jaw.diagnosis[toothId]) {
-                    toothClass = 'diagnose';
+                    toothClass = 'diagnosis';
                 }
             }
-            if (prefer.includes('procedure')) {
+            if (prefer.includes('procedures')) {
                 if (jaw.procedures[toothId] && location in jaw.procedures[toothId]) {
-                    toothClass = 'procedure';
+                    toothClass = 'procedures';
                 }
             }
             return toothClass;
@@ -63,17 +63,17 @@ const jawFunctions = {
             	то возвращай все дефолтное значенин
             */
             // hide = defaultLocation;
-            if (prefer.includes('anamnes')) {
+            if (prefer.includes('anamnesis')) {
                 if (anamnes !== undefined) {
                     hide = !anamnes;
                 }
             }
-            if (prefer.includes('diagnose')) {
+            if (prefer.includes('diagnosis')) {
                 if (diagnose !== undefined) {
                     hide = hide === true ? hide : !diagnose;
                 }
             }
-            if (prefer.includes('procedure')) {
+            if (prefer.includes('procedures')) {
                 if (procedure !== undefined) {
                     hide = hide === true ? hide : !procedure;
                 }
@@ -83,13 +83,21 @@ const jawFunctions = {
             }
             return hide;
         },
-        isHidingClicableLocation(toothId, location, jaw, prefer, defaultLocations) {
+        isHidingClicableLocation(toothId, location, jaw, prefer, defaultLocations, locationType, originalItem) {
             // если не установлен прдедпочитаемы вид (prefer) то возвращаем значение по умолчанию
             if (prefer.length === 0) {
+                if (location in originalItem.view) {
+                    const hide = !this.getNestedProperty(
+                        originalItem,
+                        'view',
+                        location,
+                    );
+                    return hide;
+                }
                 return !defaultLocations[location];
             }
             // полчаем дефолтное значение локации
-            const defaultLocation = !defaultLocations[location];
+            const originalItemLocation = !originalItem.view[location];
             let anamnes;
             let procedure;
             let diagnose;
@@ -123,21 +131,49 @@ const jawFunctions = {
             	то возвращай все дефолтное значенин
             */
             // hide = defaultLocation;
-            if (prefer.includes('anamnes')) {
+            if (prefer.includes('anamnesis')) {
                 if (anamnes !== undefined) {
                     hide = !anamnes;
                 }
+            } else if (locationType === 'anamnesis') {
+                if (location in originalItem.view) {
+                    hide = !this.getNestedProperty(
+                        originalItem,
+                        'view',
+                        location,
+                    );
+                }
             }
-            if (prefer.includes('diagnose')) {
+            if (prefer.includes('diagnosis')) {
                 if (diagnose !== undefined) {
                     hide = hide === true ? hide : !diagnose;
                 }
+            } else if (locationType === 'diagnosis') {
+                if (location in originalItem.view) {
+                    const value = this.getNestedProperty(
+                        originalItem,
+                        'view',
+                        location,
+                    );
+                    hide = !value;
+                }
             }
-            if (prefer.includes('procedure')) {
+            if (prefer.includes('procedures')) {
                 if (procedure !== undefined) {
                     hide = hide === true ? hide : !procedure;
                 }
+            } else if (locationType === 'procedures') {
+                if (location in originalItem.view) {
+                    const value = this.getNestedProperty(
+                        originalItem,
+                        'view',
+                        location,
+                    );
+                    hide = !value;
+                }
             }
+
+
             return hide;
         },
         hasProp(obj, prop) {

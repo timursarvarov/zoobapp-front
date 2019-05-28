@@ -19,8 +19,8 @@ const Collaborators = () =>
 
 // const PatientProfile = () =>
 //     import ('@/pages/Dashboard/Pages/Patient/PatientProfile/PatientProfile.vue');
-const PatientTreatment = () =>
-    import ('@/pages/Dashboard/Pages/Patient/PatientTreatment/PatientTreatment.vue');
+const PatientProfile = () =>
+    import ('@/pages/Dashboard/Pages/Patient/PatientProfile.vue');
 const PatientsList = () =>
     import ('@/pages/Dashboard/Pages/Patients/PatientsList.vue');
 
@@ -31,8 +31,6 @@ const ClinicProfile = () =>
     import ('@/pages/Dashboard/Pages/Clinic/ClinicSettings.vue');
 const ConsumablesList = () =>
     import ('@/pages/Dashboard/Pages/Clinic/ConsumablesList.vue');
-const ProceduresList = () =>
-    import ('@/pages/Dashboard/Pages/Clinic/ProceduresList.vue');
 const ManipulationsList = () =>
     import ('@/pages/Dashboard/Pages/Clinic/ManipulationsList.vue');
 
@@ -392,32 +390,32 @@ const patientPages = {
     children: [{
             path: '/patient/:patientId/profile',
             name: 'Profile',
-            component: PatientTreatment,
+            component: PatientProfile,
         },
         //     {
         //         path: '/patient/:patientId/treatment',
-        //         name: 'PatientTreatment',
-        //         component: PatientTreatment,
+        //         name: 'PatientProfile',
+        //         component: PatientProfile,
         //     },
         //     // {
         //     //     path: '/patient/:patientId/anamnes',
         //     //     name: 'Anamnes',
-        //     //     component: PatientTreatment,
+        //     //     component: PatientProfile,
         //     // },
         //     // {
         //     //     path: '/patient/:patientId/diagnose',
         //     //     name: 'Diagnose',
-        //     //     component: PatientTreatment,
+        //     //     component: PatientProfile,
         //     // },
         //     {
         //         path: '/patient/:patientId/notes',
         //         name: 'Notes',
-        //         component: PatientTreatment,
+        //         component: PatientProfile,
         //     },
         //     {
         //         path: '/patient/:patientId/files',
         //         name: 'Files',
-        //         component: PatientTreatment,
+        //         component: PatientProfile,
         //     },
     ],
 };
@@ -437,11 +435,11 @@ const clinicPages = {
             name: 'Consumables',
             component: ConsumablesList,
         },
-        {
-            path: '/clinic/:clinicId/procuders',
-            name: 'Procuders',
-            component: ProceduresList,
-        },
+        // {
+        //     path: '/clinic/:clinicId/procuders',
+        //     name: 'Procuders',
+        //     component: ProceduresList,
+        // },
         {
             path: '/clinic/:clinicId/manipulations',
             name: 'Manipulations',

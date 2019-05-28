@@ -1,6 +1,7 @@
 
 <template>
     <div>
+        <keep-alive>
         <div class="jaw-wrapper">
             <md-toolbar class="md-transparent jaw-toolbar">
                 <div class="t">
@@ -27,7 +28,7 @@
                         <md-menu-content>
                             <md-menu-item>
                                 <md-switch
-                                    @change="selectedTeethLocal = []"
+                                    @change="selectedTeethLocal = [], $emit('onChangeAgeCategory',jawType )"
                                     v-model="jawType"
                                     value="babyTeeth"
                                 >Baby teeth</md-switch>
@@ -36,21 +37,21 @@
                                 <md-switch
                                     @change="calculateJaw('Anamnes')"
                                     v-model="prefer"
-                                    value="anamnes"
+                                    value="anamnesis"
                                 >Anamnes</md-switch>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-switch
                                     @change="calculateJaw('Diagnoe')"
                                     v-model="prefer"
-                                    value="diagnose"
+                                    value="diagnosis"
                                 >Diagnose</md-switch>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-switch
                                     @change="calculateJaw('Procedure')"
                                     v-model="prefer"
-                                    value="procedure"
+                                    value="procedures"
                                 >Procedure</md-switch>
                             </md-menu-item>
                             <md-menu-item>
@@ -332,6 +333,7 @@
                 <slot name="bottom"></slot>
             </div>
         </div>
+        </keep-alive>
     </div>
 </template>
 <script>
@@ -398,7 +400,7 @@
                 toggleAll: false,
                 toggleAdultTop: false,
                 toggleAdultBottom: false,
-                prefer: ['anamnes', 'procedure', 'diagnose'],
+                prefer: ['anamnesis', 'procedures', 'diagnosis'],
                 SvgTeeth: [],
                 teethSettngs: [],
                 showSelectedToothDialog: false,
@@ -431,21 +433,21 @@
                     return 'md-success';
                 }
                 if (this.type === 'anamnesis') {
-                    return '';
+                    return 'md-info';
                 }
                 return '';
             },
             hidedPrefer() {
-                const allPrefer = ['anamnes', 'procedure', 'diagnose'];
+                const allPrefer = ['anamnesis', 'procedures', 'diagnosis'];
                 const found = [];
                 allPrefer.forEach((r) => {
                     if (!this.prefer.includes(r)) {
-                        if (r === 'anamnes') {
-                            found.push('anamnes');
-                        } else if (r === 'procedure') {
-                            found.push('procedure');
+                        if (r === 'anamnesis') {
+                            found.push('anamnesis');
+                        } else if (r === 'procedures') {
+                            found.push('procedures');
                         } else {
-                            found.push('diagnose');
+                            found.push('diagnosis');
                         }
                     }
                 });
@@ -738,10 +740,6 @@
                                 toothId => toothId === tooth,
                             );
                             if (firstIndex > lastIndex) {
-                                this.selectedTeethLocal = this.babyTeeth
-                                    .reverse()
-                                    .slice(firstIndex, lastIndex + 1);
-                            } else {
                                 const reversed = this.babyTeeth.reverse();
                                 const reversedFirstIndex = reversed.findIndex(
                                     toothId => toothId === firstEl,
@@ -753,7 +751,8 @@
                                     reversedFirstIndex,
                                     reversedLastIndex + 1,
                                 );
-                                this.selectedTeethLocal = reversed.slice(
+                            } else {
+                                this.selectedTeethLocal = this.babyTeeth.slice(
                                     firstIndex,
                                     lastIndex + 1,
                                 );

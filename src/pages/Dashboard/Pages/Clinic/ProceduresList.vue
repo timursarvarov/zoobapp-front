@@ -134,7 +134,7 @@
 
 <script>
     import { Pagination } from '@/components';
-    import { PROCEDURES } from '@/constants';
+    import { mapGetters } from 'vuex';
     import Fuse from 'fuse.js';
     import swal from 'sweetalert2';
 
@@ -147,6 +147,9 @@
              * Returns a page from the searched data or the whole data.
              * Search is performed in the watch section below
              */
+            ...mapGetters({
+                procedures: 'getProcedures',
+            }),
             queriedData() {
                 let result = this.tableData;
                 if (this.searchedData.length > 0) {
@@ -157,7 +160,7 @@
             tableData() {
                 // eslint-disable-next-line prefer-const
                 let procedures = [];
-                PROCEDURES.forEach((procedureGroup) => {
+                this.procedures.forEach((procedureGroup) => {
                     procedureGroup.codes.forEach((tretment) => {
                         procedures.push(tretment);
                     });
