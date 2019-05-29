@@ -876,6 +876,7 @@
 
 <style lang="scss" scoped>
 .jaw-wrapper {
+    transform: translateZ(0);
     .jaw-toolbar {
         padding-right: 0px;
         // margin: 0 -15px 0 -15px;
