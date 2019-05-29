@@ -74,6 +74,9 @@
                             </span>
                         </div>
                     </md-table-cell>
+                    <md-table-cell v-if="item.manipulations" md-sort-by="price" md-label="Price">
+                        {{getItemTotalPrice(item.manipulations)}} <small>{{clinic.currencyCode}}</small>
+                    </md-table-cell>
                     <md-table-cell md-sort-by="date" class="date" md-label="Date">
                         <span>{{ item.date | moment("from") }}</span>
                         <br>
@@ -187,6 +190,7 @@
                 teethSchema: 'teethSchema',
                 jaw: 'jaw',
                 patient: 'getPatient',
+                clinic: 'getCurrentClinic',
             }),
             setecltedTeeth() {
                 if (!this.isEmpty(this.selectedDiagnose)) {
@@ -222,6 +226,13 @@
         },
 
         methods: {
+            getItemTotalPrice(manipulations) {
+                let totalPrice = 0;
+                manipulations.forEach((m) => {
+                    totalPrice = +m.num * m.price;
+                });
+                return totalPrice;
+            },
             scrollToTop() {
                 window.scrollTo(0, 0);
             },

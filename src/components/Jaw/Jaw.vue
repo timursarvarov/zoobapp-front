@@ -1,7 +1,6 @@
 
 <template>
     <div>
-        <keep-alive>
         <div class="jaw-wrapper">
             <md-toolbar class="md-transparent jaw-toolbar">
                 <div class="t">
@@ -333,7 +332,6 @@
                 <slot name="bottom"></slot>
             </div>
         </div>
-        </keep-alive>
     </div>
 </template>
 <script>
@@ -786,6 +784,8 @@
                     } else {
                         this.selectedTeethLocal.unshift(tooth);
                     }
+                } else if (this.selectedTeethLocal.length === 1 && this.selectedTeethLocal.includes(tooth)) {
+                    this.selectedTeethLocal = [];
                 } else {
                     this.selectedTeethLocal = [];
                     this.selectedTeethLocal.unshift(tooth);

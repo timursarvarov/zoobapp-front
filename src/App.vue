@@ -61,23 +61,6 @@
 .md-tabs-navigation {
     overflow: auto;
 }
-/* Change autocomplete styles in WebKit */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0px 1000px rgb(255, 255, 255) inset;
-    box-shadow: 0 0 0px 1000px rgb(255, 255, 255) inset;
-    transition: background-color 5000s ease-in-out 0s;
-}
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
 div :not(.md-toolbar) > .md-field:not(.md-chips):not(.no-margin) {
     margin-top: 24px;
     .md-error {

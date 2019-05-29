@@ -18,6 +18,7 @@
                 </transition>
                 <transition name="fade">
                     <div
+                        :style="{background: gradient}"
                         v-show="!loaded || !imageSrc"
                         :class="[{'tripple-acr':  title.split(' ').length > 2 }]"
                         class="md-layout md-alignment-center-center avatar-acronim-wrapper"

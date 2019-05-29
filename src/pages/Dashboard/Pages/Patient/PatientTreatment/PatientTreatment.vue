@@ -79,8 +79,7 @@
             </t-collapse-search>
     </div>
 
-        <div    class="md-layout-item  md-size-100"
-                v-if="patient.plans.length > 0 || ( patient[currentType] && patient[currentType].length > 0)">
+        <div    class="md-layout-item  md-size-100" >
                 <transition name="fade" mode="out-in">
                     <items-list
                         v-show="currentType === 'anamnesis'"
@@ -107,7 +106,7 @@
                 </transition>
                 <transition name="fade" mode="out-in">
                     <tabs
-                        v-show="currentType === 'procedures' && currentItems.length > 0"
+                        v-show="currentType === 'procedures' "
                         v-if="patient.plans.length > 0"
                             ref="tabs"
                             :tab-name="Object.values(patient.plans).map(e=>e.title)"
@@ -240,6 +239,8 @@
             :isDialogVisible.sync="showAddProcedureWizard"
         />
 
+            {{currentPlan.id}}
+            {{currentPlan.procedures}}
         </div>
   </div>
 
