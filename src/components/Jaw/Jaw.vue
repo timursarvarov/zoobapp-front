@@ -78,7 +78,7 @@
             <div>
                 <slot name="top"></slot>
             </div>
-            <transition name="fade" mode="out-in">
+            <!-- <transition name="fade" mode="out-in"> -->
                 <div v-if="jawType === 'babyTeeth'" key="babyTeeth" class="jaw-scroll mx-auto">
                     <div class="jaw-top md-alignment-top-center mx-auto md-size-100">
                         <div
@@ -294,7 +294,7 @@
                         </div>
                     </div>
                 </div>
-            </transition>
+            <!-- </transition> -->
             <transition name="slide">
                 <div class="md-layout md-gutter">
                     <div
