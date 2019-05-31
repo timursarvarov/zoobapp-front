@@ -80,9 +80,8 @@
     </div>
 
         <div    class="md-layout-item  md-size-100" >
-                <transition name="fade" mode="out-in">
                     <items-list
-                        v-show="currentType === 'anamnesis'"
+                        v-show="currentType === 'anamnesis' || currentType === 'diagnosis'"
                         :items="currentItems"
                         @onJawChanged="recalculateJaw()"
                         @toggleItemVisibility="toggleItemVisibility"
@@ -91,23 +90,10 @@
                         :type="currentType"
                         >
                     </items-list>
-                </transition>
-                <transition name="fade" mode="out-in">
-                    <items-list
-                        v-show="currentType === 'diagnosis'"
-                        :items="currentItems"
-                        @onJawChanged="recalculateJaw()"
-                        @toggleItemVisibility="toggleItemVisibility"
-                        @editItem="editItem"
-                        :teethSystem="currentClinic.teethSystem"
-                        :type="currentType"
-                        >
-                    </items-list>
-                </transition>
-                <transition name="fade" mode="out-in">
                     <tabs
-                        v-show="currentType === 'procedures' "
-                        v-if="patient.plans.length > 0"
+                            v-show="currentType === 'procedures' "
+                            v-if="patient.plans.length > 0"
+                            @onChangeTab="onChangeTab"
                             ref="tabs"
                             :tab-name="Object.values(patient.plans).map(e=>e.title)"
                             color-button="warning"
@@ -118,8 +104,8 @@
                             slot="header-title"
                             >Navigation Pills - <small class="description">Horizontal Tabs</small></h4> -->
                             <template
-                            v-for="(plan, index) in patient.plans"
-                            :slot="`tab-pane-${index+1}`"
+                                v-for="(plan, index) in patient.plans"
+                                :slot="`tab-pane-${index+1}`"
                             >
                                 <div :key="index">
                                     <items-list
@@ -139,7 +125,6 @@
                                         </md-button>
                                     </div>
                     </tabs>
-                </transition>
         </div>
         <div class="md-layout-item md-layout md-size-100" >
 
@@ -238,9 +223,6 @@
             :teethSystem="currentClinic.teethSystem"
             :isDialogVisible.sync="showAddProcedureWizard"
         />
-
-            {{currentPlan.id}}
-            {{currentPlan.procedures}}
         </div>
   </div>
 
@@ -316,6 +298,9 @@
             };
         },
         methods: {
+            onChangeTab(index) {
+                this.changePLan(this.patient.plans[index].id);
+            },
             onChangeAgeCategory(category) {
                 this.selectedTeeth = [];
                 if (category === 'babyTeeth') {
@@ -736,6 +721,7 @@
                 this.matchHeight();
             });
             this.setOriginalItems();
+            this.selectPlan(this.currentPlan);
         },
         watch: {
             ageCategory() {
@@ -746,16 +732,6 @@
 </script>
 <style lang="scss">
 .set-diagnose-form {
-    padding-bottom: 20px;
-    .fade-enter-active,
-    .fade-leave-active {
-        transition: all 0.5s;
-    }
-
-    .fade-enter,
-    .fade-leave-active {
-        opacity: 0;
-    }
     .set-procedure-form {
         margin-right: 15px;
     }

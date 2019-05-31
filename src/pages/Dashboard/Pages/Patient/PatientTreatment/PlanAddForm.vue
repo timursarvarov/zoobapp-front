@@ -164,26 +164,6 @@
 .md-dialog.plan-add-form {
     background-color: transparent !important;
     box-shadow: none !important;
-    .md-field {
-        margin-top: 24px;
-        .md-error {
-            display: block !important;
-            left: 0;
-            opacity: 1;
-            // transform: translate3d(0,-12px,0);
-            color: #ff1744;
-            font-size: 0.6875rem;
-            bottom: -1.3rem;
-            line-height: normal;
-            text-align: left;
-        }
-        .md-icon{
-            position: relative;
-        }
-    }
-    .card-icon {
-        transition: all 2.5s ease;
-    }
     .wrapper-chips {
         margin-top: -30px;
         .md-error {

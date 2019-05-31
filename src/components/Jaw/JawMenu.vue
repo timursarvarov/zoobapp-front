@@ -29,6 +29,7 @@
                     minWidth: buttonWidth + 'em',
                     maxHeight: buttonWidth + 'em',
                     minHeight: buttonWidth + 'em',
+                    borderRdius: 20 + 'px',
                     fontSize:'0.8em',
                     }"
                 md-menu-trigger

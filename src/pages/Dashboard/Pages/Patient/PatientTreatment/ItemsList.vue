@@ -1,7 +1,8 @@
 
 <template>
-    <div class=" diagnose-list-wrapper" v-if="items.length > 0">
+    <div class=" diagnose-list-wrapper">
             <md-toolbar class="md-transparent">
+                <h3 v-if="type === 'anamnesis'" class="md-title">{{queriedData.length}} procedures in anamnes</h3>
                 <h3 class="md-title">All {{type | capitilize}}</h3>
             </md-toolbar>
 
@@ -59,7 +60,7 @@
                     </md-table-cell>
                     <md-table-cell md-sort-by="author" md-label="Created by">
                         <div class="md-layout md-alignment-left-center">
-                            <div class="md-layout-item md-layout" style="max-width:40px;">
+                            <div class="md-layout" style="max-width:40px;">
                                 <t-avatar
                                     :small="true"
                                     :color="item.author.color"

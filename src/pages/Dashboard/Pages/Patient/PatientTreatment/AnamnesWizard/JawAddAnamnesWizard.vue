@@ -282,8 +282,8 @@
 <style lang="scss">
 .jaw-dialog-wrapper {
     // min-width: 550px;
-    min-height: 80% !important;
-    max-height: 100% !important;
+    min-height: 80vh !important;
+    max-height: 100vh !important;
     background-color: transparent !important;
     box-shadow: none;
     margin: 0 !important;

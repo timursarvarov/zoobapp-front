@@ -23,8 +23,8 @@ Vue.use(require('vue-moment'));
 
 // configure router
 const router = new VueRouter({
-  routes, // short for routes: routes
-  linkExactActiveClass: 'nav-item active',
+    routes, // short for routes: routes
+    linkExactActiveClass: 'nav-item active',
 });
 // router.beforeEach((to, from, next) => {
 //   setTimeout(() => {
@@ -35,18 +35,18 @@ const router = new VueRouter({
 
 // global library setup
 Object.defineProperty(Vue.prototype, '$Chartist', {
-  get() {
-    return this.$root.Chartist;
-  },
+    get() {
+        return this.$root.Chartist;
+    },
 });
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  render: h => h(App),
-  router,
-  store,
-  data: {
-    Chartist,
-  },
+    el: '#app',
+    render: h => h(App),
+    router,
+    store,
+    data: {
+        Chartist,
+    },
 });

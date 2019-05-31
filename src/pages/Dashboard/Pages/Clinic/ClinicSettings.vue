@@ -12,23 +12,57 @@
         <md-card-content>
             <div class="md-layout">
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
-                    <md-field>
+                    <md-field
+                        :class="[
+                        {'with-subline': true},
+                        {'md-valid': !errors.has('name') && touched.name},
+                        {'md-error': errors.has('name')}]"
+                    >
                         <label>Clinic Name</label>
-                        <md-input v-model="currentClinic.name" type="text"></md-input>
-                        <span class="md-helper-text">Enter a cool currentClinic name</span>
+                        <md-input
+                            v-model="name"
+                            type="text"
+                            ref="name"
+                            data-vv-name="name"
+                            required
+                            v-validate="modelValidations.name"
+                        ></md-input>
+                        <span v-show="!errors.has('name') && touched.name" class="md-helper-text">Enter a cool currentClinic name</span>
+                        <span class="md-error">{{errors.first('name')}}</span>
+                        <slide-y-down-transition>
+                            <md-button
+                                tabindex="-1"
+                                v-show="errors.has('name')"
+                                @click="name='',focusOn('name')"
+                                class="md-button md-icon-button md-dense md-input-action"
+                            >
+                                <md-icon class="error">close</md-icon>
+                            </md-button>
+                        </slide-y-down-transition>
+                        <slide-y-down-transition>
+                            <md-button
+                                tabindex="-1"
+                                v-show="!errors.has('name')  && touched.name"
+                                class="md-button md-icon-button md-dense md-input-action no-select md-simple"
+                            >
+                                <md-icon class="success">done</md-icon>
+                            </md-button>
+                        </slide-y-down-transition>
                     </md-field>
                 </div>
 
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field
                         :class="[
+                        {'with-subline': true},
                         {'md-valid': !errors.has('phone') && touched.phone},
                         {'md-error': errors.has('phone')}]"
                     >
                         <label>Phone</label>
                         <span class="md-prefix">+</span>
                         <md-input
-                            v-model="currentClinic.phone"
+                            ref="phone"
+                            v-model="phone"
                             type="number"
                             data-vv-name="phone"
                             required
@@ -36,33 +70,45 @@
                         ></md-input>
                         <span class="md-error">{{errors.first('phone')}}</span>
                         <slide-y-down-transition>
-                            <md-icon class="error" v-show="errors.has('phone')">close</md-icon>
+                            <md-button
+                                tabindex="-1"
+                                v-show="errors.has('phone')"
+                                @click="phone='',focusOn('phone')"
+                                class="md-button md-icon-button md-dense md-input-action"
+                            >
+                                <md-icon class="error">close</md-icon>
+                            </md-button>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon
-                                class="success"
-                                v-show="!errors.has('phone') && touched.phone"
-                            >done</md-icon>
+                            <md-button
+                                tabindex="-1"
+                                v-show="!errors.has('phone')  && touched.phone"
+                                class="md-button md-icon-button md-dense md-input-action no-select md-simple"
+                            >
+                                <md-icon class="success">done</md-icon>
+                            </md-button>
                         </slide-y-down-transition>
                     </md-field>
                 </div>
 
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
-                    <md-field>
+                    <md-field class='with-subline'>
                         <label>Address</label>
-                        <md-input v-model="currentClinic.address" type="text"></md-input>
+                        <md-input v-model="address" type="text"></md-input>
                     </md-field>
                 </div>
 
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field
                         :class="[
+                        {'with-subline': true},
                         {'md-valid': !errors.has('url') && touched.url},
                         {'md-error': errors.has('url')}]"
                     >
                         <label>Clinic web site address</label>
                         <md-input
-                            v-model="currentClinic.url"
+                            ref="url"
+                            v-model="url"
                             type="text"
                             data-vv-name="url"
                             required
@@ -70,10 +116,23 @@
                         ></md-input>
                         <span class="md-error">{{errors.first('url')}}</span>
                         <slide-y-down-transition>
-                            <md-icon class="error" v-show="errors.has('url')">close</md-icon>
+                            <md-button
+                                tabindex="-1"
+                                v-show="errors.has('url')"
+                                @click="url='',focusOn('url')"
+                                class="md-button md-icon-button md-dense md-input-action"
+                            >
+                                <md-icon class="error">close</md-icon>
+                            </md-button>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon class="success" v-show="!errors.has('url') && touched.url">done</md-icon>
+                            <md-button
+                                tabindex="-1"
+                                v-show="!errors.has('url')  && touched.url"
+                                class="md-button md-icon-button md-dense md-input-action no-select md-simple"
+                            >
+                                <md-icon class="success">done</md-icon>
+                            </md-button>
                         </slide-y-down-transition>
                     </md-field>
                 </div>
@@ -81,12 +140,14 @@
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field
                         :class="[
+                        {'with-subline': true},
                         {'md-valid': !errors.has('email') && touched.email},
                         {'md-error': errors.has('email')}]"
                     >
                         <label>Email</label>
                         <md-input
-                            v-model="currentClinic.email"
+                            v-model="email"
+                            ref="email"
                             type="text"
                             data-vv-name="email"
                             required
@@ -94,88 +155,104 @@
                         ></md-input>
                         <span class="md-error">{{errors.first('email')}}</span>
                         <slide-y-down-transition>
-                            <md-icon class="error" v-show="errors.has('email')">close</md-icon>
+                            <md-button
+                                tabindex="-1"
+                                v-show="errors.has('email')"
+                                @click="email='',focusOn('email')"
+                                class="md-button md-icon-button md-dense md-input-action"
+                            >
+                                <md-icon class="error">close</md-icon>
+                            </md-button>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon
-                                class="success"
-                                v-show="!errors.has('email') && touched.email"
-                            >done</md-icon>
+                            <md-button
+                                tabindex="-1"
+                                v-show="!errors.has('email')  && touched.email"
+                                class="md-button md-icon-button md-dense md-input-action no-select md-simple"
+                            >
+                                <md-icon class="success">done</md-icon>
+                            </md-button>
                         </slide-y-down-transition>
                     </md-field>
                 </div>
 
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
-                    <md-field>
+                    <md-field
+                        :class="[
+                        {'with-subline': true},
+                        {'md-valid': !errors.has('tax') && touched.tax},
+                        {'md-error': errors.has('tax')}]"
+                    >
                         <label>Tax</label>
-                        <md-input v-model="currentClinic.tax" type="number"></md-input>
-                        <span
-                            class="md-helper-text"
-                        >Enter % that will be added to the total procedure price</span>
+                        <md-input
+                            data-vv-name="tax"
+                            ref="tax" v-model="tax" type="number" min="0"
+                            v-validate="modelValidations.tax"
+                        ></md-input>
+                        <span class="md-error">{{errors.first('tax')}}</span>
+                        <slide-y-down-transition>
+                            <md-button
+                                tabindex="-1"
+                                v-show="errors.has('tax')"
+                                @click="tax='',focusOn('tax')"
+                                class="md-button md-icon-button md-dense md-input-action"
+                            >
+                                <md-icon class="error">close</md-icon>
+                            </md-button>
+                        </slide-y-down-transition>
+                        <slide-y-down-transition>
+                            <md-button
+                                tabindex="-1"
+                                v-show="!errors.has('tax')  && touched.tax"
+                                class="md-button md-icon-button md-dense md-input-action no-select md-simple"
+                            >
+                                <md-icon class="success">done</md-icon>
+                            </md-button>
+                        </slide-y-down-transition>
                     </md-field>
                 </div>
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
-                    <md-field>
+                    <md-field class='with-subline' >
                         <label for="teethSystem">Disabled Select</label>
-                        <md-select
-                            v-model="currentClinic.teethSystem"
-                            name="teethSystem"
-                            id="teethSystem"
-                        >
+                        <md-select v-model="teethSystem" name="teethSystem" id="teethSystem">
                             <md-option :value="1">FDI World Dental Federation notation</md-option>
                             <md-option :value="2">Universal numbering system</md-option>
                             <md-option :value="3">Palmer notation method</md-option>
                         </md-select>
                     </md-field>
                 </div>
-                <div class="md-layout md-layout-item">
-                    {{currency.length}}
-                    <t-auto-complite
-                        v-model="selectedCurrency"
-                        :md-options="currency"
-                        @md-selected="currencySelected"
-                        @md-opened="selectedCurrency =''"
-                        @blur="setLocalCurrency"
-                    >
-                        <template slot="md-autocomplete-item" slot-scope="{ item }">
-                            <span
-                                class="md-serched-list-item-text"
-                            >{{ `${item.symbol} ${item.name} ${item.code}` }}</span>
-                        </template>
-                        <template slot="md-autocomplete-empty" slot-scope="{ term }">
-                            <span
-                                class="md-layout-item md-size-100"
-                                style="white-space: pre-wrap;oveflow:hidden;"
-                            >No currency matching "{{ term }}" were found.</span>
-                        </template>
-                        <label>Choose your Currency</label>
-                    </t-auto-complite>
+                 <div class="md-layout md-layout-item md-size-33">
+                    <md-field class='with-subline' >
+                        <label for="selectedCurrency">Select Currency</label>
+                        <md-select  md-dense v-model="selectedCurrency" name="selectedCurrency" id="selectedCurrency">
+                            <md-option
+                                v-for="(item, key) in  currency"
+                                :key="key"
+                                :value="item.code">
+                                {{`${item.code} - ${item.symbol} ${item.name} `}}
+                            </md-option>
+                        </md-select>
+                    </md-field>
                 </div>
-                <div class="md-layout md-layout-item md-size-100">
-                    <t-auto-complite
-                        v-model="selectedTimezone"
-                        :md-options="timezones"
-                        @md-selected="timezoneSelected"
-                        @md-opened="selectedTimezone =''"
-                        @blur="setLocalTimezone"
-                    >
-                        <template slot="md-autocomplete-item" slot-scope="{ item }">
-                            <span class="md-serched-list-item-text">{{ item.UTC }} {{ item.cities }}</span>
-                        </template>
-                        <template slot="md-autocomplete-empty" slot-scope="{ term }">
-                            <span
-                                class="md-layout-item md-size-100"
-                                style="white-space: pre-wrap;oveflow:hidden;"
-                            >No timezone matching "{{ term }}" were found.</span>
-                        </template>
-                        <label>Choose your timezone to specify sms sending time</label>
-                    </t-auto-complite>
+                <div class="md-layout md-layout-item md-size-33">
+                     <md-field class='with-subline' >
+                        <label for="teethSystem">Select UTC Timezone</label>
+                        <md-select  md-dense v-model="selectedTimezone" name="selectedCurrency" id="selectedCurrency">
+                            <md-option
+                                v-for="(item, key) in  timezones"
+                                :key="key"
+                                :value="item.offset">
+                                {{ item.UTC}}
+                                <!-- <small>{{item.cities}}</small> -->
+                            </md-option>
+                        </md-select>
+                    </md-field>
                 </div>
 
                 <div class="md-layout md-layout-item md-size-100">
-                    <md-field maxlength="5">
+                    <md-field class='with-subline' maxlength="5">
                         <label>Description</label>
-                        <md-textarea v-model="currentClinic.description"></md-textarea>
+                        <md-textarea v-model="description"></md-textarea>
                     </md-field>
                 </div>
             </div>
@@ -198,14 +275,13 @@
         COMMON_CURRENCY,
     } from '@/constants';
     import { mapGetters } from 'vuex';
-    import { TAvatarInput, TAutoComplite } from '@/components';
+    import { TAvatarInput } from '@/components';
     import { SlideYDownTransition } from 'vue2-transitions';
 
     export default {
         components: {
             SlideYDownTransition,
             TAvatarInput,
-            TAutoComplite,
         },
         name: 'currentClinic-settings',
         props: {
@@ -220,11 +296,23 @@
                 selectedCurrency: '',
                 timeZoneForOptions: [],
                 currencyForOptions: [],
+                address: '',
                 image: '',
+                email: '',
+                url: '',
+                phone: '',
+                name: '',
+                description: '',
+                tax: 0,
+                teethSystem: '',
+                timezones: TIMEZONES,
+                currency: COMMON_CURRENCY,
                 touched: {
                     url: false,
                     email: false,
                     phone: false,
+                    name: false,
+                    tax: false,
                 },
                 modelValidations: {
                     url: {
@@ -238,12 +326,21 @@
                         min: 12,
                         max: 20,
                     },
+                    tax: {
+                        min: 0,
+                    },
+                    name: {
+                        required: true,
+                    },
                 },
             };
         },
         methods: {
-            copyObj(obj) {
-                return JSON.parse(JSON.stringify(obj));
+            focusOn(ref) {
+                if (!this.$refs[ref]) {
+                    return;
+                }
+                this.$refs[ref].$el.focus();
             },
             timezoneSelected(timezoneL) {
                 if (timezoneL) {
@@ -271,9 +368,11 @@
                 }
             },
             validate() {
-                this.$validator.validate('url', 'email', 'phone').then((isValid) => {
-                    this.$emit('on-submit', this.registerForm, isValid);
-                });
+                this.$validator
+                    .validate('url', 'email', 'phone', 'name', 'tax')
+                    .then((isValid) => {
+                        this.$emit('on-submit', this.registerForm, isValid);
+                    });
                 this.touched.url = true;
                 this.touched.email = true;
                 this.touched.phone = true;
@@ -296,9 +395,22 @@
             updateClinicSettings() {
                 this.$validator.validateAll().then((result) => {
                     if (result) {
+                        const clinic = {
+                            image: this.image,
+                            email: this.email,
+                            url: this.url,
+                            phone: this.phone,
+                            address: this.address,
+                            name: this.name,
+                            tax: this.tax,
+                            teethSystem: this.teethSystem,
+                            timezoneOffset: this.selectedTimezone,
+                            currencyCode: this.selectedCurrency,
+                            description: this.description,
+                        };
                         this.$store
                             .dispatch(CLINIC_UPDATE, {
-                                clinic: this.currentClinic,
+                                clinic,
                             })
                             .then((response) => {
                                 if (response) {
@@ -353,32 +465,30 @@
                     }
                 });
             },
+            loadData() {
+                // this.createArrayTimezones();
+                // this.createArrayCurrency();
+                // this.setLocalTimezone();
+                // this.setLocalCurrency();
+                this.url = this.currentClinic.url;
+                this.address = this.currentClinic.address;
+                this.email = this.currentClinic.email;
+                this.phone = this.currentClinic.phone;
+                this.name = this.currentClinic.name;
+                this.tax = this.currentClinic.tax;
+                this.teethSystem = this.currentClinic.teethSystem;
+                this.selectedTimezone = this.currentClinic.timezoneOffset;
+                this.selectedCurrency = this.currentClinic.currencyCode;
+                this.description = this.currentClinic.description;
+            },
         },
         computed: {
             ...mapGetters({
                 currentClinic: 'getCurrentClinic',
             }),
-            email() {
-                return this.currentClinic.email;
-            },
-            url() {
-                return this.currentClinic.url;
-            },
-            phone() {
-                return this.currentClinic.phone;
-            },
-            timezones() {
-                return TIMEZONES;
-            },
-            currency() {
-                return COMMON_CURRENCY;
-            },
         },
         created() {
-            this.createArrayTimezones();
-            this.createArrayCurrency();
-            this.setLocalTimezone();
-            this.setLocalCurrency();
+            this.loadData();
         },
         watch: {
             url() {
@@ -390,46 +500,19 @@
             phone() {
                 this.touched.phone = true;
             },
+            name() {
+                this.touched.name = true;
+            },
+            tax() {
+                this.touched.tax = true;
+            },
         },
     };
 </script>
-<style lang="scss" scoped>
-.md-dialog.cropper-form {
-    background-color: transparent !important;
-    box-shadow: none !important;
-    .clipper-setter {
-        overflow: hidden;
-        max-width: 70vh;
-        max-height: 70vh;
+<style lang="scss">
+ .md-highlight-text-match {
+        border-radius: 2px;
+        background-color: yellow !important;
+        padding: 0 !important;
     }
-    .clipper-preview {
-        overflow: hidden;
-        width: 132px;
-        height: 132px;
-        margin: auto;
-    }
-    .clipper-preview-round {
-        overflow: hidden;
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        margin: 20px;
-    }
-}
-.currentClinic-wrapper {
-    .md-field {
-        // margin-top: 24px;
-        .md-error {
-            display: block !important;
-            left: 0;
-            opacity: 1;
-            // transform: translate3d(0,-12px,0);
-            color: #ff1744;
-            font-size: 0.6875rem;
-            bottom: -1.3rem;
-            line-height: normal;
-            text-align: left;
-        }
-    }
-}
 </style>

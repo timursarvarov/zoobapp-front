@@ -269,20 +269,20 @@
 <style lang="scss">
 .jaw-dialog-wrapper {
     // min-width: 550px;
-    min-height: 80% !important;
-    max-height: 100% !important;
-    background-color: transparent !important;
-    box-shadow: none;
-    margin: 0 !important;
-    padding: 0 !important;
-    -webkit-font-smoothing: antialiased !important;
-    .md-dialog-container {
-        padding: 0 9px;
-    }
-    .tab-content {
-        padding: 0;
-        min-height: 65vh;
-    }
+    // min-height: 80vh !important;
+    // max-height: 100vh !important;
+    // background-color: transparent !important;
+    // box-shadow: none;
+    // margin: 0 !important;
+    // padding: 0 !important;
+    // -webkit-font-smoothing: antialiased !important;
+    // .md-dialog-container {
+    //     padding: 0 9px;
+    // }
+    // .tab-content {
+    //     padding: 0;
+    //     min-height: 65vh;
+    // }
     .wizard-add-diagnose-form {
         .md-card-header {
             text-align: left;

@@ -26,7 +26,7 @@
 
             <md-menu-content
                 :class="contentClasses"
-                v-show="hasScopedEmptySlot || hasFilteredItems"
+                v-show="hasScopedEmptySlot || hasFilteredItems || openOnFocus"
             >
                 <div class="md-autocomplete-loading" v-if="isPromisePending">
                     <md-progress-spinner :md-diameter="40" :md-stroke="4" md-mode="indeterminate"/>

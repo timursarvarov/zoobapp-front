@@ -315,9 +315,16 @@
 </script>
 <style lang="scss">
 .jaw-dialog-wrapper {
-    // min-width: 550px;
-    min-height: 80% !important;
-    max-height: 100% !important;
+    overflow-y: scroll;
+      &::-webkit-scrollbar {
+            width: 4px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: rgb(255, 255, 255);
+            border-radius: 7px;
+        }
+    min-height: 80vh !important;
+    max-height: 100vh !important;
     background-color: transparent !important;
     box-shadow: none;
     margin: 0 !important;

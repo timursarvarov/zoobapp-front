@@ -21,37 +21,22 @@
                             {{ `${patient.firstName }` | capitilize }}
                             {{ `${patient.lastName }` | capitilize }}
                         </span>
+                        <md-button
+                            @click="handleAllergy(patient.allergy)"
+                            v-if="patient.allergy &&  patient.allergy.length>0"
+                            class="md-icon-button md-simple md-danger md-round md-just-icon"
+                        >
+                            <md-icon>report_problem</md-icon>
+                            <!-- <span class="notification">{{patient.allergy.length}}</span> -->
+                            <md-tooltip>Attention allergy!</md-tooltip>
+                        </md-button>
                     </template>
                     <span v-else >
                         {{$route.name}}
                     </span>
                 </h3>
-                <div v-if="$route.name === 'Profile'" >
-                    <md-button
-                        @click="handleAllergy(patient.allergy)"
-                        v-if="patient.allergy &&  patient.allergy.length>0"
-                        class="md-icon-button md-simple md-danger md-round md-just-icon"
-                    >
-                        <md-icon>report_problem</md-icon>
-                        <!-- <span class="notification">{{patient.allergy.length}}</span> -->
-                        <md-tooltip>Attention allergy!</md-tooltip>
-                    </md-button>
-                </div>
             </div>
 
-            <!-- <div v-if="$route.path.startsWith('/patient/')">
-                <h3 class="md-title">
-                    {{patient.firstName}} {{patient.lastName}}
-                    <md-button
-                        @click="handleAllergy(patient.allergy)"
-                        v-if="patient.allergy &&  patient.allergy.length>0"
-                        class="md-icon-button md-simple md-danger md-round md-just-icon"
-                    >
-                        <md-icon>report_problem</md-icon>
-                        <md-tooltip>Attention allergy!</md-tooltip>
-                    </md-button>
-                </h3>
-            </div> -->
             <div class="md-toolbar-section-end">
                 <md-button
                     class="md-just-icon md-round md-round md-simple md-toolbar-toggle"

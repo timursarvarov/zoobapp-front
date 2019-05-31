@@ -28,11 +28,6 @@
                                     class="md-layout-item md-size-100"
                                     style="white-space: pre-wrap;oveflow:hidden;"
                                 >No templates "{{ term }}" were found.</span>
-                                <md-button
-                                    style="min-width:40px;max-width:140px"
-                                    class="md-primary md-layout-item mx-auto md-sm"
-                                    @click="showPatientAddForm()"
-                                >CREATE Manipulation</md-button>
                             </div>
                         </template>
                     </t-auto-complite>

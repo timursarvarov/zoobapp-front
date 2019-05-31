@@ -14,7 +14,7 @@
       <md-list class="nav-tabs">
         <md-list-item
           v-for="(item, index) in tabName"
-          @click="switchPanel(tabName[index])"
+          @click="switchPanel(tabName[index]), $emit('onChangeTab', index)"
           :key="item"
           :class="[
             {active: isActivePanel(tabName[index])},
@@ -53,37 +53,37 @@
 
 <script>
     export default {
-      props: {
-        flexColumn: Boolean,
-        navPillsIcons: Boolean,
-        plain: Boolean,
-        tabName: Array,
-        tabIcon: Array,
-        colorButton: {
-          type: String,
-          default: '',
+        props: {
+            flexColumn: Boolean,
+            navPillsIcons: Boolean,
+            plain: Boolean,
+            tabName: Array,
+            tabIcon: Array,
+            colorButton: {
+                type: String,
+                default: '',
+            },
         },
-      },
-      data() {
-        return {
-          activePanel: this.tabName[0],
-        };
-      },
-      computed: {},
-      methods: {
-        switchPanel(panel) {
-          this.activePanel = panel;
+        data() {
+            return {
+                activePanel: this.tabName[0],
+            };
         },
-        isActivePanel(panel) {
-          return this.activePanel === panel;
+        computed: {},
+        methods: {
+            switchPanel(panel) {
+                this.activePanel = panel;
+            },
+            isActivePanel(panel) {
+                return this.activePanel === panel;
+            },
+            getColorButton(colorButton) {
+                return `md-${colorButton}`;
+            },
+            getTabContent(index) {
+                return `tab-pane-${index}`;
+            },
         },
-        getColorButton(colorButton) {
-          return `md-${colorButton}`;
-        },
-        getTabContent(index) {
-          return `tab-pane-${index}`;
-        },
-      },
     };
 </script>
 
