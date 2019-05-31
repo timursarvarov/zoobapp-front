@@ -7,6 +7,7 @@
             </md-toolbar>
 
             <md-table
+                @md-selected="onSelect"
                 :value="queriedData"
                 :md-sort.sync="currentSort"
                 :md-sort-order.sync="currentSortOrder"
@@ -45,7 +46,7 @@
                     <md-button class="md-primary md-raised" @click="scrollToTop()">Scroll Top</md-button>
                 </md-table-empty-state>
 
-                <md-table-row slot="md-table-row" slot-scope="{ item }">
+                <md-table-row slot="md-table-row"  md-selectable="single" slot-scope="{ item }">
                     <md-table-cell class="code" md-label="Code" md-sort-by="code">{{ item.code }}</md-table-cell>
                     <md-table-cell md-label="Title" md-sort-by="title">
                         {{ item.title }}
@@ -227,6 +228,9 @@
         },
 
         methods: {
+            onSelect(item) {
+                console.log(item);
+            },
             getItemTotalPrice(manipulations) {
                 let totalPrice = 0;
                 manipulations.forEach((m) => {

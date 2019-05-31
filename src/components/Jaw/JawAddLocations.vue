@@ -84,7 +84,7 @@
             class="jaw-list-container"
         >
             <div class="jaw md-layout-item">
-                <transition-group name="tooth" class="jaw-list mx-auto noselect">
+                <transition-group name="tooth no-select" class="jaw-list mx-auto noselect">
                     <div
                         v-ripple
                         @click="toothClick($event, toothId)"
@@ -95,13 +95,16 @@
                         :key="toothId"
                         :ref="toothId"
                     >
-                    <div class="tooth-number" >
+                    <div class="tooth-number no-select" >
                         <span >{{toothId | toCurrentTeethSystem(teethSystem)}}</span>
                     </div>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             :viewBox="jawSVG[toothId].viewBox"
-                            :style="{ 'width':  jawSVG[toothId].widthPerc * 1.6 + 'vh'}"
+                            :style="{
+                                'width':  jawSVG[toothId].widthPerc * 1.56 + (windowWidth < 700 ? 'vmax' : 'vmin'),
+                                //minWidth: jawSVG[toothId].widthPerc * 1.66 + 'vh'
+                                }"
                         >
                             <g :class="`set-${locationType}`">
                                 <template v-for="(locationValue, location) in defaultLocations">

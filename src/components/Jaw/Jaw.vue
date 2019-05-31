@@ -78,17 +78,18 @@
             <div>
                 <slot name="top"></slot>
             </div>
-            <!-- <transition name="fade" mode="out-in"> -->
+            <transition name="fade" mode="out-in">
                 <div v-if="jawType === 'babyTeeth'" key="babyTeeth" class="jaw-scroll mx-auto">
                     <div class="jaw-top md-alignment-top-center mx-auto md-size-100">
                         <div
                             class="tooth"
+                            v-ripple
                             v-for="(toothId, topJawToothIndex) in topBabyTeeth"
                             :key="toothId"
                         >
                             <div
 
-                                class="tooth-content"
+                                class="tooth-content no-select"
                                 :class="[
                                     {'selected': selectedTeethLocal.includes(toothId) },
                                     {'isToothShownDiagnose': isToothShownDiagnose(toothId) },
@@ -116,7 +117,7 @@
                                     </g>
                                 </svg>
                             </div>
-                            <!-- <jaw-menu
+                            <jaw-menu
                                 :btnClass="btnClass"
                                 :selected="isToothSelected(toothId)"
                                 :windowWidth="windowWidth"
@@ -129,12 +130,13 @@
                                 :offset="getCustomWidth(toothId)"
                                 @toggleItemVisibility="toggleItemVisibility"
                                 @showItem="showToothInfo"
-                            /> -->
+                            />
                         </div>
                     </div>
                     <div class="jaw-bottom md-size-100">
                         <div
                             class="tooth"
+                            v-ripple
                             v-for="(toothId, bottomAdultTeethIndex ) in bottomBabyTeeth"
                             :key="toothId"
                         >
@@ -169,7 +171,7 @@
                                 </svg>
                             </div>
 
-                            <!-- <jaw-menu
+                            <jaw-menu
                                 :btnClass="btnClass"
                                 :selected="isToothSelected(toothId)"
                                 :windowWidth="windowWidth"
@@ -182,7 +184,7 @@
                                 :offset="getCustomWidth(toothId)"
                                 @toggleItemVisibility="toggleItemVisibility"
                                 @showItem="showToothInfo"
-                            /> -->
+                            />
                         </div>
                     </div>
                 </div>
@@ -190,6 +192,7 @@
                     <div class="jaw-top md-alignment-top-center mx-auto md-size-100">
                         <div
                             class="tooth"
+                            v-ripple
                             v-for="(toothId, topJawToothIndex) in topAdultTeeth"
                             :key="toothId"
                         >
@@ -224,7 +227,7 @@
                                 </svg>
                             </div>
 
-                            <!-- <jaw-menu
+                            <jaw-menu
                                 :btnClass="btnClass"
                                 :selected="isToothSelected(toothId)"
                                 :windowWidth="windowWidth"
@@ -237,12 +240,13 @@
                                 :offset="getCustomWidth(toothId)"
                                 @toggleItemVisibility="toggleItemVisibility"
                                 @showItem="showToothInfo"
-                            /> -->
+                            />
                         </div>
                     </div>
                     <div class="jaw-bottom md-size-100">
                         <div
                             class="tooth"
+                            v-ripple
                             v-for="(toothId, bottomAdultTeethIndex ) in bottomAdultTeeth"
                             :key="toothId"
                         >
@@ -277,7 +281,7 @@
                                 </svg>
                             </div>
 
-                            <!-- <jaw-menu
+                            <jaw-menu
                                 :btnClass="btnClass"
                                 :selected="isToothSelected(toothId)"
                                 :windowWidth="windowWidth"
@@ -290,11 +294,11 @@
                                 :offset="getCustomWidth(toothId)"
                                 @toggleItemVisibility="toggleItemVisibility"
                                 @showItem="showToothInfo"
-                            /> -->
+                            />
                         </div>
                     </div>
                 </div>
-            <!-- </transition> -->
+            </transition>
             <transition name="slide">
                 <div class="md-layout md-gutter">
                     <div
@@ -631,7 +635,7 @@
                         return toothWidth / 1.72;
                     }
                     if (this.windowWidth >= 1920) {
-                        return ((this.windowWidth + 200) / 2 / 100) * toothWidth;
+                        return toothWidth / 2;
                     }
                     return toothWidth / 1.72;
                 }
@@ -650,6 +654,7 @@
                 if (this.windowWidth >= 1920) {
                     return toothWidth / 2.2;
                 }
+
                 return toothWidth / 2.2;
             },
             handleResize() {
@@ -876,19 +881,18 @@
 
 <style lang="scss" scoped>
 .jaw-wrapper {
-    // transform: translateZ(0);
     .jaw-toolbar {
         padding-right: 0px;
         // margin: 0 -15px 0 -15px;
     }
     .fade-enter-active,
     .fade-leave-active {
-        // transition: all 0.5s;
+        transition: all 0.5s;
     }
 
     .fade-enter,
     .fade-leave-active {
-        // opacity: 0;
+        opacity: 0;
     }
     .hint {
         opacity: 0.2;
@@ -901,10 +905,10 @@
         }
         .list-enter-active,
         .list-leave-active {
-            // transition: opacity 1s;
+            transition: opacity 1s;
         }
         .list-enter, .list-leave-to /* .list-leave-active до версии 2.1.8 */ {
-            // opacity: 0;
+            opacity: 0;
         }
     }
 }
