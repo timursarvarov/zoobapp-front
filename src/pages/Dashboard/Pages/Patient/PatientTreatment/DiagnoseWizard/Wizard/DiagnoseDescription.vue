@@ -1,5 +1,5 @@
 <template>
-    <div :style="[{'min-width': `${size.width}px`},
+    <div  class="wizard-tab-content" :style="[{'min-width': `${size.width}px`},
           {'min-height': `${size.height}px`} ]">
         <h5 class="info-text">Write a diagnose description, or choose from templates.</h5>
         <div class="md-layout">
@@ -113,7 +113,7 @@
             validate() {
                 return this.$validator.validateAll().then((res) => {
                     this.$emit('on-validated', res, 'step2');
-                    this.$emit('validated-code', this.code);
+                    // this.$emit('validated-code', this.code);
                     return res;
                 });
             },

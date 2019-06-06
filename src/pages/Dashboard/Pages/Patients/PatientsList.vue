@@ -165,15 +165,15 @@
                                         <span
                                             v-if="$moment(item[field.key], $moment.ISO_8601, true).isValid()"
                                         >
-                                            <span
+                                            <small
                                                 v-if="field.key==='birthday'"
                                             >{{ $moment().diff(item[field.key], 'years') }} years
                                               <br>
                                                 <small>{{ item[field.key] | moment("calendar")}}</small>
-                                            </span>
+                                            </small>
 
                                             <div v-else>
-                                                <span>{{ item[field.key] | moment("from") }}</span>
+                                                <small>{{ item[field.key] | moment("from") }}</small>
                                                 <br>
                                                 <small>{{ item[field.key] | moment("calendar")}}</small>
                                             </div>
@@ -529,7 +529,7 @@
         // max-width: 40px;
         }
     .patient-name{
-        max-width: 90%;
+        // max-width: 90%;
         text-overflow: ellipsis;
         overflow: hidden;
     }
@@ -545,7 +545,7 @@
     }
     table > thead > tr > th.md-table-head.md-table-cell-selection > div{
             width: 30px;
-    margin-left: 14px;
+            margin-left: 14px;
     }
     .table-settings {
         position: absolute;

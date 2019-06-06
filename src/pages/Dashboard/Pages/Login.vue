@@ -23,7 +23,7 @@
                     <p slot="description" class="description">Or Be Classical</p>
                     <div slot="inputs">
                         <md-field
-                            class="md-form-group"
+                            class="md-form-group with-subline"
                             :class="[
                 {'md-valid': !errors.has('username') && touched.username},
                 {'md-error': errors.has('username')}]"
@@ -62,7 +62,7 @@
                         </md-field>
 
                         <md-field
-                            class="md-form-group"
+                            class="md-form-group with-subline"
                             slot="inputs"
                             :class="[{'md-error': errors.has('password')},
                             {'md-valid': !errors.has('password') && touched.password}]"
@@ -164,7 +164,7 @@
                 this.$store.dispatch(AUTH_REQUEST, { username, password }).then(
                     // eslint-disable-next-line no-unused-vars
                     (response) => {
-                        this.$router.push('/');
+                        this.$router.push('/choose_clinic');
                     },
                     (error) => {
                         if (error.response.data.message === 'Wrong password') {

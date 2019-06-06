@@ -53,9 +53,18 @@
                     </wizard-tab>
 
                     <wizard-tab :before-change="() => validateStep('step2')">
+                        <template slot="label">Add files</template>
+                        <diagnose-files
+                            ref="step2"
+                            v-model="description"
+                            :size="jawListSize"
+                            :descriptions="diagnoseDescriptions"
+                        />
+                    </wizard-tab>
+                    <wizard-tab :before-change="() => validateStep('step3')">
                         <template slot="label">Add description</template>
                         <diagnose-description
-                            ref="step2"
+                            ref="step3"
                             v-model="description"
                             :size="jawListSize"
                             :descriptions="diagnoseDescriptions"
@@ -71,6 +80,7 @@
     import { SlideYDownTransition } from 'vue2-transitions';
     import ToothLocations from './Wizard/ToothLocations.vue';
     import DiagnoseDescription from './Wizard/DiagnoseDescription.vue';
+    import DiagnoseFiles from './Wizard/DiagnoseFiles.vue';
     import { SimpleWizard, WizardTab } from '@/components';
     import { mapGetters } from 'vuex';
     import { NOTIFY } from '@/constants';
@@ -141,6 +151,7 @@
             WizardTab,
             ToothLocations,
             SlideYDownTransition,
+            DiagnoseFiles,
         },
         methods: {
             // инициируем локальный диагноз
@@ -196,6 +207,27 @@
                     });
                 }
                 if (ref === 'step2') {
+                    return this.$refs[ref].validate().then((res) => {
+                        // if (!res) {
+                        //     this.$store.dispatch(NOTIFY, {
+                        //         settings: {
+                        //             message: 'Please add dignose description',
+                        //             type: 'warning',
+                        //         },
+                        //     });
+                        //     return false;
+                        // }
+                        // this.isDialogVisibleL = false;
+                        // this.$store.dispatch(NOTIFY, {
+                        //     settings: {
+                        //         message: 'Diagnose added',
+                        //         type: 'success',
+                        //     },
+                        // });
+                        return res;
+                    });
+                }
+                if (ref === 'step3') {
                     return this.$refs[ref].validate().then((res) => {
                         if (!res) {
                             this.$store.dispatch(NOTIFY, {

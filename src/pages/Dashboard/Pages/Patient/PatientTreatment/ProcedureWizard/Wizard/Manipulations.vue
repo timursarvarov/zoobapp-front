@@ -1,11 +1,11 @@
 <template>
-    <div class="manipulations-wrapper md-layout-item"
+    <div class="manipulations-wrapper wizard-tab-content"
     :style="[
         {'min-width': size.width ? `${size.width}px`: `70vw`},
       ]"
     >
       <!-- {'min-height': `${size.height}px`}  -->
-        <div class="manipulations-editor md-alignment-center-space-between md-layout ">
+            <div class="absolute-header-block manipulations-editor md-alignment-center-space-between md-layout ">
 
                 <div class="manipulations-autocomplite md-layout-item md-size-45 md-small-size-100"  ref="autocomplete">
                     <t-auto-complite
@@ -72,6 +72,7 @@
                 </div>
 
             </div>
+
             <div class="content-wrapper">
 
                 <md-table v-model="manipulationsToAdd" table-header-color="green">
@@ -317,8 +318,8 @@
 <style lang="scss" >
 .manipulations-wrapper{
 
-    overflow-y: scroll;
-    max-height: 60vh;
+    // overflow-y: scroll;
+    // max-height: 60vh;
     max-width: calc(100vw - 60px);
       &::-webkit-scrollbar {
             width: 7px;
@@ -339,7 +340,7 @@
         // display: flex;
         // justify-content: space-between;
         padding: 15px;
-        background-color: rgba(233, 233, 233, 0.459);
+        background-color: rgb(228, 228, 228);
         border-radius: 10px;
         margin-bottom: 3vh;
         margin-top: 3vh;
@@ -380,8 +381,8 @@
     }
     .content-wrapper{
         .md-table-content{
-        // max-height: calc(100vh - 720px)!important;
-        max-height: 34vh!important;
+        // max-height: calc(100vh - 450px)!important;
+        // max-height: 47vh!important;
         }
     }
 

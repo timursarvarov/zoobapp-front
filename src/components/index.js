@@ -91,7 +91,7 @@ import IconToothWash from './JawIcons/Icons/ToothWash.vue';
 import IconToothWings from './JawIcons/Icons/ToothWings.vue';
 import IconToothWorld from './JawIcons/Icons/ToothWorld.vue';
 import IconToothRestovration from './JawIcons/Icons/ToothRestovration.vue';
-// import JawCard from './Jaw/JawCard.vue';
+import JawDisplayble from './Jaw/JawDisplayble.vue';
 import Jaw from './Jaw/Jaw.vue';
 import JawAddLocations from './Jaw/JawAddLocations.vue';
 import Tooth from './Jaw/Tooth.vue';
@@ -104,7 +104,11 @@ import TImageCropperForm from './TImageCropperForm.vue';
 import TCollapseSearch from './TCollapseSearch.vue';
 import TFilePreview from './TFilePreview/TFilePreview.vue';
 import TTableEditor from './TTableEditor.vue';
+import TFilesList from './TFilesList.vue';
 import TToothItems from './TToothItems.vue';
+import TFilesAddForm from './TFilesAddForm.vue';
+import TPrintForm from './TPrintForm/TPrintForm.vue';
+import TWuswug from './TWuswug.vue';
 
 // For Dev Use Only
 
@@ -205,5 +209,10 @@ export {
     TTableEditor,
     Tooth,
     TToothItems,
+    TFilesAddForm,
+    TPrintForm,
+    TFilesList,
+    JawDisplayble,
+    TWuswug,
     // JawGenerator,
 };

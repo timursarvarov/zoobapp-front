@@ -80,14 +80,14 @@
               <!-- <div> -->
                 <slot v-if="hideSlot" name="empty-space"></slot>
               <!-- <div/> -->
-
-              <md-empty-state
-                v-if="getItems.length == 0 && !hideSlot"
-                class="md-primary"
-                md-icon="sentiment_dissatisfied"
-                :md-label="`No matching '${this.itemType}'`"
-                md-description="Try another search params">
-              </md-empty-state>
+            <div   v-if="getItems.length == 0 && !hideSlot" >
+                <md-empty-state
+                    class="md-primary"
+                    md-icon="sentiment_dissatisfied"
+                    :md-label="`No matching '${this.itemType}'`"
+                    md-description="Try another search params">
+                </md-empty-state>
+                </div>
             </div>
           </div>
 

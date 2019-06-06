@@ -1,5 +1,5 @@
 <template>
-    <div class="tooth-locations-wrapper" ref="parent">
+    <div class="tooth-locations-wrapper wizard-tab-content" ref="parent">
         <jaw-add-locations
             ref="jawadddiagnose"
             :jaw="jaw"

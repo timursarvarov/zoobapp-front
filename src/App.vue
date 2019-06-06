@@ -14,7 +14,7 @@
         computed: {
             ...mapGetters({
                 getNotify: 'getNotify',
-                refreshTokenExist: 'fetchRefreshToken',
+                refreshTokenExist: 'fetchStateRefreshToken',
                 isProfileLoaded: 'isProfileLoaded',
             }),
         },

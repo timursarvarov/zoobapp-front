@@ -50,94 +50,94 @@
   </div>
 </template>
 <script>
-import { NOTIFY } from "@/constants";
-import { SlideYDownTransition } from "vue2-transitions";
+    import { NOTIFY } from '@/constants';
+    import { SlideYDownTransition } from 'vue2-transitions';
 
-export default {
-  components: {
-    SlideYDownTransition
-  },
-  props: {
-    showForm: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      email: null,
-      touched: {
-        email: false
-      },
-      modelValidations: {
-        email: {
-          email: true
-        }
-      }
+    export default {
+        components: {
+            SlideYDownTransition,
+        },
+        props: {
+            showForm: {
+                type: Boolean,
+                default: false,
+            },
+        },
+        data() {
+            return {
+                email: null,
+                touched: {
+                    email: false,
+                },
+                modelValidations: {
+                    email: {
+                        email: true,
+                    },
+                },
+            };
+        },
+        computed: {
+            showFormL: {
+                get() {
+                    return this.showForm;
+                },
+                set(newValue) {
+                    this.$emit('update:showForm', newValue);
+                },
+            },
+        },
+        methods: {
+            focusOn(ref) {
+                if (!this.$refs[ref]) {
+                    return;
+                }
+                this.$refs[ref].$el.focus();
+            },
+        },
+        validate() {
+            this.$validator.validateAll().then((isValid) => {
+                this.$emit('on-submit', this.registerForm, isValid);
+            });
+            this.touched.email = true;
+        },
+        clearForm() {
+            this.email = null;
+        },
+        sendPassword() {
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: 'Here we send an email',
+                            type: 'primary',
+                        },
+                    });
+                    // this.$store
+                    //   .dispatch(PATIENT_CREATE, {
+                    //     params: {
+                    //       email: this.email,
+                    //     },
+                    //   })
+                    //   .then((response) => {
+                    //     if (response) {
+                    //     this.$router.push('/');
+                    //     this.$store.dispatch(NOTIFY, {
+                    //         settings: {
+                    //           message: 'Settings updated successfully',
+                    //           type: 'primary',
+                    //         },
+                    //       });
+                    //     }
+                    // });
+                }
+            });
+        },
+        watch: {
+            email() {
+                this.touched.email = true;
+            },
+        },
     };
-  },
-  computed: {
-    showFormL: {
-      get() {
-        return this.showForm;
-      },
-      set(newValue) {
-        this.$emit("update:showForm", newValue);
-      }
-    }
-  },
-  methods: {
-    focusOn(ref) {
-      if (!this.$refs[ref]) {
-        return;
-      }
-      this.$refs[ref].$el.focus();
-    }
-  },
-  validate() {
-    this.$validator.validateAll().then(isValid => {
-      this.$emit("on-submit", this.registerForm, isValid);
-    });
-    this.touched.email = true;
-  },
-  clearForm() {
-    this.email = null;
-  },
-  sendPassword() {
-    this.$validator.validateAll().then(result => {
-      if (result) {
-        this.$store.dispatch(NOTIFY, {
-          settings: {
-            message: "Here we send an email",
-            type: "primary"
-          }
-        });
-        // this.$store
-        //   .dispatch(PATIENT_CREATE, {
-        //     params: {
-        //       email: this.email,
-        //     },
-        //   })
-        //   .then((response) => {
-        //     if (response) {
-        //     this.$router.push('/');
-        //     this.$store.dispatch(NOTIFY, {
-        //         settings: {
-        //           message: 'Settings updated successfully',
-        //           type: 'primary',
-        //         },
-        //       });
-        //     }
-        // });
-      }
-    });
-  },
-  watch: {
-    email() {
-      this.touched.email = true;
-    }
-  }
-};
 
 // The first param is called 'min', and the second is called 'max'.
 </script>

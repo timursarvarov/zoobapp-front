@@ -11,28 +11,48 @@
             v-on:vdropzone-success="onSuccess"
             :useCustomSlot="true"
         >
-            <md-empty-state
-                md-icon="cloud_upload"
-                md-label="Add new file"
-                md-description="Click here or drope some files"
-            ></md-empty-state>
+           <slot name="emptyState"/>
         </t-dropzone>
     </div>
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
-    import {
-        AUTH_REFRESH_TOKEN,
-        PATIENT_ADD_SUB_PROP,
-    // eslint-disable-next-line import/no-unresolved
-    } from '@/constants';
-    // eslint-disable-next-line import/no-unresolved
+
     import { TDropzone } from '@/components';
 
     export default {
-        name: 'patient-add-files-form',
+        name: 't-files-add-form',
         processRefreshToken: false,
+        props: {
+            url: {
+                type: String,
+                default: '',
+            },
+            access_token: {
+                type: String,
+                default: '',
+            },
+            files: {
+                type: Array,
+                default: () => [],
+            },
+            maxFilesize: {
+                type: Number,
+                default: () => 5,
+            },
+            tokenExpiresAt: {
+                type: String,
+                default: () => '',
+            },
+            authRefreshToken: {
+                type: String,
+                default: () => '',
+            },
+            patientAddSubProp: {
+                type: String,
+                default: () => '',
+            },
+        },
         components: {
             TDropzone,
         },
@@ -40,18 +60,11 @@
             return {};
         },
         computed: {
-            ...mapGetters({
-                access_token: 'fetchAccessToken',
-                patient: 'getPatient',
-                expiresAt: 'expiresAt',
-            }),
             dropzoneOptions() {
                 const options = {
-                    url: `https://dental-api.owl.team/v1/patients/${
-                        this.patient ? this.patient.ID : ''
-                    }/files/`,
+                    url: this.url,
                     thumbnailWidth: 150,
-                    maxFilesize: 5,
+                    maxFilesize: this.maxFilesize,
                     paramName: 'file',
                     forcefallback: true,
                     duplicateCheck: true,
@@ -66,12 +79,7 @@
         },
         methods: {
             onSuccess(file, response) {
-                this.$store.dispatch(PATIENT_ADD_SUB_PROP, {
-                    params: {
-                        propName: 'files',
-                        value: response[0],
-                    },
-                });
+                this.$emit('onSuccess', response);
             },
             addHeader(file, xhr) {
                 xhr.setRequestHeader(
@@ -81,12 +89,12 @@
             },
             checkForExpiredToken() {
                 const currentTime = Math.floor(Date.now() / 1000);
-                if (this.expiresAt < currentTime) {
+                if (this.tokenExpiresAt < currentTime) {
                     if (!this.processRefreshToken) {
                         this.processRefreshToken = true;
                         // eslint-disable-next-line no-new
                         new Promise((resolve, reject) => {
-                            this.$store.dispatch(AUTH_REFRESH_TOKEN).then(
+                            this.$store.dispatch(this.authRefreshToken).then(
                                 (response) => {
                                     this.$refs.myDropzone.processQueue();
                                     this.processRefreshToken = false;

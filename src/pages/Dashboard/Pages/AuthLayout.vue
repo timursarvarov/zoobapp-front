@@ -1,289 +1,252 @@
 <template>
-  <div
-    class="full-page"
-    :class="{'nav-open': $sidebar.showSidebar}"
-  >
-    <md-toolbar
-      md-elevation="0"
-      class="md-transparent md-toolbar-absolute"
-    >
-      <div  class="wrapper-progress-bar" >
-          <md-progress-bar
-                v-if="loading"
-                class="md-white"
-                md-mode="indeterminate"
-              ></md-progress-bar>
-      </div>
-      <div class="md-toolbar-row md-offset">
-        <div class="md-toolbar-section-start">
-          <h3 class="md-title">{{$route.name}}</h3>
-        </div>
-        <div class="md-toolbar-section-end">
-          <md-button
-            class="md-just-icon md-simple md-round md-toolbar-toggle"
-            :class="{toggled: $sidebar.showSidebar}"
-            @click="toggleSidebar"
-          >
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </md-button>
-
-          <div
-            class="md-collapse"
-            :class="{'off-canvas-sidebar': responsive}"
-          >
-            <md-list>
-              <md-list-item to="/" v-if="isAuthenticated">
-                <md-icon>dashboard</md-icon>
-                Dashboard
-              </md-list-item>
-              <md-list-item
-                to="/pricing"
-                @click="linkClick"
-              >
-                <md-icon>attach_money</md-icon>
-                Pricing
-              </md-list-item>
-              <md-list-item
-                to="/register"
-                @click="linkClick"
-              >
-                <md-icon>person_add</md-icon>
-                Register
-              </md-list-item>
-              <md-list-item
-                to="/login"
-                @click="linkClick"
-              >
-                <md-icon>fingerprint</md-icon>
-                login
-              </md-list-item>
-              <md-list-item
-              v-if="isProfileLoaded"
-                to="/lock"
-                @click="linkClick"
-              >
-                <md-icon>lock_open</md-icon>
-                lock
-              </md-list-item>
-            </md-list>
-          </div>
-        </div>
-      </div>
-    </md-toolbar>
-    <div
-      class="wrapper wrapper-full-page"
-      @click="toggleSidebarPage"
-    >
-      <div
-        class="page-header header-filter"
-        :class="setPageClass"
-        filter-color="black"
-        :style="setBgImage"
-      >
-        <div class="container md-offset">
-          <zoom-center-transition
-            :duration="pageTransitionDuration"
-            mode="out-in"
-          >
-            <router-view></router-view>
-          </zoom-center-transition>
-        </div>
-        <footer class="footer">
-          <div class="container md-offset">
-            <nav>
-              <ul>
-                <li>
-                  <router-link :to="{path:'/dashboard'}">Home</router-link>
-                </li>
-                <li>
-                  <a href="#">
-                    Company
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    Portfolio
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    Blog
-                  </a>
-                </li>
-              </ul>
-            </nav>
-            <div class="copyright text-center">
-              &copy; {{ new Date().getFullYear() }} <a
-                href="https://www.creative-tim.com/?ref=mdf-vuejs"
-                target="_blank"
-              >Creative Tim</a>, made with <i class="fa fa-heart heart"></i> for a better web
+    <div class="full-page" :class="{'nav-open': $sidebar.showSidebar}">
+        <md-toolbar md-elevation="0" class="md-transparent md-toolbar-absolute">
+            <div class="wrapper-progress-bar">
+                <md-progress-bar v-if="loading" class="md-white" md-mode="indeterminate"></md-progress-bar>
             </div>
-          </div>
-        </footer>
-      </div>
+            <div class="md-toolbar-row md-offset">
+                <div class="md-toolbar-section-start">
+                    <h3 class="md-title">{{$route.name}}</h3>
+                </div>
+                <div class="md-toolbar-section-end">
+                    <md-button
+                        class="md-just-icon md-simple md-round md-toolbar-toggle"
+                        :class="{toggled: $sidebar.showSidebar}"
+                        @click="toggleSidebar"
+                    >
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </md-button>
+
+                    <div class="md-collapse" :class="{'off-canvas-sidebar': responsive}">
+                        <md-list>
+                            <md-list-item to="/" v-if="isStateAuthenticated">
+                                <md-icon>dashboard</md-icon>Dashboard
+                            </md-list-item>
+                            <md-list-item to="/pricing" @click="linkClick">
+                                <md-icon>attach_money</md-icon>Pricing
+                            </md-list-item>
+                            <md-list-item to="/register" @click="linkClick">
+                                <md-icon>person_add</md-icon>Register
+                            </md-list-item>
+                            <md-list-item to="/login" @click="linkClick">
+                                <md-icon>fingerprint</md-icon>login
+                            </md-list-item>
+                            <md-list-item v-if="isProfileLoaded" to="/lock" @click="linkClick">
+                                <md-icon>lock_open</md-icon>lock
+                            </md-list-item>
+                        </md-list>
+                    </div>
+                </div>
+            </div>
+        </md-toolbar>
+        <div class="wrapper wrapper-full-page" @click="toggleSidebarPage">
+            <div
+                class="page-header header-filter"
+                :class="setPageClass"
+                filter-color="black"
+                :style="setBgImage"
+            >
+                <div class="container md-offset">
+                    <zoom-center-transition :duration="pageTransitionDuration" mode="out-in">
+                        <router-view></router-view>
+                    </zoom-center-transition>
+                </div>
+                <footer class="footer">
+                    <div class="container md-offset">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <router-link :to="{path:'/dashboard'}">Home</router-link>
+                                </li>
+                                <li>
+                                    <a href="#">Company</a>
+                                </li>
+                                <li>
+                                    <a href="#">Portfolio</a>
+                                </li>
+                                <li>
+                                    <a href="#">Blog</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="copyright text-center">
+                            &copy; {{ new Date().getFullYear() }}
+                            <a
+                                href="https://www.creative-tim.com/?ref=mdf-vuejs"
+                                target="_blank"
+                            >Creative Tim</a>, made with
+                            <i class="fa fa-heart heart"></i> for a better web
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 <script>
-        import { ZoomCenterTransition } from 'vue2-transitions';
-        import { mapGetters } from 'vuex';
+    import { ZoomCenterTransition } from 'vue2-transitions';
+    import { mapGetters } from 'vuex';
 
-        export default {
-            components: {
-                ZoomCenterTransition,
+    export default {
+        components: {
+            ZoomCenterTransition,
+        },
+        props: {
+            backgroundColor: {
+                type: String,
+                default: 'black',
             },
-            props: {
-                backgroundColor: {
-                    type: String,
-                    default: 'black',
-                },
+        },
+        inject: {
+            autoClose: {
+                default: true,
             },
-            inject: {
-                autoClose: {
-                    default: true,
-                },
-            },
-            data() {
+        },
+        data() {
+            return {
+                responsive: false,
+                showMenu: false,
+                menuTransitionDuration: 250,
+                pageTransitionDuration: 300,
+                year: new Date().getFullYear(),
+            };
+        },
+        computed: {
+            ...mapGetters({
+                isProfileLoaded: 'isProfileLoaded',
+                isStateAuthenticated: 'isStateAuthenticated',
+                loading: 'loading',
+            }),
+            setBgImage() {
+                const images = {
+                    Pricing: './img/backround-register.jpg',
+                    Login: './img/backround-register.jpg',
+                    'Clinic Selection': './img/backround-register.jpg',
+                    Register: './img/backround-register.jpg',
+                    Lock: './img/backround-register.jpg',
+                };
                 return {
-                    responsive: false,
-                    showMenu: false,
-                    menuTransitionDuration: 250,
-                    pageTransitionDuration: 300,
-                    year: new Date().getFullYear(),
+                    backgroundImage: `url(${images[this.$route.name]})`,
                 };
             },
-            computed: {
-                ...mapGetters({
-                    isProfileLoaded: 'isProfileLoaded',
-                    isAuthenticated: 'isAuthenticated',
-                    loading: 'loading',
-                }),
-                setBgImage() {
-                    const images = {
-                        Pricing: './img/bg-pricing.jpg',
-                        Login: './img/backround-register.jpg',
-                        Register: './img/register.jpg',
-                        Lock: './img/lock.jpg',
-                    };
-                    return {
-                        backgroundImage: `url(${images[this.$route.name]})`,
-                    };
-                },
-                setPageClass() {
-                    return `${this.$route.name}-page`.toLowerCase();
-                },
+            setPageClass() {
+                return `${this.$route.name}-page`.toLowerCase();
             },
-            methods: {
-                toggleSidebarPage() {
-                    if (this.$sidebar.showSidebar) {
-                        this.$sidebar.displaySidebar(false);
-                    }
-                },
-                linkClick() {
-                    if (
-                        this.autoClose
-                        && this.$sidebar
-                        && this.$sidebar.showSidebar === true
-                    ) {
-                        this.$sidebar.displaySidebar(false);
-                    }
-                },
-                toggleSidebar() {
-                    this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
-                },
-                toggleNavbar() {
-                    document.body.classList.toggle('nav-open');
-                    this.showMenu = !this.showMenu;
-                },
-                closeMenu() {
-                    document.body.classList.remove('nav-open');
-                    this.showMenu = false;
-                },
-                onResponsiveInverted() {
-                    if (window.innerWidth < 991) {
-                        this.responsive = true;
-                    } else {
-                        this.responsive = false;
-                    }
-                },
-            },
-            mounted() {
-                this.onResponsiveInverted();
-                window.addEventListener('resize', this.onResponsiveInverted);
-            },
-            beforeDestroy() {
-                this.closeMenu();
-                window.removeEventListener('resize', this.onResponsiveInverted);
-            },
-            beforeRouteUpdate(to, from, next) {
-                // Close the mobile menu first then transition to next page
-                if (this.showMenu) {
-                    this.closeMenu();
-                    setTimeout(() => {
-                        next();
-                    }, this.menuTransitionDuration);
-                } else {
-                    next();
+        },
+        methods: {
+            toggleSidebarPage() {
+                if (this.$sidebar.showSidebar) {
+                    this.$sidebar.displaySidebar(false);
                 }
             },
-        };
+            linkClick() {
+                if (
+                    this.autoClose
+                    && this.$sidebar
+                    && this.$sidebar.showSidebar === true
+                ) {
+                    this.$sidebar.displaySidebar(false);
+                }
+            },
+            toggleSidebar() {
+                this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+            },
+            toggleNavbar() {
+                document.body.classList.toggle('nav-open');
+                this.showMenu = !this.showMenu;
+            },
+            closeMenu() {
+                document.body.classList.remove('nav-open');
+                this.showMenu = false;
+            },
+            onResponsiveInverted() {
+                if (window.innerWidth < 991) {
+                    this.responsive = true;
+                } else {
+                    this.responsive = false;
+                }
+            },
+        },
+        mounted() {
+            this.onResponsiveInverted();
+            window.addEventListener('resize', this.onResponsiveInverted);
+        },
+        beforeDestroy() {
+            this.closeMenu();
+            window.removeEventListener('resize', this.onResponsiveInverted);
+        },
+        beforeRouteUpdate(to, from, next) {
+            // Close the mobile menu first then transition to next page
+            if (this.showMenu) {
+                this.closeMenu();
+                setTimeout(() => {
+                    next();
+                }, this.menuTransitionDuration);
+            } else {
+                next();
+            }
+        },
+    };
 </script>
 <style lang="scss" >
 $scaleSize: 0.1;
 $zoomOutStart: 0.7;
 $zoomOutEnd: 0.46;
 @keyframes zoomIn8 {
-  from {
-    opacity: 0;
-    transform: scale3d($scaleSize, $scaleSize, $scaleSize);
-  }
-  100% {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+        transform: scale3d($scaleSize, $scaleSize, $scaleSize);
+    }
+    100% {
+        opacity: 1;
+    }
 }
 .wrapper-full-page .zoomIn {
-  animation-name: zoomIn8;
+    animation-name: zoomIn8;
 }
 .full-page {
-  .md-toolbar{
-    .wrapper-progress-bar {
-    position: fixed;
-    top: 1px;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 5px;
-    .md-progress-bar.md-theme-default.md-indeterminate,
-    .md-progress-bar.md-theme-default.md-query {
-      background-color:  rgba(250, 248, 250, 0.38) !important;
+    .md-toolbar {
+        .wrapper-progress-bar {
+            position: fixed;
+            top: 1px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            .md-progress-bar.md-theme-default.md-indeterminate,
+            .md-progress-bar.md-theme-default.md-query {
+                background-color: rgba(250, 248, 250, 0.38) !important;
+            }
+            .md-progress-bar.md-theme-default.md-indeterminate
+                .md-progress-bar-track:after,
+            .md-progress-bar.md-theme-default.md-indeterminate
+                .md-progress-bar-fill:after,
+            .md-progress-bar.md-theme-default.md-query
+                .md-progress-bar-track:after,
+            .md-progress-bar.md-theme-default.md-query
+                .md-progress-bar-fill:after {
+                background-color: white !important;
+                background-color: var(
+                    --md-theme-default-primary,
+                    white!important
+                );
+            }
+        }
     }
-    .md-progress-bar.md-theme-default.md-indeterminate
-    .md-progress-bar-track:after,
-    .md-progress-bar.md-theme-default.md-indeterminate
-    .md-progress-bar-fill:after,
-    .md-progress-bar.md-theme-default.md-query
-    .md-progress-bar-track:after,
-    .md-progress-bar.md-theme-default.md-query
-    .md-progress-bar-fill:after {
-    background-color: white!important;
-    background-color: var(--md-theme-default-primary, white!important);
-    }
-    }
-  }
 }
 @keyframes zoomOut8 {
-  from {
-    opacity: 1;
-    transform: scale3d($zoomOutStart, $zoomOutStart, $zoomOutStart);
-  }
-  to {
-    opacity: 0;
-    transform: scale3d($zoomOutEnd, $zoomOutEnd, $zoomOutEnd);
-  }
+    from {
+        opacity: 1;
+        transform: scale3d($zoomOutStart, $zoomOutStart, $zoomOutStart);
+    }
+    to {
+        opacity: 0;
+        transform: scale3d($zoomOutEnd, $zoomOutEnd, $zoomOutEnd);
+    }
 }
 .wrapper-full-page .zoomOut {
-  animation-name: zoomOut8;
+    animation-name: zoomOut8;
 }
 </style>

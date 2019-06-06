@@ -1,13 +1,13 @@
 
 <template>
-    <div class=" diagnose-list-wrapper">
+    <div class=" items-list-wrapper">
             <md-toolbar class="md-transparent">
                 <h3 v-if="type === 'anamnesis'" class="md-title">{{queriedData.length}} procedures in anamnes</h3>
                 <h3 class="md-title">All {{type | capitilize}}</h3>
             </md-toolbar>
 
             <md-table
-                @md-selected="onSelect"
+
                 :value="queriedData"
                 :md-sort.sync="currentSort"
                 :md-sort-order.sync="currentSortOrder"
@@ -46,7 +46,7 @@
                     <md-button class="md-primary md-raised" @click="scrollToTop()">Scroll Top</md-button>
                 </md-table-empty-state>
 
-                <md-table-row slot="md-table-row"  md-selectable="single" slot-scope="{ item }">
+                <md-table-row slot="md-table-row"  slot-scope="{ item }">
                     <md-table-cell class="code" md-label="Code" md-sort-by="code">{{ item.code }}</md-table-cell>
                     <md-table-cell md-label="Title" md-sort-by="title">
                         {{ item.title }}
@@ -160,6 +160,7 @@
                 type: String,
                 default: () => 'diagnosis',
             },
+
         },
         data() {
             return {
@@ -299,7 +300,10 @@
                 });
             },
             handleEdit(item) {
-                this.$emit('editItem', item, this.type);
+                if (item) {
+                    this.$emit('showItemInfo', { itemId: item.id, toothId: null, type: this.type });
+                }
+                // this.$emit('editItem', item, this.type);
             },
             handleDelete(item) {
                 swal({
@@ -347,11 +351,10 @@
 </script>
 
 <style lang="scss"  >
-    .md-tabs-content table thead {
-        display: table-header-group !important;
-    }
-.diagnose-list-wrapper{
-
+.items-list-wrapper{
+        .md-tabs-content table thead {
+            display: table-header-group !important;
+        }
 
 .md-table-cell-container{
     word-wrap: break-word;

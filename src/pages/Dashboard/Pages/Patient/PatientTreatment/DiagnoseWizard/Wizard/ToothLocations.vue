@@ -1,5 +1,5 @@
 <template>
-  <div ref="parent">
+  <div class="wizard-tab-content" ref="parent">
     <jaw-add-locations
       ref="jawadddiagnose"
       :jaw="jaw"
@@ -13,7 +13,7 @@
       locationType ='diagnosis'
       :originalItemsGrouped="diagnosis"
     >
-    <div slot="title" >
+    <div slot="title" class="absolute-header-block " >
       <slide-y-down-transition>
       <span v-show="errors.has('locations')"
         :class="[{'error': errors.has('locations')},

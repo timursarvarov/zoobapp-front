@@ -35,7 +35,6 @@
                     md-icon="folder_shared"
                     md-label="Files"
                 >
-                    <patient-add-files-form/>
                     <patient-files></patient-files>
                 </md-tab>
             </md-tabs>
@@ -45,14 +44,13 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    import { NavTabsCard } from '@/components';
+    import { NavTabsCard  } from '@/components';
     import { PATIENT_GET, NOTIFY } from '@/constants';
 
     import {
         PatientTreatment,
         Notes,
         PatientFiles,
-        PatientAddFilesForm,
         PatientCard,
 
     } from '@/pages';
@@ -63,7 +61,6 @@
             PatientTreatment,
             Notes,
             PatientFiles,
-            PatientAddFilesForm,
             PatientCard,
         },
         name: 'PatientProfile',

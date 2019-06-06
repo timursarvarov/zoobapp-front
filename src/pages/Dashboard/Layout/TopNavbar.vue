@@ -10,14 +10,17 @@
         <div class="md-toolbar-row">
             <div class="md-toolbar-section-start">
                 <h3 class="md-title">
-                    <template class="md-layout md-alignment-left-center" v-if="$route.name === 'Profile' && (patient.firstName || patient.secondName) " >
-                       <t-avatar
-                       class=' patient-header-avatar'
+                    <template
+                        class="md-layout md-alignment-left-center"
+                        v-if="$route.name === 'Profile' && (patient.firstName || patient.secondName) "
+                    >
+                        <t-avatar
+                            class="patient-header-avatar"
                             :color="patient.color"
                             :imageSrc="patient.avatar"
                             :title="patient.firstName + ' ' + patient.lastName"
                         />
-                        <span class="patient_header_title md-layout-item" >
+                        <span class="patient_header_title md-layout-item">
                             {{ `${patient.firstName }` | capitilize }}
                             {{ `${patient.lastName }` | capitilize }}
                         </span>
@@ -31,9 +34,7 @@
                             <md-tooltip>Attention allergy!</md-tooltip>
                         </md-button>
                     </template>
-                    <span v-else >
-                        {{$route.name}}
-                    </span>
+                    <span v-else>{{$route.name}}</span>
                 </h3>
             </div>
 
@@ -61,7 +62,7 @@
                             @md-opened="getPatients"
                         >
                             <label v-if="$route.meta.rtlActive">بحث...</label>
-                            <label v-else>Search...</label>
+                            <label v-else>Search patient</label>
                             <template slot="md-autocomplete-item" slot-scope="{ item }">
                                 <t-avatar
                                     class="search-avatar"
@@ -157,7 +158,7 @@
                                 class="md-list-item-router md-list-item-container md-button-clean dropdown"
                             >
                                 <div class="md-list-item-content">
-                                    <drop-down direction="down">
+                                    <drop-down multiLevel direction="down">
                                         <md-button
                                             slot="title"
                                             class="md-button md-round md-just-icon md-simple"
@@ -179,6 +180,24 @@
                                             <li @click="logout()">
                                                 <a href="#">Logout</a>
                                             </li>
+                                            <li>
+                                                <a
+                                                    class="dropdown-toggle"
+                                                    :class="{'open': multiLevel}"
+                                                    @click="toggleMultiLevel"
+                                                >Change Clinic</a>
+                                                <ul class="dropdown-menu">
+                                                    <li @click="setClinic(clinic.ID)"
+                                                        :class="[{'selected-menu-top-navbar': clinic.ID === currnentClinic.ID }]"
+                                                        v-for="(clinic, index) in clinics"
+                                                        :key="index"
+                                                    >
+                                                        <a :style="{color: clinic.ID === currnentClinic.ID ? '#fff!important': ''}"
+                                                            href="#"
+                                                        >{{clinic.name | capitilize }}{{clinic.ID }}</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
                                         </ul>
                                     </drop-down>
                                 </div>
@@ -194,7 +213,13 @@
 <script>
 /* eslint-disable */
 import swal from "sweetalert2";
-import { AUTH_LOGOUT, PATIENTS_REQUEST, AUTH_LOCK } from "@/constants";
+import {
+    CLINIC_AUTH_REQUEST,
+    AUTH_LOGOUT,
+    PATIENTS_REQUEST,
+    AUTH_LOCK,
+    NOTIFY
+} from "@/constants";
 import { mapGetters } from "vuex";
 import { TAutoComplite, TAvatar } from "@/components";
 
@@ -208,10 +233,44 @@ export default {
             callbackLauncher: null,
             searchTerm: "",
             patients: [],
-            searching: false
+            searching: false,
+            multiLevel: false
         };
     },
     methods: {
+        setClinic(clinicId) {
+                this.$store
+                    .dispatch(CLINIC_AUTH_REQUEST, {
+                        clinicId: clinicId,
+                        accessToken: this.accessToken,
+                    })
+                    .then(
+                        // eslint-disable-next-line no-unused-vars
+                        (response) => {
+                            this.$router.push('/');
+                             this.$store.dispatch(NOTIFY, {
+                                settings: {
+                                    message: 'Clinic changed',
+                                    type: 'success',
+                                    icon: 'domain'
+                                },
+                            });
+                        },
+                        (error) => {
+                            if (error && error.response) {
+                                if (error.response.data.message === 'Wrong password') {
+                                    this.showErrorsValidate('password');
+                                }
+                                if (error.response.data.message === 'Invalid login') {
+                                    this.showErrorsValidate('username');
+                                }
+                            }
+                        },
+                    );
+            },
+        toggleMultiLevel() {
+            this.multiLevel = !this.multiLevel;
+        },
         goToPatient(patient) {
             if (patient) {
                 this.$router.push({
@@ -297,14 +356,24 @@ export default {
     computed: {
         ...mapGetters({
             loading: "loading",
-            patient: "getPatient"
+            patient: "getPatient",
+            clinics: "getClinics",
+            currnentClinic: "getCurrentClinic",
+            accessToken: 'fetchStateAccessToken',
+            expiresAt: 'expiresAt',
         })
     }
 };
 </script>
 
-<style style="scss" >
+<style lang="scss">
 
+    .selected-menu-top-navbar {
+        a{
+            background-color: #9c27b0;
+            color: white!important;
+        }
+    }
     .patient-header-avatar {
         width: 40px;
     }
@@ -315,7 +384,7 @@ export default {
         width: 100%;
         height: 5px;
     }
-    .patient_header_title{
+    .patient_header_title {
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -342,5 +411,4 @@ export default {
     .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
         opacity: 0;
     }
-
 </style>

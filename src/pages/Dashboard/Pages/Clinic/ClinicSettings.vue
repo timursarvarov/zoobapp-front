@@ -213,7 +213,7 @@
                 </div>
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field class='with-subline' >
-                        <label for="teethSystem">Disabled Select</label>
+                        <label for="teethSystem">Teeth System</label>
                         <md-select v-model="teethSystem" name="teethSystem" id="teethSystem">
                             <md-option :value="1">FDI World Dental Federation notation</md-option>
                             <md-option :value="2">Universal numbering system</md-option>

@@ -102,7 +102,8 @@
                             xmlns="http://www.w3.org/2000/svg"
                             :viewBox="jawSVG[toothId].viewBox"
                             :style="{
-                                'width':  jawSVG[toothId].widthPerc * 1.56 + (windowWidth < 700 ? 'vmax' : 'vmin'),
+                                'width':  getCustomWidth(toothId) + 'vh',
+                                //'width':  jawSVG[toothId].widthPerc * 1.56 + (windowWidth < 700 ? 'vmax' : 'vmin'),
                                 //minWidth: jawSVG[toothId].widthPerc * 1.66 + 'vh'
                                 }"
                         >
@@ -215,6 +216,45 @@
             };
         },
         methods: {
+            getCustomWidth(toothId) {
+                const toothWidth = this.jawSVG[toothId].widthPerc;
+
+                if (this.jawType === 'baby') {
+                    if (this.windowWidth < 600) {
+                        return toothWidth / 0.52;
+                    }
+                    if (this.windowWidth >= 600 && this.windowWidth < 960) {
+                        return toothWidth / 0.45;
+                    }
+                    if (this.windowWidth <= 1280 && this.windowWidth > 960) {
+                        return toothWidth / 0.425;
+                    }
+                    if (this.windowWidth < 1920 && this.windowWidth > 1280) {
+                        return toothWidth / 0.43;
+                    }
+                    if (this.windowWidth >= 1920) {
+                        return toothWidth / 0.42;
+                    }
+                    return toothWidth / 1.72;
+                }
+                if (this.windowWidth < 600) {
+                    return toothWidth / 0.63;
+                }
+                if (this.windowWidth >= 600 && this.windowWidth < 960) {
+                    return toothWidth / 0.525;
+                }
+                if (this.windowWidth <= 1280 && this.windowWidth > 960) {
+                    return toothWidth / 0.56;
+                }
+                if (this.windowWidth < 1920 && this.windowWidth > 1280) {
+                    return toothWidth / 0.53;
+                }
+                if (this.windowWidth >= 1920) {
+                    return toothWidth / 0.52;
+                }
+
+                return toothWidth / 2.2;
+            },
             functionName(fun) {
                 let ret = fun.toString();
                 ret = ret.substr('function '.length);
@@ -557,17 +597,20 @@
 
         computed: {
             teethToSearch() {
-                const firstSelectedTeeth = this.selectableTeeth[0];
-                let JawType = null;
-                if (firstSelectedTeeth) {
-                    JawType = this.teethAdultAll.includes(firstSelectedTeeth)
-                        ? 'adult'
-                        : 'baby';
-                }
-                if (JawType === 'baby') {
+                if (this.jawType === 'baby') {
                     return this.teethBabyAll;
                 }
                 return this.teethAdultAll;
+            },
+            jawType() {
+                const firstSelectedTeeth = this.selectableTeeth[0];
+                let JawType = 'adult';
+                if (firstSelectedTeeth) {
+                    JawType = this.teethAdultAll.includes(this.selectableTeeth[0])
+                        ? 'adult'
+                        : 'baby';
+                }
+                return JawType;
             },
             allTeethSchema() {
                 return TEETH_SCHEMA;
@@ -671,7 +714,7 @@
             margin: 0 !important;
             // padding-top: 10px !important;
             // padding-bottom: 10px !important;
-            max-height: 52vh;
+            // max-height: 52vh;
             // min-height:  52vh;
 
             display: flex;
@@ -714,7 +757,7 @@
             }
 
             .jaw-list {
-                max-height: 52vh;
+                // max-height: 52vh;
                 // min-height: 52vh;
                 display: flex;
                 .tooth-enter, .tooth-leave-to

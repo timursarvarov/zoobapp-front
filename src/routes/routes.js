@@ -42,6 +42,8 @@ const RtlSupport = () =>
     import ('@/pages/Dashboard/Pages/RtlSupport.vue');
 const Login = () =>
     import ('@/pages/Dashboard/Pages/Login.vue');
+const ClinicSelect = () =>
+    import ('@/pages/Dashboard/Pages/ClinicSelect.vue');
 const RegisterWizard = () =>
     import ('@/pages/Dashboard/Pages/Registration/Wizard.vue');
 const Lock = () =>
@@ -98,11 +100,18 @@ const Charts = () =>
     import ('@/pages/Dashboard/Charts.vue');
 
 const ifNotAuthenticated = (to, from, next) => {
-    if (!store.getters.isAuthenticated) {
+    if (!store.getters.isStateAuthenticated) {
         next();
         return;
     }
     next('/');
+};
+const ifAuthenticatedNotselectedClinic = (to, from, next) => {
+    if (store.getters.isStateAuthenticated && store.getters.getClinics.length > 0) {
+        next();
+        return;
+    }
+    next('/login');
 };
 const isProfileLoaded = (to, from, next) => {
     if (store.getters.isProfileLoaded) {
@@ -112,7 +121,7 @@ const isProfileLoaded = (to, from, next) => {
     next('/login');
 };
 const ifAuthenticated = (to, from, next) => {
-    if (store.getters.isAuthenticated) {
+    if (store.getters.isStateAuthenticated) {
         next();
         return;
     }
@@ -359,7 +368,13 @@ const authPages = {
             path: '/login',
             name: 'Login',
             component: Login,
-            beforeEnter: ifNotAuthenticated,
+            // beforeEnter: ifNotAuthenticated,
+        },
+        {
+            path: '/choose_clinic',
+            name: 'Clinic Selection',
+            component: ClinicSelect,
+            beforeEnter: ifAuthenticatedNotselectedClinic,
         },
         {
             path: '/register',

@@ -1,5 +1,5 @@
 <template>
-    <div
+    <div     class="wizard-tab-content"
         :style="[
         {'min-width': size.width ? `${size.width}px`: `70vw`},
         {'min-height': `${size.height}px`} ]"

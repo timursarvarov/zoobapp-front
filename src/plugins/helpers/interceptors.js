@@ -12,7 +12,7 @@ import {
     NOTIFY
 } from '@/constants';
 
-export default function () {
+export default function() {
     let isAlreadyFetchingAccessToken = false;
     let subscribers = [];
 
@@ -41,10 +41,10 @@ export default function () {
 
     });
 
-    axios.interceptors.response.use(function (response) {
+    axios.interceptors.response.use(function(response) {
         store.dispatch(LOADER_STOP);
         return response;
-    }, function (error) {
+    }, function(error) {
         if (error.response) {
             const refreshToken = store.state.auth.refreshToken;
             const hasRefreshTokenError = store.state.auth.hasRefreshTokenError;
@@ -91,7 +91,7 @@ export default function () {
                     message: 'The request was made but no response was received'
                 }
             });
-        } else if(error != 'Cancel') {
+        } else if (error != 'Cancel') {
             store.dispatch(NOTIFY, {
                 settings: {
                     type: 'danger',

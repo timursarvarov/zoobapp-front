@@ -1,5 +1,6 @@
 <template>
-    <div ref="parent">
+    <div  class="wizard-tab-content"
+         ref="parent">
         <jaw-add-locations
             ref="jawadddiagnose"
             :jaw="jaw"

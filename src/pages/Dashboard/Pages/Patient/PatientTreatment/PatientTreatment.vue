@@ -69,13 +69,13 @@
                                 <md-icon>add</md-icon>
                             </md-button>
                         </div>
-
-            <md-empty-state
-                    slot="empty-space"
-                    md-label="No created plans"
-                    md-description="To implemet a procedure, you should firstly create a plan">
-                    <md-button class="md-primary md-raised" @click="showAddPlan = true">Create New Plan</md-button>
-                </md-empty-state>
+                        <div   slot="empty-space">
+                            <md-empty-state
+                                    md-label="No created plans"
+                                    md-description="To implemet a procedure, you should firstly create a plan">
+                                    <md-button class="md-primary md-raised" @click="showAddPlan = true">Create New Plan</md-button>
+                                </md-empty-state>
+                        </div>
             </t-collapse-search>
     </div>
 
@@ -83,9 +83,9 @@
                     <items-list
                         v-show="currentType === 'anamnesis' || currentType === 'diagnosis'"
                         :items="currentItems"
+                        @showItemInfo="showItemInfo"
                         @onJawChanged="recalculateJaw()"
                         @toggleItemVisibility="toggleItemVisibility"
-                        @editItem="editItem"
                         :teethSystem="currentClinic.teethSystem"
                         :type="currentType"
                         >
@@ -111,7 +111,7 @@
                                     <items-list
                                         @onJawChanged="recalculateJaw()"
                                         @toggleItemVisibility="toggleItemVisibility"
-                                        @editItem="editItem"
+                                        @showItemInfo="showItemInfo"
                                         :teethSystem="currentClinic.teethSystem"
                                         :type="currentType"
                                         :items="currentItems"
@@ -131,6 +131,7 @@
 
         <t-tooth-items
             @editItem="editItem"
+            @onPrint="onShowPrint"
             :showForm.sync="showToothDiagnosis"
             :toothId="showParams.toothId"
             :item="itemToShow"
@@ -138,59 +139,21 @@
             :originalItems="originalItems[showParams.type]"
             :teethSchema="teethSchema"
             :teethSystem="currentClinic.teethSystem"
+            :access_token="access_token"
+            :files="files"
             :jaw='jaw'
             :type="showParams.type"
-        >
-        <div slot="content" >
-            <div v-if="itemToShow.manipulations && itemToShow.manipulations.length>0" >
-                <md-subheader>
-                    Manipulations
-                </md-subheader>
-                <div class="md-layout-item">
-
-                    <md-table v-model="itemToShow.manipulations" table-header-color="green" >
-                        <md-table-row slot="md-table-row" slot-scope="{ item }">
-                            <md-table-cell md-label="Code">{{ item.manipulation.code }}</md-table-cell>
-                            <md-table-cell md-label="Title">{{ item.manipulation.title }}</md-table-cell>
-                            <md-table-cell  md-label="Qty" class="manipulations-input" >{{item.num}}</md-table-cell>
-                            <md-table-cell >*</md-table-cell>
-                            <md-table-cell md-label="Price">{{ item.price }}</md-table-cell>
-                            <md-table-cell md-label="Total">{{ item.price * item.num }}</md-table-cell>
-                        </md-table-row>
-                    </md-table>
-                    <div class="footer-table md-table">
-                    <table>
-                        <tfoot>
-                            <tr>
-                                <th class="md-table-head">
-                                    <div class="md-table-head-container md-ripple md-disabled">
-                                        <div class="md-table-head-label">
-                                            Total manipulations: {{itemToShow.manipulations.length}}
-                                        </div>
-                                    </div>
-                                </th>
-                                <th class="md-table-head">
-                                    <div class="md-table-head-container md-ripple md-disabled">
-                                        <div class="md-table-head-label">
-                                            Total price:
-                                            <!-- {{currencyCode}} -->
-                                        </div>
-                                    </div>
-                                </th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-                </div>
-            </div>
-
-            </div>
-        </t-tooth-items>
+            :currencyCode="clinic.currencyCode"
+        />
         <plan-add-form
             :showForm.sync="showAddPlan"
             :plans="patient.plans"
             @onPlanCreated="setPlan"
         />
+        <t-print-form
+            :patient="patient"
+            :showForm.sync="showPrint"/>
+
         <jaw-add-anamnes-wizard
             v-if="showAddAnamnesWizard"
             @on-created='saveItem'
@@ -245,7 +208,7 @@
     import PlanAddForm from './PlanAddForm.vue';
     import { mapGetters } from 'vuex';
     import {
-        TCollapseSearch, TToothItems, Jaw, Tabs,
+        TCollapseSearch, TToothItems, Jaw, Tabs, TPrintForm,
     } from '@/components';
     import ItemsList from './ItemsList.vue';
     import JawAddDiagnoseWizard from './DiagnoseWizard/JawAddDiagnoseWizard.vue';
@@ -265,6 +228,7 @@
             Tabs,
             JawAddProcedureWizard,
             JawAddAnamnesWizard,
+            TPrintForm,
         },
         data() {
             return {
@@ -285,6 +249,7 @@
                 showAddPlan: false,
                 recalculateCollapseItems: false,
                 fuse: false,
+                showPrint: false,
                 filter: {},
                 diagnoseOriginal: [],
                 users: [],
@@ -298,6 +263,10 @@
             };
         },
         methods: {
+            onShowPrint() {
+                this.showPrint = true;
+                console.log(this.showPrint);
+            },
             onChangeTab(index) {
                 this.changePLan(this.patient.plans[index].id);
             },
@@ -362,7 +331,13 @@
                 }
                 this.recalculateJaw(itemType);
             },
+            showItemInfo(params) {
+                console.log(params);
+                this.showParams = params;
+                this.showToothDiagnosis = true;
+            },
             showToothInfo(params) {
+                console.log(params);
                 this.showParams = params;
                 this.showToothDiagnosis = true;
             },
@@ -676,7 +651,12 @@
                 diagnosis: 'getDiagnosis',
                 procedures: 'getProcedures',
                 anamnesis: 'getProcedures',
+                access_token: 'fetchStateAccessToken',
+                clinic: 'getCurrentClinic',
             }),
+            files() {
+                return this.patient.files;
+            },
             currentItems() {
                 if (this.currentType === 'procedures') {
                     return this.currentPlan.procedures;

@@ -6,8 +6,9 @@
             'padding-top': 2 * scaleSize + 'px'
             }"
     >
-        <div
+        <div v-if="showNumber"
             :style="{'font-size': toothNumWidth+'em'}"
+            :class="{unselected: !this.selectedItem.teeth[toothId],}"
             class="single-tooth-number">{{toothId | toCurrentTeethSystem(teethSystem)}}
             </div>
         <div
@@ -72,6 +73,10 @@
                 type: String,
                 default: () => '',
             },
+            showNumber: {
+                type: Boolean,
+                default: () => true,
+            },
             selectedItem: {
                 type: Object,
                 default: () => ({
@@ -126,8 +131,9 @@
             getToothClasses(toothId, location) {
                 const toothClasses = {
                     // класс 'seleced' применяется для выбранной локации
-                    [this.classTypeComputed]: location in this.selectedItem.teeth[toothId],
-                    selected: (location in this.selectedItem.teeth[toothId]),
+                    [this.classTypeComputed]: this.selectedItem.teeth[toothId] ? location in this.selectedItem.teeth[toothId] : false,
+                    selected: this.selectedItem.teeth[toothId] ? (location in this.selectedItem.teeth[toothId]) : false,
+                    unselected: !this.selectedItem.teeth[toothId],
                 };
                 return toothClasses;
             },
@@ -139,7 +145,7 @@
                 const hasKeyInSelectedD = this.selectedItem && this.selectedItem.teeth && this.selectedItem.teeth[this.toothId] ? location in this.selectedItem.teeth[this.toothId] : undefined;
                 const InOriginalItemViewValue = this.getNestedProperty(this.originalItem, 'view', location);
                 const hasKeyInDiagnoseView = this.originalItem.view ? (location in this.originalItem.view) : false;
-                const selectedDiagnoseLocations = Object.keys(this.selectedItem.teeth[this.toothId]);
+                const selectedDiagnoseLocations = this.selectedItem.teeth && this.toothId in this.selectedItem.teeth ? Object.keys(this.selectedItem.teeth[this.toothId]) : [];
                 const originalDiagnoseLocations = Object.keys(this.originalItem.locations);
                 // const originalDiagnoseLocationsTrue = Object.keys(this.originalItem.locations).filter(l => this.originalItem.locations[l] === true);
                 // фильтруем локации из оригинального диагноза. оставив лишь выбранные
@@ -335,6 +341,9 @@
         position: relative;
         text-align: center;
     font-size: calc(7px + .5vw);
+    }
+    .unselected{
+        opacity: 0.3;
     }
 }
 </style>

@@ -79,8 +79,8 @@
                 <slot name="top"></slot>
             </div>
             <transition name="fade" mode="out-in">
-                <div v-if="jawType === 'babyTeeth'" key="babyTeeth" class="jaw-scroll mx-auto">
-                    <div class="jaw-top md-alignment-top-center mx-auto md-size-100">
+                <div v-if="jawType === 'babyTeeth'" key="babyTeeth" class="jaw-scroll ">
+                    <div class="jaw-top md-alignment-top-center md-size-100">
                         <div
                             class="tooth"
                             v-ripple
@@ -89,7 +89,7 @@
                         >
                             <div
 
-                                class="tooth-content no-select"
+                                class="tooth-content"
                                 :class="[
                                     {'selected': selectedTeethLocal.includes(toothId) },
                                     {'isToothShownDiagnose': isToothShownDiagnose(toothId) },
@@ -188,8 +188,8 @@
                         </div>
                     </div>
                 </div>
-                <div v-else key="adultTeeth" class="jaw-scroll mx-auto">
-                    <div class="jaw-top md-alignment-top-center mx-auto md-size-100">
+                <div v-else key="adultTeeth" class="jaw-scroll ">
+                    <div class="jaw-top md-alignment-top-center  md-size-100">
                         <div
                             class="tooth"
                             v-ripple
@@ -621,6 +621,7 @@
             },
             getCustomWidth(toothId) {
                 const toothWidth = this.jawSVG[toothId].widthPerc;
+
                 if (this.babyTeeth.includes(toothId)) {
                     if (this.windowWidth < 600) {
                         return toothWidth / 0.65;
@@ -725,6 +726,23 @@
                 }
             },
             selectTooth(tooth, type) {
+                if ('ontouchstart' in document.documentElement) {
+                    this.selectToothOnTouchdevice(tooth);
+                } else {
+                    this.selectToothOnNotTouchdevice(tooth, type);
+                }
+                this.tooggleTeeth();
+                this.$emit('onSelectedTeeth', this.selectedTeethLocal);
+            },
+            selectToothOnTouchdevice(tooth) {
+                const toothIndex = this.selectedTeethLocal.findIndex(val => val === tooth);
+                if (toothIndex > -1) {
+                    this.selectedTeethLocal.splice(toothIndex, 1);
+                } else {
+                    this.selectedTeethLocal.unshift(tooth);
+                }
+            },
+            selectToothOnNotTouchdevice(tooth, type) {
                 if (type === 'multiple') {
                     const index = this.selectedTeethLocal.indexOf(tooth);
                     if (index === -1) {
@@ -795,7 +813,8 @@
                     this.selectedTeethLocal = [];
                     this.selectedTeethLocal.unshift(tooth);
                 }
-
+            },
+            tooggleTeeth() {
                 let bottomTeethCount = 0;
                 let topTeethCount = 0;
 
@@ -835,7 +854,6 @@
                 } else {
                     this.toggleAdultTop = true;
                 }
-                this.$emit('onSelectedTeeth', this.selectedTeethLocal);
             },
             isToothSelected(tooth) {
                 if (this.selectedTeethLocal.indexOf(tooth) !== -1) {

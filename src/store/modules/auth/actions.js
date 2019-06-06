@@ -10,7 +10,8 @@ import {
     AUTH_DECODE_TOKEN,
     USER_REQUEST,
     USER_LOGOUT,
-    CLINIC_SET,
+    CLINIC_SET_PROPS,
+    CLINICS_SET,
     USER_SET_PARAM,
 } from '@/constants';
 
@@ -36,15 +37,10 @@ export default {
                     })
                 )
                 .then(resp => {
-                    localStorage.setItem('accessToken', resp.data.accessToken);
-                    localStorage.setItem('expiresAt', resp.data.expiresAt);
-                    localStorage.setItem('refreshToken', resp.data.refreshToken);
                     axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
-                    // console.log(axios.defaults.headers.common.Authorization);
-
-                    commit(AUTH_SUCCESS, resp);
-                    dispatch(AUTH_DECODE_TOKEN);
-                    dispatch(USER_REQUEST);
+                    dispatch(AUTH_SUCCESS, { resp });
+                    // dispatch(USER_REQUEST);
+                    dispatch(CLINICS_SET, { clinics: resp.data.organizations });
                     resolve(resp);
                 })
                 .catch(err => {
@@ -62,10 +58,11 @@ export default {
         state
     }) => {
         const refreshToken = localStorage.getItem('refreshToken');
+        const clinicId = localStorage.getItem('CLINIC_ID');
         if (!refreshToken) return;
         return new Promise((resolve, reject) => {
             commit(AUTH_REQUEST);
-            axios.post('/auth/refreshToken/',
+            axios.post(`/auth/refreshToken/${clinicId}/`,
                     JSON.stringify({
                         refreshToken: refreshToken,
                     })
@@ -75,7 +72,7 @@ export default {
                     localStorage.setItem('expiresAt', resp.data.expiresAt);
                     localStorage.setItem('refreshToken', resp.data.refreshToken);
                     axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
-                    commit(AUTH_SUCCESS, resp);
+                    dispatch(AUTH_SUCCESS, { resp });
                     dispatch(AUTH_DECODE_TOKEN);
                     resolve(resp.data.accessToken);
                 })
@@ -87,6 +84,17 @@ export default {
                     reject(err);
                 });
         })
+    },
+
+    [AUTH_SUCCESS]: ({
+        commit,
+    }, {
+        resp
+    }) => {
+        if (resp.data) {
+            console.log(resp.data)
+            commit(AUTH_SUCCESS, resp);
+        }
     },
 
     [AUTH_LOGOUT]: ({
@@ -112,7 +120,8 @@ export default {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace('-', '+').replace('_', '/');
         const decodedParms = JSON.parse(window.atob(base64));
-        dispatch(CLINIC_SET, decodedParms.organization);
+        console.log(decodedParms)
+        dispatch(CLINIC_SET_PROPS, { organization: decodedParms.organization });
         dispatch(USER_SET_PARAM, {
             type: 'ID',
             value: decodedParms.userID
