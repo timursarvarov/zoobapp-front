@@ -38,7 +38,7 @@ export default {
     }, {
         clinics
     }) => {
-        console.log(clinics)
+        localStorage.setItem('CLINICS', JSON.stringify(clinics));
         commit(CLINICS_SET, clinics);
     },
 };

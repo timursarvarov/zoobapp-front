@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import { USER_INITIAL, AUTH_DECODE_TOKEN, TEETH_INITIATION_ETHALON } from '@/constants';
+    import { AUTH_INIT } from '@/constants';
     import { mapGetters } from 'vuex';
 
     export default {
@@ -20,9 +20,7 @@
         },
         mounted() {
             if (this.refreshTokenExist) {
-                this.$store.dispatch(USER_INITIAL);
-                this.$store.dispatch(AUTH_DECODE_TOKEN);
-                this.$store.dispatch(TEETH_INITIATION_ETHALON);
+                this.$store.dispatch(AUTH_INIT);
             }
         },
         watch: {

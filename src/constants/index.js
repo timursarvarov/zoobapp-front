@@ -52,6 +52,7 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const AUTH_SET_TOKEN = 'AUTH_SET_TOKEN';
 export const AUTH_LOCK = 'AUTH_LOCK';
+export const AUTH_INIT = 'AUTH_INIT';
 export const AUTH_REFRESH_TOKEN = 'AUTH_REFRESH_TOKEN';
 export const AUTH_DECODE_TOKEN = 'AUTH_DECODE_TOKEN';
 export const AUTH_REFRESH_ERROR = 'AUTH_REFRESH_ERROR';

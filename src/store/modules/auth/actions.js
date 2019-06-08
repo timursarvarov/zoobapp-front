@@ -10,9 +10,13 @@ import {
     AUTH_DECODE_TOKEN,
     USER_REQUEST,
     USER_LOGOUT,
+    AUTH_INIT,
     CLINIC_SET_PROPS,
     CLINICS_SET,
     USER_SET_PARAM,
+    USER_INITIAL,
+    TEETH_INITIATION_ETHALON
+
 } from '@/constants';
 
 import axios from 'axios';
@@ -96,6 +100,18 @@ export default {
             commit(AUTH_SUCCESS, resp);
         }
     },
+    [AUTH_INIT]: ({
+        dispatch,
+    }) => {
+        dispatch(USER_INITIAL);
+        const clinics = JSON.parse(localStorage.getItem('CLINICS'));
+        if (clinics) {
+            dispatch(CLINICS_SET, { clinics });
+        }
+        dispatch(AUTH_DECODE_TOKEN);
+        dispatch(TEETH_INITIATION_ETHALON);
+
+    },
 
     [AUTH_LOGOUT]: ({
         commit,
@@ -108,6 +124,7 @@ export default {
             localStorage.removeItem('expiresAt');
             localStorage.removeItem('refreshToken');
             localStorage.removeItem('USER_NAME');
+            localStorage.removeItem('CLINICS');
             resolve();
         });
     },

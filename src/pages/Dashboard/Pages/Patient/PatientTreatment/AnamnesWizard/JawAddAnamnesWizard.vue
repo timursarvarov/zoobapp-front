@@ -101,11 +101,12 @@
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
     import ToothLocations from './Wizard/ToothLocations.vue';
-    import AnamnesDescription from './Wizard/AnamnesDescription.vue';
-    import { SimpleWizard, WizardTab,  TItemDescription,
-        TItemFiles,
-        TItemManipulations,
-        TItemToothLocations, } from '@/components';
+    import {
+ SimpleWizard, WizardTab, TItemDescription,
+             TItemFiles,
+             TItemManipulations,
+             TItemToothLocations 
+} from '@/components';
     import { mapGetters } from 'vuex';
     import { NOTIFY } from '@/constants';
     import { tObjProp } from '@/mixins';
@@ -175,15 +176,14 @@
             };
         },
         components: {
-            AnamnesDescription,
             SimpleWizard,
             WizardTab,
             ToothLocations,
             SlideYDownTransition,
-             TItemDescription,
-        TItemFiles,
-        TItemManipulations,
-        TItemToothLocations,
+            TItemDescription,
+            TItemFiles,
+            TItemManipulations,
+            TItemToothLocations,
         },
         methods: {
             onToothSelected(selectedTeethLocalJaw) {
@@ -266,7 +266,7 @@
                 //         return res;
                 //     });
                 // }
-                 if (ref === 'step2') {
+                if (ref === 'step2') {
                     return this.$refs[ref].validate().then((res) => {
                         if (!res) {
                             this.$store.dispatch(NOTIFY, {
