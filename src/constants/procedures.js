@@ -10,16 +10,14 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '1.2',
                 title: 'Periapical X-Ray',
                 explain: '',
-                price: 12,
+                defaultManipulations: [1, 2],
                 available: true,
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '1.3',
@@ -28,7 +26,6 @@ export default [{
                 price: 12,
                 available: false,
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '1.4',
@@ -37,7 +34,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '1.5',
@@ -46,7 +42,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '1.6',
@@ -55,7 +50,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '1.7',
@@ -64,7 +58,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '1.8',
@@ -73,7 +66,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
         ],
     },
@@ -87,7 +79,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P02',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '2.2',
@@ -96,7 +87,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P02',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '2.3',
@@ -105,7 +95,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P02',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '2.4',
@@ -113,7 +102,6 @@ export default [{
                 explain: '',
                 price: 12,
                 templateCode: 'P02',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '2.5',
@@ -122,7 +110,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P02',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '2.6',
@@ -131,7 +118,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P02',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '2.7',
@@ -140,7 +126,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P03',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
 
             },
             {
@@ -150,7 +135,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P06',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '2.9',
@@ -159,7 +143,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
         ],
     },
@@ -173,7 +156,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '3.2',
@@ -182,7 +164,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '3.3',
@@ -191,7 +172,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '3.4',
@@ -200,7 +180,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '3.5',
@@ -209,7 +188,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '3.6',
@@ -218,7 +196,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '3.7',
@@ -227,7 +204,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '3.8',
@@ -236,7 +212,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
         ],
     },
@@ -250,7 +225,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '4.2',
@@ -259,7 +233,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '4.3',
@@ -268,7 +241,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '4.4',
@@ -277,7 +249,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '4.5',
@@ -286,7 +257,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P05',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '4.6',
@@ -295,7 +265,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P20',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '4.7',
@@ -304,7 +273,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P20',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '4.8',
@@ -313,7 +281,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P20',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
         ],
     },
@@ -327,7 +294,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '5.2',
@@ -336,7 +302,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '5.3',
@@ -345,7 +310,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '5.4',
@@ -354,7 +318,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
         ],
     },
@@ -368,7 +331,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P09',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '6.2',
@@ -377,7 +339,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P10',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '6.3',
@@ -385,7 +346,6 @@ export default [{
                 explain: '',
                 price: 12,
                 templateCode: 'P10',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '6.4',
@@ -394,7 +354,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P11',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '6.5',
@@ -403,7 +362,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P11',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '6.6',
@@ -412,7 +370,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P11',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '6.7',
@@ -421,7 +378,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P11',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '6.8',
@@ -430,7 +386,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P11',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '6.9',
@@ -439,7 +394,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P12',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
         ],
     },
@@ -522,7 +476,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P17',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
 
             },
             {
@@ -532,7 +485,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P17',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '8.3',
@@ -541,7 +493,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P17',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '8.4',
@@ -550,7 +501,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P17',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '8.5',
@@ -559,7 +509,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P17',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '8.6',
@@ -568,7 +517,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P17',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '8.7',
@@ -577,7 +525,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P17',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '8.8',
@@ -586,7 +533,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P16',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '8.9',
@@ -595,7 +541,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P16',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
         ],
     },
@@ -609,7 +554,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P18',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '9.2',
@@ -618,7 +562,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P18',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '9.3',
@@ -627,7 +570,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P18',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '9.4',
@@ -636,7 +578,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P18',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '9.5',
@@ -645,7 +586,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P19',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '9.6',
@@ -654,7 +594,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P20',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
             {
                 code: '9.7',
@@ -663,7 +602,6 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P20',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
             },
         ],
     },

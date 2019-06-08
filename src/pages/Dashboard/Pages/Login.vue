@@ -54,7 +54,7 @@
                                 <md-button
                                     tabindex="-1"
                                     v-show="!errors.has('username')  && touched.username"
-                                    class="md-button md-icon-button md-dense md-input-action no-select md-simple"
+                                    class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                                 >
                                     <md-icon class="success">done</md-icon>
                                 </md-button>

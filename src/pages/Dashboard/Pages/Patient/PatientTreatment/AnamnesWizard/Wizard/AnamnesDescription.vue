@@ -7,6 +7,7 @@
     >
         <div class='md-layout-item' >
             <t-wuswug
+                :contentDescription='contentDescription'
                 v-model='descriptionL'>
                 <div slot='start'  ref="autocomplete">
                     <t-auto-complite
@@ -69,6 +70,7 @@
         },
         data() {
             return {
+                contentDescription: '',
                 selectedDescription: '',
                 code: '',
                 touched: {
@@ -121,7 +123,9 @@
                 const desc = Object.values(this.descriptions).find(
                     d => d.title === key,
                 );
-                this.descriptionL = desc ? desc.description : '';
+                if (desc) {
+                    this.contentDescription = desc.description;
+                }
             },
         },
         computed: {
@@ -139,7 +143,6 @@
                     return this.description;
                 },
                 set(value) {
-                    console.log(value)
                     this.$emit('updateDescription', value);
                 },
             },
@@ -148,17 +151,7 @@
             if (this.$refs.description) {
                 this.$refs.description.$el.focus();
             }
+            this.contentDescription = this.descriptionL;
         },
     };
 </script>
-<style lang="scss" >
-.md-menu-content {
-    z-index: 13;
-    min-width: 300px;
-}
-.md-highlight-text-match {
-    border-radius: 2px;
-    background-color: yellow !important;
-    padding: 0 !important;
-}
-</style>

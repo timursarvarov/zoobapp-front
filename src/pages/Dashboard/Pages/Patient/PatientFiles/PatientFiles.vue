@@ -90,16 +90,16 @@
 </script>
 
 <style lang="scss" >
-.patients-files-wrapper {
-    .absolute-header-block{
-        position: absolute;
-        top:0;
-    }
-    .md-table-cell {
-        .md-table-cell-container {
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    }
-}
+// .patients-files-wrapper {
+//     .absolute-header-block{
+//         position: absolute;
+//         top:0;
+//     }
+//     .md-table-cell {
+//         .md-table-cell-container {
+//             overflow: hidden;
+//             text-overflow: ellipsis;
+//         }
+//     }
+// }
 </style>

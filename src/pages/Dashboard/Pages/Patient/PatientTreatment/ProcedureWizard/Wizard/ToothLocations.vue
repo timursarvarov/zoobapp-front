@@ -200,8 +200,3 @@
         },
     };
 </script>
-<style>
-.tooth-locations-wrapper{
-    min-width: 70vw !important;
-}
-</style>

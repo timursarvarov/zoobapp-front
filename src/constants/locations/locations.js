@@ -6,6 +6,7 @@ import crownInverse from './crown-inverse';
 
 export default {
     P01: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         locations: {},
         view: {
             coronaLingual: true,
@@ -17,6 +18,7 @@ export default {
         setOnLoad: {},
     },
     P02: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         locations: {
             coronaLingualIncisalDistal: true,
             coronaLingualIncisalMiddle: true,
@@ -75,6 +77,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
     },
     P03: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         locations: {
             silant: true,
         },
@@ -93,6 +96,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
     },
     P04: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         locations: {},
         view: {
@@ -106,6 +110,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
     },
     P05: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         locations: {
             periodontit: true,
@@ -124,6 +129,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
     },
     P06: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         locations: {
             veneer: true,
         },
@@ -142,6 +148,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
     },
     P07: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         locations: {
             rootCanal: true,
             periodontit: true,
@@ -162,6 +169,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
     },
     P08: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         locations: {
             gum: true,
         },
@@ -178,6 +186,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
     },
     P09: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         locations: {
             coronaLingual: false,
             coronaTop: false,
@@ -244,6 +253,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
     },
     P10: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         locations: {
             coronaLingualIncisalDistal: false,
@@ -316,6 +326,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => crownInverse(location, diagnose, originalDiagnose, toothId),
     },
     P11: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         locations: {
             coronaLingual: true,
             coronaTop: true,
@@ -337,6 +348,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
     },
     P12: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         locations: {
             coronaLingualIncisalDistal: false,
@@ -409,6 +421,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => crownInverse(location, diagnose, originalDiagnose, toothId),
     },
     P13: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         locations: {
             coronaLingualIncisalDistal: false,
             coronaLingualIncisalMiddle: false,
@@ -491,6 +504,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => implantInverse(location, diagnose, originalDiagnose, toothId),
     },
     P14: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {
@@ -508,6 +522,7 @@ export default {
         },
     },
     P15: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {
@@ -526,11 +541,13 @@ export default {
         },
     },
     P16: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         view: {},
         setOnLoad: {},
         addLocation: {},
     },
     P17: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         locations: {
             braces: true,
@@ -549,6 +566,7 @@ export default {
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
     },
     P18: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {
@@ -624,6 +642,7 @@ export default {
         },
     },
     P19: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {
@@ -679,6 +698,7 @@ export default {
         },
     },
     P20: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {
@@ -696,6 +716,7 @@ export default {
         },
     },
     P21: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {
@@ -768,6 +789,7 @@ export default {
         },
     },
     P22: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         setOnLoad: {},
         locations: {},
         view: {
@@ -779,6 +801,7 @@ export default {
         },
     },
     P23: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         setOnLoad: {},
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
@@ -796,6 +819,7 @@ export default {
         },
     },
     P24: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         setOnLoad: {},
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
@@ -855,6 +879,7 @@ export default {
         },
     },
     P25: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         setOnLoad: {},
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
@@ -872,6 +897,7 @@ export default {
         },
     },
     P26: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         locations: {},
@@ -885,6 +911,7 @@ export default {
         },
     },
     P27: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {},
         locations: {
@@ -945,6 +972,7 @@ export default {
         },
     },
     P28: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         locations: {},
         setOnLoad: {},
         view: {
@@ -956,6 +984,7 @@ export default {
         },
     },
     P29: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         setOnLoad: {},
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
@@ -1018,6 +1047,7 @@ export default {
         },
     },
     P30: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         setOnLoad: {},
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
@@ -1076,6 +1106,7 @@ export default {
         },
     },
     P31: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         setOnLoad: {
             root: true,
         },
@@ -1092,6 +1123,7 @@ export default {
         },
     },
     P32: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         setOnLoad: { rootCanal: true },
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleLocation(location, diagnose, originalDiagnose, toothId),
         locations: {
@@ -1107,6 +1139,7 @@ export default {
         },
     },
     P33: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         addLocation: (location, diagnose, originalDiagnose, toothId) => setOnlyOneLocationPlusFalse(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {},
         locations: {
@@ -1129,6 +1162,7 @@ export default {
         },
     },
     P34: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         setOnLoad: {},
         locations: {
             paradontit1: true,
@@ -1150,6 +1184,7 @@ export default {
         },
     },
     P35: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {
@@ -1223,6 +1258,7 @@ export default {
         },
     },
     P36: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {
@@ -1300,6 +1336,7 @@ export default {
         },
     },
     P37: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {
@@ -1380,6 +1417,7 @@ export default {
         },
     },
     P38: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {
@@ -1452,6 +1490,7 @@ export default {
         },
     },
     P39: {
+        ageCategory: ['babyTeeth', 'adultTeeth'],
         functionType: 'toggleAll',
         addLocation: (location, diagnose, originalDiagnose, toothId) => toggleAllLocations(location, diagnose, originalDiagnose, toothId),
         setOnLoad: {

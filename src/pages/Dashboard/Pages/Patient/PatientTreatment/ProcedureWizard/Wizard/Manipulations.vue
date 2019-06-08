@@ -1,75 +1,78 @@
 <template>
-    <div class="manipulations-wrapper wizard-tab-content"
+    <div class=" wizard-tab-content"
     :style="[
         {'min-width': size.width ? `${size.width}px`: `70vw`},
       ]"
     >
       <!-- {'min-height': `${size.height}px`}  -->
-            <div class="absolute-header-block manipulations-editor md-alignment-center-space-between md-layout ">
+            <div class="absolute-header-block">
+                <md-toolbar class=" toolbar-jaw  manipulations-editor md-alignment-center-space-between md-layout md-transparent" >
 
-                <div class="manipulations-autocomplite md-layout-item md-size-45 md-small-size-100"  ref="autocomplete">
-                    <t-auto-complite
-                        :mdFuzzySearch="true"
-                        v-model="selectedManipulations"
-                        @md-selected="setManipulation"
-                        :md-options="manipulationsForOptions"
-                        :chooseContent="true"
-                        @md-opened="selectedManipulations =''"
-                    >
-                        <label>Manipulations</label>
-
-                        <template slot="md-autocomplete-item" slot-scope="{ item, term }">
-                            <md-highlight-text :md-term="term">{{ `${item.code} - ${item.title}` }}</md-highlight-text>
-                        </template>
-
-                        <template slot="md-autocomplete-empty" slot-scope="{ term }">
-                            <div class="md-layout" style="white-space: pre-wrap;oveflow:hidden;">
-                                <span
-                                    class="md-layout-item md-size-100"
-                                    style="white-space: pre-wrap;oveflow:hidden;"
-                                >No templates "{{ term }}" were found.</span>
-                            </div>
-                        </template>
-                    </t-auto-complite>
-                </div>
-                <div class="manipulations-input md-layout-item md-size-15 md-small-size-50  ">
-                    <md-field>
-                        <label>Qty</label>
-                        <md-input
-                        min="1"
-                        type="number"
-                        v-model="manipulationsNum"></md-input>
-                    </md-field>
-                </div>
-                <div class="manipulations-input md-layout-item md-size-15 md-small-size-50">
-                    <md-field>
-                        <label>Price {{currencyCode}}</label>
-                        <md-input
-                        min="0"
-                        type="number"
-                        v-model="manipulationsPrice"></md-input>
-                    </md-field>
-                </div>
-                <div class="manipulations-input md-layout-item md-small-size-50">
-                    <md-field>
-                        <label>Total {{currencyCode}}</label>
-                        <md-input
-                        type="number"
-                        disabled
-                        v-model="manipulationsPriceTotal"></md-input>
-                    </md-field>
-                </div>
-                <div class="manipulations-input__action md-layout-item ">
-
-                    <md-button
-                        :disabled="!selectedManipulations"
-                        :class="[{'md-primary': manipulationsNum}]"
-                        class="md-button  md-just-icon md-round"
-                        @click="addManipulation()"
+                    <div class="manipulations-autocomplite md-layout-item md-size-45 md-small-size-100"  ref="autocomplete">
+                        <t-auto-complite
+                            :mdFuzzySearch="true"
+                            v-model="selectedManipulations"
+                            @md-selected="setManipulation"
+                            :md-options="manipulationsForOptions"
+                            :chooseContent="true"
+                            @md-opened="selectedManipulations =''"
                         >
-                            <md-icon>add</md-icon>
-                    </md-button>
-                </div>
+                            <label>Manipulations</label>
+
+                            <template slot="md-autocomplete-item" slot-scope="{ item, term }">
+                                <md-highlight-text :md-term="term">{{ `${item.code} - ${item.title}` }}</md-highlight-text>
+                            </template>
+
+                            <template slot="md-autocomplete-empty" slot-scope="{ term }">
+                                <div class="md-layout" style="white-space: pre-wrap;oveflow:hidden;">
+                                    <span
+                                        class="md-layout-item md-size-100"
+                                        style="white-space: pre-wrap;oveflow:hidden;"
+                                    >No templates "{{ term }}" were found.</span>
+                                </div>
+                            </template>
+                        </t-auto-complite>
+                    </div>
+                    <div class="manipulations-input md-layout-item md-size-15 md-small-size-50  ">
+                        <md-field>
+                            <label>Qty</label>
+                            <md-input
+                            min="1"
+                            type="number"
+                            v-model="manipulationsNum"></md-input>
+                        </md-field>
+                    </div>
+                    <div class="manipulations-input md-layout-item md-size-15 md-small-size-50">
+                        <md-field>
+                            <label>Price {{currencyCode}}</label>
+                            <md-input
+                            min="0"
+                            type="number"
+                            v-model="manipulationsPrice"></md-input>
+                        </md-field>
+                    </div>
+                    <div class="manipulations-input md-layout-item md-small-size-50">
+                        <md-field>
+                            <label>Total {{currencyCode}}</label>
+                            <md-input
+                            type="number"
+                            disabled
+                            v-model="manipulationsPriceTotal"></md-input>
+                        </md-field>
+                    </div>
+                    <div class="manipulations-input__action md-layout-item ">
+
+                        <md-button
+                            :disabled="!selectedManipulations"
+                            :class="[{'md-primary': manipulationsNum}]"
+                            class="md-button  md-just-icon md-round"
+                            @click="addManipulation()"
+                            >
+                                <md-icon>add</md-icon>
+                        </md-button>
+                    </div>
+
+                </md-toolbar>
 
             </div>
 
@@ -315,76 +318,3 @@
         },
     };
 </script>
-<style lang="scss" >
-.manipulations-wrapper{
-
-    // overflow-y: scroll;
-    // max-height: 60vh;
-    max-width: calc(100vw - 60px);
-      &::-webkit-scrollbar {
-            width: 7px;
-            // background-color: transparent;
-        }
-        &::-webkit-scrollbar-thumb {
-            background-color: grey;
-            border-radius: 7px;
-        }
-    .md-tabs-content table thead {
-    display: table-header-group !important;
-}
-    position: relative;
-    // max-width: 70vw;
-    .manipulations-editor{
-        position: inherit;
-        width: 100%;
-        // display: flex;
-        // justify-content: space-between;
-        padding: 15px;
-        background-color: rgb(228, 228, 228);
-        border-radius: 10px;
-        margin-bottom: 3vh;
-        margin-top: 3vh;
-        .manipulations-autocomplite{
-            flex-grow: 1;
-            // padding-right: 0.5vw;
-            // padding-left: 0.5vw;
-            input{
-                text-overflow: ellipsis;
-                padding-right: 0;
-            }
-            .md-button{
-                display:none;
-            }
-        }
-        .manipulations-input__action{
-            // padding-right: 0.5vw;
-            // padding-left: 0.5vw;
-            max-width: 66px;
-        }
-        .manipulations-input{
-            // padding-right: 0.5vw;
-            // padding-left: 0.5vw;
-            max-width: 100px;
-            input{
-                max-width:100%;
-            }
-        }
-    }
-    .md-menu-content {
-        z-index: 13;
-        min-width: 300px;
-    }
-    .md-highlight-text-match {
-        border-radius: 2px;
-        background-color: yellow !important;
-        padding: 0 !important;
-    }
-    .content-wrapper{
-        .md-table-content{
-        // max-height: calc(100vh - 450px)!important;
-        // max-height: 47vh!important;
-        }
-    }
-
-}
-</style>

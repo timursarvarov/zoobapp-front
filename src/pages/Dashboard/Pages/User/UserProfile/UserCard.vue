@@ -43,7 +43,7 @@
                             <md-button
                                 tabindex="-1"
                                 v-show="!errors.has('firstName')  && touched.firstName"
-                                class="md-button md-icon-button md-dense md-input-action no-select md-simple"
+                                class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                             >
                                 <md-icon class="success">done</md-icon>
                             </md-button>
@@ -82,7 +82,7 @@
                             <md-button
                                 tabindex="-1"
                                 v-show="!errors.has('lastName')  && touched.lastName"
-                                class="md-button md-icon-button md-dense md-input-action no-select md-simple"
+                                class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                             >
                                 <md-icon class="success">done</md-icon>
                             </md-button>
@@ -128,7 +128,7 @@
                             <md-button
                                 tabindex="-1"
                                 v-show="!errors.has('phone')  && touched.phone"
-                                class="md-button md-icon-button md-dense md-input-action no-select md-simple"
+                                class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                             >
                                 <md-icon class="success">done</md-icon>
                             </md-button>
@@ -166,7 +166,7 @@
                             <md-button
                                 tabindex="-1"
                                 v-show="!errors.has('email')  && touched.email"
-                                class="md-button md-icon-button md-dense md-input-action no-select md-simple"
+                                class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                             >
                                 <md-icon class="success">done</md-icon>
                             </md-button>

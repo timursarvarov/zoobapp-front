@@ -41,6 +41,10 @@
     };
 </script>
 <style lang="scss" src="./assets/scss/main/main.scss">
+.md-menu-content {
+        z-index: 15!important;
+        min-width: 300px;
+    }
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

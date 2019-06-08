@@ -5,8 +5,8 @@
                 <simple-wizard finishButtonText="Save Anamnes">
                     <template slot="header">
                         <h5 class="title">
-                            <b>{{selectedAnamnes.code}}</b>
-                            {{selectedAnamnes.title}}
+                            <b>{{selectedItem.code}}</b>
+                            {{selectedItem.title}}
                         </h5>
                         <span>
                             <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
@@ -29,7 +29,7 @@
                                     >{{ key | toCurrentTeethSystem(teethSystem) }}</span>
                                 </transition-group>
                             </span>
-                            <span v-else class="category">{{selectedAnamnes.explain}}</span>
+                            <span v-else class="category">{{selectedItem.explain}}</span>
                         </span>
                     </template>
                     <wizard-tab
@@ -37,12 +37,12 @@
                         :before-change="() => validateStep('step1')"
                     >
                         <template slot="label">Locations</template>
-                        <tooth-locations
+                        <t-item-tooth-locations
                             ref="step1"
                             :jaw="jaw"
-                            :prefer="prefer"
+                            :locationType="locationType"
                             :error.sync="errorLocations"
-                            :selectedAnamnes="selectedAnamnes"
+                            :selectedItem="selectedItem"
                             :originalLocations="originalAnamnes.locations"
                             :selectedTeeth="selectedTeeth"
                             v-model="selectedAnamnesLocal"
@@ -52,14 +52,45 @@
                             @onToothSelected="onToothSelected"
                         />
                     </wizard-tab>
-                    <wizard-tab :before-change="() => validateStep('step2')">
+                    <!-- <wizard-tab :before-change="() => validateStep('step2')">
                         <template slot="label">Description</template>
-                        <anamnes-description
+                        <t-item-description
                             ref="step2"
                             v-model="description"
                             :size="jawListSize"
-                            :descriptions="anamnesDescriptions"
+                            :descriptions="itemDescriptions"
                             @on-validated="anamnesCreated"
+                        />
+                    </wizard-tab> -->
+                      <wizard-tab v-if="selectedItem.manipulations && selectedItem.manipulations.length <= 0"  :before-change="() => validateStep('step2')">
+                        <template slot="label">Manipulations</template>
+                        <t-item-manipulations
+                            ref="step2"
+                            v-model="description"
+                            :manipulationsToEdit="selectedItem.manipulations"
+                            :selectedTeeth="selectedTeethLocalJaw"
+                            :size="jawListSize"
+                            @addManipulations="manipulationsCreated"
+                            :currencyCode="clinic.currencyCode"
+                        />
+                    </wizard-tab>
+                     <wizard-tab :before-change="() => validateStep('step3')">
+                        <template slot="label">Add files</template>
+                        <t-item-files
+                            ref="step3"
+                            v-model="description"
+                            :size="jawListSize"
+                            :descriptions="itemDescriptions"
+                        />
+                    </wizard-tab>
+                    <wizard-tab :before-change="() => validateStep('step4')">
+                        <template slot="label">Description</template>
+                        <t-item-description
+                            ref="step4"
+                            v-model="description"
+                            :size="jawListSize"
+                            :descriptions="itemDescriptions"
+                            @on-validated="itemCreated"
                         />
                     </wizard-tab>
                 </simple-wizard>
@@ -71,7 +102,10 @@
     import { SlideYDownTransition } from 'vue2-transitions';
     import ToothLocations from './Wizard/ToothLocations.vue';
     import AnamnesDescription from './Wizard/AnamnesDescription.vue';
-    import { SimpleWizard, WizardTab } from '@/components';
+    import { SimpleWizard, WizardTab,  TItemDescription,
+        TItemFiles,
+        TItemManipulations,
+        TItemToothLocations, } from '@/components';
     import { mapGetters } from 'vuex';
     import { NOTIFY } from '@/constants';
     import { tObjProp } from '@/mixins';
@@ -92,11 +126,11 @@
                 type: Object,
                 default: () => {},
             },
-            prefer: {
+            locationType: {
                 type: String,
-                default: () => 'diagnose',
+                default: () => 'diagnosis',
             },
-            selectedAnamnes: {
+            selectedItem: {
                 type: Object,
                 default: () => ({
                     code: '',
@@ -146,6 +180,10 @@
             WizardTab,
             ToothLocations,
             SlideYDownTransition,
+             TItemDescription,
+        TItemFiles,
+        TItemManipulations,
+        TItemToothLocations,
         },
         methods: {
             onToothSelected(selectedTeethLocalJaw) {
@@ -154,15 +192,15 @@
             },
             // инициируем локальный диагноз
             initiateLocalDiagnose() {
-                Object.keys(this.selectedAnamnes).forEach((key) => {
-                    this.itemToCreate[key] = this.selectedAnamnes[key];
+                Object.keys(this.selectedItem).forEach((key) => {
+                    this.itemToCreate[key] = this.selectedItem[key];
                 });
                 this.itemToCreate.date = new Date();
             },
             manipulationsCreated(manipulations) {
                 this.itemToCreate.manipulations = manipulations;
             },
-            anamnesCreated() {
+            itemCreated() {
                 this.itemToCreate.description = this.description || '';
                 this.$emit('on-created', this.itemToCreate);
             },
@@ -207,7 +245,56 @@
                         return res;
                     });
                 }
-                if (ref === 'step2') {
+                // if (ref === 'step2') {
+                //     return this.$refs[ref].validate().then((res) => {
+                //         if (!res) {
+                //             this.$store.dispatch(NOTIFY, {
+                //                 settings: {
+                //                     message: 'Please add dignose description',
+                //                     type: 'warning',
+                //                 },
+                //             });
+                //             return false;
+                //         }
+                //         this.isDialogVisibleL = false;
+                //         this.$store.dispatch(NOTIFY, {
+                //             settings: {
+                //                 message: 'Diagnose added',
+                //                 type: 'success',
+                //             },
+                //         });
+                //         return res;
+                //     });
+                // }
+                 if (ref === 'step2') {
+                    return this.$refs[ref].validate().then((res) => {
+                        if (!res) {
+                            this.$store.dispatch(NOTIFY, {
+                                settings: {
+                                    message: 'Please add manipulation',
+                                    type: 'warning',
+                                },
+                            });
+                            return false;
+                        }
+                        return res;
+                    });
+                }
+                if (ref === 'step3') {
+                    return this.$refs[ref].validate().then((res) => {
+                        if (!res) {
+                            this.$store.dispatch(NOTIFY, {
+                                settings: {
+                                    message: 'Please add dignose description',
+                                    type: 'warning',
+                                },
+                            });
+                            return false;
+                        }
+                        return res;
+                    });
+                }
+                if (ref === 'step4') {
                     return this.$refs[ref].validate().then((res) => {
                         if (!res) {
                             this.$store.dispatch(NOTIFY, {
@@ -233,12 +320,12 @@
         },
         computed: {
             ...mapGetters({
-                anamnesDescriptions: 'procedureDescriptions',
+                itemDescriptions: 'procedureDescriptions',
                 clinic: 'getCurrentClinic',
                 anamnesis: 'getProcedures',
             }),
             originalAnamnes() {
-                const originalCode = this.selectedAnamnes.code;
+                const originalCode = this.selectedItem.code;
                 for (let index = 0; index < this.anamnesis.length; index += 1) {
                     const dGrooup = this.anamnesis[index];
                     if (dGrooup.codes) {
@@ -254,7 +341,7 @@
             },
             selectedAnamnesLocal: {
                 get() {
-                    return this.selectedAnamnes;
+                    return this.selectedItem;
                 },
                 set(newValue) {
                     // необходимо для реактивности создоваемого диагногза внутри данного компонента
@@ -273,45 +360,9 @@
         },
         created() {
             this.selectedTeethL = this.copyObj(this.selectedTeeth);
-            this.hasLoctionsKey(this.selectedAnamnes.code);
+            this.hasLoctionsKey(this.selectedItem.code);
             this.initiateLocalDiagnose();
-            this.description = this.selectedAnamnes.description;
+            this.description = this.selectedItem.description;
         },
     };
 </script>
-<style lang="scss">
-.jaw-dialog-wrapper {
-    // min-width: 550px;
-    min-height: 80vh !important;
-    max-height: 100vh !important;
-    background-color: transparent !important;
-    box-shadow: none;
-    margin: 0 !important;
-    padding: 0 !important;
-    -webkit-font-smoothing: antialiased !important;
-    .md-dialog-container {
-        padding: 0 9px;
-    }
-    .tab-content {
-        padding: 0;
-        min-height: 65vh;
-    }
-    .wizard-add-diagnose-form {
-        .md-card-header {
-            text-align: left;
-            .list-item {
-                display: inline-block;
-                margin-right: 10px;
-            }
-            .list-enter-active,
-            .list-leave-active {
-                transition: all 1s;
-            }
-            .list-enter, .list-leave-to /* .list-leave-active до версии 2.1.8 */ {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-        }
-    }
-}
-</style>

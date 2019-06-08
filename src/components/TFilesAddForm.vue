@@ -116,4 +116,7 @@
 </script>
 
 <style lang="scss" scoped>
+.dropzone{
+    border-radius: 8px;
+}
 </style>

@@ -1,6 +1,8 @@
 <template>
-    <div class="jaw-list-wrapper noselect">
-        <md-toolbar class="toolbar-jaw md-transparent">
+    <div class="jaw-list-wrapper  wizard-tab-content noselect">
+    <div class="absolute-header-block">
+
+        <md-toolbar class="md-transparent toolbar-jaw ">
                 <div class="md-toolbar-section-start">
                     <div>
 
@@ -24,6 +26,9 @@
                     </div>
                 </div>
                 <div class="md-toolbar-section-end">
+                        <div class="loc-error">
+                            <slot class="md-layout-item" name="title"></slot>
+                        </div>
                     <md-button
                         @click="setLastLocationForAllTeeth()"
                         class="md-primary md-round md-simple md-just-icon"
@@ -79,55 +84,53 @@
                 </div>
         </md-toolbar>
 
-        <div
-            :style="[{'max-width': `${jawListWidth}px`}]"
-            class="jaw-list-container"
-        >
-            <div class="jaw md-layout-item">
-                <transition-group name="tooth no-select" class="jaw-list mx-auto noselect">
-                    <div
-                        v-ripple
-                        @click="toothClick($event, toothId)"
-                        :class="[
-                    'tooth',
-                    isSelected(toothId)]"
-                        v-for="(toothId) in selectableTeeth"
-                        :key="toothId"
-                        :ref="toothId"
+    </div>
+    <div
+        :style="[{'max-width': `${jawListWidth}px`}]"
+        class="jaw-list-container"
+    >
+        <div class="jaw md-layout-item">
+            <transition-group name="tooth noselect" class="jaw-list mx-auto noselect">
+                <div
+                    v-ripple
+                    @click="toothClick($event, toothId)"
+                    :class="[
+                'tooth',
+                isSelected(toothId)]"
+                    v-for="(toothId) in selectableTeeth"
+                    :key="toothId"
+                    :ref="toothId"
+                >
+                <div class="tooth-number noselect" >
+                    <span >{{toothId | toCurrentTeethSystem(teethSystem)}}</span>
+                </div>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        :viewBox="jawSVG[toothId].viewBox"
+                        :style="{
+                            'width':  getCustomWidth(toothId) + 'vh',
+                            //'width':  jawSVG[toothId].widthPerc * 1.56 + (windowWidth < 700 ? 'vmax' : 'vmin'),
+                            //minWidth: jawSVG[toothId].widthPerc * 1.66 + 'vh'
+                            }"
                     >
-                    <div class="tooth-number no-select" >
-                        <span >{{toothId | toCurrentTeethSystem(teethSystem)}}</span>
-                    </div>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            :viewBox="jawSVG[toothId].viewBox"
-                            :style="{
-                                'width':  getCustomWidth(toothId) + 'vh',
-                                //'width':  jawSVG[toothId].widthPerc * 1.56 + (windowWidth < 700 ? 'vmax' : 'vmin'),
-                                //minWidth: jawSVG[toothId].widthPerc * 1.66 + 'vh'
-                                }"
-                        >
-                            <g :class="`set-${locationType}`">
-                                <template v-for="(locationValue, location) in defaultLocations">
-                                    <path
-                                        v-if="!jawComputed[toothId][location].hide"
-                                        @click="chooseLocation(toothId, location), setLastAction(toothId, location)"
-                                        :key="`${toothId}${location}`"
-                                        :class="[
-                                        // получаем объект классов диагноза
-                                        jawComputed[toothId][location]]"
-                                        :d="jawSVG[toothId][location]"
-                                    ></path>
-                                </template>
-                            </g>
-                        </svg>
-                    </div>
-                </transition-group>
-            </div>
+                        <g :class="`set-${locationType}`">
+                            <template v-for="(locationValue, location) in defaultLocations">
+                                <path
+                                    v-if="!jawComputed[toothId][location].hide"
+                                    @click="chooseLocation(toothId, location), setLastAction(toothId, location)"
+                                    :key="`${toothId}${location}`"
+                                    :class="[
+                                    // получаем объект классов диагноза
+                                    jawComputed[toothId][location]]"
+                                    :d="jawSVG[toothId][location]"
+                                ></path>
+                            </template>
+                        </g>
+                    </svg>
+                </div>
+            </transition-group>
         </div>
-           <div class="error md-layout mx-auto md-gutter">
-            <slot class="md-layout-item" name="title"></slot>
-        </div>
+    </div>
     </div>
 </template>
 <script>
@@ -220,38 +223,60 @@
                 const toothWidth = this.jawSVG[toothId].widthPerc;
 
                 if (this.jawType === 'baby') {
-                    if (this.windowWidth < 600) {
-                        return toothWidth / 0.52;
+                   if (this.windowHeigth < 768) {
+                    return toothWidth / 0.63;
                     }
-                    if (this.windowWidth >= 600 && this.windowWidth < 960) {
-                        return toothWidth / 0.45;
+                    if (this.windowHeigth >= 768 && this.windowHeigth < 900) {
+                        return toothWidth / 0.54;
                     }
-                    if (this.windowWidth <= 1280 && this.windowWidth > 960) {
-                        return toothWidth / 0.425;
+                    if (this.windowHeigth <= 1050 && this.windowHeigth > 900) {
+                        return toothWidth / 0.54;
                     }
-                    if (this.windowWidth < 1920 && this.windowWidth > 1280) {
-                        return toothWidth / 0.43;
+                    if (this.windowHeigth < 1080 && this.windowHeigth > 1050) {
+                        return toothWidth / 0.54;
                     }
-                    if (this.windowWidth >= 1920) {
-                        return toothWidth / 0.42;
+                    if (this.windowHeigth >= 1080) {
+                        return toothWidth / 0.54;
                     }
                     return toothWidth / 1.72;
                 }
-                if (this.windowWidth < 600) {
+                return toothWidth / ((this.windowHeigth + 200)/1830);
+                if (this.windowHeigth < 768) {
+                console.log(1)
                     return toothWidth / 0.63;
                 }
-                if (this.windowWidth >= 600 && this.windowWidth < 960) {
-                    return toothWidth / 0.525;
+                if (this.windowHeigth >= 768 && this.windowHeigth < 900) {
+                console.log(2)
+                    return toothWidth / ((this.windowHeigth + 300)/1530);
                 }
-                if (this.windowWidth <= 1280 && this.windowWidth > 960) {
-                    return toothWidth / 0.56;
+                if (this.windowHeigth <= 1050 && this.windowHeigth > 900) {
+                console.log(3)
+                    return toothWidth / (this.windowHeigth/1530);
                 }
-                if (this.windowWidth < 1920 && this.windowWidth > 1280) {
-                    return toothWidth / 0.53;
+                if (this.windowHeigth < 1080 && this.windowHeigth > 1050) {
+                console.log(4)
+                    return toothWidth / 0.8;
                 }
-                if (this.windowWidth >= 1920) {
-                    return toothWidth / 0.52;
+                if (this.windowHeigth >= 1080) {
+                console.log(5)
+                    return toothWidth / 1.8;
                 }
+                // }
+                // if (this.windowWidth < 600) {
+                //     return toothWidth / 0.63;
+                // }
+                // if (this.windowWidth >= 600 && this.windowWidth < 960) {
+                //     return toothWidth / 0.625;
+                // }
+                // if (this.windowWidth <= 1280 && this.windowWidth > 960) {
+                //     return toothWidth / 0.7; ;
+                // }
+                // if (this.windowWidth < 1920 && this.windowWidth > 1280) {
+                //     return toothWidth / 0.7;
+                // }
+                // if (this.windowWidth >= 1920) {
+                //     return toothWidth / 0.52;
+                // }
 
                 return toothWidth / 2.2;
             },
@@ -474,6 +499,7 @@
             },
             handleResize() {
                 this.windowWidth = window.innerWidth;
+                this.windowHeigth = window.innerHeight;
             },
             getDiagnose() {
                 this.$emit('updateDiagonoseParams', this.item);
@@ -671,115 +697,3 @@
         },
     };
 </script>
-
-<style lang="scss"  >
-.jaw-list-wrapper {
-    min-width:  57vw;
-    .error {
-        position: absolute;
-        color: red;
-        white-space: nowrap;
-        width: 100%;
-        text-align: center;
-    }
-    .md-toolbar {
-        padding: 0px 0px 0px 0;
-        margin-right: -15px;
-        div :not(.md-toolbar) > .md-field:not(.md-chips) {
-            margin-top: 0px;
-        }
-        .dropdown-menu li {
-            padding: 0px 0px 0px 16px;
-        }
-        .jaw-settings {
-            max-width: 300px;
-        }
-    }
-
-    .jaw-list-container {
-        overflow-y: auto;
-        overflow-x: auto;
-        margin: 0;
-        padding: 15px 0 15px 0;
-        min-height:56vh;
-        &::-webkit-scrollbar {
-            height: 7px;
-            // background-color: transparent;
-        }
-        &::-webkit-scrollbar-thumb {
-            background-color: rgb(146, 146, 146);
-            border-radius: 20px;
-        }
-        .jaw {
-            margin: 0 !important;
-            // padding-top: 10px !important;
-            // padding-bottom: 10px !important;
-            // max-height: 52vh;
-            // min-height:  52vh;
-
-            display: flex;
-            flex-direction: column;
-            // padding: 15px;
-            border-radius: 5px;
-            .tooth{
-
-                height: 100%;
-                display: block;
-                .tooth-number{
-                    border: none;
-                    padding-top: 1vh;
-                    font-size: 1.8em;
-                    font-weight: 400;
-                    overflow: show;
-                    left: 50%;
-                    text-align: center;
-                }
-            }
-
-             .tooth.selected {
-                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                transition-property: all;
-                background-color: rgba(153, 153, 153, 0.37);
-                  border:0;
-                .tooth-number {
-                    color: rgb(255, 255, 255);
-                }
-            }
-            .tooth:not(.selected) {
-                transition-property: all;
-                transition-duration: 0.5s;
-                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                transition-delay: 0s;
-                .tooth-number {
-                    color: #3c4858 !important;
-
-                }
-            }
-
-            .jaw-list {
-                // max-height: 52vh;
-                // min-height: 52vh;
-                display: flex;
-                .tooth-enter, .tooth-leave-to
-          /* .tooth-leave-active for <2.1.8 */ {
-                    opacity: 0;
-                    transform: scale(0);
-                }
-                .tooth-enter-to {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-
-                .tooth-leave-active {
-                    /*position: absolute;*/
-                }
-
-                .tooth-move {
-                    opacity: 1;
-                    transition: all 0.5s;
-                }
-            }
-        }
-    }
-}
-</style>

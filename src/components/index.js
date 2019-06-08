@@ -109,6 +109,10 @@ import TToothItems from './TToothItems.vue';
 import TFilesAddForm from './TFilesAddForm.vue';
 import TPrintForm from './TPrintForm/TPrintForm.vue';
 import TWuswug from './TWuswug.vue';
+import TItemDescription from './TItemDescription.vue';
+import TItemFiles from './TItemFiles.vue';
+import TItemManipulations from './TItemManipulations.vue';
+import TItemToothLocations from './TItemToothLocations.vue';
 
 // For Dev Use Only
 
@@ -214,5 +218,9 @@ export {
     TFilesList,
     JawDisplayble,
     TWuswug,
+    TItemDescription,
+    TItemFiles,
+    TItemManipulations,
+    TItemToothLocations,
     // JawGenerator,
 };

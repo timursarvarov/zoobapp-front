@@ -158,33 +158,36 @@
             v-if="showAddAnamnesWizard"
             @on-created='saveItem'
             :selectedTeeth="selectedTeeth"
-            :selectedAnamnes="selecteditemLocal"
+            :selectedItem="selecteditemLocal"
             :jaw='jaw'
             :teethSchema="teethSchema"
             :teethSystem="currentClinic.teethSystem"
             :isDialogVisible.sync="showAddAnamnesWizard"
+            :locationType="currentType"
         />
 
         <jaw-add-diagnose-wizard
             v-if="showAddDiagnoseWizard"
             @on-created='saveItem'
             :selectedTeeth="selectedTeeth"
-            :selectedDiagnose="selecteditemLocal"
+            :selectedItem="selecteditemLocal"
             :jaw='jaw'
             :teethSchema="teethSchema"
             :teethSystem="currentClinic.teethSystem"
             :isDialogVisible.sync="showAddDiagnoseWizard"
+            :locationType="currentType"
         />
         <jaw-add-procedure-wizard
             v-if="showAddProcedureWizard"
             @on-created='saveItem'
             :currentPlan="currentPlan"
             :selectedTeeth="selectedTeeth"
-            :selectedProcedure="selecteditemLocal"
+            :selectedItem="selecteditemLocal"
             :jaw='jaw'
             :teethSchema="teethSchema"
             :teethSystem="currentClinic.teethSystem"
             :isDialogVisible.sync="showAddProcedureWizard"
+            :locationType="currentType"
         />
         </div>
   </div>
@@ -265,7 +268,6 @@
         methods: {
             onShowPrint() {
                 this.showPrint = true;
-                console.log(this.showPrint);
             },
             onChangeTab(index) {
                 this.changePLan(this.patient.plans[index].id);
@@ -332,12 +334,10 @@
                 this.recalculateJaw(itemType);
             },
             showItemInfo(params) {
-                console.log(params);
                 this.showParams = params;
                 this.showToothDiagnosis = true;
             },
             showToothInfo(params) {
-                console.log(params);
                 this.showParams = params;
                 this.showToothDiagnosis = true;
             },
@@ -491,10 +491,10 @@
                 // this.selectedTeeth = [];
                 this.recalculateJaw();
             },
-            selectItem(diagnose) {
-                if (diagnose) {
+            selectItem(item) {
+                if (item) {
                     if (
-                        !this.isEmpty(diagnose.locations)
+                        !this.isEmpty(item.locations)
                         && this.selectedTeeth.length === 0
                     ) {
                         this.$store.dispatch(NOTIFY, {
@@ -505,9 +505,9 @@
                         });
                     } else {
                         Object.values(this[this.currentType]).forEach((group) => {
-                            group.codes.forEach((diagnoseOrigin) => {
-                                if (diagnoseOrigin.code === diagnose.constCode) {
-                                    this.selecteditemLocal = diagnoseOrigin;
+                            group.codes.forEach((itemOrigin) => {
+                                if (itemOrigin.code === item.constCode) {
+                                    this.selecteditemLocal = itemOrigin;
                                 }
                             });
                         });

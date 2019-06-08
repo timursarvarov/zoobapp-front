@@ -1,108 +1,120 @@
 <template>
     <div class="editor">
-        <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
-            <div class="md-transparent">
-                <slot name="start"></slot>
-                <md-button
-                    class="md-simple md-just-icon md-round"
-                    :class="{ 'md-primary': isActive.bold() }"
-                    @click="commands.bold"
-                >
-                    <md-icon>format_bold</md-icon>
-                </md-button>
+        <editor-menu-bar  :editor="editor" v-slot="{ commands, isActive }">
+            <div class="wuswug-header" >
+                <md-toolbar class="md-transparent">
+                    <slot name="start"></slot>
+                    <md-button
+                        class="md-simple md-just-icon md-round"
+                        :class="{ 'md-primary': isActive.bold() }"
+                        @click="commands.bold"
+                    >
+                        <md-icon>format_bold</md-icon>
+                    </md-button>
 
-                <md-button
-                    class="md-simple md-just-icon md-round"
-                    :class="{ 'md-primary': isActive.italic() }"
-                    @click="commands.italic"
-                >
-                    <md-icon>format_italic</md-icon>
-                </md-button>
+                    <md-button
+                        class="md-simple md-just-icon md-round"
+                        :class="{ 'md-primary': isActive.italic() }"
+                        @click="commands.italic"
+                    >
+                        <md-icon>format_italic</md-icon>
+                    </md-button>
 
-                <md-button
-                    class="md-simple md-just-icon md-round"
-                    :class="{ 'md-primary': isActive.strike() }"
-                    @click="commands.strike"
-                >
-                    <md-icon>format_strikethrough</md-icon>
-                </md-button>
+                    <md-button
+                        class="md-simple md-just-icon md-round"
+                        :class="{ 'md-primary': isActive.strike() }"
+                        @click="commands.strike"
+                    >
+                        <md-icon>format_strikethrough</md-icon>
+                    </md-button>
 
-                <md-button
-                    class="md-simple md-just-icon md-round"
-                    :class="{ 'md-primary': isActive.underline() }"
-                    @click="commands.underline"
-                >
-                    <md-icon>format_underline</md-icon>
-                </md-button>
+                    <md-button
+                        class="md-simple md-just-icon md-round"
+                        :class="{ 'md-primary': isActive.underline() }"
+                        @click="commands.underline"
+                    >
+                        <md-icon>format_underline</md-icon>
+                    </md-button>
 
-                <md-button
-                    class="md-simple md-just-icon md-round"
-                    :class="{ 'md-primary': isActive.paragraph() }"
-                    @click="commands.paragraph"
-                >
-                    <md-icon>format_textdirection_l_to_r</md-icon>
-                </md-button>
+                    <md-button
+                        class="md-simple md-just-icon md-round"
+                        :class="{ 'md-primary': isActive.paragraph() }"
+                        @click="commands.paragraph"
+                    >
+                        <md-icon>format_textdirection_l_to_r</md-icon>
+                    </md-button>
 
-                <md-button
-                    class="md-simple md-just-icon md-round"
-                    :class="{ 'md-primary': isActive.heading({ level: 1 }) }"
-                    @click="commands.heading({ level: 1 })"
-                >H1</md-button>
+                    <md-button
+                        class="md-simple md-just-icon md-round"
+                        :class="{ 'md-primary': isActive.heading({ level: 1 }) }"
+                        @click="commands.heading({ level: 1 })"
+                    >
+                        <small>H1</small>
+                    </md-button>
 
-                <md-button
-                    class="md-simple md-just-icon md-round"
-                    :class="{ 'md-primary': isActive.heading({ level: 2 }) }"
-                    @click="commands.heading({ level: 2 })"
-                >H2</md-button>
+                    <md-button
+                        class="md-simple md-just-icon md-round"
+                        :class="{ 'md-primary': isActive.heading({ level: 2 }) }"
+                        @click="commands.heading({ level: 2 })"
+                    >
+                        <small>H2</small>
+                    </md-button>
 
-                <md-button
-                    class="md-simple md-just-icon md-round"
-                    :class="{ 'md-primary': isActive.heading({ level: 3 }) }"
-                    @click="commands.heading({ level: 3 })"
-                >H3</md-button>
+                    <md-button
+                        class="md-simple md-just-icon md-round"
+                        :class="{ 'md-primary': isActive.heading({ level: 3 }) }"
+                        @click="commands.heading({ level: 3 })"
+                    >
+                        <small>H3</small>
+                    </md-button>
 
-                <md-button
-                    class="md-simple md-just-icon md-round"
-                    :class="{ 'md-primary': isActive.bullet_list() }"
-                    @click="commands.bullet_list"
-                >
-                    <md-icon>format_list_bulleted</md-icon>
-                </md-button>
+                    <md-button
+                        class="md-simple md-just-icon md-round"
+                        :class="{ 'md-primary': isActive.bullet_list() }"
+                        @click="commands.bullet_list"
+                    >
+                        <md-icon>format_list_bulleted</md-icon>
+                    </md-button>
 
-                <md-button
-                    class="md-simple md-just-icon md-round"
-                    :class="{ 'md-primary': isActive.ordered_list() }"
-                    @click="commands.ordered_list"
-                >
-                    <md-icon>format_list_numbered</md-icon>
-                </md-button>
+                    <md-button
+                        class="md-simple md-just-icon md-round"
+                        :class="{ 'md-primary': isActive.ordered_list() }"
+                        @click="commands.ordered_list"
+                    >
+                        <md-icon>format_list_numbered</md-icon>
+                    </md-button>
 
-                <md-button
-                    class="md-simple md-just-icon md-round"
-                    :class="{ 'md-primary': isActive.blockquote() }"
-                    @click="commands.blockquote"
-                >
-                    <md-icon>format_quote</md-icon>
-                </md-button>
+                    <md-button
+                        class="md-simple md-just-icon md-round"
+                        :class="{ 'md-primary': isActive.blockquote() }"
+                        @click="commands.blockquote"
+                    >
+                        <md-icon>format_quote</md-icon>
+                    </md-button>
 
-                <md-button
-                    class="md-simple md-just-icon md-round"
-                    @click="commands.horizontal_rule"
-                >
-                    <md-icon>border_horizontal</md-icon>
-                </md-button>
+                    <md-button
+                        class="md-simple md-just-icon md-round"
+                        @click="commands.horizontal_rule"
+                    >
+                        <md-icon>border_horizontal</md-icon>
+                    </md-button>
 
-                <md-button class="md-simple md-just-icon md-round" @click="commands.undo">
-                    <md-icon>undo</md-icon>
-                </md-button>
+                    <md-button class="md-simple md-just-icon md-round" @click="commands.undo">
+                        <md-icon>undo</md-icon>
+                    </md-button>
 
-                <md-button class="md-simple md-just-icon md-round" @click="commands.redo">
-                    <md-icon>redo</md-icon>
-                </md-button>
+                    <md-button class="md-simple md-just-icon md-round" @click="commands.redo">
+                        <md-icon>redo</md-icon>
+                    </md-button>
+                </md-toolbar>
             </div>
         </editor-menu-bar>
-
-        <editor-content :autofocus='true' class="editor__content" :editor="editor"/>
+        <editor-content
+            class="md-layout-item"
+            :autofocus="true"
+            :editor="editor"
+            placeholder="Write something …"
+        />
     </div>
 </template>
 
@@ -124,36 +136,18 @@
         Strike,
         Underline,
         History,
+        Placeholder,
     } from 'tiptap-extensions';
 
     export default {
-        model: {
-            prop: 'content',
-            event: 'updateContent',
-        },
         props: {
             content: {
                 type: String,
-                default: () => `  <h2>
-            Hi there,
-          </h2>
-          <p>
-            this is a very <em>basic</em> example of tiptap.
-          </p>
-          <pre><code>body { display: none; }</code></pre>
-          <ul>
-            <li>
-              A regular list
-            </li>
-            <li>
-              With regular items
-            </li>
-          </ul>
-          <blockquote>
-            It's amazing 👏
-            <br />
-            – mom
-          </blockquote>`,
+                default: () => ``,
+            },
+            contentDescription: {
+                type: String,
+                default: () => ``,
             },
         },
         components: {
@@ -179,23 +173,48 @@
                         new Strike(),
                         new Underline(),
                         new History(),
+                        new Placeholder({
+                            emptyNodeClass: 'is-empty',
+                            emptyNodeText: 'Write something …',
+                            showOnlyWhenEditable: true,
+                        }),
                     ],
-                    content: this.contentL,
+                    content: this.content,
+                    onUpdate: ({ getHTML }) => {
+                        this.$emit('input', getHTML());
+                    },
                 }),
             };
         },
-        computed: {
-            contentL: {
-                get() {
-                    return this.content;
-                },
-                set(value) {
-                    this.$emit('updateContent', value);
-                },
-            },
+        mounted() {
+            this.editor.setContent(this.content);
         },
         beforeDestroy() {
             this.editor.destroy();
         },
+        watch: {
+            content(val) {
+                // so cursor doesn't jump to start on typing
+                if (val !== this.editor.getHTML()) {
+                    this.editor.setContent(val);
+                }
+            },
+            contentDescription(val) {
+                // so cursor doesn't jump to start on typing
+                if (val !== this.editor.getHTML()) {
+                    this.editor.setContent(val);
+                }
+            },
+        },
     };
 </script>
+<style lang="scss">
+.editor p.is-empty:first-child::before {
+    content: attr(data-empty-text);
+    float: left;
+    color: #aaa;
+    pointer-events: none;
+    height: 0;
+    font-style: italic;
+}
+</style>

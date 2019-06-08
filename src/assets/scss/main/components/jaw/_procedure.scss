@@ -57,9 +57,9 @@
         &.periodontit,
         &.rootCanal,
         &.bone {
-            stroke-width: 0;
             fill: #43a047 !important;
-            // stroke: #43a047;
+            stroke-width: 0;
+            opacity: 0.6;
         }
         &.gum,
         &.paradontit1,

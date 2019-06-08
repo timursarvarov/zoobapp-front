@@ -1,55 +1,54 @@
 <template>
-    <div     class="wizard-tab-content"
+    <div
+        class="wizard-tab-content"
         :style="[
         {'min-width': size.width ? `${size.width}px`: `70vw`},
         {'min-height': `${size.height}px`} ]"
     >
-        <h5 class="info-text">Write a diagnose description, or choose from templates.</h5>
-        <div class="md-layout">
-            <div class="md-layout-item md-size-100" ref="autocomplete">
-                <t-auto-complite
-                    :mdFuzzySearch="true"
-                    v-model="selectedDescription"
-                    @md-selected="setDescription"
-                    :md-options="descriptionHeaders"
-                    :chooseContent="true"
-                >
-                    <label>Templates</label>
+        <div class='md-layout-item' >
+            <t-wuswug
+                :contentDescription='contentDescription'
+                v-model='descriptionL'>
+                <div slot='start'  ref="autocomplete">
+                    <t-auto-complite
+                        :mdFuzzySearch="true"
+                        v-model="selectedDescription"
+                        @md-selected="setDescription"
+                        :md-options="descriptionHeaders"
+                        :chooseContent="true"
+                    >
+                        <label>Search for Templates</label>
 
-                    <template slot="md-autocomplete-item" slot-scope="{ item, term }">
-                        <md-highlight-text :md-term="term">{{ item }}</md-highlight-text>
-                    </template>
+                        <template slot="md-autocomplete-item" slot-scope="{ item, term }">
+                            <md-highlight-text :md-term="term">{{ item }}</md-highlight-text>
+                        </template>
 
-                    <template slot="md-autocomplete-empty" slot-scope="{ term }">
-                        <div class="md-layout" style="white-space: pre-wrap;oveflow:hidden;">
-                            <span
-                                class="md-layout-item md-size-100"
-                                style="white-space: pre-wrap;oveflow:hidden;"
-                            >No templates "{{ term }}" were found.</span>
-                            <md-button
-                                style="min-width:40px;max-width:140px"
-                                class="md-primary md-layout-item mx-auto md-sm"
-                                @click="showPatientAddForm()"
-                            >CREATE TEMPLATE</md-button>
-                        </div>
-                    </template>
-                </t-auto-complite>
-            </div>
-            <div class="md-layout-item md-size-100">
-                <md-field>
-                    <label>Add description</label>
-                    <md-textarea ref="description" v-model="descriptionL"></md-textarea>
-                </md-field>
-            </div>
+                        <template slot="md-autocomplete-empty" slot-scope="{ term }">
+                            <div class="md-layout" style="white-space: pre-wrap;oveflow:hidden;">
+                                <span
+                                    class="md-layout-item md-size-100"
+                                    style="white-space: pre-wrap;oveflow:hidden;"
+                                >No templates "{{ term }}" were found.</span>
+                                <md-button
+                                    style="min-width:40px;max-width:140px"
+                                    class="md-primary md-layout-item mx-auto md-sm"
+                                    @click="showPatientAddForm()"
+                                >CREATE TEMPLATE</md-button>
+                            </div>
+                        </template>
+                    </t-auto-complite>
+                </div>
+            </t-wuswug>
         </div>
     </div>
 </template>
 <script>
-    import { TAutoComplite } from '@/components';
+    import { TAutoComplite, TWuswug } from '@/components';
 
     export default {
         components: {
             TAutoComplite,
+            TWuswug,
         },
         model: {
             prop: 'description',
@@ -71,6 +70,7 @@
         },
         data() {
             return {
+                contentDescription: '',
                 selectedDescription: '',
                 code: '',
                 touched: {
@@ -123,7 +123,9 @@
                 const desc = Object.values(this.descriptions).find(
                     d => d.title === key,
                 );
-                this.descriptionL = desc ? desc.description : '';
+                if (desc) {
+                    this.contentDescription = desc.description;
+                }
             },
         },
         computed: {
@@ -149,17 +151,7 @@
             if (this.$refs.description) {
                 this.$refs.description.$el.focus();
             }
+            this.contentDescription = this.descriptionL;
         },
     };
 </script>
-<style lang="scss" >
-.md-menu-content {
-    z-index: 13;
-    min-width: 300px;
-}
-.md-highlight-text-match {
-    border-radius: 2px;
-    background-color: yellow !important;
-    padding: 0 !important;
-}
-</style>

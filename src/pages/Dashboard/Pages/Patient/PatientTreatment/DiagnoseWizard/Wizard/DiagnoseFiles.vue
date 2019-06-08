@@ -2,26 +2,28 @@
      <div class="wizard-tab-content" :style="[{'min-width': `${size.width}px`},
           {'min-height': `${size.height}px`} ]">
            <div class="absolute-header-block" >
-                <t-files-add-form
-                    :url="url"
-                    :access_token="access_token"
-                    :tokenExpiresAt="`${tokenExpiresAt}`"
-                    :authRefreshToken="authRefreshToken"
-                    :patientAddSubProp="patientAddSubProp"
-                    :maxFilesize="5"
-                    @onSuccess="onSuccess"
-                >
-                <div
-                    slot="emptyState"
-                >
-                    <h3>
-                        Add new file
-                    </h3>
-                    <span>
-                        Click here or drope some files
-                    </span>
-                </div>
-                </t-files-add-form>
+                    <t-files-add-form
+                        class="md-layout-item"
+                        :url="url"
+                        :access_token="access_token"
+                        :tokenExpiresAt="`${tokenExpiresAt}`"
+                        :authRefreshToken="authRefreshToken"
+                        :patientAddSubProp="patientAddSubProp"
+                        :maxFilesize="5"
+                        @onSuccess="onSuccess"
+                    >
+                    <div
+                        slot="emptyState"
+                    >
+                        <h3>
+                            Add new file
+                        </h3>
+                        <span>
+                            Click here or drope some files
+                        </span>
+                    </div>
+                    </t-files-add-form>
+
             </div>
             <div class="files-list">
             <t-files-list
@@ -114,16 +116,3 @@
         },
     };
 </script>
-
-<style lang="scss" >
-.wizard-tab-content {
-    .files-list{
-        .md-table-cell {
-            .md-table-cell-container {
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-        }
-    }
-}
-</style>

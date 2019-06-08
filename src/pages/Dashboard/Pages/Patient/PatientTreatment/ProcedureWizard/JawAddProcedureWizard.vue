@@ -5,8 +5,8 @@
                 <simple-wizard finishButtonText="Save Procedure">
                     <template slot="header">
                         <h5 class="title">
-                            <b>{{selectedProcedure.code}}</b>
-                            {{selectedProcedure.title}}
+                            <b>{{selectedItem.code}}</b>
+                            {{selectedItem.title}}
                             <span
                                 class="category"
                             >– {{currentPlan.title | capitilize}}</span>
@@ -32,7 +32,7 @@
                                     >{{ key | toCurrentTeethSystem(teethSystem) }}</span>
                                 </transition-group>
                             </span>
-                            <span v-else class="category">{{selectedProcedure.explain}}</span>
+                            <span v-else class="category">{{selectedItem.explain}}</span>
                         </span>
                     </template>
                     <wizard-tab
@@ -40,12 +40,11 @@
                         :before-change="() => validateStep('step1')"
                     >
                         <template slot="label">Locations</template>
-                        <tooth-locations
+                        <t-item-tooth-locations
                             ref="step1"
                             :jaw="jaw"
-                            :prefer="prefer"
                             :error.sync="errorLocations"
-                            :selectedProcedure="selectedProcedure"
+                            :selectedItem="selectedItem"
                             :originalLocations="originalProcedure.locations"
                             :selectedTeeth="selectedTeeth"
                             v-model="selectedProcedureLocal"
@@ -53,25 +52,35 @@
                             :teethSystem="teethSystem"
                             @mounted-size="setSize"
                             @onToothSelected="onToothSelected"
+                            :locationType="locationType"
                         />
                     </wizard-tab>
 
                     <wizard-tab :before-change="() => validateStep('step2')">
                         <template slot="label">Manipulations</template>
-                        <manipulations
+                        <t-item-manipulations
                             ref="step2"
                             v-model="description"
-                            :manipulationsToEdit="selectedProcedure.manipulations"
+                            :manipulationsToEdit="selectedItem.manipulations"
                             :selectedTeeth="selectedTeethLocalJaw"
                             :size="jawListSize"
                             @addManipulations="manipulationsCreated"
                             :currencyCode="clinic.currencyCode"
                         />
                     </wizard-tab>
-                    <wizard-tab :before-change="() => validateStep('step3')">
-                        <template slot="label">Description</template>
-                        <procedure-description
+                     <wizard-tab :before-change="() => validateStep('step3')">
+                        <template slot="label">Add files</template>
+                        <t-item-files
                             ref="step3"
+                            v-model="description"
+                            :size="jawListSize"
+                            :descriptions="procedureDescriptions"
+                        />
+                    </wizard-tab>
+                    <wizard-tab :before-change="() => validateStep('step4')">
+                        <template slot="label">Description</template>
+                        <t-item-description
+                            ref="step4"
                             v-model="description"
                             :size="jawListSize"
                             :descriptions="procedureDescriptions"
@@ -88,7 +97,10 @@
     import ToothLocations from './Wizard/ToothLocations.vue';
     import ProcedureDescription from './Wizard/ProcedureDescription.vue';
     import Manipulations from './Wizard/Manipulations.vue';
-    import { SimpleWizard, WizardTab } from '@/components';
+    import { SimpleWizard, WizardTab,  TItemDescription,
+        TItemFiles,
+        TItemManipulations,
+        TItemToothLocations, } from '@/components';
     import { mapGetters } from 'vuex';
     import { NOTIFY } from '@/constants';
     import { tObjProp } from '@/mixins';
@@ -109,11 +121,11 @@
                 type: Object,
                 default: () => {},
             },
-            prefer: {
+            locationType: {
                 type: String,
-                default: () => 'diagnose',
+                default: () => 'diagnosis',
             },
-            selectedProcedure: {
+            selectedItem: {
                 type: Object,
                 default: () => ({
                     code: '',
@@ -165,6 +177,10 @@
             WizardTab,
             ToothLocations,
             SlideYDownTransition,
+             TItemDescription,
+        TItemFiles,
+        TItemManipulations,
+        TItemToothLocations,
         },
         methods: {
             onToothSelected(selectedTeethLocalJaw) {
@@ -173,8 +189,8 @@
             },
             // инициируем локальный диагноз
             initiateLocalDiagnose() {
-                Object.keys(this.selectedProcedure).forEach((key) => {
-                    this.itemToCreate[key] = this.selectedProcedure[key];
+                Object.keys(this.selectedItem).forEach((key) => {
+                    this.itemToCreate[key] = this.selectedItem[key];
                 });
                 this.itemToCreate.date = new Date();
             },
@@ -252,6 +268,20 @@
                             });
                             return false;
                         }
+                        return res;
+                    });
+                }
+                if (ref === 'step4') {
+                    return this.$refs[ref].validate().then((res) => {
+                        if (!res) {
+                            this.$store.dispatch(NOTIFY, {
+                                settings: {
+                                    message: 'Please add dignose description',
+                                    type: 'warning',
+                                },
+                            });
+                            return false;
+                        }
                         this.isDialogVisibleL = false;
                         this.$store.dispatch(NOTIFY, {
                             settings: {
@@ -272,7 +302,7 @@
                 procedures: 'getProcedures',
             }),
             originalProcedure() {
-                const originalCode = this.selectedProcedure.code;
+                const originalCode = this.selectedItem.code;
                 for (let index = 0; index < this.procedures.length; index += 1) {
                     const dGrooup = this.procedures[index];
                     if (dGrooup.codes) {
@@ -288,7 +318,8 @@
             },
             selectedProcedureLocal: {
                 get() {
-                    return this.selectedProcedure;
+                    console.log(this.selectedItem);
+                    return this.selectedItem;
                 },
                 set(newValue) {
                     // необходимо для реактивности создоваемого диагногза внутри данного компонента
@@ -307,52 +338,9 @@
         },
         created() {
             this.selectedTeethL = this.copyObj(this.selectedTeeth);
-            this.hasLoctionsKey(this.selectedProcedure.code);
+            this.hasLoctionsKey(this.selectedItem.code);
             this.initiateLocalDiagnose();
-            this.description = this.selectedProcedure.description;
+            this.description = this.selectedItem.description;
         },
     };
 </script>
-<style lang="scss">
-.jaw-dialog-wrapper {
-    overflow-y: scroll;
-      &::-webkit-scrollbar {
-            width: 4px;
-        }
-        &::-webkit-scrollbar-thumb {
-            background-color: rgb(255, 255, 255);
-            border-radius: 7px;
-        }
-    min-height: 80vh !important;
-    max-height: 100vh !important;
-    background-color: transparent !important;
-    box-shadow: none;
-    margin: 0 !important;
-    padding: 0 !important;
-    -webkit-font-smoothing: antialiased !important;
-    .md-dialog-container {
-        padding: 0 9px;
-    }
-    .tab-content {
-        padding: 0;
-        min-height: 65vh;
-    }
-    .wizard-add-diagnose-form {
-        .md-card-header {
-            text-align: left;
-            .list-item {
-                display: inline-block;
-                margin-right: 10px;
-            }
-            .list-enter-active,
-            .list-leave-active {
-                transition: all 1s;
-            }
-            .list-enter, .list-leave-to /* .list-leave-active до версии 2.1.8 */ {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-        }
-    }
-}
-</style>

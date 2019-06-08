@@ -5,8 +5,8 @@
                 <simple-wizard finishButtonText="Save Diagnose">
                     <template slot="header">
                         <h5 class="title">
-                            <b>{{selectedDiagnose.code}}</b>
-                            {{selectedDiagnose.title}}
+                            <b>{{selectedItem.code}}</b>
+                            {{selectedItem.title}}
                         </h5>
                         <span>
                             <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
@@ -29,7 +29,7 @@
                                     >{{ key | toCurrentTeethSystem(teethSystem) }}</span>
                                 </transition-group>
                             </span>
-                            <span v-else class="category">{{selectedDiagnose.explain}}</span>
+                            <span v-else class="category">{{selectedItem.explain}}</span>
                         </span>
                     </template>
                     <wizard-tab
@@ -37,24 +37,24 @@
                         :before-change="() => validateStep('step1')"
                     >
                         <template slot="label">Location</template>
-                        <tooth-locations
+                        <t-item-tooth-locations
                             ref="step1"
                             :jaw="jaw"
-                            :prefer="prefer"
                             :error.sync="errorLocations"
-                            :selectedDiagnose="selectedDiagnose"
+                            :selectedItem="selectedItem"
                             :originalLocations="originalDiagnose.locations"
                             :selectedTeeth="selectedTeeth"
-                            v-model="selectedDiagnoseLocal"
+                            v-model="selectedItemLocal"
                             :teethSchema="teethSchema"
                             :teethSystem="teethSystem"
                             @mounted-size="setSize"
+                            :locationType="locationType"
                         />
                     </wizard-tab>
 
                     <wizard-tab :before-change="() => validateStep('step2')">
                         <template slot="label">Add files</template>
-                        <diagnose-files
+                        <t-item-files
                             ref="step2"
                             v-model="description"
                             :size="jawListSize"
@@ -63,7 +63,7 @@
                     </wizard-tab>
                     <wizard-tab :before-change="() => validateStep('step3')">
                         <template slot="label">Add description</template>
-                        <diagnose-description
+                        <t-item-description
                             ref="step3"
                             v-model="description"
                             :size="jawListSize"
@@ -81,7 +81,14 @@
     import ToothLocations from './Wizard/ToothLocations.vue';
     import DiagnoseDescription from './Wizard/DiagnoseDescription.vue';
     import DiagnoseFiles from './Wizard/DiagnoseFiles.vue';
-    import { SimpleWizard, WizardTab } from '@/components';
+    import {
+        SimpleWizard,
+        WizardTab,
+        TItemDescription,
+        TItemFiles,
+        TItemManipulations,
+        TItemToothLocations,
+    } from '@/components';
     import { mapGetters } from 'vuex';
     import { NOTIFY } from '@/constants';
     import { tObjProp } from '@/mixins';
@@ -98,11 +105,11 @@
                 type: Object,
                 default: () => {},
             },
-            prefer: {
+            locationType: {
                 type: String,
-                default: () => 'diagnose',
+                default: () => 'diagnosis',
             },
-            selectedDiagnose: {
+            selectedItem: {
                 type: Object,
                 default: () => ({
                     code: '',
@@ -152,12 +159,16 @@
             ToothLocations,
             SlideYDownTransition,
             DiagnoseFiles,
+            TItemDescription,
+            TItemFiles,
+            TItemManipulations,
+            TItemToothLocations,
         },
         methods: {
             // инициируем локальный диагноз
             initiateLocalDiagnose() {
-                Object.keys(this.selectedDiagnose).forEach((key) => {
-                    this.diagnoseToCreate[key] = this.selectedDiagnose[key];
+                Object.keys(this.selectedItem).forEach((key) => {
+                    this.diagnoseToCreate[key] = this.selectedItem[key];
                 });
                 this.diagnoseToCreate.date = new Date();
             },
@@ -207,7 +218,7 @@
                     });
                 }
                 if (ref === 'step2') {
-                    return this.$refs[ref].validate().then((res) => {
+                    return this.$refs[ref].validate().then(res =>
                         // if (!res) {
                         //     this.$store.dispatch(NOTIFY, {
                         //         settings: {
@@ -224,8 +235,7 @@
                         //         type: 'success',
                         //     },
                         // });
-                        return res;
-                    });
+                        res,);
                 }
                 if (ref === 'step3') {
                     return this.$refs[ref].validate().then((res) => {
@@ -257,7 +267,7 @@
                 diagnosis: 'getDiagnosis',
             }),
             originalDiagnose() {
-                const originalCode = this.selectedDiagnose.code;
+                const originalCode = this.selectedItem.code;
                 for (let index = 0; index < this.diagnosis.length; index += 1) {
                     const dGrooup = this.diagnosis[index];
                     if (dGrooup.codes) {
@@ -271,9 +281,9 @@
                 }
                 return false;
             },
-            selectedDiagnoseLocal: {
+            selectedItemLocal: {
                 get() {
-                    return this.selectedDiagnose;
+                    return this.selectedItem;
                 },
                 set(newValue) {
                     // необходимо для реактивности создоваемого диагногза внутри данного компонента
@@ -292,45 +302,9 @@
         },
         created() {
             this.selectedTeethL = this.copyObj(this.selectedTeeth);
-            this.hasLoctionsKey(this.selectedDiagnose.code);
+            this.hasLoctionsKey(this.selectedItem.code);
             this.initiateLocalDiagnose();
-            this.description = this.selectedDiagnose.description;
+            this.description = this.selectedItem.description;
         },
     };
 </script>
-<style lang="scss">
-.jaw-dialog-wrapper {
-    // min-width: 550px;
-    // min-height: 80vh !important;
-    // max-height: 100vh !important;
-    // background-color: transparent !important;
-    // box-shadow: none;
-    // margin: 0 !important;
-    // padding: 0 !important;
-    // -webkit-font-smoothing: antialiased !important;
-    // .md-dialog-container {
-    //     padding: 0 9px;
-    // }
-    // .tab-content {
-    //     padding: 0;
-    //     min-height: 65vh;
-    // }
-    .wizard-add-diagnose-form {
-        .md-card-header {
-            text-align: left;
-            .list-item {
-                display: inline-block;
-                margin-right: 10px;
-            }
-            .list-enter-active,
-            .list-leave-active {
-                transition: all 1s;
-            }
-            .list-enter, .list-leave-to /* .list-leave-active до версии 2.1.8 */ {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-        }
-    }
-}
-</style>

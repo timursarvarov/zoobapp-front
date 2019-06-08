@@ -9,7 +9,6 @@ export default [{
                 title: 'Адентия',
                 explain: 'Congenitally missing teeth - complete or partial',
                 templateCode: 'P21',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -17,7 +16,6 @@ export default [{
                 title: 'Сверхкомплектные зубы',
                 explain: 'Mesiodens',
                 templateCode: 'P22',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -25,7 +23,6 @@ export default [{
                 title: 'Отклонения от размера и формы зуба',
                 explain: 'Macr/micro-dontia, dens in dente, cocrescence, fusion, gemination, peg',
                 templateCode: 'P23',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -33,7 +30,6 @@ export default [{
                 title: 'Крапчатые  зубы',
                 explain: 'Fluorosis',
                 templateCode: 'P24',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -41,7 +37,6 @@ export default [{
                 title: 'Нарушение формирования зубов',
                 explain: 'Enamel hypoplasia, dilaceration, Turner',
                 templateCode: 'P23',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -49,7 +44,6 @@ export default [{
                 title: 'Наследственные нарушения структуры зуба',
                 explain: 'Amylo/dentino-genisis imperfecta',
                 templateCode: 'P25',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -57,14 +51,12 @@ export default [{
                 title: 'Нарушения прорезывания зубов',
                 explain: 'Natal/neonatal teeth, retained deciduous tooth, premature, late',
                 templateCode: 'P26',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K00.7',
                 title: 'Синдром прорезывания зубов',
                 templateCode: 'P26',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -72,14 +64,12 @@ export default [{
                 title: 'Другие нарушения развития зубов',
                 explain: 'Colour changes due to blood incompatability, biliary, porphyria, tetyracy',
                 templateCode: 'P27',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K00.9',
                 title: 'Нарушение развития зубов неуточненные',
                 templateCode: 'P27',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -93,7 +83,6 @@ export default [{
                 title: 'Ретенированные зубы',
                 explain: 'Distinguish from impacted tooth',
                 templateCode: 'P28',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -101,7 +90,6 @@ export default [{
                 title: 'Импактные зубы',
                 explain: 'In contact with another tooth',
                 templateCode: 'P28',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -114,7 +102,6 @@ export default [{
                 title: 'Кариес эмали стадия белого (мелового) пятна',
                 explain: 'Restoration, amalgam, composite, resin',
                 templateCode: 'P29',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -122,7 +109,6 @@ export default [{
                 title: 'Кариес дентина',
                 explain: 'Restoration, amalgam, composite, resin',
                 templateCode: 'P29',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -130,7 +116,6 @@ export default [{
                 title: 'Кариес цемента',
                 explain: 'Restoration, amalgam, composite, resin, crown',
                 templateCode: 'P29',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -138,7 +123,6 @@ export default [{
                 title: 'Приостановившийся кариес зубов',
                 explain: 'Restoration, amalgam, composite, resin, crown',
                 templateCode: 'P29',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -146,21 +130,18 @@ export default [{
                 title: 'Одонтоклазия детская меланодентия, меланодонтоклазия',
                 explain: 'Infantile meladontia',
                 templateCode: 'P29',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K02.8',
                 title: 'Другой уточненный кариес зубов',
                 templateCode: 'P29',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K02.9',
                 title: 'Кариес зубов неуточненный',
                 templateCode: 'P29',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -172,14 +153,12 @@ export default [{
                 code: 'K03.0',
                 title: 'Повышенное стирание зубов',
                 templateCode: 'P30',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K03.1',
                 title: 'Сошлифовывание (абразивный знос) зубов',
                 templateCode: 'P30',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -187,7 +166,6 @@ export default [{
                 title: 'Эрозия зубов',
                 explain: 'Vomiting, anorexia, bulhemia, acid, diet',
                 templateCode: 'P30',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -195,14 +173,12 @@ export default [{
                 title: 'Патологическая резорбция зубов',
                 explain: 'Pink spot',
                 templateCode: 'P31',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K03.4',
                 title: 'Гиперцементоз',
                 templateCode: 'P31',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -210,7 +186,6 @@ export default [{
                 title: 'Анкилоз зубов',
                 explain: 'Pink spot',
                 templateCode: 'P31',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -218,7 +193,6 @@ export default [{
                 title: 'Отложения (наросты) на зубах',
                 explain: 'Pigmentation, tobacco, betel, plaque, calculus, scaling and polishing',
                 templateCode: 'P30',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -226,7 +200,6 @@ export default [{
                 title: 'Изменения цвета твердых тканей зубов после прорезывания',
                 explain: 'Metal, pulpal bleeding, betel, tobacco',
                 templateCode: 'P30',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -234,7 +207,6 @@ export default [{
                 title: 'Другие  уточненные болезни твердых тканей зубов',
                 explain: 'Sensitive dentine',
                 templateCode: 'P30',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -242,7 +214,6 @@ export default [{
                 title: 'Болезнь твердых тканей зубов неуточненная',
                 explain: '',
                 templateCode: 'P30',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -255,7 +226,6 @@ export default [{
                 title: 'Пульпит',
                 explain: 'Pulp cap, root canal treatment,sedative dressing, endodontic,obturate',
                 templateCode: 'P32',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -263,7 +233,6 @@ export default [{
                 title: 'Некроз пульпы (гангрена пульпы)',
                 explain: 'Gangrene, root canal treatment,sedative dressing, endodontic,obturate',
                 templateCode: 'P32',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -271,7 +240,6 @@ export default [{
                 title: 'Дегенерация пульпы дентикли, пульпарные камни',
                 explain: 'Pulp stones, sclerosis',
                 templateCode: 'P32',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -279,7 +247,6 @@ export default [{
                 title: 'Неправильное формирование твердых тканей в пульпе',
                 explain: '2ndary dentine - excludes pulp stones(K04.2)',
                 templateCode: 'P32',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -287,7 +254,6 @@ export default [{
                 title: 'Острый апикальный периодонтит пульпарного происхождения ',
                 explain: 'Root canal treatment,endodontic,obturate, abcess',
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -295,7 +261,6 @@ export default [{
                 title: 'Хронический апикальный периодонтит (апикальная гранулема)',
                 explain: 'Granuloma, root canal treatment,endodontic,obturate,abcess',
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -304,7 +269,6 @@ export default [{
                 explain: 'Root canal treatment,endodontic,obturate,abcess',
 
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -312,7 +276,6 @@ export default [{
                 title: 'Периапикальный абсцесс без свища',
                 explain: 'Root canal treatment,endodontic,obturate,abcess',
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -320,14 +283,12 @@ export default [{
                 title: 'Корневая киста ',
                 explain: 'Apical cyst, enucleate,apicectomy, apicoectomy',
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K04.9',
                 title: 'Другие неуточненные болезни пульпы и периапикальных тканей',
                 templateCode: 'P07',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -340,7 +301,6 @@ export default [{
                 title: 'Острый гингивит',
                 explain: 'Gingivitis, bleeding gums, scaling',
                 templateCode: 'P33',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -348,7 +308,6 @@ export default [{
                 title: 'Хронический гингивит',
                 explain: 'Gingivitis, bleeding gums, scaling, ulcerative - excludes Vincent',
                 templateCode: 'P33',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -356,7 +315,6 @@ export default [{
                 title: 'Острый парадонтит',
                 explain: 'Gingivitis, bleeding gums, scaling ',
                 templateCode: 'P33',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -364,7 +322,6 @@ export default [{
                 title: 'Хронический пародонтит',
                 explain: 'Gingivitis, chronic pericoronitis, bleeding gums, scaling',
                 templateCode: 'P33',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -372,7 +329,6 @@ export default [{
                 title: 'Пародонтоз',
                 explain: 'Juvenile,gingivitis, bleeding gums, scaling, curettage',
                 templateCode: 'P33',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -380,14 +336,12 @@ export default [{
                 title: 'Другие болезни пародонта',
                 explain: 'Gingivitis, bleeding gums, scaling',
                 templateCode: 'P33',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K05.6',
                 title: 'Другие болезни пародонта, неуточненные',
                 templateCode: 'P33',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -400,7 +354,6 @@ export default [{
                 title: 'Рецессия десны',
                 explain: 'Gingiva, recession',
                 templateCode: 'P33',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -408,7 +361,6 @@ export default [{
                 title: 'Гипертрофия десны',
                 explain: 'Fibromatosis',
                 templateCode: 'P20',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -416,7 +368,6 @@ export default [{
                 title: 'Поражения десны и беззубого альвеолярного края, обусловленные травмой',
                 explain: 'Denture hyperplasia occlusion, toothbrushing',
                 templateCode: 'P35',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -424,14 +375,12 @@ export default [{
                 title: 'Другие уточненные изменения десны и беззубого альвеолярного края',
                 explain: 'Gingival cyst, epulis, pyogenic granuloma',
                 templateCode: 'P35',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K06.9',
                 title: 'Изменения десны и беззубого альвеолярного края неуточненные',
                 templateCode: 'P35',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -444,7 +393,6 @@ export default [{
                 title: 'Основные аномалии размеров челюстей',
                 explain: 'Gingiva, recession',
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -452,7 +400,6 @@ export default [{
                 title: 'Аномалии челюстно-черепных соотношений',
                 explain: 'Asymetry, pro/retrognathic, Cl 2, Cl 3, osteotomy, orthognathic, ortho',
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -460,7 +407,6 @@ export default [{
                 title: 'Аномалии соотношения зубных дуг',
                 explain: 'Overjet, overbite, crossbite,midline deviation, orthodontic, banding',
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -468,14 +414,12 @@ export default [{
                 title: 'Аномалии положения зубов',
                 explain: 'Crowding, rotation, distema, transposition',
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K07.4',
                 title: 'Аномалии прикуса неуточненные',
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -483,7 +427,6 @@ export default [{
                 title: 'Челюстно-лицевые аномалии функционального происхождения',
                 explain: 'Mouth breathing, abnormal swallowing, habits',
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -491,7 +434,6 @@ export default [{
                 title: 'Болезни ВЧНС',
                 explain: 'Dislocation, TMJ, click, pain',
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -499,14 +441,12 @@ export default [{
                 title: 'Другие денто-лицевые аномалии',
                 explain: 'Dislocation, TMJ, click, pain',
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K07.9',
                 title: 'Денто-лицевая аномалия, неуточненная',
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -519,7 +459,6 @@ export default [{
                 title: 'Эксфолиация зубов из-за системных нарушений',
                 explain: 'Hypophosphatasia, scurvy',
                 templateCode: 'P04',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -527,7 +466,6 @@ export default [{
                 title: 'Потеря зубов вследствие несчастного случая, удаления или локализованного пародонтита',
                 explain: 'Denture, bridge, implant, space maintainer',
                 templateCode: 'P18',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -535,7 +473,6 @@ export default [{
                 title: 'Атрофия беззубого альвеолярного края',
                 explain: 'Gingival mucosal graft',
                 templateCode: 'P37',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -543,7 +480,6 @@ export default [{
                 title: 'Оставшийся корень зуба',
                 explain: 'Root rest',
                 templateCode: 'P38',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -551,14 +487,12 @@ export default [{
                 title: 'Другие уточненные изменения зубов и их опорного аппарата',
                 explain: 'Toothache NOS',
                 templateCode: 'P29',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K08.9',
                 title: 'Изменения зубов и их опорного аппарата неуточненное',
                 templateCode: 'P29',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -571,7 +505,6 @@ export default [{
                 title: 'Киста при прорезывании зубов',
                 explain: 'cyst, eruption, gingival, Kerato, dentigerous,lateral periodontal',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -579,7 +512,6 @@ export default [{
                 title: 'Ростовые (неодонтогенные) кисты области рта',
                 explain: 'Nasopalatine cyst',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -587,7 +519,6 @@ export default [{
                 title: 'Другие кисты челюстей',
                 explain: 'Nasopalatine cyst',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -595,14 +526,12 @@ export default [{
                 title: 'Кисты полости рта, не классифицированные в других рубриках',
                 explain: 'Dermoid cyst',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K09.9',
                 title: 'Кисты полости рта, неуточненные',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -615,7 +544,6 @@ export default [{
                 title: 'Нарушения развития челюстей',
                 explain: 'Tori',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -623,14 +551,12 @@ export default [{
                 title: 'Гигантоклеточная гранулема центральная',
                 explain: '',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K10.2',
                 title: 'Воспалительные заболевания челюстей',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -638,7 +564,6 @@ export default [{
                 title: 'Альвеолит челюстей альвеолярный остеит, сухая лунка',
                 explain: 'Osteomyelitis, sequestra',
                 templateCode: 'P39',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -646,14 +571,12 @@ export default [{
                 title: 'Другие уточненные болезни челюстей',
                 explain: 'Dry socket',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K10.9',
                 title: 'Болезнь челюстей неуточненная',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -665,35 +588,30 @@ export default [{
                 code: 'K11.0',
                 title: 'Атрофия слюнной железы',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K11.1',
                 title: 'Гипертрофия слюнной железы',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K11.2',
                 title: 'Сиалоадеит',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K11.3',
                 title: 'Абсцесс слюнной железы',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K11.4',
                 title: 'Свищ слюнной железы',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -701,14 +619,12 @@ export default [{
                 title: 'Сиалолитиаз, камни в слюнном протоке',
                 explain: 'Salivary calculus, stone',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K11.6',
                 title: 'Мукоцеле слюнной железы, ранула',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -716,7 +632,6 @@ export default [{
                 title: 'Нарушение секреции слюнных желез',
                 explain: 'Xerostoma, dry mouth',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -724,14 +639,12 @@ export default [{
                 title: 'Другие болезни слюнных желез',
                 explain: 'Miculicz',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K11.9',
                 title: 'Заболевание слюнной железы неуточненное',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -743,21 +656,18 @@ export default [{
                 code: 'K12.0',
                 title: 'Рецидивирующие афты полости рта',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K12.1',
                 title: 'Другие формы стоматита',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K12.2',
                 title: 'Флегмона и абсцесс области рта',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -770,56 +680,48 @@ export default [{
                 title: 'Болезни губ',
                 explain: 'Angular chelitis',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K13.1',
                 title: 'Прикусывание щеки и губ',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K13.2',
                 title: 'Лейкоплакия и другие изменения  эпителия  полости рта, включая язык',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K13.3',
                 title: 'Волосатая лейкоплакия',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K13.4',
                 title: 'Гранулема и гранулемоподобные поражения слизистой оболочки полости рта',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K13.5',
                 title: 'Подслизистый фиброз полости рта',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K13.6',
                 title: 'Гиперплазия СОПР вследствие раздражения',
                 templateCode: 'P01',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K13.7',
                 title: 'Другие и неуточненные поражения слизистой оболочки полости рта',
                 templateCode: 'P16',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],
@@ -832,21 +734,18 @@ export default [{
                 title: 'Глоссит',
                 explain: 'Ulcer, abscess',
                 templateCode: 'P16',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K14.1',
                 title: 'Географический язык, эксфолиативный глоссит',
                 templateCode: 'P16',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K14.2',
                 title: 'Срединный ромбовидный глоссит',
                 templateCode: 'P16',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -854,14 +753,12 @@ export default [{
                 title: 'Гипертрофия сосочков языка',
                 explain: 'Black hairy tongue',
                 templateCode: 'P16',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K14.4',
                 title: 'Атрофия сосочков языка',
                 templateCode: 'P16',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
@@ -869,28 +766,24 @@ export default [{
                 title: 'Складчатый, морщинистый, бороздчатый, расщепленный язык',
                 explain: 'Scrotal, fissured tongue',
                 templateCode: 'P16',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K14.6',
                 title: 'Глоссодиния',
                 templateCode: 'P16',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K14.8',
                 title: 'Глоссодиния неуточненная',
                 templateCode: 'P16',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
             {
                 code: 'K14.9',
                 title: 'Болезнь языка неуточненная',
                 templateCode: 'P16',
-                ageCategory: ['babyTeeth', 'adultTeeth'],
                 available: true,
             },
         ],

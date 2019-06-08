@@ -148,7 +148,7 @@ export default {
         const { itemId, type, planId } = params;
         let itemIndex = -1;
         let planIndex = -1;
-        if (planId) {
+        if (planId && type === 'procedures') {
             planIndex = state.patient.plans.findIndex(plan => plan.id === planId);
 
             if (planIndex > -1) {

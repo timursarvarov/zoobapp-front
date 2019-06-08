@@ -13,7 +13,7 @@
       locationType ='diagnosis'
       :originalItemsGrouped="diagnosis"
     >
-    <div slot="title" class="absolute-header-block " >
+    <div slot="title"  >
       <slide-y-down-transition>
       <span v-show="errors.has('locations')"
         :class="[{'error': errors.has('locations')},
@@ -187,5 +187,3 @@
         },
     };
 </script>
-<style>
-</style>

@@ -140,31 +140,40 @@
             // если в предыдуших диагнозах есть локации для показа или скрытия то
             // в зависимости от переклчатея показываем приореттные локации
             shouldHideLocation(location) {
-                // если если локация есть в разделе view оригинального диагноза
-                // const InSelectedItemValue = this.getNestedProperty(this.selectedItem, 'teeth', this.toothId, location);
-                const hasKeyInSelectedD = this.selectedItem && this.selectedItem.teeth && this.selectedItem.teeth[this.toothId] ? location in this.selectedItem.teeth[this.toothId] : undefined;
-                const InOriginalItemViewValue = this.getNestedProperty(this.originalItem, 'view', location);
-                const hasKeyInDiagnoseView = this.originalItem.view ? (location in this.originalItem.view) : false;
-                const selectedDiagnoseLocations = this.selectedItem.teeth && this.toothId in this.selectedItem.teeth ? Object.keys(this.selectedItem.teeth[this.toothId]) : [];
-                const originalDiagnoseLocations = Object.keys(this.originalItem.locations);
-                // const originalDiagnoseLocationsTrue = Object.keys(this.originalItem.locations).filter(l => this.originalItem.locations[l] === true);
-                // фильтруем локации из оригинального диагноза. оставив лишь выбранные
+                if (!(this.toothId in this.selectedItem.teeth)) {
+                    return !this.defaultLocations[location];
+                }
+                const hasKeyInSelectedD = this.hasKeyInSelectedD(location);
+                const InOriginalItemViewValue = this.InOriginalItemViewValue(location);
+                const selectedDiagnoseLocations = this.selectedDiagnoseLocations();
+                const originalDiagnoseLocations = this.originalDiagnoseLocations();
                 const locationsToHide = originalDiagnoseLocations.filter(x => !selectedDiagnoseLocations.includes(x));
-                if (hasKeyInDiagnoseView) {
-                    // return !hasKeyInSelectedD || locationsToHide.includes(location);
-                    if (locationsToHide.includes(location)) {
-                        return true;
-                    }
-                    if (InOriginalItemViewValue) {
-                        return false;
-                    }
-                    if (hasKeyInSelectedD === false) {
-                        return !hasKeyInSelectedD;
-                    }
-                    // return false;
-                    return !this.originalItem.view.location;
+                if (locationsToHide.includes(location)) {
+                    return true;
+                }
+                if (InOriginalItemViewValue) {
+                    return false;
+                }
+                if (hasKeyInSelectedD === false) {
+                    return !this.defaultLocations[location];
                 }
                 return true;
+            },
+            originalDiagnoseLocations() {
+                const result = Object.keys(this.originalItem.locations);
+                return result;
+            },
+            selectedDiagnoseLocations() {
+                const result = Object.keys(this.selectedItem.teeth[this.toothId]);
+                return result;
+            },
+            InOriginalItemViewValue(location) {
+                const result = this.getNestedProperty(this.originalItem, 'view', location);
+                return result;
+            },
+            hasKeyInSelectedD(location) {
+                const result = location in this.selectedItem.teeth[this.toothId];
+                return result;
             },
             // Высчитывваем в какую очередь нужно присвоить класс для показа локации в зависимости от выбронного приоретета показа(анамнез дигноз или лечение)
             setLocationOnLoad(location, toothId, value) {

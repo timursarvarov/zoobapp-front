@@ -44,6 +44,11 @@
         &.rootCanal {
             stroke-width: 2px;
         }
+        &.bone {
+            fill: #8e24aa !important;
+            stroke-width: 0;
+            opacity: 0.6;
+        }
         &.gum,
         &.paradontit1,
         &.paradontit2,

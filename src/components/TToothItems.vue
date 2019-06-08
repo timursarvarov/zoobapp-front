@@ -125,9 +125,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="item.description" >
+                            <div >
                                 <md-toolbar class="md-transparent"> <span class="md-title">Description </span> </md-toolbar>
-                                <div class="md-layout-item">{{item.description}}</div>
+                                <div  v-html="item.description" class="md-layout-item"></div>
                             </div>
                             <div v-if="files.length > 0" >
                                 <md-toolbar class="md-transparent"> <span class="md-title">Files </span> </md-toolbar>
@@ -405,7 +405,7 @@
     .content-wrapper {
         max-height: 70vh;
         max-width: 80vw;
-        min-width: 60vw;
+        min-width: 70vw;
         overflow-y: scroll;
         // max-height: 26vh;
         &::-webkit-scrollbar {
