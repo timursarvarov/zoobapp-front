@@ -212,7 +212,6 @@
 
 <script>
 /* eslint-disable */
-import swal from "sweetalert2";
 import {
     CLINIC_AUTH_REQUEST,
     AUTH_LOGOUT,
@@ -323,13 +322,7 @@ export default {
             }
         },
         handleAllergy(items) {
-            swal({
-                title: "The patient has allergies!",
-                text: `${items.join(" ,")}`,
-                type: "warning",
-                buttonsStyling: false,
-                confirmButtonClass: "md-button md-danger"
-            });
+            
         },
         toggleSidebar() {
             this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);

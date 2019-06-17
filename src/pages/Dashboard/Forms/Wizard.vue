@@ -35,7 +35,7 @@
   import FirstStep from './Wizard/FirstStep.vue';
   import SecondStep from './Wizard/SecondStep.vue';
   import ThirdStep from './Wizard/ThirdStep.vue';
-  import swal from 'sweetalert2';
+  // import swal from 'sweetalert2';
   import { SimpleWizard, WizardTab } from '@/components';
 
   export default {
@@ -59,13 +59,13 @@
         this.wizardModel = { ...this.wizardModel, ...model };
       },
       wizardComplete() {
-        swal({
-          title: 'Good job!',
-          text: 'You clicked the finish button!',
-          type: 'success',
-          confirmButtonClass: 'md-button md-success',
-          buttonsStyling: false,
-        });
+        // swal({
+        //   title: 'Good job!',
+        //   text: 'You clicked the finish button!',
+        //   type: 'success',
+        //   confirmButtonClass: 'md-button md-success',
+        //   buttonsStyling: false,
+        // });
       },
     },
   };

@@ -58,7 +58,7 @@
     import CheckEmail from './Wizard/CheckEmail.vue';
     import SetAccount from './Wizard/SetAccount.vue';
     import SetClinic from './Wizard/SetClinic.vue';
-    import swal from 'sweetalert2';
+    // import swal from 'sweetalert2';
     import { SimpleWizard, WizardTab } from '@/components';
     import { mapGetters } from 'vuex';
     import {
@@ -305,13 +305,13 @@
                 this.wizardModel[model] = validated;
             },
             wizardComplete() {
-                swal({
-                    title: 'Good job!',
-                    text: 'You clicked the finish button!',
-                    type: 'success',
-                    confirmButtonClass: 'md-button md-success',
-                    buttonsStyling: false,
-                });
+                // swal({
+                //     title: 'Good job!',
+                //     text: 'You clicked the finish button!',
+                //     type: 'success',
+                //     confirmButtonClass: 'md-button md-success',
+                //     buttonsStyling: false,
+                // });
             },
         },
         computed: {

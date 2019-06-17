@@ -2,27 +2,32 @@
   <div class="content user-profile">
     <div class="md-layout">
       <div class="md-layout-item md-medium-size-100 md-size-66">
-        <user-card button-color="success">
-        </user-card>
+        <user-card button-color="success"/>
       </div>
 
       <div class="md-layout-item md-medium-size-100 md-size-33">
-        <password-form header-color="green">
-        </password-form>
+        <password-form header-color="green"/>
+      </div>
+
+      <div class="md-layout-item md-medium-size-100 md-size-33">
+        <calendar-form header-color="green"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import { UserCard, PasswordForm } from '@/pages';
+    import UserCard from './UserProfile/UserCard';
+    import PasswordForm from './UserProfile/PasswordForm';
+    import CalendarForm from './UserProfile/CalendarForm';
 
-  export default {
-    components: {
-      UserCard,
-      PasswordForm,
-    },
-  };
+    export default {
+        components: {
+            UserCard,
+            PasswordForm,
+            CalendarForm,
+        },
+    };
 </script>
 <style lang="scss">
 .text-right {

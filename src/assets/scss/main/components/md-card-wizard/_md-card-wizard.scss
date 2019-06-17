@@ -58,6 +58,7 @@
         position: relative;
         max-height: 61vh;
         min-height: 61vh;
+        height: 61vh;
         overflow-y: scroll;
         // overflow-x: scroll;
         &::-webkit-scrollbar {
@@ -78,14 +79,16 @@
         .absolute-header-block,
         .wuswug-header {
             .md-toolbar {
-                border: 2px solid rgba(0, 0, 0, 0.3);
-                margin: 15px 0;
-                background-color: rgb(255, 255, 255)!important;
+                // border: 2px solid rgba(0, 0, 0, 0.3);
+                background-color: rgb(236, 236, 236)!important;
                 border-radius: 10px;
+                opacity: 0.95;
             }
-            z-index: 15;
+            opacity: 0.95;
+            z-index: 10;
             position: sticky;
             top: 0;
+            padding: 15px 0;
         }
         .manipulations-editor {
             position: inherit;
@@ -94,8 +97,8 @@
             // justify-content: space-between;
             background-color: rgb(228, 228, 228);
             border-radius: 10px;
-            margin-bottom: 3vh;
-            margin-top: 3vh;
+            // margin-bottom: 3vh;
+            // margin-top: 3vh;
             .manipulations-autocomplite {
                 flex-grow: 1;
                 // padding-right: 0.5vw;
@@ -180,6 +183,7 @@
                 overflow-y: auto;
                 overflow-x: auto;
                 margin: 0;
+                height: 49vh;
                 // padding: 15px 0 15px 0;
                 // min-height: 52vh;
                 &::-webkit-scrollbar {

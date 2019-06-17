@@ -90,44 +90,47 @@
         class="jaw-list-container"
     >
         <div class="jaw md-layout-item">
-            <transition-group name="tooth noselect" class="jaw-list mx-auto noselect">
+            <transition-group name="fade" class="jaw-list mx-auto noselect">
+                <template>
                 <div
                     v-ripple
                     @click="toothClick($event, toothId)"
-                    :class="[
-                'tooth',
-                isSelected(toothId)]"
                     v-for="(toothId) in selectableTeeth"
                     :key="toothId"
                     :ref="toothId"
+                    :class="[
+                        {selected: isSelected(toothId)},
+                        {tooth: true}
+                        ]"
                 >
-                <div class="tooth-number noselect" >
-                    <span >{{toothId | toCurrentTeethSystem(teethSystem)}}</span>
+                    <div class="tooth-number noselect" >
+                        <span >{{toothId | toCurrentTeethSystem(teethSystem)}}</span>
+                    </div>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            :viewBox="jawSVG[toothId].viewBox"
+                            :style="{
+                                'width':  getCustomWidth(toothId) + 'vh',
+                                //'width':  jawSVG[toothId].widthPerc * 1.56 + (windowWidth < 700 ? 'vmax' : 'vmin'),
+                                //minWidth: jawSVG[toothId].widthPerc * 1.66 + 'vh'
+                                }"
+                        >
+                            <g :class="`set-${locationType}`">
+                                <template v-for="(locationValue, location) in defaultLocations">
+                                    <path
+                                        v-if="!jawComputed[toothId][location].hide"
+                                        @click="chooseLocation(toothId, location), setLastAction(toothId, location)"
+                                        :key="`${toothId}${location}`"
+                                        :class="[
+                                        // получаем объект классов диагноза
+                                        jawComputed[toothId][location]]"
+                                        :d="jawSVG[toothId][location]"
+                                    ></path>
+                                </template>
+                            </g>
+                        </svg>
                 </div>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        :viewBox="jawSVG[toothId].viewBox"
-                        :style="{
-                            'width':  getCustomWidth(toothId) + 'vh',
-                            //'width':  jawSVG[toothId].widthPerc * 1.56 + (windowWidth < 700 ? 'vmax' : 'vmin'),
-                            //minWidth: jawSVG[toothId].widthPerc * 1.66 + 'vh'
-                            }"
-                    >
-                        <g :class="`set-${locationType}`">
-                            <template v-for="(locationValue, location) in defaultLocations">
-                                <path
-                                    v-if="!jawComputed[toothId][location].hide"
-                                    @click="chooseLocation(toothId, location), setLastAction(toothId, location)"
-                                    :key="`${toothId}${location}`"
-                                    :class="[
-                                    // получаем объект классов диагноза
-                                    jawComputed[toothId][location]]"
-                                    :d="jawSVG[toothId][location]"
-                                ></path>
-                            </template>
-                        </g>
-                    </svg>
-                </div>
+                </template>
             </transition-group>
         </div>
     </div>
@@ -223,60 +226,48 @@
                 const toothWidth = this.jawSVG[toothId].widthPerc;
 
                 if (this.jawType === 'baby') {
-                   if (this.windowHeigth < 768) {
-                    return toothWidth / 0.63;
+                    if (this.windowHeigth < 768) {
+                        // console.log(1);
+                        return toothWidth * ((this.windowHeigth / (this.windowHeigth - 350)));
                     }
                     if (this.windowHeigth >= 768 && this.windowHeigth < 900) {
-                        return toothWidth / 0.54;
+                        // console.log(2);
+                        return toothWidth * ((this.windowHeigth / (this.windowHeigth - 350)));
                     }
                     if (this.windowHeigth <= 1050 && this.windowHeigth > 900) {
-                        return toothWidth / 0.54;
+                        // console.log(3);
+                        return toothWidth * ((this.windowHeigth / (this.windowHeigth - 440)));
                     }
                     if (this.windowHeigth < 1080 && this.windowHeigth > 1050) {
-                        return toothWidth / 0.54;
+                        // console.log(4);
+                        return toothWidth * ((this.windowHeigth / (this.windowHeigth - 440)));
                     }
                     if (this.windowHeigth >= 1080) {
-                        return toothWidth / 0.54;
+                        // console.log(5);
+                        return toothWidth * ((this.windowHeigth / (this.windowHeigth - 440)));
                     }
                     return toothWidth / 1.72;
                 }
-                return toothWidth / ((this.windowHeigth + 200)/1830);
                 if (this.windowHeigth < 768) {
-                console.log(1)
-                    return toothWidth / 0.63;
+                    // console.log(1);
+                    return toothWidth * ((this.windowHeigth / (this.windowHeigth - 350)));
                 }
                 if (this.windowHeigth >= 768 && this.windowHeigth < 900) {
-                console.log(2)
-                    return toothWidth / ((this.windowHeigth + 300)/1530);
+                    // console.log(2);
+                    return toothWidth * ((this.windowHeigth / (this.windowHeigth - 200)));
                 }
                 if (this.windowHeigth <= 1050 && this.windowHeigth > 900) {
-                console.log(3)
-                    return toothWidth / (this.windowHeigth/1530);
+                    // console.log(3);
+                    return toothWidth * ((this.windowHeigth / (this.windowHeigth - 320)));
                 }
                 if (this.windowHeigth < 1080 && this.windowHeigth > 1050) {
-                console.log(4)
-                    return toothWidth / 0.8;
+                    // console.log(4);
+                    return toothWidth * ((this.windowHeigth / (this.windowHeigth - 340)));
                 }
                 if (this.windowHeigth >= 1080) {
-                console.log(5)
-                    return toothWidth / 1.8;
+                    // console.log(5);
+                    return toothWidth * ((this.windowHeigth / (this.windowHeigth - 340)));
                 }
-                // }
-                // if (this.windowWidth < 600) {
-                //     return toothWidth / 0.63;
-                // }
-                // if (this.windowWidth >= 600 && this.windowWidth < 960) {
-                //     return toothWidth / 0.625;
-                // }
-                // if (this.windowWidth <= 1280 && this.windowWidth > 960) {
-                //     return toothWidth / 0.7; ;
-                // }
-                // if (this.windowWidth < 1920 && this.windowWidth > 1280) {
-                //     return toothWidth / 0.7;
-                // }
-                // if (this.windowWidth >= 1920) {
-                //     return toothWidth / 0.52;
-                // }
 
                 return toothWidth / 2.2;
             },
@@ -316,7 +307,7 @@
             },
             isSelected(toothId) {
                 if (Object.keys(this.item.teeth).includes(`${toothId}`)) {
-                    return 'selected';
+                    return 'true';
                 }
                 return false;
             },
@@ -697,3 +688,16 @@
         },
     };
 </script>
+<style lang="scss">
+.jaw-list-wrapper{
+   .fade-enter-active, .fade-leave-active {
+  transition: all .2s;
+}
+.fade-enter, .fade-leave-to{
+  opacity: 0;
+}
+.fade-enter-active {
+  transition-delay: .2s;
+}
+}
+</style>

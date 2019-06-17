@@ -195,7 +195,7 @@
             SlideYDownTransition,
             StarRating,
             TAvatarInput,
-        // generator,
+            // generator,
         },
         name: 'patient-card',
         props: {

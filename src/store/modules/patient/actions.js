@@ -25,6 +25,7 @@ import {
     PATIENT_PROCEDURES_SET,
     PATIENT_ANAMNES_SET,
     PATIENT_ANAMNES_UPDATE,
+    PATIENT_RESET,
     TEETH_INITIATION,
 } from '@/constants';
 
@@ -97,9 +98,7 @@ export default {
         dispatch,
     }, {
         params,
-    }) => {
-        console.log(params);
-        return new Promise((resolve, reject) => {
+    }) => new Promise((resolve, reject) => {
             commit(PATIENT_REQUEST);
             axios.post(`/patients/${params.patientId}/notes/`,
                     JSON.stringify({
@@ -119,13 +118,10 @@ export default {
                     commit(PATIENT_ERROR);
                     reject(err);
                 });
-        });
-    },
+        }),
     [PATIENT_DOWNLOAD_FILE]: ({
         params,
-    }) => {
-        console.log(params);
-        return new Promise((resolve, reject) => {
+    }) => new Promise((resolve, reject) => {
             axios({
                     url: params.url,
                     method: 'GET',
@@ -137,8 +133,7 @@ export default {
                 .catch((err) => {
                     reject(err);
                 });
-        });
-    },
+        }),
     [PATIENT_TOGGLE_ITEM_VISIBILITY]: ({
         state,
         commit,
@@ -179,12 +174,22 @@ export default {
             value: props,
         });
     },
+    [PATIENT_RESET]: ({
+        commit,
+        state,
+    }) => {
+        Object.keys(state.patient).forEach((key) => {
+            commit(PATIENT_SET_PARAM, {
+                type: key,
+                value: null,
+            });
+        });
+    },
     [PATIENT_CREATE]: ({
         commit,
     }, {
         patient,
     }) => new Promise((resolve, reject) => {
-        console.log(patient);
         commit(PATIENT_REQUEST);
         axios.post('/patients/',
                 JSON.stringify({
@@ -279,11 +284,6 @@ export default {
             if (planIndex > -1) {
                 procedureIndex = state.patient.plans[planIndex].procedures.findIndex(item => item.id === procedure.id);
             }
-            console.log(
-                'planId', planId,
-                'procedureIndex', procedureIndex,
-                'planIndex', planIndex,
-                'procedure', procedure)
             commit(PATIENT_PROCEDURE_UPDATE, {
                 procedureIndex,
                 planIndex,
@@ -335,11 +335,11 @@ export default {
         Object.keys(patient).map((field) => {
             let value = patient[field];
             if (value === null) {
-                if (field === 'allergy' ||
-                    field === 'notes' ||
-                    field === 'diagnosis' ||
-                    field === 'files' ||
-                    field === 'plans'
+                if (field === 'allergy'
+                    || field === 'notes'
+                    || field === 'diagnosis'
+                    || field === 'files'
+                    || field === 'plans'
                 ) {
                     value = [];
                 }
@@ -379,7 +379,6 @@ export default {
                 resolve(resp.data);
             })
             .catch((err) => {
-                console.log(err);
                 commit(PATIENT_ERROR);
                 reject(err);
             });

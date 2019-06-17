@@ -1,4 +1,5 @@
 import DIAGNOSISL from './diagnosis';
+import DIAGNOSIS_BACKL from './diagnosis-back';
 import PROCEDURESL from './procedures';
 import LOCATIONSL from './locations';
 import MANIPULATIONSl from './manipulations';
@@ -19,6 +20,7 @@ import TEETH_ALLL from './teeth-all';
 import TIMEZONESL from './timezones';
 import COMMON_CURRENCYL from './common-currency';
 
+export const DIAGNOSIS_BACK = DIAGNOSIS_BACKL;
 export const DIAGNOSIS = DIAGNOSISL;
 export const PROCEDURES = PROCEDURESL;
 export const LOCATIONS = LOCATIONSL;
@@ -87,6 +89,7 @@ export const LOADER_START = 'LOADER_START';
 // Patients
 export const PATIENTS_REQUEST = 'PATIENTS_REQUEST';
 export const PATIENTS_SUCCESS = 'PATIENTS_SUCCESS';
+export const PATIENTS_RESET = 'PATIENTS_RESET';
 export const PATIENTS_ERROR = 'PATIENTS_ERROR';
 export const PATIENTS_SET = 'PATIENTS_SET';
 export const PATIENTS_UPDATE_PATIENT = 'PATIENTS_UPDATE_PATIENT';
@@ -95,6 +98,7 @@ export const PATIENTS_UPDATE_PATIENT = 'PATIENTS_UPDATE_PATIENT';
 export const PATIENT_CREATE = 'PATIENT_CREATE';
 export const PATIENT_REQUEST = 'PATIENT_REQUEST';
 export const PATIENT_SUCCESS = 'PATIENT_SUCCESS';
+export const PATIENT_RESET = 'PATIENT_RESET';
 export const PATIENT_ERROR = 'PATIENT_ERROR';
 export const PATIENT_AVATAR_UPLOAD = 'PATIENT_AVATAR_UPLOAD';
 export const PATIENT_UPDATE = 'PATIENT_UPDATE';

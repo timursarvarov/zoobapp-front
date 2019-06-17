@@ -183,7 +183,7 @@
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label for="language">Language</label>
-                        <md-select v-model="user.lang" name="language" id="language">
+                        <md-select @md-selected="onLangChange()" v-model="user.lang" name="language" id="language">
                             <md-option :value="1">English</md-option>
                             <md-option :value="2">Русский</md-option>
                         </md-select>
@@ -261,6 +261,14 @@
             };
         },
         methods: {
+            onLangChange() {
+                if (this.user.lang === 1) {
+                    this.$i18n.locale = 'en';
+                }
+                if (this.user.lang === 2) {
+                    this.$i18n.locale = 'ru';
+                }
+            },
             focusOn(ref) {
                 if (!this.$refs[ref]) {
                     return;

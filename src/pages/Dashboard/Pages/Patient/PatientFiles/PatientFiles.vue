@@ -2,6 +2,7 @@
     <div class="patients-files-wrapper"  >
         <div  >
             <t-files-add-form
+                class="add-files"
                 :url="url"
                 :access_token="access_token"
                 :tokenExpiresAt="`${tokenExpiresAt}`"
@@ -15,7 +16,11 @@
                     md-icon="cloud_upload"
                     md-label="Add new file"
                     md-description="Click here or drope some files"
-                ></md-empty-state>
+                >
+                 <div>
+                        <b>Total {{files.length}} files ({{totalFiles|formatBytes}})</b>
+                        </div>
+                </md-empty-state>
             </t-files-add-form>
         </div>
             <t-files-list
@@ -84,22 +89,21 @@
             patientAddSubProp() {
                 return PATIENT_ADD_SUB_PROP;
             },
+            totalFiles() {
+                return this.files.reduce((a, b) => a + (b.size || 0), 0);
+            },
+            files() {
+                return this.patient.files || [];
+            },
 
         },
     };
 </script>
 
 <style lang="scss" >
-// .patients-files-wrapper {
-//     .absolute-header-block{
-//         position: absolute;
-//         top:0;
-//     }
-//     .md-table-cell {
-//         .md-table-cell-container {
-//             overflow: hidden;
-//             text-overflow: ellipsis;
-//         }
-//     }
-// }
+.patients-files-wrapper {
+   .add-files{
+       padding: 15px;
+   }
+}
 </style>

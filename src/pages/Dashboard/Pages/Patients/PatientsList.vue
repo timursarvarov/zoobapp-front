@@ -284,7 +284,7 @@
 <script>
     import { Pagination, TAvatar, TTableEditor } from '@/components';
     import StarRating from 'vue-star-rating';
-    import swal from 'sweetalert2';
+    // import swal from 'sweetalert2';
     import { mapGetters } from 'vuex';
     import {
         PATIENTS_REQUEST,
@@ -360,56 +360,56 @@
                 console.log(this.queryParams.currentSortOrder);
             },
             handleLike(item) {
-                swal({
-                    title: `You liked ${item.name}`,
-                    buttonsStyling: false,
-                    type: 'success',
-                    confirmButtonClass: 'md-button md-success',
-                });
+                // swal({
+                //     title: `You liked ${item.name}`,
+                //     buttonsStyling: false,
+                //     type: 'success',
+                //     confirmButtonClass: 'md-button md-success',
+                // });
             },
             handleShowAllergy(item) {
-                swal({
-                    title: 'Attention!',
-                    buttonsStyling: false,
-                    html: ` ${item.firstName} ${
-                        item.lastName
-                    } has allergy! Please dont use: <h3> ${item.allergy.join(
-                        ', ',
-                    )} </h3>`,
-                    type: 'warning',
-                    confirmButtonClass: 'md-button md-success',
-                    confirmButtonText: 'OK, I will not use them!',
-                });
+                // swal({
+                //     title: 'Attention!',
+                //     buttonsStyling: false,
+                //     html: ` ${item.firstName} ${
+                //         item.lastName
+                //     } has allergy! Please dont use: <h3> ${item.allergy.join(
+                //         ', ',
+                //     )} </h3>`,
+                //     type: 'warning',
+                //     confirmButtonClass: 'md-button md-success',
+                //     confirmButtonText: 'OK, I will not use them!',
+                // });
             },
             handleEdit(item) {
-                swal({
-                    title: `You want to edit ${item.name}`,
-                    buttonsStyling: false,
-                    confirmButtonClass: 'md-button md-info',
-                });
+                // swal({
+                //     title: `You want to edit ${item.name}`,
+                //     buttonsStyling: false,
+                //     confirmButtonClass: 'md-button md-info',
+                // });
             },
             handleDelete(item) {
-                swal({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonClass: 'md-button md-success btn-fill',
-                    cancelButtonClass: 'md-button md-danger btn-fill',
-                    confirmButtonText: 'Yes, delete it!',
-                    buttonsStyling: false,
-                }).then((result) => {
-                    if (result.value) {
-                        this.deleteRow(item);
-                        swal({
-                            title: 'Deleted!',
-                            text: `You deleted ${item.name}`,
-                            type: 'success',
-                            confirmButtonClass: 'md-button md-success btn-fill',
-                            buttonsStyling: false,
-                        });
-                    }
-                });
+                // swal({
+                //     title: 'Are you sure?',
+                //     text: "You won't be able to revert this!",
+                //     type: 'warning',
+                //     showCancelButton: true,
+                //     confirmButtonClass: 'md-button md-success btn-fill',
+                //     cancelButtonClass: 'md-button md-danger btn-fill',
+                //     confirmButtonText: 'Yes, delete it!',
+                //     buttonsStyling: false,
+                // }).then((result) => {
+                //     if (result.value) {
+                //         this.deleteRow(item);
+                //         swal({
+                //             title: 'Deleted!',
+                //             text: `You deleted ${item.name}`,
+                //             type: 'success',
+                //             confirmButtonClass: 'md-button md-success btn-fill',
+                //             buttonsStyling: false,
+                //         });
+                //     }
+                // });
             },
             deleteRow(item) {
                 const indexToDelete = this.tableData.findIndex(

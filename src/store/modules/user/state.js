@@ -10,6 +10,13 @@ export default {
         color: '#235',
         address: '',
         lang: 2,
+        calendar: {
+            hiddenDays: [],
+            minTime: '00:00:00',
+            maxTime: '24:00:00',
+            showNonCurrentDates: true,
+            firstDay: 0,
+        },
     },
     status: '',
     teethSystem: 'fdi',

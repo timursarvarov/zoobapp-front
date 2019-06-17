@@ -138,7 +138,7 @@
     import { Pagination, TAvatar } from '@/components';
     import { mapGetters } from 'vuex';
     import Fuse from 'fuse.js';
-    import swal from 'sweetalert2';
+    // import swal from 'sweetalert2';
     import { tObjProp } from '@/mixins';
 
     export default {
@@ -292,12 +292,12 @@
                 });
             },
             handleLike(item) {
-                swal({
-                    title: `You liked ${item.title}`,
-                    buttonsStyling: false,
-                    type: 'success',
-                    confirmButtonClass: 'md-button md-success',
-                });
+                // swal({
+                //     title: `You liked ${item.title}`,
+                //     buttonsStyling: false,
+                //     type: 'success',
+                //     confirmButtonClass: 'md-button md-success',
+                // });
             },
             handleEdit(item) {
                 if (item) {
@@ -306,27 +306,27 @@
                 // this.$emit('editItem', item, this.type);
             },
             handleDelete(item) {
-                swal({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonClass: 'md-button md-success btn-fill',
-                    cancelButtonClass: 'md-button md-danger btn-fill',
-                    confirmButtonText: 'Yes, delete it!',
-                    buttonsStyling: false,
-                }).then((result) => {
-                    if (result.value) {
-                        this.deleteRow(item);
-                        swal({
-                            title: 'Deleted!',
-                            text: `You deleted ${item.title}`,
-                            type: 'success',
-                            confirmButtonClass: 'md-button md-success btn-fill',
-                            buttonsStyling: false,
-                        });
-                    }
-                });
+                // swal({
+                //     title: 'Are you sure?',
+                //     text: "You won't be able to revert this!",
+                //     type: 'warning',
+                //     showCancelButton: true,
+                //     confirmButtonClass: 'md-button md-success btn-fill',
+                //     cancelButtonClass: 'md-button md-danger btn-fill',
+                //     confirmButtonText: 'Yes, delete it!',
+                //     buttonsStyling: false,
+                // }).then((result) => {
+                //     if (result.value) {
+                //         this.deleteRow(item);
+                //         swal({
+                //             title: 'Deleted!',
+                //             text: `You deleted ${item.title}`,
+                //             type: 'success',
+                //             confirmButtonClass: 'md-button md-success btn-fill',
+                //             buttonsStyling: false,
+                //         });
+                //     }
+                // });
             },
             deleteRow(item) {
             },

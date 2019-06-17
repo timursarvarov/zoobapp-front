@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import Chartist from 'chartist';
 import store from './store';
 import DashboardPlugin from './material-dashboard';
+import i18n from './i18n';
 
 
 // Plugins
@@ -27,12 +28,6 @@ const router = new VueRouter({
     routes, // short for routes: routes
     linkExactActiveClass: 'nav-item active',
 });
-// router.beforeEach((to, from, next) => {
-//   setTimeout(() => {
-//     window.scrollTo(0, 0);
-//   }, 10000);
-//   next();
-// });
 
 // global library setup
 Object.defineProperty(Vue.prototype, '$Chartist', {
@@ -45,6 +40,7 @@ Object.defineProperty(Vue.prototype, '$Chartist', {
 new Vue({
     el: '#app',
     render: h => h(App),
+    i18n,
     router,
     store,
     data: {

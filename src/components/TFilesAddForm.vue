@@ -118,5 +118,8 @@
 <style lang="scss" scoped>
 .dropzone{
     border-radius: 8px;
+    opacity: 0.98;
+    border: none;
+    background-color: rgb(236, 236, 236)!important;
 }
 </style>

@@ -109,14 +109,15 @@ import TToothItems from './TToothItems.vue';
 import TFilesAddForm from './TFilesAddForm.vue';
 import TPrintForm from './TPrintForm/TPrintForm.vue';
 import TWuswug from './TWuswug.vue';
-import TItemDescription from './TItemDescription.vue';
-import TItemFiles from './TItemFiles.vue';
-import TItemManipulations from './TItemManipulations.vue';
-import TItemToothLocations from './TItemToothLocations.vue';
+import TItemDescription from './TWizard/TWizardItems/TItemDescription.vue';
+import TItemFiles from './TWizard/TWizardItems/TItemFiles.vue';
+import TItemManipulations from './TWizard/TWizardItems/TItemManipulations.vue';
+import TItemToothLocations from './TWizard/TWizardItems/TItemToothLocations.vue';
+import TWizardAddItem from './TWizard/TWizardAddItem.vue';
 
 // For Dev Use Only
 
-// import JawGenerator from './JawGenerator/jawSVGgenerator.vue';
+import JawGenerator from '@/svgImporter/jawSVGgenerator.vue';
 
 export {
     IconCheckbox,
@@ -222,5 +223,6 @@ export {
     TItemFiles,
     TItemManipulations,
     TItemToothLocations,
-    // JawGenerator,
+    TWizardAddItem,
+    JawGenerator,
 };

@@ -24,15 +24,15 @@ const PatientProfile = () =>
 const PatientsList = () =>
     import ('@/pages/Dashboard/Pages/Patients/PatientsList.vue');
 
-const ClinicsList = () =>
-    import ('@/pages/Dashboard/Pages/Clinics/ClinicsList.vue');
+// const ClinicsList = () =>
+//     import ('@/pages/Dashboard/Pages/Clinics/ClinicsList.vue');
 
 const ClinicProfile = () =>
     import ('@/pages/Dashboard/Pages/Clinic/ClinicSettings.vue');
-const ConsumablesList = () =>
-    import ('@/pages/Dashboard/Pages/Clinic/ConsumablesList.vue');
-const ManipulationsList = () =>
-    import ('@/pages/Dashboard/Pages/Clinic/ManipulationsList.vue');
+// const ConsumablesList = () =>
+//     import ('@/pages/Dashboard/Pages/Clinic/ConsumablesList.vue');
+// const ManipulationsList = () =>
+//     import ('@/pages/Dashboard/Pages/Clinic/ManipulationsList.vue');
 
 const Pricing = () =>
     import ('@/pages/Dashboard/Pages/Pricing.vue');
@@ -445,21 +445,21 @@ const clinicPages = {
             name: 'Clinic Settings',
             component: ClinicProfile,
         },
-        {
-            path: '/clinic/:clinicId/consumables',
-            name: 'Consumables',
-            component: ConsumablesList,
-        },
+        // {
+        //     path: '/clinic/:clinicId/consumables',
+        //     name: 'Consumables',
+        //     component: ConsumablesList,
+        // },
         // {
         //     path: '/clinic/:clinicId/procuders',
         //     name: 'Procuders',
         //     component: ProceduresList,
         // },
-        {
-            path: '/clinic/:clinicId/manipulations',
-            name: 'Manipulations',
-            component: ManipulationsList,
-        },
+        // {
+        //     path: '/clinic/:clinicId/manipulations',
+        //     name: 'Manipulations',
+        //     component: ManipulationsList,
+        // },
     ],
 };
 
@@ -530,13 +530,13 @@ const routes = [{
                     default: Collaborators,
                 },
             },
-            {
-                path: 'clinics',
-                name: 'Clinics',
-                components: {
-                    default: ClinicsList,
-                },
-            },
+            // {
+            //     path: 'clinics',
+            //     name: 'Clinics',
+            //     components: {
+            //         default: ClinicsList,
+            //     },
+            // },
             {
                 path: 'charts',
                 name: 'Charts',

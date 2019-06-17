@@ -2,110 +2,114 @@
     <div class="editor">
         <editor-menu-bar  :editor="editor" v-slot="{ commands, isActive }">
             <div class="wuswug-header" >
-                <md-toolbar class="md-transparent">
-                    <slot name="start"></slot>
-                    <md-button
-                        class="md-simple md-just-icon md-round"
-                        :class="{ 'md-primary': isActive.bold() }"
-                        @click="commands.bold"
-                    >
-                        <md-icon>format_bold</md-icon>
-                    </md-button>
+                <md-toolbar class="md-transparent md-layout">
+                    <div class="md-layout-item">
+                        <slot name="start"></slot>
+                    </div>
+                    <div class="md-layout-item">
+                        <md-button
+                            class="md-simple md-just-icon md-round"
+                            :class="{ 'md-primary': isActive.bold() }"
+                            @click="commands.bold"
+                        >
+                            <md-icon>format_bold</md-icon>
+                        </md-button>
 
-                    <md-button
-                        class="md-simple md-just-icon md-round"
-                        :class="{ 'md-primary': isActive.italic() }"
-                        @click="commands.italic"
-                    >
-                        <md-icon>format_italic</md-icon>
-                    </md-button>
+                        <md-button
+                            class="md-simple md-just-icon md-round"
+                            :class="{ 'md-primary': isActive.italic() }"
+                            @click="commands.italic"
+                        >
+                            <md-icon>format_italic</md-icon>
+                        </md-button>
 
-                    <md-button
-                        class="md-simple md-just-icon md-round"
-                        :class="{ 'md-primary': isActive.strike() }"
-                        @click="commands.strike"
-                    >
-                        <md-icon>format_strikethrough</md-icon>
-                    </md-button>
+                        <md-button
+                            class="md-simple md-just-icon md-round"
+                            :class="{ 'md-primary': isActive.strike() }"
+                            @click="commands.strike"
+                        >
+                            <md-icon>format_strikethrough</md-icon>
+                        </md-button>
 
-                    <md-button
-                        class="md-simple md-just-icon md-round"
-                        :class="{ 'md-primary': isActive.underline() }"
-                        @click="commands.underline"
-                    >
-                        <md-icon>format_underline</md-icon>
-                    </md-button>
+                        <md-button
+                            class="md-simple md-just-icon md-round"
+                            :class="{ 'md-primary': isActive.underline() }"
+                            @click="commands.underline"
+                        >
+                            <md-icon>format_underline</md-icon>
+                        </md-button>
 
-                    <md-button
-                        class="md-simple md-just-icon md-round"
-                        :class="{ 'md-primary': isActive.paragraph() }"
-                        @click="commands.paragraph"
-                    >
-                        <md-icon>format_textdirection_l_to_r</md-icon>
-                    </md-button>
+                        <md-button
+                            class="md-simple md-just-icon md-round"
+                            :class="{ 'md-primary': isActive.paragraph() }"
+                            @click="commands.paragraph"
+                        >
+                            <md-icon>format_textdirection_l_to_r</md-icon>
+                        </md-button>
 
-                    <md-button
-                        class="md-simple md-just-icon md-round"
-                        :class="{ 'md-primary': isActive.heading({ level: 1 }) }"
-                        @click="commands.heading({ level: 1 })"
-                    >
-                        <small>H1</small>
-                    </md-button>
+                        <md-button
+                            class="md-simple md-just-icon md-round"
+                            :class="{ 'md-primary': isActive.heading({ level: 1 }) }"
+                            @click="commands.heading({ level: 1 })"
+                        >
+                            <small>H1</small>
+                        </md-button>
 
-                    <md-button
-                        class="md-simple md-just-icon md-round"
-                        :class="{ 'md-primary': isActive.heading({ level: 2 }) }"
-                        @click="commands.heading({ level: 2 })"
-                    >
-                        <small>H2</small>
-                    </md-button>
+                        <md-button
+                            class="md-simple md-just-icon md-round"
+                            :class="{ 'md-primary': isActive.heading({ level: 2 }) }"
+                            @click="commands.heading({ level: 2 })"
+                        >
+                            <small>H2</small>
+                        </md-button>
 
-                    <md-button
-                        class="md-simple md-just-icon md-round"
-                        :class="{ 'md-primary': isActive.heading({ level: 3 }) }"
-                        @click="commands.heading({ level: 3 })"
-                    >
-                        <small>H3</small>
-                    </md-button>
+                        <md-button
+                            class="md-simple md-just-icon md-round"
+                            :class="{ 'md-primary': isActive.heading({ level: 3 }) }"
+                            @click="commands.heading({ level: 3 })"
+                        >
+                            <small>H3</small>
+                        </md-button>
 
-                    <md-button
-                        class="md-simple md-just-icon md-round"
-                        :class="{ 'md-primary': isActive.bullet_list() }"
-                        @click="commands.bullet_list"
-                    >
-                        <md-icon>format_list_bulleted</md-icon>
-                    </md-button>
+                        <md-button
+                            class="md-simple md-just-icon md-round"
+                            :class="{ 'md-primary': isActive.bullet_list() }"
+                            @click="commands.bullet_list"
+                        >
+                            <md-icon>format_list_bulleted</md-icon>
+                        </md-button>
 
-                    <md-button
-                        class="md-simple md-just-icon md-round"
-                        :class="{ 'md-primary': isActive.ordered_list() }"
-                        @click="commands.ordered_list"
-                    >
-                        <md-icon>format_list_numbered</md-icon>
-                    </md-button>
+                        <md-button
+                            class="md-simple md-just-icon md-round"
+                            :class="{ 'md-primary': isActive.ordered_list() }"
+                            @click="commands.ordered_list"
+                        >
+                            <md-icon>format_list_numbered</md-icon>
+                        </md-button>
 
-                    <md-button
-                        class="md-simple md-just-icon md-round"
-                        :class="{ 'md-primary': isActive.blockquote() }"
-                        @click="commands.blockquote"
-                    >
-                        <md-icon>format_quote</md-icon>
-                    </md-button>
+                        <md-button
+                            class="md-simple md-just-icon md-round"
+                            :class="{ 'md-primary': isActive.blockquote() }"
+                            @click="commands.blockquote"
+                        >
+                            <md-icon>format_quote</md-icon>
+                        </md-button>
 
-                    <md-button
-                        class="md-simple md-just-icon md-round"
-                        @click="commands.horizontal_rule"
-                    >
-                        <md-icon>border_horizontal</md-icon>
-                    </md-button>
+                        <md-button
+                            class="md-simple md-just-icon md-round"
+                            @click="commands.horizontal_rule"
+                        >
+                            <md-icon>border_horizontal</md-icon>
+                        </md-button>
 
-                    <md-button class="md-simple md-just-icon md-round" @click="commands.undo">
-                        <md-icon>undo</md-icon>
-                    </md-button>
+                        <md-button class="md-simple md-just-icon md-round" @click="commands.undo">
+                            <md-icon>undo</md-icon>
+                        </md-button>
 
-                    <md-button class="md-simple md-just-icon md-round" @click="commands.redo">
-                        <md-icon>redo</md-icon>
-                    </md-button>
+                        <md-button class="md-simple md-just-icon md-round" @click="commands.redo">
+                            <md-icon>redo</md-icon>
+                        </md-button>
+                    </div>
                 </md-toolbar>
             </div>
         </editor-menu-bar>

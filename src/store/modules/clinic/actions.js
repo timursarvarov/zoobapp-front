@@ -11,6 +11,8 @@ import {
     AUTH_SUCCESS,
     AUTH_REFRESH_TOKEN,
     USER_REQUEST,
+    PATIENTS_RESET,
+    PATIENT_RESET,
 } from '@/constants';
 
 import axios from 'axios';
@@ -64,6 +66,8 @@ export default {
                         dispatch(AUTH_SUCCESS, { resp });
                         dispatch(AUTH_DECODE_TOKEN);
                         dispatch(USER_REQUEST);
+                        dispatch(PATIENTS_RESET);
+                        dispatch(PATIENT_RESET);
                         resolve(resp);
                     })
                     .catch(err => {

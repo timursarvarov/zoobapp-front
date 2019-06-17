@@ -1,7 +1,9 @@
 <template lang="html">
   <div class="md-layout md-gutter set-diagnose-form">
+
         <div class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
             <div class="mx-auto" style="flex-grow:1;" ref="wrjaw">
+                {{ $t('main.title') }}
                 <jaw
                     :selectedTeeth="selectedTeeth"
                     @onSelectedTeeth='onSelectedTeeth'
@@ -73,7 +75,7 @@
                             <md-empty-state
                                     md-label="No created plans"
                                     md-description="To implemet a procedure, you should firstly create a plan">
-                                    <md-button class="md-primary md-raised" @click="showAddPlan = true">Create New Plan</md-button>
+                                    <md-button class="md-success md-raised" @click="showAddPlan = true">Create New Plan</md-button>
                                 </md-empty-state>
                         </div>
             </t-collapse-search>
@@ -154,39 +156,18 @@
             :patient="patient"
             :showForm.sync="showPrint"/>
 
-        <jaw-add-anamnes-wizard
-            v-if="showAddAnamnesWizard"
-            @on-created='saveItem'
-            :selectedTeeth="selectedTeeth"
-            :selectedItem="selecteditemLocal"
-            :jaw='jaw'
-            :teethSchema="teethSchema"
-            :teethSystem="currentClinic.teethSystem"
-            :isDialogVisible.sync="showAddAnamnesWizard"
-            :locationType="currentType"
-        />
 
-        <jaw-add-diagnose-wizard
-            v-if="showAddDiagnoseWizard"
+        <t-wizard-add-item
+            v-if="showAddItemWizard"
             @on-created='saveItem'
-            :selectedTeeth="selectedTeeth"
-            :selectedItem="selecteditemLocal"
-            :jaw='jaw'
-            :teethSchema="teethSchema"
-            :teethSystem="currentClinic.teethSystem"
-            :isDialogVisible.sync="showAddDiagnoseWizard"
-            :locationType="currentType"
-        />
-        <jaw-add-procedure-wizard
-            v-if="showAddProcedureWizard"
-            @on-created='saveItem'
+            :steps="steps"
             :currentPlan="currentPlan"
             :selectedTeeth="selectedTeeth"
             :selectedItem="selecteditemLocal"
             :jaw='jaw'
             :teethSchema="teethSchema"
             :teethSystem="currentClinic.teethSystem"
-            :isDialogVisible.sync="showAddProcedureWizard"
+            :isDialogVisible.sync="showAddItemWizard"
             :locationType="currentType"
         />
         </div>
@@ -211,12 +192,9 @@
     import PlanAddForm from './PlanAddForm.vue';
     import { mapGetters } from 'vuex';
     import {
-        TCollapseSearch, TToothItems, Jaw, Tabs, TPrintForm,
+        TCollapseSearch, TToothItems, Jaw, Tabs, TPrintForm, TWizardAddItem,
     } from '@/components';
     import ItemsList from './ItemsList.vue';
-    import JawAddDiagnoseWizard from './DiagnoseWizard/JawAddDiagnoseWizard.vue';
-    import JawAddProcedureWizard from './ProcedureWizard/JawAddProcedureWizard.vue';
-    import JawAddAnamnesWizard from './AnamnesWizard/JawAddAnamnesWizard.vue';
     import { tObjProp } from '@/mixins';
 
     export default {
@@ -226,12 +204,10 @@
             Jaw,
             TToothItems,
             ItemsList,
-            JawAddDiagnoseWizard,
             PlanAddForm,
             Tabs,
-            JawAddProcedureWizard,
-            JawAddAnamnesWizard,
             TPrintForm,
+            TWizardAddItem,
         },
         data() {
             return {
@@ -239,6 +215,7 @@
                 currentType: 'anamnesis',
                 showToothDiagnosis: false,
                 showAddDiagnoseWizard: false,
+                showAddItemWizard: false,
                 showAddProcedureWizard: false,
                 showAddAnamnesWizard: false,
                 jawHeight: 0,
@@ -320,6 +297,7 @@
                 if (type === 'procedures') {
                     this.showAddProcedureWizard = true;
                 }
+                this.showAddItemWizard = true;
             },
             toggleItemVisibility(itemId, itemType) {
                 if (itemId) {
@@ -520,6 +498,7 @@
                         if (this.currentType === 'procedures') {
                             this.showAddProcedureWizard = true;
                         }
+                        this.showAddItemWizard = true;
                     }
                 }
             },
@@ -672,6 +651,15 @@
                 }
                 return this.favoriteDiagnosis;
             },
+            steps() {
+                if (this.currentType === 'anamnesis') {
+                    return ['locations', 'files', 'description'];
+                }
+                if (this.currentType === 'diagnosis') {
+                    return ['locations', 'files', 'description'];
+                }
+                return ['locations', 'manipulations', 'files', 'description', 'appointments'];
+            },
             currentPlan() {
                 const index = this.patient.plans.findIndex(p => p.showInJaw);
                 if (index > -1) {
@@ -696,6 +684,8 @@
             },
         },
         mounted() {
+            console.log(this.$t('main.title'));
+            // console.log(JSON.stringify(this.diagnosis));
             window.addEventListener('resize', this.matchHeight);
             this.$nextTick(() => {
                 this.matchHeight();

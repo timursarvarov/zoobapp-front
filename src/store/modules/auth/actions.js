@@ -96,7 +96,6 @@ export default {
         resp
     }) => {
         if (resp.data) {
-            console.log(resp.data)
             commit(AUTH_SUCCESS, resp);
         }
     },
@@ -137,7 +136,6 @@ export default {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace('-', '+').replace('_', '/');
         const decodedParms = JSON.parse(window.atob(base64));
-        console.log(decodedParms)
         dispatch(CLINIC_SET_PROPS, { organization: decodedParms.organization });
         dispatch(USER_SET_PARAM, {
             type: 'ID',

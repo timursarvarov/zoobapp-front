@@ -5,7 +5,7 @@
                 <div class="card-icon">
                     <md-icon>lock</md-icon>
                 </div>
-                <h4 class="title">Change Password</h4>
+                <h4 class="title">Password Settings</h4>
             </md-card-header>
 
             <md-card-content>

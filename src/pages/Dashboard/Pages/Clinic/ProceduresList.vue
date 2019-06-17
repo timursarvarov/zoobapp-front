@@ -136,7 +136,7 @@
     import { Pagination } from '@/components';
     import { mapGetters } from 'vuex';
     import Fuse from 'fuse.js';
-    import swal from 'sweetalert2';
+    // import swal from 'sweetalert2';
 
     export default {
         components: {
@@ -211,42 +211,42 @@
                 });
             },
             handleLike(item) {
-                swal({
-                    title: `You liked ${item.name}`,
-                    buttonsStyling: false,
-                    type: 'success',
-                    confirmButtonClass: 'md-button md-success',
-                });
+                // swal({
+                //     title: `You liked ${item.name}`,
+                //     buttonsStyling: false,
+                //     type: 'success',
+                //     confirmButtonClass: 'md-button md-success',
+                // });
             },
             handleEdit(item) {
-                swal({
-                    title: `You want to edit ${item.name}`,
-                    buttonsStyling: false,
-                    confirmButtonClass: 'md-button md-info',
-                });
+                // swal({
+                //     title: `You want to edit ${item.name}`,
+                //     buttonsStyling: false,
+                //     confirmButtonClass: 'md-button md-info',
+                // });
             },
             handleDelete(item) {
-                swal({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonClass: 'md-button md-success btn-fill',
-                    cancelButtonClass: 'md-button md-danger btn-fill',
-                    confirmButtonText: 'Yes, delete it!',
-                    buttonsStyling: false,
-                }).then((result) => {
-                    if (result.value) {
-                        this.deleteRow(item);
-                        swal({
-                            title: 'Deleted!',
-                            text: `You deleted ${item.name}`,
-                            type: 'success',
-                            confirmButtonClass: 'md-button md-success btn-fill',
-                            buttonsStyling: false,
-                        });
-                    }
-                });
+                // swal({
+                //     title: 'Are you sure?',
+                //     text: "You won't be able to revert this!",
+                //     type: 'warning',
+                //     showCancelButton: true,
+                //     confirmButtonClass: 'md-button md-success btn-fill',
+                //     cancelButtonClass: 'md-button md-danger btn-fill',
+                //     confirmButtonText: 'Yes, delete it!',
+                //     buttonsStyling: false,
+                // }).then((result) => {
+                //     if (result.value) {
+                //         this.deleteRow(item);
+                //         swal({
+                //             title: 'Deleted!',
+                //             text: `You deleted ${item.name}`,
+                //             type: 'success',
+                //             confirmButtonClass: 'md-button md-success btn-fill',
+                //             buttonsStyling: false,
+                //         });
+                //     }
+                // });
             },
             deleteRow(item) {
                 const indexToDelete = this.tableData.findIndex(

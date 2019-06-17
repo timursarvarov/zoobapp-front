@@ -17,7 +17,19 @@
 //     },
 // };
 module.exports = {
+    devServer: {
+        watchOptions: {
+            poll: true,
+        },
+    },
     chainWebpack: (config) => {
+        const svgRule = config.module.rule('svg');
+
+        svgRule.uses.clear();
+
+        svgRule
+            .use('vue-svg-loader')
+            .loader('vue-svg-loader');
         config.module
             .rule('vue')
             .use('vue-loader')
@@ -26,5 +38,13 @@ module.exports = {
                 options.prettify = false;
                 return options;
             });
+    },
+    pluginOptions: {
+        i18n: {
+            locale: 'en',
+            fallbackLocale: 'en',
+            localeDir: 'locales',
+            enableInSFC: true,
+        },
     },
 };

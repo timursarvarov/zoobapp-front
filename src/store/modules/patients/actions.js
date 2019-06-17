@@ -6,6 +6,7 @@ import {
     PATIENTS_SUCCESS,
     PATIENTS_SET,
     PATIENTS_UPDATE_PATIENT,
+    PATIENTS_RESET,
 } from '@/constants';
 
 const CancelToken = axios.CancelToken;
@@ -39,11 +40,9 @@ export default {
                     if (params.toStore) {
                         commit(PATIENTS_SET, resp);
                     }
-                    console.log(resp)
                     resolve(resp);
                 })
                 .catch(err => {
-                    console.log(err)
                     commit(PATIENTS_ERROR);
                     reject(err);
                 });
@@ -67,5 +66,11 @@ export default {
             };
             commit(PATIENTS_UPDATE_PATIENT, payload);
         }
+    },
+    [PATIENTS_RESET]: ({
+        commit,
+        state,
+    }) => {
+        commit(PATIENTS_RESET);
     },
 };
