@@ -1,9 +1,7 @@
 <template lang="html">
   <div class="md-layout md-gutter set-diagnose-form">
-
         <div class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
             <div class="mx-auto" style="flex-grow:1;" ref="wrjaw">
-                {{ $t('main.title') }}
                 <jaw
                     :selectedTeeth="selectedTeeth"
                     @onSelectedTeeth='onSelectedTeeth'
@@ -19,86 +17,110 @@
                     :teethSystem="currentClinic.teethSystem"
                     :type="currentType"
                     >
-                        <div slot="title-start">
-
-                            <md-button @click="currentType = 'anamnesis'" :class="[{'md-info' : currentType === 'anamnesis' }, {'md-simple' :  currentType !== 'anamnesis' } ]" > anamnes</md-button>
-                            <md-button @click="currentType = 'diagnosis'"  :class="[{'md-primary' : currentType === 'diagnosis' }, {'md-simple' :  currentType !== 'diagnosis' } ]" > diagnos</md-button>
-                            <md-button @click="currentType = 'procedures'"  :class="[{'md-success' : currentType === 'procedures' }, {'md-simple' :  currentType !== 'procedures' } ]"> procedure</md-button>
-
-                        </div>
+                        <template slot="title-start">
+                            <span>Create new:</span>
+                                <md-button
+                                    @click="currentType = 'anamnesis'"
+                                    class="md-sm"
+                                    :class="[
+                                        {'md-info' : currentType === 'anamnesis' },
+                                        {'md-simple' :  currentType !== 'anamnesis' }
+                                        ]" >
+                                        anamnes
+                                        </md-button>
+                                <md-button
+                                    @click="currentType = 'diagnosis'"
+                                    class="md-sm"
+                                    :class="[
+                                        {'md-primary' : currentType === 'diagnosis' },
+                                        {'md-simple' :  currentType !== 'diagnosis' }
+                                        ]" >
+                                        diagnos
+                                        </md-button>
+                                <md-button
+                                    @click="currentType = 'procedures'"
+                                    class="md-sm"
+                                    :class="[
+                                        {'md-success' : currentType === 'procedures' },
+                                        {'md-simple' :  currentType !== 'procedures' }
+                                        ]">
+                                        procedure
+                                        </md-button>
+                        </template>
                     </jaw>
             </div>
     </div>
     <div class="md-layout-item md-layout md-small-size-100 md-xsmall-size-100 md-gutter md-medium-size-50 md-size-50">
         <t-collapse-search
-            :style="[{'max-height': jawHeight + 'px'}]" class="set-procedure-form"
+            :style="[{'max-height': `${jawHeight}px`}]" class="set-procedure-form"
             :items="originalItems[currentType]"
             :selectedTeeth="selectedTeeth"
             :favoriteItems="favoriteItems"
             :itemType="currentType"
+            :loading="itemsLoading[currentType]"
             :recalculateItems="recalculateCollapseItems"
             :jawHeight="jawHeight"
             :hideSlot="currentPlan.id === undefined && currentType === 'procedures'"
             @onSetFavoritem="setFavoriteItems"
             @onSelected="selectItem"
         >
-
-                    <md-field
-                    slot="title-start-1"
-                        v-if="currentType==='procedures'"
-                        class="no-margin">
-                            <label for="plans">Plans</label>
-                            <md-select
-                                @md-selected="changePLan"
-                                v-model="currentPlanId"
-                                name="plan" id="plan"
-                                :disabled="patient.plans.length<1"
-                            >
-                            <md-option
-                                v-for="(plan, index) in patient.plans"
-                                :key="index"
-                                :value="plan.id">{{plan.title}}</md-option>
-                            </md-select>
-                        </md-field>
-                        <div slot="title-start-2">
+                    <template slot="title-start-1">
+                            <md-field
+                                v-show="currentType==='procedures'"
+                                class="no-margin">
+                                    <label for="plans">Plans</label>
+                                    <md-select
+                                        @md-selected="changeCurrentPLan"
+                                        v-model="currentPlanId"
+                                        name="plan" id="plan"
+                                        :disabled="patient.plans.length<1"
+                                    >
+                                    <md-option
+                                        v-for="(plan, index) in patient.plans"
+                                        :key="index"
+                                        :value="plan.id">{{plan.title}}</md-option>
+                                    </md-select>
+                            </md-field>
+                    </template>
+                    <template slot="title-start-2">
                             <md-button
-                                v-if="currentType==='procedures'"
+                                v-show="currentType==='procedures'"
                                 key="addplan"
-                                class="md-primary md-just-icon md-simple md-round "
+                                class="md-success md-just-icon md-round md-sm md-simple"
                                 @click="showAddPlan = true"
                                 >
-                                <md-tooltip md-delay="1000">Add new plan</md-tooltip>
                                 <md-icon>add</md-icon>
                             </md-button>
-                        </div>
-                        <div   slot="empty-space">
-                            <md-empty-state
-                                    md-label="No created plans"
-                                    md-description="To implemet a procedure, you should firstly create a plan">
+                    </template>
+
+                    <div   slot="empty-space">
+                        <md-empty-state
+                                md-label="No created plans"
+                                md-description="To implemet a procedure, you should firstly create a plan">
                                     <md-button class="md-success md-raised" @click="showAddPlan = true">Create New Plan</md-button>
-                                </md-empty-state>
-                        </div>
+                            </md-empty-state>
+                    </div>
             </t-collapse-search>
     </div>
 
         <div    class="md-layout-item  md-size-100" >
                     <items-list
-                        v-show="currentType === 'anamnesis' || currentType === 'diagnosis'"
+                        v-if="currentType === 'anamnesis' || currentType === 'diagnosis'"
                         :items="currentItems"
                         @showItemInfo="showItemInfo"
                         @onJawChanged="recalculateJaw()"
                         @toggleItemVisibility="toggleItemVisibility"
                         :teethSystem="currentClinic.teethSystem"
                         :type="currentType"
+                        :fields="itemFields"
                         >
                     </items-list>
                     <tabs
-                            v-show="currentType === 'procedures' "
-                            v-if="patient.plans.length > 0"
+                            v-if="patient.plans.length > 0 && currentType === 'procedures' "
                             @onChangeTab="onChangeTab"
                             ref="tabs"
                             :tab-name="Object.values(patient.plans).map(e=>e.title)"
-                            color-button="warning"
+                            color-button="success"
                             class="procedures-tabs"
                         >
                             <!-- <h4
@@ -117,13 +139,17 @@
                                         :teethSystem="currentClinic.teethSystem"
                                         :type="currentType"
                                         :items="currentItems"
+                                        :fields="itemFields"
                                         >
                                     </items-list>
                                 </div>
                             </template>
                             <div slot="footer-actions">
                                         <md-button>
-                                            delete plan
+                                            Delete plan
+                                        </md-button>
+                                        <md-button>
+                                            Make primary
                                         </md-button>
                                     </div>
                     </tabs>
@@ -144,7 +170,7 @@
             :access_token="access_token"
             :files="files"
             :jaw='jaw'
-            :type="showParams.type"
+            :type="currentType"
             :currencyCode="clinic.currencyCode"
         />
         <plan-add-form
@@ -155,7 +181,6 @@
         <t-print-form
             :patient="patient"
             :showForm.sync="showPrint"/>
-
 
         <t-wizard-add-item
             v-if="showAddItemWizard"
@@ -168,10 +193,12 @@
             :teethSchema="teethSchema"
             :teethSystem="currentClinic.teethSystem"
             :isDialogVisible.sync="showAddItemWizard"
-            :locationType="currentType"
+            :itemType="currentType"
+            :singleItemName="singleItemName"
         />
+
         </div>
-  </div>
+    </div>
 
 </template>
 
@@ -188,11 +215,19 @@
         USER_SET_PARAM,
         PATIENT_ANAMNES_SET,
         PATIENT_PROCEDURE_UPDATE,
+        LOCATIONS,
+        CLINIC_DIAGNOSIS_GET,
+        CLINIC_PROCEDURES_GET,
     } from '@/constants';
     import PlanAddForm from './PlanAddForm.vue';
     import { mapGetters } from 'vuex';
     import {
-        TCollapseSearch, TToothItems, Jaw, Tabs, TPrintForm, TWizardAddItem,
+        TCollapseSearch,
+        TToothItems,
+        Jaw,
+        Tabs,
+        TPrintForm,
+        TWizardAddItem,
     } from '@/components';
     import ItemsList from './ItemsList.vue';
     import { tObjProp } from '@/mixins';
@@ -231,7 +266,6 @@
                 fuse: false,
                 showPrint: false,
                 filter: {},
-                diagnoseOriginal: [],
                 users: [],
                 selecteditemLocal: {},
                 ageCategory: 'adultTeeth',
@@ -240,14 +274,37 @@
                     anamnesis: [],
                     diagnosis: [],
                 },
+                itemsLoading: {
+                    procedures: false,
+                    diagnosis: false,
+                    anamnesis: false,
+                },
             };
         },
         methods: {
+            getItems() {
+                if (!this.clinic.diagnosis || this.originalItems.diagnosis.length <= 0) {
+                    this.itemsLoading[this.currentType] = true;
+                    this.$store.dispatch(CLINIC_DIAGNOSIS_GET).then(() => {
+                        this.setOriginalItems(['diagnosis']);
+                        this.itemsLoading[this.currentType] = false;
+                    });
+                }
+                if (!this.clinic.procedures || this.originalItems[this.currentType].length <= 0) {
+                    this.itemsLoading.procedures = true;
+                    this.itemsLoading.anamnesis = true;
+                    this.$store.dispatch(CLINIC_PROCEDURES_GET).then(() => {
+                        this.setOriginalItems(['anamnesis']);
+                        this.itemsLoading.procedures = false;
+                        this.itemsLoading.anamnesis = false;
+                    });
+                }
+            },
             onShowPrint() {
                 this.showPrint = true;
             },
             onChangeTab(index) {
-                this.changePLan(this.patient.plans[index].id);
+                this.changeCurrentPLan(this.patient.plans[index].id);
             },
             onChangeAgeCategory(category) {
                 this.selectedTeeth = [];
@@ -257,30 +314,57 @@
                     this.ageCategory = 'adultTeeth';
                 }
             },
-            setOriginalItems() {
-                this.originalItems.anamnesis = this.filterItems(this.procedures, false);
-                this.originalItems.diagnosis = this.filterItems(this.diagnosis, true);
-                this.originalItems.procedures = this.filterItems(this.procedures, true);
+            setOriginalItems(types) {
+                if (types.includes('diagnosis') && this.originalItems.diagnosis) {
+                    this.originalItems.diagnosis = this.filterItems(
+                        this.clinic.diagnosis,
+                        true,
+                        'diagnosis',
+                    );
+                }
+                if ((types.includes('anamnesis') || types.includes('procedures')) && this.originalItems.procedures) {
+                    this.originalItems.anamnesis = this.filterItems(
+                        this.clinic.procedures,
+                        false,
+                        'anamnesis',
+                    );
+
+                    this.originalItems.procedures = this.filterItems(
+                        this.clinic.procedures,
+                        true,
+                        'procedures',
+                    );
+                }
                 this.recalculateCollapseItems = !this.recalculateCollapseItems;
             },
-            filterItems(items, available) {
-                const filteredItems = [];
-                items.forEach((itemsGroup) => {
-                    const group = {};
-                    group.code = itemsGroup.code;
-                    group.title = itemsGroup.title;
-                    group.codes = [];
-                    itemsGroup.codes.forEach((item) => {
-                        if ((item.ageCategory.includes(this.ageCategory)) && (item.available || !available)) {
-                            group.codes.push({
-                                ...item,
-                            });
-                        }
-                    });
-                    if (group.codes.length > 0) {
-                        filteredItems.push(group);
+
+            filterItems(items = [], available, type) {
+                let filteredItems = [];
+                let localType = type;
+                if (type === 'anamnesis') {
+                    localType = 'procedures';
+                }
+                items.forEach((item) => {
+                    let groupIndex = filteredItems.findIndex(el => el.code === item.categoryCode);
+                    if (groupIndex === -1) {
+                        groupIndex = (filteredItems.push({
+                            code: item.categoryCode,
+                            title: this.$t(`${localType}.categories.${item.categoryCode}.title`),
+                            codes: [],
+                        }) - 1);
+                    }
+                    if (
+                        ((type === 'anamnesis' || (item.available || !available)) && LOCATIONS[item.templateID].ageCategory.includes(this.ageCategory))
+                    ) {
+                        filteredItems[groupIndex].codes.push({
+                            ...LOCATIONS[item.code],
+                            code: item.code,
+                            title: this.$t(`${localType}.${item.ID}.title`),
+                            description: this.$t(`${localType}.${item.ID}.description`),
+                        });
                     }
                 });
+                filteredItems = filteredItems.filter(el => el.codes.length !== 0);
                 return filteredItems;
             },
             editItem(item, type) {
@@ -320,9 +404,7 @@
                 this.showToothDiagnosis = true;
             },
             setFavoriteItems(items) {
-                const index = this.favoriteItems.findIndex(
-                    d => d === items.code,
-                );
+                const index = this.favoriteItems.findIndex(d => d === items.code);
                 if (this.currentType === 'diagnosis') {
                     if (index === -1) {
                         this.favoriteDiagnosis.unshift(items.code);
@@ -482,23 +564,14 @@
                             },
                         });
                     } else {
-                        Object.values(this[this.currentType]).forEach((group) => {
+                        Object.values(this.originalItems[this.currentType]).forEach((group) => {
                             group.codes.forEach((itemOrigin) => {
                                 if (itemOrigin.code === item.constCode) {
                                     this.selecteditemLocal = itemOrigin;
+                                    this.showAddItemWizard = true;
                                 }
                             });
                         });
-                        if (this.currentType === 'diagnosis') {
-                            this.showAddDiagnoseWizard = true;
-                        }
-                        if (this.currentType === 'anamnesis') {
-                            this.showAddAnamnesWizard = true;
-                        }
-                        if (this.currentType === 'procedures') {
-                            this.showAddProcedureWizard = true;
-                        }
-                        this.showAddItemWizard = true;
                     }
                 }
             },
@@ -507,22 +580,21 @@
                     this.jawHeight = this.$refs.wrjaw.clientHeight;
                 }
             },
-            changePLan(planId) {
+            changePLan(planId, key, value) {
+                this.$store.dispatch(PATIENT_PLAN_EDIT, {
+                    planId,
+                    key,
+                    value,
+                });
+            },
+            changeCurrentPLan(planId) {
                 if (planId) {
                     this.patient.plans.forEach((plan) => {
                         if (plan.id !== planId && plan.showInJaw) {
-                            this.$store.dispatch(PATIENT_PLAN_EDIT, {
-                                planId: plan.id,
-                                key: 'showInJaw',
-                                value: false,
-                            });
+                            this.changePLan(plan.id, 'showInJaw', false);
                         }
                     });
-                    this.$store.dispatch(PATIENT_PLAN_EDIT, {
-                        planId,
-                        key: 'showInJaw',
-                        value: true,
-                    });
+                    this.changePLan(planId, 'showInJaw', true);
                     this.recalculateJaw();
                 }
             },
@@ -651,6 +723,16 @@
                 }
                 return this.favoriteDiagnosis;
             },
+            itemFields() {
+                // возможные поля ['code', 'title', 'teeth', 'author', 'manipulations', 'date'];
+                if (this.currentType === 'anamnesis') {
+                    return ['code', 'title', 'teeth', 'author', 'manipulations', 'date'];
+                }
+                if (this.currentType === 'procedures') {
+                    return ['code', 'title', 'teeth', 'author', 'manipulations', 'date'];
+                }
+                return ['code', 'title', 'teeth', 'author', 'manipulations', 'date'];
+            },
             steps() {
                 if (this.currentType === 'anamnesis') {
                     return ['locations', 'files', 'description'];
@@ -658,7 +740,22 @@
                 if (this.currentType === 'diagnosis') {
                     return ['locations', 'files', 'description'];
                 }
-                return ['locations', 'manipulations', 'files', 'description', 'appointments'];
+                return [
+                    'locations',
+                    'manipulations',
+                    'files',
+                    'description',
+                    'appointments',
+                ];
+            },
+            singleItemName() {
+                if (this.currentType === 'anamnesis') {
+                    return 'anamnes';
+                }
+                if (this.currentType === 'diagnosis') {
+                    return 'diagnose';
+                }
+                return 'procedure';
             },
             currentPlan() {
                 const index = this.patient.plans.findIndex(p => p.showInJaw);
@@ -684,24 +781,30 @@
             },
         },
         mounted() {
-            console.log(this.$t('main.title'));
-            // console.log(JSON.stringify(this.diagnosis));
             window.addEventListener('resize', this.matchHeight);
             this.$nextTick(() => {
                 this.matchHeight();
             });
-            this.setOriginalItems();
             this.selectPlan(this.currentPlan);
+            this.getItems();
         },
         watch: {
             ageCategory() {
-                this.setOriginalItems();
+                this.setOriginalItems(['anamnesis', 'diagnosis']);
             },
+            // eslint-disable-next-line func-names
+            '$i18n.locale': function () {
+                this.setOriginalItems(['anamnesis', 'diagnosis']);
+            },
+
         },
     };
 </script>
 <style lang="scss">
 .set-diagnose-form {
+    .md-sm{
+
+    }
     .set-procedure-form {
         margin-right: 15px;
     }
@@ -715,10 +818,10 @@
         padding-top: 7px;
         margin-left: 17px;
     }
-    .tab-content>div{
+    .tab-content > div {
         flex-grow: 1;
     }
-    .md-card{
+    .md-card {
         box-shadow: none;
     }
 }

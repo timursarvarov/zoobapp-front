@@ -4,7 +4,6 @@
         <div
             class="md-layout-item md-size-33 md-medium-size-50 md-small-size-70 md-xsmall-size-100"
         >
-            <form>
                 <md-card>
                     <md-card-header class="md-card-header-icon md-card-header-green">
                         <div class="card-icon">
@@ -13,7 +12,7 @@
                         <h4 class="title">Select Clinic</h4>
                     </md-card-header>
 
-                    <md-card-content class="md-layout">
+                    <md-card-content >
                         <div class="md-layout-item md-size-100">
                             <md-list>
                                 <md-list-item v-for="(clinic, index) in clinics" :key="index">
@@ -25,15 +24,14 @@
                             </md-list>
                         </div>
                     </md-card-content>
-                    <div class="actions md-layout md-gutter">
-                        <md-button
-                            :disabled="!checkedClinicId"
-                            @click="setClinic()"
-                            class="ml-auto md-success"
-                        >Choose</md-button>
-                    </div>
+                    <md-card-actions>
+                            <md-button
+                                :disabled="!checkedClinicId"
+                                @click="setClinic()"
+                                class="md-success"
+                            >Choose</md-button>
+                    </md-card-actions>
                 </md-card>
-            </form>
         </div>
     </div>
 </template>

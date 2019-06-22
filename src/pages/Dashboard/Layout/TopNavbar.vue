@@ -183,6 +183,29 @@
                                             <li>
                                                 <a
                                                     class="dropdown-toggle"
+                                                    :class="{'open': multiLevel1}"
+                                                    @click="multiLevel1 = !multiLevel1"
+                                                >{{$i18n.locale }}</a>
+                                                <ul class="dropdown-menu">
+                                                    <li @click="$i18n.locale = 'ru' "
+                                                        :class="[{'selected-menu-top-navbar': $i18n.locale === 'ru' }]"
+                                                    >
+                                                        <a :style="{color:  $i18n.locale === 'ru' ? '#fff!important': ''}"
+                                                            href="#"
+                                                        >ru</a>
+                                                    </li>
+                                                    <li @click="$i18n.locale = 'en' "
+                                                        :class="[{'selected-menu-top-navbar': $i18n.locale === 'en' }]"
+                                                    >
+                                                        <a :style="{color:  $i18n.locale === 'en' ? '#fff!important': ''}"
+                                                            href="#"
+                                                        >en</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="dropdown-toggle"
                                                     :class="{'open': multiLevel}"
                                                     @click="toggleMultiLevel"
                                                 >Change Clinic</a>
@@ -233,7 +256,8 @@ export default {
             searchTerm: "",
             patients: [],
             searching: false,
-            multiLevel: false
+            multiLevel: false,
+            multiLevel1: false
         };
     },
     methods: {
@@ -354,6 +378,7 @@ export default {
             currnentClinic: "getCurrentClinic",
             accessToken: 'fetchStateAccessToken',
             expiresAt: 'expiresAt',
+            lang: 'getLang'
         })
     }
 };

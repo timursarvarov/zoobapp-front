@@ -6,6 +6,8 @@ import {
     CLINIC_SET_PROPS,
     CLINIC_LOGO_UPLOAD,
     CLINIC_UPDATE,
+    CLINIC_DIAGNOSIS_GET,
+    CLINIC_PROCEDURES_GET,
     CLINIC_AUTH_REQUEST,
     AUTH_DECODE_TOKEN,
     AUTH_SUCCESS,
@@ -66,6 +68,8 @@ export default {
                         dispatch(AUTH_SUCCESS, { resp });
                         dispatch(AUTH_DECODE_TOKEN);
                         dispatch(USER_REQUEST);
+                        dispatch(CLINIC_DIAGNOSIS_GET);
+                        dispatch(CLINIC_PROCEDURES_GET);
                         dispatch(PATIENTS_RESET);
                         dispatch(PATIENT_RESET);
                         resolve(resp);
@@ -129,4 +133,40 @@ export default {
                 });
         });
     },
+    [CLINIC_DIAGNOSIS_GET]: ({
+        commit,
+    }) => new Promise((resolve, reject) => {
+        commit(CLINIC_REQUEST);
+        axios.get(`/organization/diagnoses/`)
+            .then((resp) => {
+                commit(CLINIC_SET_PROPS, {
+                    type: 'diagnosis',
+                    value: resp.data
+                });
+                commit(CLINIC_SUCCESS);
+                resolve(resp.data);
+            })
+            .catch((err) => {
+                commit(CLINIC_ERROR);
+                reject(err);
+            });
+    }),
+    [CLINIC_PROCEDURES_GET]: ({
+        commit,
+    }) => new Promise((resolve, reject) => {
+        commit(CLINIC_REQUEST);
+        axios.get(`/organization/procedures/`)
+            .then((resp) => {
+                commit(CLINIC_SET_PROPS, {
+                    type: 'procedures',
+                    value: resp.data
+                });
+                commit(CLINIC_SUCCESS);
+                resolve(resp.data);
+            })
+            .catch((err) => {
+                commit(CLINIC_ERROR);
+                reject(err);
+            });
+    }),
 };

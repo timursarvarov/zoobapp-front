@@ -1,5 +1,5 @@
 import DIAGNOSISL from './diagnosis';
-import DIAGNOSIS_BACKL from './diagnosis-back';
+// import DIAGNOSIS_BACKL from './diagnosis-back';
 import PROCEDURESL from './procedures';
 import LOCATIONSL from './locations';
 import MANIPULATIONSl from './manipulations';
@@ -20,7 +20,7 @@ import TEETH_ALLL from './teeth-all';
 import TIMEZONESL from './timezones';
 import COMMON_CURRENCYL from './common-currency';
 
-export const DIAGNOSIS_BACK = DIAGNOSIS_BACKL;
+// export const DIAGNOSIS_BACK = DIAGNOSIS_BACKL;
 export const DIAGNOSIS = DIAGNOSISL;
 export const PROCEDURES = PROCEDURESL;
 export const LOCATIONS = LOCATIONSL;
@@ -72,6 +72,10 @@ export const USER_SET_PARAM = 'USER_SET_PARAM';
 export const USER_UPDATE_PASSWORD = 'USER_UPDATE_PASSWORD';
 export const USER_SAVE_TO_LOCAL_STORAGE = 'USER_SAVE_TO_LOCAL_STORAGE';
 export const USER_REGISTER = 'USER_REGISTER';
+export const USER_PATIENTS_COLUMNS = 'USER_PATIENTS_COLUMNS';
+export const USER_DIAGNOSIS_COLUMNS = 'USER_DIAGNOSIS_COLUMNS';
+export const USER_ANAMNESIS_COLUMNS = 'USER_ANAMNESIS_COLUMNS';
+export const USER_PROCEDURES_COLUMNS = 'USER_PROCEDURES_COLUMNS';
 
 // Collaborators
 export const COLLABORATOR_REQUEST = 'COLLABORATOR_REQUEST';
@@ -85,6 +89,8 @@ export const NOTIFY = 'NOTIFY';
 // Loader
 export const LOADER_STOP = 'LOADER_STOP';
 export const LOADER_START = 'LOADER_START';
+export const LOADER_SWITCH_OFF = 'LOADER_SWITCH_OFF';
+export const LOADER_SWITCH_ON = 'LOADER_SWITCH_ON';
 
 // Patients
 export const PATIENTS_REQUEST = 'PATIENTS_REQUEST';
@@ -132,6 +138,8 @@ export const CLINIC_ERROR = 'CLINIC_ERROR';
 export const CLINIC_SET = 'CLINIC_SET';
 export const CLINIC_SET_PROPS = 'CLINIC_SET_PROPS';
 export const CLINIC_LOGO_UPLOAD = 'CLINIC_LOGO_UPLOAD';
+export const CLINIC_DIAGNOSIS_GET = 'CLINIC_DIAGNOSIS_GET';
+export const CLINIC_PROCEDURES_GET = 'CLINIC_PROCEDURES_GET';
 
 export const CLINICS_REQUEST = 'CLINICS_REQUEST';
 export const CLINICS_ERROR = 'CLINICS_ERROR';

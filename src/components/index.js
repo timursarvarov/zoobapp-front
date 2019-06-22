@@ -26,94 +26,96 @@ import TimeLineItem from './Timeline/TimeLineItem.vue';
 import Tabs from './Tabs.vue';
 import Collapse from './Collapse.vue';
 import Slider from './Slider.vue';
-import SimpleWizard from './Wizard/Wizard.vue';
+import SimpleWizard from './CustomComponents/Wizard/Wizard.vue';
 import WizardTab from './Wizard/WizardTab.vue';
 import AsyncWorldMap from './WorldMap/AsyncWorldMap.vue';
 
 import Pagination from './Pagination.vue';
 
 // import SidebarPlugin from './SidebarPlugin';
-import SidebarPluginJaw from './SidebarPluginJaw';
 
 import AnimatedNumber from './AnimatedNumber.vue';
 
-// Jaw Icons
-import IconAdult from './JawIcons/Icons/Adult.vue';
-import IconBase from './JawIcons/IconBase.vue';
-import IconAnalgesic from './JawIcons/Icons/Analgesic.vue';
-import IconBaby from './JawIcons/Icons/Baby.vue';
-import IconBrekets from './JawIcons/Icons/Brekets.vue';
-import IconCard from './JawIcons/Icons/Card.vue';
-import IconForceps from './JawIcons/Icons/Forceps.vue';
-import IconImplant from './JawIcons/Icons/Implant.vue';
-import IconInjection from './JawIcons/Icons/Injection.vue';
-import IconInsetJaw from './JawIcons/Icons/InsetJaw.vue';
-import IconObservation from './JawIcons/Icons/Observation.vue';
-import IconOpenMouth from './JawIcons/Icons/OpenMouth.vue';
-import IconPalmFace from './JawIcons/Icons/PalmFace.vue';
-import IconParadontit from './JawIcons/Icons/Paradontit.vue';
-import IconPoint from './JawIcons/Icons/Point.vue';
-import IconRootCanal from './JawIcons/Icons/RootCanal.vue';
-import IconSurvey from './JawIcons/Icons/Survey.vue';
-import IconTablets from './JawIcons/Icons/Tablets.vue';
-import IconToggleBottom from './JawIcons/Icons/ToggleBottom.vue';
-import IconToggleTop from './JawIcons/Icons/ToggleTop.vue';
-import IconToothBacteria from './JawIcons/Icons/ToothBacteria.vue';
-import IconToothBill from './JawIcons/Icons/ToothBill.vue';
-import IconToothBottle from './JawIcons/Icons/ToothBottle.vue';
-import IconToothBottom from './JawIcons/Icons/ToothBottom.vue';
-import IconToothCalendar from './JawIcons/Icons/ToothCalendar.vue';
-import IconToothCard from './JawIcons/Icons/ToothCard.vue';
-import IconToothCarries from './JawIcons/Icons/ToothCarries.vue';
-import IconToothClean from './JawIcons/Icons/ToothClean.vue';
-import IconToothCorons from './JawIcons/Icons/ToothCorons.vue';
-import IconToothCracked from './JawIcons/Icons/ToothCracked.vue';
-import IconToothDrop from './JawIcons/Icons/ToothDrop.vue';
-import IconToothExtraction from './JawIcons/Icons/ToothExtraction.vue';
-import IconToothHandCare from './JawIcons/Icons/ToothHandCare.vue';
-import IconToothHealth from './JawIcons/Icons/ToothHealth.vue';
-import IconToothIce from './JawIcons/Icons/ToothIce.vue';
-import IconToothInfo from './JawIcons/Icons/ToothInfo.vue';
-import IconToothInspected from './JawIcons/Icons/ToothInspected.vue';
-import IconToothLocked from './JawIcons/Icons/ToothLocked.vue';
-import IconToothPain from './JawIcons/Icons/ToothPain.vue';
-import IconToothPoint from './JawIcons/Icons/ToothPoint.vue';
-import IconToothProtected from './JawIcons/Icons/ToothProtected.vue';
-import IconToothRenew from './JawIcons/Icons/ToothRenew.vue';
-import IconToothSettings from './JawIcons/Icons/ToothSettings.vue';
-import IconToothSmall from './JawIcons/Icons/ToothSmall.vue';
-import IconToothStar from './JawIcons/Icons/ToothStar.vue';
-import IconToothSun from './JawIcons/Icons/ToothSun.vue';
-import IconToothTablet from './JawIcons/Icons/ToothTablet.vue';
-import IconToothTreated from './JawIcons/Icons/ToothTreated.vue';
-import IconToothTree from './JawIcons/Icons/ToothTree.vue';
-import IconToothWash from './JawIcons/Icons/ToothWash.vue';
-import IconToothWings from './JawIcons/Icons/ToothWings.vue';
-import IconToothWorld from './JawIcons/Icons/ToothWorld.vue';
-import IconToothRestovration from './JawIcons/Icons/ToothRestovration.vue';
-import JawDisplayble from './Jaw/JawDisplayble.vue';
-import Jaw from './Jaw/Jaw.vue';
-import JawAddLocations from './Jaw/JawAddLocations.vue';
-import Tooth from './Jaw/Tooth.vue';
+// Custom components
+import SidebarPluginJaw from './CustomComponents/SidebarPluginJaw';
 
-import TAutoComplite from './TAutoComplite.vue';
-import TAvatar from './TAvatar.vue';
-import TDropzone from './TDropzone.vue';
-import TAvatarInput from './TAvatarInput.vue';
-import TImageCropperForm from './TImageCropperForm.vue';
-import TCollapseSearch from './TCollapseSearch.vue';
-import TFilePreview from './TFilePreview/TFilePreview.vue';
-import TTableEditor from './TTableEditor.vue';
-import TFilesList from './TFilesList.vue';
-import TToothItems from './TToothItems.vue';
-import TFilesAddForm from './TFilesAddForm.vue';
-import TPrintForm from './TPrintForm/TPrintForm.vue';
-import TWuswug from './TWuswug.vue';
-import TItemDescription from './TWizard/TWizardItems/TItemDescription.vue';
-import TItemFiles from './TWizard/TWizardItems/TItemFiles.vue';
-import TItemManipulations from './TWizard/TWizardItems/TItemManipulations.vue';
-import TItemToothLocations from './TWizard/TWizardItems/TItemToothLocations.vue';
-import TWizardAddItem from './TWizard/TWizardAddItem.vue';
+import IconAdult from './CustomComponents/JawIcons/Icons/Adult.vue';
+import IconBase from './CustomComponents/JawIcons/IconBase.vue';
+import IconAnalgesic from './CustomComponents/JawIcons/Icons/Analgesic.vue';
+import IconBaby from './CustomComponents/JawIcons/Icons/Baby.vue';
+import IconBrekets from './CustomComponents/JawIcons/Icons/Brekets.vue';
+import IconCard from './CustomComponents/JawIcons/Icons/Card.vue';
+import IconForceps from './CustomComponents/JawIcons/Icons/Forceps.vue';
+import IconImplant from './CustomComponents/JawIcons/Icons/Implant.vue';
+import IconInjection from './CustomComponents/JawIcons/Icons/Injection.vue';
+import IconInsetJaw from './CustomComponents/JawIcons/Icons/InsetJaw.vue';
+import IconObservation from './CustomComponents/JawIcons/Icons/Observation.vue';
+import IconOpenMouth from './CustomComponents/JawIcons/Icons/OpenMouth.vue';
+import IconPalmFace from './CustomComponents/JawIcons/Icons/PalmFace.vue';
+import IconParadontit from './CustomComponents/JawIcons/Icons/Paradontit.vue';
+import IconPoint from './CustomComponents/JawIcons/Icons/Point.vue';
+import IconRootCanal from './CustomComponents/JawIcons/Icons/RootCanal.vue';
+import IconSurvey from './CustomComponents/JawIcons/Icons/Survey.vue';
+import IconTablets from './CustomComponents/JawIcons/Icons/Tablets.vue';
+import IconToggleBottom from './CustomComponents/JawIcons/Icons/ToggleBottom.vue';
+import IconToggleTop from './CustomComponents/JawIcons/Icons/ToggleTop.vue';
+import IconToothBacteria from './CustomComponents/JawIcons/Icons/ToothBacteria.vue';
+import IconToothBill from './CustomComponents/JawIcons/Icons/ToothBill.vue';
+import IconToothBottle from './CustomComponents/JawIcons/Icons/ToothBottle.vue';
+import IconToothBottom from './CustomComponents/JawIcons/Icons/ToothBottom.vue';
+import IconToothCalendar from './CustomComponents/JawIcons/Icons/ToothCalendar.vue';
+import IconToothCard from './CustomComponents/JawIcons/Icons/ToothCard.vue';
+import IconToothCarries from './CustomComponents/JawIcons/Icons/ToothCarries.vue';
+import IconToothClean from './CustomComponents/JawIcons/Icons/ToothClean.vue';
+import IconToothCorons from './CustomComponents/JawIcons/Icons/ToothCorons.vue';
+import IconToothCracked from './CustomComponents/JawIcons/Icons/ToothCracked.vue';
+import IconToothDrop from './CustomComponents/JawIcons/Icons/ToothDrop.vue';
+import IconToothExtraction from './CustomComponents/JawIcons/Icons/ToothExtraction.vue';
+import IconToothHandCare from './CustomComponents/JawIcons/Icons/ToothHandCare.vue';
+import IconToothHealth from './CustomComponents/JawIcons/Icons/ToothHealth.vue';
+import IconToothIce from './CustomComponents/JawIcons/Icons/ToothIce.vue';
+import IconToothInfo from './CustomComponents/JawIcons/Icons/ToothInfo.vue';
+import IconToothInspected from './CustomComponents/JawIcons/Icons/ToothInspected.vue';
+import IconToothLocked from './CustomComponents/JawIcons/Icons/ToothLocked.vue';
+import IconToothPain from './CustomComponents/JawIcons/Icons/ToothPain.vue';
+import IconToothPoint from './CustomComponents/JawIcons/Icons/ToothPoint.vue';
+import IconToothProtected from './CustomComponents/JawIcons/Icons/ToothProtected.vue';
+import IconToothRenew from './CustomComponents/JawIcons/Icons/ToothRenew.vue';
+import IconToothSettings from './CustomComponents/JawIcons/Icons/ToothSettings.vue';
+import IconToothSmall from './CustomComponents/JawIcons/Icons/ToothSmall.vue';
+import IconToothStar from './CustomComponents/JawIcons/Icons/ToothStar.vue';
+import IconToothSun from './CustomComponents/JawIcons/Icons/ToothSun.vue';
+import IconToothTablet from './CustomComponents/JawIcons/Icons/ToothTablet.vue';
+import IconToothTreated from './CustomComponents/JawIcons/Icons/ToothTreated.vue';
+import IconToothTree from './CustomComponents/JawIcons/Icons/ToothTree.vue';
+import IconToothWash from './CustomComponents/JawIcons/Icons/ToothWash.vue';
+import IconToothWings from './CustomComponents/JawIcons/Icons/ToothWings.vue';
+import IconToothWorld from './CustomComponents/JawIcons/Icons/ToothWorld.vue';
+import IconToothRestovration from './CustomComponents/JawIcons/Icons/ToothRestovration.vue';
+import JawDisplayble from './CustomComponents/Jaw/JawDisplayble.vue';
+import Jaw from './CustomComponents/Jaw/Jaw.vue';
+import JawAddLocations from './CustomComponents/Jaw/JawAddLocations.vue';
+import Tooth from './CustomComponents/Jaw/Tooth.vue';
+
+import TAutoComplite from './CustomComponents/TAutoComplite.vue';
+import TAvatar from './CustomComponents/TAvatar.vue';
+import TDropzone from './CustomComponents/TDropzone.vue';
+import TAvatarInput from './CustomComponents/TAvatarInput.vue';
+import TImageCropperForm from './CustomComponents/TImageCropperForm.vue';
+import TCollapseSearch from './CustomComponents/TCollapseSearch.vue';
+import TFilePreview from './CustomComponents/TFilePreview/TFilePreview.vue';
+import TTableEditor from './CustomComponents/TTableEditor.vue';
+import TFilesList from './CustomComponents/TFilesList.vue';
+import TToothItems from './CustomComponents/TToothItems.vue';
+import TFilesAddForm from './CustomComponents/TFilesAddForm.vue';
+import TPrintForm from './CustomComponents/TPrintForm/TPrintForm.vue';
+import TWuswug from './CustomComponents/TWuswug.vue';
+import TItemDescription from './CustomComponents/TWizard/TWizardItems/TItemDescription.vue';
+import TItemFiles from './CustomComponents/TWizard/TWizardItems/TItemFiles.vue';
+import TItemManipulations from './CustomComponents/TWizard/TWizardItems/TItemManipulations.vue';
+import TItemToothLocations from './CustomComponents/TWizard/TWizardItems/TItemToothLocations.vue';
+import TWizardAddItem from './CustomComponents/TWizard/TWizardAddItem.vue';
+import TCalendar from './CustomComponents/TCalendar.vue';
 
 // For Dev Use Only
 
@@ -204,6 +206,7 @@ export {
     IconToothWings,
     IconToothWorld,
     IconToothRestovration,
+    TCalendar,
     TAutoComplite,
     TAvatar,
     TDropzone,
@@ -219,10 +222,12 @@ export {
     TFilesList,
     JawDisplayble,
     TWuswug,
-    TItemDescription,
-    TItemFiles,
-    TItemManipulations,
-    TItemToothLocations,
+
+    // TItemDescription,
+    // TItemFiles,
+    // TItemManipulations,
+    // TItemToothLocations,
     TWizardAddItem,
+
     JawGenerator,
 };

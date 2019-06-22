@@ -7,6 +7,7 @@ import {
     PATIENTS_SET,
     PATIENTS_UPDATE_PATIENT,
     PATIENTS_RESET,
+    LOADER_SWITCH_OFF,
 } from '@/constants';
 
 const CancelToken = axios.CancelToken;
@@ -16,13 +17,15 @@ export default {
 
 
     [PATIENTS_REQUEST]: ({
-        commit
+        commit,
+        dispatch
     }, {
         params
     }) => {
         return new Promise((resolve, reject) => {
             if (cancel) { cancel(); }
             commit(PATIENTS_REQUEST);
+            dispatch(LOADER_SWITCH_OFF)
             axios.get('/patients/', {
                     params: {
                         perPage: parseInt(params.perPage, 10),

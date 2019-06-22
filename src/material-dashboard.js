@@ -14,7 +14,7 @@ import GlobalDirectives from './globalDirectives';
 // Tabs plugin. Used on Panels page.
 
 // Sidebar on the right. Used as a local plugin in DashboardLayout.vue
-import SideBarJaw from './components/SidebarPluginJaw';
+import SideBarJaw from './components/CustomComponents/SidebarPluginJaw';
 // Global Add Patient Form
 import { PatientAddForm } from './pages/Dashboard/Modals';
 // import ClinicAddForm from './pages/Dashboard/Modals';
@@ -31,13 +31,13 @@ import './assets/css/demo.css';
 import 'es6-promise/auto';
 
 export default {
-  install(Vue) {
-    Vue.use(store);
-    Vue.use(GlobalComponents);
-    Vue.use(GlobalDirectives);
-    Vue.use(VueMaterial);
-    Vue.use(SideBarJaw);
-    Vue.use(PatientAddForm);
-    Vue.use(Notifications);
-  },
+    install(Vue) {
+        Vue.use(store);
+        Vue.use(GlobalComponents);
+        Vue.use(GlobalDirectives);
+        Vue.use(VueMaterial);
+        Vue.use(SideBarJaw);
+        Vue.use(PatientAddForm);
+        Vue.use(Notifications);
+    },
 };

@@ -16,18 +16,17 @@
                 getNotify: 'getNotify',
                 refreshTokenExist: 'fetchStateRefreshToken',
                 isProfileLoaded: 'isProfileLoaded',
-                user: 'getProfile',
+                lang: 'getLang',
             }),
         },
         mounted() {
+            this.$i18n.locale = this.lang;
+            console.log(this.$i18n.locale);
+            console.log(this.lang);
             if (this.refreshTokenExist) {
                 this.$store.dispatch(AUTH_INIT);
-            }
-            if (this.user.lang === 1) {
-                this.$i18n.locale = 'en';
-            }
-            if (this.user.lang === 2) {
-                this.$i18n.locale = 'ru';
+            } else {
+                this.$router.push('/login');
             }
         },
         watch: {

@@ -36,6 +36,7 @@ Object.defineProperty(Vue.prototype, '$Chartist', {
     },
 });
 
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',

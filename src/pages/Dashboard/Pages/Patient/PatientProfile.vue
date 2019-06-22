@@ -3,40 +3,27 @@
         <template slot="content">
             <!-- <span class="md-nav-tabs-title">Set new:</span> -->
             <md-tabs :class="['md-' + currentTabColor()]" md-alignment="left">
-                <md-tab
-                    id="tab-anamnes"
-                    md-icon="history"
-                    md-label="BIO"
-                >
-                     <div class="md-layout ">
+                <md-tab id="tab-anamnes" md-icon="account_box" md-label="BIO">
+                    <div class="md-layout">
                         <patient-card/>
                     </div>
                 </md-tab>
 
-                <md-tab
-                    id="tab-diagnose"
-                    md-icon="create"
-                    md-label="Treatment"
-                >
-                    <div class="md-layout ">
+                <md-tab id="tab-diagnose" md-icon="local_hospital" md-label="Treatment">
+                    <div class="md-layout">
                         <patient-treatment/>
                     </div>
                 </md-tab>
 
-                <md-tab
-                    id="tab-notes"
-                    md-icon="question_answer"
-                    md-label="Notes"
-                >
-                    <notes></notes>
+                <md-tab id="tab-notes" md-icon="question_answer" md-label="Notes">
+                    <notes/>
                 </md-tab>
-                <md-tab
-                    id="tab-files"
-                    md-icon="folder_shared"
-                    md-label="Files"
-                >
-                    <patient-files></patient-files>
+                <md-tab id="tab-files" md-icon="folder_shared" md-label="Files">
+                    <patient-files/>
                 </md-tab>
+                <md-tab id="tab-billing" md-icon="account_balance" md-label="Billing">
+                    <patient-billing/>
+                </md-tab>s
             </md-tabs>
         </template>
     </nav-tabs-card>
@@ -44,7 +31,7 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    import { NavTabsCard  } from '@/components';
+    import { NavTabsCard } from '@/components';
     import { PATIENT_GET, NOTIFY } from '@/constants';
 
     import {
@@ -52,7 +39,7 @@
         Notes,
         PatientFiles,
         PatientCard,
-
+        PatientBilling,
     } from '@/pages';
 
     export default {
@@ -62,6 +49,7 @@
             Notes,
             PatientFiles,
             PatientCard,
+            PatientBilling,
         },
         name: 'PatientProfile',
         data() {
@@ -136,9 +124,9 @@
     .text-right {
         display: flex;
     }
-    .md-tabs-navigation{
+    .md-tabs-navigation {
         padding: 15px;
-        .md-button{
+        .md-button {
             min-width: 100px;
         }
     }

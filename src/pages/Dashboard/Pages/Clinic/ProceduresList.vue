@@ -68,7 +68,7 @@
                 md-sort-by="title"
               >
               {{ item.title }}<br/>
-              {{item.explain}}
+              {{item.description}}
               </md-table-cell>
               <md-table-cell md-label="Price">{{ item.price }}</md-table-cell>
               <md-table-cell md-label="Salary">{{ item.salary }}</md-table-cell>

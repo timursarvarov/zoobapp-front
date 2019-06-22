@@ -1,0 +1,1916 @@
+{
+	"diagnosis": {
+		"1": {
+			"code": "K00.0",
+			"description": "Congenital absence of the teeth; it may involve all (total anodontia) or only some of the teeth (partial anodontia, hypodontia), and both the deciduous and the permanent dentition, or only teeth of the permanent dentition.",
+			"title": "Anodontia"
+		},
+		"2": {
+			"code": "K00.1",
+			"description": "An extra tooth, erupted or unerupted, resembling or unlike the other teeth in the group to which it belongs. Its presence may cause malposition of adjacent teeth or prevent their eruption.",
+			"title": "Mesiodens"
+		},
+		"3": {
+			"code": "K00.2",
+			"description": "Anomaly of the tooth, found chiefly in upper lateral incisors. It is characterized by invagination of the enamel at the incisal edge. Two teeth united during development by the union of their tooth germs; the teeth may be joined by the enamel of their crowns, by their root dentin, or by both",
+			"title": "Abnormalities of size and form of teeth"
+		},
+		"4": {
+			"code": "K00.3",
+			"description": "A chronic endemic form of hypoplasia of the dental enamel caused by drinking water with a high fluorine content during the time of tooth formation, and characterized by defective calcification that gives a white chalky appearance to the enamel, which gradually undergoes brown discoloration. (jablonski s dictionary of dentistry, 1992, p286)A condition that results from excessive fluorine intake during tooth development. Presentation of this disorder can range from white streaks to brown stains and cracks or pits in the tooth enamel.",
+			"title": "Mottled teeth"
+		},
+		"5": {
+			"code": "K00.4",
+			"description": "A localized arrested tooth development which appears to involve most commonly the anterior teeth, usually on one side of the midline, most often the maxillary central and lateral incisors. Roentgenographically, the teeth have a ghostlike appearance. Calcification and bits of prismatic enamel may be found in the pulp and the enamel is thin and absent in part. (jablonski, illustrated dictionary of dentistry, 1982)",
+			"title": "Disturbances in tooth formation"
+		},
+		"6": {
+			"code": "K00.5",
+			"description": "A clinically and genetically heterogeneous group of hereditary conditions characterized by malformed dental enamel, usually involving dental enamel hypoplasia and/or tooth hypomineralization.\n                A congenital tooth development disorder caused by mutations in the DSP gene. The teeth are weak, discoloured, and translucent.\n                An apparently hereditary disorder of dentin formation, marked by a normal appearance of coronal dentin associated with pulpal obliteration, faulty root formation, and a tendency for peripheral lesions without an obvious cause. (from Dorland, 27th ed)\n                An autosomal dominant disorder of tooth development characterized by opalescent dentin resulting in discolouration of the teeth. The dentin develops poorly with low mineral content while the pulp canal is obliterated.",
+			"title": "Hereditary disturbances in tooth structure, not elsewhere classified"
+		},
+		"7": {
+			"code": "K00.6",
+			"description": "Predeciduous teeth present at birth. They may be well-formed and normal or may represent hornified epithelial structures without roots. They are found on the gingivae over the crest of the ridge and arise from accessory buds of the dental lamina ahead of the deciduous buds or from buds of the accessory dental lamina.",
+			"title": "Disturbances in tooth eruption"
+		},
+		"8": {
+			"code": "K00.7",
+			"description": "",
+			"title": "Teething syndrome"
+		},
+		"9": {
+			"code": "K00.8",
+			"description": "Applicable To Colour changes during tooth formation, Intrinsic staining of teeth NOS",
+			"explainRID": "",
+			"templateCode": "",
+			"title": "Other disorders of tooth development"
+		},
+		"10": {
+			"code": "K00.9",
+			"description": "A disorder characterized by a pathological process of the teeth occurring during tooth development. A disorder of the teeth arising during odontogenesis.",
+			"explainRID": "",
+			"templateCode": "",
+			"title": "Disorder of tooth development, unspecified"
+		},
+		"11": {
+			"code": "K01.0",
+			"description": "A condition in which a tooth is so crowded in its socket that it cannot erupt normally.",
+			"title": "Embedded teeth"
+		},
+		"12": {
+			"code": "K01.1",
+			"description": "A tooth that is prevented from erupting by a physical barrier, usually other teeth. Impaction may also result from orientation of the tooth in an other than vertical position in the periodontal structures.",
+			"title": "Impacted teeth"
+		},
+		"13": {
+			"code": "K02.3",
+			"description": "A disorder characterized by the decay of a tooth, in which it becomes softened, discolored and/or porous.\n                Localized destruction of calcified tissue initiated on the tooth surface by decalcification of the enamel of the teeth, followed by enzymatic lysis of organic structures, leading to cavity formation that, if left untreated penetrates the enamel and dentin and may reach the pulp.\n                Localized destruction of the tooth surface initiated by decalcification of the enamel followed by enzymatic lysis of organic structures and leading to cavity formation. If left unchecked, the cavity may penetrate the enamel and dentin and reach the pulp. The three most prominent theories used to explain the etiology of the disease are that acids produced by bacteria lead to decalcification; that micro-organisms destroy the enamel protein; or that keratolytic micro-organisms produce chelates that lead to decalcification.\n                The decay of a tooth, in which it becomes softened, discolored, and/or porous.\n                You call it a cavity. Your dentist calls it tooth decay or dental caries. They're all names for a hole in your tooth. The cause of tooth decay is plaque, a sticky substance in your mouth made up mostly of germs. Tooth decay starts in the outer layer, called the enamel. Without a filling, the decay can get deep into the tooth and its nerves and cause a toothache or abscess. To help prevent cavities\n                brush your teeth every day with a fluoride toothpaste\n                clean between your teeth every day with floss or another type of between-the-teeth cleaner\n                snack smart - limit sugary snacks\n                see your dentist or oral health professional regularly",
+			"title": "Arrested dental caries"
+		},
+		"14": {
+			"code": "K02.51",
+			"description": "A disorder characterized by the decay of a tooth, in which it becomes softened, discolored and/or porous.\n                Localized destruction of calcified tissue initiated on the tooth surface by decalcification of the enamel of the teeth, followed by enzymatic lysis of organic structures, leading to cavity formation that, if left untreated penetrates the enamel and dentin and may reach the pulp.\n                Localized destruction of the tooth surface initiated by decalcification of the enamel followed by enzymatic lysis of organic structures and leading to cavity formation. If left unchecked, the cavity may penetrate the enamel and dentin and reach the pulp. The three most prominent theories used to explain the etiology of the disease are that acids produced by bacteria lead to decalcification; that micro-organisms destroy the enamel protein; or that keratolytic micro-organisms produce chelates that lead to decalcification.\n                The decay of a tooth, in which it becomes softened, discolored, and/or porous.\n                You call it a cavity. Your dentist calls it tooth decay or dental caries. They're all names for a hole in your tooth. The cause of tooth decay is plaque, a sticky substance in your mouth made up mostly of germs. Tooth decay starts in the outer layer, called the enamel. Without a filling, the decay can get deep into the tooth and its nerves and cause a toothache or abscess. To help prevent cavities\n                brush your teeth every day with a fluoride toothpaste\n                clean between your teeth every day with floss or another type of between-the-teeth cleaner\n                snack smart - limit sugary snacks\n                see your dentist or oral health professional regularly",
+			"title": "Dental caries on pit and fissure surface limited to enamel"
+		},
+		"15": {
+			"code": "K02.52",
+			"description": "A disorder characterized by the decay of a tooth, in which it becomes softened, discolored and/or porous.\n                Localized destruction of calcified tissue initiated on the tooth surface by decalcification of the enamel of the teeth, followed by enzymatic lysis of organic structures, leading to cavity formation that, if left untreated penetrates the enamel and dentin and may reach the pulp.\n                Localized destruction of the tooth surface initiated by decalcification of the enamel followed by enzymatic lysis of organic structures and leading to cavity formation. If left unchecked, the cavity may penetrate the enamel and dentin and reach the pulp. The three most prominent theories used to explain the etiology of the disease are that acids produced by bacteria lead to decalcification; that micro-organisms destroy the enamel protein; or that keratolytic micro-organisms produce chelates that lead to decalcification.\n                The decay of a tooth, in which it becomes softened, discolored, and/or porous.\n                You call it a cavity. Your dentist calls it tooth decay or dental caries. They're all names for a hole in your tooth. The cause of tooth decay is plaque, a sticky substance in your mouth made up mostly of germs. Tooth decay starts in the outer layer, called the enamel. Without a filling, the decay can get deep into the tooth and its nerves and cause a toothache or abscess. To help prevent cavities\n                brush your teeth every day with a fluoride toothpaste\n                clean between your teeth every day with floss or another type of between-the-teeth cleaner\n                snack smart - limit sugary snacks\n                see your dentist or oral health professional regularly",
+			"title": "Dental caries on pit and fissure surface penetrating into dentin"
+		},
+		"16": {
+			"code": "K02.53",
+			"description": "A disorder characterized by the decay of a tooth, in which it becomes softened, discolored and/or porous.\n                Localized destruction of calcified tissue initiated on the tooth surface by decalcification of the enamel of the teeth, followed by enzymatic lysis of organic structures, leading to cavity formation that, if left untreated penetrates the enamel and dentin and may reach the pulp.\n                Localized destruction of the tooth surface initiated by decalcification of the enamel followed by enzymatic lysis of organic structures and leading to cavity formation. If left unchecked, the cavity may penetrate the enamel and dentin and reach the pulp. The three most prominent theories used to explain the etiology of the disease are that acids produced by bacteria lead to decalcification; that micro-organisms destroy the enamel protein; or that keratolytic micro-organisms produce chelates that lead to decalcification.\n                The decay of a tooth, in which it becomes softened, discolored, and/or porous.\n                You call it a cavity. Your dentist calls it tooth decay or dental caries. They're all names for a hole in your tooth. The cause of tooth decay is plaque, a sticky substance in your mouth made up mostly of germs. Tooth decay starts in the outer layer, called the enamel. Without a filling, the decay can get deep into the tooth and its nerves and cause a toothache or abscess. To help prevent cavities\n                brush your teeth every day with a fluoride toothpaste\n                clean between your teeth every day with floss or another type of between-the-teeth cleaner\n                snack smart - limit sugary snacks\n                see your dentist or oral health professional regularly",
+			"title": "Dental caries on pit and fissure surface penetrating into pulp"
+		},
+		"17": {
+			"code": "K02.61",
+			"description": "A disorder characterized by the decay of a tooth, in which it becomes softened, discolored and/or porous.\n                Localized destruction of calcified tissue initiated on the tooth surface by decalcification of the enamel of the teeth, followed by enzymatic lysis of organic structures, leading to cavity formation that, if left untreated penetrates the enamel and dentin and may reach the pulp.\n                Localized destruction of the tooth surface initiated by decalcification of the enamel followed by enzymatic lysis of organic structures and leading to cavity formation. If left unchecked, the cavity may penetrate the enamel and dentin and reach the pulp. The three most prominent theories used to explain the etiology of the disease are that acids produced by bacteria lead to decalcification; that micro-organisms destroy the enamel protein; or that keratolytic micro-organisms produce chelates that lead to decalcification.\n                The decay of a tooth, in which it becomes softened, discolored, and/or porous.\n                You call it a cavity. Your dentist calls it tooth decay or dental caries. They're all names for a hole in your tooth. The cause of tooth decay is plaque, a sticky substance in your mouth made up mostly of germs. Tooth decay starts in the outer layer, called the enamel. Without a filling, the decay can get deep into the tooth and its nerves and cause a toothache or abscess. To help prevent cavities\n                brush your teeth every day with a fluoride toothpaste\n                clean between your teeth every day with floss or another type of between-the-teeth cleaner\n                snack smart - limit sugary snacks\n                see your dentist or oral health professional regularly",
+			"title": "Dental caries on smooth surfaceface limited to enamel"
+		},
+		"18": {
+			"code": "K02.62",
+			"description": "A disorder characterized by the decay of a tooth, in which it becomes softened, discolored and/or porous.\n                Localized destruction of calcified tissue initiated on the tooth surface by decalcification of the enamel of the teeth, followed by enzymatic lysis of organic structures, leading to cavity formation that, if left untreated penetrates the enamel and dentin and may reach the pulp.\n                Localized destruction of the tooth surface initiated by decalcification of the enamel followed by enzymatic lysis of organic structures and leading to cavity formation. If left unchecked, the cavity may penetrate the enamel and dentin and reach the pulp. The three most prominent theories used to explain the etiology of the disease are that acids produced by bacteria lead to decalcification; that micro-organisms destroy the enamel protein; or that keratolytic micro-organisms produce chelates that lead to decalcification.\n                The decay of a tooth, in which it becomes softened, discolored, and/or porous.\n                You call it a cavity. Your dentist calls it tooth decay or dental caries. They're all names for a hole in your tooth. The cause of tooth decay is plaque, a sticky substance in your mouth made up mostly of germs. Tooth decay starts in the outer layer, called the enamel. Without a filling, the decay can get deep into the tooth and its nerves and cause a toothache or abscess. To help prevent cavities\n                brush your teeth every day with a fluoride toothpaste\n                clean between your teeth every day with floss or another type of between-the-teeth cleaner\n                snack smart - limit sugary snacks\n                see your dentist or oral health professional regularly",
+			"title": "Dental caries on smooth surfaceenetrating into dentin"
+		},
+		"19": {
+			"code": "K02.63",
+			"description": "A disorder characterized by the decay of a tooth, in which it becomes softened, discolored and/or porous.\n                Localized destruction of calcified tissue initiated on the tooth surface by decalcification of the enamel of the teeth, followed by enzymatic lysis of organic structures, leading to cavity formation that, if left untreated penetrates the enamel and dentin and may reach the pulp.\n                Localized destruction of the tooth surface initiated by decalcification of the enamel followed by enzymatic lysis of organic structures and leading to cavity formation. If left unchecked, the cavity may penetrate the enamel and dentin and reach the pulp. The three most prominent theories used to explain the etiology of the disease are that acids produced by bacteria lead to decalcification; that micro-organisms destroy the enamel protein; or that keratolytic micro-organisms produce chelates that lead to decalcification.\n                The decay of a tooth, in which it becomes softened, discolored, and/or porous.\n                You call it a cavity. Your dentist calls it tooth decay or dental caries. They're all names for a hole in your tooth. The cause of tooth decay is plaque, a sticky substance in your mouth made up mostly of germs. Tooth decay starts in the outer layer, called the enamel. Without a filling, the decay can get deep into the tooth and its nerves and cause a toothache or abscess. To help prevent cavities\n                brush your teeth every day with a fluoride toothpaste\n                clean between your teeth every day with floss or another type of between-the-teeth cleaner\n                snack smart - limit sugary snacks\n                see your dentist or oral health professional regularly",
+			"title": "Dental caries on smooth surface penetrating into pulp"
+		},
+		"20": {
+			"code": "K02.7",
+			"description": "A disorder characterized by the decay of a tooth, in which it becomes softened, discolored and/or porous.\n                Localized destruction of calcified tissue initiated on the tooth surface by decalcification of the enamel of the teeth, followed by enzymatic lysis of organic structures, leading to cavity formation that, if left untreated penetrates the enamel and dentin and may reach the pulp.\n                Localized destruction of the tooth surface initiated by decalcification of the enamel followed by enzymatic lysis of organic structures and leading to cavity formation. If left unchecked, the cavity may penetrate the enamel and dentin and reach the pulp. The three most prominent theories used to explain the etiology of the disease are that acids produced by bacteria lead to decalcification; that micro-organisms destroy the enamel protein; or that keratolytic micro-organisms produce chelates that lead to decalcification.\n                The decay of a tooth, in which it becomes softened, discolored, and/or porous.\n                You call it a cavity. Your dentist calls it tooth decay or dental caries. They're all names for a hole in your tooth. The cause of tooth decay is plaque, a sticky substance in your mouth made up mostly of germs. Tooth decay starts in the outer layer, called the enamel. Without a filling, the decay can get deep into the tooth and its nerves and cause a toothache or abscess. To help prevent cavities\n                brush your teeth every day with a fluoride toothpaste\n                clean between your teeth every day with floss or another type of between-the-teeth cleaner\n                snack smart - limit sugary snacks\n                see your dentist or oral health professional regularly",
+			"title": "Dental root caries"
+		},
+		"21": {
+			"code": "K02.9",
+			"description": "A disorder characterized by the decay of a tooth, in which it becomes softened, discolored and/or porous.\n                Localized destruction of calcified tissue initiated on the tooth surface by decalcification of the enamel of the teeth, followed by enzymatic lysis of organic structures, leading to cavity formation that, if left untreated penetrates the enamel and dentin and may reach the pulp.\n                Localized destruction of the tooth surface initiated by decalcification of the enamel followed by enzymatic lysis of organic structures and leading to cavity formation. If left unchecked, the cavity may penetrate the enamel and dentin and reach the pulp. The three most prominent theories used to explain the etiology of the disease are that acids produced by bacteria lead to decalcification; that micro-organisms destroy the enamel protein; or that keratolytic micro-organisms produce chelates that lead to decalcification.\n                The decay of a tooth, in which it becomes softened, discolored, and/or porous.\n                You call it a cavity. Your dentist calls it tooth decay or dental caries. They're all names for a hole in your tooth. The cause of tooth decay is plaque, a sticky substance in your mouth made up mostly of germs. Tooth decay starts in the outer layer, called the enamel. Without a filling, the decay can get deep into the tooth and its nerves and cause a toothache or abscess. To help prevent cavities\n                brush your teeth every day with a fluoride toothpaste\n                clean between your teeth every day with floss or another type of between-the-teeth cleaner\n                snack smart - limit sugary snacks\n                see your dentist or oral health professional regularly",
+			"title": "Dental caries, unspecifie"
+		},
+		"22": {
+			"code": "K03.0",
+			"description": "",
+			"title": "Excessive attrition of teeth"
+		},
+		"23": {
+			"code": "K03.1",
+			"description": "The pathologic wearing away of the tooth substance by brushing, bruxism, clenching, and other mechanical causes. It is differentiated from tooth attrition in that this type of wearing away is the result of tooth-to-tooth contact, as in mastication, occurring only on the occlusal, incisal, and proximal surfaces. It differs also from tooth erosion, the progressive loss of the hard substance of a tooth by chemical processes not involving bacterial action. (from jablonski, dictionary of dentistry, 1992, p2)",
+			"title": "Abrasion of teeth"
+		},
+		"24": {
+			"code": "K03.2",
+			"description": "Progressive loss of the hard substance of a tooth by chemical processes that do not involve bacterial action.",
+			"title": "Erosion of teeth"
+		},
+		"25": {
+			"code": "K03.3",
+			"description": "Resorption of calcified dental tissue, involving demineralization due to reversal of the cation exchange and lacunar resorption by osteoclasts.\n                Resorption of calcified dental tissue, involving demineralization due to reversal of the cation exchange and lacunar resorption by osteoclasts. There are two types: external (as a result of tooth pathology) and internal (apparently initiated by a peculiar inflammatory hyperplasia of the pulp).",
+			"title": "Pathological resorption of teeth"
+		},
+		"26": {
+			"code": "K03.4",
+			"description": "A regressive change of teeth characterized by excessive development of secondary cementum on the tooth surface. It may occur on any part of the root, but the apical two-thirds are most commonly affected.",
+			"title": "Hypercementosis"
+		},
+		"27": {
+			"code": "K03.5",
+			"description": "Solid fixation of a tooth resulting from fusion of the cementum and alveolar bone, with obliteration of the periodontal ligament. It is uncommon in the deciduous dentition and very rare in permanent teeth.",
+			"title": "Ankylosis of teeth"
+		},
+		"28": {
+			"code": "K03.6",
+			"description": "A change in tooth color. Causes may be local or systemic and include tobacco use, foods, dental plaques, caries, restorative filling materials, trauma, medications, infections, hereditary diseases, and nutritional deficiencies.\n                A disorder characterized by a change in tooth hue or tint.\n                Accumulations of microflora that lead to pathological plaque and calculus which cause periodontal diseases. It can be considered a type of biofilms. It is subtly distinguished from the protective dental pellicle.\n                Any change in the hue, color, or translucency of a tooth due to any cause. Restorative filling materials, drugs (both topical and systemic), pulpal necrosis, or hemorrhage may be responsible. (jablonski, dictionary of dentistry, 1992, p253)\n                Hard or soft material deposited on a tooth surface, such as dental calculus or plaque and materia alba",
+			"title": "Deposits (accretions) on teeth"
+		},
+		"29": {
+			"code": "K03.7",
+			"description": "",
+			"title": "Posteruptive color changes of dental hard tissues"
+		},
+		"30": {
+			"code": "K03.81",
+			"description": "Incomplete fracture of any part of a tooth, characterized by pain during mastication and sensitivity to heat, cold, sweet or sour tastes, and alcohol; it is often undiagnosed because the tooth is usually x-ray negative and normal to pulp vitality tests.",
+			"title": "Cracked tooth"
+		},
+		"31": {
+			"code": "K03.89",
+			"description": "",
+			"title": "Other specified diseases of hard tissues of teeth"
+		},
+		"32": {
+			"code": "K03.9",
+			"description": "",
+			"title": "Disease of hard tissues of teeth, unspecified"
+		},
+		"33": {
+			"code": "K04.01",
+			"description": "Inflammation of the dental pulp, usually due to bacterial infection in dental caries, tooth fracture, or other conditions causing exposure of the pulp to bacterial invasion. Chemical irritants, thermal factors, hyperemic changes, and other factors may also cause pulpitis.\n                Inflammation of the dental pulp.",
+			"title": "Reversible pulpitis"
+		},
+		"34": {
+			"code": "K04.02",
+			"description": "Inflammation of the dental pulp, usually due to bacterial infection in dental caries, tooth fracture, or other conditions causing exposure of the pulp to bacterial invasion. Chemical irritants, thermal factors, hyperemic changes, and other factors may also cause pulpitis.\n                Inflammation of the dental pulp.",
+			"title": "Irreversible pulpitis"
+		},
+		"35": {
+			"code": "K04.1",
+			"description": "Death of pulp tissue with or without bacterial invasion. When the necrosis is due to ischemia with superimposed bacterial infection, it is referred to as pulp gangrene. When the necrosis is non-bacterial in origin, it is called pulp mummification.",
+			"title": "Necrosis of pulp"
+		},
+		"36": {
+			"code": "K04.2",
+			"description": "",
+			"title": "Pulp degeneration"
+		},
+		"37": {
+			"code": "K04.3",
+			"description": "",
+			"title": "Abnormal hard tissue formation in pulp"
+		},
+		"38": {
+			"code": "K04.4",
+			"description": "",
+			"title": "Acute apical periodontitis of pulpal origin"
+		},
+		"39": {
+			"code": "K04.5",
+			"description": "Inflammation of the periapical tissue. It includes general, unspecified, or acute nonsuppurative inflammation. Chronic nonsuppurative inflammation is periapical granuloma. Suppurative inflammation is periapical abscess.",
+			"title": "Chronic apical periodontitis"
+		},
+		"40": {
+			"code": "K04.6",
+			"description": "",
+			"title": "Periapical abscess with sinus"
+		},
+		"41": {
+			"code": "K04.7",
+			"description": "",
+			"title": "Periapical abscess without sinus"
+		},
+		"42": {
+			"code": "K04.8",
+			"description": "Slow-growing fluid-filled epithelial sac at the apex of a tooth with a nonvital pulp or defective root canal filling.",
+			"title": "Radicular cyst"
+		},
+		"43": {
+			"code": "K04.90",
+			"description": "",
+			"title": "Unspecified diseases of pulp and periapical tissues"
+		},
+		"44": {
+			"code": "K04.99",
+			"description": "",
+			"title": "Other diseases of pulp and periapical tissues"
+		},
+		"45": {
+			"code": "K05.00",
+			"description": "A disorder involving inflammation of the gums; may affect surrounding and supporting structures of the teeth.\n                Inflammation of gum tissue (gingiva) without loss of connective tissue.\n                Inflammation of the gingiva, the tissues that surround the teeth.",
+			"title": "Acute gingivitis, plaque induced"
+		},
+		"46": {
+			"code": "K05.01",
+			"description": "A disorder involving inflammation of the gums; may affect surrounding and supporting structures of the teeth.\n                Inflammation of gum tissue (gingiva) without loss of connective tissue.\n                Inflammation of the gingiva, the tissues that surround the teeth.",
+			"title": "Acute gingivitis, non-plaque induced"
+		},
+		"47": {
+			"code": "K05.10",
+			"description": "A disorder involving inflammation of the gums; may affect surrounding and supporting structures of the teeth.\n                Inflammation of gum tissue (gingiva) without loss of connective tissue.\n                Inflammation of the gingiva, the tissues that surround the teeth.",
+			"title": "Chronic gingivitis, plaque induced"
+		},
+		"48": {
+			"code": "K05.11",
+			"description": "A disorder involving inflammation of the gums; may affect surrounding and supporting structures of the teeth.\n                Inflammation of gum tissue (gingiva) without loss of connective tissue.\n                Inflammation of the gingiva, the tissues that surround the teeth.",
+			"title": "Chronic gingivitis, non-plaque induced"
+		},
+		"49": {
+			"code": "K05.20",
+			"description": "Inflammation and loss of periodontium that is characterized by rapid attachment loss and bone destruction in the presence of little local factors such as dental plaque and dental calculus. This highly destructive form of periodontitis often occurs in young people and was called early-onset periodontitis, but this disease also appears in old people.",
+			"title": "Aggressive periodontitis, unspecified"
+		},
+		"50": {
+			"code": "K05.211",
+			"description": "Inflammation and loss of periodontium that is characterized by rapid attachment loss and bone destruction in the presence of little local factors such as dental plaque and dental calculus. This highly destructive form of periodontitis often occurs in young people and was called early-onset periodontitis, but this disease also appears in old people.",
+			"title": "Aggressive periodontitis, localized, slight"
+		},
+		"51": {
+			"code": "K05.212",
+			"description": "Inflammation and loss of periodontium that is characterized by rapid attachment loss and bone destruction in the presence of little local factors such as dental plaque and dental calculus. This highly destructive form of periodontitis often occurs in young people and was called early-onset periodontitis, but this disease also appears in old people.",
+			"title": "Aggressive periodontitis, localized, moderate"
+		},
+		"52": {
+			"code": "K05.213",
+			"description": "Inflammation and loss of periodontium that is characterized by rapid attachment loss and bone destruction in the presence of little local factors such as dental plaque and dental calculus. This highly destructive form of periodontitis often occurs in young people and was called early-onset periodontitis, but this disease also appears in old people.",
+			"title": "Aggressive periodontitis, localized, severe"
+		},
+		"53": {
+			"code": "K05.219",
+			"description": "Inflammation and loss of periodontium that is characterized by rapid attachment loss and bone destruction in the presence of little local factors such as dental plaque and dental calculus. This highly destructive form of periodontitis often occurs in young people and was called early-onset periodontitis, but this disease also appears in old people.",
+			"title": "Aggressive periodontitis, localized,  unspecified severity"
+		},
+		"54": {
+			"code": "K05.221",
+			"description": "Inflammation and loss of periodontium that is characterized by rapid attachment loss and bone destruction in the presence of little local factors such as dental plaque and dental calculus. This highly destructive form of periodontitis often occurs in young people and was called early-onset periodontitis, but this disease also appears in old people.",
+			"title": "Aggressive periodontitis, generalized, slight"
+		},
+		"55": {
+			"code": "K05.222",
+			"description": "Inflammation and loss of periodontium that is characterized by rapid attachment loss and bone destruction in the presence of little local factors such as dental plaque and dental calculus. This highly destructive form of periodontitis often occurs in young people and was called early-onset periodontitis, but this disease also appears in old people.",
+			"title": "Aggressive periodontitis, generalized, moderate"
+		},
+		"56": {
+			"code": "K05.223",
+			"description": "Inflammation and loss of periodontium that is characterized by rapid attachment loss and bone destruction in the presence of little local factors such as dental plaque and dental calculus. This highly destructive form of periodontitis often occurs in young people and was called early-onset periodontitis, but this disease also appears in old people.",
+			"title": "Aggressive periodontitis, generalized, severe"
+		},
+		"57": {
+			"code": "K05.229",
+			"description": "Inflammation and loss of periodontium that is characterized by rapid attachment loss and bone destruction in the presence of little local factors such as dental plaque and dental calculus. This highly destructive form of periodontitis often occurs in young people and was called early-onset periodontitis, but this disease also appears in old people.",
+			"title": "Aggressive periodontitis, generalized,  unspecified severity"
+		},
+		"58": {
+			"code": "K05.30",
+			"description": "Болезнь, которая поражает десны и кости вокруг зубов\nХроническое воспаление и потеря пародонта, связанные с количеством зубного налета или зубного камня. Хронический периодонтит встречается в основном у взрослых и получил название периодонтит у взрослых, но это заболевание может появиться у молодых людей.\nВоспаление и потеря соединительных тканей, поддерживающих или окружающих зубы. Это может включать в себя любую часть пародонта. Пародонтит в настоящее время классифицируется по прогрессированию заболевания (хронический периодонтит; агрессивный периодонтит), а не по возрасту. (с 1999 г. международный семинар по классификации заболеваний пародонта и состояний, Американская академия пародонтологии)\nВоспалительная реакция тканей, окружающих зуб (периодонт), обычно в результате распространения воспаления десен в периодонт.\nДлительное воспаление десны, окружающей коронку зуба, обычно не полностью прорезанного зуба.",
+			"title": "Chronic periodontitis, unspecified"
+		},
+		"59": {
+			"code": "K05.311",
+			"description": "Болезнь, которая поражает десны и кости вокруг зубов\nХроническое воспаление и потеря пародонта, связанные с количеством зубного налета или зубного камня. Хронический периодонтит встречается в основном у взрослых и получил название периодонтит у взрослых, но это заболевание может появиться у молодых людей.\nВоспаление и потеря соединительных тканей, поддерживающих или окружающих зубы. Это может включать в себя любую часть пародонта. Пародонтит в настоящее время классифицируется по прогрессированию заболевания (хронический периодонтит; агрессивный периодонтит), а не по возрасту. (с 1999 г. международный семинар по классификации заболеваний пародонта и состояний, Американская академия пародонтологии)\nВоспалительная реакция тканей, окружающих зуб (периодонт), обычно в результате распространения воспаления десен в периодонт.\nДлительное воспаление десны, окружающей коронку зуба, обычно не полностью прорезанного зуба.",
+			"title": "Chronic periodontitis, localized, slight"
+		},
+		"60": {
+			"code": "K05.312",
+			"description": "Болезнь, которая поражает десны и кости вокруг зубов\nХроническое воспаление и потеря пародонта, связанные с количеством зубного налета или зубного камня. Хронический периодонтит встречается в основном у взрослых и получил название периодонтит у взрослых, но это заболевание может появиться у молодых людей.\nВоспаление и потеря соединительных тканей, поддерживающих или окружающих зубы. Это может включать в себя любую часть пародонта. Пародонтит в настоящее время классифицируется по прогрессированию заболевания (хронический периодонтит; агрессивный периодонтит), а не по возрасту. (с 1999 г. международный семинар по классификации заболеваний пародонта и состояний, Американская академия пародонтологии)\nВоспалительная реакция тканей, окружающих зуб (периодонт), обычно в результате распространения воспаления десен в периодонт.\nДлительное воспаление десны, окружающей коронку зуба, обычно не полностью прорезанного зуба.",
+			"title": "Chronic periodontitis, localized, moderate"
+		},
+		"61": {
+			"code": "K05.313",
+			"description": "Болезнь, которая поражает десны и кости вокруг зубов\nХроническое воспаление и потеря пародонта, связанные с количеством зубного налета или зубного камня. Хронический периодонтит встречается в основном у взрослых и получил название периодонтит у взрослых, но это заболевание может появиться у молодых людей.\nВоспаление и потеря соединительных тканей, поддерживающих или окружающих зубы. Это может включать в себя любую часть пародонта. Пародонтит в настоящее время классифицируется по прогрессированию заболевания (хронический периодонтит; агрессивный периодонтит), а не по возрасту. (с 1999 г. международный семинар по классификации заболеваний пародонта и состояний, Американская академия пародонтологии)\nВоспалительная реакция тканей, окружающих зуб (периодонт), обычно в результате распространения воспаления десен в периодонт.\nДлительное воспаление десны, окружающей коронку зуба, обычно не полностью прорезанного зуба.",
+			"title": "Chronic periodontitis, localized, severe"
+		},
+		"62": {
+			"code": "K05.319",
+			"description": "Болезнь, которая поражает десны и кости вокруг зубов\nХроническое воспаление и потеря пародонта, связанные с количеством зубного налета или зубного камня. Хронический периодонтит встречается в основном у взрослых и получил название периодонтит у взрослых, но это заболевание может появиться у молодых людей.\nВоспаление и потеря соединительных тканей, поддерживающих или окружающих зубы. Это может включать в себя любую часть пародонта. Пародонтит в настоящее время классифицируется по прогрессированию заболевания (хронический периодонтит; агрессивный периодонтит), а не по возрасту. (с 1999 г. международный семинар по классификации заболеваний пародонта и состояний, Американская академия пародонтологии)\nВоспалительная реакция тканей, окружающих зуб (периодонт), обычно в результате распространения воспаления десен в периодонт.\nДлительное воспаление десны, окружающей коронку зуба, обычно не полностью прорезанного зуба.",
+			"title": "Chronic periodontitis, localized,  unspecified severity"
+		},
+		"63": {
+			"code": "K05.321",
+			"description": "Болезнь, которая поражает десны и кости вокруг зубов\nХроническое воспаление и потеря пародонта, связанные с количеством зубного налета или зубного камня. Хронический периодонтит встречается в основном у взрослых и получил название периодонтит у взрослых, но это заболевание может появиться у молодых людей.\nВоспаление и потеря соединительных тканей, поддерживающих или окружающих зубы. Это может включать в себя любую часть пародонта. Пародонтит в настоящее время классифицируется по прогрессированию заболевания (хронический периодонтит; агрессивный периодонтит), а не по возрасту. (с 1999 г. международный семинар по классификации заболеваний пародонта и состояний, Американская академия пародонтологии)\nВоспалительная реакция тканей, окружающих зуб (периодонт), обычно в результате распространения воспаления десен в периодонт.\nДлительное воспаление десны, окружающей коронку зуба, обычно не полностью прорезанного зуба.",
+			"title": "Chronic periodontitis, generalized, slight"
+		},
+		"64": {
+			"code": "K05.322",
+			"description": "Болезнь, которая поражает десны и кости вокруг зубов\nХроническое воспаление и потеря пародонта, связанные с количеством зубного налета или зубного камня. Хронический периодонтит встречается в основном у взрослых и получил название периодонтит у взрослых, но это заболевание может появиться у молодых людей.\nВоспаление и потеря соединительных тканей, поддерживающих или окружающих зубы. Это может включать в себя любую часть пародонта. Пародонтит в настоящее время классифицируется по прогрессированию заболевания (хронический периодонтит; агрессивный периодонтит), а не по возрасту. (с 1999 г. международный семинар по классификации заболеваний пародонта и состояний, Американская академия пародонтологии)\nВоспалительная реакция тканей, окружающих зуб (периодонт), обычно в результате распространения воспаления десен в периодонт.\nДлительное воспаление десны, окружающей коронку зуба, обычно не полностью прорезанного зуба.",
+			"title": "Chronic periodontitis, generalized, moderate"
+		},
+		"65": {
+			"code": "K05.323",
+			"description": "Болезнь, которая поражает десны и кости вокруг зубов\nХроническое воспаление и потеря пародонта, связанные с количеством зубного налета или зубного камня. Хронический периодонтит встречается в основном у взрослых и получил название периодонтит у взрослых, но это заболевание может появиться у молодых людей.\nВоспаление и потеря соединительных тканей, поддерживающих или окружающих зубы. Это может включать в себя любую часть пародонта. Пародонтит в настоящее время классифицируется по прогрессированию заболевания (хронический периодонтит; агрессивный периодонтит), а не по возрасту. (с 1999 г. международный семинар по классификации заболеваний пародонта и состояний, Американская академия пародонтологии)\nВоспалительная реакция тканей, окружающих зуб (периодонт), обычно в результате распространения воспаления десен в периодонт.\nДлительное воспаление десны, окружающей коронку зуба, обычно не полностью прорезанного зуба.",
+			"title": "Chronic periodontitis, generalized, severe"
+		},
+		"66": {
+			"code": "K05.329",
+			"description": "Болезнь, которая поражает десны и кости вокруг зубов\nХроническое воспаление и потеря пародонта, связанные с количеством зубного налета или зубного камня. Хронический периодонтит встречается в основном у взрослых и получил название периодонтит у взрослых, но это заболевание может появиться у молодых людей.\nВоспаление и потеря соединительных тканей, поддерживающих или окружающих зубы. Это может включать в себя любую часть пародонта. Пародонтит в настоящее время классифицируется по прогрессированию заболевания (хронический периодонтит; агрессивный периодонтит), а не по возрасту. (с 1999 г. международный семинар по классификации заболеваний пародонта и состояний, Американская академия пародонтологии)\nВоспалительная реакция тканей, окружающих зуб (периодонт), обычно в результате распространения воспаления десен в периодонт.\nДлительное воспаление десны, окружающей коронку зуба, обычно не полностью прорезанного зуба.",
+			"title": "Chronic periodontitis, generalized,  unspecified severity"
+		},
+		"67": {
+			"code": "K05.4",
+			"description": "A localized aggressive periodontitis, formerly called localized juvenile periodontitis. It is a destructive form of periodontitis characterized by alveolar bone loss of the molars and incisors.",
+			"title": "Periodontosis"
+		},
+		"68": {
+			"code": "K05.5",
+			"description": "",
+			"title": "Other periodontal diseases"
+		},
+		"69": {
+			"code": "K05.6",
+			"description": "A disorder in the gingival tissue around the teeth.\n                An inflammatory process of the gingival tissues and/or periodontal membrane of the teeth, resulting in an abnormally deep gingival sulcus, possibly producing periodontal pockets and loss of alveolar bone support.\n                Condition in which there is a deviation from or interruption of the normal structure or function of the tissues that support, attach, and surround the teeth.\n                Pathological processes involving the periodontium including the gum (gingiva), the alveolar bone (alveolar process), the dental cementum, and the periodontal ligament.",
+			"title": "Periodontal disease, unspecified",
+			"titleRu": ""
+		},
+		"70": {
+			"code": "K06.0",
+			"description": "A loss of gum tissue resulting in an exposure of the roots of the teeth.\n                Exposure of the root surface when the edge of the gum (gingiva) moves apically away from the crown of the tooth. This is common with advancing age, vigorous tooth brushing, diseases, or tissue loss of the gingiva, the periodontal ligament and the supporting bone (alveolar process).",
+			"title": "Gingival recession"
+		},
+		"71": {
+			"code": "K06.01",
+			"description": "",
+			"title": "Gingival recession, localized"
+		},
+		"72": {
+			"code": "K06.010",
+			"description": "",
+			"title": "Localized gingival recession, unspecified"
+		},
+		"73": {
+			"code": "K06.011",
+			"description": "",
+			"title": "Localized gingival recession, minimal"
+		},
+		"74": {
+			"code": "K06.012",
+			"description": "",
+			"title": "Localized gingival recession, moderate"
+		},
+		"75": {
+			"code": "K06.013",
+			"description": "",
+			"title": "Localized gingival recession, severe"
+		},
+		"76": {
+			"code": "K06.02",
+			"description": "",
+			"title": "Gingival recession, generalized"
+		},
+		"77": {
+			"code": "K06.020",
+			"description": "",
+			"title": "Generalized gingival recession, unspecified"
+		},
+		"78": {
+			"code": "K06.021",
+			"description": "",
+			"title": "Generalized gingival recession, minimal"
+		},
+		"79": {
+			"code": "K06.022",
+			"description": "",
+			"title": "Generalized gingival recession, moderate"
+		},
+		"80": {
+			"code": "K06.023",
+			"description": "",
+			"title": "GGeneralized gingival recession, severe"
+		},
+		"81": {
+			"code": "K06.1",
+			"description": "Excessive growth of the gingiva either by an increase in the size of the constituent cells (gingival hypertrophy) or by an increase in their number (gingival hyperplasia). (from jablonski's dictionary of dentistry, 1992, p574)\n                Generalized or localized diffuse fibrous overgrowth of the gingival tissue, usually transmitted as an autosomal dominant trait, but some cases are idiopathic and others produced by drugs. The enlarged gingiva is pink, firm, and has a leather-like consistency with a minutely pebbled surface and in severe cases the teeth are almost completely covered and the enlargement projects into the oral vestibule. (Dorland, 28th ed)",
+			"title": "Gingival enlargement"
+		},
+		"82": {
+			"code": "K06.2",
+			"description": "",
+			"title": "Gingival and edentulous alveolar ridge lesions associated with trauma"
+		},
+		"83": {
+			"code": "K06.3",
+			"description": "",
+			"title": "Horizontal alveolar bone loss"
+		},
+		"84": {
+			"code": "K06.8",
+			"description": "Gingival cyst, epulis, pyogenic granuloma",
+			"title": "Other specified disorders of gingiva and edentulous alveolar ridge"
+		},
+		"85": {
+			"code": "K06.9",
+			"description": "",
+			"title": "Disorder of gingiva and edentulous alveolar ridge, unspecified"
+		},
+		"86": {
+			"code": "K08.0",
+			"description": "",
+			"title": "Exfoliation of teeth due to systemic causes"
+		},
+		"87": {
+			"code": "K08.111",
+			"description": "",
+			"title": "Полная потеря зубов, причина не указана класс 1"
+		},
+		"88": {
+			"code": "K08.102",
+			"description": "",
+			"title": "Полная потеря зубов, причина не указана класс 2"
+		},
+		"89": {
+			"code": "K08.103",
+			"description": "",
+			"title": "Полная потеря зубов, причина не указана класс 3"
+		},
+		"90": {
+			"code": "K08.104",
+			"description": "",
+			"title": "Полная потеря зубов, причина не указана класс 4"
+		},
+		"91": {
+			"code": "K08.109",
+			"description": "",
+			"title": "Полная потеря зубов, причина и класс не указаны"
+		},
+		"92": {
+			"code": "K08.111",
+			"description": "",
+			"title": "Полная потеря зубов из-за травмы класс 1"
+		},
+		"93": {
+			"code": "K08.112",
+			"description": "",
+			"title": "Полная потеря зубов из-за травмы класс 2"
+		},
+		"94": {
+			"code": "K08.113",
+			"description": "",
+			"title": "Полная потеря зубов из-за травмы класс 3"
+		},
+		"95": {
+			"code": "K08.114",
+			"description": "",
+			"title": "Полная потеря зубов из-за травмы класс 4"
+		},
+		"96": {
+			"code": "K08.119",
+			"description": "",
+			"title": "Полная потеря зубов изи класс -за травмы"
+		},
+		"97": {
+			"code": "K08.121",
+			"description": "",
+			"title": "Complete loss of teeth due to periodontal diseases класс 1"
+		},
+		"98": {
+			"code": "K08.122",
+			"description": "",
+			"title": "Complete loss of teeth due to periodontal diseases класс 2"
+		},
+		"99": {
+			"code": "K08.123",
+			"description": "",
+			"title": "Complete loss of teeth due to periodontal diseases класс 3"
+		},
+		"100": {
+			"code": "K08.124",
+			"description": "",
+			"title": "Complete loss of teeth due to periodontal diseases класс 4"
+		},
+		"101": {
+			"code": "K08.129",
+			"description": "",
+			"title": "Complete loss of teeth due to periodontaи класс l diseaseы"
+		},
+		"102": {
+			"code": "K08.131",
+			"description": "",
+			"title": "Complete loss of teeth due to caries класс 1"
+		},
+		"103": {
+			"code": "K08.132",
+			"description": "",
+			"title": "Complete loss of teeth due to caries класс 2"
+		},
+		"104": {
+			"code": "K08.133",
+			"description": "",
+			"title": "Complete loss of teeth due to caries класс 3"
+		},
+		"105": {
+			"code": "K08.134",
+			"description": "",
+			"title": "Complete loss of teeth due to caries класс 4"
+		},
+		"106": {
+			"code": "K08.139",
+			"description": "",
+			"title": "Complete loss of teeth dueи класс  to carieы"
+		},
+		"107": {
+			"code": "K08.191",
+			"description": "",
+			"title": "Complete loss of teeth due to other specified cause класс 1"
+		},
+		"108": {
+			"code": "K08.192",
+			"description": "",
+			"title": "Complete loss of teeth due to other specified cause класс 2"
+		},
+		"109": {
+			"code": "K08.193",
+			"description": "",
+			"title": "Complete loss of teeth due to other specified cause класс 3"
+		},
+		"110": {
+			"code": "K08.194",
+			"description": "",
+			"title": "Complete loss of teeth due to other specified cause класс 4"
+		},
+		"111": {
+			"code": "K08.199",
+			"description": "",
+			"title": "Complete loss of teeth due to other speciи класс fied causы"
+		},
+		"112": {
+			"code": "K08.2",
+			"description": "",
+			"title": "Atrophy of edentulous alveolar ridge"
+		},
+		"113": {
+			"code": "K08.20",
+			"description": "",
+			"title": "Unspecified atrophy of edentulous alveolar ridge"
+		},
+		"114": {
+			"code": "K08.21",
+			"description": "",
+			"title": "Minimal atrophy of the mandible"
+		},
+		"115": {
+			"code": "K08.22",
+			"description": "",
+			"title": "Moderate atrophy of the mandible"
+		},
+		"116": {
+			"code": "K08.23",
+			"description": "",
+			"title": "Severe atrophy of the mandible"
+		},
+		"117": {
+			"code": "K08.24",
+			"description": "",
+			"title": "Minimal atrophy of maxilla"
+		},
+		"118": {
+			"code": "K08.25",
+			"description": "",
+			"title": "Moderate atrophy of the maxilla"
+		},
+		"119": {
+			"code": "K08.26",
+			"description": "",
+			"title": "Severe atrophy of the maxilla"
+		},
+		"120": {
+			"code": "K08.3",
+			"description": "",
+			"title": "Retained dental root"
+		},
+		"121": {
+			"code": "K08.401",
+			"description": "",
+			"title": "Partial loss of teeth, unspecified cause class 1"
+		},
+		"122": {
+			"code": "K08.402",
+			"description": "",
+			"title": "Partial loss of teeth, unspecified cause class 2"
+		},
+		"123": {
+			"code": "K08.403",
+			"description": "",
+			"title": "Partial loss of teeth, unspecified cause class 3"
+		},
+		"124": {
+			"code": "K08.404",
+			"description": "",
+			"title": "Partial loss of teeth, unspecified cause class 4"
+		},
+		"125": {
+			"code": "K08.409",
+			"description": "",
+			"title": "Partial loss of teeth, unspecified cause unspecified class"
+		},
+		"126": {
+			"code": "K08.411",
+			"description": "",
+			"title": "Partial loss of teeth due to trauma class 1"
+		},
+		"127": {
+			"code": "K08.412",
+			"description": "",
+			"title": "Partial loss of teeth due to trauma class 2"
+		},
+		"128": {
+			"code": "K08.413",
+			"description": "",
+			"title": "Partial loss of teeth due to trauma class 3"
+		},
+		"129": {
+			"code": "K08.414",
+			"description": "",
+			"title": "Partial loss of teeth due to trauma class 4"
+		},
+		"130": {
+			"code": "K08.419",
+			"description": "",
+			"title": "Partial loss of teeth due to trauma unspecified class"
+		},
+		"131": {
+			"code": "K08.421",
+			"description": "",
+			"title": "Partial loss of teeth due to periodontal diseases class 1"
+		},
+		"132": {
+			"code": "K08.422",
+			"description": "",
+			"title": "Partial loss of teeth due to periodontal diseases class 2 "
+		},
+		"133": {
+			"code": "K08.423",
+			"description": "",
+			"title": "Partial loss of teeth due to periodontal diseases class 3 "
+		},
+		"134": {
+			"code": "K08.424",
+			"description": "",
+			"title": "Partial loss of teeth due to periodontal diseases class 4 "
+		},
+		"135": {
+			"code": "K08.429",
+			"description": "",
+			"title": "Partial loss of teeth due to periodontal diseases unspecified class"
+		},
+		"136": {
+			"code": "K08.431",
+			"description": "",
+			"title": "Partial loss of teeth due to caries class 1"
+		},
+		"137": {
+			"code": "K08.432",
+			"description": "",
+			"title": "Partial loss of teeth due to caries class 2"
+		},
+		"138": {
+			"code": "K08.433",
+			"description": "",
+			"title": "Partial loss of teeth due to caries class 3"
+		},
+		"139": {
+			"code": "K08.434",
+			"description": "",
+			"title": "Partial loss of teeth due to caries class 4"
+		},
+		"140": {
+			"code": "K08.439",
+			"description": "",
+			"title": "Partial loss of teeth due to caries unspecified class"
+		},
+		"141": {
+			"code": "K08.491",
+			"description": "",
+			"title": "Partial loss of teeth due to other specified cause class 1"
+		},
+		"142": {
+			"code": "K08.492",
+			"description": "",
+			"title": "Partial loss of teeth due to other specified cause class 2"
+		},
+		"143": {
+			"code": "K08.493",
+			"description": "",
+			"title": "Partial loss of teeth due to other specified cause class 3"
+		},
+		"144": {
+			"code": "K08.494",
+			"description": "",
+			"title": "Partial loss of teeth due to other specified cause class 4"
+		},
+		"145": {
+			"code": "K08.499",
+			"description": "",
+			"title": "Partial loss of teeth due to other specified cause, unspecified class"
+		},
+		"146": {
+			"code": "K08.50",
+			"description": "",
+			"title": "Unsatisfactory restoration of tooth unspecified"
+		},
+		"147": {
+			"code": "K08.51",
+			"description": "",
+			"title": "Open restoration margins of tooth"
+		},
+		"148": {
+			"code": "K08.52",
+			"description": "",
+			"title": "Unrepairable overhanging of dental restorative materials"
+		},
+		"149": {
+			"code": "K08.530",
+			"description": "",
+			"title": "Fractured dental restorative material without loss of material"
+		},
+		"150": {
+			"code": "K08.531",
+			"description": "",
+			"title": "Fractured dental restorative material with loss of material"
+		},
+		"151": {
+			"code": "K08.532",
+			"description": "",
+			"title": "Fractured dental restorative material unspecified"
+		},
+		"152": {
+			"code": "K08.54",
+			"description": "",
+			"title": "Contour of existing restoration of tooth biologically incompatible with oral health"
+		},
+		"153": {
+			"code": "K08.55",
+			"description": "",
+			"title": "Allergy to existing dental restorative material"
+		},
+		"154": {
+			"code": "K08.56",
+			"description": "",
+			"title": "Poor aesthetic of existing restoration of tooth"
+		},
+		"155": {
+			"code": "K08.59",
+			"description": "",
+			"title": "Other unsatisfactory restoration of tooth"
+		},
+		"156": {
+			"code": "K08.81",
+			"description": "A disorder characterized by a sensation of marked discomfort in the tooth.\n                A painful sensation originating from a tooth.\n                Pain in the adjacent areas of the teeth.",
+			"title": "Primary occlusal trauma"
+		},
+		"157": {
+			"code": "K08.82",
+			"description": "A disorder characterized by a sensation of marked discomfort in the tooth.\n                A painful sensation originating from a tooth.\n                Pain in the adjacent areas of the teeth.",
+			"title": "Secondary occlusal trauma"
+		},
+		"158": {
+			"code": "K08.89",
+			"description": "A disorder characterized by a sensation of marked discomfort in the tooth.\n                A painful sensation originating from a tooth.\n                Pain in the adjacent areas of the teeth.",
+			"title": "Other specified disorders of teeth and supporting structures"
+		},
+		"159": {
+			"code": "K08.9",
+			"description": "Condition in which there is a deviation from or interruption of the normal structure or function of the dental tissues or teeth.",
+			"title": "Disorder of teeth and supporting structures, unspecified"
+		},
+		"160": {
+			"code": "K09.0",
+			"description": "Cyst due to the occlusion of the duct of a follicle or small gland.\n                Most common follicular odontogenic cyst. Occurs in relation to a partially erupted or unerupted tooth with at least the crown of the tooth to which the cyst is attached protruding into the cystic cavity. May give rise to an ameloblastoma and, in rare instances, undergo malignant transformation.",
+			"title": "Developmental odontogenic cysts"
+		},
+		"161": {
+			"code": "K09.1",
+			"description": "Cysts formed from epithelial inclusions in the lines of fusion of the embryonic processes which form the jaws. They include nasopalatine or incisive canal cyst, incisive papilla cyst, globulomaxillary cyst, median palatal cyst, median alveolar cyst, median mandibular cyst, and nasoalveolar cyst.",
+			"title": "Developmental (nonodontogenic) cysts of oral region"
+		},
+		"162": {
+			"code": "K09.8",
+			"description": "A benign neoplasm comprised of a cyst, lined by mature epidermis-like tissue with dermal appendages.\n                A benign tumor resulting from abnormal embryonic development\n                A mature teratoma characterized by the presence of a cyst which is lined by mature tissue resembling the epidermis and the epidermal appendages. It occurs in the ovary, testis, and extragonadal sites including central nervous system and skin.\n                A tumor consisting of displaced ectodermal structures along the lines of embryonic fusion, the wall being formed of epithelium-lined connective tissue, including skin appendages, and containing keratin, sebum, and hair. (stedman, 25th ed)\n                A type of benign (not cancer) germ cell tumor (type of tumor that begins in the cells that give rise to sperm or eggs) that often contains several different types of tissue such as hair, muscle, and bone.\n                Intradermal or subcutaneous saclike structure, the wall of which is stratified epithelium containing keratohyalin granules.\n                ",
+			"title": "Other cysts of oral region, not elsewhere classified"
+		},
+		"163": {
+			"code": "K09.9",
+			"description": "",
+			"explainRID": "",
+			"title": "Cyst of oral region, unspecified"
+		},
+		"164": {
+			"code": "K11.0",
+			"description": "",
+			"title": "Atrophy of salivary gland"
+		},
+		"165": {
+			"code": "K11.1",
+			"description": "",
+			"title": "Hypertrophy of salivary gland"
+		},
+		"166": {
+			"code": "K11.20",
+			"description": "An acute or chronic inflammatory process affecting a salivary gland. Signs and symptoms include pain and tenderness in the affected area.\n                Inflammation of salivary tissue (salivary glands), usually due to infection or injuries.",
+			"title": "Sialoadenitis, unspecified"
+		},
+		"167": {
+			"code": "K11.21",
+			"description": "",
+			"title": "Acute sialoadenitis"
+		},
+		"168": {
+			"code": "K11.22",
+			"description": "",
+			"title": "Acute recurrent sialoadenitis"
+		},
+		"169": {
+			"code": "K11.23",
+			"description": "",
+			"title": "Chronic sialoadenitis"
+		},
+		"170": {
+			"code": "K11.3",
+			"description": "",
+			"title": "Abscess of salivary gland"
+		},
+		"171": {
+			"code": "K11.4",
+			"description": "A disorder characterized by an abnormal communication between a salivary gland and another organ or anatomic site.\n                A fistula between a salivary duct or gland and the cutaneous surface of the oral cavity.\n                An abnormal communication between a salivary gland and another organ or anatomic site.d",
+			"title": "Fistula of salivary gland"
+		},
+		"172": {
+			"code": "K11.5",
+			"description": "Calculi occurring in a salivary gland. Most salivary gland calculi occur in the submandibular gland, but can also occur in the parotid gland and in the sublingual and minor salivary glands.",
+			"title": "Сиалолитиаз"
+		},
+		"173": {
+			"code": "K11.6",
+			"description": "A form of retention cyst of the floor of the mouth, usually due to obstruction of the ducts of the submaxillary or sublingual glands, presenting a slowly enlarging painless deep burrowing mucocele of one side of the mouth. It is also called sublingual cyst and sublingual sialocele.",
+			"title": "Mucocele of salivary gland"
+		},
+		"174": {
+			"code": "K11.7",
+			"description": "A disorder characterized by reduced salivary flow in the oral cavity.\n                An oral condition in which salivary flow is reduced.\n                Decreased salivary flow.\n                Dry mouth is the feeling that there is not enough saliva in your mouth. Everyone has a dry mouth once in a while - if they are nervous, upset or under stress. But if you have a dry mouth all or most of the time, it can be uncomfortable and can lead to serious health problems.symptoms of dry mouth include\n                a sticky, dry feeling in the mouth\n                trouble chewing, swallowing, tasting, or speaking\n                a burning feeling in the mouth\n                a dry feeling in the throat\n                cracked lips\n                a dry, rough tongue\n                mouth sores\n                an infection in the mouth\n                dry mouth is not a normal part of aging. Causes include some medicines, radiation therapy, chemotherapy, and nerve damage. salivary gland diseases, sjogren's syndrome, hiv/aids, and diabetes can also cause dry mouth.treatment depends on the cause. Things you can do include sipping water, avoiding drinks with caffeine, tobacco, and alcohol, and chewing sugarless gum or sucking on sugarless hard candy. nih: national institute of dental and craniofacial disorders\n                Dry mouth. It occurs when the body is not able to make enough saliva.\n                Dryness of the mouth due to salivary gland secretion dysfunction.\n                Increased salivary flow.",
+			"title": "Disturbances of salivary secretion"
+		},
+		"175": {
+			"code": "K11.8",
+			"description": "A benign, inflammatory, variably ulcerated, occasionally bilateral, self-healing lesion of the minor salivary glands that is often confused clinically and histologically with carcinoma.\n                A chronic, benign, and usually painless inflammatory swelling of the lacrimal and salivary glands. It is considered by some to include the glandular enlargement associated with other diseases, such as sjogren's syndrome, sarcoidosis, lupus erythematosus, etc.",
+			"title": "Other diseases of salivary glands"
+		},
+		"176": {
+			"code": "K11.9",
+			"description": "A non-neoplastic or neoplastic (benign or malignant) disorder involving the salivary gland.\n                Condition in which there is a deviation from or interruption of the normal structure or function of any of the three pairs of salivary glands, which are the parotid, sublingual, and submandibular glands.\n                Your salivary glands make saliva - sometimes called spit - and empty it into your mouth through openings called ducts. Saliva makes your food moist, which helps you chew and swallow. It helps you digest your food. It also cleans your mouth and contains antibodies that can kill germs. Problems with salivary glands can cause the glands to become irritated and swollen. This causes symptoms such as\n                bad taste in the mouth\n                difficulty opening your mouth\n                dry mouth\n                pain in the face or mouth\n                swelling of the face or neck\n                causes of salivary gland problems include infections, obstruction or cancer. Problems can also be due to other disorders, such as mumps or sjogren's syndrome.",
+			"title": "Disease of salivary gland, unspecified"
+		},
+		"177": {
+			"code": "K12.0",
+			"description": "Symmetric excoriation of the hard palate often due to sucking in infants",
+			"title": "Recurrent oral aphthae"
+		},
+		"178": {
+			"code": "K12.1",
+			"description": "A disorder characterized by inflammation of the oral mucosal.\n                A viral disease caused by at least two distinct species (serotypes) in the vesiculovirus genus: vesicular stomatitis indiana virus and vesicular stomatitis new jersey virus. It is characterized by vesicular eruptions on the oral mucosa in cattle, horses, pigs, and other animals. In humans, vesicular stomatitis causes an acute influenza-like illness.\n                Inflammation of the mouth due to denture irritation.\n                Inflammation of the mucous tissue of the mouth\n                Inflammation of the oral mucosa due to local or systemic factors.\n                Inflammation of the soft tissues of the mouth, such as mucosa; palate; gingiva; and lip.\n                Inflammation or irritation of the mucous membranes in the mouth.",
+			"title": "Other forms of stomatitis"
+		},
+		"179": {
+			"code": "K12.2",
+			"description": "",
+			"title": "Cellulitis and abscess of mouth"
+		},
+		"180": {
+			"code": "K12.30",
+			"description": "",
+			"title": "Oral mucositis (ulcerative), unspecified"
+		},
+		"181": {
+			"code": "K12.31",
+			"description": "",
+			"title": "Oral mucositis (ulcerative) due to antineoplastic therapy"
+		},
+		"182": {
+			"code": "K12.32",
+			"description": "",
+			"title": "Oral mucositis (ulcerative) due to other drugs"
+		},
+		"183": {
+			"code": "K12.33",
+			"description": "",
+			"title": "Oral mucositis (ulcerative) due to radiation"
+		},
+		"184": {
+			"code": "K12.39",
+			"description": "",
+			"title": "Other oral mucositis (ulcerative)"
+		},
+		"185": {
+			"code": "K13.0",
+			"description": "A disorder characterized by a sensation of marked discomfort of the lip. A disorder characterized by inflammation of the lip. An inflammatory process affecting the lip. Inflammation of the lips. It is of various etiologies and degrees of pathology. Painful sensation in the lip.",
+			"title": "Diseases of ips"
+		},
+		"186": {
+			"code": "K13.1",
+			"description": "",
+			"title": "Cheek and lip biting"
+		},
+		"187": {
+			"code": "K13.21",
+			"description": "A white patch or plaque on oral cavity mucosa that cannot be characterized clinically or pathologically as any other disease. The diagnosis of leukoplakia is one of exclusion; other conditions such as candidiasis, lichen planus, leukoedema, etc. Must be ruled out before a diagnosis of leukoplakia can be made. Leukoplakia may be a premalignant condition. A white patch or plaque on oral mucosa that cannot be characterized clinically or pathologically as any other disease. The diagnosis of leukoplakia is one of exclusion; other conditions such as candidiasis, lichen planus, leukoedema, etc. Must be ruled out before a diagnosis of leukoplakia can be made. Leukoplakia may be a premalignant condition. A white patch seen on the oral mucosa. It is considered a premalignant condition and is often tobacco-induced. When evidence of epstein-barr virus is present, the condition is called hairy leukoplakia (leukoplakia, hairy). White patch seen on the oral mucosa; considered a premalignant condition and is often tobacco-induced.",
+			"title": "Leukoplakia of oral mucosa, including tongue"
+		},
+		"188": {
+			"code": "K13.22",
+			"description": "",
+			"title": "Minimal keratinized residual ridge mucosa"
+		},
+		"189": {
+			"code": "K13.23",
+			"description": "",
+			"title": "Excessive keratinized residual ridge mucosa"
+		},
+		"190": {
+			"code": "K13.24",
+			"description": "",
+			"title": "Leukokeratosis nicotina palati"
+		},
+		"191": {
+			"code": "K13.29",
+			"description": "Erythroplakia of mouth or tongue, Focal epithelial hyperplasia of mouth or tongue, Leukoedema of mouth or tongue, Other oral epithelium disturbances",
+			"title": "Other disturbances of oral epithelium, including tongue"
+		},
+		"192": {
+			"code": "K13.3",
+			"description": "",
+			"title": "Hairy leukoplakia"
+		},
+		"193": {
+			"code": "K13.4",
+			"description": "A clinical variant of Langerhans cell histiocytosis characterised by unifocal involvement of a bone (most often), skin, or lung. Patients are usually older children or adults usually presenting with a lytic bone lesion. The aetiology is unknown. Morphologically, the eosinophilic granuloma is characterised by the presence of Langerhans cells in a characteristic milieu which includes histiocytes, eosinophils neutrophils, and small, mature lymphocytes.\n                The most benign clinical form of Langerhans-cell histiocytosis, which involves localized nodular lesions of the gastric mucosa, small intestine, bones, lungs, or skin, with infiltration by eosinophils; the proliferating cell that appears to be responsible for the clinical manifestations is the Langerhans cell.\n                The most benign and common form of Langerhans-cell histiocytosis which involves localized nodular lesions predominantly of the bones but also of the gastric mucosa, small intestine, lungs, or skin, with infiltration by eosinophils.",
+			"title": "Granuloma and granuloma-like lesions of oral mucosa"
+		},
+		"194": {
+			"code": "K13.5",
+			"description": "",
+			"title": "Oral submucous fibrosis"
+		},
+		"195": {
+			"code": "K13.6",
+			"description": "",
+			"title": "Irritative hyperplasia of oral mucosa"
+		},
+		"196": {
+			"code": "K13.70",
+			"description": "",
+			"title": "Unspecified lesions of oral mucosa"
+		},
+		"197": {
+			"code": "K13.79",
+			"description": "",
+			"title": "Other diseases of lip and oral mucosa"
+		},
+		"198": {
+			"code": "K14.0",
+			"description": "Inflammation of the tongue.",
+			"title": "Glossitis"
+		},
+		"199": {
+			"code": "K14.1",
+			"description": "A benign condition characterized by the development of irregular patches in the surface of the tongue resulting in a map-like appearance. The patches migrate from day to day and usually resolve without treatment.An idiopathic disorder characterized by the loss of filiform papillae leaving reddened areas of circinate macules bound by a white band. The lesions heal, then others erupt.",
+			"title": "Geographic tongue"
+		},
+		"200": {
+			"code": "K14.2",
+			"description": "",
+			"title": "Median rhomboid glossitis"
+		},
+		"201": {
+			"code": "K14.3",
+			"description": "Applicable To Black hairy tongue Coated tongue Hypertrophy of foliate papillae Lingua villosa nigra",
+			"title": "Hypertrophy of tongue papillae"
+		},
+		"202": {
+			"code": "K14.4",
+			"description": "Applicable To Atrophic glossiti",
+			"title": "Atrophy of tongue papillae"
+		},
+		"203": {
+			"code": "K14.5",
+			"description": "Applicable To Fissured tongue Furrowed tongue Scrotal tongue",
+			"title": "Plicated tongue"
+		},
+		"204": {
+			"code": "K14.6",
+			"description": "Painful sensations in the tongue, including a sensation of burning.",
+			"title": "Glossodynia"
+		},
+		"205": {
+			"code": "K14.8",
+			"description": "A finding indicating enlargement of the tongue. The presence of an excessively large tongue, which may be congenital or may develop as a result of a tumour or oedema due to obstruction of lymphatic vessels, or it may occur in association with hyperpituitarism or acromegaly. It also may be associated with malocclusion because of the pressure of the tongue on the teeth.",
+			"title": "Other diseases of tongue"
+		},
+		"206": {
+			"code": "K14.9",
+			"description": "The upper surface contains your taste buds. Problems with the tongue include, pain, swelling, changes in colour or texture, abnormal movement or difficulty moving the tongue, taste problems,these problems can have many different causes. Treatment depends on the underlying problem.",
+			"title": "Disease of tongue, unspecified"
+		},
+		"207": {
+			"code": "M26.00",
+			"description": "",
+			"title": "Unspecified anomaly of jaw size"
+		},
+		"208": {
+			"code": "M26.01",
+			"description": "",
+			"title": "Maxillary hyperplasia"
+		},
+		"209": {
+			"code": "M26.02",
+			"description": "",
+			"title": "Maxillary hypoplasia"
+		},
+		"210": {
+			"code": "M26.03",
+			"description": "",
+			"title": "Mandibular hyperplasia"
+		},
+		"211": {
+			"code": "M26.04",
+			"description": "",
+			"title": "Mandibular hypoplasia"
+		},
+		"212": {
+			"code": "M26.05",
+			"description": "",
+			"title": "Macrogenia"
+		},
+		"213": {
+			"code": "M26.06",
+			"description": "",
+			"title": "Microgenia"
+		},
+		"214": {
+			"code": "M26.07",
+			"description": "",
+			"title": "Excessive tuberosity of jaw"
+		},
+		"215": {
+			"code": "M26.09",
+			"description": "",
+			"title": "Other specified anomalies of jaw size"
+		},
+		"216": {
+			"code": "M26.10",
+			"description": "",
+			"title": "Unspecified anomaly of jaw-cranial base relationship"
+		},
+		"217": {
+			"code": "M26.11",
+			"description": "",
+			"title": "Maxillary asymmetry"
+		},
+		"218": {
+			"code": "M26.12",
+			"description": "",
+			"title": "Other jaw asymmetry"
+		},
+		"219": {
+			"code": "M26.19",
+			"description": "",
+			"title": "Other specified anomalies of jaw-cranial base relationship"
+		},
+		"220": {
+			"code": "M26.20",
+			"description": "",
+			"title": "Unspecified anomaly of dental arch relationship"
+		},
+		"221": {
+			"code": "M26.211",
+			"description": "",
+			"title": "Malocclusion, Angles class 1"
+		},
+		"222": {
+			"code": "M26.212",
+			"description": "",
+			"title": "Malocclusion, Angle's class 2"
+		},
+		"223": {
+			"code": "M26.213",
+			"description": "",
+			"title": "Malocclusion, Angle's class 3"
+		},
+		"224": {
+			"code": "M26214",
+			"description": "",
+			"title": "Malocclusion, Angle's class unspecifieds"
+		},
+		"225": {
+			"code": "M26.220",
+			"description": "",
+			"title": "Open anterior occlusal relationship"
+		},
+		"226": {
+			"code": "M26.23",
+			"description": "",
+			"title": "Excessive horizontal overlap"
+		},
+		"227": {
+			"code": "M26.24",
+			"description": "",
+			"title": "Reverse articulation"
+		},
+		"228": {
+			"code": "M26.25",
+			"description": "",
+			"title": "Anomalies of interarch distance"
+		},
+		"229": {
+			"code": "M26.29",
+			"description": "",
+			"title": "Other anomalies of dental arch relationship"
+		},
+		"230": {
+			"code": "M26.30",
+			"description": "",
+			"title": "Unspecified anomaly of tooth position of fully erupted tooth or teeth"
+		},
+		"231": {
+			"code": "M26.31",
+			"description": "",
+			"title": "Crowding of fully erupted teeth"
+		},
+		"232": {
+			"code": "M26.32",
+			"description": "",
+			"title": "Excessive spacing of fully erupted teeth"
+		},
+		"233": {
+			"code": "M26.33",
+			"description": "",
+			"title": "Horizontal displacement of fully erupted tooth or teeth"
+		},
+		"234": {
+			"code": "M26.34",
+			"description": "",
+			"title": "Vertical displacement of fully erupted tooth or teeth"
+		},
+		"235": {
+			"code": "M26.35",
+			"description": "",
+			"title": "Rotation of fully erupted tooth or teeth"
+		},
+		"236": {
+			"code": "M26.36",
+			"description": "",
+			"title": "Insufficient interocclusal distance of fully erupted teeth (ridge)"
+		},
+		"237": {
+			"code": "M26.37",
+			"description": "",
+			"title": "Excessive interocclusal distance of fully erupted teeth"
+		},
+		"238": {
+			"code": "M26.39",
+			"description": "",
+			"title": "Other anomalies of tooth position of fully erupted tooth or teeth"
+		},
+		"239": {
+			"code": "M26.4",
+			"description": "",
+			"title": "Malocclusion, unspecified"
+		},
+		"240": {
+			"code": "M26.50",
+			"description": "",
+			"title": "Dentofacial functional abnormalities unspecified"
+		},
+		"241": {
+			"code": "M26.51",
+			"description": "",
+			"title": "Abnormal jaw closure"
+		},
+		"242": {
+			"code": "M26.52",
+			"description": "",
+			"title": "Limited mandibular range of motion"
+		},
+		"243": {
+			"code": "M26.53",
+			"description": "",
+			"title": "Deviation in opening and closing of the mandible"
+		},
+		"244": {
+			"code": "M26.54",
+			"description": "",
+			"title": "Insufficient anterior guidance"
+		},
+		"245": {
+			"code": "M26.55",
+			"description": "",
+			"title": "Centric occlusion maximum intercuspation discrepancy"
+		},
+		"246": {
+			"code": "M26.56",
+			"description": "",
+			"title": "Non-working side interference"
+		},
+		"247": {
+			"code": "M26.57",
+			"description": "",
+			"title": "Lack of posterior occlusal support"
+		},
+		"248": {
+			"code": "M26.59",
+			"description": "",
+			"title": "Other dentofacial functional abnormalities"
+		},
+		"249": {
+			"code": "M26.601",
+			"description": "",
+			"title": "Right temporomandibular joint disorder, unspecified"
+		},
+		"250": {
+			"code": "M26.602",
+			"description": "",
+			"title": "Left temporomandibular joint disorder, unspecified"
+		},
+		"251": {
+			"code": "M26.603",
+			"description": "",
+			"title": "Bilateral temporomandibular joint disorder, unspecified"
+		},
+		"252": {
+			"code": "M26.609",
+			"description": "",
+			"title": "Unspecified temporomandibular joint disorder, unspecified side"
+		},
+		"253": {
+			"code": "M26.611",
+			"description": "",
+			"title": "Adhesions and ankylosis of right temporomandibular joint"
+		},
+		"254": {
+			"code": "M26.612",
+			"description": "",
+			"title": "Adhesions and ankylosis of left temporomandibular joint"
+		},
+		"255": {
+			"code": "M26.613",
+			"description": "",
+			"title": "Adhesions and ankylosis of bilateral temporomandibular joint"
+		},
+		"256": {
+			"code": "M26.619",
+			"description": "",
+			"title": "Adhesions and ankylosis of bilateral temporomandibular joint  unspecified side"
+		},
+		"257": {
+			"code": "M26.621",
+			"description": "",
+			"title": "Arthralgia of right temporomandibular joint"
+		},
+		"258": {
+			"code": "M26.622",
+			"description": "",
+			"title": "Arthralgia of left temporomandibular joint"
+		},
+		"259": {
+			"code": "M26.623",
+			"description": "",
+			"title": "Arthralgia of bilateral temporomandibular joint"
+		},
+		"260": {
+			"code": "M26.629",
+			"description": "",
+			"title": "Arthralgia of bilateral temporomandibular joint unspecified side"
+		},
+		"261": {
+			"code": "M26.631",
+			"description": "",
+			"title": "Articular disc disorder of right temporomandibular joint"
+		},
+		"262": {
+			"code": "M26.632",
+			"description": "",
+			"title": "Articular disc disorder of left temporomandibular joint"
+		},
+		"263": {
+			"code": "M26.633",
+			"description": "",
+			"title": "Articular disc disorder of bilateral temporomandibular joint"
+		},
+		"264": {
+			"code": "M26.639",
+			"description": "",
+			"title": "Articular disc disorder of bilateral temporomandibular joint unspecified side"
+		},
+		"265": {
+			"code": "M26.69",
+			"description": "",
+			"title": "Other specified disorders of temporomandibular joint"
+		},
+		"266": {
+			"code": "M26.70",
+			"description": "",
+			"title": "Unspecified alveolar anomaly"
+		},
+		"267": {
+			"code": "M26.71",
+			"description": "",
+			"title": "Alveolar maxillary hyperplasia"
+		},
+		"268": {
+			"code": "M26.72",
+			"description": "",
+			"title": "Alveolar mandibular hyperplasia"
+		},
+		"269": {
+			"code": "M26.73",
+			"description": "",
+			"title": "Alveolar maxillary hypoplasia"
+		},
+		"270": {
+			"code": "M26.74",
+			"description": "",
+			"title": "Alveolar mandibular hypoplasia"
+		},
+		"271": {
+			"code": "M26.79",
+			"description": "",
+			"title": "Other specified alveolar anomalies"
+		},
+		"272": {
+			"code": "M26.81",
+			"description": "",
+			"title": "Anterior soft tissue impingement"
+		},
+		"273": {
+			"code": "M26.82",
+			"description": "",
+			"title": "Posterior soft tissue impingement"
+		},
+		"274": {
+			"code": "M26.89",
+			"description": "",
+			"title": "Other dentofacial anomalies"
+		},
+		"275": {
+			"code": "M26.9",
+			"description": "",
+			"title": "Dentofacial anomaly, unspecified"
+		},
+		"276": {
+			"code": "M27.0",
+			"description": "",
+			"title": "Developmental disorders of jaws"
+		},
+		"277": {
+			"code": "M27.1",
+			"description": "A non-neoplastic inflammatory lesion, usually of the jaw or gingiva, containing large, multinucleated cells. It includes reparative giant cell granuloma. Peripheral giant cell granuloma refers to the gingiva (giant cell epulis); central refers to the jaw.",
+			"title": "Giant cell granuloma, central"
+		},
+		"278": {
+			"code": "M27.2",
+			"description": "",
+			"title": "Inflammatory conditions of jaws"
+		},
+		"279": {
+			"code": "M27.3",
+			"description": "A condition sometimes occurring after tooth extraction, particularly after traumatic extraction, resulting in a dry appearance of the exposed bone in the socket, due to disintegration or loss of the blood clot. It is basically a focal osteomyelitis without suppuration and is accompanied by severe pain (alveolalgia) and foul odor. (Dorland, 28th ed)",
+			"title": "Alveolitis of jaws"
+		},
+		"280": {
+			"code": "M27.40",
+			"description": "Saccular lesions lined with epithelium and contained within pathologically formed cavities in the jaw; also nonepithelial cysts (pseudocysts) as they apply to the jaw, e.g., traumatic or solitary cyst, static bone cavity, and aneurysmal bone cyst. True jaw cysts are classified as odontogenic or nonodontogenic.",
+			"title": "Unspecified cyst of jaw"
+		},
+		"281": {
+			"code": "M27.49",
+			"description": "",
+			"title": "Other cysts of jaw"
+		},
+		"282": {
+			"code": "M27.51",
+			"description": "",
+			"title": "Perforation of root canal space due to endodontic treatment"
+		},
+		"283": {
+			"code": "M27.52",
+			"description": "",
+			"title": "Endodontic overfill"
+		},
+		"284": {
+			"code": "M27.53",
+			"description": "",
+			"title": "Endodontic underfill"
+		},
+		"285": {
+			"code": "M27.59",
+			"description": "",
+			"title": "Other periradicular pathology associated with previous endodontic treatment"
+		},
+		"286": {
+			"code": "M27.61",
+			"description": "",
+			"title": "Osseointegration failure of dental implant"
+		},
+		"287": {
+			"code": "M27.62",
+			"description": "",
+			"title": "Post-osseointegration biological failure of dental implant"
+		},
+		"288": {
+			"code": "M27.63",
+			"description": "",
+			"title": "Post-osseointegration mechanical failure of dental implant"
+		},
+		"289": {
+			"code": "M27.69",
+			"description": "",
+			"title": "Other endosseous dental implant failure"
+		},
+		"290": {
+			"code": "M27.8",
+			"description": "A disorder characterized by non-neoplastic overgrowth of bone.\n                A fibro-osseous hereditary disease of the jaws. The swollen jaws and raised eyes give a cherubic appearance; multiple radiolucencies are evident upon radiographic examination.\n                A rare disorder usually caused by mutations in the sh3bp2 gene. It is characterized by prominence of the lower part of the face due to bilateral replacement of the mandible or maxilla bones by excessive fibrous tissue.\n                Benign hypertrophy that projects outward from the surface of bone, often containing a cartilaginous component.\n                Non-neoplastic overgrowth of bone.",
+			"title": "Other specified diseases of jaws"
+		},
+		"291": {
+			"code": "M27.9",
+			"description": "",
+			"title": "Disease of jaws, unspecified"
+		},
+		"categories": {
+			"K00": {
+				"code": "K00",
+				"title": "Disorders of tooth development and eruption"
+			},
+			"K01": {
+				"code": "K01",
+				"title": "Embedded and impacted teeth"
+			},
+			"K02": {
+				"code": "K02",
+				"title": "Dental caries"
+			},
+			"K03": {
+				"code": "K03",
+				"title": "Other diseases of hard tissues of teeth"
+			},
+			"K04": {
+				"code": "K04",
+				"title": "Diseases of pulp and periapical tissues"
+			},
+			"K05": {
+				"code": "K05",
+				"title": "Gingivitis and periodontal diseases"
+			},
+			"K06": {
+				"code": "K06",
+				"title": "Other disorders of gingiva and edentulous alveolar ridge"
+			},
+			"K08": {
+				"code": "K08",
+				"title": "Other disorders of teeth and supporting structures"
+			},
+			"K09": {
+				"code": "K09",
+				"title": "Cysts of oral region, not elsewhere classified"
+			},
+			"K11": {
+				"code": "K11",
+				"title": "Diseases of salivary glands"
+			},
+			"K12": {
+				"code": "K12",
+				"title": "Stomatitis and related lesions"
+			},
+			"K13": {
+				"code": "K13",
+				"title": "Other diseases of lip and oral mucosa"
+			},
+			"K14": {
+				"code": "K14",
+				"title": "Diseases of tongue"
+			},
+			"M26": {
+				"code": "M26",
+				"title": "Dentofacial anomalies (including malocclusion)"
+			},
+			"M27": {
+				"code": "M27",
+				"title": "Other diseases of jaws"
+			}
+		}
+	},
+	"hello": "Hallo i18n in SFC!",
+	"no-button": "Nein!",
+	"procedures": {
+		"1": {
+			"code": "1.1",
+			"description": "",
+			"title": "Consultation and treatment plan"
+		},
+		"2": {
+			"code": "1.2",
+			"description": "",
+			"title": "Periapical X-Ray"
+		},
+		"3": {
+			"code": "1.3",
+			"description": "",
+			"title": "Bitewing X-Ray"
+		},
+		"4": {
+			"code": "1.4",
+			"description": "",
+			"title": "Panoramic X-Ray"
+		},
+		"5": {
+			"code": "1.5",
+			"description": "",
+			"title": "Cephalometric X-ray"
+		},
+		"6": {
+			"code": "1.6",
+			"description": "",
+			"title": "ConeBeam CT X-ray (1 jaw)"
+		},
+		"7": {
+			"code": "1.7",
+			"description": "",
+			"title": "ConeBeam CT X-ray (2 jaw)"
+		},
+		"8": {
+			"code": "1.8",
+			"description": "",
+			"title": "Blood test"
+		},
+		"9": {
+			"code": "2.1",
+			"description": "",
+			"title": "Composite filling (minimal)"
+		},
+		"10": {
+			"code": "2.2",
+			"description": "",
+			"title": "Composite filling (moderate)"
+		},
+		"11": {
+			"code": "2.3",
+			"description": "",
+			"title": "Composite filling (enlarged)"
+		},
+		"12": {
+			"code": "2.4",
+			"description": "",
+			"title": "Composite filling (extensive)"
+		},
+		"13": {
+			"code": "2.5",
+			"description": "",
+			"title": "Cosmetic Composite resin restoration"
+		},
+		"14": {
+			"code": "2.6",
+			"description": "",
+			"title": "Tooth gap filling"
+		},
+		"15": {
+			"code": "2.7",
+			"description": "",
+			"title": "Sealant"
+		},
+		"16": {
+			"code": "2.8",
+			"description": "",
+			"title": "Composite veneer"
+		},
+		"17": {
+			"code": "2.9",
+			"description": "",
+			"title": "Dental dam"
+		},
+		"18": {
+			"code": "3.1",
+			"description": "",
+			"title": "Root canal treatment (anterior)"
+		},
+		"19": {
+			"code": "3.2",
+			"description": "",
+			"title": "Root canal treatment (premolar)"
+		},
+		"20": {
+			"code": "3.3",
+			"description": "",
+			"title": "Root canal treatment (molar)"
+		},
+		"21": {
+			"code": "3.4",
+			"description": "",
+			"title": "Root canal re-treatment (anterior)"
+		},
+		"22": {
+			"code": "3.5",
+			"description": "",
+			"title": "Root canal re-treatment (premolar)"
+		},
+		"23": {
+			"code": "3.6",
+			"description": "",
+			"title": "Root canal re-treatment (molar)"
+		},
+		"24": {
+			"code": "3.7",
+			"description": "",
+			"title": "Direct pulp capping"
+		},
+		"25": {
+			"code": "3.8",
+			"description": "",
+			"title": "Abscess drainage/Abscess treatment"
+		},
+		"26": {
+			"code": "4.1",
+			"description": "",
+			"title": "Cleaning and polishing (Mild calculus)"
+		},
+		"27": {
+			"code": "4.2",
+			"description": "",
+			"title": "Cleaning and polishing (Moderate calculus)"
+		},
+		"28": {
+			"code": "4.3",
+			"description": "",
+			"title": "Cleaning and polishing (Heavy calculus)"
+		},
+		"29": {
+			"code": "4.4",
+			"description": "",
+			"title": "Teeth cleaning and polishing under local anesthetics"
+		},
+		"30": {
+			"code": "4.5",
+			"description": "",
+			"title": "Periodontal pocket treatment (non-surgical)"
+		},
+		"31": {
+			"code": "4.6",
+			"description": "",
+			"title": "Operculectomy"
+		},
+		"32": {
+			"code": "4.7",
+			"description": "",
+			"title": "Gum contouring surgery"
+		},
+		"33": {
+			"code": "4.8",
+			"description": "",
+			"title": "Gum grafting"
+		},
+		"34": {
+			"code": "5.1",
+			"description": "",
+			"title": "At-home whitening kit (Zoom)"
+		},
+		"35": {
+			"code": "5.2",
+			"description": "",
+			"title": "In-office laser whitening with Zoom 2"
+		},
+		"36": {
+			"code": "5.3",
+			"description": "",
+			"title": "Whitening Combination Package"
+		},
+		"37": {
+			"code": "5.4",
+			"description": "",
+			"title": "Internal bleaching"
+		},
+		"38": {
+			"code": "6.1",
+			"description": "",
+			"title": "Crown removal"
+		},
+		"39": {
+			"code": "6.2",
+			"description": "",
+			"title": "Temporary crown (PMMA)"
+		},
+		"40": {
+			"code": "6.3",
+			"description": "",
+			"title": "Re-cement crown"
+		},
+		"41": {
+			"code": "6.4",
+			"description": "",
+			"title": "Composite inlay"
+		},
+		"42": {
+			"code": "6.5",
+			"description": "",
+			"title": "All-porcelain inlay (Emax CAD)"
+		},
+		"43": {
+			"code": "6.6",
+			"description": "",
+			"title": "Composite onlay"
+		},
+		"44": {
+			"code": "6.7",
+			"description": "",
+			"title": "All-porcelain onlay (Emax CAD)"
+		},
+		"45": {
+			"code": "6.8",
+			"description": "",
+			"title": "All-porcelain overlay (Emax CAD)"
+		},
+		"46": {
+			"code": "6.9",
+			"description": "",
+			"title": "Porcleain fused to titanium crown (CAD/CAM)"
+		},
+		"47": {
+			"code": "7.1",
+			"description": "",
+			"title": "Nobel Biocare/SGS Switzerland dental implant"
+		},
+		"48": {
+			"code": "7.2",
+			"description": "",
+			"title": "Bone grafting"
+		},
+		"49": {
+			"code": "7.3",
+			"description": "",
+			"title": "Guided bone regeneration membrane"
+		},
+		"50": {
+			"code": "7.4",
+			"description": "",
+			"title": "Sinus augmentation (Closed)"
+		},
+		"51": {
+			"code": "7.5",
+			"description": "",
+			"title": "Sinus augmentation (Open)"
+		},
+		"52": {
+			"code": "7.6",
+			"description": "",
+			"title": "All on 8 (Nobel Biocare/SGS Switzerland dental implant)"
+		},
+		"53": {
+			"code": "7.7",
+			"description": "",
+			"title": "All on 6 (Nobel Biocare/SGS Switzerland dental implant)"
+		},
+		"54": {
+			"code": "8.1",
+			"description": "",
+			"title": "Traditional metal braces - Simple case: no extraction required"
+		},
+		"55": {
+			"code": "8.2",
+			"description": "",
+			"title": "Traditional metal braces - Requires extraction (fee for extraction is not included)"
+		},
+		"56": {
+			"code": "8.3",
+			"description": "",
+			"title": "Traditional metal braces - Complicated case: lost of molar, root treated teeth etc"
+		},
+		"57": {
+			"code": "8.4",
+			"description": "",
+			"title": "Traditional ceramic braces - Simple case: no extraction required"
+		},
+		"58": {
+			"code": "8.5",
+			"description": "",
+			"title": "Traditional ceramic braces - Requires extraction (fee for extraction is not included)"
+		},
+		"59": {
+			"code": "8.6",
+			"description": "",
+			"title": "Traditional ceramic braces - Complicated case: lost of molar, root treated teeth etc"
+		},
+		"60": {
+			"code": "8.7",
+			"description": "",
+			"title": "Invisalign ClinCheck"
+		},
+		"61": {
+			"code": "8.8",
+			"description": "",
+			"title": "Invisalign"
+		},
+		"62": {
+			"code": "8.9",
+			"description": "",
+			"title": "Functional appliance"
+		},
+		"63": {
+			"code": "9.1",
+			"description": "",
+			"title": "Permanent tooth extraction"
+		},
+		"64": {
+			"code": "9.2",
+			"description": "",
+			"title": "Wisdom tooth extraction (upper jaw)"
+		},
+		"65": {
+			"code": "9.3",
+			"description": "",
+			"title": "Wisdom tooth extraction (lower jaw)"
+		},
+		"66": {
+			"code": "9.4",
+			"description": "",
+			"title": "Surgical tooth extraction"
+		},
+		"67": {
+			"code": "9.5",
+			"description": "",
+			"title": "Tooth extraction with bone grafting"
+		},
+		"68": {
+			"code": "9.6",
+			"description": "",
+			"title": "Crown lengthening surgery"
+		},
+		"69": {
+			"code": "9.7",
+			"description": "",
+			"title": "Gum contouring surgery"
+		},
+		"categories": {
+			"1": {
+				"code": "1.1",
+				"title": "Diagnose"
+			},
+			"2": {
+				"code": "2",
+				"title": "Restoration"
+			},
+			"3": {
+				"code": "3",
+				"title": "Root Canal"
+			},
+			"4": {
+				"code": "4",
+				"title": "Hygiena"
+			},
+			"5": {
+				"code": "5",
+				"title": "Whitening"
+			},
+			"6": {
+				"code": "6",
+				"title": "Prosthetics"
+			},
+			"7": {
+				"code": "7",
+				"title": "Implantation"
+			},
+			"8": {
+				"code": "8",
+				"title": "Orthondontic"
+			},
+			"9": {
+				"code": "9",
+				"title": "Surgey"
+			}
+		}
+	},
+	"welcome": "Welcome",
+	"yes-button": "Yes"
+}

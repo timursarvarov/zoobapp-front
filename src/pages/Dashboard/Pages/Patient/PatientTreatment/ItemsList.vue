@@ -1,151 +1,161 @@
 
 <template>
-    <div class=" items-list-wrapper">
-            <md-toolbar class="md-transparent">
-                <h3 v-if="type === 'anamnesis'" class="md-title">{{queriedData.length}} procedures in anamnes</h3>
-                <h3 class="md-title">All {{type | capitilize}}</h3>
-            </md-toolbar>
+    <div class="items-list-wrapper">
+        <md-table
+            :value="items"
+            :md-sort.sync="currentSort"
+            :md-sort-order.sync="currentSortOrder"
+            :md-sort-fn="customSort"
+            class="table-with-header table-striped table-hover"
+        >
+            <md-table-toolbar>
+                <div class="md-toolbar-section-start">
+                    <h3
+                        v-if="type === 'anamnesis'"
+                        class="md-title"
+                    >{{items.length}} procedures in anamnes</h3>
+                    <h3 class="md-title">All {{type | capitilize}}</h3>
+                </div>
+                <div class="md-toolbar-section-end">
+                    <md-button
+                        @click="showTableEditor=!showTableEditor"
+                        class="md-just-icon md-simple"
+                    >
+                        <md-icon>settings</md-icon>
+                    </md-button>
+                </div>
+            </md-table-toolbar>
 
-            <md-table
-
-                :value="queriedData"
-                :md-sort.sync="currentSort"
-                :md-sort-order.sync="currentSortOrder"
-                :md-sort-fn="customSort"
-                class="paginated-table table-striped table-hover"
+            <md-table-empty-state
+                :md-label="`No ${type} found`"
+                :md-description="`No ${type}  found. Scroll top, and create new ${type} .`"
             >
-                <md-table-toolbar>
-                    <md-field>
-                        <label for="pages">Per page</label>
-                        <md-select v-model="pagination.perPage" name="pages">
-                            <md-option
-                                v-for="item in pagination.perPageOptions"
-                                :key="item"
-                                :label="item"
-                                :value="item"
-                            >{{ item }}</md-option>
-                        </md-select>
-                    </md-field>
+                <md-button class="md-primary md-raised" @click="scrollToTop()">Scroll Top</md-button>
+            </md-table-empty-state>
 
-                    <md-field>
-                        <md-input
-                            type="search"
-                            class="mb-3"
-                            clearable
-                            style="width: 200px"
-                            placeholder="Search patient diagnose"
-                            v-model="searchQuery"
-                        ></md-input>
-                    </md-field>
-                </md-table-toolbar>
-
-                <md-table-empty-state
-                    :md-label="`No ${type} found`"
-                    :md-description="`No ${type}  found. Scroll top, and create new ${type} .`"
+            <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple">
+                <md-table-cell
+                    v-for="field  in itemsTableColumns"
+                    :key="field.key"
+                    :class="field"
+                    :md-label="getFieldName(field.key).toString()"
+                    :md-sort-by=" item[field.key] ? item[field.key].toString() : ''"
                 >
-                    <md-button class="md-primary md-raised" @click="scrollToTop()">Scroll Top</md-button>
-                </md-table-empty-state>
-
-                <md-table-row slot="md-table-row"  slot-scope="{ item }">
-                    <md-table-cell class="code" md-label="Code" md-sort-by="code">{{ item.code }}</md-table-cell>
-                    <md-table-cell md-label="Title" md-sort-by="title">
+                    <div v-if="field.key === 'code'">{{ item.code }}</div>
+                    <div v-else-if="field.key === 'title'">
                         {{ item.title }}
                         <br>
-                        <small>{{item.explain}}</small>
-                    </md-table-cell>
-                    <md-table-cell md-sort-by="teeth" md-label="Teeth">
+                        <small>{{item.description}}</small>
+                    </div>
+                    <div v-else-if="field.key === 'teeth'">
                         <span
                             v-for="toothId in Object.keys(item.teeth)"
                             :key="toothId"
-                        >{{ toothId | toCurrentTeethSystem(teethSystem) }},&nbsp; </span>
-                    </md-table-cell>
-                    <md-table-cell md-sort-by="author" md-label="Created by">
-                        <div class="md-layout md-alignment-left-center">
-                            <div class="md-layout" style="max-width:40px;">
-                                <t-avatar
-                                    :small="true"
-                                    :color="item.author.color"
-                                    :imageSrc="item.author.avatar"
-                                    :title="item.author.firstName + ' ' + item.author.lastName"
-                                />
-                            </div>
-                            <span class="md-layout-item">
-                                <span>{{item.author.lastName | capitilize}}</span>
-                                <br>
-                                <span>{{item.author.firstName | capitilize}}</span>
-                            </span>
+                        >{{ toothId | toCurrentTeethSystem(teethSystem) }},&nbsp;</span>
+                    </div>
+
+                    <div
+                        v-else-if="field.key === 'author'"
+                        class="md-layout md-alignment-left-center"
+                    >
+                        <div class="md-layout" style="max-width:40px;">
+                            <t-avatar
+                                :small="true"
+                                :color="item.author.color"
+                                :imageSrc="item.author.avatar"
+                                :title="item.author.firstName + ' ' + item.author.lastName"
+                            />
                         </div>
-                    </md-table-cell>
-                    <md-table-cell v-if="item.manipulations" md-sort-by="price" md-label="Price">
-                        {{getItemTotalPrice(item.manipulations)}} <small>{{clinic.currencyCode}}</small>
-                    </md-table-cell>
-                    <md-table-cell md-sort-by="date" class="date" md-label="Date">
+                        <span class="md-layout-item">
+                            <span>{{item.author.lastName | capitilize}}</span>
+                            <br>
+                            <span>{{item.author.firstName | capitilize}}</span>
+                        </span>
+                    </div>
+
+                    <div v-if="field.key === 'manipulations' && item.manipulations">manipulations</div>
+
+                    <div v-if="field.key === 'date'">
                         <span>{{ item.date | moment("from") }}</span>
                         <br>
                         <small>{{item.date | moment("calendar")}}</small>
-                    </md-table-cell>
-                    <md-table-cell class="actions" md-label="Actions">
-                        <md-button
-                            v-show="ifDiagnoseHasLocations(item.teeth)"
-                            class="md-just-icon md-simple"
-                            @click.native="$emit('toggleItemVisibility', item.id, type)"
-                        >
-                            <md-icon v-if="item.showInJaw">visibility</md-icon>
-                            <md-icon v-else>visibility_off</md-icon>
-                        </md-button>
-                        <md-button
-                            class="md-just-icon md-info md-simple"
-                            @click.native="handleEdit(item)"
-                        >
-                            <md-icon>edit</md-icon>
-                        </md-button>
-                        <md-button
-                            class="md-just-icon md-danger md-simple"
-                            @click.native="handleDelete(item)"
-                        >
-                            <md-icon>close</md-icon>
-                        </md-button>
-                    </md-table-cell>
-                </md-table-row>
-            </md-table>
-            <div class="footer-table md-table">
-                <table>
-                    <tfoot>
-                        <tr>
-                            <th v-for="item in footerTable" :key="item" class="md-table-head">
-                                <div class="md-table-head-container md-ripple md-disabled">
-                                    <div class="md-table-head-label">{{item}}</div>
-                                </div>
-                            </th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="md-layout" md-alignment="space-between">
-                <div class="md-layout-item">
-                    <p class="card-category">Showing {{from + 1}} to {{to}} of {{total}} entries</p>
-                </div>
-                <pagination
-                    class="mb-3 pagination-no-border pagination-success"
-                    v-model="pagination.currentPage"
-                    :per-page="pagination.perPage"
-                    :total="total"
-                ></pagination>
-            </div>
+                    </div>
+
+                    <div v-if="field.key === 'price' && item.manipulations">
+                        {{getItemTotalPrice(item.manipulations)}}
+                        <small>{{clinic.currencyCode}}</small>
+                    </div>
+                </md-table-cell>
+
+                <md-table-cell class="actions" md-label="Actions">
+                    <md-button
+                        v-show="ifDiagnoseHasLocations(item.teeth)"
+                        class="md-just-icon md-simple"
+                        @click.native="$emit('toggleItemVisibility', item.id, type)"
+                    >
+                        <md-icon v-if="item.showInJaw">visibility</md-icon>
+                        <md-icon v-else>visibility_off</md-icon>
+                    </md-button>
+                    <md-button
+                        class="md-just-icon md-info md-simple"
+                        @click.native="handleEdit(item)"
+                    >
+                        <md-icon>edit</md-icon>
+                    </md-button>
+                    <md-button
+                        class="md-just-icon md-danger md-simple"
+                        @click.native="handleDelete(item)"
+                    >
+                        <md-icon>close</md-icon>
+                    </md-button>
+                </md-table-cell>
+            </md-table-row>
+        </md-table>
+        <div class="footer-table md-table">
+            <table>
+                <tfoot>
+                    <tr>
+                        <th v-for="item in itemsTableColumns" :key="item.key" class="md-table-head">
+                            <div class="md-table-head-container md-ripple md-disabled">
+                                <div class="md-table-head-label">{{item.title}}</div>
+                            </div>
+                        </th>
+                        <th class="md-table-head">
+                            <div class="md-table-head-container md-ripple md-disabled">
+                                <div class="md-table-head-label">Actions</div>
+                            </div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <t-table-editor
+            icon="settings"
+            color="success"
+            :title="`Set ${type} columns order`"
+            :availableTableColumns="computedAvailableItemsTableColumns"
+            :tableColumns="itemsTableColumns"
+            :showForm.sync="showTableEditor"
+            @selected="setColumns"
+        ></t-table-editor>
     </div>
 </template>
 <script>
-    import { Pagination, TAvatar } from '@/components';
+    import { TAvatar, TTableEditor } from '@/components';
+    import {
+        USER_DIAGNOSIS_COLUMNS,
+        USER_ANAMNESIS_COLUMNS,
+        USER_PROCEDURES_COLUMNS,
+    } from '@/constants';
     import { mapGetters } from 'vuex';
-    import Fuse from 'fuse.js';
     // import swal from 'sweetalert2';
     import { tObjProp } from '@/mixins';
 
     export default {
         mixins: [tObjProp],
         components: {
-            Pagination,
             TAvatar,
+            TTableEditor,
         },
         props: {
             items: {
@@ -160,32 +170,25 @@
                 type: String,
                 default: () => 'diagnosis',
             },
-
+            fields: {
+                type: Array,
+                default: () => [],
+            },
         },
         data() {
             return {
+                computedAvailableItemsTableColumns: [],
+                itemsTableColumns: [],
+                showTableEditor: false,
                 showForm: false,
                 currentSort: 'date',
                 currentSortOrder: 'desc',
-                selectedDiagnose: {},
                 pagination: {
                     perPage: 10,
                     currentPage: 1,
                     perPageOptions: [10, 25, 50],
                     total: 0,
                 },
-                footerTable: [
-                    'Code',
-                    'Title',
-                    'Teeth',
-                    'Diagnosed by',
-                    'Date',
-                    'Actions',
-                ],
-                searchQuery: '',
-                propsToSearch: ['code', 'diagnose', 'date', 'author', 'title'],
-                searchedData: [],
-                fuseSearch: null,
             };
         },
         computed: {
@@ -194,41 +197,104 @@
                 jaw: 'jaw',
                 patient: 'getPatient',
                 clinic: 'getCurrentClinic',
+                availableItemsTableColumns: 'availableItemsTableColumns',
             }),
-            setecltedTeeth() {
-                if (!this.isEmpty(this.selectedDiagnose)) {
-                    return Object.keys(this.selectedDiagnose.teeth);
-                }
-                return [];
-            },
             tableData() {
                 return this.items;
             },
-            queriedData() {
-                let result = this.tableData;
-                if (this.searchedData.length > 0) {
-                    result = this.searchedData;
+            currentTypeToLocalStorage() {
+                if (this.type === 'diagnosis') {
+                    return USER_DIAGNOSIS_COLUMNS;
                 }
-                return result.slice(this.from, this.to);
-            },
-            to() {
-                let highBound = this.from + this.pagination.perPage;
-                if (this.total < highBound) {
-                    highBound = this.total;
+                if (this.type === 'anamnesis') {
+                    return USER_ANAMNESIS_COLUMNS;
                 }
-                return highBound;
+                return USER_PROCEDURES_COLUMNS;
             },
-            from() {
-                return this.pagination.perPage * (this.pagination.currentPage - 1);
-            },
-            total() {
-                return this.searchedData.length > 0
-                    ? this.searchedData.length
-                    : this.tableData.length;
+            defaultFields() {
+                const standartColumns = [
+                    {
+                        key: 'code',
+                        title: 'Code',
+                    },
+                    {
+                        key: 'title',
+                        title: 'Title',
+                    },
+                    {
+                        key: 'teeth',
+                        title: 'Teeth',
+                    },
+                    {
+                        key: 'author',
+                        title: 'Created By',
+                    },
+                    {
+                        key: 'date',
+                        title: 'Date',
+                    },
+                ];
+                const extraFields = [
+                    {
+                        key: 'manipulations',
+                        title: 'Manipulations',
+                    },
+                    {
+                        key: 'price',
+                        title: 'Price',
+                    },
+                ];
+                if (this.type !== 'diagnosis') {
+                    return [...standartColumns, ...extraFields];
+                }
+                return standartColumns;
             },
         },
 
         methods: {
+            setComputedAvailableItemsTableColumns() {
+                if (this.type === 'diagnosis') {
+                    const columns = this.availableItemsTableColumns.filter(
+                        el => el.key !== 'manipulations' && el.key !== 'price',
+                    );
+                    this.computedAvailableItemsTableColumns = columns;
+                } else {
+                    this.computedAvailableItemsTableColumns = this.availableItemsTableColumns;
+                }
+            },
+            getFieldName(key) {
+                const field = this.availableItemsTableColumns.find(
+                    f => f.key === key,
+                );
+                if (field) {
+                    return field.title;
+                }
+                return '';
+            },
+            setItemsTableColumns() {
+                const columns2 = JSON.parse(
+                    localStorage.getItem(this.currentTypeToLocalStorage),
+                );
+                if (columns2) {
+                    this.itemsTableColumns = columns2;
+                } else {
+                    this.itemsTableColumns = this.defaultFields;
+                }
+            },
+            setColumns(e) {
+                // поменять после того как добавять соответствующие поля в беке
+                localStorage.setItem(
+                    this.currentTypeToLocalStorage,
+                    JSON.stringify(e),
+                );
+                this.setItemsTableColumns();
+                this.setComputedAvailableItemsTableColumns();
+            //  this.$store.dispatch(USER_UPDATE, {
+            //   user: {
+            //    columns: e,
+            //   },
+            // });
+            },
             onSelect(item) {
                 console.log(item);
             },
@@ -292,51 +358,58 @@
                 });
             },
             handleLike(item) {
-                // swal({
-                //     title: `You liked ${item.title}`,
-                //     buttonsStyling: false,
-                //     type: 'success',
-                //     confirmButtonClass: 'md-button md-success',
-                // });
+            // swal({
+            //     title: `You liked ${item.title}`,
+            //     buttonsStyling: false,
+            //     type: 'success',
+            //     confirmButtonClass: 'md-button md-success',
+            // });
             },
             handleEdit(item) {
                 if (item) {
-                    this.$emit('showItemInfo', { itemId: item.id, toothId: null, type: this.type });
+                    this.$emit('showItemInfo', {
+                        itemId: item.id,
+                        toothId: null,
+                        type: this.type,
+                    });
                 }
-                // this.$emit('editItem', item, this.type);
+            // this.$emit('editItem', item, this.type);
             },
             handleDelete(item) {
-                // swal({
-                //     title: 'Are you sure?',
-                //     text: "You won't be able to revert this!",
-                //     type: 'warning',
-                //     showCancelButton: true,
-                //     confirmButtonClass: 'md-button md-success btn-fill',
-                //     cancelButtonClass: 'md-button md-danger btn-fill',
-                //     confirmButtonText: 'Yes, delete it!',
-                //     buttonsStyling: false,
-                // }).then((result) => {
-                //     if (result.value) {
-                //         this.deleteRow(item);
-                //         swal({
-                //             title: 'Deleted!',
-                //             text: `You deleted ${item.title}`,
-                //             type: 'success',
-                //             confirmButtonClass: 'md-button md-success btn-fill',
-                //             buttonsStyling: false,
-                //         });
-                //     }
-                // });
+            // swal({
+            //     title: 'Are you sure?',
+            //     text: "You won't be able to revert this!",
+            //     type: 'warning',
+            //     showCancelButton: true,
+            //     confirmButtonClass: 'md-button md-success btn-fill',
+            //     cancelButtonClass: 'md-button md-danger btn-fill',
+            //     confirmButtonText: 'Yes, delete it!',
+            //     buttonsStyling: false,
+            // }).then((result) => {
+            //     if (result.value) {
+            //         this.deleteRow(item);
+            //         swal({
+            //             title: 'Deleted!',
+            //             text: `You deleted ${item.title}`,
+            //             type: 'success',
+            //             confirmButtonClass: 'md-button md-success btn-fill',
+            //             buttonsStyling: false,
+            //         });
+            //     }
+            // });
             },
-            deleteRow(item) {
-            },
+            deleteRow(item) {},
         },
         mounted() {
-            // Fuse search initialization.
-            this.fuseSearch = new Fuse(this.tableData, {
-                keys: ['diagnose', 'code', 'author', 'date', 'title'],
-                threshold: 0.3,
-            });
+        // Fuse search initialization.
+        // this.fuseSearch = new Fuse(this.tableData, {
+        //     keys: ['diagnose', 'code', 'author', 'date', 'title'],
+        //     threshold: 0.3,
+        // });
+        },
+        created() {
+            this.setItemsTableColumns();
+            this.setComputedAvailableItemsTableColumns();
         },
         watch: {
             searchQuery(value) {
@@ -346,39 +419,43 @@
                 }
                 this.searchedData = result;
             },
+            type(value) {
+                this.setItemsTableColumns();
+                this.setComputedAvailableItemsTableColumns();
+            },
         },
     };
 </script>
 
 <style lang="scss"  >
-.items-list-wrapper{
-        .md-tabs-content table thead {
-            display: table-header-group !important;
-        }
+.items-list-wrapper {
+    .md-tabs-content table thead {
+        display: table-header-group !important;
+    }
 
-.md-table-cell-container{
-    word-wrap: break-word;
-}
-.md-card .md-card-actions {
-    border: 0;
-    margin-left: 20px;
-    margin-right: 20px;
-}
-.code {
-    width: 20px;
-}
-.actions,
-.date {
-    width: 50px;
-}
-.paginated-table table > tbody > tr > td {
-    width: fit-content;
-}
-.footer-table table > tfoot > tr > th:first-child {
-    width: 20px;
-}
-.footer-table table > tfoot > tr > th:nth-last-child(-n + 2) {
-    width: 40px;
-}
+    .md-table-cell-container {
+        word-wrap: break-word;
+    }
+    .md-card .md-card-actions {
+        border: 0;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .code {
+        width: 20px;
+    }
+    .actions,
+    .date {
+        width: 50px;
+    }
+    .paginated-table table > tbody > tr > td {
+        width: fit-content;
+    }
+    .footer-table table > tfoot > tr > th:first-child {
+        width: 20px;
+    }
+    .footer-table table > tfoot > tr > th:nth-last-child(-n + 2) {
+        width: 40px;
+    }
 }
 </style>

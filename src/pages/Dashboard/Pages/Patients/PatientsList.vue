@@ -14,6 +14,7 @@
                 </md-card-header>
                 <md-card-content>
                     <md-table
+                    md-fixed-header
                         @md-selected="onSelect"
                         :value="patients"
                         :md-sort-fn="customSort"
@@ -70,6 +71,15 @@
                                 </div>
                             </div>
                         </md-table-toolbar>
+                         <md-table-toolbar class="md-primary" slot="md-table-alternate-header" slot-scope="{ count }">
+                                <div class="md-toolbar-section-start">{{count}}</div>
+
+                                <div class="md-toolbar-section-end">
+                                <md-button class="md-just-icon">
+                                    <md-icon>delete</md-icon>
+                                </md-button>
+                                </div>
+                            </md-table-toolbar>
 
                         <md-table-empty-state
                             v-if="status === 'success' "
@@ -84,7 +94,9 @@
                             v-else
                             md-label="Waiting for patients to load"
                             :md-description="`Please be patient, just a few seconds...`"
-                        ></md-table-empty-state>
+                        >
+                             <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+                        </md-table-empty-state>
 
                         <md-table-row
                             slot="md-table-row"
@@ -289,7 +301,7 @@
     import {
         PATIENTS_REQUEST,
         AUTH_LOGOUT,
-        PATIENTS_LIST_COLUMNS,
+        USER_PATIENTS_COLUMNS,
     } from '@/constants';
     import { tObjProp } from '@/mixins';
 
@@ -305,6 +317,7 @@
         data: () => ({
             showForm: false,
             perPageOptions: [25, 50],
+            patientsTableColumns: [],
             totalPages: 500,
             queryParams: {
                 currentSort: 'created',
@@ -319,6 +332,42 @@
             callbackLauncher: null,
         }),
         methods: {
+            setPatientsTableColumns() {
+                const columns1 = [
+                    {
+                        key: 'ID',
+                        title: 'ID',
+                    },
+                    {
+                        key: 'name',
+                        title: 'Name',
+                    },
+                    {
+                        key: 'address',
+                        title: 'Address',
+                    },
+                    {
+                        key: 'allergy',
+                        title: 'Allergy',
+                    },
+                    {
+                        key: 'birthday',
+                        title: 'Birthday',
+                    },
+                    {
+                        key: 'created',
+                        title: 'Created',
+                    },
+                    {
+                        key: 'createdBy',
+                        title: 'Created By',
+                    },
+                ];
+                const columns2 = JSON.parse(
+                    localStorage.getItem(USER_PATIENTS_COLUMNS),
+                );
+                this.patientsTableColumns = columns2 || columns1;
+            },
             goToPatient(patient) {
                 if (patient) {
                     this.$router.push({
@@ -344,7 +393,8 @@
             },
             setColumns(e) {
                 // поменять после того как добавять соответствующие поля в беке
-                localStorage.setItem('USER_PARIENTS_COLUMS', JSON.stringify(e));
+                localStorage.setItem(USER_PATIENTS_COLUMNS, JSON.stringify(e));
+                this.setPatientsTableColumns();
             //  this.$store.dispatch(USER_UPDATE, {
             //   user: {
             //    columns: e,
@@ -443,7 +493,7 @@
             },
         },
         created() {
-            console.log(TTableEditor);
+            this.setPatientsTableColumns();
             if (this.patients.length === 0) {
                 this.search();
             } else {
@@ -456,42 +506,6 @@
                 status: 'patientsStatus',
                 availablePatientsTableColumns: 'availablePatientsTableColumns',
             }),
-            patientsTableColumns() {
-                const columns1 = [
-                    {
-                        key: 'ID',
-                        title: 'ID',
-                    },
-                    {
-                        key: 'name',
-                        title: 'Name',
-                    },
-                    {
-                        key: 'address',
-                        title: 'Address',
-                    },
-                    {
-                        key: 'allergy',
-                        title: 'Allergy',
-                    },
-                    {
-                        key: 'birthday',
-                        title: 'Birthday',
-                    },
-                    {
-                        key: 'created',
-                        title: 'Created',
-                    },
-                    {
-                        key: 'createdBy',
-                        title: 'Created By',
-                    },
-                ];
-                const columns2 = JSON.parse(
-                    localStorage.getItem('USER_PARIENTS_COLUMS'),
-                );
-                return columns2 || columns1;
-            },
             to() {
                 let highBound = this.from + this.queryParams.pagination.perPage;
                 if (this.total < highBound) {

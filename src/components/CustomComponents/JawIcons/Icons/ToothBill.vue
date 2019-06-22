@@ -1,0 +1,93 @@
+<template>
+  <svg
+    version="1.1"
+    id="Слой_1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0px"
+    y="0px"
+    viewBox="0 0 110.6 96.9"
+    style="enable-background:new 0 0 110.6 96.9;"
+    xml:space="preserve"
+  >
+    <title>Tooth Bill</title>
+    <g id="Слой_2_1_">
+      <g id="_лой_1">
+        <g id="_Группа_">
+          <path
+            id="_Контур_"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M35.8,68.8l-1.1,3.3c-1.2,3.5-1.8,7.3-1.8,11v8.3c0,2.3-1.8,4.1-4.1,4.1l0,0c-1.5,0-2.8-0.8-3.6-2.1l-2.9-5
+				c-4.8-8.3-7.6-17.5-8.5-27c-0.4-4.1-1.6-8.1-3.7-11.7l-4.3-7.5C3,37.3,1.5,31.7,1.5,26.1l0,0c-0.1-5.4,1.2-10.7,3.8-15.3
+				C8.7,4.9,15,1.4,21.7,1.5l0,0c1.1,0,2.2,0.1,3.3,0.3l15.1,2.7"
+          />
+          <path
+            id="_Контур_2"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M40.1,4.4l15-2.7c1.1-0.2,2.2-0.3,3.3-0.3l0,0c6.7-0.1,13,3.5,16.4,9.2c2.6,4.7,3.9,10,3.8,15.3l0,0c0,5.7-1.5,11.2-4.3,16.2
+				l-2.8,5"
+          />
+          <path
+            id="_Контур_3"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M36.4,13.3l-9.1-2c-4-0.9-8.2,0.4-10.9,3.5c-0.2,0.2-0.4,0.5-0.6,0.7c-1.5,2.2-2.3,4.8-2.2,7.4"
+          />
+          <g id="_Группа_2">
+            <g id="_Группа_3">
+
+              <polygon
+                id="_Контур_4"
+                style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+                points="
+						102,92.3 102,63.1 41.9,63.1 41.9,92.2 					"
+              />
+
+              <polyline
+                id="_Контур_5"
+                style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+                points="
+						57.5,56.7 57.5,53.8 109.1,53.8 109.1,76.8 107,76.8 					"
+              />
+            </g>
+            <g id="_Группа_4">
+              <g id="_Группа_5">
+                <path
+                  id="_Составной_контур_"
+                  style="fill:#425958;"
+                  d="M56.4,81.5c0-0.5-0.1-1-0.4-1.4
+							c-0.4-0.4-0.8-0.8-1.3-1c-1.2-0.4-2.2-1-3.1-1.9c-1.4-1.7-1.4-4.1,0-5.9c0.7-0.8,1.7-1.3,2.7-1.3v-2.3h1.5V70
+							c1,0.1,2,0.7,2.6,1.5c0.7,0.9,1,2.1,0.9,3.2h-3c0-0.6-0.1-1.2-0.4-1.8c-0.2-0.4-0.7-0.6-1.1-0.6c-0.4,0-0.8,0.2-1.1,0.5
+							c-0.2,0.4-0.3,0.9-0.3,1.4s0.1,0.9,0.4,1.3c0.4,0.4,0.9,0.8,1.4,1.1c1.2,0.4,2.2,1,3.1,1.9c0.7,0.8,1.1,1.9,1,3
+							c0.1,1.1-0.3,2.1-1,2.9s-1.7,1.2-2.7,1.3v2.1h-1.5v-2.1c-2.3-0.1-4.1-2.1-4-4.4c0-0.1,0-0.2,0-0.3v-0.1H53
+							c-0.1,0.7,0.1,1.4,0.5,2c0.3,0.4,0.8,0.6,1.3,0.6s0.9-0.2,1.2-0.5C56.3,82.5,56.4,82,56.4,81.5z"
+                />
+              </g>
+
+              <line
+                id="_Контур_6"
+                style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+                x1="69.1"
+                y1="73.6"
+                x2="89.8"
+                y2="73.6"
+              />
+
+              <line
+                id="_Контур_7"
+                style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+                x1="69.1"
+                y1="82"
+                x2="89.8"
+                y2="82"
+              />
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
+
+</template>

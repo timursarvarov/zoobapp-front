@@ -314,7 +314,7 @@
             },
             setColumns(e) {
                 // поменять после того как добавять соответствующие поля в беке
-                localStorage.setItem('USER_PARIENTS_COLUMS', JSON.stringify(e));
+                localStorage.setItem('USER_PATIENTS_COLUMNS', JSON.stringify(e));
             //  this.$store.dispatch(USER_UPDATE, {
             //   user: {
             //    columns: e,
@@ -468,7 +468,7 @@
                     },
                 ];
                 const columns2 = JSON.parse(
-                    localStorage.getItem('USER_PARIENTS_COLUMS'),
+                    localStorage.getItem('USER_PATIENTS_COLUMNS'),
                 );
                 return columns2 || columns1;
             },

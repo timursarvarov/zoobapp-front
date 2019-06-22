@@ -24,7 +24,9 @@ export default function() {
         subscribers.push(callback);
     }
     axios.interceptors.request.use(config => {
-        store.dispatch(LOADER_START);
+        if (store.state.loader.loaderState) {
+            store.dispatch(LOADER_START);
+        }
         const expiresAt = store.state.auth.expiresAt;
         const currentTime = Math.floor(Date.now() / 1000);
         if (expiresAt < currentTime && !isAlreadyFetchingAccessToken) {

@@ -10,7 +10,7 @@
       </div>
 
       <div class="md-layout-item md-medium-size-100 md-size-33">
-        <calendar-form header-color="green"/>
+        <!-- <calendar-form header-color="green"/> -->
       </div>
     </div>
   </div>
@@ -19,13 +19,13 @@
 <script>
     import UserCard from './UserProfile/UserCard';
     import PasswordForm from './UserProfile/PasswordForm';
-    import CalendarForm from './UserProfile/CalendarForm';
+    // import CalendarForm from './UserProfile/CalendarForm';
 
     export default {
         components: {
             UserCard,
             PasswordForm,
-            CalendarForm,
+            // CalendarForm,
         },
     };
 </script>
