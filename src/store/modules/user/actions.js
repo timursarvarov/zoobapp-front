@@ -100,8 +100,10 @@ export default {
         });
     },
     [USER_LOGOUT]: ({
-        commit
+        commit,
+        store,
     }) => {
+        // console.log(router)
         localStorage.removeItem('USER_NAME');
         localStorage.removeItem('USER_LAST_NAME');
         localStorage.removeItem('USER_FIRST_NAME');

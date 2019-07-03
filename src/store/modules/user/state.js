@@ -232,4 +232,41 @@ export default {
             title: 'Date',
         },
     ],
+    availableBillingTableColumns: [{
+            key: 'code',
+            title: 'Code',
+        },
+        {
+            key: 'title',
+            title: 'Title',
+        },
+        {
+            key: 'teeth',
+            title: 'Teeth',
+        },
+        {
+            key: 'created',
+            title: 'Created',
+        },
+        {
+            key: 'author',
+            title: 'Created By',
+        },
+        {
+            key: 'manipulations',
+            title: 'Manipulations',
+        },
+        {
+            key: 'price',
+            title: 'Price',
+        },
+        {
+            key: 'date',
+            title: 'Date',
+        },
+        {
+            key: 'plan',
+            title: 'PLan',
+        },
+    ],
 };

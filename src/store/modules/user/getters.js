@@ -10,6 +10,7 @@ export default {
     diagnoseDescriptions: state => state.diagnoseDescriptions,
     availablePatientsTableColumns: state => state.availablePatientsTableColumns,
     availableItemsTableColumns: state => state.availableItemsTableColumns,
+    availableBillingTableColumns: state => state.availableBillingTableColumns,
     getLang: (state) => {
         if (state.profile.lang === 1) {
             return 'en';

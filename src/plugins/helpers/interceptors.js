@@ -30,6 +30,7 @@ export default function() {
         const expiresAt = store.state.auth.expiresAt;
         const currentTime = Math.floor(Date.now() / 1000);
         if (expiresAt < currentTime && !isAlreadyFetchingAccessToken) {
+            // if (true) {
             isAlreadyFetchingAccessToken = true;
 
             return store.dispatch(AUTH_REFRESH_TOKEN).then(token => {

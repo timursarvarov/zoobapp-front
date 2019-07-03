@@ -1,13 +1,13 @@
 /* eslint-disable */
 import {
-    CLINIC_SET_PROPS,
+    CLINIC_SET_PROP,
     CLINIC_REQUEST,
     CLINIC_SUCCESS,
     CLINIC_ERROR,
 } from '@/constants';
 
 export default {
-    [CLINIC_SET_PROPS]: (
+    [CLINIC_SET_PROP]: (
         state, {
             type,
             value

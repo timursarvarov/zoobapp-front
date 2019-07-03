@@ -5,71 +5,101 @@
       ]"
     >
       <!-- {'min-height': `${size.height}px`}  -->
-            <div class="absolute-header-block">
-                <md-toolbar class=" toolbar-jaw  manipulations-editor md-alignment-center-space-between md-layout md-transparent" >
-
-                    <div class="manipulations-autocomplite md-layout-item md-size-45 md-small-size-100"  ref="autocomplete">
-                        <t-auto-complite
-                            :mdFuzzySearch="true"
+            <div class="absolute-header-block" >
+                <md-toolbar  class=" toolbar-jaw  manipulations-editor md-alignment-center-space-between md-layout md-transparent" >
+                    <div  class="manipulations-autocomplite md-layout-item md-size-50 md-medium-size-40 md-small-size-100">
+                        <cool-select
+                            tabindex="1"
                             v-model="selectedManipulations"
-                            @md-selected="setManipulation"
-                            :md-options="manipulationsForOptions"
-                            :chooseContent="true"
-                            @md-opened="selectedManipulations =''"
+                            :items="manipulationsForOptions"
+                            :arrowsDisableInstantSelection="true"
+                            :disableFirstItemSelectOnEnter="true"
+                            item-text="text"
+                            itemValue="title"
+                            ref="autocomplete"
+                            @select="setManipulation"
+                            :placeholder="selectedManipulations ? '': 'Select manipulation'"
                         >
-                            <label>Manipulations</label>
-
-                            <template slot="md-autocomplete-item" slot-scope="{ item, term }">
-                                <md-highlight-text :md-term="term">{{ `${item.code} - ${item.title}` }}</md-highlight-text>
+                            <template v-if="item" slot="item" slot-scope="{ item }">
+                                <div style="display: flex;">
+                                    <md-button class="IZ-select-button">
+                                        <span class="text-left" v-if="item.title && item.code">
+                                            {{ `${item.code} - ${item.title}` }}
+                                        </span>
+                                        <span class="text-right" >{{`${item.price}`}} {{currencyCode}}</span>
+                                    </md-button>
+                                </div>
                             </template>
-
-                            <template slot="md-autocomplete-empty" slot-scope="{ term }">
-                                <div class="md-layout" style="white-space: pre-wrap;oveflow:hidden;">
+                            <template slot="no-data">
+                                <div class="md-layout" style="display: flex; white-space: pre-wrap;oveflow:hidden;">
                                     <span
                                         class="md-layout-item md-size-100"
                                         style="white-space: pre-wrap;oveflow:hidden;"
-                                    >No templates "{{ term }}" were found.</span>
+                                    >No manipulations were found.</span>
                                 </div>
                             </template>
-                        </t-auto-complite>
+                        </cool-select>
                     </div>
-                    <div class="manipulations-input md-layout-item md-size-15 md-small-size-50  ">
-                        <md-field>
-                            <label>Qty</label>
-                            <md-input
-                            min="1"
-                            type="number"
-                            v-model="manipulationsNum"></md-input>
-                        </md-field>
-                    </div>
-                    <div class="manipulations-input md-layout-item md-size-15 md-small-size-50">
-                        <md-field>
-                            <label>Price {{currencyCode}}</label>
-                            <md-input
-                            min="0"
-                            type="number"
-                            v-model="manipulationsPrice"></md-input>
-                        </md-field>
-                    </div>
-                    <div class="manipulations-input md-layout-item md-small-size-50">
-                        <md-field>
-                            <label>Total {{currencyCode}}</label>
-                            <md-input
-                            type="number"
-                            disabled
-                            v-model="manipulationsPriceTotal"></md-input>
-                        </md-field>
-                    </div>
-                    <div class="manipulations-input__action md-layout-item ">
+                    <div
+                        class=" md-layout md-alignment-center-space-between ">
+                        <div class="manipulations-input md-layout-item md-size-25">
+                            <md-field  >
+                                <label>Qty</label>
+                                <md-input
+                                tabIndex='1'
+                                id='qty'
+                                key='qty'
+                                ref="qty"
+                                min="1"
+                                type="number"
+                                v-model="manipulationsNum"
+                             ></md-input>
+                            </md-field>
+                                <!-- @keydown.enter.prevent="focusOn('price')" -->
+                        </div>
+                        <div class="manipulations-input md-layout-item md-size-25">
+                            <md-field  >
+                                <label>Price {{currencyCode}}</label>
+                                <md-input
+                                tabIndex='1'
+                                ref="price"
+                                id='price'
+                                key='price'
+                                min="0"
+                                type="number"
+                                @focus="getFocus('price')"
+                                v-model="manipulationsPrice"></md-input>
+                            </md-field>
+                                <!-- @keydown.enter.prevent="focusOn('addButton')" -->
+                        </div>
+                        <div class="manipulations-input md-layout-item md-size-25 ">
+                            <md-field>
+                                <label>Total {{currencyCode}}</label>
+                                <md-input
+                                tabindex="-1"
+                                type="number"
+                                disabled
+                                v-model="manipulationsPriceTotal"></md-input>
+                            </md-field>
+                        </div>
+                        <div class="manipulations-input__action md-layout-item md-alignment-center-right md-layout ">
 
-                        <md-button
-                            :disabled="!selectedManipulations"
-                            :class="[{'md-primary': manipulationsNum}]"
-                            class="md-button  md-just-icon md-round"
-                            @click="addManipulation()"
-                            >
-                                <md-icon>add</md-icon>
-                        </md-button>
+                            <md-button
+                                ref="addButton"
+                                tabIndex='1'
+                                id='addButton'
+                                key='addButton'
+                                :disabled="!selectedManipulations"
+                                :class="[{'md-primary': selectedManipulations}]"
+                                class="md-button  md-just-icon md-round"
+                                @keydown.enter="addManipulation()"
+                                @focus="getFocus('addButton')"
+                                @click="addManipulation()"
+                                >
+                                <!-- @keydown.enter.prevent="focusOn('autocomplete')" -->
+                                    <md-icon>add</md-icon>
+                            </md-button>
+                        </div>
                     </div>
 
                 </md-toolbar>
@@ -130,14 +160,19 @@
 </template>
 <script>
 // eslint-disable-next-line import/no-unresolved
-    import { TAutoComplite, AnimatedNumber } from '@/components';
-    import { MANIPULATIONS } from '@/constants';
-    // import swal from 'sweetalert2';
+    import { TAutoCompliteFuse, AnimatedNumber } from '@/components';
+    import { MANIPULATIONS, AUTH_REFRESH_TOKEN } from '@/constants';
+    import { CoolSelect } from 'vue-cool-select';
 
     export default {
+        value: {
+            type: String,
+            required: true,
+        },
         components: {
-            TAutoComplite,
+            TAutoCompliteFuse,
             AnimatedNumber,
+            CoolSelect,
         },
         model: {
             prop: 'description',
@@ -163,12 +198,15 @@
         },
         data() {
             return {
+                focusedField: null,
                 manipulationsNum: 1,
                 manipulationsPrice: 0,
+                step: 1,
                 manipulationsPriceTotal: 0,
                 selectedManipulations: '',
                 manipulationsToAdd: [],
                 manipulationToEdit: {},
+                showIfinite: true,
                 touched: {
                     code: false,
                 },
@@ -181,28 +219,12 @@
             };
         },
         methods: {
+
+            getFocus(field) {
+                console.log(field);
+                this.focusedField = field;
+            },
             handleDelete(item) {
-                // swal({
-                //     title: 'Are you sure?',
-                //     text: "You won't be able to revert this!",
-                //     type: 'warning',
-                //     showCancelButton: true,
-                //     confirmButtonClass: 'md-button md-success btn-fill',
-                //     cancelButtonClass: 'md-button md-danger btn-fill',
-                //     confirmButtonText: 'Yes, delete it!',
-                //     buttonsStyling: false,
-                // }).then((result) => {
-                //     if (result.value) {
-                //         this.deleteRow(item);
-                //         swal({
-                //             title: 'Deleted!',
-                //             text: `You deleted ${item.manipulation.title}`,
-                //             type: 'success',
-                //             confirmButtonClass: 'md-button md-success btn-fill',
-                //             buttonsStyling: false,
-                //         });
-                //     }
-                // });
             },
             deleteRow(item) {
                 const indexToDelete = this.manipulationsToAdd.findIndex(
@@ -213,10 +235,16 @@
                 }
             },
             focusOn(ref) {
-                if (!this.$refs[ref]) {
-                    return;
+                if (this.$refs[ref]) {
+                    if (ref === 'autocomplete') {
+                        this.$refs[ref].$el.querySelector('input').focus();
+                    } else if (ref === 'qty') {
+                        this.$refs.autocomplete.$el.blur();
+                        this.$refs[ref].$el.focus();
+                    } else {
+                        this.$refs[ref].$el.focus();
+                    }
                 }
-                this.$refs[ref].$el.focus();
             },
             showErrorsValidate(error) {
                 if (error.message === '') {
@@ -251,8 +279,11 @@
                 this.manipulationToAdd = manipulation;
                 this.manipulationsPrice = manipulation.price;
                 this.manipulationsNum = this.selectedTeethNum;
+                console.log('md-selected');
+                this.focusOn('qty');
             },
             addManipulation() {
+                console.log(this.focusedField);
                 this.manipulationsToAdd.unshift({
                     manipulation: this.manipulationToAdd,
                     price: this.manipulationsPrice,
@@ -261,6 +292,9 @@
                 this.selectedManipulations = '';
                 this.manipulationsPrice = 0;
                 this.manipulationsNum = this.selectedTeethNum;
+                this.selectedManipulations = '';
+
+                this.focusOn('autocomplete');
             },
         },
         computed: {
@@ -272,7 +306,14 @@
                 return sum;
             },
             manipulationsForOptions() {
-                return MANIPULATIONS;
+                const manips = [];
+                MANIPULATIONS.forEach((man) => {
+                    manips.push({
+                        ...man,
+                        text: `${man.code} ${man.title} ${man.price}`,
+                    });
+                });
+                return manips;
             },
             manipulationHeaders: {
                 get() {
@@ -304,6 +345,12 @@
                     this.manipulationsToAdd = this.manipulationsToEdit;
                 }
             });
+
+            // window.addEventListener('keyup', ({event, useCapture }) => {
+            //     if (event.keyCode === 13) {
+            //         this.callEvent(event, useCapture);
+            //     }
+            // });
         },
         watch: {
             manipulationsNum() {

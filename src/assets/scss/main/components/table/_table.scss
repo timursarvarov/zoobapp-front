@@ -1,5 +1,85 @@
-.table-with-header {
-    thead {
+.md-table-head-label {
+    padding-left: 24px;
+    padding-right: 32px;
+    font-weight: 300;
+}
+
+.md-tabs-content {
+    .table-with-header table thead {
         display: table-header-group !important;
+        .md-table-head.md-table-cell-selection {
+            .md-table-head-label {
+                padding-right: 0;
+            }
+        }
     }
+}
+
+.md-tabs-content table thead {
+    display: table-header-group !important;
+}
+
+.no-header table thead {
+    display: none !important;
+}
+
+.small table {
+    .md-table-cell {
+        padding: 6px 4px;
+        font-size: 13px;
+        height: 33px;
+    }
+    .md-table-head {
+        .md-table-head-label {
+            font-size: 13px;
+            height: 20px;
+        }
+    }
+}
+
+// .paginated-table .md-table-head-label:first-child {
+//     padding-right: 0;
+// }
+.text-right {
+    .md-table-cell-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}
+
+.md-table .md-table-head:last-child {
+    text-align: right;
+}
+
+.table-stats {
+    display: flex;
+    align-items: center;
+    text-align: right;
+    flex-flow: row wrap;
+    .td-price .td-total {
+        display: inline-flex;
+        font-weight: 500;
+        font-size: 1.0625rem;
+        margin-right: 50px;
+    }
+    &.table-striped .td-price {
+        border-bottom: 0;
+    }
+    .td-price {
+        font-size: 26px;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+    .td-price,
+    >div {
+        flex: 0 0 100%;
+        padding: 12px 8px;
+    }
+}
+
+.table-shopping .md-table-head:nth-child(5),
+.table-shopping .md-table-head:nth-child(7),
+.table-shopping .md-table-head:nth-child(6) {
+    text-align: right;
 }

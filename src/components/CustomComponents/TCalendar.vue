@@ -173,9 +173,7 @@
 @import "~@fullcalendar/timeline/main.css";
 @import "~@fullcalendar/list/main.css";
 .t-f-calendar {
-    .fc-scroller{
-        // height: auto!important;
-    }
+  
 
     .fc-button-primary:not(:disabled):active:focus,
     .fc-button-primary:not(:disabled).fc-button-active:focus {

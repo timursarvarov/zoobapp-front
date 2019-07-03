@@ -14,13 +14,12 @@
                 </md-card-header>
                 <md-card-content>
                     <md-table
-                    md-fixed-header
-                        @md-selected="onSelect"
-                        :value="patients"
+                        :md-selected-value.sync="selectedPatients"
+                        v-model="patients"
                         :md-sort-fn="customSort"
                         :md-sort.sync="queryParams.currentSort"
                         :md-sort-order.sync="queryParams.currentSortOrder"
-                        class="paginated-table table-striped table-hover"
+                        class=" table-striped table-hover"
                     >
                         <!-- <md-table-toolbar>
                             <div class="md-toolbar-row">
@@ -33,53 +32,44 @@
                             </div>
                         </md-table-toolbar> -->
                         <md-table-toolbar>
-                            <div class="md-toolbar-row">
-                                <div class="md-toolbar-section-end"></div>
-                            </div>
-
-                            <div class="md-toolbar-row">
-                                <div class="md-toolbar-section-start">
-                                    <md-field>
-                                        <label for="pages">Per page</label>
-                                        <md-select
-                                            v-model="queryParams.pagination.perPage"
-                                            name="pages"
-                                        >
-                                            <md-option
-                                                v-for="item in perPageOptions"
-                                                :key="item"
-                                                :label="item"
-                                                :value="item"
-                                            >{{ item }}</md-option>
-                                        </md-select>
-                                    </md-field>
+                                <div class="md-toolbar-section-start  md-layout">
+                                    <div class=" md-size-50 md-small-size-100">
+                                        <md-field>
+                                            <label for="pages">Per page</label>
+                                            <md-select
+                                                v-model="queryParams.pagination.perPage"
+                                                name="pages"
+                                            >
+                                                <md-option
+                                                    v-for="item in perPageOptions"
+                                                    :key="item"
+                                                    :label="item"
+                                                    :value="item"
+                                                >{{ item }}</md-option>
+                                            </md-select>
+                                        </md-field>
+                                    </div >
                                 </div>
-                                <div class="md-toolbar-section-end">
-                                    <md-field>
-                                        <md-input
-                                            type="search"
-                                            class="mb-3"
-                                            clearable
-                                            style="width: 200px"
-                                            placeholder="Search records"
-                                            v-model="queryParams.searchQuery"
-                                        ></md-input>
-                                    </md-field>
-                                     <md-button @click="showForm=!showForm" class="md-just-icon md-simple">
-                                        <md-icon>settings</md-icon>
-                                    </md-button>
+                                <div class="md-toolbar-section-end md-layout ml-auto">
+                                    <div class="md-layout-item">
+                                        <md-field>
+                                            <md-input
+                                                type="search"
+                                                class="mb-3"
+                                                clearable
+                                                style="width: 200px"
+                                                placeholder="Search records"
+                                                v-model="queryParams.searchQuery"
+                                            ></md-input>
+                                        </md-field>
+                                    </div>
+                                    <div class=" ">
+                                        <md-button @click="showForm=!showForm" class="md-just-icon md-simple">
+                                            <md-icon>settings</md-icon>
+                                        </md-button>
+                                    </div>
                                 </div>
-                            </div>
                         </md-table-toolbar>
-                         <md-table-toolbar class="md-primary" slot="md-table-alternate-header" slot-scope="{ count }">
-                                <div class="md-toolbar-section-start">{{count}}</div>
-
-                                <div class="md-toolbar-section-end">
-                                <md-button class="md-just-icon">
-                                    <md-icon>delete</md-icon>
-                                </md-button>
-                                </div>
-                            </md-table-toolbar>
 
                         <md-table-empty-state
                             v-if="status === 'success' "
@@ -102,6 +92,7 @@
                             slot="md-table-row"
                             slot-scope="{ item }"
                             md-selectable="multiple"
+                            md-auto-select
                         >
                             <md-table-cell
                                 v-for="field  in patientsTableColumns"
@@ -215,7 +206,7 @@
                                 </div>
                             </md-table-cell>
 
-                            <md-table-cell md-label="Actions">
+                            <md-table-cell md-label="Actions" class="text-right" >
                                 <md-button
                                     v-show="item.allergy && item.allergy.length > 0"
                                     class="md-just-icon md-danger md-simple"
@@ -290,6 +281,10 @@
                 </md-card-actions>
             </md-card>
         </div>
+         <md-snackbar :md-position="'center'" :md-duration="true ? Infinity : 4000" :md-active.sync="showSnackbar" md-persistent>
+                <span>{{selectedPatients.length}} Patients selected</span>
+                <md-button class="md-primary" @click="showSnackbar = false">Retry</md-button>
+        </md-snackbar>
     </div>
 </template>
 
@@ -316,8 +311,9 @@
         },
         data: () => ({
             showForm: false,
+            showSnackbar: false,
             perPageOptions: [25, 50],
-            patientsTableColumns: [],
+            selectedPatients: [],
             totalPages: 500,
             queryParams: {
                 currentSort: 'created',
@@ -384,12 +380,6 @@
                     return field.title;
                 }
                 return '';
-            },
-            onSelect(items) {
-                if (this.selectedAllSearchedPatients) {
-                    this.selectedAllSearchedPatients = false;
-                }
-                this.selected = items;
             },
             setColumns(e) {
                 // поменять после того как добавять соответствующие поля в беке
@@ -496,8 +486,8 @@
             this.setPatientsTableColumns();
             if (this.patients.length === 0) {
                 this.search();
-            } else {
-                this.tableData = this.patients;
+            // } else {
+            //     this.tableData = this.patients;
             }
         },
         computed: {
@@ -527,8 +517,8 @@
                 },
                 deep: true,
             },
-            patients() {
-                this.tableData = this.patients;
+            selectedPatients() {
+                this.showSnackbar = this.selectedPatients.length > 0;
             },
         },
     };
@@ -536,12 +526,6 @@
 
 <style lang="scss" >
 .patients-list-wrapper {
-    // .md-table .md-table-row .md-table-cell-selection {
-
-    // }
-     .md-table-cell-container{
-        // max-width: 40px;
-        }
     .patient-name{
         // max-width: 90%;
         text-overflow: ellipsis;

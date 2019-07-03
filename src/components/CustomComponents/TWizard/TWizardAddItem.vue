@@ -3,7 +3,8 @@
         <div class="wizard-add-diagnose-form">
             <div>
                 <simple-wizard
-                    :finishButtonText="`Save ${singleItemName}`" 
+                    :finishButtonText="`Save ${singleItemName}`"
+                    @tab-change="onTabChange"
                     :tabColor="tabColor">
                     <template slot="header">
                         <h5 class="title">
@@ -207,6 +208,11 @@
             TItemAppointment,
         },
         methods: {
+            onTabChange(oldTab, newTab) {
+                if (this.itemType === 'procedures' && newTab.tabId === '4') {
+                    this.showAppointment = true;
+                }
+            },
             onToothSelected(selectedTeethLocalJaw) {
                 this.selectedTeethLocalJaw = [];
                 this.selectedTeethLocalJaw = selectedTeethLocalJaw;
@@ -262,6 +268,7 @@
             },
             validateStep(ref) {
                 if (ref === 'step1') {
+                    if (!this.$refs[ref]) return false;
                     return this.$refs[ref].validate().then((res) => {
                         if (!res) {
                             this.$store.dispatch(NOTIFY, {
@@ -275,6 +282,7 @@
                     });
                 }
                 if (ref === 'step2') {
+                    if (!this.$refs[ref]) return false;
                     return this.$refs[ref].validate().then((res) => {
                         if (!res) {
                             this.$store.dispatch(NOTIFY, {
@@ -289,6 +297,7 @@
                     });
                 }
                 if (ref === 'step3') {
+                    if (!this.$refs[ref]) return false;
                     return this.$refs[ref].validate().then((res) => {
                         if (!res) {
                             this.$store.dispatch(NOTIFY, {
@@ -303,8 +312,8 @@
                     });
                 }
                 if (ref === 'step4') {
+                    if (!this.$refs[ref]) return false;
                     return this.$refs[ref].validate().then((res) => {
-                        this.showAppointment = true;
                         if (!res) {
                             this.$store.dispatch(NOTIFY, {
                                 settings: {
@@ -321,6 +330,7 @@
                     });
                 }
                 if (ref === 'step5') {
+                    if (!this.$refs[ref]) return false;
                     return this.$refs[ref].validate().then((res) => {
                         if (!res) {
                             this.$store.dispatch(NOTIFY, {
@@ -391,20 +401,6 @@
             //! переделать
             originalItem() {
                 return this.selectedItem;
-                const originalCode = this.selectedItem.code;
-                const originalItems = this[this.itemType];
-                for (let index = 0; index < originalItems.length; index += 1) {
-                    const dGrooup = originalItems[index];
-                    if (dGrooup.codes) {
-                        const dIndex = dGrooup.codes
-                            .map(d => d.code)
-                            .indexOf(originalCode);
-                        if (dIndex > -1) {
-                            return dGrooup.codes[dIndex];
-                        }
-                    }
-                }
-                return {};
             },
             selectedProcedureLocal: {
                 get() {

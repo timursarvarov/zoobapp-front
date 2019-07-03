@@ -6,7 +6,7 @@
         {'min-height': `${size.height}px`} ]"
     >
         <div class='md-layout-item' >
-            <t-calendar v-if="showAppointment" />
+            <t-calendar v-if="showAppointment"/>
         </div>
     </div>
 </template>

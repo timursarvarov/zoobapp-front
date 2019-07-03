@@ -16,8 +16,11 @@ export default {
             slotDuration: '00:30:00',
             hiddenDays: [],
         },
-        diagnosis: null,
-        procedures: null,
+        diagnosis: [],
+        procedures: [],
+        diagnosisComputed: null,
+        proceduresComputed: null,
+        anamnesisComputed: null,
     },
     status: '',
 };

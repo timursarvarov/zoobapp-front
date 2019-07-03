@@ -5,4 +5,4 @@ import './vue-clipper';
 import './font-awesome';
 import './viewer';
 import './print';
-// import './vue-i18n';
+import './vue-cool-select';

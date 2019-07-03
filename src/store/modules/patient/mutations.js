@@ -17,6 +17,7 @@ import {
     PATIENT_GET,
     PATIENT_SET_PARAM,
     PATIENT_TOGGLE_ITEM_VISIBILITY,
+    PATIENT_SUB_PARAM_SET,
 } from '@/constants';
 
 export default {
@@ -71,6 +72,9 @@ export default {
     },
     [PATIENT_ANAMNES_SET]: (state, anamnes) => {
         state.patient.anamnesis.unshift(anamnes);
+    },
+    [PATIENT_SUB_PARAM_SET]: (state, params) => {
+        state.patient[params.field][params.action](params.value);
     },
     [PATIENT_DIAGNOSE_UPDATE]: (state, { dIndex, diagnose }) => {
         state.patient.diagnosis.splice(dIndex, 1, diagnose);

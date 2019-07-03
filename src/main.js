@@ -6,7 +6,6 @@ import store from './store';
 import DashboardPlugin from './material-dashboard';
 import i18n from './i18n';
 
-
 // Plugins
 import App from './App.vue';
 
@@ -28,7 +27,6 @@ const router = new VueRouter({
     routes, // short for routes: routes
     linkExactActiveClass: 'nav-item active',
 });
-
 // global library setup
 Object.defineProperty(Vue.prototype, '$Chartist', {
     get() {

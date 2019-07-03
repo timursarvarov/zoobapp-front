@@ -1,19 +1,21 @@
 <template lang="html">
     <div class="t-collapse-search-wrapper noselect">
-        <md-toolbar class=" md-transparent no-side-padding md-layout md-alignment-top-space-between" >
 
-            <div class="md-layout md-layout-item" >
-                <div class="md-size-80 md-layout-item md-layout " >
+        <div v-if="loading"
+            class="no-plan-space"
+                :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
+            <md-empty-state>
+                <md-progress-spinner md-mode="indeterminate"/>
+            </md-empty-state>
+        </div>
+        <div v-else >
+
+            <md-toolbar  class=" md-transparent no-side-padding md-layout md-alignment-top-space-between collapse-toolbar__items" >
+                <div class="collapse-actions md-small-size-100 md-size-50" >
                     <slot name="title-start-1"></slot>
-
-                </div>
-                <div class="md-size-20 md-layout-item md-layout " >
                     <slot name="title-start-2"></slot>
                 </div>
-
-            </div>
-            <div class="md-layout md-layout-item" >
-                <div class="md-layout-item md-size-80 collapse-toolbar__items md-gutter">
+                <div class="collapse-actions md-small-size-100 md-size-50" >
                     <div class=" collapse-toolbar__grow">
                         <md-field class="no-margin " >
                             <label>Search {{itemType}}</label>
@@ -26,27 +28,19 @@
                             </slide-y-down-transition>
                         </md-field>
                     </div>
+                    <div class="ml-auto collapse-toolbar__nogrow">
+                        <md-button
+                            @click="toggleAll=!toggleAll"
+                            class="md-mini md-just-icon md-simple md-round"
+                        >
+                            <md-icon :class="[{rotate:toggleAll }]" >keyboard_arrow_down</md-icon>
+                            <md-tooltip md-delay="500">Show all {{itemType}}</md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+            </md-toolbar>
 
-                </div>
-                <div class="ml-auto md-size-20 action-button collapse-toolbar__nogrow">
-                    <md-button
-                        @click="toggleAll=!toggleAll"
-                        class="md-mini md-just-icon md-simple md-round"
-                    >
-                        <md-icon :class="[{rotate:toggleAll }]" >keyboard_arrow_down</md-icon>
-                        <md-tooltip md-delay="500">Show all {{itemType}}</md-tooltip>
-                    </md-button>
-                </div>
-            </div>
-        </md-toolbar>
-            <div v-if="loading&&hideSlot"
-                class="no-plan-space"
-                 :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
-                <md-empty-state>
-                    <md-progress-spinner md-mode="indeterminate"/>
-                </md-empty-state>
-            </div>
-            <div v-if="!hideSlot" class="collapse-wrapper "  :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
+            <div v-if="!hideSlot && getItems.length > 0" class="collapse-wrapper "  :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
                 <custom-collapse
                         :colorCollapse="colorCollapse"
                         v-if="!hideSlot"
@@ -57,28 +51,28 @@
                             :toggleAll = "getToggleAll"
                         >
 
-                        <template  v-for="(procedureGroup, key) in getItems" :slot="'md-collapse-pane-'+(parseInt(key) + 1)" >
+                        <template  v-for="(itemGroup, key) in getItems" :slot="'md-collapse-pane-'+(parseInt(key) + 1)" >
                             <div class="list-wrapper"   :key="key">
                             <md-list class=" md-dense" >
-                                <md-list-item  @click="procedureClick($event, procedure)"
-                                :class="[{dental: !isEmpty(procedure.locations) && selectedTeeth.length == 0 }]"
+                                <md-list-item  @click="itemClick($event, item)"
+                                :class="[{dental: !isEmpty(item.locations) && selectedTeeth.length == 0 }]"
                                 class="item"
-                                v-ripple v-for="(procedure, keyd) in procedureGroup.codes" :key="keyd" >
+                                v-ripple v-for="(item, keyd) in itemGroup.codes" :key="keyd" >
 
 
-                                    <div class="procedure-code" >
-                                    <h6  v-html="procedure.code"></h6>
+                                    <div class="item-code" >
+                                    <h6  v-html="item.code"></h6>
                                     </div>
 
                                     <div class="md-list-item-text" >
 
-                                    <span  v-html="procedure.title"></span>
-                                    <small class="description text-warning" v-if="!isEmpty(procedure.locations) && selectedTeeth.length == 0" > Please firstly choose a tooth  </small>
-                                    <small class="description" v-else  v-html="procedure.description">Horizontal Tabs</small>
+                                    <span  v-html="item.title"></span>
+                                    <small class="description text-warning" v-if="!isEmpty(item.locations) && selectedTeeth.length == 0" > Please firstly choose a tooth  </small>
+                                    <small class="description" v-else  v-html="item.description">Horizontal Tabs</small>
 
                                     </div>
 
-                                    <md-button  :class="[{[`md-${colorCollapse}`] : isFavorite(procedure)}, 'md-simple', 'md-list-action', 'md-icon-button']"   :md-ripple="false" >
+                                    <md-button  :class="[{[`md-${colorCollapse}`] : isFavorite(item)}, 'md-simple', 'md-list-action', 'md-icon-button']"   :md-ripple="false" >
                                     <md-icon >star</md-icon>
                                     <md-tooltip  md-delay="700">Add to Favorite</md-tooltip>
                                     </md-button>
@@ -90,22 +84,23 @@
                         </template>
                 </custom-collapse>
             </div>
-            <div v-else >
-                <div v-if="getItems.length == 0 && !hideSlot"
-                    class="no-plan-space"
-                    :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
-                    <md-empty-state
-                        md-icon="sentiment_dissatisfied"
-                        :md-label="`No matching ${this.itemType}`"
-                        md-description="Try another search params">
-                    </md-empty-state>
-                </div>
-                <div class="no-plan-space"
-                    :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
-                    <slot v-if="hideSlot" name="empty-space"></slot>
-                </div>
+
+            <div v-if="getItems.length == 0 && !hideSlot"
+                class="no-plan-space"
+                :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
+                <md-empty-state
+                    md-icon="sentiment_dissatisfied"
+                    :md-label="`No matching ${this.itemType}`"
+                    md-description="Try another search params">
+                </md-empty-state>
             </div>
+            <div class="no-plan-space"
+                :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
+                <slot v-if="hideSlot" name="empty-space"></slot>
+            </div>
+
         </div>
+    </div>
     </div>
 
 </template>
@@ -190,23 +185,23 @@
                 toggleAll: false,
                 fuse: false,
                 //   filter: {},
-                procedureOriginal: [],
-                selectedProcedure: {},
+                itemOriginal: [],
+                selecteditem: {},
             };
         },
         methods: {
-            isFavorite(procedure) {
-                if (this.favoriteItems.includes(procedure.code)) {
+            isFavorite(item) {
+                if (this.favoriteItems.includes(item.code)) {
                     return true;
                 }
                 return false;
             },
-            procedureClick(event, procedure) {
+            itemClick(event, item) {
                 if (event.target.classList.contains('md-icon')) {
-                    this.$emit('onSetFavoritem', procedure);
+                    this.$emit('onSetFavoritem', item);
                     this.loadData();
                 } else {
-                    this.$emit('onSelected', procedure);
+                    this.$emit('onSelected', item);
                 }
             },
             loadData() {
@@ -214,12 +209,12 @@
                 this.unshiftFavoriteItems();
                 this.searched = this.copyObj(this.items);
                 Object.values(this.searched).forEach((group) => {
-                    group.codes.forEach((procedure) => {
+                    group.codes.forEach((item) => {
                         // eslint-disable-next-line
-                    procedure.constCode = this.copyObj(procedure.code).slice(0);
+                    item.constCode = this.copyObj(item.code).slice(0);
                     });
                 });
-                this.procedureOriginal = this.copyObj(this.searched);
+                this.itemOriginal = this.copyObj(this.searched);
                 this.fuse = new Fuse(this.items, fuseOptions);
             },
             unshiftFavoriteItems() {
@@ -229,12 +224,12 @@
                     title: `Favorite ${this.itemType}`,
                 };
                 if (this.favoriteItems.length > 0) {
-                    this.favoriteItems.forEach((fProcedure) => {
+                    this.favoriteItems.forEach((fitem) => {
                         Object.values(this.items).forEach((group) => {
                             let favoriteD = null;
                             if (group.codes && group.code !== '★') {
                                 favoriteD = group.codes.find(
-                                    procedure => procedure.code === fProcedure,
+                                    item => item.code === fitem,
                                 );
                             }
                             if (favoriteD) {
@@ -245,7 +240,7 @@
                 }
                 if (favoriteItems.codes.length > 0) {
                     const favoriteIndex = this.items.findIndex(
-                        procedure => procedure.code === '★',
+                        item => item.code === '★',
                     );
                     if (favoriteIndex === -1) {
                         this.items.unshift(favoriteItems);
@@ -254,7 +249,7 @@
                     }
                 } else {
                     const favoriteIndex = this.items.findIndex(
-                        procedure => procedure.code === '★',
+                        item => item.code === '★',
                     );
                     this.items.splice(favoriteIndex, 1);
                 }
@@ -289,7 +284,7 @@
                 )}</span>${sourceString.substring(endIndex + 1)}`;
             },
             getFilteredItems() {
-                this.searched = this.copyObj(this.procedureOriginal).slice(0);
+                this.searched = this.copyObj(this.itemOriginal).slice(0);
                 const grooup = [];
                 this.searched.forEach((itemsGroupe) => {
                     const fuseResults = new Fuse(
@@ -329,22 +324,6 @@
                 });
                 return grooup;
             },
-            recalculateJawProcedure() {
-                this.jaw.procedures = JSON.parse(
-                    JSON.stringify(this.jawEthalon.procedures),
-                );
-                this.patient.items.forEach((procedure) => {
-                    if (procedure.showInJaw) {
-                        Object.keys(procedure.teeth).forEach((toothId) => {
-                            Object.keys(procedure.teeth[toothId]).forEach(
-                                (kLocation) => {
-                                    this.jaw.procedures[toothId][kLocation] =                                    procedure.teeth[toothId][kLocation];
-                                },
-                            );
-                        });
-                    }
-                });
-            },
         },
         computed: {
             filteredItems() {
@@ -379,16 +358,16 @@
         },
         mounted() {
             this.loadData();
-            this.searched = this.copyObj(this.procedureOriginal);
+            this.searched = this.copyObj(this.itemOriginal);
         },
         watch: {
             itemType() {
                 this.loadData();
-                this.searched = this.copyObj(this.procedureOriginal);
+                this.searched = this.copyObj(this.itemOriginal);
             },
             recalculateItems() {
                 this.loadData();
-                this.searched = this.copyObj(this.procedureOriginal);
+                this.searched = this.copyObj(this.itemOriginal);
             },
         },
     };
@@ -397,11 +376,16 @@
 .t-collapse-search-wrapper {
     .collapse-toolbar__items {
         display: flex;
+        justify-content: space-between;
         .collapse-toolbar__grow {
             flex-grow: 1;
         }
         .collapse-toolbar__nogrow {
             // padding-left: 15px
+        }
+        .collapse-actions{
+            flex-grow: 1;
+            display: flex;
         }
     }
     .no-side-padding {
@@ -420,7 +404,7 @@
         -webkit-transform: rotate(180deg);
         transform: rotate(180deg);
     }
-    .procedure-code {
+    .item-code {
         margin-right: 24px;
     }
     .action-start {

@@ -7,8 +7,10 @@
         >
             <div>
                 <md-card>
-                    <md-card-header class="md-card-header-icon md-card-header-green">
-                        <div class="card-icon">
+                    <md-card-header
+                        class="md-card-header-icon ">
+                        <div class="card-icon"
+                            :style="{'background-color': planColor}">
                             <md-icon>playlist_add</md-icon>
                         </div>
                         <h4 class="title">Add New Plan</h4>
@@ -62,6 +64,8 @@
 <script>
     import { PATIENT_CREATE, NOTIFY } from '@/constants';
     import { SlideYDownTransition } from 'vue2-transitions';
+    
+    const randomMC = require('random-material-color');
 
     export default {
         props: {
@@ -79,6 +83,7 @@
         },
         data() {
             return {
+                randomMC:'',
                 planTitle: null,
                 touched: {
                     planTitle: false,
@@ -114,6 +119,7 @@
                             const plan = {
                                 title: this.planTitle,
                                 id: Math.random(),
+                                color: this.planColor,
                             };
                             this.$store.dispatch(NOTIFY, {
                                 settings: {
@@ -129,6 +135,10 @@
             },
         },
         computed: {
+            planColor() {
+                const color = this.randomMC.getColor({ text: `${this.planTitle}` });
+                return color;
+            },
             plansTitles() {
                 const titles = [];
                 this.plans.forEach((plan, index) => {
@@ -144,6 +154,9 @@
                     this.$emit('update:showForm', value);
                 },
             },
+        },
+         created() {
+            this.randomMC = randomMC;
         },
         watch: {
             showFormL(value) {

@@ -21,8 +21,6 @@
         },
         mounted() {
             this.$i18n.locale = this.lang;
-            console.log(this.$i18n.locale);
-            console.log(this.lang);
             if (this.refreshTokenExist) {
                 this.$store.dispatch(AUTH_INIT);
             } else {
@@ -40,6 +38,11 @@
                     this.$notify(newNotify);
                 },
                 deep: true,
+            },
+            isProfileLoaded(value) {
+                if (!value) {
+                    this.$router.push('/login');
+                }
             },
         },
     };

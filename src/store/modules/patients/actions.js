@@ -40,10 +40,11 @@ export default {
                     })
                 }).then(resp => {
                     commit(PATIENTS_SUCCESS);
+                    const patients = resp.data || []
                     if (params.toStore) {
-                        commit(PATIENTS_SET, resp);
+                        commit(PATIENTS_SET, patients);
                     }
-                    resolve(resp);
+                    resolve(patients);
                 })
                 .catch(err => {
                     commit(PATIENTS_ERROR);

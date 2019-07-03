@@ -15,8 +15,8 @@ export default {
     [PATIENTS_SUCCESS]: (state) => {
         state.status = 'success';
     },
-    [PATIENTS_SET]: (state, resp) => {
-        state.patients = resp.data;
+    [PATIENTS_SET]: (state, patients) => {
+        state.patients = patients;
     },
     [PATIENTS_RESET]: (state) => {
         state.patients = [];

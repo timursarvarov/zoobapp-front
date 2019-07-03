@@ -1,27 +1,19 @@
 
 <template>
-    <div class="items-list-wrapper md-layout-item">
-        <md-toolbar class="md-transparent" >
+    <div class="items-list-wrapper">
+        <md-toolbar>
             <div class="md-layout">
                 <div class="md-layout-item">
-                    <p class="category"><b>Ballance</b></p>
-                    <h3 class="title"><animated-number :value="calculateProcedures(tableData)" /> {{clinic.currencyCode}}</h3>
+                    Ballance
                 </div>
                 <div class="md-layout-item">
-                    <p class="category"><b>Unbilled procedures</b></p>
-                    <h3 class="title"><span><animated-number :value="tableData.length" /></span></h3>
+                    All invoices
                 </div>
                 <div class="md-layout-item">
-                    <p class="category"><b>All invoices</b></p>
-                    <h3 class="title"><span><animated-number :value="selectedItems.length" /> {{clinic.currencyCode}}</span></h3>
+                    Discounts
                 </div>
                 <div class="md-layout-item">
-                    <p class="category"><b>Discounts</b></p>
-                    <h3 class="title"><animated-number :value="300" /> {{clinic.currencyCode}}</h3>
-                </div>
-                <div class="md-layout-item">
-                    <p class="category"><b>Tax</b></p>
-                    <h3 class="title"><animated-number :value="300" /> {{clinic.currencyCode}} </h3>
+                    Tax
                 </div>
             </div>
         </md-toolbar>
@@ -35,7 +27,7 @@
         >
             <md-table-toolbar>
                 <div class="md-toolbar-section-start">
-                    <div class="md-title">Unbilled procedures</div>
+                    Unbilled procedures
                 </div>
                 <div class="md-toolbar-section-end">
                     <md-button
@@ -57,9 +49,8 @@
             <md-table-row
                 slot="md-table-row"
                 md-selectable="multiple"
-                :style="[{backgroundColor:`${convertHex(item.planColor, 30 )}`}]"
-                slot-scope="{ item }"
-            >
+                :style="[{backgroundColor:`${lightenDarkenColor(item.planColor, 190 )}`}]"
+                slot-scope="{ item }" >
                 <md-table-cell
                     v-for="field  in itemsTableColumns"
                     :key="field.key"
@@ -80,8 +71,7 @@
                         >{{ toothId | toCurrentTeethSystem(teethSystem) }},&nbsp;</span>
                     </div>
 
-                    <div
-                        :class="field.key"
+                    <div :class="field.key"
                         v-else-if="field.key === 'author'"
                         class="md-layout md-alignment-left-center"
                     >
@@ -112,10 +102,12 @@
                         {{getItemTotalPrice(item.manipulations)}}
                         <small>{{clinic.currencyCode}}</small>
                     </div>
-                    <div v-if="field.key === 'plan'">{{item.planTitle}}</div>
+                    <div v-if="field.key === 'plan'">
+                        {{item.planTitle}}
+                    </div>
                 </md-table-cell>
 
-                <md-table-cell class md-label="Actions">
+                <md-table-cell class="" md-label="Actions">
                     <md-button
                         v-show="ifDiagnoseHasLocations(item.teeth)"
                         class="md-just-icon md-simple"
@@ -166,39 +158,17 @@
             :showForm.sync="showTableEditor"
             @selected="setColumns"
         ></t-table-editor>
-        <t-wizard-add-billing
-            :isDialogVisible.sync="showInvoiceForm"
-            :procedures="selectedItems"
-            :currencyCode="clinic.currencyCode"/>
-        <md-snackbar
-            :md-position="'center'"
-            :md-duration="true ? Infinity : 4000"
-            :md-active.sync="showSnackbar"
-            md-persistent
-        >
-            <p>{{`${selectedItems.length}`}}
-                Procedures for
-                <animated-number :value="calculateProcedures(selectedItems)" /> {{clinic.currencyCode}}
-                selected
-            </p>
-            <div>
-                <md-button class="md-simple" @click="showSnackbar = false, selectedItems=[]">unselect</md-button>
-                <md-button
-                    class="md-success"
-                    @click="showSnackbar = false, showInvoiceForm = true"
-                >Create Invoice</md-button>
-            </div>
+        <md-snackbar :md-position="'center'" :md-duration="true ? Infinity : 4000" :md-active.sync="showSnackbar" md-persistent>
+                <span> {{`Set ${selectedItems.length} ${type} selected`}} Patients selected</span>
+                <md-button class="md-primary" @click="showSnackbar = false">do something</md-button>
         </md-snackbar>
     </div>
 </template>
 <script>
+    import { TAvatar, TTableEditor } from '@/components';
     import {
-        TAvatar,
-        TTableEditor,
-        TWizardAddBilling,
-        AnimatedNumber,
-    } from '@/components';
-    import { USER_BILLING_COLUMNS } from '@/constants';
+        USER_BILLING_COLUMNS,
+    } from '@/constants';
     import { mapGetters } from 'vuex';
     // import swal from 'sweetalert2';
     import { tObjProp } from '@/mixins';
@@ -208,8 +178,6 @@
         components: {
             TAvatar,
             TTableEditor,
-            TWizardAddBilling,
-            AnimatedNumber,
         },
         props: {
             items: {
@@ -233,7 +201,6 @@
                 showTableEditor: false,
                 showForm: false,
                 showSnackbar: false,
-                showInvoiceForm: false,
                 isInfinity: false,
                 currentSort: 'date',
                 currentSortOrder: 'desc',
@@ -258,15 +225,18 @@
                 this.patient.plans.forEach((plan) => {
                     if (plan.state === 'approved' && plan.procedures) {
                         plan.procedures.forEach((p) => {
-                            procedures.push({
-                                ...p,
-                                planId: plan.id,
-                                planTitle: plan.title,
-                                planColor: plan.color,
-                            });
+                            procedures.push(
+                                {
+                                    ...p,
+                                    planId: plan.id,
+                                    planTitle: plan.title,
+                                    planColor: plan.color,
+                                },
+                            );
                         });
                     }
                 });
+                console.log(this.patient.plans, procedures);
                 return procedures;
             },
             defaultFields() {
@@ -305,30 +275,31 @@
         },
 
         methods: {
-            calculateProcedures(procedures = []) {
-                let sum = 0;
-                procedures.forEach((p) => {
-                    if (p.manipulations) {
-                        sum += this.calculateManipulations(p.manipulations);
-                    }
-                });
-                return sum;
-            },
-            calculateManipulations(m = []) {
-                let sum = 0;
-                m.forEach((manip) => {
-                    sum += manip.price * manip.num;
-                });
-                return sum;
-            },
-            convertHex(hex, opacity) {
-                const hexLocal = hex.replace('#', '');
-                const r = parseInt(hexLocal.substring(0, 2), 16);
-                const g = parseInt(hexLocal.substring(2, 4), 16);
-                const b = parseInt(hexLocal.substring(4, 6), 16);
+            lightenDarkenColor(col, amt) {
+                let usePound = false;
+                if (col[0] == '#') {
+                    col = col.slice(1);
+                    usePound = true;
+                }
 
-                const result = `rgba(${r},${g},${b},${opacity / 100})`;
-                return result;
+                let num = parseInt(col, 16);
+
+                let r = (num >> 16) + amt;
+
+                if (r > 255) r = 255;
+                else if (r < 0) r = 0;
+
+                let b = ((num >> 8) & 0x00FF) + amt;
+
+                if (b > 255) b = 255;
+                else if (b < 0) b = 0;
+
+                let g = (num & 0x0000FF) + amt;
+
+                if (g > 255) g = 255;
+                else if (g < 0) g = 0;
+
+                return (usePound ? '#':'') + (g | (b << 8) | (r << 16)).toString(16);
             },
             setComputedAvailableBillingTableColumns() {
                 if (this.type === 'diagnosis') {
@@ -361,7 +332,10 @@
             },
             setColumns(e) {
                 // поменять после того как добавять соответствующие поля в беке
-                localStorage.setItem(USER_BILLING_COLUMNS, JSON.stringify(e));
+                localStorage.setItem(
+                    USER_BILLING_COLUMNS,
+                    JSON.stringify(e),
+                );
                 this.setItemsTableColumns();
                 this.setComputedAvailableBillingTableColumns();
             },
@@ -503,19 +477,22 @@
 
 <style lang="scss"  >
 .items-list-wrapper {
+
+
     .md-table-cell-container {
+
         overflow: hidden;
-        .teeth {
-            max-width: 150px;
-            width: 14vw;
-            min-width: 50px;
+        .teeth{
+            max-width:150px;
+            width:14vw;
+            min-width:50px;
             text-overflow: ellipsis;
             // word-wrap: break-word;
             overflow: hidden;
         }
-        .code {
-            width: 20px;
-        }
+         .code {
+        width: 20px;
+    }
     }
     .md-card .md-card-actions {
         border: 0;

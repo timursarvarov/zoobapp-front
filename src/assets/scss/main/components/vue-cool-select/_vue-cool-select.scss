@@ -1,0 +1,196 @@
+.IZ-select {
+    min-width: 250px;
+    .IZ-select__input-wrap {
+        overflow: hidden;
+        .IZ-select__input {
+            padding: 0;
+            align-items: center;
+            display: flex;
+            flex: 1 1 auto;
+            flex-wrap: wrap;
+            width: 100%;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: transparent;
+            background-clip: padding-box;
+            background: none;
+            border-radius: 2px;
+            box-shadow: none;
+            position: relative;
+            background-size: 0%;
+            transition: none;
+            &:target {
+                background-color: transparent!important;
+                background-size: 0%;
+            }
+            &:active {
+                background-color: transparent!important;
+                background-size: 0%;
+            }
+            &:active:hover {
+                background-color: transparent!important;
+                background-size: 0%;
+            }
+            &:checked {
+                background-color: transparent!important;
+                background-size: 0%;
+            }
+            &:hover {
+                background-color: transparent!important;
+                background-size: 0%;
+            }
+            &:after {
+                background-color: #d2d2d2 !important;
+                height: 1px;
+                opacity: 1;
+                bottom: 1px;
+                z-index: 2;
+                position: absolute;
+                right: 0;
+                left: 0;
+                content: " ";
+                z-index: 3;
+            }
+            &:active:before {
+                bottom: 0;
+                height: 2px;
+                z-index: 2;
+                opacity: 0;
+                transform: scaleX(.12);
+                position: absolute;
+                transition: border .3s cubic-bezier(.4, 0, .2, 1), opacity .3s cubic-bezier(.4, 0, .2, 1), transform 0s cubic-bezier(.4, 0, .2, 1) .3s;
+                will-change: border, opacity, transform;
+                content: " ";
+            }
+            .IZ-selection {
+                width: inherit;
+                max-width: 90%;
+                .IZ-selection__text {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+            input {
+                padding: 7px 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-top: 6px;
+            }
+            .input-end {
+                position: absolute;
+                right: 0;
+            }
+        }
+        .IZ-select__input--focused {
+            background-color: transparent;
+            &:after,
+            &:before {
+                bottom: 2px;
+                background-color: #9c27b0 !important;
+                height: 2px;
+                z-index: 2;
+                opacity: 1;
+                transform: scaleX(1);
+                position: absolute;
+                right: 0;
+                left: 0;
+                z-index: 1;
+                transition: border .3s cubic-bezier(.4, 0, .2, 1), opacity .3s cubic-bezier(.4, 0, .2, 1), transform 0s cubic-bezier(.4, 0, .2, 1) .3s;
+                transition-property: border, opacity, transform;
+                will-change: border, opacity, transform;
+                content: " ";
+            }
+            &:hover {
+                background-color: transparent!important;
+            }
+        }
+        .IZ-select__input--has-menu {
+            display: flex;
+            align-items: stretch;
+            .IZ-selection {
+                max-width: 90%;
+                flex-grow: 1
+            }
+            input {
+                // flex-grow: 1
+            }
+        }
+    }
+    .IZ-select__menu {
+        .IZ-select__menu-items {
+            overflow-x: scroll;
+            &::-webkit-scrollbar {
+                width: 7px;
+                // background-color: transparent;
+            }
+            &::-webkit-scrollbar-thumb {
+                background-color: rgba(128, 128, 128, 0.63);
+                border-radius: 7px;
+            }
+        }
+        .IZ-select__item:not(.IZ-select__item--selected) {
+            .IZ-select-button {
+                opacity: 1!important;
+                color: grey !important;
+                background-color: transparent!important;
+                box-shadow: none;
+            }
+        }
+        .IZ-select__item--selected {
+            .IZ-select-button {
+                color: white !important;
+                background-color: #9c27b0!important;
+            }
+        }
+        .IZ-select__item {
+            padding: 0;
+            margin: 0 .3125rem;
+            &:not(:last-child) {
+                margin-bottom: 5px;
+            }
+            .btn-avatar {
+                .md-ripple {
+                    .md-button-content {
+                        overflow: visible;
+                    }
+                }
+            }
+            .IZ-select-button:not(.btn-avatar) {
+                .md-ripple {
+                    .md-button-content {
+                        overflow: hidden;
+                    }
+                }
+            }
+            .IZ-select-button {
+                border-radius: 3px;
+                flex-grow: 1;
+                &:hover {
+                    background-color: #9c27b0 !important;
+                    color: #FFF !important;
+                }
+                .md-ripple {
+                    padding: 12px 6px!important;
+                    .md-button-content {
+                        text-transform: none;
+                        width: 100%;
+                        display: flex;
+                        align-items: stretch;
+                        .text-left {
+                            text-align: left;
+                            padding-right: 15px;
+                            max-width: 90%;
+                            flex-grow: 1;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

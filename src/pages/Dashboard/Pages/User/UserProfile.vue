@@ -30,23 +30,19 @@
     };
 </script>
 <style lang="scss">
-.text-right {
-  display: flex;
-}
-.user-profile {
-  .md-field {
-    margin-top: 24px;
-    .md-error {
-      position: absolute;
-      display: block !important;
-      opacity: 1;
-      // transform: translate3d(0,-12px,0);
-      color: #ff1744;
-      font-size: 0.6875rem;
-      bottom: -1.3rem;
-      line-height: normal;
-      text-align: left;
-    }
-  }
-}
+// .user-profile {
+//   .md-field {
+//     .md-error {
+//       position: absolute;
+//       display: block !important;
+//       opacity: 1;
+//       // transform: translate3d(0,-12px,0);
+//       color: #ff1744;
+//       font-size: 0.6875rem;
+//       bottom: -1.3rem;
+//       line-height: normal;
+//       text-align: left;
+//     }
+//   }
+// }
 </style>

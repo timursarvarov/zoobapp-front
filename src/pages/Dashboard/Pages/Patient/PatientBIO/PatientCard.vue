@@ -1,19 +1,34 @@
 <template>
     <div class="patient-card-wrapper">
-        <md-card-content>
-            <div class="md-layout md-gutter">
+        <md-card-content  class="md-layout" >
                 <div
-                    class="md-layout md-layout-item  md-small-size-100 md-size-50"
+                    class="md-layout  md-small-size-100 md-size-50"
                 >
-                    <div class="md-layout-item md-size-100 avatart-wrapper">
-                        <t-avatar-input
-                            :color="patientColor"
-                            :imageSrc="patient.avatar"
-                            :title="patient.firstName + ' ' + patient.lastName"
-                            :formTitle="'Add patient foto'"
-                            :buttonColor="'green'"
-                            @on-created="updatepatientAvatar"
-                        />
+                    <div class="md-layout-item md-layout md-size-100 avatart-wrapper">
+                        <div class="md-layout-item  md-small-size-100 md-size-50  md-layout switch md-alignment-center-space-between">
+                            <t-avatar-input
+                                :color="patientColor"
+                                :imageSrc="patient.avatar"
+                                :title="patient.firstName + ' ' + patient.lastName"
+                                :formTitle="'Add patient foto'"
+                                :buttonColor="'green'"
+                                @on-created="updatepatientAvatar"
+                            />
+                        </div>
+                        <div class="md-layout-item  md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between">
+                            <div class="md-layout-item">
+                                <md-switch v-model="showRating">Show Rating</md-switch>
+                            </div>
+                            <div class="md-layout-item">
+                                <star-rating
+                                    v-show="showRating"
+                                    :glow="5"
+                                    :show-rating="false"
+                                    :star-size="18"
+                                    v-model="patient.rating"
+                                ></star-rating>
+                            </div>
+                        </div>
                     </div>
                     <div class="md-layout-item md-size-100">
                         <md-field
@@ -99,7 +114,7 @@
                 </div>
 
                 <div
-                    class="md-layout md-layout-item md-small-size-100 md-size-50"
+                    class="md-layout  md-small-size-100 md-size-50"
                 >
                     <div class="md-layout-item md-size-100">
                         <md-field>
@@ -157,24 +172,8 @@
                         <span class="small helper">Enter allergent name and click "Enter"</span>
                     </div>
                 </div>
-            </div>
         </md-card-content>
         <md-card-actions>
-            <div class="md-layout-item md-layout switch md-alignment-center-space-between">
-                <div class="md-layout-item">
-                    <md-switch v-model="showRating">Show Rating</md-switch>
-                </div>
-                <div class="md-layout-item">
-                    <star-rating
-                        v-show="showRating"
-                        :glow="5"
-                        :show-rating="false"
-                        :star-size="18"
-                        v-model="patient.rating"
-                    ></star-rating>
-                </div>
-            </div>
-
             <md-button @click="updateProfile" class="md-raised md-success mt-4">Update Profile</md-button>
         </md-card-actions>
         <!-- <generator/> -->

@@ -3,12 +3,11 @@ import {
     COMPANY_LOGO_URL,
     COMPANY_COLOR,
     COMPANY_LINK,
-    DIAGNOSIS,
-    PROCEDURES,
-    LOCATIONS,
 } from '@/constants';
 
 export default {
+    getCurrentDiagnosis: state => state.clinic.diagnosis || [],
+    getCurrentProcedures: state => state.clinic.procedures || [],
     getCurrentClinic: (state) => {
         const clinic = {};
         // eslint-disable-next-line no-restricted-syntax
@@ -29,37 +28,5 @@ export default {
             }
         }
         return clinic;
-    },
-    getDiagnosis: () => {
-        const diagnosis = [];
-        DIAGNOSIS.forEach((diagnoseGroup, indexGroup) => {
-            diagnosis[indexGroup] = {};
-            diagnosis[indexGroup].code = diagnoseGroup.code;
-            diagnosis[indexGroup].title = diagnoseGroup.title;
-            diagnosis[indexGroup].codes = [];
-            diagnoseGroup.codes.forEach((diagnose) => {
-                diagnosis[indexGroup].codes.push({
-                    ...diagnose,
-                    ...LOCATIONS[diagnose.templateCode],
-                });
-            });
-        });
-        return diagnosis;
-    },
-    getProcedures: () => {
-        const procedures = [];
-        PROCEDURES.forEach((procedureGroup, indexGroup) => {
-            procedures[indexGroup] = {};
-            procedures[indexGroup].code = procedureGroup.code;
-            procedures[indexGroup].title = procedureGroup.title;
-            procedures[indexGroup].codes = [];
-            procedureGroup.codes.forEach((procedure) => {
-                procedures[indexGroup].codes.push({
-                    ...procedure,
-                    ...LOCATIONS[procedure.templateCode],
-                });
-            });
-        });
-        return procedures;
     },
 };

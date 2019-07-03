@@ -27,6 +27,7 @@ import {
     PATIENT_ANAMNES_UPDATE,
     PATIENT_RESET,
     TEETH_INITIATION,
+    PATIENT_SUB_PARAM_SET,
 } from '@/constants';
 
 export default {
@@ -99,41 +100,41 @@ export default {
     }, {
         params,
     }) => new Promise((resolve, reject) => {
-            commit(PATIENT_REQUEST);
-            axios.post(`/patients/${params.patientId}/notes/`,
-                    JSON.stringify({
-                        note: params.note,
-                    }))
-                .then((resp) => {
-                    commit(PATIENT_SUCCESS);
-                    const { notes } = state.patient;
-                    notes.unshift(resp.data);
-                    dispatch(PATIENT_SET_PARAM, {
-                        type: 'notes',
-                        value: notes,
-                    });
-                    resolve(resp);
-                })
-                .catch((err) => {
-                    commit(PATIENT_ERROR);
-                    reject(err);
+        commit(PATIENT_REQUEST);
+        axios.post(`/patients/${params.patientId}/notes/`,
+                JSON.stringify({
+                    note: params.note,
+                }))
+            .then((resp) => {
+                commit(PATIENT_SUCCESS);
+                const { notes } = state.patient;
+                notes.unshift(resp.data);
+                dispatch(PATIENT_SET_PARAM, {
+                    type: 'notes',
+                    value: notes,
                 });
-        }),
+                resolve(resp);
+            })
+            .catch((err) => {
+                commit(PATIENT_ERROR);
+                reject(err);
+            });
+    }),
     [PATIENT_DOWNLOAD_FILE]: ({
         params,
     }) => new Promise((resolve, reject) => {
-            axios({
-                    url: params.url,
-                    method: 'GET',
-                    responseType: 'blob', // important
-                })
-                .then((resp) => {
-                    resolve(resp);
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-        }),
+        axios({
+                url: params.url,
+                method: 'GET',
+                responseType: 'blob', // important
+            })
+            .then((resp) => {
+                resolve(resp);
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    }),
     [PATIENT_TOGGLE_ITEM_VISIBILITY]: ({
         state,
         commit,
@@ -255,6 +256,13 @@ export default {
     }) => {
         commit(PATIENT_ANAMNES_SET, anamnes);
     },
+    [PATIENT_SUB_PARAM_SET]: ({
+        commit,
+    }, {
+        params,
+    }) => {
+        commit(PATIENT_SUB_PARAM_SET, params);
+    },
 
     [PATIENT_PLAN_EDIT]: ({
         commit,
@@ -335,11 +343,12 @@ export default {
         Object.keys(patient).map((field) => {
             let value = patient[field];
             if (value === null) {
-                if (field === 'allergy'
-                    || field === 'notes'
-                    || field === 'diagnosis'
-                    || field === 'files'
-                    || field === 'plans'
+                if (field === 'allergy' ||
+                    field === 'notes' ||
+                    field === 'diagnosis' ||
+                    field === 'anamnesis' ||
+                    field === 'files' ||
+                    field === 'plans'
                 ) {
                     value = [];
                 }
@@ -356,6 +365,10 @@ export default {
         });
         commit(PATIENT_SET_PARAM, {
             type: 'diagnosis',
+            value: [],
+        });
+        commit(PATIENT_SET_PARAM, {
+            type: 'anamnesis',
             value: [],
         });
         dispatch(PATIENTS_UPDATE_PATIENT, {

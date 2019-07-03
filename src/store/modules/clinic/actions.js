@@ -4,6 +4,7 @@ import {
     CLINIC_ERROR,
     CLINIC_SUCCESS,
     CLINIC_SET_PROPS,
+    CLINIC_SET_PROP,
     CLINIC_LOGO_UPLOAD,
     CLINIC_UPDATE,
     CLINIC_DIAGNOSIS_GET,
@@ -68,8 +69,6 @@ export default {
                         dispatch(AUTH_SUCCESS, { resp });
                         dispatch(AUTH_DECODE_TOKEN);
                         dispatch(USER_REQUEST);
-                        dispatch(CLINIC_DIAGNOSIS_GET);
-                        dispatch(CLINIC_PROCEDURES_GET);
                         dispatch(PATIENTS_RESET);
                         dispatch(PATIENT_RESET);
                         resolve(resp);
@@ -90,7 +89,7 @@ export default {
         commit
     }, { organization }) => {
         Object.keys(organization).forEach(key => {
-            commit(CLINIC_SET_PROPS, {
+            commit(CLINIC_SET_PROP, {
                 type: key,
                 value: organization[key]
             });
@@ -139,7 +138,7 @@ export default {
         commit(CLINIC_REQUEST);
         axios.get(`/organization/diagnoses/`)
             .then((resp) => {
-                commit(CLINIC_SET_PROPS, {
+                commit(CLINIC_SET_PROP, {
                     type: 'diagnosis',
                     value: resp.data
                 });
@@ -151,13 +150,21 @@ export default {
                 reject(err);
             });
     }),
+    [CLINIC_SET_PROP]: ({
+        commit,
+    }, { props }) => {
+        commit(CLINIC_SET_PROP, {
+            type: props.type,
+            value: props.value
+        });
+    },
     [CLINIC_PROCEDURES_GET]: ({
         commit,
     }) => new Promise((resolve, reject) => {
         commit(CLINIC_REQUEST);
         axios.get(`/organization/procedures/`)
             .then((resp) => {
-                commit(CLINIC_SET_PROPS, {
+                commit(CLINIC_SET_PROP, {
                     type: 'procedures',
                     value: resp.data
                 });

@@ -157,7 +157,7 @@ export default [
     {
         id: 232,
         code: ' 232',
-        title: ' &#8212; химиокомпозита (КМ хим)',
+        title: ' химиокомпозита (КМ хим)',
         price: 1150,
         unitType: 'pcs',
         available: true,
@@ -165,7 +165,7 @@ export default [
     {
         id: 233,
         code: '233',
-        title: ' &#8212; светокомпозита (КМ свет)',
+        title: ' светокомпозита (КМ свет)',
         price: 650,
         unitType: 'pcs',
         available: true,

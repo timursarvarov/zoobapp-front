@@ -58,7 +58,7 @@
                             {'md-valid': !errors.has('lastName') && touched.lastName},
                             {'md-error': errors.has('lastName')}]"
                     >
-                        <label>First Name</label>
+                        <label>Last Name</label>
                         <md-input
                             v-model="user.lastName"
                             type="text"
@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="md-layout-item md-small-size-100 md-size-33">
-                    <md-field>
+                    <md-field class="with-subline">
                         <label>User Name</label>
                         <md-input v-model="user.userName" disabled type="text"></md-input>
                     </md-field>
@@ -175,7 +175,7 @@
                 </div>
 
                 <div class="md-layout-item md-small-size-100 md-size-33">
-                    <md-field>
+                    <md-field class="with-subline" >
                         <label>Address</label>
                         <md-input v-model="user.address" type="text"></md-input>
                     </md-field>

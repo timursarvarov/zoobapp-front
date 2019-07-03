@@ -2,11 +2,12 @@
 <template>
     <div class="items-list-wrapper">
         <md-table
-            :value="items"
+            :md-selected-value.sync="selectedItems"
+            v-model="items"
             :md-sort.sync="currentSort"
             :md-sort-order.sync="currentSortOrder"
             :md-sort-fn="customSort"
-            class="table-with-header table-striped table-hover"
+            class="table-striped paginated-table table-with-header  table-hover"
         >
             <md-table-toolbar>
                 <div class="md-toolbar-section-start">
@@ -14,7 +15,7 @@
                         v-if="type === 'anamnesis'"
                         class="md-title"
                     >{{items.length}} procedures in anamnes</h3>
-                    <h3 class="md-title">All {{type | capitilize}}</h3>
+                   <slot name="title-start" />
                 </div>
                 <div class="md-toolbar-section-end">
                     <md-button
@@ -33,7 +34,10 @@
                 <md-button class="md-primary md-raised" @click="scrollToTop()">Scroll Top</md-button>
             </md-table-empty-state>
 
-            <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple">
+            <md-table-row
+                slot="md-table-row"
+                :md-selectable="type ==='procedures'?'multiple':'single'"
+                slot-scope="{ item }" >
                 <md-table-cell
                     v-for="field  in itemsTableColumns"
                     :key="field.key"
@@ -41,20 +45,20 @@
                     :md-label="getFieldName(field.key).toString()"
                     :md-sort-by=" item[field.key] ? item[field.key].toString() : ''"
                 >
-                    <div v-if="field.key === 'code'">{{ item.code }}</div>
-                    <div v-else-if="field.key === 'title'">
+                    <div :class="field.key" v-if="field.key === 'code'">{{ item.code }}</div>
+                    <div :class="field.key" v-else-if="field.key === 'title'">
                         {{ item.title }}
                         <br>
                         <small>{{item.description}}</small>
                     </div>
-                    <div v-else-if="field.key === 'teeth'">
+                    <div :class="field.key" v-else-if="field.key === 'teeth'">
                         <span
                             v-for="toothId in Object.keys(item.teeth)"
                             :key="toothId"
                         >{{ toothId | toCurrentTeethSystem(teethSystem) }},&nbsp;</span>
                     </div>
 
-                    <div
+                    <div :class="field.key"
                         v-else-if="field.key === 'author'"
                         class="md-layout md-alignment-left-center"
                     >
@@ -87,7 +91,7 @@
                     </div>
                 </md-table-cell>
 
-                <md-table-cell class="actions" md-label="Actions">
+                <md-table-cell class="" md-label="Actions">
                     <md-button
                         v-show="ifDiagnoseHasLocations(item.teeth)"
                         class="md-just-icon md-simple"
@@ -138,6 +142,14 @@
             :showForm.sync="showTableEditor"
             @selected="setColumns"
         ></t-table-editor>
+           <md-snackbar :md-position="'center'" :md-duration="true ? Infinity : 4000" :md-active.sync="showSnackbar" md-persistent>
+                <span> {{`Set ${selectedItems.length} ${type}`}} </span>
+                <div>
+                    <md-button class="md-simple" @click="showSnackbar = false">Delete</md-button>
+                    <md-button class="md-simple" @click="showSnackbar = false">Create invoice</md-button>
+                    <md-button class="md-success" @click="showSnackbar = false">Complete</md-button>
+                </div>
+        </md-snackbar>
     </div>
 </template>
 <script>
@@ -170,17 +182,16 @@
                 type: String,
                 default: () => 'diagnosis',
             },
-            fields: {
-                type: Array,
-                default: () => [],
-            },
         },
         data() {
             return {
                 computedAvailableItemsTableColumns: [],
                 itemsTableColumns: [],
+                selectedItems: [],
                 showTableEditor: false,
                 showForm: false,
+                showSnackbar: false,
+                isInfinity: false,
                 currentSort: 'date',
                 currentSortOrder: 'desc',
                 pagination: {
@@ -289,14 +300,10 @@
                 );
                 this.setItemsTableColumns();
                 this.setComputedAvailableItemsTableColumns();
-            //  this.$store.dispatch(USER_UPDATE, {
-            //   user: {
-            //    columns: e,
-            //   },
-            // });
             },
             onSelect(item) {
                 console.log(item);
+                this.showSnackbar = !this.showSnackbar;
             },
             getItemTotalPrice(manipulations) {
                 let totalPrice = 0;
@@ -423,39 +430,45 @@
                 this.setItemsTableColumns();
                 this.setComputedAvailableItemsTableColumns();
             },
+            selectedItems() {
+                this.showSnackbar = this.selectedItems.length > 0;
+            },
         },
     };
 </script>
 
 <style lang="scss"  >
 .items-list-wrapper {
-    .md-tabs-content table thead {
-        display: table-header-group !important;
-    }
+
 
     .md-table-cell-container {
-        word-wrap: break-word;
+
+        overflow: hidden;
+        .teeth{
+            max-width:150px;
+            width:14vw;
+            min-width:50px;
+            text-overflow: ellipsis;
+            // word-wrap: break-word;
+            overflow: hidden;
+        }
+         .code {
+        width: 20px;
+    }
     }
     .md-card .md-card-actions {
         border: 0;
         margin-left: 20px;
         margin-right: 20px;
     }
-    .code {
-        width: 20px;
-    }
-    .actions,
-    .date {
-        width: 50px;
-    }
     .paginated-table table > tbody > tr > td {
         width: fit-content;
     }
-    .footer-table table > tfoot > tr > th:first-child {
-        width: 20px;
-    }
-    .footer-table table > tfoot > tr > th:nth-last-child(-n + 2) {
-        width: 40px;
-    }
+    // .footer-table table > tfoot > tr > th:first-child {
+    //     width: 20px;
+    // }
+    // .footer-table table > tfoot > tr > th:nth-last-child(-n + 2) {
+    //     width: 40px;
+    // }
 }
 </style>

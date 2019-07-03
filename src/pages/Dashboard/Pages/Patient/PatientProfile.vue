@@ -11,19 +11,19 @@
 
                 <md-tab id="tab-diagnose" md-icon="local_hospital" md-label="Treatment">
                     <div class="md-layout">
-                        <patient-treatment/>
+                        <patient-treatment ref="treatment" />
                     </div>
                 </md-tab>
 
+                <md-tab id="tab-billing" md-icon="account_balance" md-label="Billing">
+                    <patient-billing/>
+                </md-tab>
                 <md-tab id="tab-notes" md-icon="question_answer" md-label="Notes">
                     <notes/>
                 </md-tab>
                 <md-tab id="tab-files" md-icon="folder_shared" md-label="Files">
                     <patient-files/>
                 </md-tab>
-                <md-tab id="tab-billing" md-icon="account_balance" md-label="Billing">
-                    <patient-billing/>
-                </md-tab>s
             </md-tabs>
         </template>
     </nav-tabs-card>
@@ -66,6 +66,11 @@
                 color = 'success';
                 return color;
             },
+            setPlanApproved() {
+                if (this.$refs.treatment) {
+                    this.$refs.treatment.setPlanApproved();
+                }
+            },
         },
         computed: {
             ...mapGetters({
@@ -82,6 +87,8 @@
             ) {
                 this.$store.dispatch(PATIENT_GET, {
                     patientId: this.$route.params.patientId,
+                }).then(() => {
+                    this.setPlanApproved();
                 });
             }
         },
@@ -120,9 +127,6 @@
             background-color: white;
             border-radius: 7px;
         }
-    }
-    .text-right {
-        display: flex;
     }
     .md-tabs-navigation {
         padding: 15px;

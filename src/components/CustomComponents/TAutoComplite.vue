@@ -19,11 +19,10 @@
                 @focus.stop="openOnFocus"
                 @blur="hideOptions"
                 @input="onInput"
-                @click.stop.prevent="openOnFocus"
                 @keyup.down="mooveFocusItems(0)"
+                @click.stop.prevent="openOnFocus"
                 @keyup.up="mooveFocusItems(-1)"
             />
-
             <md-menu-content
                 :class="contentClasses"
                 v-show="hasScopedEmptySlot || hasFilteredItems || openOnFocus"
@@ -56,6 +55,11 @@
                             />
                             <template v-else>{{ item }}</template>
                         </md-menu-item>
+                           <slot
+                                name="md-last-item"
+                                :term="searchTerm"
+                            />
+                        
                     </div>
                 </transition>
 
@@ -74,8 +78,11 @@
 <script>
 /* eslint-disable */
 import fuzzy from "fuzzysearch";
+import { reject } from 'q';
 const isPromise = require("is-promise");
 export default {
+    components:{
+    },
     name: "t-autocomplete",
     props: {
         value: {
@@ -108,6 +115,8 @@ export default {
     data() {
         return {
             blur: false,
+            busy: false,
+            data: [],
             searchTerm: this.value,
             showMenu: false,
             triggerPopover: false,
@@ -176,9 +185,14 @@ export default {
         },
         value(val) {
             this.searchTerm = val;
+            if(val){
+                this.showOptions()
+            }
         }
     },
     methods: {
+   
+
         mooveFocusItems(e) {
             this.$nextTick(() => {
                 if (this.$refs && this.$refs["md-menu-content"]) {
@@ -262,6 +276,7 @@ export default {
             this.$nextTick(() => {
                 this.triggerPopover = true;
                 this.$emit("md-opened");
+                this.initiate();
             });
         },
         hideOptions(e) {
@@ -285,7 +300,17 @@ export default {
             this.$emit("input", this.searchTerm);
             this.$emit("md-selected", item);
             this.hideOptions();
+        },
+        initiate() {
+             if (this.$refs && this.$refs["scroll"]) {
+              const elList = this.$refs["scroll"]
+               elList.addEventListener('scroll', () => {
+                })
+          }
         }
+    },
+    mounted(){
+          this.initiate();
     }
 };
 </script>

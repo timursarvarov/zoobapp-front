@@ -26,7 +26,6 @@ import TimeLineItem from './Timeline/TimeLineItem.vue';
 import Tabs from './Tabs.vue';
 import Collapse from './Collapse.vue';
 import Slider from './Slider.vue';
-import SimpleWizard from './CustomComponents/Wizard/Wizard.vue';
 import WizardTab from './Wizard/WizardTab.vue';
 import AsyncWorldMap from './WorldMap/AsyncWorldMap.vue';
 
@@ -38,7 +37,8 @@ import AnimatedNumber from './AnimatedNumber.vue';
 
 // Custom components
 import SidebarPluginJaw from './CustomComponents/SidebarPluginJaw';
-
+import TTabs from './CustomComponents/TTabs.vue';
+import SimpleWizard from './CustomComponents/Wizard/Wizard.vue';
 import IconAdult from './CustomComponents/JawIcons/Icons/Adult.vue';
 import IconBase from './CustomComponents/JawIcons/IconBase.vue';
 import IconAnalgesic from './CustomComponents/JawIcons/Icons/Analgesic.vue';
@@ -97,6 +97,7 @@ import Jaw from './CustomComponents/Jaw/Jaw.vue';
 import JawAddLocations from './CustomComponents/Jaw/JawAddLocations.vue';
 import Tooth from './CustomComponents/Jaw/Tooth.vue';
 
+import TAutoCompliteFuse from './CustomComponents/TAutoCompliteFuse.vue';
 import TAutoComplite from './CustomComponents/TAutoComplite.vue';
 import TAvatar from './CustomComponents/TAvatar.vue';
 import TDropzone from './CustomComponents/TDropzone.vue';
@@ -110,10 +111,7 @@ import TToothItems from './CustomComponents/TToothItems.vue';
 import TFilesAddForm from './CustomComponents/TFilesAddForm.vue';
 import TPrintForm from './CustomComponents/TPrintForm/TPrintForm.vue';
 import TWuswug from './CustomComponents/TWuswug.vue';
-import TItemDescription from './CustomComponents/TWizard/TWizardItems/TItemDescription.vue';
-import TItemFiles from './CustomComponents/TWizard/TWizardItems/TItemFiles.vue';
-import TItemManipulations from './CustomComponents/TWizard/TWizardItems/TItemManipulations.vue';
-import TItemToothLocations from './CustomComponents/TWizard/TWizardItems/TItemToothLocations.vue';
+import TWizardAddBilling from './CustomComponents/TWizardBilling/TWizardAddBilling.vue';
 import TWizardAddItem from './CustomComponents/TWizard/TWizardAddItem.vue';
 import TCalendar from './CustomComponents/TCalendar.vue';
 
@@ -208,7 +206,9 @@ export {
     IconToothRestovration,
     TCalendar,
     TAutoComplite,
+    TAutoCompliteFuse,
     TAvatar,
+    TTabs,
     TDropzone,
     TImageCropperForm,
     TAvatarInput,
@@ -222,12 +222,8 @@ export {
     TFilesList,
     JawDisplayble,
     TWuswug,
-
-    // TItemDescription,
-    // TItemFiles,
-    // TItemManipulations,
-    // TItemToothLocations,
     TWizardAddItem,
+    TWizardAddBilling,
 
     JawGenerator,
 };

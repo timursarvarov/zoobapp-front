@@ -19,6 +19,7 @@
 <script>
 
     import { TDropzone } from '@/components';
+    import { AUTH_REFRESH_TOKEN } from '@/constants';
 
     export default {
         name: 't-files-add-form',
@@ -94,7 +95,7 @@
                         this.processRefreshToken = true;
                         // eslint-disable-next-line no-new
                         new Promise((resolve, reject) => {
-                            this.$store.dispatch(this.authRefreshToken).then(
+                            this.$store.dispatch(AUTH_REFRESH_TOKEN).then(
                                 (response) => {
                                     this.$refs.myDropzone.processQueue();
                                     this.processRefreshToken = false;

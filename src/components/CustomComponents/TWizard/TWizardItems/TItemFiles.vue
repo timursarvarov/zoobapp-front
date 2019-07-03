@@ -15,12 +15,14 @@
                     <div
                         slot="emptyState"
                     >
-                        <h3>
-                            Add new file
-                        </h3>
-                        <span>
-                            Click here or drope some files
-                        </span>
+                        <div >
+                            <div style="color: #AAAAAA" class="md-title " >
+                                Add new file
+                            </div>
+                            <span style="color: #AAAAAA" >
+                                Click here or drope some files
+                            </span>
+                        </div>
                     </div>
                     </t-files-add-form>
 

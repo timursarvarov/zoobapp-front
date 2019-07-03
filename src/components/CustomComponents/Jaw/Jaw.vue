@@ -1,6 +1,6 @@
 
 <template>
-    <div>
+    <div  ref="wrjaw" >
         <div class="jaw-wrapper">
             <md-toolbar class="md-transparent md-layout jaw-toolbar md-dense md-alignment-center-space-between">
                     <div class="md-layout-item">
@@ -641,16 +641,16 @@
                     return toothWidth / 1.72;
                 }
                 if (this.windowWidth < 600) {
-                    return toothWidth / 1.1;
+                    return toothWidth / 1.15;
                 }
                 if (this.windowWidth >= 600 && this.windowWidth < 960) {
-                    return toothWidth / 1.1;
+                    return toothWidth / 1.15;
                 }
                 if (this.windowWidth <= 1280 && this.windowWidth > 960) {
-                    return toothWidth / 2.35;
+                    return toothWidth / 2.65;
                 }
                 if (this.windowWidth < 1920 && this.windowWidth > 1280) {
-                    return toothWidth / 2.3;
+                    return toothWidth / 2.5;
                 }
                 if (this.windowWidth >= 1920) {
                     return toothWidth / 2.2;
@@ -660,6 +660,10 @@
             },
             handleResize() {
                 this.windowWidth = window.innerWidth;
+                if (this.$refs.wrjaw) {
+                    const jawHeight = this.$refs.wrjaw.clientHeight;
+                    this.$emit('onSizeChanged', jawHeight);
+                }
             },
             toggleTeeth(teethToTogle) {
                 const existingTeeth = [];
@@ -867,6 +871,11 @@
                 }
                 return false;
             },
+        },
+        mounted() {
+            this.$nextTick(() => {
+                this.handleResize();
+            });
         },
         watch: {
             selectedTeeth: {

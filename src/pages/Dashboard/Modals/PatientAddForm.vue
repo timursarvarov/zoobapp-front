@@ -1,4 +1,4 @@
-<template>
+`<template>
   <div>
     <md-dialog
       class="patient-add-form"

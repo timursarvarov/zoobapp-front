@@ -5,7 +5,7 @@
        :aria-hidden="!active"
        :aria-labelledby="`step-${tabId}`"
        :class="{'active show': active}" v-show="active">
-    <slot></slot>
+    <slot :active="active" ></slot>
   </div>
 </template>
 <script>
