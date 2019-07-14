@@ -22,6 +22,7 @@
         mounted() {
             this.$i18n.locale = this.lang;
             if (this.refreshTokenExist) {
+                console.log(this.refreshTokenExist);
                 this.$store.dispatch(AUTH_INIT);
             } else {
                 this.$router.push('/login');
