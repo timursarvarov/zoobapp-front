@@ -43,6 +43,10 @@ export default {
                 .then(resp => {
                     axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
                     dispatch(AUTH_SUCCESS, { resp });
+                    localStorage.setItem('accessToken', resp.data.accessToken);
+                    localStorage.setItem('expiresAt', resp.data.expiresAt);
+                    localStorage.setItem('refreshToken', resp.data.refreshToken);
+                    axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
                     // dispatch(USER_REQUEST);
                     dispatch(CLINICS_SET, { clinics: resp.data.organizations });
                     resolve(resp);
@@ -85,6 +89,7 @@ export default {
                     dispatch(AUTH_REFRESH_ERROR);
                     dispatch(USER_LOGOUT);
                     localStorage.removeItem('accessToken');
+                    localStorage.removeItem('refreshToken');
                     reject(err);
                 });
         })
