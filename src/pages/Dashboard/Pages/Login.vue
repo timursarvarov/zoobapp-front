@@ -100,7 +100,7 @@
 </template>
 <script>
     import { LoginCard } from '@/components';
-    import { AUTH_REQUEST, NOTIFY } from '@/constants';
+    import { AUTH_REQUEST, NOTIFY, CLINIC_AUTH_REQUEST } from '@/constants';
     import { SlideYDownTransition } from 'vue2-transitions';
     import ForgotPassword from './ForgotPassword.vue';
 
@@ -146,6 +146,8 @@
                 this.touched.password = true;
             },
             login() {
+                //  this.$router.push('/choose_clinic');
+                //  return;
                 const { username, password } = this;
                 if (this.errors.has('username') || !this.username) {
                     this.showErrorsValidate('username');
@@ -164,7 +166,13 @@
                 this.$store.dispatch(AUTH_REQUEST, { username, password }).then(
                     // eslint-disable-next-line no-unused-vars
                     (response) => {
-                        this.$router.push('/choose_clinic');
+                        const { data } = response;
+
+                        if (data.organizations.length === 1) {
+                            this.setClinic(data);
+                        } else {
+                            this.$router.push('/choose_clinic');
+                        }
                     },
                     (error) => {
                         if (error.response.data.message === 'Wrong password') {
@@ -175,6 +183,29 @@
                         }
                     },
                 );
+            },
+            setClinic(data) {
+                this.$store
+                    .dispatch(CLINIC_AUTH_REQUEST, {
+                        clinicId: data.organizations[0].ID,
+                        accessToken: data.accessToken,
+                    })
+                    .then(
+                        // eslint-disable-next-line no-unused-vars
+                        (response) => {
+                            this.$router.push('/');
+                        },
+                        (error) => {
+                            if (error && error.response) {
+                                if (error.response.data.message === 'Clinic Authorization failed') {
+                                    this.showErrorsValidate('password');
+                                }
+                                if (error.response.data.message === 'Invalid login') {
+                                    this.showErrorsValidate('username');
+                                }
+                            }
+                        },
+                    );
             },
             showErrorsValidate(errField = 'username') {
                 const field = this.$validator.fields.find({

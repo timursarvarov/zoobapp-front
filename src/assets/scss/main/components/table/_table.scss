@@ -48,7 +48,7 @@
     }
 }
 
-.md-table .md-table-head:last-child {
+.md-table:noty(.table-no-actions) .md-table-head:last-child {
     text-align: right;
 }
 
@@ -82,4 +82,8 @@
 .table-shopping .md-table-head:nth-child(7),
 .table-shopping .md-table-head:nth-child(6) {
     text-align: right;
+}
+
+.table-no-actions .paginated-table .md-table-head:nth-child(6) {
+    text-align: left!important;
 }

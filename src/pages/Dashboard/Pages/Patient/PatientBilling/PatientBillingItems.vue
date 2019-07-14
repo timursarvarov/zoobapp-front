@@ -1,33 +1,17 @@
 
 <template>
     <div class="items-list-wrapper">
-        <md-toolbar>
-            <div class="md-layout">
-                <div class="md-layout-item">
-                    Ballance
-                </div>
-                <div class="md-layout-item">
-                    All invoices
-                </div>
-                <div class="md-layout-item">
-                    Discounts
-                </div>
-                <div class="md-layout-item">
-                    Tax
-                </div>
-            </div>
-        </md-toolbar>
         <md-table
             :md-selected-value.sync="selectedItems"
             v-model="tableData"
             :md-sort.sync="currentSort"
             :md-sort-order.sync="currentSortOrder"
             :md-sort-fn="customSort"
-            class="table-striped table-with-header paginated-table table-hover"
+            class="table-striped table-with-header table-hover"
         >
             <md-table-toolbar>
                 <div class="md-toolbar-section-start">
-                    Unbilled procedures
+                    <h1 class="md-title"><b>Unbilled procedures</b></h1>
                 </div>
                 <div class="md-toolbar-section-end">
                     <md-button
@@ -49,8 +33,9 @@
             <md-table-row
                 slot="md-table-row"
                 md-selectable="multiple"
-                :style="[{backgroundColor:`${lightenDarkenColor(item.planColor, 190 )}`}]"
-                slot-scope="{ item }" >
+                slot-scope="{ item }"
+                md-auto-select
+            >
                 <md-table-cell
                     v-for="field  in itemsTableColumns"
                     :key="field.key"
@@ -71,7 +56,8 @@
                         >{{ toothId | toCurrentTeethSystem(teethSystem) }},&nbsp;</span>
                     </div>
 
-                    <div :class="field.key"
+                    <div
+                        :class="field.key"
                         v-else-if="field.key === 'author'"
                         class="md-layout md-alignment-left-center"
                     >
@@ -89,9 +75,6 @@
                             <span>{{item.author.firstName | capitilize}}</span>
                         </span>
                     </div>
-
-                    <div v-if="field.key === 'manipulations' && item.manipulations">manipulations</div>
-
                     <div v-if="field.key === 'date'">
                         <span>{{ item.date | moment("from") }}</span>
                         <br>
@@ -100,55 +83,41 @@
 
                     <div v-if="field.key === 'price' && item.manipulations">
                         {{getItemTotalPrice(item.manipulations)}}
-                        <small>{{clinic.currencyCode}}</small>
+                        <small>{{currentClinic.currencyCode}}</small>
                     </div>
-                    <div v-if="field.key === 'plan'">
-                        {{item.planTitle}}
+                    <div v-if="field.key === 'plan'"
+                        class="md-layout md-alignment-center-left"
+                    >
+                        <div class="md-layout" style="max-width:40px;">
+                            <t-avatar
+                                :small="true"
+                                :color="planColor(item.planCreated +item.planId +item.planName )"
+                            />
+                        </div>
+                        <div class="md-layout md-alignment-center-left">
+                            <span style="height: fit-content;" class="md-xsmall-hide">
+                                {{item.planName| capitilize}}
+                            </span>
+                        </div>
                     </div>
-                </md-table-cell>
-
-                <md-table-cell class="" md-label="Actions">
-                    <md-button
-                        v-show="ifDiagnoseHasLocations(item.teeth)"
-                        class="md-just-icon md-simple"
-                        @click.native="$emit('toggleItemVisibility', item.id, type)"
-                    >
-                        <md-icon v-if="item.showInJaw">visibility</md-icon>
-                        <md-icon v-else>visibility_off</md-icon>
-                    </md-button>
-                    <md-button
-                        class="md-just-icon md-info md-simple"
-                        @click.native="handleEdit(item)"
-                    >
-                        <md-icon>edit</md-icon>
-                    </md-button>
-                    <md-button
-                        class="md-just-icon md-danger md-simple"
-                        @click.native="handleDelete(item)"
-                    >
-                        <md-icon>close</md-icon>
-                    </md-button>
+                    <div class="manipulations" v-if="field.key === 'manipulations' && item.manipulations">
+                        <div>
+                            <small
+                                class="items-manipulations_wrapper"
+                                v-for="(m, i) in item.manipulations"
+                                :key="m.id"
+                            >
+                                <span class="text-left">{{i+1}}. {{m.manipulation.title}}</span>
+                                <span
+                                    class="text-right"
+                                >{{m.num}} * {{m.price || 0}} = {{m.num * (m.price || 0)}} {{currentClinic.currencyCode}}</span>
+                                <br />
+                            </small>
+                        </div>
+                    </div>
                 </md-table-cell>
             </md-table-row>
         </md-table>
-        <div class="footer-table md-table">
-            <table>
-                <tfoot>
-                    <tr>
-                        <th v-for="item in itemsTableColumns" :key="item.key" class="md-table-head">
-                            <div class="md-table-head-container md-ripple md-disabled">
-                                <div class="md-table-head-label">{{item.title}}</div>
-                            </div>
-                        </th>
-                        <th class="md-table-head">
-                            <div class="md-table-head-container md-ripple md-disabled">
-                                <div class="md-table-head-label">Actions</div>
-                            </div>
-                        </th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
         <t-table-editor
             icon="settings"
             color="success"
@@ -158,26 +127,46 @@
             :showForm.sync="showTableEditor"
             @selected="setColumns"
         ></t-table-editor>
-        <md-snackbar :md-position="'center'" :md-duration="true ? Infinity : 4000" :md-active.sync="showSnackbar" md-persistent>
-                <span> {{`Set ${selectedItems.length} ${type} selected`}} Patients selected</span>
-                <md-button class="md-primary" @click="showSnackbar = false">do something</md-button>
+        <md-snackbar
+            v-if="!showForm"
+            :md-position="'center'"
+            :md-duration="true ? Infinity : 4000"
+            :md-active.sync="showSnackbar"
+            md-persistent
+        >
+            <p>{{`${selectedItems.length}`}}
+                Procedures for
+                <animated-number :value="calculateProcedures(selectedItems)" /> {{currentClinic.currencyCode}}
+                selected
+            </p>
+            <div>
+                <md-button class="md-simple" @click="showSnackbar = false, selectedItems=[]">unselect</md-button>
+                <md-button
+                    class="md-success"
+                    @click="showCreateInvoice()"
+                >Create Invoice</md-button>
+            </div>
         </md-snackbar>
     </div>
 </template>
 <script>
-    import { TAvatar, TTableEditor } from '@/components';
     import {
-        USER_BILLING_COLUMNS,
-    } from '@/constants';
+        TAvatar,
+        TTableEditor,
+        AnimatedNumber,
+    } from '@/components';
+    import { USER_BILLING_COLUMNS } from '@/constants';
     import { mapGetters } from 'vuex';
-    // import swal from 'sweetalert2';
     import { tObjProp } from '@/mixins';
+
+    const randomMC = require('random-material-color');
 
     export default {
         mixins: [tObjProp],
         components: {
             TAvatar,
             TTableEditor,
+            AnimatedNumber,
         },
         props: {
             items: {
@@ -201,7 +190,6 @@
                 showTableEditor: false,
                 showForm: false,
                 showSnackbar: false,
-                isInfinity: false,
                 currentSort: 'date',
                 currentSortOrder: 'desc',
                 pagination: {
@@ -215,28 +203,24 @@
         computed: {
             ...mapGetters({
                 teethSchema: 'teethSchema',
-                jaw: 'jaw',
                 patient: 'getPatient',
-                clinic: 'getCurrentClinic',
+                currentClinic: 'getCurrentClinic',
                 availableBillingTableColumns: 'availableBillingTableColumns',
             }),
             tableData() {
                 const procedures = [];
                 this.patient.plans.forEach((plan) => {
-                    if (plan.state === 'approved' && plan.procedures) {
+                    if (plan.state === 1 && plan.procedures) {
                         plan.procedures.forEach((p) => {
-                            procedures.push(
-                                {
-                                    ...p,
-                                    planId: plan.id,
-                                    planTitle: plan.title,
-                                    planColor: plan.color,
-                                },
-                            );
+                            procedures.push({
+                                ...p,
+                                planId: plan.ID,
+                                planName: plan.name,
+                                planCreated: plan.created,
+                            });
                         });
                     }
                 });
-                console.log(this.patient.plans, procedures);
                 return procedures;
             },
             defaultFields() {
@@ -275,31 +259,40 @@
         },
 
         methods: {
-            lightenDarkenColor(col, amt) {
-                let usePound = false;
-                if (col[0] == '#') {
-                    col = col.slice(1);
-                    usePound = true;
-                }
+            showCreateInvoice() {
+                this.showSnackbar = false,
+                this.$emit('onCreateInvoice', this.selectedItems);
+            },
+            onProcedureAdd(p) {
+                this.selectedItems.push(p);
+            },
+            planColor(text) {
+                return this.randomMC.getColor({ text: `${text}` });
+            },
+            calculateProcedures(procedures = []) {
+                let sum = 0;
+                procedures.forEach((p) => {
+                    if (p.manipulations) {
+                        sum += this.calculateManipulations(p.manipulations);
+                    }
+                });
+                return sum;
+            },
+            calculateManipulations(m = []) {
+                let sum = 0;
+                m.forEach((manip) => {
+                    sum += manip.price * manip.num;
+                });
+                return sum;
+            },
+            convertHex(hex, opacity) {
+                const hexLocal = hex.replace('#', '');
+                const r = parseInt(hexLocal.substring(0, 2), 16);
+                const g = parseInt(hexLocal.substring(2, 4), 16);
+                const b = parseInt(hexLocal.substring(4, 6), 16);
 
-                let num = parseInt(col, 16);
-
-                let r = (num >> 16) + amt;
-
-                if (r > 255) r = 255;
-                else if (r < 0) r = 0;
-
-                let b = ((num >> 8) & 0x00FF) + amt;
-
-                if (b > 255) b = 255;
-                else if (b < 0) b = 0;
-
-                let g = (num & 0x0000FF) + amt;
-
-                if (g > 255) g = 255;
-                else if (g < 0) g = 0;
-
-                return (usePound ? '#':'') + (g | (b << 8) | (r << 16)).toString(16);
+                const result = `rgba(${r},${g},${b},${opacity / 100})`;
+                return result;
             },
             setComputedAvailableBillingTableColumns() {
                 if (this.type === 'diagnosis') {
@@ -332,10 +325,7 @@
             },
             setColumns(e) {
                 // поменять после того как добавять соответствующие поля в беке
-                localStorage.setItem(
-                    USER_BILLING_COLUMNS,
-                    JSON.stringify(e),
-                );
+                localStorage.setItem(USER_BILLING_COLUMNS, JSON.stringify(e));
                 this.setItemsTableColumns();
                 this.setComputedAvailableBillingTableColumns();
             },
@@ -346,7 +336,7 @@
             getItemTotalPrice(manipulations) {
                 let totalPrice = 0;
                 manipulations.forEach((m) => {
-                    totalPrice = +m.num * m.price;
+                    totalPrice += m.num * m.price;
                 });
                 return totalPrice;
             },
@@ -455,6 +445,7 @@
         created() {
             this.setItemsTableColumns();
             this.setComputedAvailableBillingTableColumns();
+            this.randomMC = randomMC;
         },
         watch: {
             searchQuery(value) {
@@ -477,22 +468,42 @@
 
 <style lang="scss"  >
 .items-list-wrapper {
-
-
     .md-table-cell-container {
-
         overflow: hidden;
-        .teeth{
-            max-width:150px;
-            width:14vw;
-            min-width:50px;
+        .teeth {
+            max-width: 150px;
+            width: 14vw;
+            min-width: 50px;
             text-overflow: ellipsis;
             // word-wrap: break-word;
             overflow: hidden;
         }
-         .code {
-        width: 20px;
+        .code {
+            width: 20px;
+        }
     }
+    .manipulations{
+    max-width: 30vw;
+    .items-manipulations_wrapper {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            align-items: stretch;
+            display: flex;
+            .text-left {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-align: left;
+                // max-width: 70%;
+            }
+            .text-right {
+                flex-grow:1;
+                // max-width: 30%;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-align: right;
+            }
+        }
     }
     .md-card .md-card-actions {
         border: 0;

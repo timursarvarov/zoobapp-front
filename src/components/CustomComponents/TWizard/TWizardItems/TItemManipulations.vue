@@ -4,25 +4,42 @@
         {'min-width': size.width ? `${size.width}px`: `70vw`},
       ]"
     >
-      <!-- {'min-height': `${size.height}px`}  -->
             <div class="absolute-header-block" >
                 <md-toolbar  class=" toolbar-jaw  manipulations-editor md-alignment-center-space-between md-layout md-transparent" >
                     <div  class="manipulations-autocomplite md-layout-item md-size-50 md-medium-size-40 md-small-size-100">
                         <cool-select
+                            class="with-subline with-action md-field"
+                            :class="[{'md-focused': coolSelectFocus || selectedManipulations}]"
+                            @focus="coolSelectFocus = true"
+                            @blur="coolSelectFocus = false"
                             tabindex="1"
                             v-model="selectedManipulations"
                             :items="manipulationsForOptions"
+                            inputForTextClass="md-input"
                             :arrowsDisableInstantSelection="true"
                             :disableFirstItemSelectOnEnter="true"
                             item-text="text"
                             itemValue="title"
                             ref="autocomplete"
                             @select="setManipulation"
-                            :placeholder="selectedManipulations ? '': 'Select manipulation'"
                         >
+                            <template slot="input-end">
+                                 <md-button
+                                    @click="selectedManipulations = null"
+                                    tabindex="-1"
+                                    v-show="selectedManipulations"
+                                    class="md-button md-icon-button md-dense md-input-action noselect md-simple"
+                                >
+                                    <md-icon class="success">close</md-icon>
+                                </md-button>
+                            </template>
+
+                            <template slot="input-start">
+                                <label for="input">Select manipulation</label>
+                            </template>
                             <template v-if="item" slot="item" slot-scope="{ item }">
                                 <div style="display: flex;">
-                                    <md-button class="IZ-select-button">
+                                    <md-button class="IZ-select-button md-layout-item">
                                         <span class="text-left" v-if="item.title && item.code">
                                             {{ `${item.code} - ${item.title}` }}
                                         </span>
@@ -53,6 +70,7 @@
                                 min="1"
                                 type="number"
                                 v-model="manipulationsNum"
+                                @keyup.enter="getFocus('price')"
                              ></md-input>
                             </md-field>
                                 <!-- @keydown.enter.prevent="focusOn('price')" -->
@@ -67,7 +85,7 @@
                                 key='price'
                                 min="0"
                                 type="number"
-                                @focus="getFocus('price')"
+                                @keyup.enter="getFocus('addButton')"
                                 v-model="manipulationsPrice"></md-input>
                             </md-field>
                                 <!-- @keydown.enter.prevent="focusOn('addButton')" -->
@@ -118,6 +136,7 @@
                         <md-table-cell md-label="Title">{{ item.manipulation.title }}</md-table-cell>
                         <md-table-cell  md-label="Qty" class="manipulations-input" >{{item.num}}</md-table-cell>
                         <md-table-cell >*</md-table-cell>
+
                         <md-table-cell md-label="Price">{{ item.price.toFixed(2) }}</md-table-cell>
                         <md-table-cell md-label="Total">{{ (item.price * item.num).toFixed(2) }}</md-table-cell>
                         <md-table-cell  class="actions" >
@@ -160,8 +179,7 @@
 </template>
 <script>
 // eslint-disable-next-line import/no-unresolved
-    import { TAutoCompliteFuse, AnimatedNumber } from '@/components';
-    import { MANIPULATIONS, AUTH_REFRESH_TOKEN } from '@/constants';
+    import { AnimatedNumber } from '@/components';
     import { CoolSelect } from 'vue-cool-select';
 
     export default {
@@ -170,7 +188,6 @@
             required: true,
         },
         components: {
-            TAutoCompliteFuse,
             AnimatedNumber,
             CoolSelect,
         },
@@ -187,6 +204,10 @@
                 type: Array,
                 default: () => [],
             },
+            manipulations: {
+                type: Array,
+                default: () => [],
+            },
             size: {
                 type: Object,
                 default: () => {},
@@ -195,6 +216,10 @@
                 type: Array,
                 default: () => [],
             },
+            originalItem: {
+                type: Object,
+                default: () => {},
+            },
         },
         data() {
             return {
@@ -202,6 +227,7 @@
                 manipulationsNum: 1,
                 manipulationsPrice: 0,
                 step: 1,
+                coolSelectFocus: false,
                 manipulationsPriceTotal: 0,
                 selectedManipulations: '',
                 manipulationsToAdd: [],
@@ -219,9 +245,18 @@
             };
         },
         methods: {
-
+            setDefaultManips() {
+                if (this.originalItem && this.originalItem.defaultManipulations) {
+                    this.originalItem.defaultManipulations.forEach((mID) => {
+                        const manip = this.manipulations.find(m => m.ID === mID);
+                        if (manip) {
+                            this.setManipulation(manip, 'initiated');
+                            this.addManipulation();
+                        }
+                    });
+                }
+            },
             getFocus(field) {
-                console.log(field);
                 this.focusedField = field;
             },
             handleDelete(item) {
@@ -275,15 +310,16 @@
                     return res;
                 });
             },
-            setManipulation(manipulation) {
+            setManipulation(manipulation, initiated) {
+                console.log(manipulation);
                 this.manipulationToAdd = manipulation;
                 this.manipulationsPrice = manipulation.price;
                 this.manipulationsNum = this.selectedTeethNum;
-                console.log('md-selected');
-                this.focusOn('qty');
+                if (!initiated) {
+                    this.focusOn('qty');
+                }
             },
             addManipulation() {
-                console.log(this.focusedField);
                 this.manipulationsToAdd.unshift({
                     manipulation: this.manipulationToAdd,
                     price: this.manipulationsPrice,
@@ -294,7 +330,7 @@
                 this.manipulationsNum = this.selectedTeethNum;
                 this.selectedManipulations = '';
 
-                this.focusOn('autocomplete');
+                // this.focusOn('autocomplete');
             },
         },
         computed: {
@@ -307,7 +343,7 @@
             },
             manipulationsForOptions() {
                 const manips = [];
-                MANIPULATIONS.forEach((man) => {
+                this.manipulations.forEach((man) => {
                     manips.push({
                         ...man,
                         text: `${man.code} ${man.title} ${man.price}`,
@@ -337,20 +373,13 @@
             },
         },
         mounted() {
-            if (this.$refs.description) {
-                this.$refs.description.$el.focus();
-            }
             this.$nextTick(() => {
                 if (this.manipulationsToEdit.length > 0) {
                     this.manipulationsToAdd = this.manipulationsToEdit;
+                } else {
+                    this.setDefaultManips();
                 }
             });
-
-            // window.addEventListener('keyup', ({event, useCapture }) => {
-            //     if (event.keyCode === 13) {
-            //         this.callEvent(event, useCapture);
-            //     }
-            // });
         },
         watch: {
             manipulationsNum() {

@@ -5,7 +5,10 @@
         :class="{'md-toolbar-absolute md-white md-fixed-top': $route.meta.navbarAbsolute}"
     >
         <div class="wrapper-progress-bar">
-            <md-progress-bar v-show="loading" md-mode="indeterminate"></md-progress-bar>
+            <md-progress-bar
+                v-show="loading"
+                :md-stroke="2"
+            md-mode="indeterminate"></md-progress-bar>
         </div>
         <div class="md-toolbar-row">
             <div class="md-toolbar-section-start">
@@ -50,13 +53,16 @@
                 </md-button>
 
                 <cool-select
+                    class="patient-select with-action with-subline md-field"
+                    :class="[{'md-focused': coolSelectFocus || searchTerm}]"
+                    @focus="coolSelectFocus = true"
+                    @blur="coolSelectFocus = false"
                     tabindex="0"
                     v-model="searchTerm"
                     :searchText.sync="searchText"
                     :items="patients"
                     :loading="searching"
                     item-text="firstName"
-                    placeholder="Enter patient name"
                     disable-filtering-by-search
                     loadingIndicator="spinner"
                     :arrowsDisableInstantSelection="true"
@@ -65,48 +71,33 @@
                     @search="getPatients"
                 >
                     <template slot="input-end">
+                            <md-button
+                            @click=" searchTerm=null"
+                            tabindex="-1"
+                            v-show="searchTerm"
+                            class="md-button md-icon-button md-dense md-input-action noselect md-simple"
+                        >
+                            <md-icon class="success">close</md-icon>
+                        </md-button>
+                    </template>
+                    <template slot="input-start">
+                        <label for="input">Search for patient</label>
+                    </template>
+                    <template slot="input-end">
                         <div class="input-end">
                             <md-progress-spinner
                                 v-if="searching"
                                 :md-diameter="30"
-                                :md-stroke="3"
+                                :md-stroke="2"
                                 md-mode="indeterminate"
                             ></md-progress-spinner>
                         </div>
                     </template>
 
                     <template slot="no-data">
-                        <div v-if="serverError">
+                        <div v-if="noData">
                             <div class="md-layout">
-                                <div
-                                    class="md-layout-item"
-                                    style="padding: 15px 0;"
-                                >
-                                <md-subheader>
-                                    Oops! Connection problems
-                                </md-subheader>
-                                        <div class="md-layout-item md-size-100">
-                                            <md-button
-                                                class="md-primary md-layout-item mx-auto md-sm"
-                                                @click="getPatients()"
-                                            >Retry</md-button>
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div v-else-if="!noData || searchText.length<3">
-                            <div class="md-layout">
-                                <div
-                                    style="padding: 15px 0 0 0;"
-                                >
-                                    <md-subheader>
-                                    Type at least 3 letters to search by phone, email or name
-                                    </md-subheader>
-                                    </div>
-                            </div>
-                        </div>
-                        <div v-else class="md-layout" style="white-space: pre-wrap;oveflow:hidden;">
-                            <div
+                             <div
                                 class="md-size-100 md-layout md-alignment-center-center"
                                 style="white-space: pre-wrap;oveflow:hidden; padding: 15px 0;"
                             >
@@ -116,10 +107,31 @@
                             </div>
                             <div class="md-layout-item md-size-100">
                                 <md-button
-                                    class="md-primary md-layout-item mx-auto md-sm"
+                                    class="md-success md-layout-item mx-auto md-sm"
                                     @click="showPatientAddForm()"
                                 >Create patient</md-button>
                             </div>
+                            </div>
+                        </div>
+                        <div v-else-if="!serverError && (!noData || searchText.length<3)">
+                            <div class="md-layout">
+                                <div
+                                >
+                                    <md-subheader>
+                                    Type at least 3 letters to search by phone, email or name
+                                    </md-subheader>
+                                    </div>
+                            </div>
+                        </div>
+                        <div v-else-if="serverError" >
+                            <md-subheader>
+                                Connection problems
+                            </md-subheader>
+
+                            <md-button
+                                class="md-success md-layout-item mx-auto md-sm"
+                                @click="getPatients()"
+                            >Retry</md-button>
                         </div>
                     </template>
                     <template v-if="item" slot="item" slot-scope="{ item }">
@@ -187,59 +199,6 @@
                         </div>
                     </template>
                 </cool-select>
-
-                <!--  <t-auto-complite
-                            autocomplete="off"
-                            v-model="searchTerm"
-                            class="search"
-                            md-dense
-                            @md-selected="goToPatient"
-                            :md-options="patients"
-                            @md-changed="getPatients"
-                            @md-opened="getPatients"
-                            >
-                            <label v-if="$route.meta.rtlActive">بحث...</label>
-                            <label v-else>Search patient</label>
-                            <template slot="md-autocomplete-item" slot-scope="{ item }">
-                                <t-avatar
-                                    class="search-avatar"
-                                    :color="item.color"
-                                    :imageSrc="item.avatar"
-                                    :title="item.firstName + ' ' + item.lastName"
-                                    :notification="item.allergy ? 'A' : ''"
-                                />
-
-                                <span class="md-serched-list-item-text">
-                                    {{ item.firstName | capitilize}} {{ item.lastName | capitilize }}
-                                    <br>
-                                    <small v-if="item.phone">{{ "+" + item.phone }}</small>
-                                </span>
-                            </template>
-                            <template slot="md-autocomplete-empty" slot-scope="{ term }">
-                                <div
-                                    class="md-layout"
-                                    v-if="term.length >= 3 && !searching"
-                                    style="white-space: pre-wrap;oveflow:hidden;"
-                                >
-                                    <span
-                                        class="md-layout-item md-size-100"
-                                        style="white-space: pre-wrap;oveflow:hidden;"
-                                    >No patients matching "{{ term }}" were found.</span>
-                                    <md-button
-                                        class="md-primary md-layout-item mx-auto md-sm"
-                                        @click="showPatientAddForm()"
-                                    >Create patient</md-button>
-                                </div>
-                                <span
-                                    v-if="term.length < 3 && !searching && 0 < term.length"
-                                >At least 3 characters required</span>
-                                <div v-if="searching" class="for-loader"></div>
-                                <span v-if="term.length === 0 && !searching">
-                                    Type to search by
-                                    <br>phone, email or name
-                                </span>
-                            </template>
-                </t-auto-complite>-->
                 <md-list>
                     <md-list-item to="/">
                         <i class="material-icons">dashboard</i>
@@ -348,6 +307,16 @@
                                                         href="#"
                                                     >en</a>
                                                 </li>
+                                                <li
+                                                    @click="$i18n.locale = 'uz' "
+                                                    :class="[{'selected-menu-top-navbar': $i18n.locale === 'uz' }]"
+                                                >
+                                                    <a
+                                                        @click="multiLevel1 = !multiLevel1"
+                                                        :style="{color:  $i18n.locale === 'uz' ? '#fff!important': ''}"
+                                                        href="#"
+                                                    >uz</a>
+                                                </li>
                                             </ul>
                                         </li>
                                         <li>
@@ -409,6 +378,7 @@ export default {
             searchText: '',
             searchTerm: "",
             patients: [],
+            coolSelectFocus: false,
             serverError: false,
             searching: false,
             multiLevel: false,
@@ -478,7 +448,6 @@ export default {
                 .then(resp => {
                     if (resp) {
                         this.searching = false;
-                        console.log(resp)
                         if(resp.length < this.perPage) {
                                 $state.complete();
                             } else{
@@ -489,7 +458,6 @@ export default {
                         }
                 })
                 .catch(err => {
-                    console.log(1, err);
                     $state.error();
                 });;
         },
@@ -523,8 +491,10 @@ export default {
                                 })
                                 .then(resp => {
                                     if (resp) {
-                                        console.log(resp)
                                         vm.searching = false;
+                                        if(resp.length === 0){
+                                            vm.noData = true;
+                                        }
                                         vm.patients = resp;
                                     }
                                     resolve(resp);
@@ -535,7 +505,6 @@ export default {
             }).catch(err => {
                 this.searching = false;
                 this.serverError = true;
-                console.log(err);
             });
             return promise;
         },

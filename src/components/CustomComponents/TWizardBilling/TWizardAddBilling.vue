@@ -1,28 +1,39 @@
 <template>
-    <md-dialog :md-active.sync="isDialogVisibleL" class="jaw-dialog-wrapper">
+    <md-dialog
+        :md-active.sync="isDialogVisibleL"
+        :md-click-outside-to-close="true"
+        class="jaw-dialog-wrapper">
         <div class="wizard-add-diagnose-form">
             <div>
                 <simple-wizard :finishButtonText="`Save`">
                     <template slot="header">
                         <div class="title md-alignment-center-space-between md-layout md-transparent" >
-
-                            <div class="md-layout-item">
+                            <div v-if="invoiceToCreate.id" class="md-layout-item">
                                 Invoice №
+                                {{invoiceToCreate.id}}
+                            </div>
+                            <div v-else class="md-layout-item">
+                                New Invoice
                             </div>
 
                             <div class="md-layout-item">
                                 Created Date
+                                {{invoiceToCreate.created || new Date()  | moment('ll')}}
                             </div>
-                            <div class="md-layout-item">
+                            <div v-if="invoiceToCreate.dueDate" class="md-layout-item">
                                 Due Date
+                                 {{invoiceToCreate.dueDate | moment('ll')}}
                             </div>
                         </div>
                     </template>
                     <wizard-tab :before-change="() => validateStep('step1')">
                         <template slot="label">Bill</template>
                         <t-add-billing ref="step1"
-                            :procedures="procedures"
+                            :selectedProcedures="selectedProcedures"
+                            :allProcedures="allProcedures"
                             :currencyCode="currencyCode"
+                            :invoiceToCreate="invoiceToCreate"
+                            @onCreateInvoice="setInvoice"
                         />
                     </wizard-tab>
 
@@ -30,6 +41,7 @@
                         <template slot="label">Payment</template>
                         <t-add-payment ref="step2"
                             :currencyCode="currencyCode"
+                            :invoice="invoiceToCreate"
                             @on-validated="isDialogVisibleL=false"
                         />
                     </wizard-tab>
@@ -39,11 +51,11 @@
     </md-dialog>
 </template>
 <script>
+    import { mapGetters } from 'vuex';
     import TAddBilling from './TWizardBillingItems/TAddBilling.vue';
     import TAddPayment from './TWizardBillingItems/TAddPayment.vue';
     import { SimpleWizard, WizardTab } from '@/components';
-    import { mapGetters } from 'vuex';
-    import { NOTIFY, PATIENT_SUB_PARAM_SET } from '@/constants';
+    import { NOTIFY, PATIENT_SUB_PARAM_SET, PATIENT_INVOICE_SET } from '@/constants';
     import { tObjProp } from '@/mixins';
 
     export default {
@@ -54,7 +66,11 @@
                 type: Boolean,
                 default: false,
             },
-            procedures: {
+            selectedProcedures: {
+                type: Array,
+                default: () => [],
+            },
+            allProcedures: {
                 type: Array,
                 default: () => [],
             },
@@ -70,12 +86,15 @@
         data() {
             return {
                 invoiceToCreate: {
-                    teeth: {},
-                    description: '',
-                    manipulations: [],
-                    code: '',
-                    title: '',
-                    proceduresLocal: [],
+                    dueDate: null,
+                    createdDate: null,
+                    discount: null,
+                    round: null,
+                    tax: null,
+                    note: null,
+                    total: null,
+                    procedures: [],
+                    payments: [],
                 },
             };
         },
@@ -86,14 +105,57 @@
             TAddPayment,
         },
         methods: {
-            saveInvoice(i) {
-                this.$store.dispatch(PATIENT_SUB_PARAM_SET, {
-                    params: {
-                        field: 'invoces',
-                        value: i,
-                        action: 'unshift',
+
+            onProcedureAdd(p) {
+                this.$emit('onProcedureAdd', p);
+            },
+            setInvoice(i) {
+                this.invoiceToCreate = {
+                    ...i,
+                    author: {
+                        color: this.currentUser.color,
+                        avatar: this.currentUser.avatar,
+                        firstName: this.currentUser.firstName,
+                        lastName: this.currentUser.lastName,
                     },
-                }).then(resp => resp);
+                };
+            },
+            saveInvoice() {
+                if (this.invoiceToCreate.id) return true;
+                // return true;
+                return new Promise((resolve, reject) => {
+                    this.$store
+                        .dispatch(PATIENT_INVOICE_SET, {
+                            invoice: this.invoiceToCreate,
+                        })
+                        .then(
+                            (response) => {
+                                // this.$router.push('/');
+                                this.setInvoice(response);
+                                // return true;
+                                resolve(true);
+                            },
+                            (error) => {
+                                const err = error.response.data.error;
+                                if (err === 'user_name exist') {
+                                    this.errorAccount.message = 'Username already exist';
+                                    this.errorAccount.exceptions.push(
+                                        this.account.username,
+                                    );
+                                } else {
+                                    this.$store.dispatch(NOTIFY, {
+                                        settings: {
+                                            message: 'error.response.data.error',
+                                            type: 'warning',
+                                        },
+                                    });
+                                }
+                                // eslint-disable-next-line
+                            reject(false);
+                            // return false;
+                            },
+                        );
+                });
             },
             validateStep(ref) {
                 if (ref === 'step1') {
@@ -107,8 +169,8 @@
                                 },
                             });
                         }
-                        const nInvoice = this.saveInvoice(res);
-                        return nInvoice;
+                        return Promise.resolve(this.saveInvoice());
+                        // return res;
                     });
                 }
                 if (ref === 'step2') {
@@ -123,7 +185,6 @@
                             });
                             return false;
                         }
-                        console.log('step2');
                         this.isDialogVisibleL = false;
                         return res;
                     });
@@ -132,7 +193,9 @@
             },
         },
         computed: {
-            ...mapGetters({}),
+            ...mapGetters({
+                currentUser: 'getProfile',
+            }),
             isDialogVisibleL: {
                 get() {
                     return this.isDialogVisible;
@@ -143,7 +206,7 @@
             },
         },
         created() {
-            this.proceduresLocal = this.procedures;
+            this.proceduresLocal = this.selectedProcedures;
         },
     };
 </script>

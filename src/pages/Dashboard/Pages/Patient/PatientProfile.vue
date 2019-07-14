@@ -43,6 +43,23 @@
     } from '@/pages';
 
     export default {
+        beforeRouteEnter(to, from, next) {
+            next((vm) => {
+                if (vm.patient.ID) {
+                    document.title = `${vm.patient.firstName} ${vm.patient.lastName} - ZoobApp`;
+                }
+            });
+        },
+        beforeRouteUpdate(to, from, next) {
+            if (this.patient.ID) {
+                document.title = `${this.patient.firstName} ${this.patient.lastName} - ZoobApp`;
+            }
+            next();
+        },
+        beforeRouteLeave(to, from, next) {
+            document.title = 'ZoobApp';
+            next();
+        },
         components: {
             NavTabsCard,
             PatientTreatment,
@@ -66,11 +83,6 @@
                 color = 'success';
                 return color;
             },
-            setPlanApproved() {
-                if (this.$refs.treatment) {
-                    this.$refs.treatment.setPlanApproved();
-                }
-            },
         },
         computed: {
             ...mapGetters({
@@ -87,8 +99,10 @@
             ) {
                 this.$store.dispatch(PATIENT_GET, {
                     patientId: this.$route.params.patientId,
-                }).then(() => {
-                    this.setPlanApproved();
+                }).then((patient) => {
+                    if (patient) {
+                        document.title = `${patient.firstName} ${patient.lastName } ` + ' - ZoobApp';
+                    }
                 });
             }
         },

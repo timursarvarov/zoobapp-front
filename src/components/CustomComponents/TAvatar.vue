@@ -115,7 +115,7 @@
     position: relative;
     width: fit-content;
     .notification {
-        z-index: 20 !important;
+        z-index: 20;
         position: absolute;
         top: -6px !important;
         border: 1px solid #fff;
@@ -123,14 +123,12 @@
         font-size: 9px;
         background: #f44336;
         color: #ffffff;
-        z-index: 1;
         min-width: 20px;
-        padding: 0px 5px !important;
+        padding: 0px 5px;
         height: 20px;
         border-radius: 10px;
         text-align: center;
-        line-height: 19px;
-        padding: 0;
+        line-height: 17px;
         display: block;
     }
     .t-avatar.md-avatar {

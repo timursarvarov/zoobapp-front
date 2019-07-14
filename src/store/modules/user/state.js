@@ -228,6 +228,10 @@ export default {
             title: 'Price',
         },
         {
+            key: 'state',
+            title: 'State',
+        },
+        {
             key: 'date',
             title: 'Date',
         },
@@ -266,7 +270,48 @@ export default {
         },
         {
             key: 'plan',
-            title: 'PLan',
+            title: 'Plan',
+        },
+    ],
+    availableInvoiceTableColumns: [{
+            key: 'discount',
+            title: 'Discount',
+        },
+        {
+            key: 'dueDate',
+            title: 'Due date',
+        },
+        {
+            key: 'ID',
+            title: 'ID',
+        },
+        {
+            key: 'payments',
+            title: 'Payments',
+        },
+        {
+            key: 'procedures',
+            title: 'Procedures',
+        },
+        {
+            key: 'author',
+            title: 'Created By',
+        },
+        {
+            key: 'round',
+            title: 'Round',
+        },
+        {
+            key: 'tax',
+            title: 'Tax',
+        },
+        {
+            key: 'createdDate',
+            title: 'Created date',
+        },
+        {
+            key: 'total',
+            title: 'Total',
         },
     ],
 };

@@ -1,7 +1,7 @@
 <template>
     <div>
         <md-dialog
-            @md-opened="focusOn('planTitle')"
+            @md-opened="focusOn('planName')"
             class="plan-add-form"
             :md-active.sync="showFormL"
         >
@@ -13,48 +13,64 @@
                             :style="{'background-color': planColor}">
                             <md-icon>playlist_add</md-icon>
                         </div>
-                        <h4 class="title">Add New Plan</h4>
+                        <h4 class="name">Add New Plan</h4>
                     </md-card-header>
                     <md-card-content class="md-layout">
                         <div class="md-layout-item">
                             <md-field
                                 :class="[
-                {'md-valid': !errors.has('planTitle') && touched.planTitle},
-                {'md-error': errors.has('planTitle')}]"
+                                {'with-subline': true},
+                                {'md-valid': !errors.has('planName') && touched.planName},
+                                {'md-error': errors.has('planName')}]"
                             >
-                                <label>Plane title</label>
+                                <label>Plane name</label>
                                 <md-input
                                     autofocus
-                                    ref="planTitle"
-                                    v-model="planTitle"
+                                    ref="planName"
+                                    v-model="planName"
                                     type="text"
-                                    data-vv-name="planTitle"
+                                    data-vv-name="planName"
                                     required
-                                    v-validate="{'verify_plan':this.plansTitles, required: true, min: 2}"
+                                    v-validate="{'verify_plan': names, required: true, min: 2}"
                                 ></md-input>
-                                <span class="md-error">{{errors.first('planTitle')}}</span>
-                                <slide-y-down-transition>
+                                <span class="md-error">{{errors.first('planName')}}</span>
+                               <slide-y-down-transition>
                                     <md-button
-                                        v-show="errors.has('planTitle')"
-                                        @click="planTitle='',focusOn('planTitle')"
-                                        class="md-just-icon md-round md-input-action clear-button md-simple"
+                                        tabindex="-1"
+                                        v-show="errors.has('planName')"
+                                        @click="user.planName='',focusOn('planName')"
+                                        class="md-button  md-icon-button md-dense md-input-action"
                                     >
                                         <md-icon class="error">close</md-icon>
                                     </md-button>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        class="success"
-                                        v-show="!errors.has('planTitle') && touched.planTitle"
-                                    >done</md-icon>
+                                    <md-button
+                                        tabindex="-1"
+                                        v-show="!errors.has('planName')  && touched.planName"
+                                        class="md-button md-icon-button md-dense md-input-action noselect md-simple"
+                                    >
+                                        <md-icon class="success">done</md-icon>
+                                    </md-button>
                                 </slide-y-down-transition>
                             </md-field>
                         </div>
                     </md-card-content>
                     <md-card-actions md-alignment="right">
                         <md-button @click="addPlan()"
-                        :disabled="errors.has('planTitle')"
-                        class="md-success">Create</md-button>
+                        :disabled="errors.has('planName') || loading"
+                        class="md-success">
+                        <div v-if="loading">
+                             <md-progress-spinner
+                                class="t-white"
+                                :md-diameter="18"
+                                :md-stroke="2"
+                                md-mode="indeterminate"
+                            ></md-progress-spinner>
+                        </div>
+                        <span v-else>Create</span>
+                        
+                        </md-button>
                     </md-card-actions>
                 </md-card>
             </div>
@@ -62,13 +78,17 @@
     </div>
 </template>
 <script>
-    import { PATIENT_CREATE, NOTIFY } from '@/constants';
+    import { PATIENT_PLAN_SET, NOTIFY } from '@/constants';
     import { SlideYDownTransition } from 'vue2-transitions';
-    
+
     const randomMC = require('random-material-color');
 
     export default {
         props: {
+            patientId: {
+                type: Number,
+                default: () => 0,
+            },
             showForm: {
                 type: Boolean,
                 default: () => false,
@@ -83,10 +103,12 @@
         },
         data() {
             return {
-                randomMC:'',
-                planTitle: null,
+                loading: false,
+                randomMC: '',
+                planName: null,
+                names: null,
                 touched: {
-                    planTitle: false,
+                    planName: false,
                 },
             };
         },
@@ -99,36 +121,54 @@
                     this.$refs[ref].$el.focus();
                 });
             },
-            validate() {
-                this.$validator.validateAll().then((isValid) => {
-                    this.$emit('on-submit', this.registerForm, isValid);
-                });
-                this.touched.planTitle = true;
-            },
-            clearForm() {
-                this.planTitle = null;
-                this.showFormL = false;
-            },
+            // validate() {
+            //     this.$validator.validateAll().then((isValid) => {
+            //         this.$emit('on-submit', this.registerForm, isValid);
+            //     });
+            //     this.touched.planName = true;
+            // },
+            // clearForm() {
+            //     this.planName = null;
+            //     this.showFormL = false;
+            //     this.$validator.reset();
+            // },
             setInitialName() {
-                this.planTitle = `Plan № ${this.plans.length + 1}`;
+                this.planName = `Plan № ${this.plans.length + 1}`;
+            },
+            setPlansNames() {
+                this.names = [];
+                this.plans.forEach((plan, index) => {
+                    this.names[index] = plan.name;
+                });
             },
             addPlan() {
-                if (this.planTitle) {
+                if (this.planName) {
                     this.$validator.validateAll().then((result) => {
                         if (result) {
-                            const plan = {
-                                title: this.planTitle,
-                                id: Math.random(),
-                                color: this.planColor,
+                            this.loading = true;
+                            const params = {
+                                patientId: this.patientId,
+                                planName: this.planName,
                             };
-                            this.$store.dispatch(NOTIFY, {
-                                settings: {
-                                    message: `${this.planTitle} plan added`,
-                                    type: 'success',
+                            this.$store.dispatch(PATIENT_PLAN_SET, {
+                                params,
+                            }).then(
+                                (resp) => {
+                                    console.log(resp);
+                                    if (resp.data) {
+                                        this.$emit('onPlanCreated', resp.data);
+                                        this.$store.dispatch(NOTIFY, {
+                                            settings: {
+                                                message: `${this.planName} plan added`,
+                                                type: 'success',
+                                            },
+                                        });
+                                        this.$validator.reset();
+                                        this.loading = false;
+                                        this.showFormL = false;
+                                    }
                                 },
-                            });
-                            this.$emit('onPlanCreated', plan);
-                            this.clearForm();
+                            );
                         }
                     });
                 }
@@ -136,15 +176,8 @@
         },
         computed: {
             planColor() {
-                const color = this.randomMC.getColor({ text: `${this.planTitle}` });
+                const color = this.randomMC.getColor({ text: `${this.planName}` });
                 return color;
-            },
-            plansTitles() {
-                const titles = [];
-                this.plans.forEach((plan, index) => {
-                    titles[index] = plan.title;
-                });
-                return titles;
             },
             showFormL: {
                 get() {
@@ -155,20 +188,21 @@
                 },
             },
         },
-         created() {
+        created() {
             this.randomMC = randomMC;
         },
         watch: {
             showFormL(value) {
                 if (value) {
                     this.setInitialName();
+                    this.setPlansNames();
                     this.$nextTick(() => {
-                        this.focusOn('planTitle');
+                        this.focusOn('planName');
                     });
                 }
             },
-            planTitle() {
-                this.touched.planTitle = true;
+            planName() {
+                this.touched.planName = true;
             },
         },
     };

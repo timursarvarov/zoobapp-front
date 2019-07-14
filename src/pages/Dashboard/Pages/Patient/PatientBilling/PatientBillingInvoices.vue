@@ -1,33 +1,17 @@
 
 <template>
     <div class="items-list-wrapper">
-        <md-toolbar>
-            <div class="md-layout">
-                <div class="md-layout-item">
-                    Ballance
-                </div>
-                <div class="md-layout-item">
-                    All invoices
-                </div>
-                <div class="md-layout-item">
-                    Discounts
-                </div>
-                <div class="md-layout-item">
-                    Tax
-                </div>
-            </div>
-        </md-toolbar>
         <md-table
             :md-selected-value.sync="selectedItems"
             v-model="tableData"
             :md-sort.sync="currentSort"
             :md-sort-order.sync="currentSortOrder"
             :md-sort-fn="customSort"
-            class="table-striped table-with-header paginated-table table-hover"
+            class="table-striped table-with-header table-hover"
         >
             <md-table-toolbar>
                 <div class="md-toolbar-section-start">
-                    Unbilled procedures
+                    <h1 class="md-title"><b>Invoices</b></h1>
                 </div>
                 <div class="md-toolbar-section-end">
                     <md-button
@@ -47,34 +31,29 @@
             </md-table-empty-state>
 
             <md-table-row
+                md-selectable="single"
                 slot="md-table-row"
-                md-selectable="multiple"
-                :style="[{backgroundColor:`${lightenDarkenColor(item.planColor, 190 )}`}]"
                 slot-scope="{ item }" >
                 <md-table-cell
                     v-for="field  in itemsTableColumns"
                     :key="field.key"
                     :class="field"
-                    :md-label="getFieldName(field.key).toString()"
+                    :md-label="field.title.toString()"
                     :md-sort-by=" item[field.key] ? item[field.key].toString() : ''"
                 >
-                    <div :class="field.key" v-if="field.key === 'code'">{{ item.code }}</div>
-                    <div :class="field.key" v-else-if="field.key === 'title'">
-                        {{ item.title }}
+                    <div :class="field.key" v-if="field.key === 'ID'">{{ item.ID }}</div>
+                    <div :class="field.key" v-else-if="field.key === 'procedures'">{{ item.procedures.length }}</div>
+                    <div :class="field.key" v-else-if="field.key === 'payments'">{{ item.payments.length }}</div>
+                    <div :class="field.key" v-else-if="field.key === 'round'">{{ item.round }}</div>
+                    <div :class="field.key" v-else-if="field.key === 'discount'">
+                        {{ item.discount || 0}}%
                         <br>
-                        <small>{{item.description}}</small>
-                    </div>
-                    <div :class="field.key" v-else-if="field.key === 'teeth'">
-                        <span
-                            v-for="toothId in Object.keys(item.teeth)"
-                            :key="toothId"
-                        >{{ toothId | toCurrentTeethSystem(teethSystem) }},&nbsp;</span>
                     </div>
 
                     <div :class="field.key"
-                        v-else-if="field.key === 'author'"
+                        v-else-if="field.key === 'author' && item.author"
                         class="md-layout md-alignment-left-center"
-                    >
+                        >
                         <div class="md-layout" style="max-width:40px;">
                             <t-avatar
                                 :small="true"
@@ -90,65 +69,27 @@
                         </span>
                     </div>
 
-                    <div v-if="field.key === 'manipulations' && item.manipulations">manipulations</div>
-
-                    <div v-if="field.key === 'date'">
-                        <span>{{ item.date | moment("from") }}</span>
+                    <div v-else-if="field.key === 'createdDate' && item.createdDate">
+                        <span>{{ item.createdDate | moment("from") }}</span>
                         <br>
-                        <small>{{item.date | moment("calendar")}}</small>
+                        <small>{{item.createdDate | moment("calendar")}}</small>
+                    </div>
+                    <div v-else-if="field.key === 'dueDate' && item.dueDate">
+                        <span>{{ item.dueDate | moment("from") }}</span>
+                        <br>
+                        <small>{{item.dueDate | moment("calendar")}}</small>
                     </div>
 
-                    <div v-if="field.key === 'price' && item.manipulations">
-                        {{getItemTotalPrice(item.manipulations)}}
+                    <div v-else-if="field.key === 'total'">
+                        {{item.total}}
                         <small>{{clinic.currencyCode}}</small>
                     </div>
-                    <div v-if="field.key === 'plan'">
-                        {{item.planTitle}}
+                    <div v-else-if="field.key === 'tax'">
+                        {{item.tax || 0}}%
                     </div>
-                </md-table-cell>
-
-                <md-table-cell class="" md-label="Actions">
-                    <md-button
-                        v-show="ifDiagnoseHasLocations(item.teeth)"
-                        class="md-just-icon md-simple"
-                        @click.native="$emit('toggleItemVisibility', item.id, type)"
-                    >
-                        <md-icon v-if="item.showInJaw">visibility</md-icon>
-                        <md-icon v-else>visibility_off</md-icon>
-                    </md-button>
-                    <md-button
-                        class="md-just-icon md-info md-simple"
-                        @click.native="handleEdit(item)"
-                    >
-                        <md-icon>edit</md-icon>
-                    </md-button>
-                    <md-button
-                        class="md-just-icon md-danger md-simple"
-                        @click.native="handleDelete(item)"
-                    >
-                        <md-icon>close</md-icon>
-                    </md-button>
                 </md-table-cell>
             </md-table-row>
         </md-table>
-        <div class="footer-table md-table">
-            <table>
-                <tfoot>
-                    <tr>
-                        <th v-for="item in itemsTableColumns" :key="item.key" class="md-table-head">
-                            <div class="md-table-head-container md-ripple md-disabled">
-                                <div class="md-table-head-label">{{item.title}}</div>
-                            </div>
-                        </th>
-                        <th class="md-table-head">
-                            <div class="md-table-head-container md-ripple md-disabled">
-                                <div class="md-table-head-label">Actions</div>
-                            </div>
-                        </th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
         <t-table-editor
             icon="settings"
             color="success"
@@ -167,7 +108,7 @@
 <script>
     import { TAvatar, TTableEditor } from '@/components';
     import {
-        USER_BILLING_COLUMNS,
+        USER_INVOICE_COLUMNS,
     } from '@/constants';
     import { mapGetters } from 'vuex';
     // import swal from 'sweetalert2';
@@ -218,56 +159,52 @@
                 jaw: 'jaw',
                 patient: 'getPatient',
                 clinic: 'getCurrentClinic',
-                availableBillingTableColumns: 'availableBillingTableColumns',
+                availableInvoiceTableColumns: 'availableInvoiceTableColumns',
             }),
             tableData() {
-                const procedures = [];
-                this.patient.plans.forEach((plan) => {
-                    if (plan.state === 'approved' && plan.procedures) {
-                        plan.procedures.forEach((p) => {
-                            procedures.push(
-                                {
-                                    ...p,
-                                    planId: plan.id,
-                                    planTitle: plan.title,
-                                    planColor: plan.color,
-                                },
-                            );
-                        });
-                    }
-                });
-                console.log(this.patient.plans, procedures);
-                return procedures;
+                return this.patient.invoices || [];
             },
             defaultFields() {
                 const standartColumns = [
                     {
-                        key: 'code',
-                        title: 'Code',
+                        key: 'discount',
+                        title: 'Discount',
                     },
                     {
-                        key: 'title',
-                        title: 'Title',
+                        key: 'dueDate',
+                        title: 'Due date',
                     },
                     {
-                        key: 'teeth',
-                        title: 'Teeth',
+                        key: 'ID',
+                        title: 'ID',
+                    },
+                    {
+                        key: 'payments',
+                        title: 'Payments',
+                    },
+                    {
+                        key: 'procedures',
+                        title: 'Procedures',
                     },
                     {
                         key: 'author',
                         title: 'Created By',
                     },
                     {
-                        key: 'date',
-                        title: 'Date',
+                        key: 'round',
+                        title: 'Round',
                     },
                     {
-                        key: 'manipulations',
-                        title: 'Manipulations',
+                        key: 'tax',
+                        title: 'Tax',
                     },
                     {
-                        key: 'price',
-                        title: 'Price',
+                        key: 'createdDate',
+                        title: 'Created date',
+                    },
+                    {
+                        key: 'total',
+                        title: 'Total',
                     },
                 ];
                 return standartColumns;
@@ -275,44 +212,18 @@
         },
 
         methods: {
-            lightenDarkenColor(col, amt) {
-                let usePound = false;
-                if (col[0] == '#') {
-                    col = col.slice(1);
-                    usePound = true;
-                }
-
-                let num = parseInt(col, 16);
-
-                let r = (num >> 16) + amt;
-
-                if (r > 255) r = 255;
-                else if (r < 0) r = 0;
-
-                let b = ((num >> 8) & 0x00FF) + amt;
-
-                if (b > 255) b = 255;
-                else if (b < 0) b = 0;
-
-                let g = (num & 0x0000FF) + amt;
-
-                if (g > 255) g = 255;
-                else if (g < 0) g = 0;
-
-                return (usePound ? '#':'') + (g | (b << 8) | (r << 16)).toString(16);
-            },
             setComputedAvailableBillingTableColumns() {
                 if (this.type === 'diagnosis') {
-                    const columns = this.availableBillingTableColumns.filter(
+                    const columns = this.availableInvoiceTableColumns.filter(
                         el => el.key !== 'manipulations' && el.key !== 'price',
                     );
                     this.computedAvailableBillingTableColumns = columns;
                 } else {
-                    this.computedAvailableBillingTableColumns = this.availableBillingTableColumns;
+                    this.computedAvailableBillingTableColumns = this.availableInvoiceTableColumns;
                 }
             },
             getFieldName(key) {
-                const field = this.availableBillingTableColumns.find(
+                const field = this.availableInvoiceTableColumns.find(
                     f => f.key === key,
                 );
                 if (field) {
@@ -322,7 +233,7 @@
             },
             setItemsTableColumns() {
                 const columns2 = JSON.parse(
-                    localStorage.getItem(USER_BILLING_COLUMNS),
+                    localStorage.getItem(USER_INVOICE_COLUMNS),
                 );
                 if (columns2) {
                     this.itemsTableColumns = columns2;
@@ -333,7 +244,7 @@
             setColumns(e) {
                 // поменять после того как добавять соответствующие поля в беке
                 localStorage.setItem(
-                    USER_BILLING_COLUMNS,
+                    USER_INVOICE_COLUMNS,
                     JSON.stringify(e),
                 );
                 this.setItemsTableColumns();
@@ -356,14 +267,14 @@
             recalculateJaw() {
                 this.$emit('onJawChanged');
             },
-            ifDiagnoseHasLocations(teeth) {
-                let show = false;
-                show = Object.keys(teeth)
-                    .map(key => Object.keys(teeth[key]).length > 0)
-                    .indexOf(true);
-                show = show !== -1;
-                return show;
-            },
+            // ifDiagnoseHasLocations(teeth) {
+            //     let show = false;
+            //     show = Object.keys(teeth)
+            //         .map(key => Object.keys(teeth[key]).length > 0)
+            //         .indexOf(true);
+            //     show = show !== -1;
+            //     return show;
+            // },
             getToothName(toothId) {
                 const tooth = {
                     num: this.teethSchema[toothId][this.teethSystem],

@@ -3,7 +3,7 @@
 
         <div v-if="loading"
             class="no-plan-space"
-                :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
+                :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
             <md-empty-state>
                 <md-progress-spinner md-mode="indeterminate"/>
             </md-empty-state>
@@ -40,7 +40,7 @@
                 </div>
             </md-toolbar>
 
-            <div v-if="!hideSlot && getItems.length > 0" class="collapse-wrapper "  :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
+            <div v-if="!hideSlot && getItems.length > 0" class="collapse-wrapper "  :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
                 <custom-collapse
                         :colorCollapse="colorCollapse"
                         v-if="!hideSlot"
@@ -87,7 +87,7 @@
 
             <div v-if="getItems.length == 0 && !hideSlot"
                 class="no-plan-space"
-                :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
+                :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
                 <md-empty-state
                     md-icon="sentiment_dissatisfied"
                     :md-label="`No matching ${this.itemType}`"
@@ -95,7 +95,7 @@
                 </md-empty-state>
             </div>
             <div class="no-plan-space"
-                :style="[{'max-height': jawHeight - 90 + 'px'},{'min-height': jawHeight - 90 + 'px'}]" >
+                :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
                 <slot v-if="hideSlot" name="empty-space"></slot>
             </div>
 
@@ -152,7 +152,7 @@
                 type: Array,
                 default: () => [],
             },
-            jawHeight: {
+            customHeight: {
                 type: Number,
                 default: () => 1,
             },
@@ -417,14 +417,11 @@
     .collapse-wrapper {
         background-color: #ececec6b;
         border-radius: 10px;
-        margin-bottom: 3vh;
-        margin-top: 3vh;
-        margin: 20px 0 0 0;
         overflow: hidden;
         overflow-y: scroll;
         // max-height: 40vh;
         // min-height: 30vh;
-        padding: 20px 10px 20px 10px;
+        padding: 6px;
         &::-webkit-scrollbar {
             width: 7px;
             // background-color: transparent;

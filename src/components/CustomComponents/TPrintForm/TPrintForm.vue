@@ -1,5 +1,7 @@
 <template>
-    <md-dialog v-if="showForm" class="tooth-diagnosis-form" :md-active.sync="showFormLocal">
+    <md-dialog v-if="showForm"
+        :md-click-outside-to-close="false"
+        class="tooth-diagnosis-form" :md-active.sync="showFormLocal">
         <md-card>
             <md-card-header class="md-card-header-icon md-card-header-green">
                 <div class="card-icon">

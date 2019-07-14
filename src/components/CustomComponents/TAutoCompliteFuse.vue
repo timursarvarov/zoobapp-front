@@ -478,6 +478,6 @@ export default {
 }
 
     .md-menu-content{
-        width: auto !important; max-width: none!important;
+        // width: auto !important; max-width: none!important;
 }
 </style>

@@ -16,9 +16,12 @@ import {
     PATIENT_PROCEDURE_UPDATE,
     PATIENT_GET,
     PATIENT_SET_PARAM,
+    PATIENT_DELETE_PARAM,
     PATIENT_TOGGLE_ITEM_VISIBILITY,
     PATIENT_SUB_PARAM_SET,
+    PATIENT_INVOICE_SET,
 } from '@/constants';
+import Vue from 'vue'
 
 export default {
     [PATIENT_REQUEST]: (state) => {
@@ -61,10 +64,28 @@ export default {
             }
         }
     },
-    [PATIENT_PROCEDURES_SET]: (state, { procedure, pIndex }) => {
-        state.patient.plans[pIndex].procedures.unshift(procedure);
+    [PATIENT_PROCEDURES_SET]: (state, { procedure, pIndex, planId }) => {
+        if (state.patient.plans[pIndex].procedures) {
+            state.patient.plans.map(p => {
+                if (p.ID !== planId) {
+                    return p
+                }
+                let plan = p;
+                Vue.set(plan.procedures, plan.procedures.length, procedure);
+                return plan
+            });
+        } else {
+            state.patient.plans.map(p => {
+                if (p.ID !== planId) {
+                    return p
+                }
+                let plan = p;
+                Vue.set(plan, 'procedures', [procedure]);
+                return plan
+            });
+        }
     },
-    [PATIENT_PROCEDURE_UPDATE]: (state, { procedureIndex, planIndex, procedure, }) => {
+    [PATIENT_PROCEDURE_UPDATE]: (state, { procedureIndex, planIndex, procedure }) => {
         state.patient.plans[planIndex].procedures.splice(procedureIndex, 1, procedure);
     },
     [PATIENT_DIAGNOSE_SET]: (state, diagnose) => {
@@ -73,7 +94,11 @@ export default {
     [PATIENT_ANAMNES_SET]: (state, anamnes) => {
         state.patient.anamnesis.unshift(anamnes);
     },
+    [PATIENT_INVOICE_SET]: (state, invoice) => {
+        state.patient.invoices.unshift(invoice);
+    },
     [PATIENT_SUB_PARAM_SET]: (state, params) => {
+        console.log(params)
         state.patient[params.field][params.action](params.value);
     },
     [PATIENT_DIAGNOSE_UPDATE]: (state, { dIndex, diagnose }) => {
@@ -91,6 +116,22 @@ export default {
             value
         }
     ) => {
-        state.patient[type] = value;
+        Vue.set(state.patient, type, value);
+        // state.patient[type] = value;
+    },
+    [PATIENT_DELETE_PARAM]: (
+        state, {
+            type,
+            ID
+        }
+    ) => {
+        state.patient[type].map((p, index) => {
+            if (p.ID !== ID) {
+                Vue.set(state.patient[type], index, p);
+            } else {
+                Vue.delete(state.patient[type], index);
+
+            }
+        });
     },
 };

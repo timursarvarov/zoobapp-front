@@ -1,10 +1,12 @@
-/* eslint-disable */
+
 import {
     CLINIC_SET_PROP,
     CLINIC_REQUEST,
     CLINIC_SUCCESS,
     CLINIC_ERROR,
 } from '@/constants';
+
+import Vue from 'vue'
 
 export default {
     [CLINIC_SET_PROP]: (
@@ -13,7 +15,7 @@ export default {
             value
         }
     ) => {
-        state.clinic[type] = value;
+        Vue.set(state.clinic, type, value )
     },
     [CLINIC_REQUEST]: (state) => {
         state.status = 'loading';

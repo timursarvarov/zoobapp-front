@@ -6,6 +6,7 @@ import {
 } from '@/constants';
 
 export default {
+    getCurrentManipulations: state => state.clinic.manipulations || [],
     getCurrentDiagnosis: state => state.clinic.diagnosis || [],
     getCurrentProcedures: state => state.clinic.procedures || [],
     getCurrentClinic: (state) => {

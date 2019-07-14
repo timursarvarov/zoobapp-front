@@ -18,9 +18,11 @@ export default {
         },
         diagnosis: [],
         procedures: [],
+        manipulations: [],
         diagnosisComputed: null,
         proceduresComputed: null,
         anamnesisComputed: null,
+        manipulationsComputed: null,
     },
     status: '',
 };

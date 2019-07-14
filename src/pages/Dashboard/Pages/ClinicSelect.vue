@@ -51,28 +51,30 @@
                 const currentTime = Math.floor(Date.now() / 1000);
                 if (this.expiresAt < currentTime) {
                     this.$router.push('/login');
+                } else {
+                    this.$store
+                        .dispatch(CLINIC_AUTH_REQUEST, {
+                            clinicId: this.checkedClinicId,
+                            accessToken: this.accessToken,
+                        })
+                        .then(
+                            // eslint-disable-next-line no-unused-vars
+                            (response) => {
+                                this.$router.push('/');
+                            },
+                            (error) => {
+                                if (error && error.response) {
+                                    if (error.response.data.message === 'Wrong password') {
+                                        this.showErrorsValidate('password');
+                                    }
+                                    if (error.response.data.message === 'Invalid login') {
+                                        this.showErrorsValidate('username');
+                                    }
+                                }
+                            },
+                        );
+
                 }
-                this.$store
-                    .dispatch(CLINIC_AUTH_REQUEST, {
-                        clinicId: this.checkedClinicId,
-                        accessToken: this.accessToken,
-                    })
-                    .then(
-                        // eslint-disable-next-line no-unused-vars
-                        (response) => {
-                            this.$router.push('/');
-                        },
-                        (error) => {
-                            if (error && error.response) {
-                                if (error.response.data.message === 'Wrong password') {
-                                    this.showErrorsValidate('password');
-                                }
-                                if (error.response.data.message === 'Invalid login') {
-                                    this.showErrorsValidate('username');
-                                }
-                            }
-                        },
-                    );
             },
         },
         computed: {

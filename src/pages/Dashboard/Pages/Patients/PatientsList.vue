@@ -19,7 +19,7 @@
                         :md-sort-fn="customSort"
                         :md-sort.sync="queryParams.currentSort"
                         :md-sort-order.sync="queryParams.currentSortOrder"
-                        class=" table-striped table-hover"
+                        class="table-striped table-hover"
                     >
                         <!-- <md-table-toolbar>
                             <div class="md-toolbar-row">
@@ -92,7 +92,6 @@
                             slot="md-table-row"
                             slot-scope="{ item }"
                             md-selectable="multiple"
-                            md-auto-select
                         >
                             <md-table-cell
                                 v-for="field  in patientsTableColumns"

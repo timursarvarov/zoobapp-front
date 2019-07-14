@@ -38,6 +38,7 @@
           .to({ tweeningNumber: newValue }, this.duration)
           .onUpdate((object) => {
             vm.animatedNumber = object.tweeningNumber.toFixed(this.toFix);
+            // vm.animatedNumber = Number(object.tweeningNumber).toFixed(this.toFix);
           })
           .start();
 

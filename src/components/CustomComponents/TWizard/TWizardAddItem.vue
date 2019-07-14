@@ -1,5 +1,7 @@
 <template>
-    <md-dialog :md-active.sync="isDialogVisibleL" class="jaw-dialog-wrapper">
+    <md-dialog
+    :md-click-outside-to-close="true"
+    :md-active.sync="isDialogVisibleL" class="jaw-dialog-wrapper">
         <div class="wizard-add-diagnose-form">
             <div>
                 <simple-wizard
@@ -8,13 +10,13 @@
                     :tabColor="tabColor">
                     <template slot="header">
                         <h5 class="title">
-                            Adding a {{singleItemName}}:
+                            {{singleItemName | capitilize}} adding:
                             <b>{{selectedItem.code}}</b>
                             {{selectedItem.title}}
                             <span
-                                v-if="currentPlan.title"
+                                v-if="currentPlan.name"
                                 class="category"
-                            >– {{currentPlan.title | capitilize}}</span>
+                            >– {{currentPlan.name | capitilize}}</span>
                         </h5>
                         <span>
                             <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
@@ -68,11 +70,13 @@
                         <template slot="label">Manipulations</template>
                         <t-item-manipulations
                             ref="step2"
+                            :originalItem="originalItem"
                             :manipulationsToEdit="selectedItem.manipulations"
                             :selectedTeeth="selectedTeethLocalJaw"
                             :size="jawListSize"
                             @addManipulations="manipulationsCreated"
                             :currencyCode="clinic.currencyCode"
+                            :manipulations="clinic.manipulationsComputed"
                         />
                     </wizard-tab>
                     <wizard-tab
@@ -191,7 +195,6 @@
                     teeth: {},
                     description: '',
                     manipulations: [],
-                    description: '',
                     code: '',
                     title: '',
                 },

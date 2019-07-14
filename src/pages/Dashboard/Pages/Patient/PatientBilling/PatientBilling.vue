@@ -1,215 +1,90 @@
 
 <template>
     <div class="items-list-wrapper md-layout-item">
-        <md-toolbar class="md-transparent" >
+        <md-toolbar class="md-transparent">
             <div class="md-layout">
                 <div class="md-layout-item">
-                    <p class="category"><b>Ballance</b></p>
-                    <h3 class="title"><animated-number :value="calculateProcedures(tableData)" /> {{clinic.currencyCode}}</h3>
+                    <p class="category">
+                        <b>Ballance</b>
+                    </p>
+                    <h3 class="title">
+                        <animated-number :value="calculateProcedures(tableData)" />
+                        {{currentClinic.currencyCode}}
+                    </h3>
                 </div>
-                <div class="md-layout-item">
-                    <p class="category"><b>Unbilled procedures</b></p>
-                    <h3 class="title"><span><animated-number :value="tableData.length" /></span></h3>
+                <div class="md-layout-item text-right">
+                    <p class="category">
+                        <b>Unbilled procedures</b>
+                    </p>
+                    <h3 class="title">
+                        <span>
+                            <animated-number :value="tableData.length" />
+                        </span>
+                    </h3>
                 </div>
-                <div class="md-layout-item">
-                    <p class="category"><b>All invoices</b></p>
-                    <h3 class="title"><span><animated-number :value="selectedItems.length" /> {{clinic.currencyCode}}</span></h3>
+                <div class="md-layout-item text-right">
+                    <p class="category">
+                        <b>All invoices</b>
+                    </p>
+                    <h3 class="title">
+                        <span>
+                            <animated-number :value="selectedItems.length" />
+                            {{currentClinic.currencyCode}}
+                        </span>
+                    </h3>
                 </div>
-                <div class="md-layout-item">
-                    <p class="category"><b>Discounts</b></p>
-                    <h3 class="title"><animated-number :value="300" /> {{clinic.currencyCode}}</h3>
+                <div class="md-layout-item text-right">
+                    <p class="category">
+                        <b>Discounts</b>
+                    </p>
+                    <h3 class="title">
+                        <animated-number :value="300" />
+                        {{currentClinic.currencyCode}}
+                    </h3>
                 </div>
-                <div class="md-layout-item">
-                    <p class="category"><b>Tax</b></p>
-                    <h3 class="title"><animated-number :value="300" /> {{clinic.currencyCode}} </h3>
+                <div class="md-layout-item text-right">
+                    <p class="category">
+                        <b>Tax</b>
+                    </p>
+                    <h3 class="title">
+                        <animated-number :value="300" />
+                        {{currentClinic.currencyCode}}
+                    </h3>
                 </div>
             </div>
         </md-toolbar>
-        <md-table
-            :md-selected-value.sync="selectedItems"
-            v-model="tableData"
-            :md-sort.sync="currentSort"
-            :md-sort-order.sync="currentSortOrder"
-            :md-sort-fn="customSort"
-            class="table-striped table-with-header paginated-table table-hover"
-        >
-            <md-table-toolbar>
-                <div class="md-toolbar-section-start">
-                    <div class="md-title">Unbilled procedures</div>
-                </div>
-                <div class="md-toolbar-section-end">
-                    <md-button
-                        @click="showTableEditor=!showTableEditor"
-                        class="md-just-icon md-simple"
-                    >
-                        <md-icon>settings</md-icon>
-                    </md-button>
-                </div>
-            </md-table-toolbar>
-
-            <md-table-empty-state
-                :md-label="`No ${type} found`"
-                :md-description="`No ${type}  found. Scroll top, and create new ${type} .`"
-            >
-                <md-button class="md-primary md-raised" @click="scrollToTop()">Scroll Top</md-button>
-            </md-table-empty-state>
-
-            <md-table-row
-                slot="md-table-row"
-                md-selectable="multiple"
-                :style="[{backgroundColor:`${convertHex(item.planColor, 30 )}`}]"
-                slot-scope="{ item }"
-            >
-                <md-table-cell
-                    v-for="field  in itemsTableColumns"
-                    :key="field.key"
-                    :class="field"
-                    :md-label="getFieldName(field.key).toString()"
-                    :md-sort-by=" item[field.key] ? item[field.key].toString() : ''"
-                >
-                    <div :class="field.key" v-if="field.key === 'code'">{{ item.code }}</div>
-                    <div :class="field.key" v-else-if="field.key === 'title'">
-                        {{ item.title }}
-                        <br>
-                        <small>{{item.description}}</small>
-                    </div>
-                    <div :class="field.key" v-else-if="field.key === 'teeth'">
-                        <span
-                            v-for="toothId in Object.keys(item.teeth)"
-                            :key="toothId"
-                        >{{ toothId | toCurrentTeethSystem(teethSystem) }},&nbsp;</span>
-                    </div>
-
-                    <div
-                        :class="field.key"
-                        v-else-if="field.key === 'author'"
-                        class="md-layout md-alignment-left-center"
-                    >
-                        <div class="md-layout" style="max-width:40px;">
-                            <t-avatar
-                                :small="true"
-                                :color="item.author.color"
-                                :imageSrc="item.author.avatar"
-                                :title="item.author.firstName + ' ' + item.author.lastName"
-                            />
-                        </div>
-                        <span class="md-layout-item">
-                            <span>{{item.author.lastName | capitilize}}</span>
-                            <br>
-                            <span>{{item.author.firstName | capitilize}}</span>
-                        </span>
-                    </div>
-
-                    <div v-if="field.key === 'manipulations' && item.manipulations">manipulations</div>
-
-                    <div v-if="field.key === 'date'">
-                        <span>{{ item.date | moment("from") }}</span>
-                        <br>
-                        <small>{{item.date | moment("calendar")}}</small>
-                    </div>
-
-                    <div v-if="field.key === 'price' && item.manipulations">
-                        {{getItemTotalPrice(item.manipulations)}}
-                        <small>{{clinic.currencyCode}}</small>
-                    </div>
-                    <div v-if="field.key === 'plan'">{{item.planTitle}}</div>
-                </md-table-cell>
-
-                <md-table-cell class md-label="Actions">
-                    <md-button
-                        v-show="ifDiagnoseHasLocations(item.teeth)"
-                        class="md-just-icon md-simple"
-                        @click.native="$emit('toggleItemVisibility', item.id, type)"
-                    >
-                        <md-icon v-if="item.showInJaw">visibility</md-icon>
-                        <md-icon v-else>visibility_off</md-icon>
-                    </md-button>
-                    <md-button
-                        class="md-just-icon md-info md-simple"
-                        @click.native="handleEdit(item)"
-                    >
-                        <md-icon>edit</md-icon>
-                    </md-button>
-                    <md-button
-                        class="md-just-icon md-danger md-simple"
-                        @click.native="handleDelete(item)"
-                    >
-                        <md-icon>close</md-icon>
-                    </md-button>
-                </md-table-cell>
-            </md-table-row>
-        </md-table>
-        <div class="footer-table md-table">
-            <table>
-                <tfoot>
-                    <tr>
-                        <th v-for="item in itemsTableColumns" :key="item.key" class="md-table-head">
-                            <div class="md-table-head-container md-ripple md-disabled">
-                                <div class="md-table-head-label">{{item.title}}</div>
-                            </div>
-                        </th>
-                        <th class="md-table-head">
-                            <div class="md-table-head-container md-ripple md-disabled">
-                                <div class="md-table-head-label">Actions</div>
-                            </div>
-                        </th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        <t-table-editor
-            icon="settings"
-            color="success"
-            :title="`Set ${type} columns order`"
-            :availableTableColumns="computedAvailableBillingTableColumns"
-            :tableColumns="itemsTableColumns"
-            :showForm.sync="showTableEditor"
-            @selected="setColumns"
-        ></t-table-editor>
+        <patient-billing-items
+            @onCreateInvoice="onCreateInvoice"/>
+        <patient-billing-invoices/>
         <t-wizard-add-billing
+            @onProcedureAdd="onProcedureAdd"
             :isDialogVisible.sync="showInvoiceForm"
-            :procedures="selectedItems"
-            :currencyCode="clinic.currencyCode"/>
-        <md-snackbar
-            :md-position="'center'"
-            :md-duration="true ? Infinity : 4000"
-            :md-active.sync="showSnackbar"
-            md-persistent
-        >
-            <p>{{`${selectedItems.length}`}}
-                Procedures for
-                <animated-number :value="calculateProcedures(selectedItems)" /> {{clinic.currencyCode}}
-                selected
-            </p>
-            <div>
-                <md-button class="md-simple" @click="showSnackbar = false, selectedItems=[]">unselect</md-button>
-                <md-button
-                    class="md-success"
-                    @click="showSnackbar = false, showInvoiceForm = true"
-                >Create Invoice</md-button>
-            </div>
-        </md-snackbar>
+            :selectedProcedures="selectedItems"
+            :allProcedures="tableData"
+            :currencyCode="currentClinic.currencyCode"
+        />
     </div>
 </template>
 <script>
     import {
-        TAvatar,
-        TTableEditor,
         TWizardAddBilling,
         AnimatedNumber,
     } from '@/components';
     import { USER_BILLING_COLUMNS } from '@/constants';
     import { mapGetters } from 'vuex';
-    // import swal from 'sweetalert2';
+    import PatientBillingItems from './PatientBillingItems.vue';
+    import PatientBillingInvoices from './PatientBillingInvoices.vue';
     import { tObjProp } from '@/mixins';
+
+    const randomMC = require('random-material-color');
 
     export default {
         mixins: [tObjProp],
         components: {
-            TAvatar,
-            TTableEditor,
             TWizardAddBilling,
             AnimatedNumber,
+            PatientBillingItems,
+            PatientBillingInvoices,
         },
         props: {
             items: {
@@ -237,6 +112,7 @@
                 isInfinity: false,
                 currentSort: 'date',
                 currentSortOrder: 'desc',
+                randomMC: '',
                 pagination: {
                     perPage: 10,
                     currentPage: 1,
@@ -250,19 +126,19 @@
                 teethSchema: 'teethSchema',
                 jaw: 'jaw',
                 patient: 'getPatient',
-                clinic: 'getCurrentClinic',
+                currentClinic: 'getCurrentClinic',
                 availableBillingTableColumns: 'availableBillingTableColumns',
             }),
             tableData() {
                 const procedures = [];
                 this.patient.plans.forEach((plan) => {
-                    if (plan.state === 'approved' && plan.procedures) {
+                    if (plan.state === 1 && plan.procedures) {
                         plan.procedures.forEach((p) => {
                             procedures.push({
                                 ...p,
-                                planId: plan.id,
-                                planTitle: plan.title,
-                                planColor: plan.color,
+                                planId: plan.ID,
+                                planName: plan.name,
+                                planCreated: plan.created,
                             });
                         });
                     }
@@ -305,6 +181,17 @@
         },
 
         methods: {
+            onCreateInvoice(items) {
+                console.log(items);
+                this.selectedItems = items;
+                this.showInvoiceForm = true;
+            },
+            onProcedureAdd(p) {
+                this.selectedItems.push(p);
+            },
+            planColor(text) {
+                return this.randomMC.getColor({ text: `${text}` });
+            },
             calculateProcedures(procedures = []) {
                 let sum = 0;
                 procedures.forEach((p) => {
@@ -372,7 +259,7 @@
             getItemTotalPrice(manipulations) {
                 let totalPrice = 0;
                 manipulations.forEach((m) => {
-                    totalPrice = +m.num * m.price;
+                    totalPrice += m.num * m.price;
                 });
                 return totalPrice;
             },
@@ -481,6 +368,7 @@
         created() {
             this.setItemsTableColumns();
             this.setComputedAvailableBillingTableColumns();
+            this.randomMC = randomMC;
         },
         watch: {
             searchQuery(value) {

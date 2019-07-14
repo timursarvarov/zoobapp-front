@@ -11,13 +11,16 @@ import {
     PATIENT_SET_PARAMS,
     PATIENT_AVATAR_UPLOAD,
     PATIENT_UPDATE,
+    PATIENT_UNSET,
     PATIENT_CREATE_NOTE,
     PATIENTS_UPDATE_PATIENT,
     PATIENT_ADD_SUB_PROP,
     PATIENT_DOWNLOAD_FILE,
     PATIENT_PLAN_SET,
     PATIENT_PLAN_DELETE,
+    PATIENT_DELETE_PARAM,
     PATIENT_PLAN_EDIT,
+    PATIENT_PLANS_GET,
     PATIENT_DIAGNOSE_SET,
     PATIENT_DIAGNOSE_UPDATE,
     PATIENT_PROCEDURE_UPDATE,
@@ -28,6 +31,7 @@ import {
     PATIENT_RESET,
     TEETH_INITIATION,
     PATIENT_SUB_PARAM_SET,
+    PATIENT_INVOICE_SET,
 } from '@/constants';
 
 export default {
@@ -145,7 +149,7 @@ export default {
         let itemIndex = -1;
         let planIndex = -1;
         if (planId && type === 'procedures') {
-            planIndex = state.patient.plans.findIndex(plan => plan.id === planId);
+            planIndex = state.patient.plans.findIndex(plan => plan.ID === planId);
 
             if (planIndex > -1) {
                 itemIndex = state.patient.plans[planIndex].procedures.findIndex(item => item.id === itemId);
@@ -215,11 +219,48 @@ export default {
     [PATIENT_PLAN_SET]: ({
         commit,
     }, {
-        plan,
-    }) => {
-        commit(PATIENT_PLAN_SET, plan);
-    },
-
+        params,
+    }) => new Promise((resolve, reject) => {
+        commit(PATIENT_REQUEST);
+        axios.post(`/patients/${params.patientId}/plans/`,
+                JSON.stringify({
+                    name: params.planName,
+                }))
+            .then((resp) => {
+                commit(PATIENT_SUCCESS);
+                commit(PATIENT_PLAN_SET, resp.data);
+                resolve(resp.data);
+            })
+            .catch((err) => {
+                commit(PATIENT_ERROR);
+                reject(err);
+            });
+    }),
+    [PATIENT_PLANS_GET]: ({
+        commit,
+        dispatch,
+    }, {
+        patientId,
+    }) => new Promise((resolve, reject) => {
+        commit(PATIENT_REQUEST);
+        axios.get(`/patients/${patientId}/plans/`)
+            .then((resp) => {
+                let plans = [];
+                if (resp.data) {
+                    plans = resp.data.reverse();
+                }
+                dispatch(PATIENT_SET_PARAM, {
+                    type: 'plans',
+                    value: plans,
+                });
+                commit(PATIENT_SUCCESS);
+                resolve(plans);
+            })
+            .catch((err) => {
+                commit(PATIENT_ERROR);
+                reject(err);
+            });
+    }),
     [PATIENT_PROCEDURES_SET]: ({
         commit,
         state,
@@ -227,21 +268,29 @@ export default {
         procedure,
         planId,
     }) => {
-        const pIndex = state.patient.plans.findIndex(plan => plan.id === planId);
-        commit(PATIENT_PROCEDURES_SET, { procedure, pIndex });
+        const pIndex = state.patient.plans.findIndex(plan => plan.ID === planId);
+        commit(PATIENT_PROCEDURES_SET, { procedure, pIndex, planId });
     },
     [PATIENT_PLAN_DELETE]: ({
         commit,
-        state,
     }, {
-        plan,
-    }) => {
-        const pIndex = state.patient.plans.findIndex(pplan => pplan.id === plan.id);
-        if (pIndex !== -1) {
-            commit(PATIENT_PLAN_DELETE, { pIndex, plan });
-        }
-    },
-
+        params,
+    }) => new Promise((resolve, reject) => {
+        commit(PATIENT_REQUEST);
+        axios.delete(`/patients/${params.patientId}/plans/${params.planID}/`)
+            .then((resp) => {
+                commit(PATIENT_DELETE_PARAM, {
+                    type: 'plans',
+                    ID: params.planID,
+                });
+                commit(PATIENT_SUCCESS);
+                resolve(resp.data);
+            })
+            .catch((err) => {
+                commit(PATIENT_ERROR);
+                reject(err);
+            });
+    }),
     [PATIENT_DIAGNOSE_SET]: ({
         commit,
     }, {
@@ -260,9 +309,22 @@ export default {
         commit,
     }, {
         params,
-    }) => {
+    }) => new Promise((resolve, reject) => {
         commit(PATIENT_SUB_PARAM_SET, params);
-    },
+        resolve(true);
+    }).catch(err => console.log(err)),
+    [PATIENT_INVOICE_SET]: ({
+        commit,
+    }, {
+        invoice,
+    }) => new Promise((resolve, reject) => {
+        const newInvoice = {
+            ...invoice,
+            ID: Math.random(),
+        };
+        commit(PATIENT_INVOICE_SET, newInvoice);
+        resolve(newInvoice);
+    }).catch(err => console.log(err)),
 
     [PATIENT_PLAN_EDIT]: ({
         commit,
@@ -272,7 +334,7 @@ export default {
         key,
         value,
     }) => {
-        const pIndex = state.patient.plans.findIndex(pplan => pplan.id === planId);
+        const pIndex = state.patient.plans.findIndex(pplan => pplan.ID === planId);
         if (pIndex !== -1) {
             commit(PATIENT_PLAN_EDIT, { pIndex, key, value });
         }
@@ -288,7 +350,7 @@ export default {
         let procedureIndex = -1;
         let planIndex = -1;
         if (planId) {
-            planIndex = state.patient.plans.findIndex(plan => plan.id === planId);
+            planIndex = state.patient.plans.findIndex(plan => plan.ID === planId);
             if (planIndex > -1) {
                 procedureIndex = state.patient.plans[planIndex].procedures.findIndex(item => item.id === procedure.id);
             }
@@ -296,6 +358,7 @@ export default {
                 procedureIndex,
                 planIndex,
                 procedure,
+                planId,
             });
         }
     },
@@ -382,6 +445,7 @@ export default {
     }, {
         patientId,
     }) => new Promise((resolve, reject) => {
+        dispatch(PATIENT_UNSET);
         commit(PATIENT_REQUEST);
         axios.get(`/patients/${patientId}/`)
             .then((resp) => {
@@ -396,4 +460,19 @@ export default {
                 reject(err);
             });
     }),
+    [PATIENT_UNSET]: ({
+        commit,
+        state,
+    }) => {
+        Object.keys(state.patient).forEach((field) => {
+            let value = null;
+            if (state.patient[field] !== null && Array.isArray(state.patient[field])) {
+                value = [];
+            }
+            commit(PATIENT_SET_PARAM, {
+                type: field,
+                value,
+            });
+        });
+    },
 };

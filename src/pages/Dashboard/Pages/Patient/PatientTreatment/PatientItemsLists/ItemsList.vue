@@ -1,13 +1,62 @@
 
 <template>
     <div class="items-list-wrapper">
+        <md-toolbar v-if="type==='procedures'" class="md-transparent">
+            <div class="md-layout">
+                <div class="md-layout-item">
+                    <p class="category">
+                        <b>Plan Name</b>
+                    </p>
+                    <h3 class="title">{{plan.name}}</h3>
+                </div>
+                <div class="md-layout-item text-right">
+                    <p class="category">
+                        <b>Unbilled procedures</b>
+                    </p>
+                    <h3 class="title">
+                        <span>
+                            <animated-number :value="plan.procedures ? plan.procedures.length : 0" />
+                        </span>
+                    </h3>
+                </div>
+                <div class="md-layout-item text-right">
+                    <p class="category">
+                        <b>All Procedures</b>
+                    </p>
+                    <h3 class="title">
+                        <span>
+                            <animated-number :value="plan.procedures ? plan.procedures.length : 0" />
+                        </span>
+                    </h3>
+                </div>
+                <div class="md-layout-item text-right">
+                    <p class="category">
+                        <b>Total Manipulations</b>
+                    </p>
+                    <h3 class="title">
+                        <animated-number
+                            :value="plan.procedures ? getTotalManips(plan.procedures) : 0"
+                        />
+                    </h3>
+                </div>
+                <div class="md-layout-item text-right">
+                    <p class="category">
+                        <b>Total Price</b>
+                    </p>
+                    <h3 class="title">
+                        <animated-number :value="getPlanTotalPrice(plan.procedures)" />
+                        {{currentClinic.currencyCode}}
+                    </h3>
+                </div>
+            </div>
+        </md-toolbar>
         <md-table
             :md-selected-value.sync="selectedItems"
             v-model="items"
             :md-sort.sync="currentSort"
             :md-sort-order.sync="currentSortOrder"
             :md-sort-fn="customSort"
-            class="table-striped paginated-table table-with-header  table-hover"
+            class="table-striped paginated-table table-with-header table-hover"
         >
             <md-table-toolbar>
                 <div class="md-toolbar-section-start">
@@ -15,7 +64,7 @@
                         v-if="type === 'anamnesis'"
                         class="md-title"
                     >{{items.length}} procedures in anamnes</h3>
-                   <slot name="title-start" />
+                    <slot name="title-start" />
                 </div>
                 <div class="md-toolbar-section-end">
                     <md-button
@@ -36,8 +85,10 @@
 
             <md-table-row
                 slot="md-table-row"
+                :key="item.id"
                 :md-selectable="type ==='procedures'?'multiple':'single'"
-                slot-scope="{ item }" >
+                slot-scope="{ item }"
+            >
                 <md-table-cell
                     v-for="field  in itemsTableColumns"
                     :key="field.key"
@@ -48,17 +99,18 @@
                     <div :class="field.key" v-if="field.key === 'code'">{{ item.code }}</div>
                     <div :class="field.key" v-else-if="field.key === 'title'">
                         {{ item.title }}
-                        <br>
+                        <br />
                         <small>{{item.description}}</small>
                     </div>
-                    <div :class="field.key" v-else-if="field.key === 'teeth'">
+                    <div :class="field.key" v-else-if="field.key === 'teeth' && item.teeth">
                         <span
                             v-for="toothId in Object.keys(item.teeth)"
                             :key="toothId"
                         >{{ toothId | toCurrentTeethSystem(teethSystem) }},&nbsp;</span>
                     </div>
 
-                    <div :class="field.key"
+                    <div
+                        :class="field.key"
                         v-else-if="field.key === 'author'"
                         class="md-layout md-alignment-left-center"
                     >
@@ -72,26 +124,54 @@
                         </div>
                         <span class="md-layout-item">
                             <span>{{item.author.lastName | capitilize}}</span>
-                            <br>
+                            <br />
                             <span>{{item.author.firstName | capitilize}}</span>
                         </span>
                     </div>
 
-                    <div v-if="field.key === 'manipulations' && item.manipulations">manipulations</div>
+                    <div v-if="field.key === 'manipulations' && item.manipulations">
+                        <div>
+                            <small
+                                class="items-manipulations_wrapper"
+                                v-for="(m, i) in item.manipulations"
+                                :key="m.id"
+                            >
+                                <span class="text-left">{{i+1}}. {{m.manipulation.title}}</span>
+                                <span
+                                    class="text-right"
+                                >{{m.num}} * {{m.price || 0}} = {{m.num * (m.price || 0)}} {{currentClinic.currencyCode}}</span>
+                                <br />
+                            </small>
+                        </div>
+                    </div>
+
+                    <div v-if="field.key === 'state'">
+                        <div>
+                           {{item.state}}
+                        </div>
+                    </div>
 
                     <div v-if="field.key === 'date'">
-                        <span>{{ item.date | moment("from") }}</span>
-                        <br>
+                        <span class="md-medium-hide">
+                            {{ item.date | moment("from") }}
+                            <br />
+                        </span>
                         <small>{{item.date | moment("calendar")}}</small>
                     </div>
 
                     <div v-if="field.key === 'price' && item.manipulations">
-                        {{getItemTotalPrice(item.manipulations)}}
-                        <small>{{clinic.currencyCode}}</small>
+                        <span>
+                            {{getItemTotalPrice(item.manipulations)}}
+                            <small>{{currentClinic.currencyCode}}</small>
+                        </span>
+                        <span class="md-small-hide">
+                            <br />
+                            <small>{{ getSubManips(item.manipulations)}} manipulations</small>
+                        </span>
                     </div>
                 </md-table-cell>
 
-                <md-table-cell class="" md-label="Actions">
+                <md-table-cell class md-label="Actions">
                     <md-button
                         v-show="ifDiagnoseHasLocations(item.teeth)"
                         class="md-just-icon md-simple"
@@ -115,7 +195,7 @@
                 </md-table-cell>
             </md-table-row>
         </md-table>
-        <div class="footer-table md-table">
+        <!-- <div class="footer-table md-table">
             <table>
                 <tfoot>
                     <tr>
@@ -132,7 +212,7 @@
                     </tr>
                 </tfoot>
             </table>
-        </div>
+        </div> -->
         <t-table-editor
             icon="settings"
             color="success"
@@ -142,18 +222,33 @@
             :showForm.sync="showTableEditor"
             @selected="setColumns"
         ></t-table-editor>
-           <md-snackbar :md-position="'center'" :md-duration="true ? Infinity : 4000" :md-active.sync="showSnackbar" md-persistent>
-                <span> {{`Set ${selectedItems.length} ${type}`}} </span>
-                <div>
-                    <md-button class="md-simple" @click="showSnackbar = false">Delete</md-button>
-                    <md-button class="md-simple" @click="showSnackbar = false">Create invoice</md-button>
-                    <md-button class="md-success" @click="showSnackbar = false">Complete</md-button>
+        <md-snackbar
+            :md-position="'center'"
+            :md-duration="true ? Infinity : 4000"
+            :md-active.sync="showSnackbar"
+            md-persistent
+        >
+        <div class="md-layout">
+            <div class="md-layout md-layout-item">
+                <div class='md-layout-item' >
+                    <span> Selected: <animated-number :value="selectedItems.length" /> {{type}}</span>
                 </div>
+                <div class='md-layout-item' >
+                     <animated-number :value="getPlanTotalPrice(selectedItems)" />
+                        {{currentClinic.currencyCode}}
+                </div>
+            </div>
+            <div class="md-layout md-layout-item" >
+                <md-button class="md-simple" @click="showSnackbar = false">Delete</md-button>
+                <md-button class="md-simple" @click="showSnackbar = false">Create invoice</md-button>
+                <md-button class="md-success" @click="showSnackbar = false">Complete</md-button>
+            </div>
+        </div>
         </md-snackbar>
     </div>
 </template>
 <script>
-    import { TAvatar, TTableEditor } from '@/components';
+    import { TAvatar, TTableEditor, AnimatedNumber } from '@/components';
     import {
         USER_DIAGNOSIS_COLUMNS,
         USER_ANAMNESIS_COLUMNS,
@@ -168,8 +263,13 @@
         components: {
             TAvatar,
             TTableEditor,
+            AnimatedNumber,
         },
         props: {
+            plan: {
+                type: Object,
+                default: () => {},
+            },
             items: {
                 type: Array,
                 default: () => [],
@@ -207,7 +307,7 @@
                 teethSchema: 'teethSchema',
                 jaw: 'jaw',
                 patient: 'getPatient',
-                clinic: 'getCurrentClinic',
+                currentClinic: 'getCurrentClinic',
                 availableItemsTableColumns: 'availableItemsTableColumns',
             }),
             tableData() {
@@ -244,6 +344,10 @@
                         key: 'date',
                         title: 'Date',
                     },
+                    {
+                        key: 'state',
+                        title: 'State',
+                    },
                 ];
                 const extraFields = [
                     {
@@ -263,6 +367,50 @@
         },
 
         methods: {
+            getSubManips(manipulations) {
+                let total = 0;
+                if (!Array.isArray(manipulations)) {
+                    return total;
+                }
+                manipulations.forEach((m) => {
+                    total += m.num;
+                });
+                return total;
+            },
+            getTotalManips(items) {
+                let total = 0;
+                if (!Array.isArray(items)) {
+                    return total;
+                }
+                items.forEach((item) => {
+                    total += this.getSubManips(item.manipulations);
+                });
+                return total;
+            },
+            getItemTotalPrice(manipulations) {
+                let totalPrice = 0;
+                if (!Array.isArray(manipulations)) {
+                    return totalPrice;
+                }
+                manipulations.forEach((m) => {
+                    totalPrice += m.num * m.price;
+                });
+                return totalPrice;
+            },
+            getPlanTotalPrice(items) {
+                let totalPrice = 0;
+                if (!Array.isArray(items)) {
+                    return totalPrice;
+                }
+                if (items) {
+                    items.forEach((p) => {
+                        if (p.manipulations) {
+                            totalPrice += this.getItemTotalPrice(p.manipulations);
+                        }
+                    });
+                }
+                return totalPrice;
+            },
             setComputedAvailableItemsTableColumns() {
                 if (this.type === 'diagnosis') {
                     const columns = this.availableItemsTableColumns.filter(
@@ -302,36 +450,29 @@
                 this.setComputedAvailableItemsTableColumns();
             },
             onSelect(item) {
-                console.log(item);
                 this.showSnackbar = !this.showSnackbar;
             },
-            getItemTotalPrice(manipulations) {
-                let totalPrice = 0;
-                manipulations.forEach((m) => {
-                    totalPrice = +m.num * m.price;
-                });
-                return totalPrice;
-            },
+            // getItemTotalPrice(manipulations) {
+            //     let totalPrice = 0;
+            //     if(!Array.isArray(manipulations)){
+            //         return totalPrice;
+            //         }
+            //     manipulations.forEach((m) => {
+            //         totalPrice = +m.num * m.price;
+            //     });
+            //     return totalPrice;
+            // },
             scrollToTop() {
                 window.scrollTo(0, 0);
             },
-            recalculateJaw() {
-                this.$emit('onJawChanged');
-            },
             ifDiagnoseHasLocations(teeth) {
+                if(!teeth) return false;
                 let show = false;
                 show = Object.keys(teeth)
                     .map(key => Object.keys(teeth[key]).length > 0)
                     .indexOf(true);
                 show = show !== -1;
                 return show;
-            },
-            getToothName(toothId) {
-                const tooth = {
-                    num: this.teethSchema[toothId][this.teethSystem],
-                    name: this.teethSchema[toothId].name,
-                };
-                return tooth;
             },
             customSort(value) {
                 const thisLocal = this;
@@ -345,18 +486,18 @@
                     }
                     if (typeof a[thisLocal.currentSort] === 'number') {
                         const orderLocal = thisLocal.currentSortOrder;
-                        const dflt = orderLocal === 'asc'
-                            ? Number.MAX_VALUE
-                            : -Number.MAX_VALUE;
+                        const dflt =                        orderLocal === 'asc'
+                                ? Number.MAX_VALUE
+                                : -Number.MAX_VALUE;
                         const aVal = a[sortBy] === null ? dflt : a[sortBy];
                         const bVal = b[sortBy] === null ? dflt : b[sortBy];
                         return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
                     }
                     if (typeof a[thisLocal.currentSort] === 'object') {
                         const orderLocal = thisLocal.currentSortOrder;
-                        const dflt = orderLocal === 'asc'
-                            ? Number.MAX_VALUE
-                            : -Number.MAX_VALUE;
+                        const dflt =                        orderLocal === 'asc'
+                                ? Number.MAX_VALUE
+                                : -Number.MAX_VALUE;
                         const aVal = a[sortBy] === null ? dflt : a[sortBy];
                         const bVal = b[sortBy] === null ? dflt : b[sortBy];
                         return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
@@ -439,22 +580,39 @@
 
 <style lang="scss"  >
 .items-list-wrapper {
-
-
     .md-table-cell-container {
-
         overflow: hidden;
-        .teeth{
-            max-width:150px;
-            width:14vw;
-            min-width:50px;
+        .teeth {
+            max-width: 150px;
+            width: 14vw;
+            min-width: 50px;
             text-overflow: ellipsis;
             // word-wrap: break-word;
             overflow: hidden;
         }
-         .code {
-        width: 20px;
-    }
+        .code {
+            width: 20px;
+        }
+        .items-manipulations_wrapper {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            align-items: stretch;
+            display: flex;
+            .text-left {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-align: left;
+                // max-width: 70%;
+            }
+            .text-right {
+                flex-grow:1;
+                // max-width: 30%;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-align: right;
+            }
+        }
     }
     .md-card .md-card-actions {
         border: 0;

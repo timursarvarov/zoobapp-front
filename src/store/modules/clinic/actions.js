@@ -9,6 +9,7 @@ import {
     CLINIC_UPDATE,
     CLINIC_DIAGNOSIS_GET,
     CLINIC_PROCEDURES_GET,
+    CLINIC_MANIPULATIONS_GET,
     CLINIC_AUTH_REQUEST,
     AUTH_DECODE_TOKEN,
     AUTH_SUCCESS,
@@ -166,6 +167,24 @@ export default {
             .then((resp) => {
                 commit(CLINIC_SET_PROP, {
                     type: 'procedures',
+                    value: resp.data
+                });
+                commit(CLINIC_SUCCESS);
+                resolve(resp.data);
+            })
+            .catch((err) => {
+                commit(CLINIC_ERROR);
+                reject(err);
+            });
+    }),
+    [CLINIC_MANIPULATIONS_GET]: ({
+        commit,
+    }) => new Promise((resolve, reject) => {
+        commit(CLINIC_REQUEST);
+        axios.get(`/organization/manipulations/`)
+            .then((resp) => {
+                commit(CLINIC_SET_PROP, {
+                    type: 'manipulations',
                     value: resp.data
                 });
                 commit(CLINIC_SUCCESS);

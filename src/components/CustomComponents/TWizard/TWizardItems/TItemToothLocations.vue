@@ -17,7 +17,7 @@
                     <span
                         v-show="errors.has('locations')"
                         :class="[{'error': errors.has('locations')},
-            {'md-valid': !errors.has('locations') && touched.locations}]"
+                            {'md-valid': !errors.has('locations') && touched.locations}]"
                     >{{errors.first('locations')}}</span>
                 </slide-y-down-transition>
             </div>

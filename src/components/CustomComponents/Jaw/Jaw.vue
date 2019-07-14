@@ -394,7 +394,7 @@
         data() {
             return {
 
-                jawType: '',
+                jawType: 'adultTeeth',
                 mouseOverToothId: '',
                 separatedItems: {},
                 separatedProcedures: {},
