@@ -21,20 +21,30 @@
 
                     <div class="md-collapse" :class="{'off-canvas-sidebar': responsive}">
                         <md-list>
-                            <md-list-item to="/dashboard" v-if="isStateAuthenticated">
-                                <md-icon>dashboard</md-icon>Dashboard
+                            <md-list-item  v-if="isStateAuthenticated">
+                                <router-link to="/dashboard" >
+                                    <md-icon>dashboard</md-icon>Dashboard
+                                </router-link>
                             </md-list-item>
-                            <md-list-item to="/pricing" @click="linkClick">
-                                <md-icon>attach_money</md-icon>Pricing
+                            <md-list-item @click="linkClick">
+                                <router-link to="/pricing" >
+                                    <md-icon>attach_money</md-icon>Pricing
+                                </router-link>
                             </md-list-item>
-                            <md-list-item to="/register" @click="linkClick">
-                                <md-icon>person_add</md-icon>Register
+                            <md-list-item  @click="linkClick">
+                                <router-link to="/register" >
+                                    <md-icon>person_add</md-icon>Register
+                                </router-link>
                             </md-list-item>
-                            <md-list-item to="/login" @click="linkClick">
-                                <md-icon>fingerprint</md-icon>login
+                            <md-list-item @click="linkClick">
+                                    <router-link to="/login" >
+                                        <md-icon>fingerprint</md-icon>login
+                                    </router-link>
                             </md-list-item>
-                            <md-list-item v-if="isProfileLoaded" to="/lock" @click="linkClick">
-                                <md-icon>lock_open</md-icon>lock
+                            <md-list-item v-if="isProfileLoaded"  @click="linkClick">
+                                <router-link to="/lock" >
+                                    <md-icon>lock_open</md-icon>lock
+                                </router-link>
                             </md-list-item>
                         </md-list>
                     </div>

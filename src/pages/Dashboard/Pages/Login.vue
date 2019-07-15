@@ -9,15 +9,14 @@
                     <h4 slot="title" class="title">Log in</h4>
                     <md-button
                         slot="buttons"
-                        to="#facebook"
                         class="md-just-icon md-simple md-white"
                     >
                         <i class="fab fa-facebook-square"></i>
                     </md-button>
-                    <md-button slot="buttons" to="#twitter" class="md-just-icon md-simple md-white">
+                    <md-button slot="buttons" class="md-just-icon md-simple md-white">
                         <i class="fab fa-twitter"></i>
                     </md-button>
-                    <md-button slot="buttons" to="#google" class="md-just-icon md-simple md-white">
+                    <md-button slot="buttons" class="md-just-icon md-simple md-white">
                         <i class="fab fa-google-plus-g"></i>
                     </md-button>
                     <p slot="description" class="description">Or Be Classical</p>
@@ -99,9 +98,9 @@
     </div>
 </template>
 <script>
+    import { SlideYDownTransition } from 'vue2-transitions';
     import { LoginCard } from '@/components';
     import { AUTH_REQUEST, NOTIFY, CLINIC_AUTH_REQUEST } from '@/constants';
-    import { SlideYDownTransition } from 'vue2-transitions';
     import ForgotPassword from './ForgotPassword.vue';
 
     export default {

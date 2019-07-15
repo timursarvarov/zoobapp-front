@@ -200,9 +200,12 @@
                     </template>
                 </cool-select>
                 <md-list>
-                    <md-list-item to="/dashboard">
-                        <i class="material-icons">dashboard</i>
-                        <p class="hidden-lg hidden-md">Dashboard</p>
+                    <md-list-item >
+                        <router-link
+                            to="/">
+                            <i class="material-icons">dashboard</i>
+                            <p class="hidden-lg hidden-md">Dashboard</p>
+                        </router-link>
                     </md-list-item>
                     <md-list-item
                         class="md-primary md-round md-simple md-just-icon"
