@@ -175,3 +175,6 @@ export const COMPANY_NAME = 'Dental CRM';
 export const COMPANY_LOGO_URL = 'https://s3.envato.com/files/247286010/owl-logo.png';
 export const COMPANY_COLOR = '#43a047';
 export const COMPANY_LINK = 'https://dental.owl.team';
+
+// Base
+export const BASE_URL = 'https://api.zoobapp.com/v1';

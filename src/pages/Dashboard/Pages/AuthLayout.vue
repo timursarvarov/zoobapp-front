@@ -21,7 +21,7 @@
 
                     <div class="md-collapse" :class="{'off-canvas-sidebar': responsive}">
                         <md-list>
-                            <md-list-item to="/" v-if="isStateAuthenticated">
+                            <md-list-item to="/dashboard" v-if="isStateAuthenticated">
                                 <md-icon>dashboard</md-icon>Dashboard
                             </md-list-item>
                             <md-list-item to="/pricing" @click="linkClick">
@@ -132,6 +132,7 @@
                 };
             },
             setPageClass() {
+                console.log(this.$route);
                 return `${this.$route.name}-page`.toLowerCase();
             },
         },

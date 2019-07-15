@@ -58,7 +58,7 @@
                                         :mimeType="item.mimeType"
                                         :showOverlay="true"
                                         overlayIcon="visibility"
-                                        
+
                                     />
                                 </div>
                             </div>
@@ -333,23 +333,9 @@
             },
         },
         computed: {
-            // ...mapGetters({
-            //     access_token: 'fetchStateAccessToken',
-            //     patient: 'getPatient',
-            // }),
             totalFiles() {
                 return this.files.reduce((a, b) => a + (b.size || 0), 0);
             },
-            // postAction() {
-            //     return `https://dental-api.owl.team/v1/patients/${
-            //         this.patient ? this.patient.ID : ''
-            //     }/files/`;
-            // },
-            // putAction() {
-            //     return `https://dental-api.owl.team/v1/patients/${
-            //         this.patient ? this.patient.ID : ''
-            //     }/files/`;
-            // },
             headers() {
                 return {
                     Authorization: this.access_token,

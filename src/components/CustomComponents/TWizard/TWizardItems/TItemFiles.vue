@@ -45,6 +45,7 @@
     import {
         AUTH_REFRESH_TOKEN,
         PATIENT_ADD_SUB_PROP,
+        BASE_URL,
     // eslint-disable-next-line import/no-unresolved
     } from '@/constants';
 
@@ -104,7 +105,7 @@
                 tokenExpiresAt: 'expiresAt',
             }),
             url() {
-                return `https://dental-api.owl.team/v1/patients/${
+                return `${BASE_URL}/patients/${
                     this.patient ? this.patient.ID : ''
                 }/files/`;
             },

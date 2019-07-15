@@ -200,7 +200,7 @@
                     </template>
                 </cool-select>
                 <md-list>
-                    <md-list-item to="/">
+                    <md-list-item to="/dashboard">
                         <i class="material-icons">dashboard</i>
                         <p class="hidden-lg hidden-md">Dashboard</p>
                     </md-list-item>
