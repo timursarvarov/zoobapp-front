@@ -123,7 +123,7 @@
                 const images = {
                     Pricing: './img/backround-register.jpg',
                     Login: './img/backround-register.jpg',
-                    'Clinic Selection': './img/backround-register.jpg',
+                    Clinics: './img/backround-register.jpg',
                     Register: './img/backround-register.jpg',
                     Lock: './img/backround-register.jpg',
                 };
