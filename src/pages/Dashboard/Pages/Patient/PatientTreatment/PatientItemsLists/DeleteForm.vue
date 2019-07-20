@@ -1,9 +1,9 @@
 <template>
     <div>
         <md-dialog
-            class="plan-add-form"
+            class="item-delete-form"
             :md-active.sync="showFormL"
-            :md-click-outside-to-close="false"
+            :md-click-outside-to-close="!loading"
         >
             <div>
                 <md-card>
@@ -12,32 +12,34 @@
                         <div class="card-icon">
                             <md-icon>delete</md-icon>
                         </div>
-                        <h4 class="name">Delete plan </h4>
+                        <h4 class="name">{{titleText}} </h4>
                     </md-card-header>
                     <md-card-content class="md-layout">
                         <div class="md-layout-item">
-                            Dlete <b>{{plan.name}}</b>?
+                            Dlete <b>{{itemToDelete.name}}</b>?
                         </div>
                     </md-card-content>
                     <md-card-actions md-alignment="right">
-                        <md-button @click="deletePlan()"
+                         <md-button
                             :disabled="loading"
-                            class="md-simple"
+                            @click="showFormL = false"
+                            class="md-simple">
+                            Cancel
+
+                        </md-button>
+                        <md-button @click="deleteItem()"
+                            :disabled="loading"
+                            class="md-warning"
                             >
                                 <div v-if="loading">
                                     <md-progress-spinner
                                         class="md-primary"
-                                        :md-diameter="18"
+                                        :md-diameter="12"
                                         :md-stroke="2"
                                         md-mode="indeterminate"
                                     ></md-progress-spinner>
                                 </div>
                                 <span v-else>Delete</span>
-
-                            </md-button>
-                        <md-button @click="showFormL = false"
-                            class="md-success">
-                            Cancel
 
                         </md-button>
                     </md-card-actions>
@@ -48,18 +50,30 @@
 </template>
 <script>
     import {
-        PATIENT_PLAN_EDIT,
-        PATIENT_PLANS_GET,
         PATIENT_PLAN_DELETE,
+        PATIENT_PROCEDURE_DELETE,
     } from '@/constants';
 
     export default {
         props: {
+
+            titleText: {
+                type: String,
+                default: () => '',
+            },
+            planID: {
+                type: Number,
+                default: () => 0,
+            },
+            currentType: {
+                type: String,
+                default: () => '',
+            },
             showForm: {
                 type: Boolean,
                 default: () => false,
             },
-            plan: {
+            itemToDelete: {
                 type: Object,
                 default: () => {},
             },
@@ -74,22 +88,57 @@
             };
         },
         methods: {
+            deleteItem() {
+                if (this.currentType === 'procedures') {
+                    this.deleteProcedure();
+                }
+                if (this.currentType === 'diagnosis') {
+                    this.deleteDiagnose();
+                }
+                if (this.currentType === 'anamnesis') {
+                    this.deleteAnamnes();
+                }
+                if (this.currentType === 'plan') {
+                    this.deletePlan();
+                }
+            },
             deletePlan() {
                 this.loading = true;
                 this.$store.dispatch(PATIENT_PLAN_DELETE, {
                     params: {
                         patientId: this.patientID,
-                        planID: this.plan.ID,
+                        planID: this.itemToDelete.ID,
                     },
                 }).then(
                     () => {
-                        this.$emit('onPlanDeleted', false);
+                        this.$emit('onDeleted', false);
                         this.showFormL = false;
                         this.loading = false;
                     },
                 ).catch(() => {
                     this.showFormL = false;
                     this.loading = false;
+                });
+            },
+            deleteProcedure() {
+                this.loading = true;
+                this.$store.dispatch(PATIENT_PROCEDURE_DELETE, {
+                    params: {
+                        patientId: this.patientID,
+                        planID: this.itemToDelete.ID,
+                        procedureID: this.itemToDelete.ID,
+                    },
+                }).then(
+                    () => {
+                        this.$emit('onDeleted', false);
+                        this.showFormL = false;
+                        this.loading = false;
+                        console.log('succes');
+                    },
+                ).catch((err) => {
+                    this.showFormL = false;
+                    this.loading = false;
+                    console.log(err);
                 });
             },
         },
@@ -106,7 +155,7 @@
     };
 </script>
 <style lang="scss" >
-.md-dialog.plan-add-form {
+.md-dialog.item-delete-form {
     background-color: transparent !important;
     box-shadow: none !important;
 }

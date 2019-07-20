@@ -1,7 +1,7 @@
 <template>
     <md-card class="md-card-profile">
         <t-avatar-input
-            :color="userColor"
+            :textToColor="user.ID"
             :maxFilesize="2000"
             :imageSrc="user.avatar"
             :title="user.firstName+ ' ' + user.lastName"
@@ -29,7 +29,7 @@
                             v-validate="modelValidations.firstName"
                         ></md-input>
                         <span class="md-error">{{errors.first('firstName')}}</span>
-                         <slide-y-down-transition>
+                        <slide-y-down-transition>
                             <md-button
                                 tabindex="-1"
                                 v-show="errors.has('firstName')"
@@ -206,12 +206,10 @@
     </md-card>
 </template>
 <script>
-    import { USER_AVATAR_UPLOAD, USER_UPDATE, NOTIFY } from '@/constants';
     import { mapGetters } from 'vuex';
     import { SlideYDownTransition } from 'vue2-transitions';
+    import { USER_AVATAR_UPLOAD, USER_UPDATE, NOTIFY } from '@/constants';
     import { TAvatarInput } from '@/components';
-
-    const randomMC = require('random-material-color');
 
     export default {
         components: {
@@ -341,12 +339,6 @@
             },
             phone() {
                 return this.user.phone;
-            },
-            userColor() {
-                const color = randomMC.getColor({
-                    text: this.firstName + this.lastName + this.phone + this.email,
-                });
-                return color;
             },
         },
         watch: {

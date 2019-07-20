@@ -1,7 +1,7 @@
 <template>
     <md-card class="md-card-profile currentClinic-wrapper">
         <t-avatar-input
-            :color="currentClinic.color"
+            :textToColor="currentClinic.ID"
             :maxFilesize="2000"
             :imageSrc="currentClinic.logo"
             :title="currentClinic.name"
@@ -267,6 +267,8 @@
     </md-card>
 </template>
     <script>
+    import { mapGetters } from 'vuex';
+    import { SlideYDownTransition } from 'vue2-transitions';
     import {
         CLINIC_LOGO_UPLOAD,
         CLINIC_UPDATE,
@@ -274,9 +276,7 @@
         TIMEZONES,
         COMMON_CURRENCY,
     } from '@/constants';
-    import { mapGetters } from 'vuex';
     import { TAvatarInput } from '@/components';
-    import { SlideYDownTransition } from 'vue2-transitions';
 
     export default {
         components: {

@@ -103,7 +103,7 @@
         />
         <polyline
           style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
-          points="72.9,93.6 
+          points="72.9,93.6
 			72.9,104.8 92.2,104.8 92.2,93.6 		"
         />
 
@@ -116,7 +116,7 @@
         />
         <polyline
           style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
-          points="51.9,115 
+          points="51.9,115
 			67.4,64.9 85,68.9 		"
         />
         <path

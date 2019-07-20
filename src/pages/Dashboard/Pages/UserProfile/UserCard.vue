@@ -19,26 +19,26 @@
   </md-card>
 </template>
 <script>
-export default {
-  name: "user-card",
-  props: {
-    cardUserImage: {
-      type: String,
-      default: "./img/faces/marc.jpg"
-    },
-    buttonColor: {
-      type: String,
-      default: ""
-    }
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    getColorButton: function(buttonColor) {
-      return "md-" + buttonColor + "";
-    }
-  }
-};
+    export default {
+        name: 'user-card',
+        props: {
+            cardUserImage: {
+                type: String,
+                default: './img/faces/marc.jpg',
+            },
+            buttonColor: {
+                type: String,
+                default: '',
+            },
+        },
+        data() {
+            return {};
+        },
+        methods: {
+            getColorButton(buttonColor) {
+                return `md-${buttonColor}`;
+            },
+        },
+    };
 </script>
 <style></style>

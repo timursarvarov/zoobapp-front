@@ -16,9 +16,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'signup-card',
-  };
+    export default {
+        name: 'signup-card',
+    };
 </script>
 
 <style lang="css">

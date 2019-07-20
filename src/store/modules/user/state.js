@@ -208,16 +208,24 @@ export default {
             title: 'Title',
         },
         {
+            key: 'ID',
+            title: 'ID',
+        },
+        {
             key: 'teeth',
             title: 'Teeth',
+        },
+        {
+            key: 'createdBy',
+            title: 'Created By',
         },
         {
             key: 'created',
             title: 'Created',
         },
         {
-            key: 'author',
-            title: 'Created By',
+            key: 'updated',
+            title: 'Updated',
         },
         {
             key: 'manipulations',
@@ -230,10 +238,6 @@ export default {
         {
             key: 'state',
             title: 'State',
-        },
-        {
-            key: 'date',
-            title: 'Date',
         },
     ],
     availableBillingTableColumns: [{

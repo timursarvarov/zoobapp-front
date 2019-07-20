@@ -22,8 +22,6 @@
         "@fullcalendar/timeline": "^4.2.0",
         "@fullcalendar/vue": "^4.2.2",
         "@tweenjs/tween.js": "17.2.0",
-        "@vue/cli": "^3.7.0",
-        "@vue/cli-service": "^3.1.4",
         "@vue/eslint-config-airbnb": "^4.0.0",
         "acorn": "^6.1.1",
         "ajv": "^6.10.0",
@@ -39,6 +37,7 @@
         "i": "^0.3.6",
         "install": "^0.12.2",
         "is-promise": "^2.1.0",
+        "normalizr": "^3.4.0",
         "nouislider": "12.1.0",
         "npm": "^6.9.0",
         "perfect-scrollbar": "1.4.0",
@@ -56,8 +55,9 @@
         "vue-cool-select": "^2.10.2",
         "vue-i18n": "^8.11.2",
         "vue-infinite-loading": "^2.4.4",
+        "vue-lodash": "^2.0.2",
         "vue-marquee-text-component": "^1.1.1",
-        "vue-material": "github:vuematerial/vue-material#dev",
+        "vue-material": "^1.0.0-beta-11",
         "vue-moment": "^4.0.0",
         "vue-ripple-directive": "^2.0.1",
         "vue-router": "^3.0.1",
@@ -65,18 +65,16 @@
         "vue-smooth-dnd": "^0.2.8",
         "vue-star-rating": "^1.6.1",
         "vue2-transitions": "0.2.3",
-        "vuex": "^3.0.1",
-        "webpack": "^4.30.0"
+        "vuex": "^3.0.1"
     },
     "devDependencies": {
-        "@vue/cli-plugin-babel": "^3.7.0",
-        "babel-eslint": "^10.0.1",
+        "@vue/cli-plugin-babel": "3.8.0",
+        "@vue/cli-service": "3.8.0",
         "eslint": "^5.15.3",
         "eslint-plugin-vue": "^5.2.2",
         "node-sass": "^4.12.0",
         "sass-loader": "^7.1.0",
         "vue-svg-loader": "^0.12.0",
-        "vue-template-compiler": "^2.5.17",
-        "webpack-dev-server": "^3.3.1"
+        "vue-template-compiler": "^2.5.17"
     }
 }

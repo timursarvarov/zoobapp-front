@@ -9,7 +9,7 @@
             :teethSchema="teethSchema"
             :teethSystem="teethSystem"
             :defaultLocations="defaultLocations"
-            :itemType="itemType"
+            :currentType="currentType"
             @onToothSelected="onToothSelected"
         >
             <div slot="title">
@@ -52,8 +52,8 @@
     </div>
 </template>
 <script>
-    import { JawAddLocations } from '@/components';
     import { SlideYDownTransition } from 'vue2-transitions';
+    import { JawAddLocations } from '@/components';
     import { tObjProp } from '@/mixins';
 
     export default {
@@ -63,8 +63,8 @@
             JawAddLocations,
         },
         model: {
-            prop: 'newDiagnoseParams',
-            event: 'updateDiagonoseParams',
+            prop: 'newItemParams',
+            event: 'updateItemParams',
         },
         props: {
             error: {
@@ -88,10 +88,6 @@
                 type: Object,
                 default: () => {},
             },
-            prefer: {
-                type: String,
-                default: () => 'diagnose',
-            },
             selectedItem: {
                 type: Object,
                 default: () => ({
@@ -103,11 +99,11 @@
                 type: Array,
                 default: () => [],
             },
-            newDiagnoseParams: {
+            newItemParams: {
                 type: Object,
                 default: () => {},
             },
-            itemType: {
+            currentType: {
                 type: String,
                 default: () => 'diagnosis',
             },
@@ -176,10 +172,10 @@
         computed: {
             newProcedureParamsLocal: {
                 get() {
-                    return this.newDiagnoseParams;
+                    return this.newItemParams;
                 },
                 set(newValue) {
-                    this.$emit('updateDiagonoseParams', newValue);
+                    this.$emit('updateItemParams', newValue);
                     this.procedureLocal = {};
                     this.procedureLocal = newValue;
                     this.locations = this.isValidLoctions() ? 1 : '';

@@ -318,104 +318,104 @@
 </template>
 
 <script>
-  import { Slider } from '@/components';
+    import { Slider } from '@/components';
 
-  export default {
-    components: {
-      Slider,
-    },
-    props: {
-      regularImg: {
-        type: String,
-        default: './img/image_placeholder.jpg',
-      },
-      avatarImg: {
-        type: String,
-        default: './img/placeholder.jpg',
-      },
-    },
-    data() {
-      return {
-        responsive: false,
-        imageRegular: '',
-        imageCircle: '',
-        amount: 30,
-        amount2: 60,
-        buffer: 40,
-        multiLevel: false,
-        multiLevel2: false,
-        multiLevel3: false,
-        selectedLabeled: null,
-        selectedDate: new Date('2018/03/26'),
-        selectedClose: null,
-        switch1: true,
-        switch2: null,
-        movie: 'godfather',
-        selectedMovies: [],
-        fruits: ['Amsterdam', 'Washington', 'Sydney', 'Beijing'],
-        sliders: {
-          simple: 40,
-          rangeSlider: [20, 60],
+    export default {
+        components: {
+            Slider,
         },
-      };
-    },
-    methods: {
-      toggleMultiLevel() {
-        this.multiLevel = !this.multiLevel;
-      },
-      toggleMultiLevel2() {
-        this.multiLevel2 = !this.multiLevel2;
-        this.multiLevel3 = false;
-      },
-      toggleMultiLevel3() {
-        this.multiLevel3 = !this.multiLevel3;
-        this.multiLevel2 = false;
-      },
-      onFileChange(e) {
-        const files = e.target.files || e.dataTransfer.files;
-        if (!files.length) return;
-        if (e.target.name) {
-          this.createImage(files[0], 'circle');
-        } else {
-          this.createImage(files[0]);
-        }
-      },
-      createImage(file, type) {
-        const reader = new FileReader();
-        const vm = this;
+        props: {
+            regularImg: {
+                type: String,
+                default: './img/image_placeholder.jpg',
+            },
+            avatarImg: {
+                type: String,
+                default: './img/placeholder.jpg',
+            },
+        },
+        data() {
+            return {
+                responsive: false,
+                imageRegular: '',
+                imageCircle: '',
+                amount: 30,
+                amount2: 60,
+                buffer: 40,
+                multiLevel: false,
+                multiLevel2: false,
+                multiLevel3: false,
+                selectedLabeled: null,
+                selectedDate: new Date('2018/03/26'),
+                selectedClose: null,
+                switch1: true,
+                switch2: null,
+                movie: 'godfather',
+                selectedMovies: [],
+                fruits: ['Amsterdam', 'Washington', 'Sydney', 'Beijing'],
+                sliders: {
+                    simple: 40,
+                    rangeSlider: [20, 60],
+                },
+            };
+        },
+        methods: {
+            toggleMultiLevel() {
+                this.multiLevel = !this.multiLevel;
+            },
+            toggleMultiLevel2() {
+                this.multiLevel2 = !this.multiLevel2;
+                this.multiLevel3 = false;
+            },
+            toggleMultiLevel3() {
+                this.multiLevel3 = !this.multiLevel3;
+                this.multiLevel2 = false;
+            },
+            onFileChange(e) {
+                const files = e.target.files || e.dataTransfer.files;
+                if (!files.length) return;
+                if (e.target.name) {
+                    this.createImage(files[0], 'circle');
+                } else {
+                    this.createImage(files[0]);
+                }
+            },
+            createImage(file, type) {
+                const reader = new FileReader();
+                const vm = this;
 
-        reader.onload = (e) => {
-          if (type === 'circle') {
-            vm.imageCircle = e.target.result;
-          } else {
-            vm.imageRegular = e.target.result;
-          }
-        };
-        reader.readAsDataURL(file);
-      },
-      removeImage(type) {
-        if (type === 'circle') {
-          this.imageCircle = '';
-        } else {
-          this.imageRegular = '';
-        }
-      },
-      onResponsiveInverted() {
-        if (window.innerWidth < 768) {
-          this.responsive = true;
-        } else {
-          this.responsive = false;
-        }
-      },
-    },
-    mounted() {
-      this.onResponsiveInverted();
-      window.addEventListener('resize', this.onResponsiveInverted);
-    },
-    beforeDestroy() {
-      window.removeEventListener('resize', this.onResponsiveInverted);
-    },
-  };
+                reader.onload = (e) => {
+                    if (type === 'circle') {
+                        vm.imageCircle = e.target.result;
+                    } else {
+                        vm.imageRegular = e.target.result;
+                    }
+                };
+                reader.readAsDataURL(file);
+            },
+            removeImage(type) {
+                if (type === 'circle') {
+                    this.imageCircle = '';
+                } else {
+                    this.imageRegular = '';
+                }
+            },
+            onResponsiveInverted() {
+                if (window.innerWidth < 768) {
+                    this.responsive = true;
+                } else {
+                    this.responsive = false;
+                }
+            },
+        },
+        mounted() {
+            this.onResponsiveInverted();
+            window.addEventListener('resize', this.onResponsiveInverted);
+        },
+        beforeDestroy() {
+            window.removeEventListener('resize', this.onResponsiveInverted);
+        },
+    };
 </script>
 
 <style lang="scss">

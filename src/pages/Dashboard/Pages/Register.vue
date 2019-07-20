@@ -214,205 +214,205 @@
   </div>
 </template>
 <script>
-  import { SignupCard } from '@/components';
-  import { USER_REGISTER, NOTIFY } from '@/constants';
-  import { SlideYDownTransition, SlideXLeftTransition } from 'vue2-transitions';
+    import { SlideYDownTransition, SlideXLeftTransition } from 'vue2-transitions';
+    import { SignupCard } from '@/components';
+    import { USER_REGISTER, NOTIFY } from '@/constants';
 
-  export default {
-    components: {
-      SignupCard,
-      SlideYDownTransition,
-      SlideXLeftTransition,
-    },
-    data() {
-      return {
-        firstName: null,
-        lastName: null,
-        username: null,
-        boolean: false,
-        boolean2: false,
-        email: null,
-        password: null,
-        rPassword: null,
-        touched: {
-          lastName: false,
-          firstName: false,
-          username: false,
-          password: false,
-          rPassword: false,
+    export default {
+        components: {
+            SignupCard,
+            SlideYDownTransition,
+            SlideXLeftTransition,
         },
-        modelValidations: {
-          username: {
-            required: true,
-            min: 5,
-          },
-          password: {
-            required: true,
-            min: 5,
-          },
-          lastName: {
-            required: true,
-            min: 2,
-          },
-          firstName: {
-            required: true,
-            min: 2,
-          },
-          rPassword: {
-            required: true,
-            min: 2,
-            confirmed: 'password',
-          },
+        data() {
+            return {
+                firstName: null,
+                lastName: null,
+                username: null,
+                boolean: false,
+                boolean2: false,
+                email: null,
+                password: null,
+                rPassword: null,
+                touched: {
+                    lastName: false,
+                    firstName: false,
+                    username: false,
+                    password: false,
+                    rPassword: false,
+                },
+                modelValidations: {
+                    username: {
+                        required: true,
+                        min: 5,
+                    },
+                    password: {
+                        required: true,
+                        min: 5,
+                    },
+                    lastName: {
+                        required: true,
+                        min: 2,
+                    },
+                    firstName: {
+                        required: true,
+                        min: 2,
+                    },
+                    rPassword: {
+                        required: true,
+                        min: 2,
+                        confirmed: 'password',
+                    },
+                },
+                contentLeft: [
+                    {
+                        colorIcon: 'icon-success',
+                        icon: 'timeline',
+                        title: 'Marketing',
+                        description:
+                            "We've created the marketing campaign of the website. It was a very interesting collaboration.",
+                    },
+
+                    {
+                        colorIcon: 'icon-danger',
+                        icon: 'code',
+                        title: 'Fully Coded in HTML5',
+                        description:
+                            "We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub.",
+                    },
+
+                    {
+                        colorIcon: 'icon-info',
+                        icon: 'group',
+                        title: 'Built Audience',
+                        description:
+                            'There is also a Fully Customizable CMS Admin Dashboard for this product.',
+                    },
+                ],
+            };
         },
-        contentLeft: [
-          {
-            colorIcon: 'icon-success',
-            icon: 'timeline',
-            title: 'Marketing',
-            description:
-              "We've created the marketing campaign of the website. It was a very interesting collaboration.",
-          },
-
-          {
-            colorIcon: 'icon-danger',
-            icon: 'code',
-            title: 'Fully Coded in HTML5',
-            description:
-              "We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub.",
-          },
-
-          {
-            colorIcon: 'icon-info',
-            icon: 'group',
-            title: 'Built Audience',
-            description:
-              'There is also a Fully Customizable CMS Admin Dashboard for this product.',
-          },
-        ],
-      };
-    },
-    methods: {
-      passwordFocus() {
-        this.$refs.password.$el.focus();
-      },
-      validate() {
-        this.$validator.validateAll().then((isValid) => {
-          this.$emit('on-submit', this.registerForm, isValid);
-        });
-        this.touched.username = true;
-        this.touched.password = true;
-        this.touched.lastName = true;
-        this.touched.firstName = true;
-        this.touched.rPassword = true;
-      },
-      registrate() {
-        if (this.errors.has('username') || !this.username) {
-          this.showErrorsValidate('username');
-          this.$store.dispatch(NOTIFY, {
-            settings: {
-              message: this.errors.first('username'),
-              type: 'warning',
+        methods: {
+            passwordFocus() {
+                this.$refs.password.$el.focus();
             },
-          });
-          return;
-        }
-        if (this.errors.has('lastName') || !this.lastName) {
-          this.showErrorsValidate('lastName');
-          this.$store.dispatch(NOTIFY, {
-            settings: {
-              message: this.errors.first('lastName'),
-              type: 'warning',
+            validate() {
+                this.$validator.validateAll().then((isValid) => {
+                    this.$emit('on-submit', this.registerForm, isValid);
+                });
+                this.touched.username = true;
+                this.touched.password = true;
+                this.touched.lastName = true;
+                this.touched.firstName = true;
+                this.touched.rPassword = true;
             },
-          });
-          return;
-        }
-        if (this.errors.has('firstName') || !this.firstName) {
-          this.showErrorsValidate('firstName');
-          this.$store.dispatch(NOTIFY, {
-            settings: {
-              message: this.errors.first('firstName'),
-              type: 'warning',
+            registrate() {
+                if (this.errors.has('username') || !this.username) {
+                    this.showErrorsValidate('username');
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: this.errors.first('username'),
+                            type: 'warning',
+                        },
+                    });
+                    return;
+                }
+                if (this.errors.has('lastName') || !this.lastName) {
+                    this.showErrorsValidate('lastName');
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: this.errors.first('lastName'),
+                            type: 'warning',
+                        },
+                    });
+                    return;
+                }
+                if (this.errors.has('firstName') || !this.firstName) {
+                    this.showErrorsValidate('firstName');
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: this.errors.first('firstName'),
+                            type: 'warning',
+                        },
+                    });
+                    return;
+                }
+                if (this.errors.has('password') || !this.password) {
+                    this.showErrorsValidate('password');
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: this.errors.first('password'),
+                            type: 'warning',
+                        },
+                    });
+                    return;
+                }
+                if (this.errors.has('rPassword') || !this.rPassword) {
+                    this.showErrorsValidate('rPassword');
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: this.errors.first('rPassword'),
+                            type: 'warning',
+                        },
+                    });
+                    return;
+                }
+                this.$store.dispatch(USER_REGISTER, {
+                    params: {
+                        username: this.username,
+                        password: this.password,
+                        lastName: this.lastName,
+                        firstName: this.firstName,
+                    },
+                }).then(
+                    (response) => {
+                        if (response) {
+                            this.$router.push('/');
+                        }
+                    },
+                    (error) => {
+                        if (error.response.data.message === 'Wrong password') {
+                            this.showErrorsValidate('password');
+                        }
+                        if (error.response.data.message === 'Invalid login') {
+                            this.showErrorsValidate('username');
+                        }
+                    },
+                );
             },
-          });
-          return;
-        }
-        if (this.errors.has('password') || !this.password) {
-          this.showErrorsValidate('password');
-          this.$store.dispatch(NOTIFY, {
-            settings: {
-              message: this.errors.first('password'),
-              type: 'warning',
+            showErrorsValidate(errField = 'username') {
+                const field = this.$validator.fields.find({
+                    name: errField,
+                    scope: this.$options.scope,
+                });
+                if (!field) return;
+                this.$validator.errors.add({
+                    id: errField,
+                    field: errField,
+                    msg: errField === 'username' ? 'Invalid login' : 'Wrong password',
+                    scope: this.$options.scope,
+                });
+                field.setFlags({
+                    invalid: true,
+                    valid: false,
+                    validated: true,
+                });
             },
-          });
-          return;
-        }
-        if (this.errors.has('rPassword') || !this.rPassword) {
-          this.showErrorsValidate('rPassword');
-          this.$store.dispatch(NOTIFY, {
-            settings: {
-              message: this.errors.first('rPassword'),
-              type: 'warning',
+        },
+        watch: {
+            username() {
+                this.touched.username = true;
             },
-          });
-          return;
-        }
-        this.$store.dispatch(USER_REGISTER, {
-          params: {
-            username: this.username,
-            password: this.password,
-            lastName: this.lastName,
-            firstName: this.firstName,
-          },
-        }).then(
-          (response) => {
-            if (response) {
-              this.$router.push('/');
-            }
-          },
-          (error) => {
-            if (error.response.data.message === 'Wrong password') {
-              this.showErrorsValidate('password');
-            }
-            if (error.response.data.message === 'Invalid login') {
-              this.showErrorsValidate('username');
-            }
-          },
-        );
-      },
-      showErrorsValidate(errField = 'username') {
-        const field = this.$validator.fields.find({
-          name: errField,
-          scope: this.$options.scope,
-        });
-        if (!field) return;
-        this.$validator.errors.add({
-          id: errField,
-          field: errField,
-          msg: errField === 'username' ? 'Invalid login' : 'Wrong password',
-          scope: this.$options.scope,
-        });
-        field.setFlags({
-          invalid: true,
-          valid: false,
-          validated: true,
-        });
-      },
-    },
-    watch: {
-      username() {
-        this.touched.username = true;
-      },
-      password() {
-        this.touched.password = true;
-      },
-      firstName() {
-        this.touched.firstName = true;
-      },
-      lastName() {
-        this.touched.lastName = true;
-      },
-    },
-  };
+            password() {
+                this.touched.password = true;
+            },
+            firstName() {
+                this.touched.firstName = true;
+            },
+            lastName() {
+                this.touched.lastName = true;
+            },
+        },
+    };
 </script>
 <style lang="scss" scoped >
 div :not(.md-toolbar) > .md-field:not(.md-chips) .md-error {

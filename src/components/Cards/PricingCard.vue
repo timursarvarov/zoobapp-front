@@ -14,19 +14,19 @@
   </md-card>
 </template>
 <script>
-  export default {
-    name: 'pricing-card',
-    props: {
-      cardClass: {
-        type: String,
-        default: '',
-      },
-      iconColor: {
-        type: String,
-        default: '',
-      },
-    },
-  };
+    export default {
+        name: 'pricing-card',
+        props: {
+            cardClass: {
+                type: String,
+                default: '',
+            },
+            iconColor: {
+                type: String,
+                default: '',
+            },
+        },
+    };
 </script>
 <style>
 </style>

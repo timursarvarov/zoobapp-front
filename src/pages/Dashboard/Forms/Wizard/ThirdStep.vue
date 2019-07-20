@@ -104,61 +104,61 @@
   </div>
 </template>
 <script>
-  import { SlideYDownTransition } from 'vue2-transitions';
+    import { SlideYDownTransition } from 'vue2-transitions';
 
-  export default {
-    components: {
-      SlideYDownTransition,
-    },
-    data() {
-      return {
-        street: '',
-        streetNo: '',
-        city: '',
-        country: '',
-        select: null,
-        touched: {
-          street: false,
+    export default {
+        components: {
+            SlideYDownTransition,
         },
-        countryOptions: ['One', 'Two', 'Three', 'Four', 'Five', 'Six'],
-        modelValidations: {
-          street: {
-            required: true,
-            min: 5,
-          },
-          streetNo: {
-            required: true,
-            min: 5,
-          },
-          city: {
-            required: true,
-          },
-          country: {
-            required: true,
-          },
+        data() {
+            return {
+                street: '',
+                streetNo: '',
+                city: '',
+                country: '',
+                select: null,
+                touched: {
+                    street: false,
+                },
+                countryOptions: ['One', 'Two', 'Three', 'Four', 'Five', 'Six'],
+                modelValidations: {
+                    street: {
+                        required: true,
+                        min: 5,
+                    },
+                    streetNo: {
+                        required: true,
+                        min: 5,
+                    },
+                    city: {
+                        required: true,
+                    },
+                    country: {
+                        required: true,
+                    },
+                },
+            };
         },
-      };
-    },
-    methods: {
-      getError(fieldName) {
-        return this.errors.first(fieldName);
-      },
-      validate() {
-        return this.$validator.validateAll().then((res) => {
-          this.$emit('on-validated', res);
-          return res;
-        });
-      },
-    },
-    watch: {
-      street() {
-        this.touched.street = true;
-      },
-      streetNo() {
-        this.touched.streetNo = true;
-      },
-    },
-  };
+        methods: {
+            getError(fieldName) {
+                return this.errors.first(fieldName);
+            },
+            validate() {
+                return this.$validator.validateAll().then((res) => {
+                    this.$emit('on-validated', res);
+                    return res;
+                });
+            },
+        },
+        watch: {
+            street() {
+                this.touched.street = true;
+            },
+            streetNo() {
+                this.touched.streetNo = true;
+            },
+        },
+    };
 </script>
 <style>
 </style>

@@ -219,9 +219,9 @@
     </md-dialog>
 </template>
 <script>
-    import { Tooth, TAvatar, TFilesList } from '@/components';
     import { Printd } from 'printd';
     import { mapGetters } from 'vuex';
+    import { Tooth, TAvatar, TFilesList } from '@/components';
     import printFormCss from './print-form-css';
     import formCss from './form-css';
 

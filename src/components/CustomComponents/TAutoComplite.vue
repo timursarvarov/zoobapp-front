@@ -59,7 +59,7 @@
                                 name="md-last-item"
                                 :term="searchTerm"
                             />
-                        
+
                     </div>
                 </transition>
 

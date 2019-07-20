@@ -153,76 +153,76 @@
 
 </template>
 <script>
-  import { Pagination } from '@/components';
+    import { Pagination } from '@/components';
 
-  export default {
-    components: {
-      Pagination,
-    },
-    data() {
-      return {
-        defaultPagination: 1,
-        infoPagination: 2,
-        socialButtons: [
-          {
-            name: 'connect with twitter',
-            button: 'md-twitter',
-            icon: 'fab fa-twitter',
-          },
-          {
-            name: 'share · 2.2k',
-            button: 'md-facebook',
-            icon: 'fab fa-facebook',
-          },
-          {
-            name: 'share on google+',
-            button: 'md-google',
-            icon: 'fab fa-google-plus-g',
-          },
-          {
-            name: 'connect with linkedin',
-            button: 'md-linkedin',
-            icon: 'fab fa-linkedin-in',
-          },
-          {
-            name: 'pin it · 212',
-            button: 'md-pinterest',
-            icon: 'fab fa-pinterest',
-          },
-          {
-            name: 'view on youtube',
-            button: 'md-youtube',
-            icon: 'fab fa-youtube',
-          },
-          {
-            name: 'repost',
-            button: 'md-tumblr',
-            icon: 'fab fa-tumblr-square',
-          },
-          {
-            name: 'connect with gitub',
-            button: 'md-github',
-            icon: 'fab fa-github',
-          },
-          {
-            name: 'follow us',
-            button: 'md-behance',
-            icon: 'fab fa-behance',
-          },
-          {
-            name: 'find us on dribbble',
-            button: 'md-dribbble',
-            icon: 'fab fa-dribbble',
-          },
-          {
-            name: 'repost · 232',
-            button: 'md-reddit',
-            icon: 'fab fa-reddit',
-          },
-        ],
-      };
-    },
-  };
+    export default {
+        components: {
+            Pagination,
+        },
+        data() {
+            return {
+                defaultPagination: 1,
+                infoPagination: 2,
+                socialButtons: [
+                    {
+                        name: 'connect with twitter',
+                        button: 'md-twitter',
+                        icon: 'fab fa-twitter',
+                    },
+                    {
+                        name: 'share · 2.2k',
+                        button: 'md-facebook',
+                        icon: 'fab fa-facebook',
+                    },
+                    {
+                        name: 'share on google+',
+                        button: 'md-google',
+                        icon: 'fab fa-google-plus-g',
+                    },
+                    {
+                        name: 'connect with linkedin',
+                        button: 'md-linkedin',
+                        icon: 'fab fa-linkedin-in',
+                    },
+                    {
+                        name: 'pin it · 212',
+                        button: 'md-pinterest',
+                        icon: 'fab fa-pinterest',
+                    },
+                    {
+                        name: 'view on youtube',
+                        button: 'md-youtube',
+                        icon: 'fab fa-youtube',
+                    },
+                    {
+                        name: 'repost',
+                        button: 'md-tumblr',
+                        icon: 'fab fa-tumblr-square',
+                    },
+                    {
+                        name: 'connect with gitub',
+                        button: 'md-github',
+                        icon: 'fab fa-github',
+                    },
+                    {
+                        name: 'follow us',
+                        button: 'md-behance',
+                        icon: 'fab fa-behance',
+                    },
+                    {
+                        name: 'find us on dribbble',
+                        button: 'md-dribbble',
+                        icon: 'fab fa-dribbble',
+                    },
+                    {
+                        name: 'repost · 232',
+                        button: 'md-reddit',
+                        icon: 'fab fa-reddit',
+                    },
+                ],
+            };
+        },
+    };
 </script>
 <style lang="scss" scoped>
 .social-buttons {

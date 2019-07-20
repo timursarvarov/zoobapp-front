@@ -166,9 +166,9 @@
 </template>
 <script>
 /* eslint-disable func-names */
+    import { SlideYDownTransition } from 'vue2-transitions';
     import { AnimatedNumber } from '@/components';
     import { PATIENT_PAYMENT_SET } from '@/constants';
-    import { SlideYDownTransition } from 'vue2-transitions';
 
     export default {
         components: {

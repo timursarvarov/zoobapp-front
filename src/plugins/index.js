@@ -6,3 +6,4 @@ import './font-awesome';
 import './viewer';
 import './print';
 import './vue-cool-select';
+import './lodash';

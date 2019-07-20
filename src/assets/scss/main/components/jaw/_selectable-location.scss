@@ -5,7 +5,7 @@
         }
         .selectable-location:not(.selected) {
             &.tooth-number {
-                color: #00bcd4;
+                color: $brand-info;
                 ;
             }
             &.coronaLingualIncisalDistal,
@@ -43,12 +43,12 @@
             &.coronaLingual,
             &.coronaTop,
             &.coronaLabial {
-                // fill: #8e24aa !important;
+                // fill: $brand-primary !important;
                 fill: #fff;
                 stroke: #000;
                 stroke-width: 0.25px;
                 &:hover {
-                    stroke: #00bcd4;
+                    stroke: $brand-info;
                     stroke-width: 2px;
                     transition: all 0.2s ease-in-out;
                 }
@@ -64,7 +64,7 @@
                 stroke: #000;
                 stroke-width: 1px;
                 &:hover {
-                    stroke: #00bcd4;
+                    stroke: $brand-info;
                     ;
                     stroke-width: 1px;
                     transition: all 0.2s ease-in-out;
@@ -97,7 +97,7 @@
         }
         .selectable-location:not(.selected) {
             &.tooth-number {
-                color: #43a047;
+                color: $brand-success;
             }
             &.coronaLingualIncisalDistal,
             &.coronaLingualIncisalMiddle,
@@ -134,12 +134,12 @@
             &.coronaLingual,
             &.coronaTop,
             &.coronaLabial {
-                // fill: #8e24aa !important;
+                // fill: $brand-primary !important;
                 fill: #fff;
                 stroke: #000;
                 stroke-width: 0.25px;
                 &:hover {
-                    stroke: #43a047;
+                    stroke: $brand-success;
                     stroke-width: 2px;
                     transition: all 0.2s ease-in-out;
                 }
@@ -155,7 +155,7 @@
                 stroke: #000;
                 stroke-width: 1px;
                 &:hover {
-                    stroke: #43a047;
+                    stroke: $brand-success;
                     stroke-width: 1px;
                     transition: all 0.2s ease-in-out;
                 }
@@ -187,7 +187,7 @@
         }
         .selectable-location:not(.selected) {
             &.tooth-number {
-                color: #8e24aa;
+                color: $brand-primary;
             }
             &.coronaLingualIncisalDistal,
             &.coronaLingualIncisalMiddle,
@@ -222,12 +222,12 @@
             &.coronaLingual,
             &.coronaTop,
             &.coronaLabial {
-                // fill: #8e24aa !important;
+                // fill: $brand-primary !important;
                 fill: #fff;
                 stroke: #000;
                 stroke-width: 0.25px;
                 &:hover {
-                    stroke: #8a5499;
+                    stroke: lighten( $brand-primary, 13.5%)!important;
                     stroke-width: 2px;
                     transition: all 0.2s ease-in-out;
                 }
@@ -239,11 +239,11 @@
                 fill: #3535ed;
             }
             &.silant {
-                fill: #8e24aa;
+                fill: $brand-primary;
                 stroke: #000;
                 stroke-width: 0.25px;
                 &:hover {
-                    stroke: #8a5499;
+                    stroke: lighten( $brand-primary, 13.5%)!important;
                     stroke-width: 1px;
                     transition: all 0.2s ease-in-out;
                 }

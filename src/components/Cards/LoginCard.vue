@@ -19,31 +19,31 @@
 </template>
 
 <script>
-  export default {
-    name: 'login-card',
-    props: {
-      headerColor: {
-        type: String,
-        default: '',
-      },
-    },
-    data() {
-      return {
-        cardHidden: true,
-      };
-    },
-    beforeMount() {
-      setTimeout(this.showCard, 400);
-    },
-    methods: {
-      showCard() {
-        this.cardHidden = false;
-      },
-      getClass(headerColor) {
-        return `md-card-header-${headerColor}`;
-      },
-    },
-  };
+    export default {
+        name: 'login-card',
+        props: {
+            headerColor: {
+                type: String,
+                default: '',
+            },
+        },
+        data() {
+            return {
+                cardHidden: true,
+            };
+        },
+        beforeMount() {
+            setTimeout(this.showCard, 400);
+        },
+        methods: {
+            showCard() {
+                this.cardHidden = false;
+            },
+            getClass(headerColor) {
+                return `md-card-header-${headerColor}`;
+            },
+        },
+    };
 </script>
 
 <style lang="css">

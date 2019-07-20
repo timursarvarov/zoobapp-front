@@ -103,9 +103,9 @@
 </template>
 
 <script>
+    import Fuse from 'fuse.js';
     import { Pagination } from '@/components';
     import users from './users';
-    import Fuse from 'fuse.js';
 
     export default {
         components: {
@@ -159,6 +159,7 @@
         },
         methods: {
             customSort(value) {
+                console.log(value);
                 return value.sort((a, b) => {
                     const sortBy = this.currentSort;
                     if (this.currentSortOrder === 'desc') {

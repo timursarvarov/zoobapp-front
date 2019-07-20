@@ -1,7 +1,7 @@
 
 <template>
     <div class="items-list-wrapper">
-        <md-toolbar v-if="type==='procedures'" class="md-transparent">
+        <md-toolbar v-if="currentType==='procedures'" class="md-transparent">
             <div class="md-layout">
                 <div class="md-layout-item">
                     <p class="category">
@@ -52,7 +52,7 @@
         </md-toolbar>
         <md-table
             :md-selected-value.sync="selectedItems"
-            v-model="items"
+            :value="items"
             :md-sort.sync="currentSort"
             :md-sort-order.sync="currentSortOrder"
             :md-sort-fn="customSort"
@@ -61,7 +61,7 @@
             <md-table-toolbar>
                 <div class="md-toolbar-section-start">
                     <h3
-                        v-if="type === 'anamnesis'"
+                        v-if="currentType === 'anamnesis'"
                         class="md-title"
                     >{{items.length}} procedures in anamnes</h3>
                     <slot name="title-start" />
@@ -77,8 +77,8 @@
             </md-table-toolbar>
 
             <md-table-empty-state
-                :md-label="`No ${type} found`"
-                :md-description="`No ${type}  found. Scroll top, and create new ${type} .`"
+                :md-label="`No ${currentType} found`"
+                :md-description="`No ${currentType}  found. Scroll top, and create new ${currentType} .`"
             >
                 <md-button class="md-primary md-raised" @click="scrollToTop()">Scroll Top</md-button>
             </md-table-empty-state>
@@ -86,7 +86,7 @@
             <md-table-row
                 slot="md-table-row"
                 :key="item.id"
-                :md-selectable="type ==='procedures'?'multiple':'single'"
+                :md-selectable="currentType ==='procedures'?'multiple':'single'"
                 slot-scope="{ item }"
             >
                 <md-table-cell
@@ -94,14 +94,17 @@
                     :key="field.key"
                     :class="field"
                     :md-label="getFieldName(field.key).toString()"
-                    :md-sort-by=" item[field.key] ? item[field.key].toString() : ''"
+                    :md-sort-by="field.key"
                 >
-                    <div :class="field.key" v-if="field.key === 'code'">{{ item.code }}</div>
-                    <div :class="field.key" v-else-if="field.key === 'title'">
+                    <!-- :md-sort-by=" item[field.key] ? item[field.key].toString() : ''" -->
+                    <div :class="field.key" v-if="field.key === 'code' && item.code">{{ item.code }}</div>
+
+                    <div :class="field.key" v-else-if="field.key === 'title' && item.title">
                         {{ item.title }}
                         <br />
                         <small>{{item.description}}</small>
                     </div>
+
                     <div :class="field.key" v-else-if="field.key === 'teeth' && item.teeth">
                         <span
                             v-for="toothId in Object.keys(item.teeth)"
@@ -111,21 +114,21 @@
 
                     <div
                         :class="field.key"
-                        v-else-if="field.key === 'author'"
+                        v-else-if="field.key === 'createdBy' && item.createdBy"
                         class="md-layout md-alignment-left-center"
                     >
                         <div class="md-layout" style="max-width:40px;">
                             <t-avatar
                                 :small="true"
-                                :color="item.author.color"
-                                :imageSrc="item.author.avatar"
-                                :title="item.author.firstName + ' ' + item.author.lastName"
+                                :textToColor="item.createdBy.ID"
+                                :imageSrc="item.createdBy.avatar"
+                                :title="item.createdBy.firstName + ' ' + item.createdBy.lastName"
                             />
                         </div>
                         <span class="md-layout-item">
-                            <span>{{item.author.lastName | capitilize}}</span>
+                            <span>{{item.createdBy.lastName | capitilize}}</span>
                             <br />
-                            <span>{{item.author.firstName | capitilize}}</span>
+                            <span>{{item.createdBy.firstName | capitilize}}</span>
                         </span>
                     </div>
 
@@ -151,12 +154,33 @@
                         </div>
                     </div>
 
-                    <div v-if="field.key === 'date'">
+                    <div v-if="field.key === 'ID'">
+                        <div>
+                           {{item.ID}}
+                        </div>
+                    </div>
+
+                    <div v-if="field.key === 'date' && item.date">
                         <span class="md-medium-hide">
                             {{ item.date | moment("from") }}
                             <br />
                         </span>
                         <small>{{item.date | moment("calendar")}}</small>
+                    </div>
+                    <div v-if="field.key === 'created' && item.created">
+                        <span class="md-medium-hide">
+                            {{ item.created | moment("from") }}
+                            <br />
+                        </span>
+                        <small>{{item.created | moment("calendar")}}</small>
+                    </div>
+
+                    <div v-if="field.key === 'updated' && item.updated">
+                        <span class="md-medium-hide">
+                            {{ item.updated | moment("from") }}
+                            <br />
+                        </span>
+                        <small>{{item.updated | moment("calendar")}}</small>
                     </div>
 
                     <div v-if="field.key === 'price' && item.manipulations">
@@ -175,7 +199,7 @@
                     <md-button
                         v-show="ifDiagnoseHasLocations(item.teeth)"
                         class="md-just-icon md-simple"
-                        @click.native="$emit('toggleItemVisibility', item.id, type)"
+                        @click.native="$emit('toggleItemVisibility', item.id, currentType)"
                     >
                         <md-icon v-if="item.showInJaw">visibility</md-icon>
                         <md-icon v-else>visibility_off</md-icon>
@@ -195,43 +219,36 @@
                 </md-table-cell>
             </md-table-row>
         </md-table>
-        <!-- <div class="footer-table md-table">
-            <table>
-                <tfoot>
-                    <tr>
-                        <th v-for="item in itemsTableColumns" :key="item.key" class="md-table-head">
-                            <div class="md-table-head-container md-ripple md-disabled">
-                                <div class="md-table-head-label">{{item.title}}</div>
-                            </div>
-                        </th>
-                        <th class="md-table-head">
-                            <div class="md-table-head-container md-ripple md-disabled">
-                                <div class="md-table-head-label">Actions</div>
-                            </div>
-                        </th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div> -->
         <t-table-editor
             icon="settings"
             color="success"
-            :title="`Set ${type} columns order`"
+            :title="`Set ${currentType} columns order`"
             :availableTableColumns="computedAvailableItemsTableColumns"
             :tableColumns="itemsTableColumns"
             :showForm.sync="showTableEditor"
             @selected="setColumns"
         ></t-table-editor>
+
+        <delete-form
+            text="Delete Plan?"
+            :showForm.sync="showDeleteForm"
+            :itemToDelete="itemToDelete"
+            :patientID="patient.ID"
+            :currentType="currentType"
+            :planID="plan.ID"
+        />
+
         <md-snackbar
             :md-position="'center'"
             :md-duration="true ? Infinity : 4000"
             :md-active.sync="showSnackbar"
+            text="Delete currentType?"
             md-persistent
         >
         <div class="md-layout">
             <div class="md-layout md-layout-item">
                 <div class='md-layout-item' >
-                    <span> Selected: <animated-number :value="selectedItems.length" /> {{type}}</span>
+                    <span> Selected: <animated-number :value="selectedItems.length" /> {{currentType}}</span>
                 </div>
                 <div class='md-layout-item' >
                      <animated-number :value="getPlanTotalPrice(selectedItems)" />
@@ -248,14 +265,14 @@
     </div>
 </template>
 <script>
+    import { mapGetters } from 'vuex';
     import { TAvatar, TTableEditor, AnimatedNumber } from '@/components';
     import {
         USER_DIAGNOSIS_COLUMNS,
         USER_ANAMNESIS_COLUMNS,
         USER_PROCEDURES_COLUMNS,
     } from '@/constants';
-    import { mapGetters } from 'vuex';
-    // import swal from 'sweetalert2';
+    import DeleteForm from './DeleteForm.vue';
     import { tObjProp } from '@/mixins';
 
     export default {
@@ -264,6 +281,7 @@
             TAvatar,
             TTableEditor,
             AnimatedNumber,
+            DeleteForm,
         },
         props: {
             plan: {
@@ -278,7 +296,7 @@
                 type: Number,
                 default: () => 1,
             },
-            type: {
+            currentType: {
                 type: String,
                 default: () => 'diagnosis',
             },
@@ -288,8 +306,9 @@
                 computedAvailableItemsTableColumns: [],
                 itemsTableColumns: [],
                 selectedItems: [],
+                itemToDelete: {},
                 showTableEditor: false,
-                showForm: false,
+                showDeleteForm: false,
                 showSnackbar: false,
                 isInfinity: false,
                 currentSort: 'date',
@@ -314,55 +333,20 @@
                 return this.items;
             },
             currentTypeToLocalStorage() {
-                if (this.type === 'diagnosis') {
+                if (this.currentType === 'diagnosis') {
                     return USER_DIAGNOSIS_COLUMNS;
                 }
-                if (this.type === 'anamnesis') {
+                if (this.currentType === 'anamnesis') {
                     return USER_ANAMNESIS_COLUMNS;
                 }
                 return USER_PROCEDURES_COLUMNS;
             },
             defaultFields() {
-                const standartColumns = [
-                    {
-                        key: 'code',
-                        title: 'Code',
-                    },
-                    {
-                        key: 'title',
-                        title: 'Title',
-                    },
-                    {
-                        key: 'teeth',
-                        title: 'Teeth',
-                    },
-                    {
-                        key: 'author',
-                        title: 'Created By',
-                    },
-                    {
-                        key: 'date',
-                        title: 'Date',
-                    },
-                    {
-                        key: 'state',
-                        title: 'State',
-                    },
-                ];
-                const extraFields = [
-                    {
-                        key: 'manipulations',
-                        title: 'Manipulations',
-                    },
-                    {
-                        key: 'price',
-                        title: 'Price',
-                    },
-                ];
-                if (this.type !== 'diagnosis') {
-                    return [...standartColumns, ...extraFields];
+                if (this.currentType !== 'diagnosis') {
+                    const filteredColumns = this.availableItemsTableColumns.filter(c => c.key !== 'manipulations' || c.key !== 'price');
+                    return filteredColumns;
                 }
-                return standartColumns;
+                return this.availableItemsTableColumns;
             },
         },
 
@@ -412,17 +396,10 @@
                 return totalPrice;
             },
             setComputedAvailableItemsTableColumns() {
-                if (this.type === 'diagnosis') {
-                    const columns = this.availableItemsTableColumns.filter(
-                        el => el.key !== 'manipulations' && el.key !== 'price',
-                    );
-                    this.computedAvailableItemsTableColumns = columns;
-                } else {
-                    this.computedAvailableItemsTableColumns = this.availableItemsTableColumns;
-                }
+                this.computedAvailableItemsTableColumns = this.defaultFields;
             },
             getFieldName(key) {
-                const field = this.availableItemsTableColumns.find(
+                const field = this.defaultFields.find(
                     f => f.key === key,
                 );
                 if (field) {
@@ -436,12 +413,13 @@
                 );
                 if (columns2) {
                     this.itemsTableColumns = columns2;
-                } else {
+                }
+                else {
                     this.itemsTableColumns = this.defaultFields;
                 }
             },
             setColumns(e) {
-                // поменять после того как добавять соответствующие поля в беке
+                //! поменять после того как добавять соответствующие поля в беке
                 localStorage.setItem(
                     this.currentTypeToLocalStorage,
                     JSON.stringify(e),
@@ -466,7 +444,7 @@
                 window.scrollTo(0, 0);
             },
             ifDiagnoseHasLocations(teeth) {
-                if(!teeth) return false;
+                if (!teeth) return false;
                 let show = false;
                 show = Object.keys(teeth)
                     .map(key => Object.keys(teeth[key]).length > 0)
@@ -475,29 +453,29 @@
                 return show;
             },
             customSort(value) {
-                const thisLocal = this;
+                const vm = this;
                 const val = value.sort((a, b) => {
-                    const sortBy = thisLocal.currentSort;
-                    if (typeof a[thisLocal.currentSort] === 'string') {
-                        if (thisLocal.currentSortOrder === 'desc') {
+                    const sortBy = vm.currentSort;
+                    if (typeof a[vm.currentSort] === 'string') {
+                        if (vm.currentSortOrder === 'desc') {
                             return a[sortBy].localeCompare(b[sortBy]);
                         }
                         return b[sortBy].localeCompare(a[sortBy]);
                     }
-                    if (typeof a[thisLocal.currentSort] === 'number') {
-                        const orderLocal = thisLocal.currentSortOrder;
-                        const dflt =                        orderLocal === 'asc'
-                                ? Number.MAX_VALUE
-                                : -Number.MAX_VALUE;
+                    if (typeof a[vm.currentSort] === 'number') {
+                        const orderLocal = vm.currentSortOrder;
+                        const dflt = orderLocal === 'asc'
+                            ? Number.MAX_VALUE
+                            : -Number.MAX_VALUE;
                         const aVal = a[sortBy] === null ? dflt : a[sortBy];
                         const bVal = b[sortBy] === null ? dflt : b[sortBy];
                         return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
                     }
-                    if (typeof a[thisLocal.currentSort] === 'object') {
-                        const orderLocal = thisLocal.currentSortOrder;
-                        const dflt =                        orderLocal === 'asc'
-                                ? Number.MAX_VALUE
-                                : -Number.MAX_VALUE;
+                    if (typeof a[vm.currentSort] === 'object') {
+                        const orderLocal = vm.currentSortOrder;
+                        const dflt = orderLocal === 'asc'
+                            ? Number.MAX_VALUE
+                            : -Number.MAX_VALUE;
                         const aVal = a[sortBy] === null ? dflt : a[sortBy];
                         const bVal = b[sortBy] === null ? dflt : b[sortBy];
                         return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
@@ -518,33 +496,14 @@
                     this.$emit('showItemInfo', {
                         itemId: item.id,
                         toothId: null,
-                        type: this.type,
+                        type: this.currentType,
                     });
                 }
-            // this.$emit('editItem', item, this.type);
+            // this.$emit('editItem', item, this.currentType);
             },
             handleDelete(item) {
-            // swal({
-            //     title: 'Are you sure?',
-            //     text: "You won't be able to revert this!",
-            //     type: 'warning',
-            //     showCancelButton: true,
-            //     confirmButtonClass: 'md-button md-success btn-fill',
-            //     cancelButtonClass: 'md-button md-danger btn-fill',
-            //     confirmButtonText: 'Yes, delete it!',
-            //     buttonsStyling: false,
-            // }).then((result) => {
-            //     if (result.value) {
-            //         this.deleteRow(item);
-            //         swal({
-            //             title: 'Deleted!',
-            //             text: `You deleted ${item.title}`,
-            //             type: 'success',
-            //             confirmButtonClass: 'md-button md-success btn-fill',
-            //             buttonsStyling: false,
-            //         });
-            //     }
-            // });
+                this.itemToDelete = item;
+                this.showDeleteForm = true;
             },
             deleteRow(item) {},
         },
@@ -567,7 +526,7 @@
                 }
                 this.searchedData = result;
             },
-            type(value) {
+            currentType(value) {
                 this.setItemsTableColumns();
                 this.setComputedAvailableItemsTableColumns();
             },

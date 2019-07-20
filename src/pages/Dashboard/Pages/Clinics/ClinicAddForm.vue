@@ -86,106 +86,106 @@
   </div>
 </template>
 <script>
-  import { CLINICS_CREATE, NOTIFY } from '@/constants';
-  import { SlideYDownTransition } from 'vue2-transitions';
+    import { SlideYDownTransition } from 'vue2-transitions';
+    import { CLINICS_CREATE, NOTIFY } from '@/constants';
 
-  const randomMC = require('random-material-color');
+    const randomMC = require('random-material-color');
 
-  export default {
-    components: {
-      SlideYDownTransition,
-    },
-    props: {
-      showForm: {
-        type: Boolean,
-        default: false,
-      },
-    },
-    data() {
-      return {
-        name: null,
-        description: null,
-        isLoadingRegistration: false,
-        touched: {
-          name: false,
+    export default {
+        components: {
+            SlideYDownTransition,
         },
-        modelValidations: {
-          name: {
-            required: true,
-          },
-          description: {
-            required: true,
-          },
+        props: {
+            showForm: {
+                type: Boolean,
+                default: false,
+            },
         },
-      };
-    },
-    methods: {
-      validate() {
-        this.$validator.validateAll().then((isValid) => {
-          this.$emit('on-submit', this.registerForm, isValid);
-        });
-        this.touched.name = true;
-        this.touched.description = true;
-      },
-      clearForm() {
-        this.name = null;
-        this.description = null;
-        this.$nextTick(() => this.$validator.reset());
-      },
-      addClinic() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.$store
-              .dispatch(CLINICS_CREATE, {
-                clinic: {
-                  name: this.name,
-                  description: this.description,
+        data() {
+            return {
+                name: null,
+                description: null,
+                isLoadingRegistration: false,
+                touched: {
+                    name: false,
                 },
-              })
-              .then((response) => {
-                if (response) {
-                  this.showForml = false;
-                  this.clearForm();
-                  this.$store.dispatch(NOTIFY, {
-                    settings: {
-                      message: 'Clinic was created',
-                      type: 'success',
+                modelValidations: {
+                    name: {
+                        required: true,
                     },
-                  });
-                }
-            });
-          }
-        });
-      },
-    },
-    computed: {
-      patientColor() {
-        const color = this.randomMC.getColor({
-          text: this.name + this.description + this.phone + this.name,
-        });
-        return color;
-      },
-      showForml: {
-        get() {
-          return this.showForm;
+                    description: {
+                        required: true,
+                    },
+                },
+            };
         },
-        set(e) {
-          this.$emit('update:showForm', e);
+        methods: {
+            validate() {
+                this.$validator.validateAll().then((isValid) => {
+                    this.$emit('on-submit', this.registerForm, isValid);
+                });
+                this.touched.name = true;
+                this.touched.description = true;
+            },
+            clearForm() {
+                this.name = null;
+                this.description = null;
+                this.$nextTick(() => this.$validator.reset());
+            },
+            addClinic() {
+                this.$validator.validateAll().then((result) => {
+                    if (result) {
+                        this.$store
+                            .dispatch(CLINICS_CREATE, {
+                                clinic: {
+                                    name: this.name,
+                                    description: this.description,
+                                },
+                            })
+                            .then((response) => {
+                                if (response) {
+                                    this.showForml = false;
+                                    this.clearForm();
+                                    this.$store.dispatch(NOTIFY, {
+                                        settings: {
+                                            message: 'Clinic was created',
+                                            type: 'success',
+                                        },
+                                    });
+                                }
+                            });
+                    }
+                });
+            },
         },
-      },
-    },
-    created() {
-      this.randomMC = randomMC;
-    },
-    watch: {
-      name() {
-        this.touched.name = true;
-      },
-      description() {
-        this.touched.description = true;
-      },
-    },
-  };
+        computed: {
+            patientColor() {
+                const color = this.randomMC.getColor({
+                    text: this.name + this.description + this.phone + this.name,
+                });
+                return color;
+            },
+            showForml: {
+                get() {
+                    return this.showForm;
+                },
+                set(e) {
+                    this.$emit('update:showForm', e);
+                },
+            },
+        },
+        created() {
+            this.randomMC = randomMC;
+        },
+        watch: {
+            name() {
+                this.touched.name = true;
+            },
+            description() {
+                this.touched.description = true;
+            },
+        },
+    };
 
 // The first param is called 'min', and the second is called 'max'.
 </script>

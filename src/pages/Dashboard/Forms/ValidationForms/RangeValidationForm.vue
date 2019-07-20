@@ -191,76 +191,76 @@
   </form>
 </template>
 <script>
-  import { SlideYDownTransition } from 'vue2-transitions';
+    import { SlideYDownTransition } from 'vue2-transitions';
 
-  export default {
-    components: {
-      SlideYDownTransition,
-    },
-    data() {
-      return {
-        minLength: '',
-        maxLength: '',
-        range: '',
-        minValue: '',
-        maxValue: '',
-        touched: {
-          minLength: false,
-          maxLength: false,
-          range: false,
-          minValue: false,
-          maxValue: false,
+    export default {
+        components: {
+            SlideYDownTransition,
         },
-        modelValidations: {
-          minLength: {
-            required: true,
-            min: 5,
-          },
-          maxLength: {
-            required: true,
-            max: 5,
-          },
-          range: {
-            required: true,
-            min: 6,
-            max: 10,
-          },
-          minValue: {
-            required: true,
-            min_value: 6,
-          },
-          maxValue: {
-            required: true,
-            max_value: 6,
-          },
+        data() {
+            return {
+                minLength: '',
+                maxLength: '',
+                range: '',
+                minValue: '',
+                maxValue: '',
+                touched: {
+                    minLength: false,
+                    maxLength: false,
+                    range: false,
+                    minValue: false,
+                    maxValue: false,
+                },
+                modelValidations: {
+                    minLength: {
+                        required: true,
+                        min: 5,
+                    },
+                    maxLength: {
+                        required: true,
+                        max: 5,
+                    },
+                    range: {
+                        required: true,
+                        min: 6,
+                        max: 10,
+                    },
+                    minValue: {
+                        required: true,
+                        min_value: 6,
+                    },
+                    maxValue: {
+                        required: true,
+                        max_value: 6,
+                    },
+                },
+            };
         },
-      };
-    },
-    methods: {
-      validate() {
-        this.$validator.validateAll().then((isValid) => {
-          this.$emit('on-submit', this.registerForm, isValid);
-        });
-      },
-    },
-    watch: {
-      minLength() {
-        this.touched.minLength = true;
-      },
-      maxLength() {
-        this.touched.maxLength = true;
-      },
-      range() {
-        this.touched.range = true;
-      },
-      minValue() {
-        this.touched.minValue = true;
-      },
-      maxValue() {
-        this.touched.maxValue = true;
-      },
-    },
-  };
+        methods: {
+            validate() {
+                this.$validator.validateAll().then((isValid) => {
+                    this.$emit('on-submit', this.registerForm, isValid);
+                });
+            },
+        },
+        watch: {
+            minLength() {
+                this.touched.minLength = true;
+            },
+            maxLength() {
+                this.touched.maxLength = true;
+            },
+            range() {
+                this.touched.range = true;
+            },
+            minValue() {
+                this.touched.minValue = true;
+            },
+            maxValue() {
+                this.touched.maxValue = true;
+            },
+        },
+    };
 </script>
 <style lang="scss" scoped>
 .md-card .md-card-actions {

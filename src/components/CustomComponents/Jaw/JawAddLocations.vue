@@ -112,7 +112,7 @@
                                 //minWidth: jawSVG[toothId].widthPerc * 1.66 + 'vh'
                                 }"
                         >
-                            <g :class="`set-${itemType}`">
+                            <g :class="`set-${currentType}`">
                                 <template v-for="(locationValue, location) in defaultLocations">
                                     <path
                                         v-if="!jawComputed[toothId][location].hide"
@@ -148,15 +148,15 @@
         mixins: [tObjProp, jawFunctions],
         components: {},
         model: {
-            prop: 'newDiagnoseParams',
-            event: 'updateDiagonoseParams',
+            prop: 'newItemParams',
+            event: 'updateItemParams',
         },
         props: {
             jaw: {
                 type: Object,
                 default: () => {},
             },
-            itemType: {
+            currentType: {
                 type: String,
                 default: () => 'diagnosis',
             },
@@ -178,7 +178,7 @@
             },
             // Глобальная V-model для
             // отображения/скрытия формы
-            newDiagnoseParams: {
+            newItemParams: {
                 type: Object,
                 default: () => {},
             },
@@ -211,6 +211,7 @@
                 },
                 teethSettngs: [],
                 item: {
+                    ID: '',
                     code: '',
                     title: '',
                     description: '',
@@ -358,7 +359,7 @@
                     this.jaw,
                     this.prefer,
                     this.defaultLocations,
-                    this.itemType,
+                    this.currentType,
                     this.originalItem,
                 );
                 if (hide === true) {
@@ -397,7 +398,7 @@
             },
             dropAllLocations() {
                 this.item.teeth = {};
-                this.getDiagnose();
+                this.getItem();
             },
             setTooth(toothId) {
                 this.item.teeth[toothId] = {};
@@ -489,8 +490,9 @@
                 this.windowWidth = window.innerWidth;
                 this.windowHeigth = window.innerHeight;
             },
-            getDiagnose() {
-                this.$emit('updateDiagonoseParams', this.item);
+            getItem() {
+                console.log(this.item);
+                this.$emit('updateItemParams', this.item);
             },
             setLocationOnLoad(location, toothId, value) {
                 if (value !== undefined) {
@@ -590,7 +592,7 @@
                         );
                     });
                 });
-                this.getDiagnose();
+                this.getItem();
                 this.jawComputed = jaw;
                 this.$emit('onToothSelected', Object.keys(this.item.teeth));
             },
@@ -610,6 +612,15 @@
         },
 
         computed: {
+            typeSingleName() {
+                if (this.currentType === 'diagnosis') {
+                    return 'diagnose';
+                }
+                if (this.currentType === 'anamnesis') {
+                    return 'anamnes';
+                }
+                return 'procedure';
+            },
             teethToSearch() {
                 if (this.jawType === 'baby') {
                     return this.teethBabyAll;
@@ -656,9 +667,7 @@
             this.selectableTeethExtraChoose = this.selectedTeeth;
             window.addEventListener('resize', this.handleResize);
             this.handleResize();
-            this.item.id = this.selectedItem.id;
-            this.item.author = this.selectedItem.author;
-            this.item.date = this.selectedItem.date;
+            this.item[`${this.typeSingleName}ID`] = this.selectedItem.ID;
             this.item.showInJaw = this.selectedItem.showInJaw;
             this.item.code = this.selectedItem.code;
             this.item.title = this.selectedItem.title;

@@ -95,7 +95,7 @@
                             >
                                 <div v-if="field.key === 'avatar'">
                                     <t-avatar
-                                        :color="item.color"
+                                        :textToColor="item.ID"
                                         :imageSrc="item.avatar"
                                         :title="item.firstName + ' ' + item.lastName"
                                     />
@@ -123,7 +123,7 @@
                                         >
                                             <t-avatar
                                                 :small="true"
-                                                :color="item[field.key].color"
+                                                :textToColor="item[field.key].ID"
                                                 :imageSrc="item[field.key].avatar"
                                                 :title="item[field.key].firstName + ' ' + item[field.key].lastName"
                                             />
@@ -254,10 +254,10 @@
 </template>
 
 <script>
-    import { Pagination, TTableEditor, TAvatar } from '@/components';
     import StarRating from 'vue-star-rating';
     // import swal from 'sweetalert2';
     import { mapGetters } from 'vuex';
+    import { Pagination, TTableEditor, TAvatar } from '@/components';
     import {
         PATIENTS_REQUEST,
         AUTH_LOGOUT,

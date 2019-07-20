@@ -1,4 +1,7 @@
 .jaw-dialog-wrapper {
+    .moving-tab {
+        z-index: 12;
+    }
     z-index: 8;
     .md-card-actions {
         border-top: 1px solid #eeeeee;
@@ -89,6 +92,9 @@
             position: sticky;
             top: 0;
             padding: 15px 0;
+            @media screen and (max-width: 900px) {
+                position: static;
+            }
         }
         .manipulations-editor {
             position: inherit;

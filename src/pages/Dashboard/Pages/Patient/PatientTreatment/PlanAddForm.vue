@@ -63,13 +63,13 @@
                         <div v-if="loading">
                              <md-progress-spinner
                                 class="t-white"
-                                :md-diameter="18"
+                                :md-diameter="12"
                                 :md-stroke="2"
                                 md-mode="indeterminate"
                             ></md-progress-spinner>
                         </div>
                         <span v-else>Create</span>
-                        
+
                         </md-button>
                     </md-card-actions>
                 </md-card>
@@ -78,8 +78,8 @@
     </div>
 </template>
 <script>
-    import { PATIENT_PLAN_SET, NOTIFY } from '@/constants';
     import { SlideYDownTransition } from 'vue2-transitions';
+    import { PATIENT_PLAN_SET, NOTIFY } from '@/constants';
 
     const randomMC = require('random-material-color');
 
@@ -155,8 +155,8 @@
                             }).then(
                                 (resp) => {
                                     console.log(resp);
-                                    if (resp.data) {
-                                        this.$emit('onPlanCreated', resp.data);
+                                    if (resp) {
+                                        this.$emit('onPlanCreated', resp);
                                         this.$store.dispatch(NOTIFY, {
                                             settings: {
                                                 message: `${this.planName} plan added`,

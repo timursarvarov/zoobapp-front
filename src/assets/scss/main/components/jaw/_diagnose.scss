@@ -6,7 +6,7 @@
     }
     .diagnosis {
         &.tooth-number {
-            color: #8e24aa;
+            color: $brand-primary;
         }
         &.coronaLingualIncisalDistal,
         &.coronaLingualIncisalMiddle,
@@ -37,15 +37,15 @@
         &.root,
         &.veneer,
         &.silant {
-            fill: #8e24aa !important;
-            stroke: #8e24aa;
+            fill: $brand-primary !important;
+            stroke: $brand-primary;
         }
         &.periodontit,
         &.rootCanal {
             stroke-width: 2px;
         }
         &.bone {
-            fill: #8e24aa !important;
+            fill: $brand-primary !important;
             stroke-width: 0;
             opacity: 0.6;
         }

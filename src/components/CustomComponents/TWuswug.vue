@@ -147,11 +147,11 @@
         props: {
             content: {
                 type: String,
-                default: () => ``,
+                default: () => '',
             },
             contentDescription: {
                 type: String,
-                default: () => ``,
+                default: () => '',
             },
         },
         components: {

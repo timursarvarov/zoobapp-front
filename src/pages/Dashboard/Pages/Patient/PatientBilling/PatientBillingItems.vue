@@ -3,7 +3,7 @@
     <div class="items-list-wrapper">
         <md-table
             :md-selected-value.sync="selectedItems"
-            v-model="tableData"
+            :value="tableData"
             :md-sort.sync="currentSort"
             :md-sort-order.sync="currentSortOrder"
             :md-sort-fn="customSort"
@@ -64,7 +64,7 @@
                         <div class="md-layout" style="max-width:40px;">
                             <t-avatar
                                 :small="true"
-                                :color="item.author.color"
+                                :textToColor="item.author.ID"
                                 :imageSrc="item.author.avatar"
                                 :title="item.author.firstName + ' ' + item.author.lastName"
                             />
@@ -91,7 +91,7 @@
                         <div class="md-layout" style="max-width:40px;">
                             <t-avatar
                                 :small="true"
-                                :color="planColor(item.planCreated +item.planId +item.planName )"
+                                :textToColor="item.planId"
                             />
                         </div>
                         <div class="md-layout md-alignment-center-left">
@@ -150,16 +150,15 @@
     </div>
 </template>
 <script>
+    import { mapGetters } from 'vuex';
     import {
         TAvatar,
         TTableEditor,
         AnimatedNumber,
     } from '@/components';
     import { USER_BILLING_COLUMNS } from '@/constants';
-    import { mapGetters } from 'vuex';
     import { tObjProp } from '@/mixins';
 
-    const randomMC = require('random-material-color');
 
     export default {
         mixins: [tObjProp],
@@ -184,6 +183,7 @@
         },
         data() {
             return {
+                tableData: [],
                 computedAvailableBillingTableColumns: [],
                 itemsTableColumns: [],
                 selectedItems: [],
@@ -207,22 +207,6 @@
                 currentClinic: 'getCurrentClinic',
                 availableBillingTableColumns: 'availableBillingTableColumns',
             }),
-            tableData() {
-                const procedures = [];
-                this.patient.plans.forEach((plan) => {
-                    if (plan.state === 1 && plan.procedures) {
-                        plan.procedures.forEach((p) => {
-                            procedures.push({
-                                ...p,
-                                planId: plan.ID,
-                                planName: plan.name,
-                                planCreated: plan.created,
-                            });
-                        });
-                    }
-                });
-                return procedures;
-            },
             defaultFields() {
                 const standartColumns = [
                     {
@@ -259,15 +243,31 @@
         },
 
         methods: {
+            setTableData() {
+                const procedures = [];
+                this.patient.plans.forEach((plan) => {
+                    if (plan.state === 1 && plan.procedures) {
+                        plan.procedures.forEach((p) => {
+                            procedures.push({
+                                ...p,
+                                planId: plan.ID,
+                                planName: plan.name,
+                                planCreated: plan.created,
+                            });
+                        });
+                    }
+                });
+                this.tableData = procedures;
+            },
+            allPlans() {
+                return this.patient.plans;
+            },
             showCreateInvoice() {
                 this.showSnackbar = false,
                 this.$emit('onCreateInvoice', this.selectedItems);
             },
             onProcedureAdd(p) {
                 this.selectedItems.push(p);
-            },
-            planColor(text) {
-                return this.randomMC.getColor({ text: `${text}` });
             },
             calculateProcedures(procedures = []) {
                 let sum = 0;
@@ -445,9 +445,12 @@
         created() {
             this.setItemsTableColumns();
             this.setComputedAvailableBillingTableColumns();
-            this.randomMC = randomMC;
+            this.setTableData();
         },
         watch: {
+            allPlans() {
+                this.setTableData();
+            },
             searchQuery(value) {
                 let result = this.tableData;
                 if (value !== '') {

@@ -11,20 +11,20 @@
 </template>
 
 <script>
-  export default {
-    name: 'global-sales-card',
-    props: {
-      headerColor: {
-        type: String,
-        default: '',
-      },
-    },
-    methods: {
-      getClass(headerColor) {
-        return `md-card-header-${headerColor}`;
-      },
-    },
-  };
+    export default {
+        name: 'global-sales-card',
+        props: {
+            headerColor: {
+                type: String,
+                default: '',
+            },
+        },
+        methods: {
+            getClass(headerColor) {
+                return `md-card-header-${headerColor}`;
+            },
+        },
+    };
 </script>
 
 <style lang="css">

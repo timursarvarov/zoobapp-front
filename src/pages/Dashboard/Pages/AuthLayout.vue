@@ -21,10 +21,10 @@
 
                     <div class="md-collapse" :class="{'off-canvas-sidebar': responsive}">
                         <md-list>
-                            <md-list-item  v-if="isStateAuthenticated">
-                                <router-link to="/dashboard" >
+                            <md-list-item  to="/dashboard" v-if="isStateAuthenticated">
+                                <!-- <router-link to="/dashboard" > -->
                                     <md-icon>dashboard</md-icon>Dashboard
-                                </router-link>
+                                <!-- </router-link> -->
                             </md-list-item>
                             <md-list-item @click="linkClick">
                                 <router-link to="/pricing" >
@@ -46,6 +46,37 @@
                                     <md-icon>lock_open</md-icon>lock
                                 </router-link>
                             </md-list-item>
+                            <li class="md-list-item">
+                                  <a
+                                        class="md-list-item-router md-list-item-container md-button-clean dropdown"
+                                    >
+                            <div class="md-list-item-content">
+                                <drop-down direction="down">
+                                    <md-button
+                                        slot="title"
+                                        class="md-simple  md-list-item-content "
+                                        data-toggle="dropdown"
+                                    >
+
+                                        <md-icon>language</md-icon>
+                                        <span>{{$i18n.locale}}</span>
+                                        <p class="hidden-lg hidden-md">Language</p>
+                                    </md-button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li v-for="(loc, index) in $i18n.availableLocales" :key="index"
+                                            @click="$i18n.locale = loc"
+                                            :class="[{'selected-menu-top-navbar': $i18n.locale === loc }]"
+                                        >
+                                            <a
+                                                :style="{color:  $i18n.locale === loc ? '#fff!important': ''}"
+                                                href="#"
+                                            >{{loc}}</a>
+                                        </li>
+                                    </ul>
+                                </drop-down>
+                            </div>
+                            </a>
+                    </li>
                         </md-list>
                     </div>
                 </div>
@@ -147,6 +178,12 @@
             },
         },
         methods: {
+            setLang() {
+                const systemLang = navigator.language.split('-')[0];
+                if (this.$i18n.availableLocales.includes(systemLang)) {
+                    this.$i18n.locale = systemLang;
+                }
+            },
             toggleSidebarPage() {
                 if (this.$sidebar.showSidebar) {
                     this.$sidebar.displaySidebar(false);

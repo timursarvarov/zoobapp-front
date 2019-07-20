@@ -3,7 +3,7 @@
         .selected {
             opacity: 1;
             &.tooth-number {
-                color: #8e24aa;
+                color: $brand-primary;
             }
             &.coronaLingualIncisalDistal,
             &.coronaLingualIncisalMiddle,
@@ -37,10 +37,10 @@
             &.coronaLingual,
             &.coronaTop,
             &.coronaLabial {
-                fill: #8e24aa !important;
-                stroke: #8e24aa;
+                fill: $brand-primary !important;
+                stroke: $brand-primary;
                 &:hover {
-                    stroke: #b07bbe;
+                    stroke: lighten( $brand-primary, 83.5%);
                     stroke-width: 2px;
                     transition: all 0.2s ease-in-out;
                 }
@@ -70,7 +70,7 @@
         .selected {
             opacity: 1;
             &.tooth-number {
-                color: #43a047;
+                color: $brand-success;
             }
             &.coronaLingualIncisalDistal,
             &.coronaLingualIncisalMiddle,
@@ -104,8 +104,8 @@
             &.coronaLingual,
             &.coronaTop,
             &.coronaLabial {
-                fill: #43a047 !important;
-                stroke: #43a047;
+                fill: $brand-success !important;
+                stroke: $brand-success;
                 &:hover {
                     stroke: #90ce93;
                     stroke-width: 2px;
@@ -115,7 +115,7 @@
             &.bone,
             &.braces,
             &.silant {
-                fill: #43a047 !important;
+                fill: $brand-success !important;
                 stroke: #000;
                 stroke-width: 0.25px;
                 &:hover {
@@ -125,7 +125,7 @@
                 }
             }
             &.veneer {
-                fill: #43a047 !important;
+                fill: $brand-success !important;
             }
             &.silant,
             &.veneer {
@@ -138,7 +138,7 @@
             &.paradontit3,
             &.paradontit4 {
                 opacity: 1;
-                stroke: #43a047;
+                stroke: $brand-success;
                 stroke-linejoin: round;
                 stroke-width: 4px;
                 fill: none !important;
@@ -152,7 +152,7 @@
         .selected {
             opacity: 1;
             &.tooth-number {
-                color: #00bcd4;
+                color: $brand-info;
             }
             &.coronaLingualIncisalDistal,
             &.coronaLingualIncisalMiddle,
@@ -188,8 +188,8 @@
             &.coronaLingual,
             &.coronaTop,
             &.coronaLabial {
-                fill: #00bcd4 !important;
-                stroke: #00bcd4;
+                fill: $brand-info !important;
+                stroke: $brand-info;
                 &:hover {
                     stroke: #02d7f3;
                     stroke-width: 2px;

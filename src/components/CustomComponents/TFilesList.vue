@@ -89,7 +89,7 @@
                                     <div class="md-layout-item md-layout" style="max-width:35px;">
                                         <t-avatar
                                             small
-                                            :color="item.author.color"
+                                            :textToColor="item.author.ID"
                                             :noImgTag="true"
                                             :imageSrc="item.author.avatar"
                                             :title="item.author.firstName + ' ' + item.author.lastName"
@@ -164,8 +164,8 @@
 </template>
 
 <script>
-    import { Pagination, TAvatar, TFilePreview } from '@/components';
     import Fuse from 'fuse.js';
+    import { Pagination, TAvatar, TFilePreview } from '@/components';
     // import swal from 'sweetalert2';
     import 'viewerjs/dist/viewer.css';
     import { tObjProp } from '@/mixins';

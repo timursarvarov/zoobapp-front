@@ -18,8 +18,10 @@
 // };
 module.exports = {
     devServer: {
+        // clientLogLevel: 'info',
         watchOptions: {
             poll: true,
+            aggregateTimeout: 300,
         },
     },
     chainWebpack: (config) => {

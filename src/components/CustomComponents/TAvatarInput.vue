@@ -46,15 +46,17 @@
     import TImageCropperForm from './TImageCropperForm.vue';
     import { NOTIFY } from '@/constants';
 
+    const randomMC = require('random-material-color');
+
     export default {
         components: {
             TImageCropperForm,
         },
         name: 't-avatar-inptut',
         props: {
-            color: {
-                type: String,
-                default: '#43a047',
+            textToColor: {
+                type: [String, Number],
+                default: null,
             },
             imageSrc: {
                 type: String,
@@ -87,6 +89,7 @@
                 fd: null,
                 showForm: false,
                 image: '',
+                randomMC: null,
             };
         },
         methods: {
@@ -149,13 +152,14 @@
             },
         },
         computed: {
-            colorC() {
-                return this.color || '#43a047';
+            computedColor() {
+                const color = this.randomMC.getColor({ text: `${this.textToColor}` });
+                return color;
             },
             gradient() {
                 let colors = 'linear-gradient(45deg';
-                const colorStart = this.colorLuminance(this.colorC, -0.4);
-                const colorEnd = this.colorLuminance(this.colorC, 0.4);
+                const colorStart = this.colorLuminance(this.computedColor, -0.4);
+                const colorEnd = this.colorLuminance(this.computedColor, 0.4);
                 colors += `,${colorStart},${colorEnd}`;
                 colors += ')';
                 return colors;
@@ -166,6 +170,9 @@
                 // emit
                 this.$emit('on-created', file);
             },
+        },
+        created() {
+            this.randomMC = randomMC;
         },
     };
 </script>

@@ -72,51 +72,51 @@
   </form>
 </template>
 <script>
-  import { SlideYDownTransition } from 'vue2-transitions';
+    import { SlideYDownTransition } from 'vue2-transitions';
 
-  export default {
-    components: {
-      SlideYDownTransition,
-    },
-    data() {
-      return {
-        email: '',
-        password: '',
-        touched: {
-          email: false,
-          password: false,
+    export default {
+        components: {
+            SlideYDownTransition,
         },
-        modelValidations: {
-          email: {
-            required: true,
-            email: true,
-          },
-          password: {
-            required: true,
-            min: 5,
-          },
+        data() {
+            return {
+                email: '',
+                password: '',
+                touched: {
+                    email: false,
+                    password: false,
+                },
+                modelValidations: {
+                    email: {
+                        required: true,
+                        email: true,
+                    },
+                    password: {
+                        required: true,
+                        min: 5,
+                    },
+                },
+            };
         },
-      };
-    },
-    methods: {
-      validate() {
-        this.$validator.validateAll().then((isValid) => {
-          this.$emit('on-submit', this.registerForm, isValid);
-        });
+        methods: {
+            validate() {
+                this.$validator.validateAll().then((isValid) => {
+                    this.$emit('on-submit', this.registerForm, isValid);
+                });
 
-        this.touched.email = true;
-        this.touched.password = true;
-      },
-    },
-    watch: {
-      email() {
-        this.touched.email = true;
-      },
-      password() {
-        this.touched.password = true;
-      },
-    },
-  };
+                this.touched.email = true;
+                this.touched.password = true;
+            },
+        },
+        watch: {
+            email() {
+                this.touched.email = true;
+            },
+            password() {
+                this.touched.password = true;
+            },
+        },
+    };
 </script>
 <style lang="scss" scoped>
 .md-card .md-card-actions {

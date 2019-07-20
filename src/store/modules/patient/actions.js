@@ -1,5 +1,4 @@
-/* eslint-disable no-tabs */
-
+import { normalize } from 'normalizr';
 import axios from 'axios';
 import {
     PATIENT_CREATE,
@@ -9,6 +8,7 @@ import {
     PATIENT_GET,
     PATIENT_SET_PARAM,
     PATIENT_SET_PARAMS,
+    PATIENT_SUB_PARAM_DELETE,
     PATIENT_AVATAR_UPLOAD,
     PATIENT_UPDATE,
     PATIENT_UNSET,
@@ -24,14 +24,16 @@ import {
     PATIENT_DIAGNOSE_SET,
     PATIENT_DIAGNOSE_UPDATE,
     PATIENT_PROCEDURE_UPDATE,
+    PATIENT_PROCEDURE_SET,
+    PATIENT_PROCEDURE_DELETE,
     PATIENT_TOGGLE_ITEM_VISIBILITY,
-    PATIENT_PROCEDURES_SET,
     PATIENT_ANAMNES_SET,
     PATIENT_ANAMNES_UPDATE,
     PATIENT_RESET,
     TEETH_INITIATION,
     PATIENT_SUB_PARAM_SET,
     PATIENT_INVOICE_SET,
+    NRMLZ_PLANS,
 } from '@/constants';
 
 export default {
@@ -248,6 +250,57 @@ export default {
                 let plans = [];
                 if (resp.data) {
                     plans = resp.data.reverse();
+                    const Nplans = [{
+                            "id": "123",
+                            "author": {
+                                "id": "1",
+                                "name": "Paul"
+                            },
+                            "title": "My awesome blog post",
+                            "comments": [{
+                                "id": "324",
+                                "commenter": {
+                                    "id": "2",
+                                    "name": "Nicole"
+                                }
+                            }]
+                        },
+                        {
+                            "id": "1233",
+                            "author": {
+                                "id": "1",
+                                "name": "Paul"
+                            },
+                            "title": "My awesome blog post",
+                            "comments": [{
+                                "id": "324",
+                                "commenter": {
+                                    "id": "2",
+                                    "name": "Nicole"
+                                }
+                            }]
+                        },
+                        {
+                            "id": "1323",
+                            "author": {
+                                "id": "1",
+                                "name": "Paul"
+                            },
+                            "title": "My awesome blog post",
+                            "comments": [{
+                                "id": "324",
+                                "commenter": {
+                                    "id": "2",
+                                    "name": "Nicole"
+                                }
+                            }]
+                        }
+                    ];
+
+                    const normalizedData = normalize(plans, NRMLZ_PLANS);
+                    console.log(normalizedData);
+                    console.log(Nplans);
+                    console.log(plans);
                 }
                 dispatch(PATIENT_SET_PARAM, {
                     type: 'plans',
@@ -261,16 +314,69 @@ export default {
                 reject(err);
             });
     }),
-    [PATIENT_PROCEDURES_SET]: ({
+    [PATIENT_PROCEDURE_SET]: ({
         commit,
-        state,
     }, {
         procedure,
-        planId,
-    }) => {
-        const pIndex = state.patient.plans.findIndex(plan => plan.ID === planId);
-        commit(PATIENT_PROCEDURES_SET, { procedure, pIndex, planId });
-    },
+        planID,
+        patientID,
+
+    }) => new Promise((resolve, reject) => {
+        commit(PATIENT_REQUEST);
+        axios.post(`/patients/${patientID}/plans/${planID}/procedures/`,
+                JSON.stringify({
+                    procedureID: procedure.procedureID,
+                    teeth: procedure.teeth,
+                }))
+            .then((resp) => {
+                const nProcedure = resp.data;
+                commit(PATIENT_PROCEDURE_SET, { procedure: nProcedure, planID });
+                commit(PATIENT_SUCCESS);
+                resolve(nProcedure);
+            })
+            .catch((err) => {
+                commit(PATIENT_ERROR);
+                reject(err);
+            });
+    }),
+    [PATIENT_PROCEDURE_DELETE]: ({
+        commit,
+    }, {
+        procedureID,
+        planID,
+        patientID,
+
+    }) => new Promise((resolve, reject) => {
+        commit(PATIENT_SUB_PARAM_DELETE, {
+            param: 'plans',
+            subParam: 'procedures',
+            paramID: planID,
+            subParamID: procedureID,
+        });
+    }).then((resp) => {
+        commit(PATIENT_SUCCESS);
+        resolve(true);
+        // });
+        // commit(PATIENT_REQUEST);
+        // axios.delete(`/patients/${patientID}/plans/${planID}/procedures/${procedureID}`)
+        //     .then((resp) => {
+        //         commit(PATIENT_SUB_PARAM_DELETE, {
+        //             param: 'plans',
+        //             subParam: 'procedures',
+        //             paramID: planID,
+        //             subParamID: procedureID,
+        //         });
+        //         commit(PATIENT_SUCCESS);
+        //         resolve(resp.data);
+        //     })
+        //     .catch((err) => {
+        //         commit(PATIENT_ERROR);
+        //         reject(err);
+        //     });
+    }).catch((err) => {
+        commit(PATIENT_ERROR);
+        console.log(err);
+    }),
     [PATIENT_PLAN_DELETE]: ({
         commit,
     }, {
@@ -403,7 +509,7 @@ export default {
     }, {
         patient,
     }) => {
-        Object.keys(patient).map((field) => {
+        Object.keys(patient).forEach((field) => {
             let value = patient[field];
             if (value === null) {
                 if (field === 'allergy' ||

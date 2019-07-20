@@ -12,13 +12,14 @@ import {
     PATIENT_ANAMNES_UPDATE,
     PATIENT_DIAGNOSE_SET,
     PATIENT_DIAGNOSE_UPDATE,
-    PATIENT_PROCEDURES_SET,
+    PATIENT_PROCEDURE_SET,
     PATIENT_PROCEDURE_UPDATE,
     PATIENT_GET,
     PATIENT_SET_PARAM,
     PATIENT_DELETE_PARAM,
     PATIENT_TOGGLE_ITEM_VISIBILITY,
     PATIENT_SUB_PARAM_SET,
+    PATIENT_SUB_PARAM_DELETE,
     PATIENT_INVOICE_SET,
 } from '@/constants';
 import Vue from 'vue'
@@ -64,26 +65,20 @@ export default {
             }
         }
     },
-    [PATIENT_PROCEDURES_SET]: (state, { procedure, pIndex, planId }) => {
-        if (state.patient.plans[pIndex].procedures) {
-            state.patient.plans.map(p => {
-                if (p.ID !== planId) {
-                    return p
-                }
-                let plan = p;
-                Vue.set(plan.procedures, plan.procedures.length, procedure);
-                return plan
-            });
-        } else {
-            state.patient.plans.map(p => {
-                if (p.ID !== planId) {
-                    return p
-                }
-                let plan = p;
-                Vue.set(plan, 'procedures', [procedure]);
-                return plan
-            });
-        }
+    [PATIENT_PROCEDURE_SET]: (state, { procedure, planId }) => {
+
+        state.patient.plans.map(p => {
+            if (p.ID !== planId) {
+                return
+            }
+            if (!state.patient.plan.procedures) {
+                Vue.set(state.patient.plan, 'procedures', []);
+            }
+            Vue.set(state.patient.plan.procedures, state.patient.plan.procedures.length, procedure);
+            console.log(state.patient.plan.procedures)
+            return plan
+        });
+
     },
     [PATIENT_PROCEDURE_UPDATE]: (state, { procedureIndex, planIndex, procedure }) => {
         state.patient.plans[planIndex].procedures.splice(procedureIndex, 1, procedure);
@@ -98,6 +93,10 @@ export default {
         state.patient.invoices.unshift(invoice);
     },
     [PATIENT_SUB_PARAM_SET]: (state, params) => {
+        console.log(params)
+        state.patient[params.field][params.action](params.value);
+    },
+    [PATIENT_SUB_PARAM_DELETE]: (state, params) => {
         console.log(params)
         state.patient[params.field][params.action](params.value);
     },
@@ -132,6 +131,28 @@ export default {
                 Vue.delete(state.patient[type], index);
 
             }
+        });
+    },
+    [PATIENT_SUB_PARAM_DELETE]: (
+        state, {
+            param,
+            subParam,
+            paramID,
+            subParamID,
+        }
+    ) => {
+        state.patient[param].map((param, index) => {
+            console.log(param)
+            if (param.ID !== paramID) {
+                return;
+            }
+            state.patient[param][index][subParam].map((subP, subIndex) => {
+                if (subP.ID !== subParamID) {
+                    return;
+                }
+                console.log(state.patient[param][index][subParam])
+                Vue.delete(state.patient[param][index][subParam], subIndex);
+            })
         });
     },
 };

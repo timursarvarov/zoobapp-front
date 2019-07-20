@@ -304,101 +304,101 @@
 </template>
 
 <script>
-  import {
-    NavTabsCard,
-    TimeLine,
-    TimeLineItem,
-    PricingCard,
-    TestimonialCard,
-  } from '@/components';
+    import {
+        NavTabsCard,
+        TimeLine,
+        TimeLineItem,
+        PricingCard,
+        TestimonialCard,
+    } from '@/components';
 
-  export default {
-    components: {
-      NavTabsCard,
-      PricingCard,
-      TimeLine,
-      TimeLineItem,
-      TestimonialCard,
-    },
-    props: {
-      profileCard: {
-        type: String,
-        default: './img/faces/card-profile1-square.jpg',
-      },
-    },
-    data() {
-      return {
-        selected: [],
-        firstTabs: [
-          {
-            tab:
-              ' فقد لمحاكم الاندونيسية, بلاده بالتوقيع تم يبق. جعل السبب وفرنسا الصينية أي.',
-          },
-          { tab: 'بحث. كل مما ٢٠٠٤ شاسعة العسكري جعل السبب وفرنسا الصينية أي.' },
-          { tab: 'تسبب أفريقيا ضرب عن, عن إنطلاق جعل السبب وفرنسا الصينية أي.' },
-        ],
-        secondTabs: [
-          {
-            tab:
-              'قدما مليون بين عن, مرجع منتصف الأمريكية  جعل السبب وفرنسا الصينية أي.',
-          },
-          {
-            tab:
-              'قدما مليون بين عن, مرجع منتصف الأمريكية  جعل السبب وفرنسا الصينية أي.',
-          },
-          {
-            tab:
-              'قدما مليون بين عن, مرجع منتصف الأمريكية  جعل السبب وفرنسا الصينية أي.',
-          },
-        ],
-        thirdTabs: [
-          {
-            tab:
-              'قدما مليون بين عن, مرجع منتصف الأمريكية  جعل السبب وفرنسا الصينية أي.',
-          },
-          {
-            tab:
-              'قدما مليون بين عن, مرجع منتصف الأمريكية  جعل السبب وفرنسا الصينية أي.',
-          },
-          {
-            tab:
-              'قدما مليون بين عن, مرجع منتصف الأمريكية  جعل السبب وفرنسا الصينية أي.',
-          },
-        ],
-        users: [
-          {
-            id: 1,
-            name: 'السبب وفرنسا الصينية ',
-            salary: '$36,738',
-            country: 'تكاليف ',
-          },
-          {
-            id: 2,
-            name: 'بمباركة بها',
-            salary: '$23,738',
-            country: 'الأمريكية من',
-          },
-          {
-            id: 3,
-            name: 'شاسعالأمريكية',
-            salary: '$56,142',
-            country: 'السفن وعُرفت',
-          },
-          {
-            id: 4,
-            name: 'الاندونيسية',
-            salary: '$38,735',
-            country: 'فصل.',
-          },
-        ],
-      };
-    },
-    methods: {
-      onSelect(items) {
-        this.selected = items;
-      },
-    },
-  };
+    export default {
+        components: {
+            NavTabsCard,
+            PricingCard,
+            TimeLine,
+            TimeLineItem,
+            TestimonialCard,
+        },
+        props: {
+            profileCard: {
+                type: String,
+                default: './img/faces/card-profile1-square.jpg',
+            },
+        },
+        data() {
+            return {
+                selected: [],
+                firstTabs: [
+                    {
+                        tab:
+                            ' فقد لمحاكم الاندونيسية, بلاده بالتوقيع تم يبق. جعل السبب وفرنسا الصينية أي.',
+                    },
+                    { tab: 'بحث. كل مما ٢٠٠٤ شاسعة العسكري جعل السبب وفرنسا الصينية أي.' },
+                    { tab: 'تسبب أفريقيا ضرب عن, عن إنطلاق جعل السبب وفرنسا الصينية أي.' },
+                ],
+                secondTabs: [
+                    {
+                        tab:
+                            'قدما مليون بين عن, مرجع منتصف الأمريكية  جعل السبب وفرنسا الصينية أي.',
+                    },
+                    {
+                        tab:
+                            'قدما مليون بين عن, مرجع منتصف الأمريكية  جعل السبب وفرنسا الصينية أي.',
+                    },
+                    {
+                        tab:
+                            'قدما مليون بين عن, مرجع منتصف الأمريكية  جعل السبب وفرنسا الصينية أي.',
+                    },
+                ],
+                thirdTabs: [
+                    {
+                        tab:
+                            'قدما مليون بين عن, مرجع منتصف الأمريكية  جعل السبب وفرنسا الصينية أي.',
+                    },
+                    {
+                        tab:
+                            'قدما مليون بين عن, مرجع منتصف الأمريكية  جعل السبب وفرنسا الصينية أي.',
+                    },
+                    {
+                        tab:
+                            'قدما مليون بين عن, مرجع منتصف الأمريكية  جعل السبب وفرنسا الصينية أي.',
+                    },
+                ],
+                users: [
+                    {
+                        id: 1,
+                        name: 'السبب وفرنسا الصينية ',
+                        salary: '$36,738',
+                        country: 'تكاليف ',
+                    },
+                    {
+                        id: 2,
+                        name: 'بمباركة بها',
+                        salary: '$23,738',
+                        country: 'الأمريكية من',
+                    },
+                    {
+                        id: 3,
+                        name: 'شاسعالأمريكية',
+                        salary: '$56,142',
+                        country: 'السفن وعُرفت',
+                    },
+                    {
+                        id: 4,
+                        name: 'الاندونيسية',
+                        salary: '$38,735',
+                        country: 'فصل.',
+                    },
+                ],
+            };
+        },
+        methods: {
+            onSelect(items) {
+                this.selected = items;
+            },
+        },
+    };
 </script>
 
 <style lang="css">

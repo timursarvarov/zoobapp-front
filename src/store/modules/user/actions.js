@@ -247,6 +247,7 @@ export default {
         type,
         value
     }) => {
+        if (type === 'lang' && !value) return;
         commit(USER_SET_PARAM, {
             type: type,
             value: value,

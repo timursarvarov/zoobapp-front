@@ -19,7 +19,7 @@
         >
         <t-avatar
           v-if="link.acronim"
-          :color="link.avatarColor"
+          :textToColor="link.textToColor"
           :imageSrc="link.img"
           :title="link.acronim"
           :notification= "link.notification"
@@ -82,7 +82,7 @@
                 default: () => ({
                     name: '',
                     path: '',
-                    avatarColor: '#43a047',
+                    textToColor: '#43a047',
                     acronim: '',
                     children: [],
                     notification: '',

@@ -183,101 +183,101 @@
     </div>
 </template>
 <script>
-import { SlideYDownTransition } from "vue2-transitions";
+    import { SlideYDownTransition } from 'vue2-transitions';
 
-export default {
-    components: {
-        SlideYDownTransition
-    },
-    props: {
-        avatar: {
-            type: String,
-            default: "./img/default-avatar.png"
-        }
-    },
-    data() {
-        return {
-            image: "",
-            single: null,
-            firstName: "",
-            lastName: "",
-            username: "",
-            password: "",
-            rPassword: "",
-            email: "",
-            touched: {
-                firstName: false,
-                lastName: false,
-                username: false,
-                password: false,
-                rPassword: false
+    export default {
+        components: {
+            SlideYDownTransition,
+        },
+        props: {
+            avatar: {
+                type: String,
+                default: './img/default-avatar.png',
             },
-            modelValidations: {
-                firstName: {
-                    required: true,
-                    min: 2
+        },
+        data() {
+            return {
+                image: '',
+                single: null,
+                firstName: '',
+                lastName: '',
+                username: '',
+                password: '',
+                rPassword: '',
+                email: '',
+                touched: {
+                    firstName: false,
+                    lastName: false,
+                    username: false,
+                    password: false,
+                    rPassword: false,
                 },
-                lastName: {
-                    required: true,
-                    min: 2
+                modelValidations: {
+                    firstName: {
+                        required: true,
+                        min: 2,
+                    },
+                    lastName: {
+                        required: true,
+                        min: 2,
+                    },
+                    email: {
+                        required: true,
+                        email: true,
+                    },
+                    password: {
+                        required: true,
+                    },
+                    rPassword: {
+                        required: true,
+                        confirmed: 'password',
+                    },
+                    username: {
+                        required: true,
+                        min: 5,
+                    },
                 },
-                email: {
-                    required: true,
-                    email: true
-                },
-                password: {
-                    required: true
-                },
-                rPassword: {
-                    required: true,
-                    confirmed: "password"
-                },
-                username: {
-                    required: true,
-                    min: 5
+            };
+        },
+        methods: {
+            focusOn(ref) {
+                if (!this.$refs[ref]) {
+                    return;
                 }
-            }
-        };
-    },
-    methods: {
-        focusOn(ref) {
-            if (!this.$refs[ref]) {
-                return;
-            }
-            console.log(ref);
-            this.$refs[ref].$el.focus();
+                console.log(ref);
+                this.$refs[ref].$el.focus();
+            },
+            getError(fieldName) {
+                return this.errors.first(fieldName);
+            },
+            validate() {
+                return this.$validator.validateAll().then((res) => {
+                    this.$emit('on-validated', res);
+                    return res;
+                });
+            },
         },
-        getError(fieldName) {
-            return this.errors.first(fieldName);
+        watch: {
+            firstName() {
+                this.touched.firstName = true;
+            },
+            lastName() {
+                this.touched.lastName = true;
+            },
+            email() {
+                this.touched.email = true;
+            },
+            username() {
+                this.touched.username = true;
+            },
+            password() {
+                this.touched.password = true;
+            },
+            rPassword() {
+                this.touched.rPassword = true;
+            },
         },
-        validate() {
-            return this.$validator.validateAll().then(res => {
-                this.$emit("on-validated", res);
-                return res;
-            });
-        }
-    },
-    watch: {
-        firstName() {
-            this.touched.firstName = true;
-        },
-        lastName() {
-            this.touched.lastName = true;
-        },
-        email() {
-            this.touched.email = true;
-        },
-        username() {
-            this.touched.username = true;
-        },
-        password() {
-            this.touched.password = true;
-        },
-        rPassword() {
-            this.touched.rPassword = true;
-        }
-    }
-};
+    };
 </script>
 <style>
 </style>

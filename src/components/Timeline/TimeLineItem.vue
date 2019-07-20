@@ -38,28 +38,28 @@
   </li>
 </template>
 <script>
-  export default {
-    name: 'time-line-item',
-    props: {
-      inverted: Boolean,
-      badgeType: {
-        type: String,
-        default: 'success',
-      },
-      badgeColor: {
-        type: String,
-        default: '',
-      },
-      badgeIcon: {
-        type: String,
-        default: '',
-      },
-      badgeAvatar: {
-        type: Object,
-        default: () => ({ img: null, acronim: null, color: 'null' }),
-      },
-    },
-  };
+    export default {
+        name: 'time-line-item',
+        props: {
+            inverted: Boolean,
+            badgeType: {
+                type: String,
+                default: 'success',
+            },
+            badgeColor: {
+                type: String,
+                default: '',
+            },
+            badgeIcon: {
+                type: String,
+                default: '',
+            },
+            badgeAvatar: {
+                type: Object,
+                default: () => ({ img: null, acronim: null, color: 'null' }),
+            },
+        },
+    };
 </script>
 <style lang="scss" scoped>
 .timeline-badge{

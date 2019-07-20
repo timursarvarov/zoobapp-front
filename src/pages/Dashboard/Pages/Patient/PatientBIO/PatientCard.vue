@@ -7,7 +7,7 @@
                     <div class="md-layout-item md-layout md-size-100 avatart-wrapper">
                         <div class="md-layout-item  md-small-size-100 md-size-50  md-layout switch md-alignment-center-space-between">
                             <t-avatar-input
-                                :color="patientColor"
+                                :textToColor="patient.ID"
                                 :imageSrc="patient.avatar"
                                 :title="patient.firstName + ' ' + patient.lastName"
                                 :formTitle="'Add patient foto'"
@@ -180,10 +180,10 @@
     </div>
 </template>
 <script>
-    import { PATIENT_AVATAR_UPLOAD, PATIENT_UPDATE, NOTIFY } from '@/constants';
     import { mapGetters } from 'vuex';
     import { SlideYDownTransition } from 'vue2-transitions';
     import StarRating from 'vue-star-rating';
+    import { PATIENT_AVATAR_UPLOAD, PATIENT_UPDATE, NOTIFY } from '@/constants';
     import { TAvatarInput } from '@/components';
     // import generator from '@/svgImporter/jawSVGgenerator';
 

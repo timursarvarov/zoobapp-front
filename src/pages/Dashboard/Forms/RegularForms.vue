@@ -319,40 +319,40 @@
   </div>
 </template>
 <script>
-  export default {
-    components: {},
-    data() {
-      return {
-        layout1: null,
-        layout2: null,
-        layout3: null,
-        emailadress: null,
-        emailadress1: null,
-        placeholder: null,
-        password: null,
-        success: null,
-        error: null,
-        password1: null,
-        password2: null,
-        boolean: false,
-        disabled: null,
-        boolean1: false,
-        helper: null,
-        checkbox1: null,
-        checkbox2: null,
-        checkbox3: null,
-        checkbox4: null,
-        checkbox5: null,
-        checkbox6: true,
-        checkbox7: null,
-        checkbox8: true,
-        checkbox9: null,
-        radio: true,
-        radio1: true,
-        radio2: true,
-      };
-    },
-  };
+    export default {
+        components: {},
+        data() {
+            return {
+                layout1: null,
+                layout2: null,
+                layout3: null,
+                emailadress: null,
+                emailadress1: null,
+                placeholder: null,
+                password: null,
+                success: null,
+                error: null,
+                password1: null,
+                password2: null,
+                boolean: false,
+                disabled: null,
+                boolean1: false,
+                helper: null,
+                checkbox1: null,
+                checkbox2: null,
+                checkbox3: null,
+                checkbox4: null,
+                checkbox5: null,
+                checkbox6: true,
+                checkbox7: null,
+                checkbox8: true,
+                checkbox9: null,
+                radio: true,
+                radio1: true,
+                radio2: true,
+            };
+        },
+    };
 </script>
 <style lang="scss" scoped>
 .md-card .md-card-actions {

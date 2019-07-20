@@ -6,9 +6,10 @@
     </div>
 </template>
 
+
 <script>
-    import { AUTH_INIT } from '@/constants';
     import { mapGetters } from 'vuex';
+    import { AUTH_INIT } from '@/constants';
 
     export default {
         computed: {
@@ -22,7 +23,6 @@
         mounted() {
             this.$i18n.locale = this.lang;
             if (this.refreshTokenExist) {
-                console.log(this.refreshTokenExist);
                 this.$store.dispatch(AUTH_INIT);
             } else {
                 this.$router.push('/login');

@@ -113,7 +113,7 @@
             :teethSchema="teethSchema"
             :teethSystem="currentClinic.teethSystem"
             :isDialogVisible.sync="showAddItemWizard"
-            :itemType="currentType"
+            :currentType="currentType"
             :singleItemName="singleItemName"
         />
         </div>
@@ -122,6 +122,7 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     import {
         NOTIFY,
         PATIENT_DIAGNOSE_SET,
@@ -130,7 +131,7 @@
         PATIENT_PLAN_EDIT,
         PATIENT_PLAN_SET,
         PATIENT_PLANS_GET,
-        PATIENT_PROCEDURES_SET,
+        PATIENT_PROCEDURE_SET,
         PATIENT_ANAMNES_UPDATE,
         PATIENT_ANAMNES_SET,
         PATIENT_PROCEDURE_UPDATE,
@@ -138,7 +139,6 @@
         M,
     } from '@/constants';
     import PlanAddForm from './PlanAddForm.vue';
-    import { mapGetters } from 'vuex';
     import {
         TToothItems,
         Jaw,
@@ -276,6 +276,7 @@
                 });
             },
             saveItem(d) {
+                console.log(d);
                 if (d.id) {
                     if (this.currentType === 'diagnosis') {
                         this.saveEditedDiagnose(d);
@@ -309,9 +310,11 @@
                         });
                     }
                     if (this.currentType === 'procedures') {
-                        this.$store.dispatch(PATIENT_PROCEDURES_SET, {
-                            planId: this.currentPlan.ID,
+                        console.log(itemL)
+                        this.$store.dispatch(PATIENT_PROCEDURE_SET, {
+                            planID: this.currentPlan.ID,
                             procedure: itemL,
+                            patientID: this.patient.ID,
                         });
                         if (this.$refs['items-lists']) {
                             this.$refs['items-lists'].changeTabHeaders(this.currentPlan.ID);
@@ -335,9 +338,10 @@
                 };
                 procedureL.showInJaw = true;
                 procedureL.id = Math.random();
-                this.$store.dispatch(PATIENT_PROCEDURES_SET, {
-                    planId: this.currentPlan.ID,
+                this.$store.dispatch(PATIENT_PROCEDURE_SET, {
+                    planID: this.currentPlan.ID,
                     procedure: procedureL,
+                    patientID: this.patient.ID,
                 });
                 this.recalculateJaw();
             },

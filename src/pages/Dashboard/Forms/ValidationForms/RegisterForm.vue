@@ -101,58 +101,58 @@
   </form>
 </template>
 <script>
-  import { SlideYDownTransition } from 'vue2-transitions';
+    import { SlideYDownTransition } from 'vue2-transitions';
 
-  export default {
-    components: {
-      SlideYDownTransition,
-    },
-    data() {
-      return {
-        boolean: null,
-        email: '',
-        password: '',
-        confirmPassword: '',
-        touched: {
-          email: false,
-          password: false,
-          confirmPass: false,
+    export default {
+        components: {
+            SlideYDownTransition,
         },
-        modelValidations: {
-          email: {
-            required: true,
-            email: true,
-          },
-          password: {
-            required: true,
-            min: 5,
-          },
-          confirmPassword: {
-            required: true,
-            confirmed: 'password',
-          },
+        data() {
+            return {
+                boolean: null,
+                email: '',
+                password: '',
+                confirmPassword: '',
+                touched: {
+                    email: false,
+                    password: false,
+                    confirmPass: false,
+                },
+                modelValidations: {
+                    email: {
+                        required: true,
+                        email: true,
+                    },
+                    password: {
+                        required: true,
+                        min: 5,
+                    },
+                    confirmPassword: {
+                        required: true,
+                        confirmed: 'password',
+                    },
+                },
+            };
         },
-      };
-    },
-    methods: {
-      validate() {
-        this.$validator.validateAll().then((isValid) => {
-          this.$emit('on-submit', this.registerForm, isValid);
-        });
-      },
-    },
-    watch: {
-      email() {
-        this.touched.email = true;
-      },
-      password() {
-        this.touched.password = true;
-      },
-      confirmPassword() {
-        this.touched.confirmPass = true;
-      },
-    },
-  };
+        methods: {
+            validate() {
+                this.$validator.validateAll().then((isValid) => {
+                    this.$emit('on-submit', this.registerForm, isValid);
+                });
+            },
+        },
+        watch: {
+            email() {
+                this.touched.email = true;
+            },
+            password() {
+                this.touched.password = true;
+            },
+            confirmPassword() {
+                this.touched.confirmPass = true;
+            },
+        },
+    };
 </script>
 <style lang="scss" scoped>
 .md-card .md-card-actions {

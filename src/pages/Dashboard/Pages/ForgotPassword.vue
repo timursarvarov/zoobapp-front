@@ -50,8 +50,8 @@
   </div>
 </template>
 <script>
-    import { NOTIFY } from '@/constants';
     import { SlideYDownTransition } from 'vue2-transitions';
+    import { NOTIFY } from '@/constants';
 
     export default {
         components: {

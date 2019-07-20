@@ -66,12 +66,12 @@
     </div>
 </template>
 <script>
+    import { mapGetters } from 'vuex';
     import {
         TWizardAddBilling,
         AnimatedNumber,
     } from '@/components';
     import { USER_BILLING_COLUMNS } from '@/constants';
-    import { mapGetters } from 'vuex';
     import PatientBillingItems from './PatientBillingItems.vue';
     import PatientBillingInvoices from './PatientBillingInvoices.vue';
     import { tObjProp } from '@/mixins';

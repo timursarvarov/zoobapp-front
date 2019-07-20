@@ -101,7 +101,7 @@
                     patientId: this.$route.params.patientId,
                 }).then((patient) => {
                     if (patient) {
-                        document.title = `${patient.firstName} ${patient.lastName } ` + ' - ZoobApp';
+                        document.title = `${patient.firstName} ${patient.lastName} ` + ' - ZoobApp';
                     }
                 });
             }

@@ -50,49 +50,49 @@
 </template>
 
 <script>
-  export default {
-    name: 'product-card',
-    props: {
-      headerAnimation: {
-        type: String,
-        default: 'true',
-      },
-    },
-    data() {
-      return {
-        hoverCount: 0,
-        imgHovered: false,
-        fixedHeader: false,
-      };
-    },
-    computed: {
-      headerDown() {
-        return this.hoverCount > 15;
-      },
-    },
-    methods: {
-      headerBack() {
-        this.fixedHeader = false;
-      },
-      fixHeader() {
-        this.hoverCount = 0;
-        this.fixedHeader = true;
+    export default {
+        name: 'product-card',
+        props: {
+            headerAnimation: {
+                type: String,
+                default: 'true',
+            },
+        },
+        data() {
+            return {
+                hoverCount: 0,
+                imgHovered: false,
+                fixedHeader: false,
+            };
+        },
+        computed: {
+            headerDown() {
+                return this.hoverCount > 15;
+            },
+        },
+        methods: {
+            headerBack() {
+                this.fixedHeader = false;
+            },
+            fixHeader() {
+                this.hoverCount = 0;
+                this.fixedHeader = true;
 
-        setTimeout(this.headerBack, 480);
-      },
-      onMouseOver() {
-        if (this.headerAnimation === 'true') {
-          this.imgHovered = true;
-          this.hoverCount += 1;
-        }
-      },
-      onMouseLeave() {
-        if (this.headerAnimation === 'true') {
-          this.imgHovered = false;
-        }
-      },
-    },
-  };
+                setTimeout(this.headerBack, 480);
+            },
+            onMouseOver() {
+                if (this.headerAnimation === 'true') {
+                    this.imgHovered = true;
+                    this.hoverCount += 1;
+                }
+            },
+            onMouseLeave() {
+                if (this.headerAnimation === 'true') {
+                    this.imgHovered = false;
+                }
+            },
+        },
+    };
 </script>
 
 <style lang="scss">

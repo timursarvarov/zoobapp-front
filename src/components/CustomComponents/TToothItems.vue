@@ -46,7 +46,7 @@
                                             <t-avatar
                                                 class="author-avatar"
                                                 :small="true"
-                                                :color="item.author.color"
+                                                :textToColor="item.author.ID"
                                                 :imageSrc="item.author.avatar"
                                                 :title="item.author.firstName + ' ' + item.author.lastName"
                                             />
@@ -177,8 +177,8 @@
 </template>
 <script>
     import {
- Tooth, TAvatar, TFilesList, TFilePreview 
-} from '@/components';
+        Tooth, TAvatar, TFilesList, TFilePreview,
+    } from '@/components';
     import {
         TEETH_ADDULT_ALL,
         TEETH_DEFAULT_LOCATIONS,
@@ -297,9 +297,9 @@
             showEmptyState() {
                 if (
                     (this.item.description && this.item.description.length > 0)
-                || (this.item.manipulations
+                    || (this.item.manipulations
                     && this.item.manipulations.length > 0)
-                || (this.files && this.files.length > 0)
+                    || (this.files && this.files.length > 0)
                 ) {
                     return true;
                 }
@@ -337,7 +337,7 @@
                 this.patientItems.forEach((diagnose) => {
                     if (
                         diagnose.teeth
-                    && Object.keys(diagnose.teeth).includes(this.toothId)
+                        && Object.keys(diagnose.teeth).includes(this.toothId)
                     ) {
                         diagnosis.push(diagnose);
                     }

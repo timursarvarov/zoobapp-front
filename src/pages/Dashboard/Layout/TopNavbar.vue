@@ -19,7 +19,7 @@
                     >
                         <t-avatar
                             class="patient-header-avatar"
-                            :color="patient.color"
+                            :textToColor="patient.ID"
                             :imageSrc="patient.avatar"
                             :title="patient.firstName + ' ' + patient.lastName"
                         />
@@ -54,7 +54,11 @@
 
                 <cool-select
                     class="patient-select with-action with-subline md-field"
-                    :class="[{'md-focused': coolSelectFocus || searchTerm}]"
+                    :class="[
+                    {'md-focused': coolSelectFocus || searchTerm},
+                    {'no-after-no-before': searching}
+                    ]"
+                    style="width:300px;"
                     @focus="coolSelectFocus = true"
                     @blur="coolSelectFocus = false"
                     tabindex="0"
@@ -78,51 +82,48 @@
                             class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                         >
                             <md-icon class="success">close</md-icon>
-                        </md-button>
+                    </md-button>
                     </template>
                     <template slot="input-start">
                         <label for="input">Search for patient</label>
                     </template>
-                    <template slot="input-end">
-                        <div class="input-end">
-                            <md-progress-spinner
-                                v-if="searching"
-                                :md-diameter="30"
-                                :md-stroke="2"
-                                md-mode="indeterminate"
-                            ></md-progress-spinner>
-                        </div>
+                    <template slot="input-after">
+                        <md-progress-bar
+                            v-if="searching"
+                            class="underline-progress-bar"
+                            :md-stroke="2"
+                        md-mode="indeterminate"></md-progress-bar>
                     </template>
-
                     <template slot="no-data">
-                        <div v-if="noData">
-                            <div class="md-layout">
-                             <div
-                                class="md-size-100 md-layout md-alignment-center-center"
-                                style="white-space: pre-wrap;oveflow:hidden; padding: 15px 0;"
-                            >
-                                <span
-                                    class="md-layout-item"
-                                >No patients matching "{{ searchText }}" were found.</span>
-                            </div>
-                            <div class="md-layout-item md-size-100">
-                                <md-button
-                                    class="md-success md-layout-item mx-auto md-sm"
-                                    @click="showPatientAddForm()"
-                                >Create patient</md-button>
-                            </div>
-                            </div>
-                        </div>
-                        <div v-else-if="!serverError && (!noData || searchText.length<3)">
+                         <div v-if="!serverError && ( searchText.length<3)">
                             <div class="md-layout">
                                 <div
                                 >
                                     <md-subheader>
                                     Type at least 3 letters to search by phone, email or name
                                     </md-subheader>
-                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div v-else-if="noData">
+                            <div class="md-layout">
+                            <div
+                                class="md-size-100 md-layout md-alignment-center-center"
+                                style="white-space: pre-wrap;oveflow:hidden; padding: 0 0 15px 0;"
+                            >
+                                <span
+                                    class="md-layout-item"
+                                >No patients matching "{{ searchText }}" were found.</span>
+                            </div>
+                            <div class="md-layout md-layout-item md-alignment-center md-size-100">
+                                <md-button
+                                    class="md-success md-sm"
+                                    @click="showPatientAddForm()"
+                                >Create patient</md-button>
+                            </div>
+                            </div>
+                        </div>
+
                         <div v-else-if="serverError" >
                             <md-subheader>
                                 Connection problems
@@ -139,17 +140,19 @@
                             <md-button class="IZ-select-button btn-avatar">
                                 <t-avatar
                                     class="search-avatar"
-                                    :color="item.color"
+                                    :textToColor="item.ID"
                                     :imageSrc="item.avatar"
                                     :title="item.firstName + ' ' + item.lastName"
-                                    :notification="item.allergy ? 'A' : ''"
+                                    :notification="item.allergy && item.allergy.length ? 'A' : ''"
                                 />
                                 <div class="md-serched-list-item-text text-left">
-                                    <small >
+                                    <span >
                                         {{ item.firstName | capitilize}} {{ item.lastName | capitilize }}
                                         <br />
-                                    </small>
-                                    <small v-if="item.phone">{{ "+" + item.phone }}</small>
+                                    </span>
+                                    <span v-if="item.phone">
+                                        {{ "+" + item.phone }}
+                                    </span>
                                 </div>
                                 <!-- <span class="text-right" >{{`${item.phone}`}} {{currnentClinic.currencyCode}}</span> -->
                             </md-button>
@@ -290,7 +293,17 @@
                                                 >&nbsp;{{$i18n.locale}}</span>
                                             </a>
                                             <ul class="dropdown-menu">
-                                                <li
+                                                <li v-for="(loc, index) in $i18n.availableLocales" :key="index"
+                                                    @click="$i18n.locale = loc "
+                                                    :class="[{'selected-menu-top-navbar': $i18n.locale === loc }]"
+                                                >
+                                                    <a
+                                                        @click="multiLevel1 = !multiLevel1"
+                                                        :style="{color:  $i18n.locale === loc ? '#fff!important': ''}"
+                                                        href="#"
+                                                    >{{loc}}</a>
+                                                </li>
+                                                <!-- <li
                                                     @click="$i18n.locale = 'ru' "
                                                     :class="[{'selected-menu-top-navbar': $i18n.locale === 'ru' }]"
                                                 >
@@ -319,7 +332,7 @@
                                                         :style="{color:  $i18n.locale === 'uz' ? '#fff!important': ''}"
                                                         href="#"
                                                     >uz</a>
-                                                </li>
+                                                </li> -->
                                             </ul>
                                         </li>
                                         <li>

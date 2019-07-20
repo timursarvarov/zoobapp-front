@@ -38,7 +38,7 @@ import AnimatedNumber from './AnimatedNumber.vue';
 // Custom components
 import SidebarPluginJaw from './CustomComponents/SidebarPluginJaw';
 import TTabs from './CustomComponents/TTabs.vue';
-import SimpleWizard from './CustomComponents/Wizard/Wizard.vue';
+import SimpleWizard from './CustomComponents/TWizard/Wizard.vue';
 import IconAdult from './CustomComponents/JawIcons/Icons/Adult.vue';
 import IconBase from './CustomComponents/JawIcons/IconBase.vue';
 import IconAnalgesic from './CustomComponents/JawIcons/Icons/Analgesic.vue';
@@ -112,7 +112,7 @@ import TFilesAddForm from './CustomComponents/TFilesAddForm.vue';
 import TPrintForm from './CustomComponents/TPrintForm/TPrintForm.vue';
 import TWuswug from './CustomComponents/TWuswug.vue';
 import TWizardAddBilling from './CustomComponents/TWizardBilling/TWizardAddBilling.vue';
-import TWizardAddItem from './CustomComponents/TWizard/TWizardAddItem.vue';
+import TWizardAddItem from './CustomComponents/TWizardAddItem/TWizardAddItem.vue';
 import TCalendar from './CustomComponents/TCalendar.vue';
 
 // For Dev Use Only

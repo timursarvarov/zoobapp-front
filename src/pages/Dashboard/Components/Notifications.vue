@@ -321,56 +321,56 @@
 </template>
 
 <script>
-  import { Modal } from '@/components';
+    import { Modal } from '@/components';
 
-  export default {
-    components: {
-      Modal,
-    },
-    props: {
-      registerImg: {
-        type: String,
-        default: './img/card-1.jpg',
-      },
-      applyImg: {
-        type: String,
-        default: './img/card-2.jpg',
-      },
-    },
-    data() {
-      return {
-        type: ['', 'info', 'success', 'warning', 'danger'],
-        notifications: {
-          topCenter: false,
+    export default {
+        components: {
+            Modal,
         },
-        classicModal: false,
-        noticeModal: false,
-        smallAlertModal: false,
-      };
-    },
-    methods: {
-      notifyVue(verticalAlign, horizontalAlign) {
-        const color = Math.floor(Math.random() * 4 + 1);
-        this.$notify({
-          message:
-            'Welcome to <b>Vue Material Dashboard Pro</b> - a beautiful admin panel for every web developer.',
-          icon: 'add_alert',
-          horizontalAlign,
-          verticalAlign,
-          type: this.type[color],
-        });
-      },
-      classicModalHide() {
-        this.classicModal = false;
-      },
-      noticeModalHide() {
-        this.noticeModal = false;
-      },
-      smallAlertModalHide() {
-        this.smallAlertModal = false;
-      },
-    },
-  };
+        props: {
+            registerImg: {
+                type: String,
+                default: './img/card-1.jpg',
+            },
+            applyImg: {
+                type: String,
+                default: './img/card-2.jpg',
+            },
+        },
+        data() {
+            return {
+                type: ['', 'info', 'success', 'warning', 'danger'],
+                notifications: {
+                    topCenter: false,
+                },
+                classicModal: false,
+                noticeModal: false,
+                smallAlertModal: false,
+            };
+        },
+        methods: {
+            notifyVue(verticalAlign, horizontalAlign) {
+                const color = Math.floor(Math.random() * 4 + 1);
+                this.$notify({
+                    message:
+                        'Welcome to <b>Vue Material Dashboard Pro</b> - a beautiful admin panel for every web developer.',
+                    icon: 'add_alert',
+                    horizontalAlign,
+                    verticalAlign,
+                    type: this.type[color],
+                });
+            },
+            classicModalHide() {
+                this.classicModal = false;
+            },
+            noticeModalHide() {
+                this.noticeModal = false;
+            },
+            smallAlertModalHide() {
+                this.smallAlertModal = false;
+            },
+        },
+    };
 </script>
 <style lang="scss">
 .text-center {

@@ -30,12 +30,14 @@
     </div>
 </template>
 <script>
+    const randomMC = require('random-material-color');
+
     export default {
         name: 't-avatar',
         props: {
-            color: {
-                type: String,
-                default: '#43a047',
+            textToColor: {
+                type: [String, Number],
+                default: null,
             },
             notification: {
                 type: String,
@@ -61,6 +63,7 @@
         data() {
             return {
                 loaded: false,
+                randomMC: '',
             };
         },
         methods: {
@@ -95,17 +98,21 @@
             },
         },
         computed: {
-            colorC() {
-                return this.color || '#43a047';
+            computedColor() {
+                const color = this.randomMC.getColor({ text: `${this.textToColor}` });
+                return color;
             },
             gradient() {
                 let colors = 'linear-gradient(45deg';
-                const colorStart = this.colorLuminance(this.colorC, -0.6);
-                const colorEnd = this.colorLuminance(this.colorC, 0.6);
+                const colorStart = this.colorLuminance(this.computedColor, -0.6);
+                const colorEnd = this.colorLuminance(this.computedColor, 0.6);
                 colors += `,${colorStart},${colorEnd}`;
                 colors += ')';
                 return colors;
             },
+        },
+        created() {
+            this.randomMC = randomMC;
         },
     };
 </script>
@@ -114,13 +121,13 @@
     margin: 6px;
     position: relative;
     width: fit-content;
-    .notification {
+    span.notification {
         z-index: 20;
         position: absolute;
         top: -6px !important;
         border: 1px solid #fff;
         right: -8px !important;
-        font-size: 9px;
+        font-size: 12px!important;
         background: #f44336;
         color: #ffffff;
         min-width: 20px;
@@ -128,8 +135,16 @@
         height: 20px;
         border-radius: 10px;
         text-align: center;
-        line-height: 17px;
+        line-height: 20px!important;
         display: block;
+    }
+    .md-small{
+          .avatar-acronim-wrapper {
+                font-size: 16px!important;
+                &.tripple-acr {
+                    font-size: 16px!important;
+                }
+            }
     }
     .t-avatar.md-avatar {
         .wrapper {
@@ -167,10 +182,12 @@
                 }
             }
             .avatar-acronim-wrapper {
+                font-size: 24px;
+                font-weight: 200;
                 height: 100%;
                 text-align: center;
                 &.tripple-acr {
-                    font-size: 20px;
+                    font-size: 16px!important;
                 }
                 .avatar-acronim {
                     text-align: center;

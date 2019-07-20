@@ -248,12 +248,12 @@
   </div>
 </template>
 <script>
-  import { Tabs, Collapse } from '@/components';
+    import { Tabs, Collapse } from '@/components';
 
-  export default {
-    components: {
-      Tabs,
-      Collapse,
-    },
-  };
+    export default {
+        components: {
+            Tabs,
+            Collapse,
+        },
+    };
 </script>

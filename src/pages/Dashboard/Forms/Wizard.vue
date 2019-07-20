@@ -32,41 +32,41 @@
   </div>
 </template>
 <script>
-  import FirstStep from './Wizard/FirstStep.vue';
-  import SecondStep from './Wizard/SecondStep.vue';
-  import ThirdStep from './Wizard/ThirdStep.vue';
-  // import swal from 'sweetalert2';
-  import { SimpleWizard, WizardTab } from '@/components';
+    import FirstStep from './Wizard/FirstStep.vue';
+    import SecondStep from './Wizard/SecondStep.vue';
+    import ThirdStep from './Wizard/ThirdStep.vue';
+    // import swal from 'sweetalert2';
+    import { SimpleWizard, WizardTab } from '@/components';
 
-  export default {
-    data() {
-      return {
-        wizardModel: {},
-      };
-    },
-    components: {
-      FirstStep,
-      SecondStep,
-      ThirdStep,
-      SimpleWizard,
-      WizardTab,
-    },
-    methods: {
-      validateStep(ref) {
-        return this.$refs[ref].validate();
-      },
-      onStepValidated(validated, model) {
-        this.wizardModel = { ...this.wizardModel, ...model };
-      },
-      wizardComplete() {
-        // swal({
-        //   title: 'Good job!',
-        //   text: 'You clicked the finish button!',
-        //   type: 'success',
-        //   confirmButtonClass: 'md-button md-success',
-        //   buttonsStyling: false,
-        // });
-      },
-    },
-  };
+    export default {
+        data() {
+            return {
+                wizardModel: {},
+            };
+        },
+        components: {
+            FirstStep,
+            SecondStep,
+            ThirdStep,
+            SimpleWizard,
+            WizardTab,
+        },
+        methods: {
+            validateStep(ref) {
+                return this.$refs[ref].validate();
+            },
+            onStepValidated(validated, model) {
+                this.wizardModel = { ...this.wizardModel, ...model };
+            },
+            wizardComplete() {
+                // swal({
+                //   title: 'Good job!',
+                //   text: 'You clicked the finish button!',
+                //   type: 'success',
+                //   confirmButtonClass: 'md-button md-success',
+                //   buttonsStyling: false,
+                // });
+            },
+        },
+    };
 </script>

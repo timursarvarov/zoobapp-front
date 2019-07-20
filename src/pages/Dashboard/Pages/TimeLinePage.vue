@@ -113,45 +113,45 @@
   </div>
 </template>
 <script>
-  import { TimeLine, TimeLineItem, Badge } from '@/components';
+    import { TimeLine, TimeLineItem, Badge } from '@/components';
 
-  export default {
-    components: {
-      TimeLine,
-      TimeLineItem,
-      Badge,
-    },
-    data() {
-      return {
-        responsive: false,
-      };
-    },
-    computed: {
-      simpleTimeline() {
-        if (this.responsive) {
-          const simple = 'simple';
-          return simple;
-        }
-        return false;
-      },
-    },
-    methods: {
-      onResponsiveInverted() {
-        if (window.innerWidth < 768) {
-          this.responsive = true;
-        } else {
-          this.responsive = false;
-        }
-      },
-    },
-    mounted() {
-      this.onResponsiveInverted();
-      window.addEventListener('resize', this.onResponsiveInverted);
-    },
-    beforeDestroy() {
-      window.removeEventListener('resize', this.onResponsiveInverted);
-    },
-  };
+    export default {
+        components: {
+            TimeLine,
+            TimeLineItem,
+            Badge,
+        },
+        data() {
+            return {
+                responsive: false,
+            };
+        },
+        computed: {
+            simpleTimeline() {
+                if (this.responsive) {
+                    const simple = 'simple';
+                    return simple;
+                }
+                return false;
+            },
+        },
+        methods: {
+            onResponsiveInverted() {
+                if (window.innerWidth < 768) {
+                    this.responsive = true;
+                } else {
+                    this.responsive = false;
+                }
+            },
+        },
+        mounted() {
+            this.onResponsiveInverted();
+            window.addEventListener('resize', this.onResponsiveInverted);
+        },
+        beforeDestroy() {
+            window.removeEventListener('resize', this.onResponsiveInverted);
+        },
+    };
 </script>
 <style>
 </style>

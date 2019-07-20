@@ -107,8 +107,8 @@
 
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
-    import CustomCollapse from './CustomCollapse';
     import Fuse from 'fuse.js';
+    import CustomCollapse from './CustomCollapse';
     import { tObjProp } from '@/mixins';
 
     const fuseOptions = {

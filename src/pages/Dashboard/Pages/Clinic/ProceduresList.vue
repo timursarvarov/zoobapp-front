@@ -133,9 +133,9 @@
 </template>
 
 <script>
-    import { Pagination } from '@/components';
     import { mapGetters } from 'vuex';
     import Fuse from 'fuse.js';
+    import { Pagination } from '@/components';
     // import swal from 'sweetalert2';
 
     export default {

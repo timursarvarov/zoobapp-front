@@ -102,7 +102,7 @@
                             >
                                 <div v-if="field.key === 'avatar'">
                                     <t-avatar
-                                        :color="item.color"
+                                        :textToColor="item.ID"
                                         :imageSrc="item.avatar"
                                         :title="item.firstName + ' ' + item.lastName"
                                     />
@@ -130,7 +130,7 @@
                                         >
                                             <t-avatar
                                                 :small="true"
-                                                :color="item[field.key].color"
+                                                :textToColor="item[field.key].ID"
                                                 :imageSrc="item[field.key].avatar"
                                                 :title="item[field.key].firstName + ' ' + item[field.key].lastName"
                                             />
@@ -263,11 +263,11 @@
 
 <script>
 // import { mapFilters } from '@/filters/map-filters';
+    import StarRating from 'vue-star-rating';
+    import { mapGetters } from 'vuex';
     import { Pagination, TAvatar, TTableEditor } from '@/components';
     import ClinicAddForm from './ClinicAddForm.vue';
-    import StarRating from 'vue-star-rating';
     // import swal from 'sweetalert2';
-    import { mapGetters } from 'vuex';
     import { PATIENTS_REQUEST } from '@/constants';
     import { tObjProp } from '@/mixins';
 

@@ -12,13 +12,14 @@
 </template>
 
 <script>
-import { EditProfileForm, UserCard } from "@/pages";
-export default {
-  components: {
-    EditProfileForm,
-    UserCard
-  }
-};
+    import { EditProfileForm, UserCard } from '@/pages';
+
+    export default {
+        components: {
+            EditProfileForm,
+            UserCard,
+        },
+    };
 </script>
 <style lang="scss">
 .text-right {

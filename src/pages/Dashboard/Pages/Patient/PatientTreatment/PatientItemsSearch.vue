@@ -66,6 +66,7 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     import {
         NOTIFY,
         USER_SET_PARAM,
@@ -75,7 +76,6 @@
         CLINIC_MANIPULATIONS_GET,
         CLINIC_SET_PROP,
     } from '@/constants';
-    import { mapGetters } from 'vuex';
     import {
         TCollapseSearch,
     } from '@/components';
@@ -264,6 +264,7 @@
                             filteredItems[groupIndex].codes.push({
                                 ...LOCATIONS[item.templateID],
                                 code: item.code,
+                                ID: item.ID,
                                 title: this.$t(`${localType}.${item.ID}.title`),
                                 description: this.$t(
                                     `${localType}.${item.ID}.description`,
@@ -274,6 +275,7 @@
                                 ...LOCATIONS[item.templateID],
                                 defaultManipulations: item.defaultManipulations,
                                 code: item.code,
+                                ID: item.ID,
                                 title: this.$t(`${localType}.${item.ID}.title`),
                                 description: this.$t(
                                     `${localType}.${item.ID}.description`,

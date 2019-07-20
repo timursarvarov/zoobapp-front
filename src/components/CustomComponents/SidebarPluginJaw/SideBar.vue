@@ -20,7 +20,7 @@
         :style="[{'margin-top': notification ? '-11px': '-8px'}]"
         >
         <t-avatar
-          :color="logoColor"
+          :textToColor="title"
           :title="title"
           :imageSrc="logo"
           :notification="notification"
@@ -72,100 +72,100 @@
   </div>
 </template>
 <script>
-        import { TAvatar } from '@/components';
+    import { TAvatar } from '@/components';
 
-        export default {
-            components: {
-                TAvatar,
+    export default {
+        components: {
+            TAvatar,
+        },
+        name: 'sidebar',
+        props: {
+            logoColor: {
+                type: String,
+                default: '#790e8b',
             },
-            name: 'sidebar',
-            props: {
-                logoColor: {
-                    type: String,
-                    default: '#790e8b',
-                },
-                title: {
-                    type: String,
-                    default: 'Vue MD PRO',
-                },
-                link: {
-                    type: String,
-                    default: '#',
-                },
-                notification: {
-                    type: String,
-                    default: '',
-                },
-                rtlTitle: {
-                    type: String,
-                    default: 'توقيت الإبداعية',
-                },
-                activeColor: {
-                    type: String,
-                    default: 'green',
-                    validator: (value) => {
-                        const acceptedValues = [
-                            '',
-                            'primary',
-                            'azure',
-                            'green',
-                            'orange',
-                            'danger',
-                            'rose',
-                        ];
-                        return acceptedValues.indexOf(value) !== -1;
-                    },
-                },
-                backgroundImage: {
-                    type: String,
-                    default: './img/sidebar-6.jpg',
-                },
-                backgroundColor: {
-                    type: String,
-                    default: 'black',
-                    validator: (value) => {
-                        const acceptedValues = ['', 'black', 'white', 'red'];
-                        return acceptedValues.indexOf(value) !== -1;
-                    },
-                },
-                logo: {
-                    type: String,
-                    default: './img/vue-logo.png',
-                },
-                sidebarLinks: {
-                    type: Array,
-                    default: () => [],
-                },
-                autoClose: {
-                    type: Boolean,
-                    default: true,
+            title: {
+                type: String,
+                default: 'Vue MD PRO',
+            },
+            link: {
+                type: String,
+                default: '#',
+            },
+            notification: {
+                type: String,
+                default: '',
+            },
+            rtlTitle: {
+                type: String,
+                default: 'توقيت الإبداعية',
+            },
+            activeColor: {
+                type: String,
+                default: 'green',
+                validator: (value) => {
+                    const acceptedValues = [
+                        '',
+                        'primary',
+                        'azure',
+                        'green',
+                        'orange',
+                        'danger',
+                        'rose',
+                    ];
+                    return acceptedValues.indexOf(value) !== -1;
                 },
             },
-            provide() {
-                return {
-                    autoClose: this.autoClose,
-                };
+            backgroundImage: {
+                type: String,
+                default: './img/sidebar-6.jpg',
             },
-            methods: {
-                minimizeSidebar() {
-                    if (this.$sidebar) {
-                        this.$sidebar.toggleMinimize();
-                    }
+            backgroundColor: {
+                type: String,
+                default: 'black',
+                validator: (value) => {
+                    const acceptedValues = ['', 'black', 'white', 'red'];
+                    return acceptedValues.indexOf(value) !== -1;
                 },
             },
-            computed: {
-                sidebarStyle() {
-                    return {
-                        backgroundImage: `url(${this.backgroundImage})`,
-                    };
-                },
+            logo: {
+                type: String,
+                default: './img/vue-logo.png',
             },
-            beforeDestroy() {
-                if (this.$sidebar.showSidebar) {
-                    this.$sidebar.showSidebar = false;
+            sidebarLinks: {
+                type: Array,
+                default: () => [],
+            },
+            autoClose: {
+                type: Boolean,
+                default: true,
+            },
+        },
+        provide() {
+            return {
+                autoClose: this.autoClose,
+            };
+        },
+        methods: {
+            minimizeSidebar() {
+                if (this.$sidebar) {
+                    this.$sidebar.toggleMinimize();
                 }
             },
-        };
+        },
+        computed: {
+            sidebarStyle() {
+                return {
+                    backgroundImage: `url(${this.backgroundImage})`,
+                };
+            },
+        },
+        beforeDestroy() {
+            if (this.$sidebar.showSidebar) {
+                this.$sidebar.showSidebar = false;
+            }
+        },
+    };
 </script>
 <style lang="scss">
 @media (min-width: 992px) {

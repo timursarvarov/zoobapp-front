@@ -6,16 +6,16 @@
   </md-card>
 </template>
 <script>
-  export default {
-    name: 'time-line',
-    props: {
-      plain: Boolean,
-      type: {
-        type: String,
-        default: '',
-      },
-    },
-  };
+    export default {
+        name: 'time-line',
+        props: {
+            plain: Boolean,
+            type: {
+                type: String,
+                default: '',
+            },
+        },
+    };
 </script>
 <style>
 </style>

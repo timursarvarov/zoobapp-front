@@ -36,54 +36,54 @@
 </template>
 
 <script>
-        import { CollapseTransition } from 'vue2-transitions';
+    import { CollapseTransition } from 'vue2-transitions';
 
-        export default {
-            name: 'collapse',
-            components: {
-                CollapseTransition,
+    export default {
+        name: 'collapse',
+        components: {
+            CollapseTransition,
+        },
+        props: {
+            collapse: Array,
+            icon: String,
+            colorCollapse: String,
+            toggleAll: Boolean,
+        },
+        data() {
+            return {
+                isActive: 1,
+            };
+        },
+        methods: {
+            getActiveCollapse(index) {
+                if (this.toggleAll) {
+                    return true;
+                }
+                return this.isActive === index;
             },
-            props: {
-                collapse: Array,
-                icon: String,
-                colorCollapse: String,
-                toggleAll: Boolean,
-            },
-            data() {
+            activeCollapse(index) {
                 return {
-                    isActive: 1,
+                    'is-active': this.isActive === index,
                 };
             },
-            methods: {
-                getActiveCollapse(index) {
-                    if (this.toggleAll) {
-                        return true;
-                    }
-                    return this.isActive === index;
-                },
-                activeCollapse(index) {
-                    return {
-                        'is-active': this.isActive === index,
-                    };
-                },
-                toggle(index) {
-                    if (index === this.isActive) {
-                        this.isActive = 0;
-                    } else {
-                        this.isActive = index;
-                    }
-                },
-                getCollapseContent(index) {
-                    return `md-collapse-pane-${index}`;
-                },
-                getColorCollapse(colorCollapse) {
-                    if (!this.toggleAll) {
-                        return `md-${colorCollapse}`;
-                    }
-                    return false;
-                },
+            toggle(index) {
+                if (index === this.isActive) {
+                    this.isActive = 0;
+                } else {
+                    this.isActive = index;
+                }
             },
-        };
+            getCollapseContent(index) {
+                return `md-collapse-pane-${index}`;
+            },
+            getColorCollapse(colorCollapse) {
+                if (!this.toggleAll) {
+                    return `md-${colorCollapse}`;
+                }
+                return false;
+            },
+        },
+    };
 </script>
 
 <style lang="scss" scoped>

@@ -77,11 +77,11 @@
     </div>
 </template>
 <script>
-    import { NOTIFY } from '@/constants';
     import { SlideYDownTransition } from 'vue2-transitions';
+    import { mapGetters } from 'vuex';
+    import { NOTIFY } from '@/constants';
     import { IconBase } from '@/components';
     import { ImageCropperForm } from '@/pages';
-    import { mapGetters } from 'vuex';
 
     export default {
         components: {

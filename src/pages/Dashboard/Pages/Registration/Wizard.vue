@@ -54,13 +54,13 @@
     </div>
 </template>
 <script>
+    import { mapGetters } from 'vuex';
     import GetEmail from './Wizard/GetEmail.vue';
     import CheckEmail from './Wizard/CheckEmail.vue';
     import SetAccount from './Wizard/SetAccount.vue';
     import SetClinic from './Wizard/SetClinic.vue';
     // import swal from 'sweetalert2';
     import { SimpleWizard, WizardTab } from '@/components';
-    import { mapGetters } from 'vuex';
     import {
         USER_REGISTER,
         NOTIFY,

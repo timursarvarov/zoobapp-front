@@ -24,7 +24,7 @@
                             @select="setManipulation"
                         >
                             <template slot="input-end">
-                                 <md-button
+                                <md-button
                                     @click="selectedManipulations = null"
                                     tabindex="-1"
                                     v-show="selectedManipulations"
@@ -179,8 +179,8 @@
 </template>
 <script>
 // eslint-disable-next-line import/no-unresolved
-    import { AnimatedNumber } from '@/components';
     import { CoolSelect } from 'vue-cool-select';
+    import { AnimatedNumber } from '@/components';
 
     export default {
         value: {
@@ -311,7 +311,6 @@
                 });
             },
             setManipulation(manipulation, initiated) {
-                console.log(manipulation);
                 this.manipulationToAdd = manipulation;
                 this.manipulationsPrice = manipulation.price;
                 this.manipulationsNum = this.selectedTeethNum;

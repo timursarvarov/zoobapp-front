@@ -173,224 +173,224 @@
 </template>
 
 <script>
-  import { ChartCard } from '@/components';
+    import { ChartCard } from '@/components';
 
-  export default {
-    components: {
-      ChartCard,
-    },
-    data() {
-      return {
-        roundedLineChart: {
-          data: {
-            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-            series: [[12, 17, 7, 17, 23, 18, 38]],
-          },
-          options: {
-            lineSmooth: this.$Chartist.Interpolation.cardinal({
-              tension: 10,
-            }),
-            axisX: {
-              showGrid: false,
-            },
-            low: 0,
-            high: 50,
-            // creative tim: we recommend you to set the high
-            // sa the biggest value + something for a better look
-            chartPadding: {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-            },
-            showPoint: false,
-          },
+    export default {
+        components: {
+            ChartCard,
         },
-        straightLinesChart: {
-          data: {
-            labels: [
-              "'07",
-              "'08",
-              "'09",
-              "'10",
-              "'11",
-              "'12",
-              "'13",
-              "'14",
-              "'15",
-            ],
-            series: [[10, 16, 8, 13, 20, 15, 20, 34, 30]],
-          },
+        data() {
+            return {
+                roundedLineChart: {
+                    data: {
+                        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+                        series: [[12, 17, 7, 17, 23, 18, 38]],
+                    },
+                    options: {
+                        lineSmooth: this.$Chartist.Interpolation.cardinal({
+                            tension: 10,
+                        }),
+                        axisX: {
+                            showGrid: false,
+                        },
+                        low: 0,
+                        high: 50,
+                        // creative tim: we recommend you to set the high
+                        // sa the biggest value + something for a better look
+                        chartPadding: {
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                            left: 0,
+                        },
+                        showPoint: false,
+                    },
+                },
+                straightLinesChart: {
+                    data: {
+                        labels: [
+                            "'07",
+                            "'08",
+                            "'09",
+                            "'10",
+                            "'11",
+                            "'12",
+                            "'13",
+                            "'14",
+                            "'15",
+                        ],
+                        series: [[10, 16, 8, 13, 20, 15, 20, 34, 30]],
+                    },
 
-          options: {
-            lineSmooth: this.$Chartist.Interpolation.cardinal({
-              tension: 0,
-            }),
-            low: 0,
-            high: 50,
-            // creative tim: we recommend you to set the high
-            // sa the biggest value + something for a better look
-            chartPadding: {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-            },
-            classNames: {
-              point: 'ct-point ct-white',
-              line: 'ct-line ct-white',
-            },
-          },
-        },
-        simpleBarChart: {
-          data: {
-            labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-            series: [[542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]],
-          },
-          options: {
-            seriesBarDistance: 10,
-            axisX: {
-              showGrid: false,
-            },
-          },
-          responsiveOptions: [
-            [
-              'screen and (max-width: 640px)',
-              {
-                seriesBarDistance: 5,
-                axisX: {
-                  labelInterpolationFnc(value) {
-                    return value[0];
-                  },
+                    options: {
+                        lineSmooth: this.$Chartist.Interpolation.cardinal({
+                            tension: 0,
+                        }),
+                        low: 0,
+                        high: 50,
+                        // creative tim: we recommend you to set the high
+                        // sa the biggest value + something for a better look
+                        chartPadding: {
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                            left: 0,
+                        },
+                        classNames: {
+                            point: 'ct-point ct-white',
+                            line: 'ct-line ct-white',
+                        },
+                    },
                 },
-              },
-            ],
-          ],
-        },
-        colouredLineChart: {
-          data: {
-            labels: [
-              "'06",
-              "'07",
-              "'08",
-              "'09",
-              "'10",
-              "'11",
-              "'12",
-              "'13",
-              "'14",
-              "'15",
-            ],
-            series: [[287, 480, 290, 554, 690, 690, 500, 752, 650, 900, 944]],
-          },
-          options: {
-            lineSmooth: this.$Chartist.Interpolation.cardinal({
-              tension: 10,
-            }),
-            axisY: {
-              showGrid: true,
-              offset: 40,
-            },
-            axisX: {
-              showGrid: false,
-            },
-            low: 0,
-            high: 1000,
-            showPoint: true,
-            height: '300px',
-          },
-        },
-        colouredBarsChart: {
-          data: {
-            labels: [
-              "'06",
-              "'07",
-              "'08",
-              "'09",
-              "'10",
-              "'11",
-              "'12",
-              "'13",
-              "'14",
-              "'15",
-            ],
-            series: [
-              [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944],
-              [67, 152, 143, 287, 335, 435, 437, 539, 542, 544, 647],
-              [23, 113, 67, 190, 239, 307, 308, 439, 410, 410, 509],
-            ],
-          },
-          options: {
-            lineSmooth: this.$Chartist.Interpolation.cardinal({
-              tension: 10,
-            }),
-            axisY: {
-              showGrid: true,
-              offset: 40,
-            },
-            axisX: {
-              showGrid: false,
-            },
-            low: 0,
-            high: 1000,
-            showPoint: true,
-            height: '300px',
-          },
-        },
-        multipleBarsChart: {
-          data: {
-            labels: [
-              'Jan',
-              'Feb',
-              'Mar',
-              'Apr',
-              'Mai',
-              'Jun',
-              'Jul',
-              'Aug',
-              'Sep',
-              'Oct',
-              'Nov',
-              'Dec',
-            ],
-            series: [
-              [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-              [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695],
-            ],
-          },
-          options: {
-            seriesBarDistance: 10,
-            axisX: {
-              showGrid: false,
-            },
-            height: '300px',
-          },
-          responsiveOptions: [
-            [
-              'screen and (max-width: 640px)',
-              {
-                seriesBarDistance: 5,
-                axisX: {
-                  labelInterpolationFnc(value) {
-                    return value[0];
-                  },
+                simpleBarChart: {
+                    data: {
+                        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+                        series: [[542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]],
+                    },
+                    options: {
+                        seriesBarDistance: 10,
+                        axisX: {
+                            showGrid: false,
+                        },
+                    },
+                    responsiveOptions: [
+                        [
+                            'screen and (max-width: 640px)',
+                            {
+                                seriesBarDistance: 5,
+                                axisX: {
+                                    labelInterpolationFnc(value) {
+                                        return value[0];
+                                    },
+                                },
+                            },
+                        ],
+                    ],
                 },
-              },
-            ],
-          ],
+                colouredLineChart: {
+                    data: {
+                        labels: [
+                            "'06",
+                            "'07",
+                            "'08",
+                            "'09",
+                            "'10",
+                            "'11",
+                            "'12",
+                            "'13",
+                            "'14",
+                            "'15",
+                        ],
+                        series: [[287, 480, 290, 554, 690, 690, 500, 752, 650, 900, 944]],
+                    },
+                    options: {
+                        lineSmooth: this.$Chartist.Interpolation.cardinal({
+                            tension: 10,
+                        }),
+                        axisY: {
+                            showGrid: true,
+                            offset: 40,
+                        },
+                        axisX: {
+                            showGrid: false,
+                        },
+                        low: 0,
+                        high: 1000,
+                        showPoint: true,
+                        height: '300px',
+                    },
+                },
+                colouredBarsChart: {
+                    data: {
+                        labels: [
+                            "'06",
+                            "'07",
+                            "'08",
+                            "'09",
+                            "'10",
+                            "'11",
+                            "'12",
+                            "'13",
+                            "'14",
+                            "'15",
+                        ],
+                        series: [
+                            [287, 385, 490, 554, 586, 698, 695, 752, 788, 846, 944],
+                            [67, 152, 143, 287, 335, 435, 437, 539, 542, 544, 647],
+                            [23, 113, 67, 190, 239, 307, 308, 439, 410, 410, 509],
+                        ],
+                    },
+                    options: {
+                        lineSmooth: this.$Chartist.Interpolation.cardinal({
+                            tension: 10,
+                        }),
+                        axisY: {
+                            showGrid: true,
+                            offset: 40,
+                        },
+                        axisX: {
+                            showGrid: false,
+                        },
+                        low: 0,
+                        high: 1000,
+                        showPoint: true,
+                        height: '300px',
+                    },
+                },
+                multipleBarsChart: {
+                    data: {
+                        labels: [
+                            'Jan',
+                            'Feb',
+                            'Mar',
+                            'Apr',
+                            'Mai',
+                            'Jun',
+                            'Jul',
+                            'Aug',
+                            'Sep',
+                            'Oct',
+                            'Nov',
+                            'Dec',
+                        ],
+                        series: [
+                            [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
+                            [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695],
+                        ],
+                    },
+                    options: {
+                        seriesBarDistance: 10,
+                        axisX: {
+                            showGrid: false,
+                        },
+                        height: '300px',
+                    },
+                    responsiveOptions: [
+                        [
+                            'screen and (max-width: 640px)',
+                            {
+                                seriesBarDistance: 5,
+                                axisX: {
+                                    labelInterpolationFnc(value) {
+                                        return value[0];
+                                    },
+                                },
+                            },
+                        ],
+                    ],
+                },
+                pieChart: {
+                    data: {
+                        labels: ['62%', '32%', '6%'],
+                        series: [62, 32, 6],
+                    },
+                    options: {
+                        height: '230px',
+                    },
+                },
+            };
         },
-        pieChart: {
-          data: {
-            labels: ['62%', '32%', '6%'],
-            series: [62, 32, 6],
-          },
-          options: {
-            height: '230px',
-          },
-        },
-      };
-    },
-  };
+    };
 </script>
 
 <style lang="scss" scoped>

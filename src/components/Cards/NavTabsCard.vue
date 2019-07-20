@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  export default {
-    name: 'nav-tabs-card',
-  };
+    export default {
+        name: 'nav-tabs-card',
+    };
 </script>

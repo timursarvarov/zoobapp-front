@@ -57,7 +57,7 @@
                         <div class="md-layout" style="max-width:40px;">
                             <t-avatar
                                 :small="true"
-                                :color="item.author.color"
+                                :textToColor="item.author.ID"
                                 :imageSrc="item.author.avatar"
                                 :title="item.author.firstName + ' ' + item.author.lastName"
                             />
@@ -106,11 +106,11 @@
     </div>
 </template>
 <script>
+    import { mapGetters } from 'vuex';
     import { TAvatar, TTableEditor } from '@/components';
     import {
         USER_INVOICE_COLUMNS,
     } from '@/constants';
-    import { mapGetters } from 'vuex';
     // import swal from 'sweetalert2';
     import { tObjProp } from '@/mixins';
 
@@ -136,6 +136,7 @@
         },
         data() {
             return {
+                tableData: [],
                 computedAvailableBillingTableColumns: [],
                 itemsTableColumns: [],
                 selectedItems: [],
@@ -161,8 +162,8 @@
                 clinic: 'getCurrentClinic',
                 availableInvoiceTableColumns: 'availableInvoiceTableColumns',
             }),
-            tableData() {
-                return this.patient.invoices || [];
+            invoices(){
+                return this.patient.invoices || []
             },
             defaultFields() {
                 const standartColumns = [
@@ -212,6 +213,9 @@
         },
 
         methods: {
+            setTableData() {
+                this.tableData = this.invoices;
+            },
             setComputedAvailableBillingTableColumns() {
                 if (this.type === 'diagnosis') {
                     const columns = this.availableInvoiceTableColumns.filter(
@@ -366,8 +370,12 @@
         created() {
             this.setItemsTableColumns();
             this.setComputedAvailableBillingTableColumns();
+            this.setTableData();
         },
         watch: {
+            invoices(){
+                this.setTableData();
+            },
             searchQuery(value) {
                 let result = this.tableData;
                 if (value !== '') {

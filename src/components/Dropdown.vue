@@ -18,36 +18,36 @@
   </div>
 </template>
 <script>
-  export default {
-    name: 'drop-down',
-    props: {
-      direction: {
-        type: String,
-        default: 'down',
-      },
-      multiLevel: {
-        type: Boolean,
-        default: false,
-      },
-      title: String,
-      icon: String,
-    },
-    data() {
-      return {
-        isOpen: false,
-      };
-    },
-    methods: {
-      toggleDropDown() {
-        if (this.multiLevel) {
-          this.isOpen = true;
-        } else {
-          this.isOpen = !this.isOpen;
-        }
-      },
-      closeDropDown() {
-        this.isOpen = false;
-      },
-    },
-  };
+    export default {
+        name: 'drop-down',
+        props: {
+            direction: {
+                type: String,
+                default: 'down',
+            },
+            multiLevel: {
+                type: Boolean,
+                default: false,
+            },
+            title: String,
+            icon: String,
+        },
+        data() {
+            return {
+                isOpen: false,
+            };
+        },
+        methods: {
+            toggleDropDown() {
+                if (this.multiLevel) {
+                    this.isOpen = true;
+                } else {
+                    this.isOpen = !this.isOpen;
+                }
+            },
+            closeDropDown() {
+                this.isOpen = false;
+            },
+        },
+    };
 </script>

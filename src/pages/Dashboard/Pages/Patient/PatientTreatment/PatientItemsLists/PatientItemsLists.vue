@@ -8,7 +8,7 @@
                 @onJawChanged="recalculateJaw()"
                 @toggleItemVisibility="toggleItemVisibility"
                 :teethSystem="currentClinic.teethSystem"
-                type="anamnesis"
+                currentType="anamnesis"
             >
             </items-list>
         </keep-alive>
@@ -19,7 +19,7 @@
             @onJawChanged="recalculateJaw()"
             @toggleItemVisibility="toggleItemVisibility"
             :teethSystem="currentClinic.teethSystem"
-            type="diagnosis"
+            currentType="diagnosis"
             >
         </items-list>
         <t-tabs
@@ -42,7 +42,7 @@
                             @toggleItemVisibility="toggleItemVisibility"
                             @showItemInfo="showItemInfo"
                             :teethSystem="currentClinic.teethSystem"
-                            type="procedures"
+                            currentType="procedures"
                             :items="plan.procedures||[]"
                             :plan="plan"
                         >
@@ -72,27 +72,29 @@
                         </div>
                     </template>
         </t-tabs>
-        <plan-delete-form
+        <delete-form
+            text="Delete Plan?"
             :showForm.sync="showDeleteForm"
-            :plan="currentPlan"
+            :itemToDelete="currentPlan"
             :patientID="patient.ID"
-            @onPlanDeleted="onPlanDeleted"
+            currentType='plan'
+            @onDeleted="onPlanDeleted"
         />
 
     </div>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     import {
         PATIENT_PLAN_EDIT,
         PATIENT_PLANS_GET,
     } from '@/constants';
-    import { mapGetters } from 'vuex';
     import {
         TTabs,
     } from '@/components';
     import ItemsList from './ItemsList.vue';
-    import PlanDeleteForm from './PlanDeleteForm.vue';
+    import DeleteForm from './DeleteForm.vue';
     import { tObjProp } from '@/mixins';
 
     export default {
@@ -100,7 +102,7 @@
         components: {
             TTabs,
             ItemsList,
-            PlanDeleteForm,
+            DeleteForm,
         },
         props: {
             currentType: {

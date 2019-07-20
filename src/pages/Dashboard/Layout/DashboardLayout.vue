@@ -38,7 +38,7 @@
                             name: `${patient.firstName} ${patient.lastName}`,
                             icon: 'account_circle',
                             img:patient.avatar? patient.avatar: '',
-                            avatarColor: patient.color,
+                            textTocolor: patient.ID,
                             acronim: patient.firstName+' '+patient.lastName,
                             notification: patient.allergy.length > 0 ? 'A' : '',
                             path: `/patient/${patient.ID}/profile/`

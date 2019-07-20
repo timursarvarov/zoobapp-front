@@ -485,9 +485,9 @@
 </template>
 <script>
 /* eslint-disable func-names */
-    import { AnimatedNumber } from '@/components';
     import { SlideYDownTransition } from 'vue2-transitions';
     import { CoolSelect } from 'vue-cool-select';
+    import { AnimatedNumber } from '@/components';
 
     export default {
         components: {

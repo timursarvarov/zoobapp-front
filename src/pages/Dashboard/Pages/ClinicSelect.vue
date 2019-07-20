@@ -36,8 +36,8 @@
     </div>
 </template>
 <script>
-    import { CLINIC_AUTH_REQUEST, NOTIFY } from '@/constants';
     import { mapGetters } from 'vuex';
+    import { CLINIC_AUTH_REQUEST, NOTIFY } from '@/constants';
 
     export default {
         components: {},
@@ -73,7 +73,6 @@
                                 }
                             },
                         );
-
                 }
             },
         },

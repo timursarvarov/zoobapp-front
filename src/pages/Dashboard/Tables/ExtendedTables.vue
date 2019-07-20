@@ -190,204 +190,204 @@
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        tableData: [
-          {
-            id: 1,
-            name: 'Dakota Rice',
-            salary: '$36.738',
-            country: 'Niger',
-            city: 'Oud-Turnhout',
-            icon1: 'person',
-            icon2: 'edit',
-            icon3: 'close',
-          },
-          {
-            id: 2,
-            name: 'Minerva Hooper',
-            salary: '$23,789',
-            country: 'Curaçao',
-            city: 'Sinaai-Waas',
-            icon1: 'person',
-            icon2: 'edit',
-            icon3: 'close',
-          },
-          {
-            id: 3,
-            name: 'Sage Rodriguez',
-            salary: '$56,142',
-            country: 'Netherlands',
-            city: 'Baileux',
-            icon1: 'person',
-            icon2: 'edit',
-            icon3: 'close',
-          },
-          {
-            id: 4,
-            name: 'Philip Chaney',
-            salary: '$38,735',
-            country: 'Korea, South',
-            city: 'Overland Park',
-            icon1: 'person',
-            icon2: 'edit',
-            icon3: 'close',
-          },
-          {
-            id: 5,
-            name: 'Doris Greene',
-            salary: '$63,542',
-            country: 'Malawi',
-            city: 'Feldkirchen in Kärnten',
-            icon1: 'person',
-            icon2: 'edit',
-            icon3: 'close',
-          },
-        ],
-        tableDataStriped: [
-          {
-            id: 1,
-            name: 'Moleskine Agenda',
-            type: 'Office',
-            qty: '25',
-            price: '€ 49',
-            amount: '€ 1,225',
-          },
-          {
-            id: 2,
-            name: 'Stabilo Pen',
-            type: 'Office',
-            qty: '30',
-            price: '€ 10',
-            amount: '€ 300',
-          },
-          {
-            id: 3,
-            name: 'A4 Paper Pack',
-            type: 'Office',
-            qty: '50',
-            price: '€ 10.99',
-            amount: '€ 109',
-          },
-          {
-            id: 4,
-            name: 'Apple Ipad',
-            type: 'Meeting',
-            qty: '10',
-            price: '€ 499.00',
-            amount: '€ 4,990',
-          },
-          {
-            id: 5,
-            name: 'Apple Iphone',
-            type: 'Communication',
-            qty: '10',
-            price: '€ 599.00',
-            amount: '€ 5,990',
-          },
-        ],
-        shoppingCartTable: [
-          {
-            image: './img/product1.jpg',
-            product: 'Spring Jacket',
-            category: 'by Dolce&Gabbana',
-            color: 'Red',
-            size: 'M',
-            price: 549,
-            qty: 1,
-            amount: 549,
-          },
-          {
-            image: './img/product2.jpg',
-            product: 'Short Pants',
-            category: 'by Gucci',
-            color: 'Purple',
-            size: 'M',
-            price: 499,
-            qty: 2,
-            amount: 998,
-          },
-          {
-            image: './img/product3.jpg',
-            product: 'Pencil Skirt',
-            category: 'by Valentino',
-            color: 'Red',
-            size: 'M',
-            price: 799,
-            qty: 1,
-            amount: 799,
-          },
-        ],
-      };
-    },
-    computed: {
-      shoppingTotal() {
-        return this.shoppingCartTable.reduce(
-          (accumulator, current) => accumulator + current.amount,
-          0,
-        );
-      },
-    },
-    methods: {
-      getClass(item, id) {
-        let classes = '';
-        switch (item) {
-        case 'person': {
-          classes = 'md-info';
-          break;
-        }
-        case 'edit': {
-          classes = 'md-success';
-          break;
-        }
-        case 'close': {
-          classes = 'md-danger';
-          break;
-        }
-        default:
-          // do nothing
-        }
-        switch (id) {
-        case 1:
-        case 5: {
-          break;
-        }
-        case 2:
-        case 4: {
-          classes = `${classes} md-round`;
-          break;
-        }
-        case 3: {
-          classes = `${classes} md-simple`;
-          break;
-        }
-        default:
-          // do nothing
-        }
-        return classes;
-      },
-      getAlignClasses: ({ id }) => ({
-        'text-right': id,
-      }),
-      increaseQuantity(item) {
-        const nitem = item;
-        nitem.qty += 1;
-        this.computeAmount(nitem);
-      },
-      decreaseQuantity(item) {
-        if (item.qty > 1) {
-          const nitem = item;
-          nitem.qty -= 1;
-          this.computeAmount(nitem);
-        }
-      },
-      computeAmount(item) {
-        const nitem = item;
-        nitem.amount = nitem.qty * nitem.price;
-      },
-    },
-  };
+    export default {
+        data() {
+            return {
+                tableData: [
+                    {
+                        id: 1,
+                        name: 'Dakota Rice',
+                        salary: '$36.738',
+                        country: 'Niger',
+                        city: 'Oud-Turnhout',
+                        icon1: 'person',
+                        icon2: 'edit',
+                        icon3: 'close',
+                    },
+                    {
+                        id: 2,
+                        name: 'Minerva Hooper',
+                        salary: '$23,789',
+                        country: 'Curaçao',
+                        city: 'Sinaai-Waas',
+                        icon1: 'person',
+                        icon2: 'edit',
+                        icon3: 'close',
+                    },
+                    {
+                        id: 3,
+                        name: 'Sage Rodriguez',
+                        salary: '$56,142',
+                        country: 'Netherlands',
+                        city: 'Baileux',
+                        icon1: 'person',
+                        icon2: 'edit',
+                        icon3: 'close',
+                    },
+                    {
+                        id: 4,
+                        name: 'Philip Chaney',
+                        salary: '$38,735',
+                        country: 'Korea, South',
+                        city: 'Overland Park',
+                        icon1: 'person',
+                        icon2: 'edit',
+                        icon3: 'close',
+                    },
+                    {
+                        id: 5,
+                        name: 'Doris Greene',
+                        salary: '$63,542',
+                        country: 'Malawi',
+                        city: 'Feldkirchen in Kärnten',
+                        icon1: 'person',
+                        icon2: 'edit',
+                        icon3: 'close',
+                    },
+                ],
+                tableDataStriped: [
+                    {
+                        id: 1,
+                        name: 'Moleskine Agenda',
+                        type: 'Office',
+                        qty: '25',
+                        price: '€ 49',
+                        amount: '€ 1,225',
+                    },
+                    {
+                        id: 2,
+                        name: 'Stabilo Pen',
+                        type: 'Office',
+                        qty: '30',
+                        price: '€ 10',
+                        amount: '€ 300',
+                    },
+                    {
+                        id: 3,
+                        name: 'A4 Paper Pack',
+                        type: 'Office',
+                        qty: '50',
+                        price: '€ 10.99',
+                        amount: '€ 109',
+                    },
+                    {
+                        id: 4,
+                        name: 'Apple Ipad',
+                        type: 'Meeting',
+                        qty: '10',
+                        price: '€ 499.00',
+                        amount: '€ 4,990',
+                    },
+                    {
+                        id: 5,
+                        name: 'Apple Iphone',
+                        type: 'Communication',
+                        qty: '10',
+                        price: '€ 599.00',
+                        amount: '€ 5,990',
+                    },
+                ],
+                shoppingCartTable: [
+                    {
+                        image: './img/product1.jpg',
+                        product: 'Spring Jacket',
+                        category: 'by Dolce&Gabbana',
+                        color: 'Red',
+                        size: 'M',
+                        price: 549,
+                        qty: 1,
+                        amount: 549,
+                    },
+                    {
+                        image: './img/product2.jpg',
+                        product: 'Short Pants',
+                        category: 'by Gucci',
+                        color: 'Purple',
+                        size: 'M',
+                        price: 499,
+                        qty: 2,
+                        amount: 998,
+                    },
+                    {
+                        image: './img/product3.jpg',
+                        product: 'Pencil Skirt',
+                        category: 'by Valentino',
+                        color: 'Red',
+                        size: 'M',
+                        price: 799,
+                        qty: 1,
+                        amount: 799,
+                    },
+                ],
+            };
+        },
+        computed: {
+            shoppingTotal() {
+                return this.shoppingCartTable.reduce(
+                    (accumulator, current) => accumulator + current.amount,
+                    0,
+                );
+            },
+        },
+        methods: {
+            getClass(item, id) {
+                let classes = '';
+                switch (item) {
+                case 'person': {
+                    classes = 'md-info';
+                    break;
+                }
+                case 'edit': {
+                    classes = 'md-success';
+                    break;
+                }
+                case 'close': {
+                    classes = 'md-danger';
+                    break;
+                }
+                default:
+                // do nothing
+                }
+                switch (id) {
+                case 1:
+                case 5: {
+                    break;
+                }
+                case 2:
+                case 4: {
+                    classes = `${classes} md-round`;
+                    break;
+                }
+                case 3: {
+                    classes = `${classes} md-simple`;
+                    break;
+                }
+                default:
+                // do nothing
+                }
+                return classes;
+            },
+            getAlignClasses: ({ id }) => ({
+                'text-right': id,
+            }),
+            increaseQuantity(item) {
+                const nitem = item;
+                nitem.qty += 1;
+                this.computeAmount(nitem);
+            },
+            decreaseQuantity(item) {
+                if (item.qty > 1) {
+                    const nitem = item;
+                    nitem.qty -= 1;
+                    this.computeAmount(nitem);
+                }
+            },
+            computeAmount(item) {
+                const nitem = item;
+                nitem.amount = nitem.qty * nitem.price;
+            },
+        },
+    };
 </script>
 <style lang="scss" scoped>
 .text-right /deep/ .md-table-cell-container {

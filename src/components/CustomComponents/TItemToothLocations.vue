@@ -50,8 +50,8 @@
 </template>
 <script>
     import { mapGetters } from 'vuex';
-    import { JawAddLocations } from '@/components';
     import { SlideYDownTransition } from 'vue2-transitions';
+    import { JawAddLocations } from '@/components';
     import { tObjProp } from '@/mixins';
 
     export default {
@@ -170,7 +170,7 @@
                 anamnesis: 'getProcedures',
                 procedures: 'getProcedures',
             }),
-            originalItemsGrouped(){
+            originalItemsGrouped() {
                 return this[this.locationType];
             },
             newDiagnoseParamsLocal: {

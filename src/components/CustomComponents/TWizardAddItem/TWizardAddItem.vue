@@ -1,22 +1,29 @@
 <template>
     <md-dialog
-    :md-click-outside-to-close="true"
-    :md-active.sync="isDialogVisibleL" class="jaw-dialog-wrapper">
+        :md-click-outside-to-close="!isLoading"
+        :md-active.sync="isDialogVisibleL"
+        class="jaw-dialog-wrapper"
+    >
         <div class="wizard-add-diagnose-form">
             <div>
                 <simple-wizard
                     :finishButtonText="`Save ${singleItemName}`"
                     @tab-change="onTabChange"
-                    :tabColor="tabColor">
-                    <template slot="header">
+                    :tabColor="tabColor"
+                    :isLoading="isLoading"
+                    :validateMode="needToSaveItem"
+                >
+                    <template slot="header">{{needToSaveItem()}}
                         <h5 class="title">
+                            {{!itemToCreate.ID}}
                             {{singleItemName | capitilize}} adding:
                             <b>{{selectedItem.code}}</b>
                             {{selectedItem.title}}
                             <span
                                 v-if="currentPlan.name"
                                 class="category"
-                            >– {{currentPlan.name | capitilize}}</span>
+                            >– {{currentPlan.name | capitilize}}</span>  
+
                         </h5>
                         <span>
                             <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
@@ -59,7 +66,7 @@
                             v-model="selectedProcedureLocal"
                             :teethSchema="teethSchema"
                             :teethSystem="teethSystem"
-                            :itemType="itemType"
+                            :currentType="currentType"
                         />
                     </wizard-tab>
 
@@ -109,7 +116,7 @@
                     >
                         <template slot="label">Appointment</template>
                         <t-item-appointment
-                        :showAppointment="showAppointment"
+                            :showAppointment="showAppointment"
                             ref="step5"
                             :size="jawListSize"
                         />
@@ -121,14 +128,14 @@
 </template>
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
+    import { mapGetters } from 'vuex';
     import TItemToothLocations from './TWizardItems/TItemToothLocations.vue';
     import TItemDescription from './TWizardItems/TItemDescription.vue';
     import TItemManipulations from './TWizardItems/TItemManipulations.vue';
     import TItemFiles from './TWizardItems/TItemFiles.vue';
     import TItemAppointment from './TWizardItems/TItemAppointment.vue';
     import { SimpleWizard, WizardTab } from '@/components';
-    import { mapGetters } from 'vuex';
-    import { NOTIFY } from '@/constants';
+    import { NOTIFY, PATIENT_PROCEDURE_SET } from '@/constants';
     import { tObjProp } from '@/mixins';
 
     export default {
@@ -147,7 +154,7 @@
                 type: Object,
                 default: () => {},
             },
-            itemType: {
+            currentType: {
                 type: String,
                 default: () => 'diagnosis',
             },
@@ -158,6 +165,7 @@
             selectedItem: {
                 type: Object,
                 default: () => ({
+                    ID: '',
                     code: '',
                     title: '',
                     manipulations: [],
@@ -187,6 +195,7 @@
                     show: 'false',
                 },
                 showAppointment: false,
+                isLoading: false,
                 jawListSize: {},
                 description: '',
                 selectedTeethL: [],
@@ -211,8 +220,68 @@
             TItemAppointment,
         },
         methods: {
+            setProcedure() {
+                const procedure = {
+                    procedureID: this.itemToCreate.procedureID,
+                    teeth: this.itemToCreate.teeth,
+                };
+                console.log(procedure);
+                this.isLoading = true;
+                // return true;
+                return new Promise((resolve, reject) => {
+                    this.$store.dispatch(PATIENT_PROCEDURE_SET, {
+                        planID: this.currentPlan.ID,
+                        patientID: this.patient.ID,
+                        procedure,
+                    }).then(
+                        (response) => {
+                            console.log(response);
+                            this.itemToCreate.ID = response.procedureID
+                            this.itemToCreate.teeth = response.teeth
+                            resolve(true);
+                            this.isLoading = false;
+                        },
+                        (error) => {
+                            this.$store.dispatch(NOTIFY, {
+                                settings: {
+                                    message: 'error.response.data.error',
+                                    type: 'warning',
+                                },
+                            });
+                            reject(error);
+                            this.isLoading = false;
+                        },
+                    );
+                });
+            },
+            saveItem() {
+                if (this.currentType === 'diagnosis') {
+                    this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
+                        diagnose: itemL,
+                    });
+                }
+                if (this.currentType === 'anamnesis') {
+                    this.$store.dispatch(PATIENT_ANAMNES_SET, {
+                        anamnes: itemL,
+                    });
+                }
+                if (this.currentType === 'procedures') {
+                    if(this.needToSaveItem){
+                        return Promise.resolve(this.setProcedure());
+                    } else {
+                        return true
+                    }
+                }
+                return false;
+            },
+            needToSaveItem(){
+                if( !this.itemToCreate.ID || !this.lodash.isEqual(this.itemToCreate, this.this.selectedItem)){
+                    return true;
+                }
+                return false;
+            },
             onTabChange(oldTab, newTab) {
-                if (this.itemType === 'procedures' && newTab.tabId === '4') {
+                if (this.currentType === 'procedures' && newTab.tabId === '4') {
                     this.showAppointment = true;
                 }
             },
@@ -221,11 +290,12 @@
                 this.selectedTeethLocalJaw = selectedTeethLocalJaw;
             },
             // инициируем локальный диагноз
-            initiateLocalDiagnose() {
+            initiateLocalItem() {
                 Object.keys(this.selectedItem).forEach((key) => {
-                    this.itemToCreate[key] = this.selectedItem[key];
+                    this.$set(this.itemToCreate, key, this.selectedItem[key])
                 });
-                this.itemToCreate.date = new Date();
+                console.log(this.itemToCreate);
+                // this.itemToCreate.date = new Date();
             },
             manipulationsCreated(manipulations) {
                 this.itemToCreate.manipulations = manipulations;
@@ -281,6 +351,9 @@
                                 },
                             });
                         }
+                        if (res) {
+                            return Promise.resolve(this.saveItem());
+                        }
                         return res;
                     });
                 }
@@ -325,7 +398,7 @@
                                 },
                             });
                             return false;
-                        } if (this.itemType !== 'procedures') {
+                        } if (this.currentType !== 'procedures') {
                             this.itemCreated();
                             this.isDialogVisibleL = false;
                         }
@@ -358,7 +431,7 @@
                 }
                 if (tab === 'manipulations') {
                     return (
-                        this.hasManipulations() || this.itemType === 'procedures'
+                        this.hasManipulations() || this.currentType === 'procedures'
                     );
                 }
                 if (tab === 'files') {
@@ -368,7 +441,7 @@
                     return true;
                 }
                 if (tab === 'appointment') {
-                    return this.itemType === 'procedures';
+                    return this.currentType === 'procedures';
                 }
                 return false;
             },
@@ -382,21 +455,22 @@
                 anamnesis: 'getProcedures',
                 procedures: 'getProcedures',
                 diagnosis: 'getDiagnosis',
+                patient: 'getPatient',
             }),
             originalDescriptions() {
-                if (this.itemType === 'diagnosis') {
+                if (this.currentType === 'diagnosis') {
                     return this.diagnoseDescriptions;
                 }
-                if (this.itemType === 'anamnesis') {
+                if (this.currentType === 'anamnesis') {
                     return this.anamnesDescriptions;
                 }
                 return this.procedureDescriptions;
             },
             tabColor() {
-                if (this.itemType === 'diagnosis') {
+                if (this.currentType === 'diagnosis') {
                     return 'purple';
                 }
-                if (this.itemType === 'anamnesis') {
+                if (this.currentType === 'anamnesis') {
                     return 'blue';
                 }
                 return 'green';
@@ -427,8 +501,8 @@
         created() {
             this.selectedTeethL = this.copyObj(this.selectedTeeth);
             this.hasLoctionsKey(this.selectedItem.code);
-            this.initiateLocalDiagnose();
-            this.description = this.selectedItem.description || this.selectedItem.description;
+            this.initiateLocalItem();
+            this.description = this.selectedItem.description;
         },
     };
 </script>

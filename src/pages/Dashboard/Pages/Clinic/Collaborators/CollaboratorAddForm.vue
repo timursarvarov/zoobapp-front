@@ -49,85 +49,85 @@
   </div>
 </template>
 <script>
-  import { COLLABORATOR_CREATE, NOTIFY } from '@/constants';
-  import { SlideYDownTransition } from 'vue2-transitions';
+    import { SlideYDownTransition } from 'vue2-transitions';
+    import { COLLABORATOR_CREATE, NOTIFY } from '@/constants';
 
-  export default {
-    components: {
-      SlideYDownTransition,
-    },
-    props: {
-      showForm: {
-        type: Boolean,
-        default: false,
-      },
-    },
-    data() {
-      return {
-        email: null,
-        isLoadingRegistration: false,
-        touched: {
-          email: false,
+    export default {
+        components: {
+            SlideYDownTransition,
         },
-        modelValidations: {
-          email: {
-            email: true,
-          },
+        props: {
+            showForm: {
+                type: Boolean,
+                default: false,
+            },
         },
-      };
-    },
-    methods: {
-      validate() {
-        this.$validator.validateAll().then((isValid) => {
-          this.$emit('on-submit', this.registerForm, isValid);
-        });
-        this.touched.email = true;
-      },
-      clearForm() {
-        this.email = null;
-        this.$nextTick(() => this.$validator.reset());
-      },
-      addPatient() {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.$store
-              .dispatch(COLLABORATOR_CREATE, {
-                params: {
-                  email: this.email,
+        data() {
+            return {
+                email: null,
+                isLoadingRegistration: false,
+                touched: {
+                    email: false,
                 },
-              })
-              .then((response) => {
-                if (response) {
-                  this.showForml = false;
-                  this.clearForm();
-                  this.$store.dispatch(NOTIFY, {
-                    settings: {
-                      message: 'Inventation was sent',
-                      type: 'success',
+                modelValidations: {
+                    email: {
+                        email: true,
                     },
-                  });
-                }
-            });
-          }
-        });
-      },
-    },
-    computed: {
-      showForml: {
-        get() {
-          return this.showForm;
+                },
+            };
         },
-        set(e) {
-          this.$emit('update:showForm', e);
+        methods: {
+            validate() {
+                this.$validator.validateAll().then((isValid) => {
+                    this.$emit('on-submit', this.registerForm, isValid);
+                });
+                this.touched.email = true;
+            },
+            clearForm() {
+                this.email = null;
+                this.$nextTick(() => this.$validator.reset());
+            },
+            addPatient() {
+                this.$validator.validateAll().then((result) => {
+                    if (result) {
+                        this.$store
+                            .dispatch(COLLABORATOR_CREATE, {
+                                params: {
+                                    email: this.email,
+                                },
+                            })
+                            .then((response) => {
+                                if (response) {
+                                    this.showForml = false;
+                                    this.clearForm();
+                                    this.$store.dispatch(NOTIFY, {
+                                        settings: {
+                                            message: 'Inventation was sent',
+                                            type: 'success',
+                                        },
+                                    });
+                                }
+                            });
+                    }
+                });
+            },
         },
-      },
-    },
-    watch: {
-      email() {
-        this.touched.email = true;
-      },
-    },
-  };
+        computed: {
+            showForml: {
+                get() {
+                    return this.showForm;
+                },
+                set(e) {
+                    this.$emit('update:showForm', e);
+                },
+            },
+        },
+        watch: {
+            email() {
+                this.touched.email = true;
+            },
+        },
+    };
 
 // The first param is called 'min', and the second is called 'max'.
 </script>

@@ -1,4 +1,5 @@
 
+import Vue from 'vue';
 import {
     CLINIC_SET_PROP,
     CLINIC_REQUEST,
@@ -6,16 +7,15 @@ import {
     CLINIC_ERROR,
 } from '@/constants';
 
-import Vue from 'vue'
 
 export default {
     [CLINIC_SET_PROP]: (
         state, {
             type,
-            value
-        }
+            value,
+        },
     ) => {
-        Vue.set(state.clinic, type, value )
+        Vue.set(state.clinic, type, value);
     },
     [CLINIC_REQUEST]: (state) => {
         state.status = 'loading';

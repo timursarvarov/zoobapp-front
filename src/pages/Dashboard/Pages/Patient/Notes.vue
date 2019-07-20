@@ -189,10 +189,10 @@
   </div>
 </template>
 <script>
-    import { TimeLine, TimeLineItem, Badge } from '@/components';
     import { mapGetters } from 'vuex';
-    import { PATIENT_CREATE_NOTE, NOTIFY } from '@/constants';
     import { SlideYDownTransition } from 'vue2-transitions';
+    import { TimeLine, TimeLineItem, Badge } from '@/components';
+    import { PATIENT_CREATE_NOTE, NOTIFY } from '@/constants';
 
     export default {
         components: {

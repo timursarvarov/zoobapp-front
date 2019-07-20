@@ -18,28 +18,28 @@
 </template>
 
 <script>
-  export default {
-    name: 'lock-card',
-    props: {
-      imageProfile: {
-        type: String,
-        default: '',
-      },
-    },
-    data() {
-      return {
-        cardHidden: true,
-      };
-    },
-    beforeMount() {
-      setTimeout(this.showCard, 400);
-    },
-    methods: {
-      showCard() {
-        this.cardHidden = false;
-      },
-    },
-  };
+    export default {
+        name: 'lock-card',
+        props: {
+            imageProfile: {
+                type: String,
+                default: '',
+            },
+        },
+        data() {
+            return {
+                cardHidden: true,
+            };
+        },
+        beforeMount() {
+            setTimeout(this.showCard, 400);
+        },
+        methods: {
+            showCard() {
+                this.cardHidden = false;
+            },
+        },
+    };
 </script>
 
 <style lang="css">

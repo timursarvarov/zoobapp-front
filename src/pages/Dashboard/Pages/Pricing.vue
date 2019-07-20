@@ -105,13 +105,13 @@
   </div>
 </template>
 <script>
-  import { PricingCard } from '@/components';
+    import { PricingCard } from '@/components';
 
-  export default {
-    components: {
-      PricingCard,
-    },
-  };
+    export default {
+        components: {
+            PricingCard,
+        },
+    };
 </script>
 <style scoped>
 .text-center {

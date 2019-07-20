@@ -313,116 +313,116 @@
 </template>
 
 <script>
-  import {
-    NavTabsCard,
-    TimeLine,
-    TimeLineItem,
-    PricingCard,
-    TestimonialCard,
-  } from '@/components';
+    import {
+        NavTabsCard,
+        TimeLine,
+        TimeLineItem,
+        PricingCard,
+        TestimonialCard,
+    } from '@/components';
 
-  export default {
-    components: {
-      NavTabsCard,
-      PricingCard,
-      TimeLine,
-      TimeLineItem,
-      TestimonialCard,
-    },
-    props: {
-      profileCard: {
-        type: String,
-        default: './img/faces/card-profile1-square.jpg',
-      },
-    },
-    data() {
-      return {
-        selected: [],
-        responsive: false,
-        firstTabs: [
-          {
-            tab: 'Sign contract for "What are conference organizers afraid of?"',
-          },
-          {
-            tab: 'Lines From Great Russian Literature? Or E-mails From My Boss?',
-          },
-          {
-            tab:
-              'Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit',
-          },
-        ],
-        secondTabs: [
-          {
-            tab: 'Sign contract for "What are conference organizers afraid of?"',
-          },
-          {
-            tab: 'Lines From Great Russian Literature? Or E-mails From My Boss?',
-          },
-          {
-            tab:
-              'Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit',
-          },
-        ],
-        thirdTabs: [
-          {
-            tab: 'Sign contract for "What are conference organizers afraid of?"',
-          },
-          {
-            tab: 'Lines From Great Russian Literature? Or E-mails From My Boss?',
-          },
-          {
-            tab:
-              'Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit',
-          },
-        ],
-        users: [
-          {
-            id: 1,
-            name: 'Dakota Rice',
-            salary: '$36,738',
-            country: 'Niger',
-          },
-          {
-            id: 2,
-            name: 'Minerva Hooper',
-            salary: '$23,738',
-            country: 'Curaçao',
-          },
-          {
-            id: 3,
-            name: 'Sage Rodriguez',
-            salary: '$56,142',
-            country: 'Netherlands',
-          },
-          {
-            id: 4,
-            name: 'Philip Chaney',
-            salary: '$38,735',
-            country: 'Korea, South',
-          },
-        ],
-      };
-    },
-    methods: {
-      onSelect(items) {
-        this.selected = items;
-      },
-      onResponsiveInverted() {
-        if (window.innerWidth < 768) {
-          this.responsive = true;
-        } else {
-          this.responsive = false;
-        }
-      },
-    },
-    mounted() {
-      this.onResponsiveInverted();
-      window.addEventListener('resize', this.onResponsiveInverted);
-    },
-    beforeDestroy() {
-      window.removeEventListener('resize', this.onResponsiveInverted);
-    },
-  };
+    export default {
+        components: {
+            NavTabsCard,
+            PricingCard,
+            TimeLine,
+            TimeLineItem,
+            TestimonialCard,
+        },
+        props: {
+            profileCard: {
+                type: String,
+                default: './img/faces/card-profile1-square.jpg',
+            },
+        },
+        data() {
+            return {
+                selected: [],
+                responsive: false,
+                firstTabs: [
+                    {
+                        tab: 'Sign contract for "What are conference organizers afraid of?"',
+                    },
+                    {
+                        tab: 'Lines From Great Russian Literature? Or E-mails From My Boss?',
+                    },
+                    {
+                        tab:
+                            'Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit',
+                    },
+                ],
+                secondTabs: [
+                    {
+                        tab: 'Sign contract for "What are conference organizers afraid of?"',
+                    },
+                    {
+                        tab: 'Lines From Great Russian Literature? Or E-mails From My Boss?',
+                    },
+                    {
+                        tab:
+                            'Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit',
+                    },
+                ],
+                thirdTabs: [
+                    {
+                        tab: 'Sign contract for "What are conference organizers afraid of?"',
+                    },
+                    {
+                        tab: 'Lines From Great Russian Literature? Or E-mails From My Boss?',
+                    },
+                    {
+                        tab:
+                            'Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit',
+                    },
+                ],
+                users: [
+                    {
+                        id: 1,
+                        name: 'Dakota Rice',
+                        salary: '$36,738',
+                        country: 'Niger',
+                    },
+                    {
+                        id: 2,
+                        name: 'Minerva Hooper',
+                        salary: '$23,738',
+                        country: 'Curaçao',
+                    },
+                    {
+                        id: 3,
+                        name: 'Sage Rodriguez',
+                        salary: '$56,142',
+                        country: 'Netherlands',
+                    },
+                    {
+                        id: 4,
+                        name: 'Philip Chaney',
+                        salary: '$38,735',
+                        country: 'Korea, South',
+                    },
+                ],
+            };
+        },
+        methods: {
+            onSelect(items) {
+                this.selected = items;
+            },
+            onResponsiveInverted() {
+                if (window.innerWidth < 768) {
+                    this.responsive = true;
+                } else {
+                    this.responsive = false;
+                }
+            },
+        },
+        mounted() {
+            this.onResponsiveInverted();
+            window.addEventListener('resize', this.onResponsiveInverted);
+        },
+        beforeDestroy() {
+            window.removeEventListener('resize', this.onResponsiveInverted);
+        },
+    };
 </script>
 
 <style lang="css">

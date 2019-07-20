@@ -6,8 +6,8 @@ export default function setOnlyOneLocationPlusFalse(location, diagnose, original
     // удаляю все локации
     Object.keys(originalDiagnose.locations).forEach((element) => {
         if (
-            Object.keys(d.teeth[toothId]).find(key => key === element) &&
-            location !== element
+            Object.keys(d.teeth[toothId]).find(key => key === element)
+            && location !== element
         ) {
             delete d.teeth[toothId][element];
         }
