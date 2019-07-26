@@ -2,50 +2,53 @@
     <div class="jaw-list-wrapper  wizard-tab-content noselect">
     <div class="absolute-header-block">
 
-        <md-toolbar class="md-transparent toolbar-jaw ">
-                <div class="md-toolbar-section-start">
-                        <md-field>
-                            <label for="teeth">Available Teeth</label>
-                            <md-select
-                                @md-selected="setSelectableTeeth(selectableTeethExtraChoose)"
-                                v-model="selectableTeethExtraChoose"
-                                name="teeth"
-                                id="teeth"
-                                multiple
-                            >
-                                <md-option
-                                    v-for="(value, index) in teethToSearch"
-                                    :key="index"
-                                    :value="value"
-                                >{{value | toCurrentTeethSystem(teethSystem)}} - {{ value | toCurrentTeethSystem(teethSystem, true)}}</md-option>
-                            </md-select>
-                        </md-field>
-
+        <md-toolbar class="md-transparent toolbar-jaw md-layout md-alignment-center-space-between">
+                <div class="md-layout md-gutter">
+                    <div class="md-layout-item">
+                            <md-field class="" >
+                                <label for="teeth">Available Teeth</label>
+                                <md-select
+                                    ref="selecteeth"
+                                    @md-selected="setSelectableTeeth(selectableTeethExtraChoose)"
+                                    v-model="selectableTeethExtraChoose"
+                                    name="teeth"
+                                    id="teeth"
+                                    multiple
+                                >
+                                    <md-option
+                                        v-for="(value, index) in teethToSearch"
+                                        :key="index"
+                                        :value="value"
+                                    >{{value | toCurrentTeethSystem(teethSystem)}} - {{ value | toCurrentTeethSystem(teethSystem, true)}}</md-option>
+                                </md-select>
+                            </md-field>
                     </div>
-                <div class="md-toolbar-section-end">
-                        <div class="loc-error">
+                        <div class="loc-error md-layout md-alignment-center-left">
                             <slot class="md-layout-item" name="title"></slot>
                         </div>
-                    <md-button
-                        @click="setLastLocationForAllTeeth()"
-                        class="md-primary md-round md-simple md-just-icon"
-                    >
-                        <md-icon>done_all</md-icon>
+                    </div>
+                <div class="md-alignment-center-right md-layout">
+                      <md-button
+                                @click="setLastLocationForAllTeeth()"
+                                class="md-primary md-round md-simple"
+                            >
+                                <md-icon>done_all</md-icon>
+                                set for all
+                                <md-tooltip v-if="'locations' in originalItem" md-delay="1000">Toggle teeth</md-tooltip>
+                                <md-tooltip v-else md-delay="1000">
+                                    Set last created
+                                    <br>change for all teeth
+                                </md-tooltip>
+                            </md-button>
 
-                        <md-tooltip v-if="'locations' in originalItem" md-delay="1000">Toggle teeth</md-tooltip>
-                        <md-tooltip v-else md-delay="1000">
-                            Set last created
-                            <br>change for all teeth
-                        </md-tooltip>
-                    </md-button>
-
-                    <md-button
-                        @click="dropAllLocations()"
-                        class="md-primary md-round md-simple md-just-icon"
-                    >
-                        <md-icon>clear_all</md-icon>
-                        <md-tooltip md-delay="1000">Drop all locations</md-tooltip>
-                    </md-button>
+                            <md-button
+                                @click="dropAllLocations()"
+                                class="md-primary md-round md-simple"
+                            >
+                                <md-icon>clear_all</md-icon>
+                                reset
+                                <md-tooltip md-delay="1000">Drop all locations</md-tooltip>
+                            </md-button>
                     <drop-down direction="down">
                         <md-button
                             slot="title"
@@ -86,7 +89,7 @@
         :style="[{'max-width': `${jawListWidth}px`}]"
         class="jaw-list-container"
     >
-        <div class="jaw md-layout-item">
+        <div v-if="selectableTeeth.length > 0" class="jaw md-layout-item">
             <transition-group name="fade" class="jaw-list mx-auto noselect">
                 <template>
                 <div
@@ -129,6 +132,14 @@
                 </div>
                 </template>
             </transition-group>
+        </div>
+        <div v-else class="jaw md-layout-item">
+            <md-empty-state
+                md-icon="change_history"
+                md-label="No selected teeth"
+                :md-description="`The ${typeSingleName} will be stored without indicating teeth`">
+                      <md-button @click="focusOn('selecteeth')" class="md-primary md-raised">Select Teeth</md-button>
+            </md-empty-state>
         </div>
     </div>
     </div>
@@ -609,6 +620,15 @@
 
                 return 'fdi';
             },
+            focusOn(ref) {
+                if (!this.$refs[ref]) {
+                    return;
+                }
+                if (ref === 'selecteeth') {
+                    this.$refs[ref].$el.getElementsByTagName('input')[0].focus();
+                }
+                this.$refs[ref].$el.focus();
+            },
         },
 
         computed: {
@@ -685,6 +705,14 @@
 }
 .fade-enter-active {
   transition-delay: .2s;
+}
+.loc-error{
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    .error{
+        color:red;
+    }
 }
 }
 </style>

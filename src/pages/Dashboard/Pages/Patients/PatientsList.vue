@@ -13,8 +13,17 @@
 
                 </md-card-header>
                 <md-card-content>
-                      <md-toolbar class="md-transparent" >
-                          <div class="md-toolbar-row">
+                    <md-toolbar class="md-transparent"  >
+                            <div class="md-toolbar-section-start  md-layout">
+                            </div>
+                            <div class="md-toolbar-section-end md-layout ml-auto">
+
+                                <md-button @click="showForm=!showForm" class="md-just-icon md-simple">
+                                    <md-icon>settings</md-icon>
+                                </md-button>
+                            </div>
+                    </md-toolbar>
+                      <md-toolbar class="md-transparent"  >
                             <div class="md-toolbar-section-start  md-layout">
                                 <div class=" md-size-50 md-small-size-100">
                                     <md-field>
@@ -33,7 +42,7 @@
                                     </md-field>
                                 </div >
                             </div>
-                            <div class="md-toolbar-section-end md-layout-item ml-auto">
+                            <div class="md-toolbar-section-end ml-auto">
                                 <div style="width: 300px" >
                                     <md-field :class="{'no-after-no-before': searching}" >
                                         <label>Search for patient</label>
@@ -44,15 +53,13 @@
                                             v-model="queryParams.searchQuery"
                                         ></md-input>
                                     </md-field>
-                                            <md-progress-bar
-                                            v-if="searching"
-                                            class="underline-progress"
-                                                :md-stroke="1"
-                                                md-mode="indeterminate">
-                                            </md-progress-bar>
-
+                                    <md-progress-bar
+                                        v-if="searching"
+                                        class="underline-progress"
+                                        :md-stroke="1"
+                                        md-mode="indeterminate">
+                                    </md-progress-bar>
                                 </div>
-                            </div>
                             </div>
                     </md-toolbar>
                     <div class="table-wrapper" >
@@ -70,17 +77,6 @@
                             :md-sort-fn="customSort"
                             class="table-striped paginated-table table-hover"
                         >
-                            <md-table-toolbar>
-                                    <div class="md-toolbar-section-start  md-layout">
-                                    </div>
-                                    <div class="md-toolbar-section-end md-layout ml-auto">
-                                        <div class=" ">
-                                            <md-button @click="showForm=!showForm" class="md-just-icon md-simple">
-                                                <md-icon>settings</md-icon>
-                                            </md-button>
-                                        </div>
-                                    </div>
-                            </md-table-toolbar>
                             <div style="height: 250px; position: inherit; overflow:hidden;" >
                             <slide-x-left-transition  >
                                 <md-table-empty-state
@@ -115,12 +111,16 @@
                             </div>
 
                             <md-table-row
+                                :class="[
+                                        {'just-added': item.justAdded},
+                                ]"
+                                class="transitionable-row"
                                 slot="md-table-row"
                                 slot-scope="{ item }"
                                 md-selectable="multiple"
                             >
                                 <md-table-cell
-                                    :md-sort-by=" item[field.key] ? item[field.key].toString() : ''"
+                                    :md-sort-by="field.key"
                                     v-for="field  in patientsTableColumns"
                                     :key="field.key"
                                     :md-label="getFieldName(field.key).toString()"
@@ -144,7 +144,6 @@
                                                     <br>
                                                     <span>{{item.firstName | capitilize}}</span>
                                                 </span>
-
                                         </div>
 
                                         <div v-else-if="item[field.key] === null">1</div>
@@ -243,7 +242,6 @@
                                     </md-button>
                                     <md-button
                                         class="md-just-icon md-warning md-simple"
-                                        @click.native="openPatientProfile(item)"
                                     >
                                         <md-icon>more_vert</md-icon>
                                     </md-button>
@@ -314,6 +312,7 @@
     import { SlideXLeftTransition } from 'vue2-transitions';
     import StarRating from 'vue-star-rating';
     import { mapGetters } from 'vuex';
+    import { setTimeout } from 'timers';
     import { Pagination, TAvatar, TTableEditor } from '@/components';
     import {
         PATIENTS_REQUEST,
@@ -419,9 +418,6 @@
             //   },
             // });
             },
-            openPatientProfile() {
-                this.$store.dispatch(AUTH_LOGOUT, { params: '' });
-            },
             handleLike(item) {
                 // swal({
                 //     title: `You liked ${item.name}`,
@@ -512,6 +508,18 @@
                         });
                 }, DELAY);
             },
+
+            removeClass() {
+                setTimeout(() => {
+                    if (document.querySelector('.just-added')) {
+                        this.patients.forEach((patient, index) => {
+                            if (patient.justAdded) {
+                                this.patients[index].justAdded = false;
+                            }
+                        });
+                    }
+                }, 5000);
+            },
         },
         created() {
             this.setPatientsTableColumns();
@@ -550,6 +558,9 @@
             },
             selectedPatients() {
                 this.showSnackbar = true;
+            },
+            patients() {
+                this.removeClass();
             },
         },
     };

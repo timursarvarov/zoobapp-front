@@ -339,8 +339,8 @@
     </div>
 </template>
 <script>
-    import jawSVGjs from './jawSVG';
-    import jawMenu from './JawMenu';
+    import jawSVGjs from '@/components/CustomComponents/Jaw/jawSVG';
+    import jawMenu from '@/components/CustomComponents/Jaw/JawMenu';
     import { AnimatedNumber } from '@/components';
     import { tObjProp, jawFunctions } from '@/mixins';
     import {
@@ -500,10 +500,7 @@
 
         created() {
             this.calculateJaw('created');
-            // this.selectedTeethLocal = this.selectedTeeth;
-            // this.prefer = this.prefer;
             window.addEventListener('resize', this.handleResize);
-            this.handleResize();
         },
         destroyed() {
             window.removeEventListener('resize', this.handleResize);
@@ -716,6 +713,7 @@
                 });
                 this.jawComputed = jaw;
                 this.getSeparatedItemsForEachTooth();
+                this.handleResize();
             },
 
             setTeeth() {

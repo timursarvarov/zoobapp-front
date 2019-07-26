@@ -6,13 +6,13 @@
                 <div class="picture-container">
                     <div class="picture">
                         <div v-if="!currentClinic.logo">
-                            <icon-base
+                            <!-- <icon-base
                                 class="icon-wrapper--item"
                                 width="104"
                                 height="104"
                                 icon-name="icon-tooth-wings"
                                 style="margin-top:10px;"
-                            />
+                            /> -->
                         </div>
                         <div v-else>
                             <img :src="currentClinic.logo">
@@ -80,14 +80,12 @@
     import { SlideYDownTransition } from 'vue2-transitions';
     import { mapGetters } from 'vuex';
     import { NOTIFY } from '@/constants';
-    import { IconBase } from '@/components';
     import { ImageCropperForm } from '@/pages';
 
     export default {
         components: {
             SlideYDownTransition,
             ImageCropperForm,
-            IconBase,
         },
         props: {
             error: {

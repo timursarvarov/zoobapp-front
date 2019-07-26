@@ -1,10 +1,12 @@
 /* eslint-disable */
+import Vue from 'vue';
 import {
     PATIENTS_REQUEST,
     PATIENTS_ERROR,
     PATIENTS_SUCCESS,
     PATIENTS_SET,
-    PATIENTS_UPDATE_PATIENT,
+    PATIENTS_PATIENT_UPDATE,
+    PATIENTS_PATIENT_ADD,
     PATIENTS_RESET,
 } from '@/constants';
 
@@ -24,7 +26,10 @@ export default {
     [PATIENTS_ERROR]: (state) => {
         state.status = 'error';
     },
-    [PATIENTS_UPDATE_PATIENT]: (state, payload) => {
-        state.patients[payload.index] = payload.patient;
+    [PATIENTS_PATIENT_UPDATE]: (state, payload) => {
+        Vue.set(state.patients, payload.index, payload.patient);
+    },
+    [PATIENTS_PATIENT_ADD]: (state, paitent) => {
+        state.patients.unshift(paitent);
     },
 };

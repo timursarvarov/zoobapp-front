@@ -1,4 +1,5 @@
 export default {
+    status: null,
     patient: {
         ID: null,
         organizationID: null,
@@ -13,6 +14,8 @@ export default {
         allergy: [],
         notes: [],
         plans: [],
+        currentPlanID: null,
+        procedures: {},
         diagnosis: [],
         invoices: [],
         anamnesis: [],

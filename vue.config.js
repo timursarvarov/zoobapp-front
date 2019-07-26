@@ -17,13 +17,6 @@
 //     },
 // };
 module.exports = {
-    devServer: {
-        // clientLogLevel: 'info',
-        watchOptions: {
-            poll: true,
-            aggregateTimeout: 300,
-        },
-    },
     chainWebpack: (config) => {
         const svgRule = config.module.rule('svg');
 

@@ -58,18 +58,20 @@
         :currentType="currentType"
         :recalculateItems="recalculateCollapseItems"
         :currentPlan="currentPlan"
+        :loadingAllPLans="loadingAllPLans"
         @addPlan="addPlan"
         @onSelectItem="selectItem"
     />
     <div class="md-layout-item  md-size-100" >
         <patient-items-lists
-        ref='items-lists'
-        :currentType="currentType"
-        :ageCategory="ageCategory"
-        :plans="patient.plans"
-        @onChangeTab="onChangeTab"
-        @toggleItemVisibility='toggleItemVisibility'
-        @showItemInfo='selectItem'
+            ref='items-lists'
+            :currentType="currentType"
+            :ageCategory="ageCategory"
+            :plans="patient.plans"
+            @onChangeTab="onChangeTab"
+            @toggleItemVisibility='toggleItemVisibility'
+            @showItemInfo='selectItem'
+            @onLoadingAllPlans="onLoadingAllPlans"
         />
     </div>
 
@@ -96,7 +98,7 @@
             :plans="patient.plans"
             :patientId="patient.ID"
             @onPlanCreated="onPlanCreated"
-            @onLoadingAllPLans="onLoadingAllPLans"
+            @onLoadingAllPlans="onLoadingAllPlans"
         />
         <t-print-form
             :patient="patient"
@@ -126,17 +128,12 @@
     import {
         NOTIFY,
         PATIENT_DIAGNOSE_SET,
-        PATIENT_TOGGLE_ITEM_VISIBILITY,
+        PATIENT_ITEM_VISIBILITY_TOGGLE,
         PATIENT_DIAGNOSE_UPDATE,
-        PATIENT_PLAN_EDIT,
-        PATIENT_PLAN_SET,
-        PATIENT_PLANS_GET,
         PATIENT_PROCEDURE_SET,
         PATIENT_ANAMNES_UPDATE,
         PATIENT_ANAMNES_SET,
         PATIENT_PROCEDURE_UPDATE,
-        CLINIC_SET_PROP,
-        M,
     } from '@/constants';
     import PlanAddForm from './PlanAddForm.vue';
     import {
@@ -179,16 +176,6 @@
             };
         },
         methods: {
-            showM() {
-                const manips = [];
-                M.forEach((m, i) => {
-                    manips.push({
-                        ID: i,
-                        ...m,
-                    });
-                });
-                console.log(JSON.stringify(manips));
-            },
             onChangeAgeCategory(c) {
                 this.ageCategory = c || 'adultTeeth';
                 this.onRecalculateCollapseItems();
@@ -197,7 +184,7 @@
                 this.recalculateCollapseItems = !this.recalculateCollapseItems;
             },
             addPlan() {
-                if (this.patient.plans.length >= 10) {
+                if (this.patient.plans && this.patient.plans.length >= 10) {
                     this.$store.dispatch(NOTIFY, {
                         settings: {
                             message: 'PLans limite riched (only 10 plans allowed)',
@@ -224,7 +211,7 @@
             },
             toggleItemVisibility(itemId, itemType) {
                 if (itemId) {
-                    this.$store.dispatch(PATIENT_TOGGLE_ITEM_VISIBILITY, {
+                    this.$store.dispatch(PATIENT_ITEM_VISIBILITY_TOGGLE, {
                         params: {
                             itemId,
                             type: itemType,
@@ -254,7 +241,7 @@
                 this.focusedPlanID = p.ID;
                 this.recalculateJawProcedure();
             },
-            onLoadingAllPLans(isLoading) {
+            onLoadingAllPlans(isLoading) {
                 this.loadingAllPLans = isLoading;
             },
             saveEditedAnamnes(a) {
@@ -276,7 +263,6 @@
                 });
             },
             saveItem(d) {
-                console.log(d);
                 if (d.id) {
                     if (this.currentType === 'diagnosis') {
                         this.saveEditedDiagnose(d);
@@ -310,7 +296,7 @@
                         });
                     }
                     if (this.currentType === 'procedures') {
-                        console.log(itemL)
+                        jaw;
                         this.$store.dispatch(PATIENT_PROCEDURE_SET, {
                             planID: this.currentPlan.ID,
                             procedure: itemL,
@@ -482,9 +468,11 @@
                 return 'procedure';
             },
             currentPlan() {
-                const index = this.patient.plans.findIndex(p => p.ID === this.focusedPlanID);
-                if (index > -1) {
-                    return this.patient.plans[index];
+                if (this.patient.plans) {
+                    const index = this.patient.plans.findIndex(p => p.ID === this.focusedPlanID);
+                    if (index > -1) {
+                        return this.patient.plans[index];
+                    }
                 }
                 return {};
             },

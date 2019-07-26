@@ -75,7 +75,7 @@
             },
             itemToDelete: {
                 type: Object,
-                default: () => {},
+                default: () => ({ name: '' }),
             },
             patientID: {
                 type: Number,
@@ -121,13 +121,12 @@
                 });
             },
             deleteProcedure() {
+                console.log(this.planID);
                 this.loading = true;
                 this.$store.dispatch(PATIENT_PROCEDURE_DELETE, {
-                    params: {
-                        patientId: this.patientID,
-                        planID: this.itemToDelete.ID,
-                        procedureID: this.itemToDelete.ID,
-                    },
+                    patientId: this.patientID,
+                    planID: this.planID,
+                    procedureID: this.itemToDelete.ID,
                 }).then(
                     () => {
                         this.$emit('onDeleted', false);

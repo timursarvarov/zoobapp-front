@@ -79,7 +79,7 @@ export default {
                     localStorage.setItem('accessToken', resp.data.accessToken);
                     localStorage.setItem('expiresAt', resp.data.expiresAt);
                     localStorage.setItem('refreshToken', resp.data.refreshToken);
-                    axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
+                    // axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
                     dispatch(AUTH_SUCCESS, { resp });
                     dispatch(AUTH_DECODE_TOKEN);
                     resolve(resp.data.accessToken);

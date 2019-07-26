@@ -5,7 +5,8 @@ import {
     PATIENTS_ERROR,
     PATIENTS_SUCCESS,
     PATIENTS_SET,
-    PATIENTS_UPDATE_PATIENT,
+    PATIENTS_PATIENT_UPDATE,
+    PATIENTS_PATIENT_ADD,
     PATIENTS_RESET,
     LOADER_SWITCH_OFF,
 } from '@/constants';
@@ -53,7 +54,7 @@ export default {
         });
 
     },
-    [PATIENTS_UPDATE_PATIENT]: ({
+    [PATIENTS_PATIENT_UPDATE]: ({
         commit,
         state
     }, {
@@ -68,8 +69,17 @@ export default {
                 index: index,
                 patient: patient
             };
-            commit(PATIENTS_UPDATE_PATIENT, payload);
+            commit(PATIENTS_PATIENT_UPDATE, payload);
         }
+    },
+    [PATIENTS_PATIENT_ADD]: ({
+        commit,
+    }, {
+        patient
+    }) => {
+        const patientN = patient;
+        patientN['justAdded'] = true;
+        commit(PATIENTS_PATIENT_ADD, patientN);
     },
     [PATIENTS_RESET]: ({
         commit,

@@ -11,6 +11,7 @@
                 v-model='descriptionL'>
                 <div slot='start'  ref="autocomplete">
                     <t-auto-complite
+                        class="no-margin"
                         :mdFuzzySearch="true"
                         v-model="selectedDescription"
                         @md-selected="setDescription"
@@ -46,6 +47,7 @@
     import { TAutoComplite, TWuswug } from '@/components';
 
     export default {
+        name: 't-item-description',
         components: {
             TAutoComplite,
             TWuswug,

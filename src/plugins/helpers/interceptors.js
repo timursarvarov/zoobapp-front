@@ -14,31 +14,72 @@ import {
 
 export default function() {
     let isAlreadyFetchingAccessToken = false;
-    let subscribers = [];
+    let subscribersResponse = [];
+
+    let isRefreshingRequest = false;
+    let refreshSubscribersRequst = [];
+
+    function subscribeTokenRefresh(cb) {
+        refreshSubscribersRequst.push(cb);
+    }
+
+    function onRrefreshed(token) {
+        refreshSubscribersRequst.map(cb => cb(token));
+    }
 
     function onAccessTokenFetched(accessToken) {
-        subscribers = subscribers.filter(callback => callback(accessToken));
+        subscribersResponse = subscribersResponse.filter(callback => callback(accessToken));
     }
 
     function addSubscriber(callback) {
-        subscribers.push(callback);
+        subscribersResponse.push(callback);
     }
     axios.interceptors.request.use(config => {
         if (store.state.loader.loaderState) {
             store.dispatch(LOADER_START);
         }
-        const expiresAt = store.state.auth.expiresAt;
-        const currentTime = Math.floor(Date.now() / 1000);
-        if (expiresAt < currentTime && !isAlreadyFetchingAccessToken) {
-            isAlreadyFetchingAccessToken = true;
 
-            return store.dispatch(AUTH_REFRESH_TOKEN).then(token => {
-                config.headers.Authorization = `Bearer ${token}`;
-                isAlreadyFetchingAccessToken = false;
-                return Promise.resolve(config);
-            });
+        // const expiresAt = store.state.auth.expiresAt;
+        // const currentTime = Math.floor(Date.now() / 1000);
 
-        }
+        // const originalRequest = config;
+        // console.log(expiresAt, currentTime, expiresAt <= currentTime)
+        // console.log('isRefreshingRequest', isRefreshingRequest)
+
+        // if (expiresAt <= currentTime) {
+
+        //     if (!isRefreshingRequest) {
+        //         isRefreshingRequest = true;
+        //         console.log(config)
+        //         return new Promise.resolve(store.dispatch(AUTH_REFRESH_TOKEN)
+        //             .then(newToken => {
+        //                 isRefreshingRequest = false;
+        //                 onRrefreshed(newToken);
+        //             }));
+        //     }
+        //     console.log(subscribersResponse)
+        //     const retryOrigReq = new Promise((resolve, reject) => {
+        //         subscribeTokenRefresh(token => {
+        //             // replace the expired token and retry
+        //             originalRequest.headers['Authorization'] = 'Bearer ' + token;
+        //             resolve(axios(originalRequest));
+        //         });
+        //     });
+        //     return retryOrigReq;
+        // }
+
+
+        // if (expiresAt <= currentTime && !isAlreadyFetchingAccessToken) {
+        //     isAlreadyFetchingAccessToken = true;
+        //     return store.dispatch(AUTH_REFRESH_TOKEN).then(token => {
+        //         isAlreadyFetchingAccessToken = false;
+        //         config.headers.Authorization = `Bearer ${token}`;
+        //         return Promise.resolve(config);
+        //     }).catch((err) => {
+        //         console.log(err);
+        //     });
+
+        // }
         return config;
 
     });
@@ -50,8 +91,6 @@ export default function() {
         if (error.response) {
             const refreshToken = store.state.auth.refreshToken;
             const hasRefreshTokenError = store.state.auth.hasRefreshTokenError;
-
-
             const {
                 config,
                 response: {
@@ -59,11 +98,12 @@ export default function() {
                 }
             } = error;
             const originalRequest = config;
-            if (status === 401 && refreshToken && !isAlreadyFetchingAccessToken && !hasRefreshTokenError) {
+            // if (status === 401 && refreshToken && !isAlreadyFetchingAccessToken && !hasRefreshTokenError) {
+            if (status === 401) {
                 if (!isAlreadyFetchingAccessToken) {
-                    isAlreadyFetchingAccessToken = true;
+                    isAlreadyFetchingAccessToken = false;
                     store.dispatch(AUTH_REFRESH_TOKEN).then((accessToken) => {
-                        isAlreadyFetchingAccessToken = false;
+                        isAlreadyFetchingAccessToken = true;
                         onAccessTokenFetched(accessToken);
                     });
                 }

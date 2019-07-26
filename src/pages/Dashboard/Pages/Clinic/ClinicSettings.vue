@@ -10,7 +10,7 @@
             @on-created="updateClinicLogo"
         />
         <md-card-content>
-            <div class="md-layout">
+            <div class="md-layout" >
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field
                         :class="[
@@ -20,6 +20,7 @@
                     >
                         <label>Clinic Name</label>
                         <md-input
+                            :disabled="loading"
                             v-model="name"
                             type="text"
                             ref="name"
@@ -61,6 +62,7 @@
                         <label>Phone</label>
                         <span class="md-prefix">+</span>
                         <md-input
+                            :disabled="loading"
                             ref="phone"
                             v-model="phone"
                             type="number"
@@ -94,7 +96,7 @@
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field class='with-subline'>
                         <label>Address</label>
-                        <md-input v-model="address" type="text"></md-input>
+                        <md-input  v-model="address" type="text"></md-input>
                     </md-field>
                 </div>
 
@@ -107,6 +109,8 @@
                     >
                         <label>Clinic web site address</label>
                         <md-input
+                            :disabled="loading"
+                            autocomplete="site"
                             ref="url"
                             v-model="url"
                             type="text"
@@ -146,6 +150,8 @@
                     >
                         <label>Email</label>
                         <md-input
+                            :disabled="loading"
+                            autocomplete="email"
                             v-model="email"
                             ref="email"
                             type="text"
@@ -183,12 +189,14 @@
                         {'md-valid': !errors.has('tax') && touched.tax},
                         {'md-error': errors.has('tax')}]"
                     >
-                        <label>Tax</label>
+                        <label>Tax %</label>
                         <md-input
+                            :disabled="loading"
                             data-vv-name="tax"
                             ref="tax" v-model="tax" type="number" min="0"
                             v-validate="modelValidations.tax"
                         ></md-input>
+                        <span v-show="!errors.has('tax') && touched.tax" class="md-helper-text">Tax will be added to clients bill</span>
                         <span class="md-error">{{errors.first('tax')}}</span>
                         <slide-y-down-transition>
                             <md-button
@@ -214,7 +222,9 @@
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field class='with-subline' >
                         <label for="teethSystem">Teeth System</label>
-                        <md-select v-model="teethSystem" name="teethSystem" id="teethSystem">
+                        <md-select
+                            :disabled="loading"
+                            v-model="teethSystem" name="teethSystem" id="teethSystem">
                             <md-option :value="1">FDI World Dental Federation notation</md-option>
                             <md-option :value="2">Universal numbering system</md-option>
                             <md-option :value="3">Palmer notation method</md-option>
@@ -226,6 +236,7 @@
                         <label for="selectedCurrency">Select Currency</label>
                         <md-select  md-dense v-model="selectedCurrency" name="selectedCurrency" id="selectedCurrency">
                             <md-option
+                                :disabled="loading"
                                 v-for="(item, key) in  currency"
                                 :key="key"
                                 :value="item.code">
@@ -239,6 +250,7 @@
                         <label for="teethSystem">Select UTC Timezone</label>
                         <md-select  md-dense v-model="selectedTimezone" name="selectedCurrency" id="selectedCurrency">
                             <md-option
+                                :disabled="loading"
                                 v-for="(item, key) in  timezones"
                                 :key="key"
                                 :value="item.offset">
@@ -259,10 +271,30 @@
         </md-card-content>
         <md-card-actions>
             <md-button
+                :disabled="loading"
                 native-type="submit"
                 @click="updateClinicSettings"
                 class="md-raised md-success ml-auto"
-            >Update Settings</md-button>
+            >
+            <div v-if="loading">
+                <md-progress-spinner
+                        class="t-white"
+                        :md-diameter="12"
+                        :md-stroke="2"
+                        md-mode="indeterminate"
+                    >
+                </md-progress-spinner>
+                &nbsp;
+            <span >
+                Saving...
+            </span >
+            </div>
+            <span v-else>
+                Update Settings
+            </span>
+
+
+            </md-button>
         </md-card-actions>
     </md-card>
 </template>
@@ -307,6 +339,7 @@
                 teethSystem: '',
                 timezones: TIMEZONES,
                 currency: COMMON_CURRENCY,
+                loading: false,
                 touched: {
                     url: false,
                     email: false,
@@ -395,6 +428,7 @@
             updateClinicSettings() {
                 this.$validator.validateAll().then((result) => {
                     if (result) {
+                        this.loading = true;
                         const clinic = {
                             image: this.image,
                             email: this.email,
@@ -414,14 +448,21 @@
                             })
                             .then((response) => {
                                 if (response) {
+                                    this.loading = false;
                                     this.$store.dispatch(NOTIFY, {
                                         settings: {
                                             message: 'Settings updated',
-                                            type: 'primary',
+                                            type: 'success',
                                         },
                                     });
                                 }
-                            });
+                            })
+                            .catch(
+                                (err) => {
+                                    this.loading = false;
+                                    console.log(err);
+                                },
+                            );
                     }
                 });
             },

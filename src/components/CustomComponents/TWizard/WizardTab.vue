@@ -2,6 +2,7 @@
   <div class="tab-pane fade"
        role="tabpanel"
        :id="tabId"
+       :name="name"
        :aria-hidden="!active"
        :aria-labelledby="`step-${tabId}`"
        :class="{'active show': active}" v-show="active">
@@ -13,12 +14,14 @@
         name: 'wizard-tab',
         props: {
             label: String,
+            name: String,
             id: String,
             beforeChange: Function,
         },
         inject: ['addTab', 'removeTab'],
         data() {
             return {
+                tabName: this.name,
                 active: false,
                 checked: false,
                 hasError: false,

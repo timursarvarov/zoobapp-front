@@ -8,6 +8,8 @@
             :title="currentClinic.name"
             :logoColor="currentClinic.color"
             :link="currentClinic.link"
+            :backgroundImage="backgroundImage"
+            @onToggleSidebar="saveSidebarPosition"
         >
             <!-- <user-menu></user-menu> -->
             <mobile-menu></mobile-menu>
@@ -35,11 +37,11 @@
                 <sidebar-item
                     v-if="patient.ID !== null"
                     :link="{
-                            name: `${patient.firstName} ${patient.lastName}`,
+                            name: `${capitalize (patient.firstName)} ${ capitalize(patient.lastName)}`,
                             icon: 'account_circle',
                             img:patient.avatar? patient.avatar: '',
                             textTocolor: patient.ID,
-                            acronim: patient.firstName+' '+patient.lastName,
+                            acronim: patient.firstName + ' '+ patient.lastName,
                             notification: patient.allergy.length > 0 ? 'A' : '',
                             path: `/patient/${patient.ID}/profile/`
                             }"
@@ -207,6 +209,7 @@
     import TopNavbar from './TopNavbar.vue';
     import ContentFooter from './ContentFooter.vue';
     import MobileMenu from './Extra/MobileMenu.vue';
+    import { SIDEBAR_BACKGROUND_URL, SIDE_BAR_POSITION } from '@/constants';
     // import UserMenu from './Extra/UserMenu.vue';
 
     function hasElement(className) {
@@ -233,6 +236,21 @@
             ZoomCenterTransition,
         },
         methods: {
+            capitalize(s) {
+                if (typeof s !== 'string') return '';
+                return s.charAt(0).toUpperCase() + s.slice(1);
+            },
+            saveSidebarPosition(val) {
+                localStorage.setItem(SIDE_BAR_POSITION, val === true ? '1' : '0');
+            },
+            initiateSidebarPosition() {
+                this.$nextTick(() => {
+                    const isMinimized = localStorage.getItem(SIDE_BAR_POSITION) === '1';
+                    if (isMinimized !== this.$sidebar.isMinimized) {
+                        this.$sidebar.toggleMinimize();
+                    }
+                });
+            },
             toggleSidebar() {
                 if (this.$sidebar.showSidebar) {
                     this.$sidebar.displaySidebar(false);
@@ -251,6 +269,7 @@
             } else {
                 docClasses.add('perfect-scrollbar-off');
             }
+            this.initiateSidebarPosition();
         },
         computed: {
             ...mapGetters({
@@ -258,6 +277,9 @@
                 currentClinic: 'getCurrentClinic',
                 selectedClinic: 'getCurrentClinic',
             }),
+            backgroundImage() {
+                return SIDEBAR_BACKGROUND_URL;
+            },
         },
     };
 </script>

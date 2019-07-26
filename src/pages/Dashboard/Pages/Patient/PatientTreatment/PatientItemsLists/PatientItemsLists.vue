@@ -2,7 +2,7 @@
     <div class="md-layout-item  md-size-100" >
         <keep-alive>
             <items-list
-                v-if="currentType === 'anamnesis' && patient.anamnesis.length > 0"
+                v-if="currentType === 'anamnesis' && patient.anamnesis && patient.anamnesis.length > 0"
                 :items="patient.anamnesis||[]"
                 @showItemInfo="showItemInfo"
                 @onJawChanged="recalculateJaw()"
@@ -13,7 +13,7 @@
             </items-list>
         </keep-alive>
         <items-list
-            v-if="currentType === 'diagnosis' && patient.diagnosis.length > 0"
+            v-if="currentType === 'diagnosis' && patient.diagnosis &&  patient.diagnosis.length > 0"
             :items="patient.diagnosis||[]"
             @showItemInfo="showItemInfo"
             @onJawChanged="recalculateJaw()"
@@ -23,7 +23,7 @@
             >
         </items-list>
         <t-tabs
-                v-if="patient.plans.length > 0 && currentType === 'procedures' "
+                v-if="patient.plans && patient.plans.length > 0 && currentType === 'procedures' "
                 @onChangeTab="onChangeTab"
                 ref="tabs"
                 :tab-name="tabHeaders"
@@ -31,11 +31,10 @@
                 class="procedures-tabs"
             >
                 <div
-                    v-for="(plan, index) of plans"
+                    v-for="(plan, index) of this.patient.plans"
                     :slot="`tab-pane-${index+1}`"
                     :key="plan.ID"
                     >
-                    <!-- <div :key="index"> -->
                         <items-list
                             :key="plan.ID"
                             @onJawChanged="recalculateJaw()"
@@ -43,7 +42,7 @@
                             @showItemInfo="showItemInfo"
                             :teethSystem="currentClinic.teethSystem"
                             currentType="procedures"
-                            :items="plan.procedures||[]"
+                            :items="getProceduresByIds(plan.procedures) || []"
                             :plan="plan"
                         >
                         <template v-if="plan.state === 1" slot="title-start" >
@@ -63,7 +62,7 @@
                                     Delete plan
                                 </md-button>
                                 <md-button
-                                    :disabled="currentPlan.state === 1"
+                                    :disabled="currentPlan.state === 1 "
                                     class="md-success"
                                     @click="editPLanField( currentPlan.ID, 'state', 1)" >
                                     Approve plan
@@ -131,7 +130,6 @@
                             ID: p.ID,
                             name: p.name,
                             state: p.state === 1 ? 'approved' : '',
-                            background: p.state === 1 ? '#00bcd4' : '',
                             price: this.getPlanTotalPrice(p),
                         };
                     });
@@ -142,9 +140,17 @@
                     ID: p.ID,
                     name: p.name,
                     state: '',
-                    background: '',
                     price: '',
                 });
+            },
+            getProcedures(procedures = []) {
+                const planProcedures = [];
+                if (procedures) {
+                    procedures.forEach((ID) => {
+                        planProcedures.push(this.patient.procedures[ID]);
+                    });
+                }
+                return planProcedures;
             },
             onChangeTab(index) {
                 this.focusedPlanID = this.patient.plans[index].ID;
@@ -164,28 +170,32 @@
                 this.initiatePlans();
             },
             getAllPlans() {
-                this.$emit('onLoadingAllPLans', true);
+                if (!this.patient.ID) return;
+                this.$emit('onLoadingAllPlans', true);
                 this.$store.dispatch(PATIENT_PLANS_GET, {
                     patientId: this.patient.ID,
                 }).then(
                     (resp) => {
-                        this.$emit('onLoadingAllPLans', false);
+                        this.$emit('onLoadingAllPlans', false);
                         if (resp.length > 0) {
                             this.initiatePlans();
                         }
                     },
-                ).catch(() => {
-                    this.$emit('onLoadingAllPLans', false);
+                ).catch((err) => {
+                    this.$emit('onLoadingAllPlans', false);
+                    console.log(err);
                 });
             },
             focusOnTab(ID) {
                 this.focusedPlanID = ID;
+                if (!this.patient.plans) return;
                 const index = this.patient.plans.findIndex(p => p.ID === ID);
                 if (this.$refs.tabs && index > -1) {
                     this.$refs.tabs.switchPanel(this.patient.plans[index]);
                 }
             },
             initiatePlans() {
+                if (!this.patient.plans) return;
                 this.tabHeaders = [];
                 this.initiateTabHeaders();
                 const approvedIndex = this.patient.plans.findIndex(p => p.state === 1);
@@ -198,6 +208,7 @@
                 }
             },
             changeTabHeaders(ID) {
+                if (!this.patient.plans) return;
                 const pIndex = this.patient.plans.findIndex(p => p.ID === ID);
                 const tabPlanIndex = this.tabHeaders.findIndex(p => p.ID === ID);
                 if (pIndex > -1 && tabPlanIndex > -1) {
@@ -240,20 +251,22 @@
             ...mapGetters({
                 patient: 'getPatient',
                 currentClinic: 'getCurrentClinic',
+                getProceduresByIds: 'getProceduresByIds',
             }),
+            // procedures() {
+            //     this.patient.procedures;
+            // },
             currentPlan() {
+                if (!this.patient.plans) return {};
                 const index = this.patient.plans.findIndex(p => p.ID === this.focusedPlanID);
                 if (index > -1) {
                     return this.patient.plans[index];
                 }
                 return {};
             },
-            plans() {
-                return this.patient.plans;
-            },
         },
         created() {
-            if (this.patient.plans.length < 1) {
+            if (this.patient.plans && this.patient.plans.length < 1) {
                 this.getAllPlans();
             } else {
                 this.initiatePlans();
@@ -261,8 +274,10 @@
         },
         watch: {
             // eslint-disable-next-line func-names
-            'patient.ID': function () {
-                this.getAllPlans();
+            'patient.ID': function (val) {
+                if (val) {
+                    this.getAllPlans();
+                }
             },
         },
     };

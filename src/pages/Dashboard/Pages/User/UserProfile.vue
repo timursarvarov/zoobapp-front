@@ -17,8 +17,8 @@
 </template>
 
 <script>
-    import UserCard from './UserProfile/UserCard';
-    import PasswordForm from './UserProfile/PasswordForm';
+    import UserCard from '@/pages/Dashboard/Pages/User/UserProfile/UserCard.vue';
+    import PasswordForm from '@/pages/Dashboard/Pages/User/UserProfile/PasswordForm.vue';
     // import CalendarForm from './UserProfile/CalendarForm';
 
     export default {

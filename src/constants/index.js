@@ -1,9 +1,9 @@
-import DIAGNOSISL from './diagnosis';
+// import DIAGNOSISL from './diagnosis';
 // import DIAGNOSIS_BACKL from './diagnosis-back';
 import PROCEDURESL from './procedures';
 import LOCATIONSL from './locations';
-import MANIPULATIONSl from './manipulations';
-import MANIPULATIONSt from './templates/manipulations';
+// import MANIPULATIONSl from './manipulations';
+// import MANIPULATIONSt from './templates/manipulations';
 
 import TEETH_DEFAULT_LOCATIONSL from './tooth-default-locations';
 import TEETH_SCHEMAL from './teeth-schema';
@@ -21,17 +21,14 @@ import TEETH_ALLL from './teeth-all';
 import TIMEZONESL from './timezones';
 import COMMON_CURRENCYL from './common-currency';
 
-import nrmlzPlans from './normalzr';
-
 // export const DIAGNOSIS_BACK = DIAGNOSIS_BACKL;
-export const DIAGNOSIS = DIAGNOSISL;
+// export const DIAGNOSIS = DIAGNOSISL;
 export const PROCEDURES = PROCEDURESL;
 export const LOCATIONS = LOCATIONSL;
-export const MANIPULATIONS = MANIPULATIONSl;
-export const M = MANIPULATIONSt;
+// export const MANIPULATIONS = MANIPULATIONSl;
+// export const M = MANIPULATIONSt;
 
 // normalizer for vuex
-export const NRMLZ_PLANS = nrmlzPlans;
 
 // Teeth schema locations
 
@@ -107,7 +104,8 @@ export const PATIENTS_SUCCESS = 'PATIENTS_SUCCESS';
 export const PATIENTS_RESET = 'PATIENTS_RESET';
 export const PATIENTS_ERROR = 'PATIENTS_ERROR';
 export const PATIENTS_SET = 'PATIENTS_SET';
-export const PATIENTS_UPDATE_PATIENT = 'PATIENTS_UPDATE_PATIENT';
+export const PATIENTS_PATIENT_UPDATE = 'PATIENTS_PATIENT_UPDATE';
+export const PATIENTS_PATIENT_ADD = 'PATIENTS_PATIENT_ADD';
 
 // Patient
 export const PATIENT_CREATE = 'PATIENT_CREATE';
@@ -130,18 +128,22 @@ export const PATIENT_TREATMETS_UPDATE = 'PATIENT_TREATMETS_UPDATE';
 export const PATIENT_PROCEDURE_UPDATE = 'PATIENT_PROCEDURE_UPDATE';
 export const PATIENT_ANAMNES_SET = 'PATIENT_ANAMNES_SET';
 export const PATIENT_ANAMNES_UPDATE = 'PATIENT_ANAMNES_UPDATE';
+export const PATIENT_MANIPULATION_SET = 'PATIENT_MANIPULATION_SET';
 export const PATIENT_DIAGNOSE_SET = 'PATIENT_DIAGNOSE_SET';
 export const PATIENT_DIAGNOSE_DELETE = 'PATIENT_DIAGNOSE_DELETE';
 export const PATIENT_DIAGNOSE_UPDATE = 'PATIENT_DIAGNOSE_UPDATE';
-export const PATIENT_TOGGLE_ITEM_VISIBILITY = 'PATIENT_TOGGLE_ITEM_VISIBILITY';
+export const PATIENT_ITEM_VISIBILITY_TOGGLE = 'PATIENT_ITEM_VISIBILITY_TOGGLE';
 export const PATIENT_GET = 'PATIENT_GET';
-export const PATIENT_SET_PARAM = 'PATIENT_SET_PARAM';
-export const PATIENT_DELETE_PARAM = 'PATIENT_DELETE_PARAM';
-export const PATIENT_SET_PARAMS = 'PATIENT_SET_PARAMS';
-export const PATIENT_CREATE_NOTE = 'PATIENT_CREATE_NOTE';
+export const PATIENT_PARAM_SET = 'PATIENT_PARAM_SET';
+export const PATIENT_PARAM_PUSH = 'PATIENT_PARAM_PUSH';
+export const PATIENT_PARAM_DELETE = 'PATIENT_PARAM_DELETE';
+export const PATIENT_PARAMS_SET = 'PATIENT_PARAMS_SET';
+export const PATIENT_NOTE_CREATE = 'PATIENT_NOTE_CREATE';
 export const PATIENT_ADD_SUB_PROP = 'PATIENT_ADD_SUB_PROP';
-export const PATIENT_DOWNLOAD_FILE = 'PATIENT_DOWNLOAD_FILE';
+export const PATIENT_FILE_DOWNLOAD = 'PATIENT_FILE_DOWNLOAD';
 export const PATIENT_SUB_PARAM_SET = 'PATIENT_SUB_PARAM_SET';
+export const PATIENT_SUB_PARAMS_SET = 'PATIENT_SUB_PARAMS_SET';
+export const PATIENT_SUB_PARAM_PUSH = 'PATIENT_SUB_PARAM_PUSH';
 export const PATIENT_SUB_PARAM_DELETE = 'PATIENT_SUB_PARAM_DELETE';
 export const PATIENT_INVOICE_SET = 'PATIENT_INVOICE_SET';
 export const PATIENT_PAYMENT_SET = 'PATIENT_PAYMENT_SET';
@@ -182,6 +184,11 @@ export const COMPANY_NAME = 'Dental CRM';
 export const COMPANY_LOGO_URL = 'https://s3.envato.com/files/247286010/owl-logo.png';
 export const COMPANY_COLOR = '#43a047';
 export const COMPANY_LINK = 'https://dental.owl.team';
+export const SIDEBAR_BACKGROUND_URL = 'https://owl.team/sidebar-6.jpg';
+export const LOGIN_BACKGROUND_URL = 'https://owl.team/backround-register.jpg';
+
+// Sidebar
+export const SIDE_BAR_POSITION = 'SIDE_BAR_POSITION';
 
 // Base
 export const BASE_URL = 'https://api.zoobapp.com/v1';

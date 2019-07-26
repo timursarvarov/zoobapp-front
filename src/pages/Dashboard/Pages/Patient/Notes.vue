@@ -192,7 +192,7 @@
     import { mapGetters } from 'vuex';
     import { SlideYDownTransition } from 'vue2-transitions';
     import { TimeLine, TimeLineItem, Badge } from '@/components';
-    import { PATIENT_CREATE_NOTE, NOTIFY } from '@/constants';
+    import { PATIENT_NOTE_CREATE, NOTIFY } from '@/constants';
 
     export default {
         components: {
@@ -249,7 +249,7 @@
                 this.$validator.validateAll().then((result) => {
                     if (result) {
                         this.$store
-                            .dispatch(PATIENT_CREATE_NOTE, {
+                            .dispatch(PATIENT_NOTE_CREATE, {
                                 params: {
                                     note: this.noteText,
                                     patientId: this.patient.ID,

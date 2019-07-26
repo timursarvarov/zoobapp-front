@@ -245,18 +245,20 @@
         methods: {
             setTableData() {
                 const procedures = [];
-                this.patient.plans.forEach((plan) => {
-                    if (plan.state === 1 && plan.procedures) {
-                        plan.procedures.forEach((p) => {
-                            procedures.push({
-                                ...p,
-                                planId: plan.ID,
-                                planName: plan.name,
-                                planCreated: plan.created,
+                if (this.patient.plans) {
+                    this.patient.plans.forEach((plan) => {
+                        if (plan.state === 1 && plan.procedures) {
+                            plan.procedures.forEach((p) => {
+                                procedures.push({
+                                    ...p,
+                                    planId: plan.ID,
+                                    planName: plan.name,
+                                    planCreated: plan.created,
+                                });
                             });
-                        });
-                    }
-                });
+                        }
+                    });
+                }
                 this.tableData = procedures;
             },
             allPlans() {

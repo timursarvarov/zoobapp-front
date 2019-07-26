@@ -41,7 +41,17 @@ VeeValidate.Validator.extend('is_after', {
         });
     }),
 });
+VeeValidate.Validator.extend('is_exist', {
+    // Custom validation message
+    getMessage: () => 'Please save or delete this field.',
+    // Custom validation rule
+    validate: value => new Promise((resolve) => {
+        resolve({
+            valid: value.length === 0,
+        });
+    }),
+});
 
 Vue.use(VeeValidate, {
-    fieldsBagName: 'veeFields',
+    fieldsBagName: 'fields',
 });

@@ -20,7 +20,7 @@
                             :tabindex="tab.checked ? 0 : ''"
                             :id="`step-${tab.tabId}`"
                             :aria-controls="tab.tabId"
-                            :aria-disabled="tab.active || !validateMode"
+                            :aria-disabled="validateMode || tab.active"
                             :aria-selected="tab.active"
                             :ref="`tab-${index}`"
                             class="nav-item wizard-tab-link"
@@ -29,8 +29,8 @@
                             <a
                                 class="nav-link"
                                 @click="navigateToTab(index)"
-                                :class="[{'disabled-wizard-link':  !tab.checked || !validateMode },
-                                        {active: tab.active}, {checked: tab.checked || !validateMode}]"
+                                :class="[{'disabled-wizard-link':  !validateMode || tab.checked },
+                                        {active: tab.active}, {checked: validateMode || tab.checked}]"
                                 data-toggle="tab"
                             >
                                 <tab-item-content :tab="tab"></tab-item-content>
@@ -258,7 +258,7 @@ export default {
             this.activeTabIndex--;
         },
         async navigateToTab(index) {
-            if (this.tabs[index].checked || !this.validateMode) {
+            if (this.validateMode || this.tabs[index].checked) {
                 // recursively validate each tab
                 if (index > this.activeTabIndex) {
                     let valid = await this.nextTab();
@@ -305,7 +305,7 @@ export default {
                 if (!newTab.checked) {
                     newTab.checked = true;
                 }
-                this.$emit("tab-change", oldTab, newTab);
+                this.$emit("tab-change", oldTab, newTab, this.activeTabIndex);
                 this.$emit("update:startIndex", newValue);
             }
         }

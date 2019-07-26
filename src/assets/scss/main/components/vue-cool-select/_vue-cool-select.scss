@@ -4,6 +4,10 @@
     }
 }
 
+.no-margin {
+    margin: 0!important;
+}
+
 .with-action {
     .md-input-action {
         top: 8px;
@@ -18,7 +22,7 @@
 
 .IZ-select:not(.md-focused) {
     label {
-        top: 9px;
+        top: 10px;
     }
 }
 
@@ -32,9 +36,13 @@
 .IZ-select.md-focused {
     .IZ-select__input-wrap {
         label {
-            top: -8px!important;
+            top: -10px!important;
         }
     }
+}
+
+.IZ-select:not(.no-margin) {
+    margin: 6px 0 18px!important;
 }
 
 .IZ-select {
@@ -42,13 +50,14 @@
     .underline-progress-bar {
         position: absolute;
         width: 100%;
-        top: 33px;
-        height: 2px;
+        top: 42px;
+        height: 3px;
     }
     .IZ-select__input-wrap {
         width: 100%;
         overflow: visible;
         .IZ-select__input {
+            top: 5px;
             min-width: fit-content;
             padding: 0;
             align-items: center;
@@ -99,7 +108,7 @@
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                // margin-top: 6px;
+                margin: 6px 0 2px 0;
                 width: 100%;
                 height: 36px;
                 padding: 7px 0px;
@@ -108,6 +117,9 @@
             .input-end {
                 position: absolute;
                 right: 0;
+            }
+            button {
+                top: 3px;
             }
         }
         .IZ-select__input--focused {
@@ -125,9 +137,22 @@
             }
         }
     }
+    .error {
+        // display: block !important;
+        opacity: 1;
+        transform: translate3d(0, 6px, 0);
+        color: #ff1744;
+        font-size: 0.6875rem;
+        line-height: normal;
+        text-align: left;
+        position: absolute;
+        bottom: -14px;
+        font-size: 12px;
+        transition: .3s
+    }
     .IZ-select__menu {
         min-width: 62vw;
-        top: 36px;
+        top: 42px;
         .IZ-select__no-data {
             padding: 15px 0;
         }

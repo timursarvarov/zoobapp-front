@@ -7,6 +7,7 @@
                     <div class="md-layout-item md-layout md-size-100 avatart-wrapper">
                         <div class="md-layout-item  md-small-size-100 md-size-50  md-layout switch md-alignment-center-space-between">
                             <t-avatar-input
+                                :disabled="loading"
                                 :textToColor="patient.ID"
                                 :imageSrc="patient.avatar"
                                 :title="patient.firstName + ' ' + patient.lastName"
@@ -38,6 +39,7 @@
                         >
                             <label>First Name</label>
                             <md-input
+                                :disabled="loading"
                                 v-model="patient.firstName"
                                 type="text"
                                 data-vv-name="firstName"
@@ -65,6 +67,7 @@
                         >
                             <label>Last Name</label>
                             <md-input
+                                :disabled="loading"
                                 v-model="patient.lastName"
                                 type="text"
                                 data-vv-name="lastName"
@@ -93,6 +96,7 @@
                             <label>Phone</label>
                             <span class="md-prefix">+</span>
                             <md-input
+                                :disabled="loading"
                                 v-model="patient.phone"
                                 type="number"
                                 data-vv-name="phone"
@@ -119,19 +123,25 @@
                     <div class="md-layout-item md-size-100">
                         <md-field>
                             <label>Source</label>
-                            <md-input v-model="patient.source"></md-input>
+                            <md-input
+                                v-model="patient.source"
+                                :disabled="loading"></md-input>
                         </md-field>
                     </div>
 
                     <div class="md-layout-item md-size-100">
                         <md-field>
                             <label>Address</label>
-                            <md-input v-model="patient.address"></md-input>
+                            <md-input
+                                :disabled="loading"
+                                v-model="patient.address"></md-input>
                         </md-field>
                     </div>
 
                     <div class="md-layout-item md-size-100">
-                        <md-datepicker md-immediately v-model="patient.birthday">
+                        <md-datepicker
+                            md-immediately v-model="patient.birthday"
+                            :disabled="loading">
                             <label>Birthday date</label>
                         </md-datepicker>
                     </div>
@@ -145,6 +155,7 @@
                         >
                             <label>Email Address</label>
                             <md-input
+                                :disabled="loading"
                                 v-model="patient.email"
                                 type="email"
                                 data-vv-name="email"
@@ -165,6 +176,7 @@
                     </div>
                      <div class="md-layout-item md-size-100">
                         <md-chips
+                            :disabled="loading"
                             v-model="patient.allergy"
                             class="md-danger"
                             md-placeholder="Add allergy..."
@@ -174,7 +186,26 @@
                 </div>
         </md-card-content>
         <md-card-actions>
-            <md-button @click="updateProfile" class="md-raised md-success mt-4">Update Profile</md-button>
+            <md-button @click="updateProfile"
+                :disabled="loading"
+                class="md-raised md-success mt-4">
+                    <div v-if="loading">
+                        <md-progress-spinner
+                                class="t-white"
+                                :md-diameter="12"
+                                :md-stroke="2"
+                                md-mode="indeterminate"
+                            >
+                        </md-progress-spinner>
+                        &nbsp;
+                    <span >
+                        Saving...
+                    </span >
+                    </div>
+                    <span v-else>
+                        Update Profile
+                    </span>
+                </md-button>
         </md-card-actions>
         <!-- <generator/> -->
     </div>
@@ -185,7 +216,6 @@
     import StarRating from 'vue-star-rating';
     import { PATIENT_AVATAR_UPLOAD, PATIENT_UPDATE, NOTIFY } from '@/constants';
     import { TAvatarInput } from '@/components';
-    // import generator from '@/svgImporter/jawSVGgenerator';
 
     const randomMC = require('random-material-color');
 
@@ -214,6 +244,7 @@
         data() {
             return {
                 showRating: false,
+                loading: false,
                 showForm: false,
                 image: '',
                 address: null,
@@ -260,12 +291,14 @@
                     .validateAll('firstName', 'email', 'phone', 'lastName')
                     .then((result) => {
                         if (result) {
+                            this.loading = true;
                             this.$store
                                 .dispatch(PATIENT_UPDATE, {
                                     patient: this.patient,
                                 })
                                 .then((response) => {
                                     if (response) {
+                                        this.loading = false;
                                         this.$store.dispatch(NOTIFY, {
                                             settings: {
                                                 message:
@@ -274,6 +307,9 @@
                                             },
                                         });
                                     }
+                                }).catch((err) => {
+                                    console.log(err);
+                                    this.loading = false;
                                 });
                         }
                     });

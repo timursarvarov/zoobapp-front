@@ -118,7 +118,7 @@
             },
             backgroundImage: {
                 type: String,
-                default: './img/sidebar-6.jpg',
+                default: '',
             },
             backgroundColor: {
                 type: String,
@@ -151,6 +151,7 @@
                 if (this.$sidebar) {
                     this.$sidebar.toggleMinimize();
                 }
+                this.$emit('onToggleSidebar', this.$sidebar.isMinimized)
             },
         },
         computed: {

@@ -84,7 +84,7 @@
     </div>
 </template>
 <script>
-    import Tooth from './Tooth';
+    import Tooth from '@/components/CustomComponents/Jaw/Tooth';
     import {
         TEETH_ADDULT_ALL,
         TEETH_DEFAULT_LOCATIONS,

@@ -5,10 +5,10 @@
         :class="{'md-toolbar-absolute md-white md-fixed-top': $route.meta.navbarAbsolute}"
     >
         <div class="wrapper-progress-bar">
-            <md-progress-bar
-                v-show="loading"
+            <!-- <md-progress-bar
+                v-if="loading"
                 :md-stroke="2"
-            md-mode="indeterminate"></md-progress-bar>
+            md-mode="indeterminate"></md-progress-bar> -->
         </div>
         <div class="md-toolbar-row">
             <div class="md-toolbar-section-start">
@@ -33,7 +33,6 @@
                             class="md-icon-button md-simple md-danger md-round md-just-icon"
                         >
                             <md-icon>report_problem</md-icon>
-                            <!-- <span class="notification">{{patient.allergy.length}}</span> -->
                             <md-tooltip>Attention allergy!</md-tooltip>
                         </md-button>
                     </template>
@@ -51,316 +50,283 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </md-button>
-
-                <cool-select
-                    class="patient-select with-action with-subline md-field"
-                    :class="[
-                    {'md-focused': coolSelectFocus || searchTerm},
-                    {'no-after-no-before': searching}
-                    ]"
-                    style="width:300px;"
-                    @focus="coolSelectFocus = true"
-                    @blur="coolSelectFocus = false"
-                    tabindex="0"
-                    v-model="searchTerm"
-                    :searchText.sync="searchText"
-                    :items="patients"
-                    :loading="searching"
-                    item-text="firstName"
-                    disable-filtering-by-search
-                    loadingIndicator="spinner"
-                    :arrowsDisableInstantSelection="true"
-                    :disableFirstItemSelectOnEnter="true"
-                    @select="goToPatient"
-                    @search="getPatients"
-                >
-                    <template slot="input-end">
-                            <md-button
-                            @click=" searchTerm=null"
-                            tabindex="-1"
-                            v-show="searchTerm"
-                            class="md-button md-icon-button md-dense md-input-action noselect md-simple"
-                        >
-                            <md-icon class="success">close</md-icon>
-                    </md-button>
-                    </template>
-                    <template slot="input-start">
-                        <label for="input">Search for patient</label>
-                    </template>
-                    <template slot="input-after">
-                        <md-progress-bar
-                            v-if="searching"
-                            class="underline-progress-bar"
-                            :md-stroke="2"
-                        md-mode="indeterminate"></md-progress-bar>
-                    </template>
-                    <template slot="no-data">
-                         <div v-if="!serverError && ( searchText.length<3)">
-                            <div class="md-layout">
-                                <div
-                                >
-                                    <md-subheader>
-                                    Type at least 3 letters to search by phone, email or name
-                                    </md-subheader>
-                                </div>
-                            </div>
-                        </div>
-                        <div v-else-if="noData">
-                            <div class="md-layout">
-                            <div
-                                class="md-size-100 md-layout md-alignment-center-center"
-                                style="white-space: pre-wrap;oveflow:hidden; padding: 0 0 15px 0;"
-                            >
-                                <span
-                                    class="md-layout-item"
-                                >No patients matching "{{ searchText }}" were found.</span>
-                            </div>
-                            <div class="md-layout md-layout-item md-alignment-center md-size-100">
-                                <md-button
-                                    class="md-success md-sm"
-                                    @click="showPatientAddForm()"
-                                >Create patient</md-button>
-                            </div>
-                            </div>
-                        </div>
-
-                        <div v-else-if="serverError" >
-                            <md-subheader>
-                                Connection problems
-                            </md-subheader>
-
-                            <md-button
-                                class="md-success md-layout-item mx-auto md-sm"
-                                @click="getPatients()"
-                            >Retry</md-button>
-                        </div>
-                    </template>
-                    <template v-if="item" slot="item" slot-scope="{ item }">
-                        <div style="display: flex;">
-                            <md-button class="IZ-select-button btn-avatar">
-                                <t-avatar
-                                    class="search-avatar"
-                                    :textToColor="item.ID"
-                                    :imageSrc="item.avatar"
-                                    :title="item.firstName + ' ' + item.lastName"
-                                    :notification="item.allergy && item.allergy.length ? 'A' : ''"
-                                />
-                                <div class="md-serched-list-item-text text-left">
-                                    <span >
-                                        {{ item.firstName | capitilize}} {{ item.lastName | capitilize }}
-                                        <br />
-                                    </span>
-                                    <span v-if="item.phone">
-                                        {{ "+" + item.phone }}
-                                    </span>
-                                </div>
-                                <!-- <span class="text-right" >{{`${item.phone}`}} {{currnentClinic.currencyCode}}</span> -->
-                            </md-button>
-                        </div>
-                    </template>
-                    <template v-if="patients.length >1" slot="after-items">
-                        <div style="display: flex;">
-                            <div style="flex-grow:1" class="md-layout-item">
-                                <infinite-loading
-                                    @infinite="infiniteHandler"
-                                    :identifier="infiniteId"
-                                    :key="patients.length"
-                                >
-                                    <div slot="spinner">
-                                        <md-progress-spinner
-                                            :md-diameter="40"
-                                            :md-stroke="4"
-                                            md-mode="indeterminate"
-                                        />
-                                    </div>
-                                    <!-- <div slot="no-more">
-                                        <md-subheader>No more patients</md-subheader>
-                                    </div> -->
-                                    <div slot="no-results">
-                                          <md-subheader>No more patients</md-subheader>
-                                    </div>
-                                    <div slot="error" slot-scope="{ trigger }">
-                                        <div class="md-layout">
-                                        <div
-                                            class="md-layout-item"
-                                            style="padding: 15px 0;"
-                                        >
-                                        <md-subheader>
-                                            Oops! Connection problems
-                                        </md-subheader>
-                                                <div class="md-layout-item md-size-100">
-                                                    <md-button
-                                                        class="md-primary md-layout-item mx-auto md-sm"
-                                                        @click="trigger"
-                                                    >Retry</md-button>
-                                                </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </infinite-loading>
-                            </div>
-                        </div>
-                    </template>
-                </cool-select>
-                <md-list>
-                    <md-list-item >
-                        <router-link
-                            to="/">
-                            <i class="material-icons">dashboard</i>
-                            <p class="hidden-lg hidden-md">Dashboard</p>
-                        </router-link>
-                    </md-list-item>
-                    <md-list-item
-                        class="md-primary md-round md-simple md-just-icon"
-                        @click="showPatientAddForm()"
+                <div class="md-collapse">
+                    <cool-select
+                        class="patient-select with-action md-field"
+                        :class="[
+                        {'md-focused': coolSelectFocus || searchTerm},
+                        {'no-after-no-before': searching}
+                        ]"
+                        style="width:300px;"
+                        @focus="coolSelectFocus = true"
+                        @blur="coolSelectFocus = false"
+                        tabindex="0"
+                        v-model="searchTerm"
+                        :searchText.sync="searchText"
+                        :items="patients"
+                        :loading="searching"
+                        item-text="firstName"
+                        disable-filtering-by-search
+                        loadingIndicator="spinner"
+                        :arrowsDisableInstantSelection="true"
+                        :disableFirstItemSelectOnEnter="true"
+                        @select="goToPatient"
+                        @search="getPatients"
                     >
-                        <i class="material-icons">person_add</i>
-                        <p class="hidden-lg hidden-md">Add Patient</p>
-                    </md-list-item>
+                        <template slot="input-end">
+                                <md-button
+                                @click=" searchTerm=null"
+                                tabindex="-1"
+                                v-show="searchTerm"
+                                class="md-button md-icon-button md-dense md-input-action noselect md-simple"
+                            >
+                                <md-icon class="success">close</md-icon>
+                        </md-button>
+                        </template>
+                        <template slot="input-start">
+                            <label for="input">Search for patient</label>
+                        </template>
+                        <template slot="input-after">
+                            <md-progress-bar
+                                v-if="searching"
+                                class="underline-progress-bar"
+                                :md-stroke="2"
+                            md-mode="indeterminate"></md-progress-bar>
+                        </template>
+                        <template slot="no-data">
+                            <div v-if="!serverError && ( searchText.length<3)">
+                                <div class="md-layout">
+                                    <div
+                                    >
+                                        <md-subheader>
+                                        Type at least 3 letters to search by phone, email or name
+                                        </md-subheader>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else-if="noData">
+                                <div class="md-layout">
+                                <div
+                                    class="md-size-100 md-layout md-alignment-center-center"
+                                    style="white-space: pre-wrap;oveflow:hidden; padding: 0 0 15px 0;"
+                                >
+                                    <span
+                                        class="md-layout-item"
+                                    >No patients matching "{{ searchText }}" were found.</span>
+                                </div>
+                                <div class="md-layout md-layout-item md-alignment-center md-size-100">
+                                    <md-button
+                                        class="md-success md-sm"
+                                        @click="showPatientAddForm()"
+                                    >Create patient</md-button>
+                                </div>
+                                </div>
+                            </div>
 
-                    <li class="md-list-item">
-                        <a
-                            class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                        >
-                            <div class="md-list-item-content">
-                                <drop-down direction="down">
-                                    <md-button
-                                        slot="title"
-                                        class="md-button md-round md-just-icon md-simple"
-                                        data-toggle="dropdown"
-                                    >
-                                        <md-icon>notifications</md-icon>
-                                        <span class="notification">5</span>
-                                        <p class="hidden-lg hidden-md">Notifications</p>
-                                    </md-button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li>
-                                            <a href="#">Mike John responded to your email</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">You have 5 new tasks</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">You're now friend with Andrew</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Another Notification</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Another One</a>
-                                        </li>
-                                    </ul>
-                                </drop-down>
+                            <div v-else-if="serverError" >
+                                <md-subheader>
+                                    Connection problems
+                                </md-subheader>
+
+                                <md-button
+                                    class="md-success md-layout-item mx-auto md-sm"
+                                    @click="getPatients()"
+                                >Retry</md-button>
                             </div>
-                        </a>
-                    </li>
-                    <li class="md-list-item">
-                        <a
-                            class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                        >
-                            <div class="md-list-item-content">
-                                <drop-down multiLevel direction="down">
-                                    <md-button
-                                        slot="title"
-                                        class="md-button md-round md-just-icon md-simple"
-                                        data-toggle="dropdown"
+                        </template>
+                        <template v-if="item" slot="item" slot-scope="{ item }">
+                            <div style="display: flex;">
+                                <md-button class="IZ-select-button btn-avatar">
+                                    <t-avatar
+                                        class="search-avatar"
+                                        :textToColor="item.ID"
+                                        :imageSrc="item.avatar"
+                                        :title="item.firstName + ' ' + item.lastName"
+                                        :notification="item.allergy && item.allergy.length ? 'A' : ''"
+                                    />
+                                    <div class="md-serched-list-item-text text-left">
+                                        <span >
+                                            {{ item.firstName | capitilize}} {{ item.lastName | capitilize }}
+                                            <br />
+                                        </span>
+                                        <span v-if="item.phone">
+                                            {{ "+" + item.phone }}
+                                        </span>
+                                    </div>
+                                </md-button>
+                            </div>
+                        </template>
+                        <template v-if="patients.length >1" slot="after-items">
+                            <div style="display: flex;">
+                                <div style="flex-grow:1" class="md-layout-item">
+                                    <infinite-loading
+                                        @infinite="infiniteHandler"
+                                        :identifier="infiniteId"
+                                        :key="patients.length"
                                     >
-                                        <md-icon>more_vert</md-icon>
-                                        <p class="hidden-lg hidden-md">More</p>
-                                    </md-button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li>
-                                            <router-link tag="a" to="/pages/user">My Profile</router-link>
-                                        </li>
-                                        <li @click="showPatientAddForm()" class="md-layout">
-                                            <a href="#" class="md-layout-item">Add new Patient</a>
-                                        </li>
-                                        <li @click="lock()" class="md-layout">
-                                            <a href="#" class="md-layout-item">Lock</a>
-                                        </li>
-                                        <li @click="logout()">
-                                            <a href="#">Logout</a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                class="dropdown-toggle"
-                                                :class="{'open': multiLevel1}"
-                                                @click="multiLevel1 = !multiLevel1"
+                                        <div slot="spinner">
+                                            <md-progress-spinner
+                                                :md-diameter="40"
+                                                :md-stroke="4"
+                                                md-mode="indeterminate"
+                                            />
+                                        </div>
+                                        <div slot="no-results">
+                                            <md-subheader>No more patients</md-subheader>
+                                        </div>
+                                        <div slot="error" slot-scope="{ trigger }">
+                                            <div class="md-layout">
+                                            <div
+                                                class="md-layout-item"
+                                                style="padding: 15px 0;"
                                             >
-                                                Current language:
-                                                <span
-                                                    style="text-transform: uppercase;"
-                                                >&nbsp;{{$i18n.locale}}</span>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li v-for="(loc, index) in $i18n.availableLocales" :key="index"
-                                                    @click="$i18n.locale = loc "
-                                                    :class="[{'selected-menu-top-navbar': $i18n.locale === loc }]"
-                                                >
-                                                    <a
-                                                        @click="multiLevel1 = !multiLevel1"
-                                                        :style="{color:  $i18n.locale === loc ? '#fff!important': ''}"
-                                                        href="#"
-                                                    >{{loc}}</a>
-                                                </li>
-                                                <!-- <li
-                                                    @click="$i18n.locale = 'ru' "
-                                                    :class="[{'selected-menu-top-navbar': $i18n.locale === 'ru' }]"
-                                                >
-                                                    <a
-                                                        @click="multiLevel1 = !multiLevel1"
-                                                        :style="{color:  $i18n.locale === 'ru' ? '#fff!important': ''}"
-                                                        href="#"
-                                                    >ru</a>
-                                                </li>
-                                                <li
-                                                    @click="$i18n.locale = 'en' "
-                                                    :class="[{'selected-menu-top-navbar': $i18n.locale === 'en' }]"
-                                                >
-                                                    <a
-                                                        @click="multiLevel1 = !multiLevel1"
-                                                        :style="{color:  $i18n.locale === 'en' ? '#fff!important': ''}"
-                                                        href="#"
-                                                    >en</a>
-                                                </li>
-                                                <li
-                                                    @click="$i18n.locale = 'uz' "
-                                                    :class="[{'selected-menu-top-navbar': $i18n.locale === 'uz' }]"
-                                                >
-                                                    <a
-                                                        @click="multiLevel1 = !multiLevel1"
-                                                        :style="{color:  $i18n.locale === 'uz' ? '#fff!important': ''}"
-                                                        href="#"
-                                                    >uz</a>
-                                                </li> -->
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a
-                                                class="dropdown-toggle"
-                                                :class="{'open': multiLevel}"
-                                                @click="toggleMultiLevel"
-                                            >Change Clinic</a>
-                                            <ul class="dropdown-menu">
-                                                <li
-                                                    @click="setClinic(clinic.ID), toggleMultiLevel()"
-                                                    :class="[{'selected-menu-top-navbar': clinic.ID === currnentClinic.ID }]"
-                                                    v-for="(clinic, index) in clinics"
-                                                    :key="index"
-                                                >
-                                                    <a
-                                                        :style="{color: clinic.ID === currnentClinic.ID ? '#fff!important': ''}"
-                                                        href="#"
-                                                    >{{clinic.name | capitilize }}{{clinic.ID }}</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </drop-down>
+                                            <md-subheader>
+                                                Oops! Connection problems
+                                            </md-subheader>
+                                                    <div class="md-layout-item md-size-100">
+                                                        <md-button
+                                                            class="md-primary md-layout-item mx-auto md-sm"
+                                                            @click="trigger"
+                                                        >Retry</md-button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </infinite-loading>
+                                </div>
                             </div>
-                        </a>
-                    </li>
-                </md-list>
+                        </template>
+                    </cool-select>
+                    <md-list>
+                        <md-list-item >
+                            <router-link
+                                to="/">
+                                <i class="material-icons">dashboard</i>
+                                <p class="hidden-lg hidden-md">Dashboard</p>
+                            </router-link>
+                        </md-list-item>
+                        <md-list-item
+                            class="md-primary md-round md-simple md-just-icon"
+                            @click="showPatientAddForm()"
+                        >
+                            <i class="material-icons">person_add</i>
+                            <p class="hidden-lg hidden-md">Add Patient</p>
+                        </md-list-item>
+
+                        <li class="md-list-item">
+                            <a
+                                class="md-list-item-router md-list-item-container md-button-clean dropdown"
+                            >
+                                <div class="md-list-item-content">
+                                    <drop-down direction="down">
+                                        <md-button
+                                            slot="title"
+                                            class="md-button md-round md-just-icon md-simple"
+                                            data-toggle="dropdown"
+                                        >
+                                            <md-icon>notifications</md-icon>
+                                            <span class="notification">5</span>
+                                            <p class="hidden-lg hidden-md">Notifications</p>
+                                        </md-button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li>
+                                                <a href="#">Mike John responded to your email</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">You have 5 new tasks</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">You're now friend with Andrew</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Another Notification</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Another One</a>
+                                            </li>
+                                        </ul>
+                                    </drop-down>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="md-list-item">
+                            <a
+                                class="md-list-item-router md-list-item-container md-button-clean dropdown"
+                            >
+                                <div class="md-list-item-content">
+                                    <drop-down multiLevel direction="down">
+                                        <md-button
+                                            slot="title"
+                                            class="md-button md-round md-just-icon md-simple"
+                                            data-toggle="dropdown"
+                                        >
+                                            <md-icon>more_vert</md-icon>
+                                            <p class="hidden-lg hidden-md">More</p>
+                                        </md-button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li>
+                                                <router-link tag="a" to="/pages/user">My Profile</router-link>
+                                            </li>
+                                            <li @click="showPatientAddForm()" class="md-layout">
+                                                <a href="#" class="md-layout-item">Add new Patient</a>
+                                            </li>
+                                            <li @click="lock()" class="md-layout">
+                                                <a href="#" class="md-layout-item">Lock</a>
+                                            </li>
+                                            <li @click="logout()">
+                                                <a href="#">Logout</a>
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="dropdown-toggle"
+                                                    :class="{'open': multiLevel1}"
+                                                    @click="multiLevel1 = !multiLevel1"
+                                                >
+                                                    Current language:
+                                                    <span
+                                                        style="text-transform: uppercase;"
+                                                    >&nbsp;{{$i18n.locale}}</span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li v-for="(loc, index) in $i18n.availableLocales" :key="index"
+                                                        @click="$i18n.locale = loc "
+                                                        :class="[{'selected-menu-top-navbar': $i18n.locale === loc }]"
+                                                    >
+                                                        <a
+                                                            @click="multiLevel1 = !multiLevel1"
+                                                            :style="{color:  $i18n.locale === loc ? '#fff!important': ''}"
+                                                            href="#"
+                                                        >{{loc}}</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="dropdown-toggle"
+                                                    :class="{'open': multiLevel}"
+                                                    @click="toggleMultiLevel"
+                                                >Change Clinic</a>
+                                                <ul class="dropdown-menu">
+                                                    <li
+                                                        @click="setClinic(clinic.ID), toggleMultiLevel()"
+                                                        :class="[{'selected-menu-top-navbar': clinic.ID === currnentClinic.ID }]"
+                                                        v-for="(clinic, index) in clinics"
+                                                        :key="index"
+                                                    >
+                                                        <a
+                                                            :style="{color: clinic.ID === currnentClinic.ID ? '#fff!important': ''}"
+                                                            href="#"
+                                                        >{{clinic.name | capitilize }}{{clinic.ID }}</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </drop-down>
+                                </div>
+                            </a>
+                        </li>
+                    </md-list>
+                </div>
             </div>
         </div>
     </md-toolbar>
@@ -545,7 +511,7 @@ export default {
             this.$store.dispatch(AUTH_LOCK).then(() => {
                 this.$router.push("/lock");
             });
-        }
+        },
     },
     computed: {
         ...mapGetters({
@@ -557,7 +523,7 @@ export default {
             expiresAt: "expiresAt",
             lang: "getLang"
         })
-    }
+    },
 };
 </script>
 

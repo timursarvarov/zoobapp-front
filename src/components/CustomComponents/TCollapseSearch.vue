@@ -108,7 +108,7 @@
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
     import Fuse from 'fuse.js';
-    import CustomCollapse from './CustomCollapse';
+    import CustomCollapse from '@/components/CustomComponents/CustomCollapse';
     import { tObjProp } from '@/mixins';
 
     const fuseOptions = {
@@ -374,6 +374,9 @@
 </script>
 <style lang="scss">
 .t-collapse-search-wrapper {
+    .no-margin{
+        margin: 0!important;
+    }
     .collapse-toolbar__items {
         display: flex;
         justify-content: space-between;

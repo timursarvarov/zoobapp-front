@@ -20,7 +20,6 @@
     export default {
         components: {
             PatientCard,
-            // JawGenerator,
         },
         computed: {
             ...mapGetters({

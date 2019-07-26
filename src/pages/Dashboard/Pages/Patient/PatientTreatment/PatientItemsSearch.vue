@@ -37,7 +37,7 @@
                 :selectedTeeth="selectedTeeth"
                 :favoriteItems="favoriteProcedures"
                 itemType="procedures"
-                :loading="originalItemsLoading.procedures || loadingAllPLans"
+                :loading="loadingAllPLans || originalItemsLoading.procedures"
                 :recalculateItems="recalculateItemsLocal"
                 :customHeight="customHeight"
                 :hideSlot="currentPlan.ID === undefined && currentType === 'procedures'"
@@ -138,6 +138,9 @@
                     this.$store.dispatch(CLINIC_DIAGNOSIS_GET).then(() => {
                         this.setOriginalItems(['diagnosis']);
                         this.originalItemsLoading.diagnosis = false;
+                    }).catch((err) => {
+                        console.log(err);
+                        this.originalItemsLoading.diagnosis = false;
                     });
                 }
                 if (
@@ -147,6 +150,9 @@
                     this.originalItemsLoading.manipulations = true;
                     this.$store.dispatch(CLINIC_MANIPULATIONS_GET).then(() => {
                         this.setOriginalItems(['manipulations']);
+                        this.originalItemsLoading.manipulations = false;
+                    }).catch((err) => {
+                        console.log(err);
                         this.originalItemsLoading.manipulations = false;
                     });
                 }
@@ -158,6 +164,9 @@
                     this.$store.dispatch(CLINIC_PROCEDURES_GET).then(() => {
                         this.setOriginalItems(['anamnesis']);
                         this.originalItemsLoading.anamnesis = false;
+                    }).catch((err) => {
+                        console.log(err);
+                        this.originalItemsLoading.anamnesis = false;
                     });
                 }
                 if (
@@ -167,6 +176,9 @@
                     this.originalItemsLoading.procedures = true;
                     this.$store.dispatch(CLINIC_PROCEDURES_GET).then(() => {
                         this.setOriginalItems(['procedures']);
+                        this.originalItemsLoading.procedures = false;
+                    }).catch((err) => {
+                        console.log(err);
                         this.originalItemsLoading.procedures = false;
                     });
                 }

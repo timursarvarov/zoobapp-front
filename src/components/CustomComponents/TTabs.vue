@@ -13,7 +13,7 @@
         <md-card-content>
             <md-list class="nav-tabs">
                 <md-list-item
-                    v-for="(item, index) in tabName"
+                    v-for="(item, index) of tabName"
                     @click="switchPanel(tabName[index]), $emit('onChangeTab', index)"
                     :key="item.ID"
                     :class="[

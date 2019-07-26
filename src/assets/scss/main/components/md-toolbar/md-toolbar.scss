@@ -1,0 +1,20 @@
+.t-toolbar {
+    background-color: #ececec !important;
+    border-radius: 10px;
+    &__section {
+        // flex-grow: 1;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+    &__section-text {
+        // flex-grow: 1;
+        // max-width: 30%;
+        text-overflow: ellipsis;
+        // white-space: nowrap;
+    }
+    .md-toolbar .md-field:after,
+    .md-toolbar .md-field:before {
+        bottom: 1px;
+    }
+}

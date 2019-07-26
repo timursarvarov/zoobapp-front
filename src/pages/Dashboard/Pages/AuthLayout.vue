@@ -129,6 +129,7 @@
 <script>
     import { ZoomCenterTransition } from 'vue2-transitions';
     import { mapGetters } from 'vuex';
+    import { LOGIN_BACKGROUND_URL } from '@/constants';
 
     export default {
         components: {
@@ -161,15 +162,16 @@
                 loading: 'loading',
             }),
             setBgImage() {
-                const images = {
-                    Pricing: './img/backround-register.jpg',
-                    Login: './img/backround-register.jpg',
-                    Clinics: './img/backround-register.jpg',
-                    Register: './img/backround-register.jpg',
-                    Lock: './img/backround-register.jpg',
-                };
+                // const images = {
+                //     Pricing: './img/backround-register.jpg',
+                //     Login: './img/backround-register.jpg',
+                //     Clinics: './img/backround-register.jpg',
+                //     Register: './img/backround-register.jpg',
+                //     Lock: './img/backround-register.jpg',
+                // };
                 return {
-                    backgroundImage: `url(${images[this.$route.name]})`,
+                    // backgroundImage: `url(${images[this.$route.name]})`,
+                    backgroundImage: `url(${LOGIN_BACKGROUND_URL})`,
                 };
             },
             setPageClass() {

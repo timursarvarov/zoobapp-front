@@ -9,8 +9,7 @@
                 <md-card>
                     <md-card-header
                         class="md-card-header-icon ">
-                        <div class="card-icon"
-                            :style="{'background-color': planColor}">
+                        <div class="card-icon md-card-header-green">
                             <md-icon>playlist_add</md-icon>
                         </div>
                         <h4 class="name">Add New Plan</h4>
@@ -60,14 +59,16 @@
                         <md-button @click="addPlan()"
                         :disabled="errors.has('planName') || loading"
                         class="md-success">
-                        <div v-if="loading">
+                        <span v-if="loading">
                              <md-progress-spinner
                                 class="t-white"
                                 :md-diameter="12"
                                 :md-stroke="2"
                                 md-mode="indeterminate"
                             ></md-progress-spinner>
-                        </div>
+                            &nbsp;
+                            Loading...
+                        </span>
                         <span v-else>Create</span>
 
                         </md-button>
@@ -80,8 +81,6 @@
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
     import { PATIENT_PLAN_SET, NOTIFY } from '@/constants';
-
-    const randomMC = require('random-material-color');
 
     export default {
         props: {
@@ -104,7 +103,6 @@
         data() {
             return {
                 loading: false,
-                randomMC: '',
                 planName: null,
                 names: null,
                 touched: {
@@ -133,13 +131,15 @@
             //     this.$validator.reset();
             // },
             setInitialName() {
-                this.planName = `Plan № ${this.plans.length + 1}`;
+                this.planName = `Plan № ${this.plans ? this.plans.length + 1 : 1}`;
             },
             setPlansNames() {
                 this.names = [];
-                this.plans.forEach((plan, index) => {
-                    this.names[index] = plan.name;
-                });
+                if (this.plans) {
+                    this.plans.forEach((plan, index) => {
+                        this.names[index] = plan.name;
+                    });
+                }
             },
             addPlan() {
                 if (this.planName) {
@@ -175,10 +175,6 @@
             },
         },
         computed: {
-            planColor() {
-                const color = this.randomMC.getColor({ text: `${this.planName}` });
-                return color;
-            },
             showFormL: {
                 get() {
                     return this.showForm;
@@ -187,9 +183,6 @@
                     this.$emit('update:showForm', value);
                 },
             },
-        },
-        created() {
-            this.randomMC = randomMC;
         },
         watch: {
             showFormL(value) {

@@ -11,19 +11,18 @@
                     @tab-change="onTabChange"
                     :tabColor="tabColor"
                     :isLoading="isLoading"
-                    :validateMode="needToSaveItem"
+                    :validateMode="!needToSaveItem()"
                 >
-                    <template slot="header">{{needToSaveItem()}}
+                    <template slot="header">
+                        {{needToSaveItem()}}{{itemToCreate.ID}}
                         <h5 class="title">
-                            {{!itemToCreate.ID}}
                             {{singleItemName | capitilize}} adding:
                             <b>{{selectedItem.code}}</b>
                             {{selectedItem.title}}
                             <span
                                 v-if="currentPlan.name"
                                 class="category"
-                            >– {{currentPlan.name | capitilize}}</span>  
-
+                            >– {{currentPlan.name | capitilize}}</span>
                         </h5>
                         <span>
                             <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
@@ -49,6 +48,7 @@
                         </span>
                     </template>
                     <wizard-tab
+                        name="locations"
                         v-if="showTab('locations')"
                         :before-change="() => validateStep('step1')"
                     >
@@ -71,6 +71,7 @@
                     </wizard-tab>
 
                     <wizard-tab
+                        name="manipulations"
                         :before-change="() => validateStep('step2')"
                         v-if="showTab('manipulations')"
                     >
@@ -78,7 +79,7 @@
                         <t-item-manipulations
                             ref="step2"
                             :originalItem="originalItem"
-                            :manipulationsToEdit="selectedItem.manipulations"
+                            :itemID="itemToCreate.ID || null"
                             :selectedTeeth="selectedTeethLocalJaw"
                             :size="jawListSize"
                             @addManipulations="manipulationsCreated"
@@ -87,6 +88,7 @@
                         />
                     </wizard-tab>
                     <wizard-tab
+                        name="files"
                         :before-change="() => validateStep('step3')"
                         v-if="showTab('files')"
                     >
@@ -98,6 +100,7 @@
                         />
                     </wizard-tab>
                     <wizard-tab
+                        name="description"
                         :before-change="() => validateStep('step4')"
                         v-if="showTab('description')"
                     >
@@ -111,6 +114,7 @@
                         />
                     </wizard-tab>
                     <wizard-tab
+                        name="appointment"
                         :before-change="() => validateStep('step5')"
                         v-if="showTab('appointment')"
                     >
@@ -135,11 +139,15 @@
     import TItemFiles from './TWizardItems/TItemFiles.vue';
     import TItemAppointment from './TWizardItems/TItemAppointment.vue';
     import { SimpleWizard, WizardTab } from '@/components';
-    import { NOTIFY, PATIENT_PROCEDURE_SET } from '@/constants';
     import { tObjProp } from '@/mixins';
+    import {
+        NOTIFY,
+        PATIENT_PROCEDURE_SET,
+        PATIENT_MANIPULATION_SET,
+    } from '@/constants';
 
     export default {
-        name: 'refistration-wizard',
+        name: 't-wizard-add-item',
         mixins: [tObjProp],
         props: {
             currentPlan: {
@@ -196,11 +204,19 @@
                 },
                 showAppointment: false,
                 isLoading: false,
+                currentTab: '',
                 jawListSize: {},
                 description: '',
                 selectedTeethL: [],
                 selectedTeethLocalJaw: [],
                 itemToCreate: {
+                    teeth: {},
+                    description: '',
+                    manipulations: [],
+                    code: '',
+                    title: '',
+                },
+                itemToCompare: {
                     teeth: {},
                     description: '',
                     manipulations: [],
@@ -225,33 +241,38 @@
                     procedureID: this.itemToCreate.procedureID,
                     teeth: this.itemToCreate.teeth,
                 };
-                console.log(procedure);
                 this.isLoading = true;
                 // return true;
                 return new Promise((resolve, reject) => {
-                    this.$store.dispatch(PATIENT_PROCEDURE_SET, {
-                        planID: this.currentPlan.ID,
-                        patientID: this.patient.ID,
-                        procedure,
-                    }).then(
-                        (response) => {
-                            console.log(response);
-                            this.itemToCreate.ID = response.procedureID
-                            this.itemToCreate.teeth = response.teeth
-                            resolve(true);
+                    this.$store
+                        .dispatch(PATIENT_PROCEDURE_SET, {
+                            planID: this.currentPlan.ID,
+                            patientID: this.patient.ID,
+                            procedure,
+                        })
+                        .then(
+                            (response) => {
+                                this.itemToCreate.ID = response.ID;
+                                this.itemToCreate.teeth = response.teeth;
+                                this.itemToCompare.ID = response.ID;
+                                this.itemToCompare.teeth = response.teeth;
+                                resolve(true);
+                                this.isLoading = false;
+                            },
+                            (error) => {
+                                this.$store.dispatch(NOTIFY, {
+                                    settings: {
+                                        message: 'error.response.data.error',
+                                        type: 'warning',
+                                    },
+                                });
+                                reject(error);
+                                this.isLoading = false;
+                            },
+                        ).catch((err) => {
+                            console.log(err);
                             this.isLoading = false;
-                        },
-                        (error) => {
-                            this.$store.dispatch(NOTIFY, {
-                                settings: {
-                                    message: 'error.response.data.error',
-                                    type: 'warning',
-                                },
-                            });
-                            reject(error);
-                            this.isLoading = false;
-                        },
-                    );
+                        });
                 });
             },
             saveItem() {
@@ -266,22 +287,36 @@
                     });
                 }
                 if (this.currentType === 'procedures') {
-                    if(this.needToSaveItem){
+                    if (this.needToSaveItem()) {
                         return Promise.resolve(this.setProcedure());
-                    } else {
-                        return true
                     }
-                }
-                return false;
-            },
-            needToSaveItem(){
-                if( !this.itemToCreate.ID || !this.lodash.isEqual(this.itemToCreate, this.this.selectedItem)){
                     return true;
                 }
                 return false;
             },
+            needToSaveItem() {
+                if (!this.currentTab || this.currentTab === 'locations') {
+                    if (!this.itemToCreate.ID) {
+                        return true;
+                    }
+                    // console.log(this.itemToCreate.teeth, this.itemToCompare.teeth);
+                    return !this.lodash.isEqual(this.itemToCreate.teeth, this.itemToCompare.teeth);
+                }
+                if (this.currentTab === 'manipulations') {
+                    // console.log(this.itemToCreate.teeth, this.itemToCompare.teeth);
+                    return !this.lodash.isEqual(this.itemToCreate.manipulations, this.itemToCompare.manipulations);
+                }
+                return false;
+            },
             onTabChange(oldTab, newTab) {
-                if (this.currentType === 'procedures' && newTab.tabId === '4') {
+                // странные значения newTab
+                // 1 = первый таб
+                // 3 = второй таб
+                // 5 = третий таб
+                // 7 = четвертый таб
+                // 9 = пятый таб
+                this.currentTab = newTab.$attrs.name;
+                if (this.currentType === 'procedures') {
                     this.showAppointment = true;
                 }
             },
@@ -292,10 +327,8 @@
             // инициируем локальный диагноз
             initiateLocalItem() {
                 Object.keys(this.selectedItem).forEach((key) => {
-                    this.$set(this.itemToCreate, key, this.selectedItem[key])
+                    this.$set(this.itemToCompare, key, this.selectedItem[key]);
                 });
-                console.log(this.itemToCreate);
-                // this.itemToCreate.date = new Date();
             },
             manipulationsCreated(manipulations) {
                 this.itemToCreate.manipulations = manipulations;
@@ -346,7 +379,7 @@
                         if (!res) {
                             this.$store.dispatch(NOTIFY, {
                                 settings: {
-                                    message: 'Please choose diseas locations',
+                                    message: 'Please choose tooth locations',
                                     type: 'warning',
                                 },
                             });
@@ -363,11 +396,13 @@
                         if (!res) {
                             this.$store.dispatch(NOTIFY, {
                                 settings: {
-                                    message: 'Please add manipulation',
+                                    message: 'You have unsaved manipulation',
                                     type: 'warning',
                                 },
                             });
-                            return false;
+                        }
+                        if (res) {
+                            return Promise.resolve(this.setManipulations());
                         }
                         return res;
                     });
@@ -398,7 +433,8 @@
                                 },
                             });
                             return false;
-                        } if (this.currentType !== 'procedures') {
+                        }
+                        if (this.currentType !== 'procedures') {
                             this.itemCreated();
                             this.isDialogVisibleL = false;
                         }
@@ -427,7 +463,8 @@
             },
             showTab(tab) {
                 if (tab === 'locations') {
-                    return this.hasLocationKeyOrSelectedTeeth();
+                    return true;
+                    // return this.hasLocationKeyOrSelectedTeeth();
                 }
                 if (tab === 'manipulations') {
                     return (
@@ -487,6 +524,7 @@
                     // необходимо для реактивности создоваемого диагногза внутри данного компонента
                     this.unsetLocalDiagnose();
                     this.itemToCreate = this.copyObj(newValue);
+                    // console.log(this.itemToCreate);
                 },
             },
             isDialogVisibleL: {
