@@ -36,6 +36,9 @@ import {
     PATIENT_INVOICE_SET,
     PATIENTS_PATIENT_ADD,
     PATIENT_MANIPULATION_SET,
+    PATIENT_PARAM_REWRITE,
+    PATIENT_MANIPULATION_EDIT,
+    PATIENT_MANIPULATION_DELETE,
     TEETH_INITIATION,
 } from '@/constants';
 
@@ -348,6 +351,33 @@ export default {
             reject(err);
         });
     }),
+    [PATIENT_MANIPULATION_DELETE]: ({
+        commit,
+        state,
+    }, {
+        procedureID,
+        manipulationID,
+        patientID,
+
+    }) => new Promise((resolve, reject) => {
+        const subParamIndex = state.patient.procedures[procedureID].manipulations.findIndex(ID => ID === manipulationID);
+        return Promise.resolve(
+            commit(PATIENT_SUB_PARAM_DELETE, {
+                param: 'procedures',
+                paramIndex: procedureID,
+                subParam: 'manipulations',
+                subParamIndex,
+                subParamID: manipulationID,
+            }),
+        ).then((resp) => {
+            commit(PATIENT_SUCCESS);
+            resolve(resp);
+        }).catch((err) => {
+            commit(PATIENT_ERROR);
+            console.log(err);
+            reject(err);
+        });
+    }),
     [PATIENT_MANIPULATION_SET]: ({
         commit,
         state,
@@ -355,23 +385,51 @@ export default {
         manipulationParams,
         initiated,
 
-    }) => new Promise((resolve, reject) => Promise.resolve(
-        console.log(manipulationParams), commit(PATIENT_SUB_PARAM_PUSH, {
-            paramName: 'procedures',
-            paramIndex: manipulationParams.procedureID,
-            subParamName: 'manipulations',
-            subParamIndex: state.patient.procedures[manipulationParams.procedureID] && state.patient.procedures[manipulationParams.procedureID].manipulations ? state.patient.procedures[manipulationParams.procedureID].manipulations.length : 0,
-            subParamKey: manipulationParams.ID,
-            subParamValue: manipulationParams,
-        }),
-    ).then((resp) => {
-        commit(PATIENT_SUCCESS);
-        resolve(true);
-    }).catch((err) => {
-        commit(PATIENT_ERROR);
-        console.log(err);
-        reject(err);
-    })),
+    }) => new Promise((resolve, reject) => {
+        const manipulationParamsN = manipulationParams;
+        manipulationParamsN.justAdded = true;
+        Promise.resolve(
+            console.log(manipulationParams), commit(PATIENT_SUB_PARAM_PUSH, {
+                paramName: 'procedures',
+                paramIndex: manipulationParamsN.procedureID,
+                subParamName: 'manipulations',
+                subParamIndex: state.patient.procedures[manipulationParamsN.procedureID] && state.patient.procedures[manipulationParamsN.procedureID].manipulations ? state.patient.procedures[manipulationParamsN.procedureID].manipulations.length : 0,
+                subParamKey: manipulationParamsN.ID,
+                subParamValue: manipulationParamsN,
+            }),
+        ).then((resp) => {
+            commit(PATIENT_SUCCESS);
+            resolve(manipulationParamsN);
+        }).catch((err) => {
+            commit(PATIENT_ERROR);
+            console.log(err);
+            reject(err);
+        });
+    }),
+    [PATIENT_MANIPULATION_EDIT]: ({
+        commit,
+        state,
+    }, {
+        manipulationParams,
+
+    }) => new Promise((resolve, reject) => {
+        const manipulationParamsN = manipulationParams;
+        manipulationParamsN.justAdded = true;
+        Promise.resolve(
+            console.log(manipulationParams), commit(PATIENT_PARAM_REWRITE, {
+                paramName: 'manipulations',
+                paramIndex: manipulationParamsN.ID,
+                paramValue: manipulationParamsN,
+            }),
+        ).then((resp) => {
+            commit(PATIENT_SUCCESS);
+            resolve(true);
+        }).catch((err) => {
+            commit(PATIENT_ERROR);
+            console.log(err);
+            reject(err);
+        });
+    }),
     [PATIENT_PLAN_DELETE]: ({
         commit,
     }, {
@@ -508,12 +566,12 @@ export default {
         Object.keys(patient).forEach((field) => {
             let value = patient[field];
             if (value === null) {
-                if (field === 'allergy'
-                    || field === 'notes'
-                    || field === 'diagnosis'
-                    || field === 'anamnesis'
-                    || field === 'files'
-                    || field === 'plans'
+                if (field === 'allergy' ||
+                    field === 'notes' ||
+                    field === 'diagnosis' ||
+                    field === 'anamnesis' ||
+                    field === 'files' ||
+                    field === 'plans'
                 ) {
                     value = [];
                 }

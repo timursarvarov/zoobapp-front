@@ -23,7 +23,7 @@
             >
         </items-list>
         <t-tabs
-                v-if="patient.plans && patient.plans.length > 0 && currentType === 'procedures' "
+                v-if="patient.plans  && patient.plans.length > 0 && currentType === 'procedures' "
                 @onChangeTab="onChangeTab"
                 ref="tabs"
                 :tab-name="tabHeaders"

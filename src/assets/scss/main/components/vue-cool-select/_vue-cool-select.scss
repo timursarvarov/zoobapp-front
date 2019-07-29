@@ -22,7 +22,7 @@
 
 .IZ-select:not(.md-focused) {
     label {
-        top: 10px;
+        // top: 10px;
     }
 }
 
@@ -36,7 +36,7 @@
 .IZ-select.md-focused {
     .IZ-select__input-wrap {
         label {
-            top: -10px!important;
+            // top: -10px!important;
         }
     }
 }
@@ -57,7 +57,7 @@
         width: 100%;
         overflow: visible;
         .IZ-select__input {
-            top: 5px;
+            // top: 5px;
             min-width: fit-content;
             padding: 0;
             align-items: center;
@@ -108,7 +108,7 @@
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                margin: 6px 0 2px 0;
+                margin: 6px 0 0;
                 width: 100%;
                 height: 36px;
                 padding: 7px 0px;

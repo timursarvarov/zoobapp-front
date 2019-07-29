@@ -23,6 +23,7 @@ import {
     PATIENT_SUB_PARAMS_SET,
     PATIENT_SUB_PARAM_SET,
     PATIENT_SUB_PARAM_PUSH,
+    PATIENT_PARAM_REWRITE,
     PATIENT_SUB_PARAM_DELETE,
     PATIENT_INVOICE_SET,
 } from '@/constants';
@@ -101,6 +102,16 @@ export default {
         }
         Vue.set(state.patient[paramName][paramIndex], subParamName, subParamIndexArray);
         Vue.set(state.patient, subParamName, subParamsValue);
+    },
+    [PATIENT_PARAM_REWRITE]: (state, {
+        paramName,
+        paramIndex,
+        paramValue,
+    }) => {
+        if (!state.patient[paramName]) {
+            Vue.set(state.patient, paramName, []);
+        }
+        Vue.set(state.patient[paramName], paramIndex, paramValue);
     },
     [PATIENT_SUB_PARAM_PUSH]: (state, {
         paramName,

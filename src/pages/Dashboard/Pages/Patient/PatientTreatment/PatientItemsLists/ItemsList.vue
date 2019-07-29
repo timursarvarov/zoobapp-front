@@ -105,7 +105,7 @@
             </md-toolbar>
             <md-table
                 :md-selected-value.sync="selectedItems"
-                :value="queriedData"
+                :value="queriedData || []"
                 :md-sort.sync="currentSort"
                 :md-sort-order.sync="currentSortOrder"
                 :md-sort-fn="customSort"

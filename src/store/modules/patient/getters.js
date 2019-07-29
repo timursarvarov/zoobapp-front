@@ -20,14 +20,12 @@ export default {
             ids.forEach((ID) => {
                 manipulations.push(state.patient.manipulations[ID]);
             });
-            // Turn your strings into dates, and then subtract them
-            // to get a value that is either negative, positive, or zero.
-            manipulations.sort((a, b) => {
-                if (a.created && b.created) {
-                    return new Date(b.created) - new Date(a.created);
-                }
-            });
+            if (manipulations.length > 1) {
+                manipulations.sort((a, b) => new Date(b.created) - new Date(a.created));
+            }
+            console.log(manipulations);
             return manipulations;
         }
     },
+    getProcedureById: state => ID => state.patient.procedures[ID],
 };

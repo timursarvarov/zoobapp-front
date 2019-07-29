@@ -26,6 +26,7 @@
                             >
                                 <label for="the_firstName23">First Name</label>
                                 <md-input
+                                    @focus="unsetAutofill('firstName')"
                                     ref="firstName"
                                     :disabled="loading"
                                     v-model="firstName"
@@ -65,6 +66,7 @@
                             >
                                 <label>Last Name</label>
                                 <md-input
+                                    @focus="unsetAutofill('lastName')"
                                     :disabled="loading"
                                     ref="lastName"
                                     v-model="lastName"
@@ -104,6 +106,7 @@
                             >
                                 <label>Email</label>
                                 <md-input
+                                    @focus="unsetAutofill('email')"
                                     ref="email"
                                     :disabled="loading"
                                     v-model="email"
@@ -143,6 +146,7 @@
                                 <label>Phone</label>
                                 <span class="md-prefix">+</span>
                                 <md-input
+                                    @focus="unsetAutofill('phone')"
                                     :disabled="loading"
                                     ref="phone"
                                     v-model="phone"
@@ -201,6 +205,8 @@
                                 >
                                     <label>Source</label>
                                     <md-input
+                                        @focus="unsetAutofill('source')"
+                                        ref="source"
                                         :disabled="loading"
                                         source="source"
                                         v-model="source"
@@ -376,10 +382,9 @@
                 }
                 this.$refs[ref].$el.focus();
             },
-            unsetAutofill() {
-                Object.keys(this.$refs).forEach((key, i) => {
-                    this.$refs[key].$el.setAttribute('autocomplete', Math.random());
-                });
+            unsetAutofill(ref) {
+                this.$refs[ref].$el.setAttribute('autocomplete', Math.random());
+                console.log(ref, this.$refs[ref].$el);
             },
             setOpenProfileAfterCreation() {
                 localStorage.setItem(
@@ -471,9 +476,6 @@
                         .patientAddFormShown;
                 },
             },
-        },
-        mounted() {
-            this.unsetAutofill();
         },
         watch: {
             showForm() {

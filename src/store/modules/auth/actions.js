@@ -34,21 +34,26 @@ export default {
         }
         return new Promise((resolve, reject) => {
             commit(AUTH_REQUEST);
-            axios.post('/auth/authentication/',
+            axios.post('/',
                     JSON.stringify({
-                        username: username,
-                        password: password
+                        jsonrpc: '2.0',
+                        method: 'Auth.Authentication',
+                        params: {
+                            username: username,
+                            password: password
+                        },
+                        id: 1
                     })
                 )
                 .then(resp => {
                     axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
                     dispatch(AUTH_SUCCESS, { resp });
-                    localStorage.setItem('accessToken', resp.data.accessToken);
-                    localStorage.setItem('expiresAt', resp.data.expiresAt);
-                    localStorage.setItem('refreshToken', resp.data.refreshToken);
+                    localStorage.setItem('accessToken', resp.result.accessToken);
+                    localStorage.setItem('expiresAt', resp.result.expiresAt);
+                    localStorage.setItem('refreshToken', resp.result.refreshToken);
                     axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
                     // dispatch(USER_REQUEST);
-                    dispatch(CLINICS_SET, { clinics: resp.data.organizations });
+                    dispatch(CLINICS_SET, { clinics: resp.result.organizations });
                     resolve(resp);
                 })
                 .catch(err => {
@@ -60,6 +65,45 @@ export default {
                 });
         });
     },
+    // [AUTH_REQUEST]: ({
+    //     commit,
+    //     dispatch
+    // }, {
+    //     username,
+    //     password
+    // }) => {
+    //     const token = axios.defaults.headers.common.Authorization;
+    //     if (token) {
+    //         axios.defaults.headers.common.Authorization = '';
+    //     }
+    //     return new Promise((resolve, reject) => {
+    //         commit(AUTH_REQUEST);
+    //         axios.post('/auth/authentication/',
+    //                 JSON.stringify({
+    //                     username: username,
+    //                     password: password
+    //                 })
+    //             )
+    //             .then(resp => {
+    //                 axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
+    //                 dispatch(AUTH_SUCCESS, { resp });
+    //                 localStorage.setItem('accessToken', resp.data.accessToken);
+    //                 localStorage.setItem('expiresAt', resp.data.expiresAt);
+    //                 localStorage.setItem('refreshToken', resp.data.refreshToken);
+    //                 axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
+    //                 // dispatch(USER_REQUEST);
+    //                 dispatch(CLINICS_SET, { clinics: resp.data.organizations });
+    //                 resolve(resp);
+    //             })
+    //             .catch(err => {
+    //                 if (err.response) {
+    //                     reject(err);
+    //                 }
+    //                 commit(AUTH_ERROR, err);
+    //                 localStorage.removeItem('accessToken');
+    //             });
+    //     });
+    // },
     [AUTH_REFRESH_TOKEN]: ({
         commit,
         dispatch,
@@ -79,7 +123,7 @@ export default {
                     localStorage.setItem('accessToken', resp.data.accessToken);
                     localStorage.setItem('expiresAt', resp.data.expiresAt);
                     localStorage.setItem('refreshToken', resp.data.refreshToken);
-                    // axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
+                    axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
                     dispatch(AUTH_SUCCESS, { resp });
                     dispatch(AUTH_DECODE_TOKEN);
                     resolve(resp.data.accessToken);
