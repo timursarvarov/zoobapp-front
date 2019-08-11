@@ -350,12 +350,7 @@
 <script>
     import { mapGetters } from 'vuex';
     import Fuse from 'fuse.js';
-    import {
-        TAvatar,
-        TTableEditor,
-        AnimatedNumber,
-        Pagination,
-    } from '@/components';
+    import components from '@/components';
     import {
         USER_DIAGNOSIS_COLUMNS,
         USER_ANAMNESIS_COLUMNS,
@@ -367,11 +362,8 @@
     export default {
         mixins: [tObjProp],
         components: {
-            TAvatar,
-            TTableEditor,
-            AnimatedNumber,
+            ...components,
             DeleteForm,
-            Pagination,
         },
         props: {
             plan: {
@@ -640,7 +632,6 @@
                 this.showSnackbar = this.selectedItems.length > 0;
             },
             items() {
-                console.log(12);
                 this.removeClass();
             },
         },

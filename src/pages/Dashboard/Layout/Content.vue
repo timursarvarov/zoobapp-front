@@ -10,6 +10,7 @@
     import { FadeTransition } from 'vue2-transitions';
 
     export default {
+      name: 'content',
         components: {
             FadeTransition,
         },

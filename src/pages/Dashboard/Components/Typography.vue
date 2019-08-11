@@ -119,7 +119,9 @@
   </div>
 </template>
 <script>
-    export default {};
+    export default {
+      name:'typography',
+    };
 </script>
 <style>
 </style>

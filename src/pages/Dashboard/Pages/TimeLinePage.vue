@@ -113,13 +113,12 @@
   </div>
 </template>
 <script>
-    import { TimeLine, TimeLineItem, Badge } from '@/components';
+    import components from '@/components';
 
     export default {
+        name: 'time-line-page',
         components: {
-            TimeLine,
-            TimeLineItem,
-            Badge,
+            ...components,
         },
         data() {
             return {

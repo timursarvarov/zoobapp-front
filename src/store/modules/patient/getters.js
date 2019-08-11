@@ -1,12 +1,12 @@
 export default {
-    getPatient: state => state.patient,
+    getPatient: state => state,
     getPatientStatus: state => state.status,
-    isPatient: state => !!state.patient.ID,
+    isPatient: state => !!state.ID,
     getProceduresByIds: state => (ids) => {
         const procedures = [];
         if (ids && ids.length > 0) {
             ids.forEach((ID) => {
-                procedures.push(state.patient.procedures[ID]);
+                procedures.push(state.procedures[ID]);
             });
         }
         // Turn your strings into dates, and then subtract them
@@ -18,7 +18,7 @@ export default {
         const manipulations = [];
         if (ids && ids.length > 0) {
             ids.forEach((ID) => {
-                manipulations.push(state.patient.manipulations[ID]);
+                manipulations.push(state.manipulations[ID]);
             });
             if (manipulations.length > 1) {
                 manipulations.sort((a, b) => new Date(b.created) - new Date(a.created));
@@ -27,5 +27,5 @@ export default {
             return manipulations;
         }
     },
-    getProcedureById: state => ID => state.patient.procedures[ID],
+    getProcedureById: state => ID => state.procedures[ID],
 };

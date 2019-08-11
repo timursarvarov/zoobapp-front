@@ -191,6 +191,7 @@
 </template>
 <script>
     export default {
+        name: 'extended-tables',
         data() {
             return {
                 tableData: [

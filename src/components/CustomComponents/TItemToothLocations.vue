@@ -51,14 +51,15 @@
 <script>
     import { mapGetters } from 'vuex';
     import { SlideYDownTransition } from 'vue2-transitions';
-    import { JawAddLocations } from '@/components';
+    
     import { tObjProp } from '@/mixins';
 
     export default {
+        name: 't-item-tooth-locations',
         mixins: [tObjProp],
         components: {
             SlideYDownTransition,
-            JawAddLocations,
+            'jaw-add-locations': () => import('@/components/CustomComponents/Jaw/JawAddLocations'),
         },
         model: {
             prop: 'newDiagnoseParams',

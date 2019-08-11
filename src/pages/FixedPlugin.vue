@@ -91,6 +91,7 @@
 </template>
 <script>
     export default {
+        name: 'pixed-plugins',
         props: {
             sidebarMini: Boolean,
             sidebarImg: Boolean,

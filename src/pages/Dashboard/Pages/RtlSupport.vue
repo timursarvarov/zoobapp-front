@@ -304,21 +304,12 @@
 </template>
 
 <script>
-    import {
-        NavTabsCard,
-        TimeLine,
-        TimeLineItem,
-        PricingCard,
-        TestimonialCard,
-    } from '@/components';
+    import components from '@/components';
 
     export default {
+        name: 'rtl-support',
         components: {
-            NavTabsCard,
-            PricingCard,
-            TimeLine,
-            TimeLineItem,
-            TestimonialCard,
+            ...components,
         },
         props: {
             profileCard: {

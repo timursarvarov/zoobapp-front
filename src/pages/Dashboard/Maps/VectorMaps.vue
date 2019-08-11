@@ -25,11 +25,12 @@
   </div>
 </template>
 <script>
-    import AsyncWorldMap from '@/components/WorldMap/AsyncWorldMap.vue';
+    import components from '@/components';
 
     export default {
+      name: 'vector-maps',
         components: {
-            AsyncWorldMap,
+            ...components,
         },
         data() {
             return {

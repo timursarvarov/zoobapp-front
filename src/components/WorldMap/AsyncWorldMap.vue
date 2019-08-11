@@ -16,6 +16,7 @@ it contains 2 big libraries (jquery and jquery vector maps)
         delay: 200,
     });
     export default {
+        name: 'async-world-map',
         components: {
             WorldMap,
         },

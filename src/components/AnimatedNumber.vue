@@ -5,6 +5,7 @@
     import TWEEN from '@tweenjs/tween.js';
 
     export default {
+        name: 'animated-number',
         props: {
             value: {
                 default: 0,

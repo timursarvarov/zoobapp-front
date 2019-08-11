@@ -265,19 +265,18 @@
 // import { mapFilters } from '@/filters/map-filters';
     import StarRating from 'vue-star-rating';
     import { mapGetters } from 'vuex';
-    import { Pagination, TAvatar, TTableEditor } from '@/components';
+    import components from '@/components';
     import ClinicAddForm from './ClinicAddForm.vue';
     // import swal from 'sweetalert2';
     import { PATIENTS_REQUEST } from '@/constants';
     import { tObjProp } from '@/mixins';
 
     export default {
+        name: 'clinics-list',
         mixins: [tObjProp],
         components: {
-            Pagination,
+            ...components,
             StarRating,
-            TTableEditor,
-            TAvatar,
             ClinicAddForm,
         },
         data: () => ({

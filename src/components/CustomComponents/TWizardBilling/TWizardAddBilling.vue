@@ -54,8 +54,8 @@
     import { mapGetters } from 'vuex';
     import TAddBilling from './TWizardBillingItems/TAddBilling.vue';
     import TAddPayment from './TWizardBillingItems/TAddPayment.vue';
-    import { SimpleWizard, WizardTab } from '@/components';
-    import { NOTIFY, PATIENT_SUB_PARAM_SET, PATIENT_INVOICE_SET } from '@/constants';
+    
+    import { NOTIFY, PATIENT_INVOICE_SET } from '@/constants';
     import { tObjProp } from '@/mixins';
 
     export default {
@@ -99,10 +99,9 @@
             };
         },
         components: {
-            SimpleWizard,
-            WizardTab,
             TAddBilling,
             TAddPayment,
+            'simple-wizard': () => import('@/components/CustomComponents/TWizard/Wizard'),
         },
         methods: {
 

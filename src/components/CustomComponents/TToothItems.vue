@@ -176,9 +176,7 @@
     </md-dialog>
 </template>
 <script>
-    import {
-        Tooth, TAvatar, TFilesList, TFilePreview,
-    } from '@/components';
+    
     import {
         TEETH_ADDULT_ALL,
         TEETH_DEFAULT_LOCATIONS,
@@ -193,10 +191,7 @@
     export default {
         name: 't-tooth-items',
         components: {
-            Tooth,
-            TAvatar,
-            TFilesList,
-            TFilePreview,
+            't-file-preview': () => import('@/components/CustomComponents/TFilesAddForm'),
         },
         props: {
             files: {

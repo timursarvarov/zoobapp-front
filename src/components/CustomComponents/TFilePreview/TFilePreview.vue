@@ -57,7 +57,6 @@
 
     export default {
         name: 't-file-preview',
-        components: {},
         props: {
             color: {
                 type: String,

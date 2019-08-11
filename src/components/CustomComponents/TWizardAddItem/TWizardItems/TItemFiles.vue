@@ -1,46 +1,42 @@
 <template>
-     <div class="wizard-tab-content" :style="[{'min-width': `${size.width}px`},
-          {'min-height': `${size.height}px`} ]">
-           <div class="absolute-header-block" >
-                    <t-files-add-form
-                        class="md-layout-item"
-                        :url="url"
-                        :access_token="access_token"
-                        :tokenExpiresAt="`${tokenExpiresAt}`"
-                        :authRefreshToken="authRefreshToken"
-                        :patientAddSubProp="patientAddSubProp"
-                        :maxFilesize="5"
-                        @onSuccess="onSuccess"
-                    >
-                    <div
-                        slot="emptyState"
-                    >
-                        <div >
-                            <div style="color: #AAAAAA" class="md-title " >
-                                Add new file
-                            </div>
-                            <span style="color: #AAAAAA" >
-                                Click here or drope some files
-                            </span>
-                        </div>
+    <div
+        class="wizard-tab-content"
+        :style="[{'min-width': `${size.width}px`},
+          {'min-height': `${size.height}px`} ]"
+    >
+        <div class="absolute-header-block">
+            <t-files-add-form
+                class="md-layout-item"
+                :url="url"
+                :access_token="access_token"
+                :tokenExpiresAt="`${tokenExpiresAt}`"
+                :authRefreshToken="authRefreshToken"
+                :patientAddSubProp="patientAddSubProp"
+                :maxFilesize="5"
+                @onSuccess="onSuccess"
+            >
+                <div slot="emptyState">
+                    <div>
+                        <div style="color: #AAAAAA" class="md-title">Add new file</div>
+                        <span style="color: #AAAAAA">Click here or drope some files</span>
                     </div>
-                    </t-files-add-form>
-
-            </div>
-            <div class="files-list">
+                </div>
+            </t-files-add-form>
+        </div>
+        <div class="files-list">
             <t-files-list
                 :columns="columns"
-                :paginated='false'
+                :paginated="false"
                 :access_token="access_token"
                 :files="patient.files"
             />
-            </div>
+        </div>
     </div>
 </template>
 
 <script>
     import { mapGetters } from 'vuex';
-    import { TFilesList, TFilesAddForm } from '@/components';
+
     import { tObjProp } from '@/mixins';
     import {
         AUTH_REFRESH_TOKEN,
@@ -53,8 +49,8 @@
         name: 'patient-files',
         mixins: [tObjProp],
         components: {
-            TFilesList,
-            TFilesAddForm,
+            't-files-add-form': () => import('@/components/CustomComponents/TFilesAddForm'),
+            't-files-list': () => import('@/components/CustomComponents/TFilesList'),
         },
         props: {
             size: {
@@ -64,21 +60,22 @@
         },
         data() {
             return {
-                columns: [{
-                              key: 'filePreview',
-                              title: 'Preview',
-                              sortable: false,
-                          },
-                          {
-                              key: 'name',
-                              title: 'Name',
-                              sortable: true,
-                          },
-                          {
-                              key: 'filesize',
-                              title: 'File Size',
-                              sortable: true,
-                          },
+                columns: [
+                    {
+                        key: 'filePreview',
+                        title: 'Preview',
+                        sortable: false,
+                    },
+                    {
+                        key: 'name',
+                        title: 'Name',
+                        sortable: true,
+                    },
+                    {
+                        key: 'filesize',
+                        title: 'File Size',
+                        sortable: true,
+                    },
                 ],
             };
         },
@@ -115,7 +112,6 @@
             patientAddSubProp() {
                 return PATIENT_ADD_SUB_PROP;
             },
-
         },
     };
 </script>

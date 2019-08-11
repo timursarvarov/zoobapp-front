@@ -16,11 +16,10 @@
   </div>
 </template>
 <script>
-    import Notification from './Notification.vue';
-
     export default {
+      name: 'notifications',
         components: {
-            Notification,
+            notification: () => import('./Notification'),
         },
         data() {
             return {

@@ -105,11 +105,12 @@
   </div>
 </template>
 <script>
-    import { PricingCard } from '@/components';
+    import components from '@/components';
 
     export default {
+      name: 'pricing',
         components: {
-            PricingCard,
+            ...components,
         },
     };
 </script>

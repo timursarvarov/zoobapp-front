@@ -45,6 +45,7 @@
   } from './extends/clippo';
 
   export default {
+    name: 'clipper-fixed',
     extends: {
       methods: fixedMethods,
       mixins: [rxEventListeners, rxWheelListeners, pluginMethods],

@@ -1,67 +1,61 @@
-// import DIAGNOSISL from './diagnosis';
-// import DIAGNOSIS_BACKL from './diagnosis-back';
-import PROCEDURESL from './procedures';
-import LOCATIONSL from './locations';
-// import MANIPULATIONSl from './manipulations';
-// import MANIPULATIONSt from './templates/manipulations';
+import PROCEDURES_L from './procedures';
+import LOCATIONS_L from './locations';
 
-import TEETH_DEFAULT_LOCATIONSL from './tooth-default-locations';
-import TEETH_SCHEMAL from './teeth-schema';
+import TEETH_DEFAULT_LOCATIONS_L from './tooth-default-locations';
+import TEETH_SCHEMA_L from './teeth-schema';
 
-import TEETH_ADDULT_BOTTOML from './teeth-adult-bottom';
-import TEETH_ADDULT_TOPL from './teeth-adult-top';
-import TEETH_ADDULT_ALLL from './teeth-adult-all';
+import TEETH_ADDULT_BOTTOM_L from './teeth-adult-bottom';
+import TEETH_ADDULT_TOP_L from './teeth-adult-top';
+import TEETH_ADDULT_ALL_L from './teeth-adult-all';
 
-import TEETH_BABY_ALLL from './teeth-baby-all';
-import TEETH_BABY_TOPL from './teeth-baby-top';
-import TEETH_BABY_BOTTOML from './teeth-baby-bottom';
+import TEETH_BABY_ALL_L from './teeth-baby-all';
+import TEETH_BABY_TOP_L from './teeth-baby-top';
+import TEETH_BABY_BOTTOM_L from './teeth-baby-bottom';
 
-import TEETH_ALLL from './teeth-all';
+import TEETH_ALL_L from './teeth-all';
 
-import TIMEZONESL from './timezones';
-import COMMON_CURRENCYL from './common-currency';
+import TIMEZONES_L from './timezones';
+import COMMON_CURRENCY_L from './common-currency';
 
-// export const DIAGNOSIS_BACK = DIAGNOSIS_BACKL;
-// export const DIAGNOSIS = DIAGNOSISL;
-export const PROCEDURES = PROCEDURESL;
-export const LOCATIONS = LOCATIONSL;
-// export const MANIPULATIONS = MANIPULATIONSl;
-// export const M = MANIPULATIONSt;
+import SERVER_ERRORS_L from './server-errors';
+import UPLOAD_FILE_SETTINGS_L from './upload-file-settings';
+import LOCAL_STORAGE_L from './localStorage-items';
+import AVAILABLE_LANGUAGES_L from './languages';
 
-// normalizer for vuex
+export const PROCEDURES = PROCEDURES_L;
+export const LOCATIONS = LOCATIONS_L;
 
 // Teeth schema locations
 
-export const TEETH_DEFAULT_LOCATIONS = TEETH_DEFAULT_LOCATIONSL;
-export const TEETH_SCHEMA = TEETH_SCHEMAL;
+export const TEETH_DEFAULT_LOCATIONS = TEETH_DEFAULT_LOCATIONS_L;
+export const TEETH_SCHEMA = TEETH_SCHEMA_L;
 
-export const TEETH_ADDULT_BOTTOM = TEETH_ADDULT_BOTTOML;
-export const TEETH_ADDULT_TOP = TEETH_ADDULT_TOPL;
-export const TEETH_ADDULT_ALL = TEETH_ADDULT_ALLL;
+export const TEETH_ADDULT_BOTTOM = TEETH_ADDULT_BOTTOM_L;
+export const TEETH_ADDULT_TOP = TEETH_ADDULT_TOP_L;
+export const TEETH_ADDULT_ALL = TEETH_ADDULT_ALL_L;
 
-export const TEETH_BABY_BOTTOM = TEETH_BABY_BOTTOML;
-export const TEETH_BABY_ALL = TEETH_BABY_ALLL;
-export const TEETH_BABY_TOP = TEETH_BABY_TOPL;
+export const TEETH_BABY_BOTTOM = TEETH_BABY_BOTTOM_L;
+export const TEETH_BABY_ALL = TEETH_BABY_ALL_L;
+export const TEETH_BABY_TOP = TEETH_BABY_TOP_L;
 
-export const TEETH_ALL = TEETH_ALLL;
+export const TEETH_ALL = TEETH_ALL_L;
 
-export const TIMEZONES = TIMEZONESL;
+export const TIMEZONES = TIMEZONES_L;
 
-export const COMMON_CURRENCY = COMMON_CURRENCYL;
+export const COMMON_CURRENCY = COMMON_CURRENCY_L;
 
 // Constants Declaration
 
 // Auth
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
-export const AUTH_ERROR = 'AUTH_ERROR';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
-export const AUTH_SET_TOKEN = 'AUTH_SET_TOKEN';
 export const AUTH_LOCK = 'AUTH_LOCK';
 export const AUTH_INIT = 'AUTH_INIT';
 export const AUTH_REFRESH_TOKEN = 'AUTH_REFRESH_TOKEN';
 export const AUTH_DECODE_TOKEN = 'AUTH_DECODE_TOKEN';
-export const AUTH_REFRESH_ERROR = 'AUTH_REFRESH_ERROR';
+export const AUTH_SET_PROP = 'AUTH_SET_PROP';
+
 
 // User
 export const USER_AVATAR_UPLOAD = 'USER_AVATAR_UPLOAD';
@@ -73,6 +67,7 @@ export const USER_LOGOUT = 'USER_LOGOUT';
 export const USER_INITIAL = 'USER_INITIAL';
 export const USER_SET_PARAMS = 'USER_SET_PARAMS';
 export const USER_SET_PARAM = 'USER_SET_PARAM';
+export const USER_PROP_SET = 'USER_PROP_SET';
 export const USER_UPDATE_PASSWORD = 'USER_UPDATE_PASSWORD';
 export const USER_SAVE_TO_LOCAL_STORAGE = 'USER_SAVE_TO_LOCAL_STORAGE';
 export const USER_REGISTER = 'USER_REGISTER';
@@ -97,6 +92,7 @@ export const LOADER_STOP = 'LOADER_STOP';
 export const LOADER_START = 'LOADER_START';
 export const LOADER_SWITCH_OFF = 'LOADER_SWITCH_OFF';
 export const LOADER_SWITCH_ON = 'LOADER_SWITCH_ON';
+export const LOADER_SET_PROP = 'LOADER_SET_PROP';
 
 // Patients
 export const PATIENTS_REQUEST = 'PATIENTS_REQUEST';
@@ -104,6 +100,7 @@ export const PATIENTS_SUCCESS = 'PATIENTS_SUCCESS';
 export const PATIENTS_RESET = 'PATIENTS_RESET';
 export const PATIENTS_ERROR = 'PATIENTS_ERROR';
 export const PATIENTS_SET = 'PATIENTS_SET';
+export const PATIENTS_SET_PROP = 'PATIENTS_SET_PROP';
 export const PATIENTS_PATIENT_UPDATE = 'PATIENTS_PATIENT_UPDATE';
 export const PATIENTS_PATIENT_ADD = 'PATIENTS_PATIENT_ADD';
 
@@ -121,6 +118,7 @@ export const PATIENT_PLAN_SET = 'PATIENT_PLAN_SET';
 export const PATIENT_PLANS_GET = 'PATIENT_PLANS_GET';
 export const PATIENT_PLAN_DELETE = 'PATIENT_PLAN_DELETE';
 export const PATIENT_PLAN_EDIT = 'PATIENT_PLAN_EDIT';
+export const PATIENT_PLAN_CURRENT_SET = 'PATIENT_PLAN_CURRENT_SET';
 export const PATIENT_PROCEDURE_SET = 'PATIENT_PROCEDURESS_SET';
 export const PATIENT_PROCEDURE_DELETE = 'PATIENT_PROCEDURESS_DELETE';
 export const PATIENT_TREATMETS_DELETE = 'PATIENT_TREATMETS_DELETE';
@@ -165,11 +163,9 @@ export const CLINIC_DIAGNOSIS_GET = 'CLINIC_DIAGNOSIS_GET';
 export const CLINIC_PROCEDURES_GET = 'CLINIC_PROCEDURES_GET';
 export const CLINIC_MANIPULATIONS_GET = 'CLINIC_MANIPULATIONS_GET';
 
-export const CLINICS_REQUEST = 'CLINICS_REQUEST';
-export const CLINICS_ERROR = 'CLINICS_ERROR';
-export const CLINICS_SUCCESS = 'CLINICS_SUCCESS';
 export const CLINICS_CREATE = 'CLINICS_CREATE';
-export const CLINICS_SET = 'CLINICS_SET';
+export const CLINICS_PROP_SET = 'CLINICS_PROP_SET';
+export const CLINICS_PROP_PUSH = 'CLINICS_PROP_SET';
 
 // Diagnosis
 export const DIAGNOSIS_REQUEST = 'DIAGNOSIS_REQUEST';
@@ -195,3 +191,16 @@ export const SIDE_BAR_POSITION = 'SIDE_BAR_POSITION';
 
 // Base
 export const BASE_URL = 'https://api.zoobapp.com/v1';
+
+// Server errors
+export const SERVER_ERRORS = SERVER_ERRORS_L;
+
+// Local storage items
+export const LOCAL_STORAGE = LOCAL_STORAGE_L;
+
+// Upload file settings
+export const UPLOAD_FILE_SETTINGS = UPLOAD_FILE_SETTINGS_L;
+
+export const AVAILABLE_LANGUAGES = AVAILABLE_LANGUAGES_L;
+export const DEFAULT_LANGUAGE = 'en';
+export const FALLBACK_LANGUAGE = 'en';

@@ -167,13 +167,13 @@
 <script>
 /* eslint-disable func-names */
     import { SlideYDownTransition } from 'vue2-transitions';
-    import { AnimatedNumber } from '@/components';
-    import { PATIENT_PAYMENT_SET } from '@/constants';
+
 
     export default {
+        name: 't-add-billing-item',
         components: {
+            'animated-number': () => import('@/components/AnimatedNumber'),
             // TAutoComplite,
-            AnimatedNumber,
             SlideYDownTransition,
         },
         props: {

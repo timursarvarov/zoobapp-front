@@ -20,6 +20,7 @@
     import np from '../namespace';
 
     export default {
+        name: 'clipper-preview',
         mounted() {
             this.imgEl = this.$el.querySelector('.img');
             this.initListener();

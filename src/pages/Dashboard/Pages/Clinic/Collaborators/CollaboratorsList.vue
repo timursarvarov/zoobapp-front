@@ -264,19 +264,18 @@
 <script>
     import StarRating from 'vue-star-rating';
     import { mapGetters } from 'vuex';
-    import { Pagination, TAvatar, TTableEditor } from '@/components';
+    import components from '@/components';
     import CollaboratorAddForm from './CollaboratorAddForm.vue';
     // import swal from 'sweetalert2';
     import { PATIENTS_REQUEST, AUTH_LOGOUT } from '@/constants';
     import { tObjProp } from '@/mixins';
 
     export default {
+    name: 'collaborators-list',
         mixins: [tObjProp],
         components: {
-            Pagination,
             StarRating,
-            TTableEditor,
-            TAvatar,
+            ...components,
             CollaboratorAddForm,
         },
         data: () => ({

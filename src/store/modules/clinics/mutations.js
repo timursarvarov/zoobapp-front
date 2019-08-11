@@ -1,31 +1,23 @@
-/* eslint-disable */
+import Vue from 'vue';
 import {
-    CLINICS_REQUEST,
-    CLINICS_ERROR,
-    CLINICS_SUCCESS,
-    CLINICS_CREATE,
-    CLINICS_SET,
+    CLINICS_PROP_PUSH,
+    CLINICS_PROP_SET,
 } from '@/constants';
 
 export default {
-    [CLINICS_CREATE]: (
+    [CLINICS_PROP_PUSH]: (
         state, {
-            type,
-            value
-        }
+            subPropIndex,
+            propName,
+            propValue,
+        },
     ) => {
-        state.clinic[type] = value;
+        if (!state[propName]) {
+            Vue.set(state, propName, []);
+        }
+        Vue.set(state[propName], subPropIndex, propValue);
     },
-    [CLINICS_REQUEST]: (state) => {
-        state.status = 'loading';
-    },
-    [CLINICS_SUCCESS]: (state) => {
-        state.status = 'success';
-    },
-    [CLINICS_ERROR]: (state) => {
-        state.status = 'error';
-    },
-    [CLINICS_SET]: (state, clinics) => {
-        state.clinics = clinics;
+    [CLINICS_PROP_SET]: (state, { propKey, propName }) => {
+        Vue.set(state, propKey, propName);
     },
 };

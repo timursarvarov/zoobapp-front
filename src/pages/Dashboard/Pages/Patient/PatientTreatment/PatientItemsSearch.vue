@@ -76,15 +76,13 @@
         CLINIC_MANIPULATIONS_GET,
         CLINIC_SET_PROP,
     } from '@/constants';
-    import {
-        TCollapseSearch,
-    } from '@/components';
+    import components from '@/components';
     import { tObjProp } from '@/mixins';
 
     export default {
         mixins: [tObjProp],
         components: {
-            TCollapseSearch,
+            ...components,
         },
         props: {
             customHeight: {

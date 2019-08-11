@@ -104,12 +104,13 @@
 
 <script>
     import Fuse from 'fuse.js';
-    import { Pagination } from '@/components';
+    import components from '@/components';
     import users from './users';
 
     export default {
+        name: 'paginated-tables',
         components: {
-            Pagination,
+            ...components,
         },
         computed: {
             /** *

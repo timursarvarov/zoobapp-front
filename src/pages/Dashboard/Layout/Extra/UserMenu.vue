@@ -86,6 +86,7 @@
     import { CollapseTransition } from 'vue2-transitions';
 
     export default {
+      name: 'user-menu',
         components: {
             CollapseTransition,
         },

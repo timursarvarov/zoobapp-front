@@ -212,6 +212,7 @@
     import { SlideYDownTransition } from 'vue2-transitions';
 
     export default {
+        name: 'type-validations-forms',
         components: {
             SlideYDownTransition,
         },

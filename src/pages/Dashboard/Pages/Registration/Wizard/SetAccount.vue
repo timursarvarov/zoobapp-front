@@ -208,6 +208,7 @@
     import { SlideYDownTransition } from 'vue2-transitions';
 
     export default {
+        name: 'set-account',
         components: {
             SlideYDownTransition,
         },

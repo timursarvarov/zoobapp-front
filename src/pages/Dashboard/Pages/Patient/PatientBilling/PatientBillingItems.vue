@@ -11,7 +11,9 @@
         >
             <md-table-toolbar>
                 <div class="md-toolbar-section-start">
-                    <h1 class="md-title"><b>Unbilled procedures</b></h1>
+                    <h1 class="md-title">
+                        <b>Unbilled procedures</b>
+                    </h1>
                 </div>
                 <div class="md-toolbar-section-end">
                     <md-button
@@ -46,7 +48,7 @@
                     <div :class="field.key" v-if="field.key === 'code'">{{ item.code }}</div>
                     <div :class="field.key" v-else-if="field.key === 'title'">
                         {{ item.title }}
-                        <br>
+                        <br />
                         <small>{{item.description}}</small>
                     </div>
                     <div :class="field.key" v-else-if="field.key === 'teeth'">
@@ -71,13 +73,13 @@
                         </div>
                         <span class="md-layout-item">
                             <span>{{item.author.lastName | capitilize}}</span>
-                            <br>
+                            <br />
                             <span>{{item.author.firstName | capitilize}}</span>
                         </span>
                     </div>
                     <div v-if="field.key === 'date'">
                         <span>{{ item.date | moment("from") }}</span>
-                        <br>
+                        <br />
                         <small>{{item.date | moment("calendar")}}</small>
                     </div>
 
@@ -85,22 +87,21 @@
                         {{getItemTotalPrice(item.manipulations)}}
                         <small>{{currentClinic.currencyCode}}</small>
                     </div>
-                    <div v-if="field.key === 'plan'"
-                        class="md-layout md-alignment-center-left"
-                    >
+                    <div v-if="field.key === 'plan'" class="md-layout md-alignment-center-left">
                         <div class="md-layout" style="max-width:40px;">
-                            <t-avatar
-                                :small="true"
-                                :textToColor="item.planId"
-                            />
+                            <t-avatar :small="true" :textToColor="item.planId" />
                         </div>
                         <div class="md-layout md-alignment-center-left">
-                            <span style="height: fit-content;" class="md-xsmall-hide">
-                                {{item.planName| capitilize}}
-                            </span>
+                            <span
+                                style="height: fit-content;"
+                                class="md-xsmall-hide"
+                            >{{item.planName| capitilize}}</span>
                         </div>
                     </div>
-                    <div class="manipulations" v-if="field.key === 'manipulations' && item.manipulations">
+                    <div
+                        class="manipulations"
+                        v-if="field.key === 'manipulations' && item.manipulations"
+                    >
                         <div>
                             <small
                                 class="items-manipulations_wrapper"
@@ -134,38 +135,33 @@
             :md-active.sync="showSnackbar"
             md-persistent
         >
-            <p>{{`${selectedItems.length}`}}
+            <p>
+                {{`${selectedItems.length}`}}
                 Procedures for
-                <animated-number :value="calculateProcedures(selectedItems)" /> {{currentClinic.currencyCode}}
+                <animated-number :value="calculateProcedures(selectedItems)" />
+                {{currentClinic.currencyCode}}
                 selected
             </p>
             <div>
-                <md-button class="md-simple" @click="showSnackbar = false, selectedItems=[]">unselect</md-button>
                 <md-button
-                    class="md-success"
-                    @click="showCreateInvoice()"
-                >Create Invoice</md-button>
+                    class="md-simple"
+                    @click="showSnackbar = false, selectedItems=[]"
+                >unselect</md-button>
+                <md-button class="md-success" @click="showCreateInvoice()">Create Invoice</md-button>
             </div>
         </md-snackbar>
     </div>
 </template>
 <script>
     import { mapGetters } from 'vuex';
-    import {
-        TAvatar,
-        TTableEditor,
-        AnimatedNumber,
-    } from '@/components';
+    import components from '@/components';
     import { USER_BILLING_COLUMNS } from '@/constants';
     import { tObjProp } from '@/mixins';
-
 
     export default {
         mixins: [tObjProp],
         components: {
-            TAvatar,
-            TTableEditor,
-            AnimatedNumber,
+            ...components,
         },
         props: {
             items: {
@@ -246,7 +242,7 @@
             setTableData() {
                 const procedures = [];
                 if (this.patient.plans) {
-                    this.patient.plans.forEach((plan) => {
+                    Object.values(this.patient.plans).forEach((plan) => {
                         if (plan.state === 1 && plan.procedures) {
                             plan.procedures.forEach((p) => {
                                 procedures.push({
@@ -265,7 +261,7 @@
                 return this.patient.plans;
             },
             showCreateInvoice() {
-                this.showSnackbar = false,
+                (this.showSnackbar = false),
                 this.$emit('onCreateInvoice', this.selectedItems);
             },
             onProcedureAdd(p) {
@@ -375,18 +371,18 @@
                     }
                     if (typeof a[thisLocal.currentSort] === 'number') {
                         const orderLocal = thisLocal.currentSortOrder;
-                        const dflt = orderLocal === 'asc'
-                            ? Number.MAX_VALUE
-                            : -Number.MAX_VALUE;
+                        const dflt =                        orderLocal === 'asc'
+                                ? Number.MAX_VALUE
+                                : -Number.MAX_VALUE;
                         const aVal = a[sortBy] === null ? dflt : a[sortBy];
                         const bVal = b[sortBy] === null ? dflt : b[sortBy];
                         return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
                     }
                     if (typeof a[thisLocal.currentSort] === 'object') {
                         const orderLocal = thisLocal.currentSortOrder;
-                        const dflt = orderLocal === 'asc'
-                            ? Number.MAX_VALUE
-                            : -Number.MAX_VALUE;
+                        const dflt =                        orderLocal === 'asc'
+                                ? Number.MAX_VALUE
+                                : -Number.MAX_VALUE;
                         const aVal = a[sortBy] === null ? dflt : a[sortBy];
                         const bVal = b[sortBy] === null ? dflt : b[sortBy];
                         return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
@@ -487,9 +483,9 @@
             width: 20px;
         }
     }
-    .manipulations{
-    max-width: 30vw;
-    .items-manipulations_wrapper {
+    .manipulations {
+        max-width: 30vw;
+        .items-manipulations_wrapper {
             text-overflow: ellipsis;
             overflow: hidden;
             align-items: stretch;
@@ -502,7 +498,7 @@
                 // max-width: 70%;
             }
             .text-right {
-                flex-grow:1;
+                flex-grow: 1;
                 // max-width: 30%;
                 text-overflow: ellipsis;
                 white-space: nowrap;

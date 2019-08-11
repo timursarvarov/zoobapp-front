@@ -320,7 +320,7 @@
 </template>
 <script>
     export default {
-        components: {},
+      name: 'regular-forms',
         data() {
             return {
                 layout1: null,

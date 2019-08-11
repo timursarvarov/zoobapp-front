@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import axios from 'axios';
 // import { settings } from '../settings';
 
@@ -9,93 +7,102 @@ import {
     AUTH_REFRESH_TOKEN,
     LOADER_STOP,
     LOADER_START,
-    NOTIFY
+    NOTIFY,
 } from '@/constants';
 
 export default function() {
-    let isAlreadyFetchingAccessToken = false;
-    let subscribersResponse = [];
+    let isRefreshing = false;
+    let failedQueue = [];
 
-    let isRefreshingRequest = false;
-    let refreshSubscribersRequst = [];
+    const processQueue = (error, token = null) => {
+        failedQueue.forEach((prom) => {
+            if (error) {
+                prom.reject(error);
+            } else {
+                console.log('prom.resolve(token);');
+                prom.resolve(token);
+            }
+        });
 
-    function subscribeTokenRefresh(cb) {
-        refreshSubscribersRequst.push(cb);
-    }
+        failedQueue = [];
+    };
 
-    function onRrefreshed(token) {
-        refreshSubscribersRequst.map(cb => cb(token));
-    }
-
-    function onAccessTokenFetched(accessToken) {
-        subscribersResponse = subscribersResponse.filter(callback => callback(accessToken));
-    }
-
-    function addSubscriber(callback) {
-        subscribersResponse.push(callback);
-    }
-    axios.interceptors.request.use(config => {
+    axios.interceptors.request.use((config) => {
         if (store.state.loader.loaderState) {
             store.dispatch(LOADER_START);
         }
 
-        // const expiresAt = store.state.auth.expiresAt;
-        // const currentTime = Math.floor(Date.now() / 1000);
+        const expiresAt = localStorage.getItem('expiresAt');
+        const currentTime = Math.floor(Date.now() / 1000);
+        console.log(expiresAt, currentTime);
+        const originalRequest = config;
+        if (expiresAt && currentTime && !originalRequest.retry) {
+            if (expiresAt && currentTime) {
+                // if (expiresAt <= currentTime) {
+                if (isRefreshing) {
+                    console.log(failedQueue);
+                    return new Promise(((resolve, reject) => {
+                        failedQueue.push({ resolve, reject });
+                        console.log('failedQueue.push', failedQueue);
+                    })).then((token) => {
+                        originalRequest.headers.Authorization = `Bearer ${token}`;
+                        console.log('axios(originalRequest)');
+                        return axios(originalRequest);
+                    }).catch(err => err);
+                }
+                console.log(config);
+                originalRequest.retry = true;
+                isRefreshing = true;
+                store.dispatch(AUTH_REFRESH_TOKEN).then((result) => {
+                        localStorage.setItem('accessToken', result.accessToken);
+                        localStorage.setItem('expiresAt', result.expiresAt);
+                        axios.defaults.headers.common.Authorization = `Bearer ${result.accessToken}`;
+                        originalRequest.headers.Authorization = `Bearer ${result.accessToken}`;
+                        processQueue(null, result.accessToken);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        processQueue(err, null);
+                        reject(err);
+                    })
+                    .then(() => { isRefreshing = false; });
+            }
+            console.log('originalRequest');
+            return originalRequest;
 
-        // const originalRequest = config;
-        // console.log(expiresAt, currentTime, expiresAt <= currentTime)
-        // console.log('isRefreshingRequest', isRefreshingRequest)
+            return Promise.resolve(originalRequest).then((res) => {
+                console.log(res);
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
 
-        // if (expiresAt <= currentTime) {
-
-        //     if (!isRefreshingRequest) {
-        //         isRefreshingRequest = true;
-        //         console.log(config)
-        //         return new Promise.resolve(store.dispatch(AUTH_REFRESH_TOKEN)
-        //             .then(newToken => {
-        //                 isRefreshingRequest = false;
-        //                 onRrefreshed(newToken);
-        //             }));
-        //     }
-        //     console.log(subscribersResponse)
-        //     const retryOrigReq = new Promise((resolve, reject) => {
-        //         subscribeTokenRefresh(token => {
-        //             // replace the expired token and retry
-        //             originalRequest.headers['Authorization'] = 'Bearer ' + token;
-        //             resolve(axios(originalRequest));
-        //         });
-        //     });
-        //     return retryOrigReq;
-        // }
-
-
-        // if (expiresAt <= currentTime && !isAlreadyFetchingAccessToken) {
-        //     isAlreadyFetchingAccessToken = true;
-        //     return store.dispatch(AUTH_REFRESH_TOKEN).then(token => {
-        //         isAlreadyFetchingAccessToken = false;
-        //         config.headers.Authorization = `Bearer ${token}`;
-        //         return Promise.resolve(config);
-        //     }).catch((err) => {
-        //         console.log(err);
-        //     });
-
-        // }
-        return config;
-
+        return originalRequest;
     });
 
-    axios.interceptors.response.use(function(response) {
+
+    axios.interceptors.response.use((response) => {
         store.dispatch(LOADER_STOP);
+        if (response.data.error) {
+            console.log(response.data.error);
+            store.dispatch(NOTIFY, {
+                settings: {
+                    type: 'warning',
+                    status: response.data.error.code ? response.data.error.code : 'No code',
+                    message: response.data.error.message ? response.data.error.message : 'No data to show',
+                },
+            });
+        }
         return response;
-    }, function(error) {
-        if (error.response) {
-            const refreshToken = store.state.auth.refreshToken;
-            const hasRefreshTokenError = store.state.auth.hasRefreshTokenError;
+    }, (error) => {
+        console.log(error);
+        if (error.code) {
+            const { refreshToken, hasRefreshTokenError } = store.state.auth;
             const {
                 config,
                 response: {
-                    status
-                }
+                    status,
+                },
             } = error;
             const originalRequest = config;
             // if (status === 401 && refreshToken && !isAlreadyFetchingAccessToken && !hasRefreshTokenError) {
@@ -108,39 +115,40 @@ export default function() {
                     });
                 }
                 const retryOriginalRequest = new Promise((resolve) => {
-                    addSubscriber(accessToken => {
-                        originalRequest.headers.Authorization = 'Bearer ' + accessToken;
+                    addSubscriber((accessToken) => {
+                        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
                         resolve(axios(originalRequest));
                         store.dispatch(LOADER_STOP);
                     });
                 });
                 return retryOriginalRequest;
-            } else {
-                store.dispatch(NOTIFY, {
-                    settings: {
-                        type: 'warning',
-                        status: error.response.status ? error.response.status : 'Some status',
-                        message: error.response.data.error ? error.response.data.error : 'No data to show'
-                    }
-                });
             }
+            store.dispatch(NOTIFY, {
+                settings: {
+                    type: 'warning',
+                    status: error.response.status ? error.response.status : 'Some status',
+                    message: error.response.data.error ? error.response.data.error : 'No data to show',
+                },
+            });
+
             store.dispatch(LOADER_STOP);
         } else if (error.request) {
             store.dispatch(NOTIFY, {
                 settings: {
                     type: 'danger',
                     status: error.request,
-                    message: 'The request was made but no response was received'
-                }
+                    message: 'The request was made but no response was received',
+                },
             });
         } else if (error != 'Cancel') {
             store.dispatch(NOTIFY, {
                 settings: {
                     type: 'danger',
-                    message: 'Something happened in setting up the request that triggered an error'
-                }
+                    message: 'Something happened in setting up the request that triggered an error',
+                },
             });
         }
+
         store.dispatch(LOADER_STOP);
         return Promise.reject(error);
     });

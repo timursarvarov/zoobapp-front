@@ -21,6 +21,7 @@
     import RangeValidationForm from './ValidationForms/RangeValidationForm.vue';
 
     export default {
+      name: 'validation-forms',
         components: {
             LoginForm,
             RegisterForm,

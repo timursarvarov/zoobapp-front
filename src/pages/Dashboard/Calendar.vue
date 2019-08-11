@@ -27,11 +27,12 @@
     </div>
 </template>
 <script>
-    import { TCalendar } from '@/components';
+    import components from '@/components';
 
     export default {
+        name:'calendar',
         components: {
-            TCalendar,
+        ...components,
         },
         data() {
             return {

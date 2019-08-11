@@ -357,7 +357,9 @@
 </template>
 
 <script>
-    export default {};
+    export default {
+      name:'grid-system',
+    };
 </script>
 <style scoped>
 .text-center {

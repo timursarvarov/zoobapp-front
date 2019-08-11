@@ -64,6 +64,7 @@
     import { SlideYDownTransition } from 'vue2-transitions';
 
     export default {
+        name: 'check-email',
         components: {
             SlideYDownTransition,
         },

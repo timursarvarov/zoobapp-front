@@ -186,6 +186,7 @@
                         <md-select @md-selected="onLangChange()" v-model="user.lang" name="language" id="language">
                             <md-option :value="1">English</md-option>
                             <md-option :value="2">Русский</md-option>
+                            <md-option :value="3">Uzbek</md-option>
                         </md-select>
                     </md-field>
                 </div>
@@ -197,9 +198,17 @@
                 </div>
                 <div class="md-layout-item md-size-100 text-right">
                     <md-button
+                        :disabled="lodash.isEmpty(changedFields) || loading"
                         @click="updateProfile"
                         class="md-raised md-success mt-4"
-                    >Update Profile</md-button>
+                    >
+                    <span v-if="loading">
+                        Loading
+                    </span>
+                    <span v-else >
+                        Update Profile
+                    </span>
+                    </md-button>
                 </div>
             </div>
         </md-card-content>
@@ -208,13 +217,19 @@
 <script>
     import { mapGetters } from 'vuex';
     import { SlideYDownTransition } from 'vue2-transitions';
-    import { USER_AVATAR_UPLOAD, USER_UPDATE, NOTIFY } from '@/constants';
-    import { TAvatarInput } from '@/components';
+    import {
+        USER_AVATAR_UPLOAD,
+        USER_UPDATE,
+        NOTIFY,
+        SERVER_ERRORS,
+    } from '@/constants';
+    import components from '@/components';
 
     export default {
+        name: 'user-card',
         components: {
             SlideYDownTransition,
-            TAvatarInput,
+            ...components,
         },
         name: 'user-card',
         props: {
@@ -229,8 +244,8 @@
         },
         data() {
             return {
-                city: null,
-                country: null,
+                copiedUser: {},
+                loading: false,
                 code: null,
                 aboutme: null,
                 touched: {
@@ -286,25 +301,61 @@
                 this.$validator
                     .validateAll()
                     .then((result) => {
-                        // TODO подключить после настройки api
-                        // this.user['color'] = this.userColor
                         if (result) {
+                            this.loading = true;
                             this.$store
                                 .dispatch(USER_UPDATE, {
-                                    user: this.user,
+                                    user: this.changedFields,
                                 })
                                 .then((response) => {
                                     if (response) {
+                                        this.copiedUser = this.lodash.clone(response);
                                         this.$store.dispatch(NOTIFY, {
                                             settings: {
                                                 message: 'Updated',
-                                                type: 'primary',
+                                                type: 'success',
                                             },
                                         });
                                     }
+                                })
+                                .catch((error) => {
+                                    if (error.code === SERVER_ERRORS.codes.ServerErrorCode) {
+                                        if (error.message === 'email exist') {
+                                            this.showErrorsValidate(
+                                                {
+                                                    type: 'email',
+                                                    message: error.message,
+                                                },
+                                            );
+                                        }
+                                    }
+                                })
+                                .then(() => {
+                                    this.loading = false;
                                 });
                         }
                     });
+            },
+            showErrorsValidate(error) {
+                if (error.message === '') {
+                    return;
+                }
+                const field = this.$validator.fields.find({
+                    name: error.type,
+                    scope: this.$options.scope,
+                });
+                if (!field) return;
+                this.$validator.errors.add({
+                    id: error.type,
+                    field: error.type,
+                    msg: error.message,
+                    scope: this.$options.scope,
+                });
+                field.setFlags({
+                    invalid: true,
+                    valid: false,
+                    validated: true,
+                });
             },
             updateUserAvatar(fd) {
                 this.$store
@@ -324,6 +375,9 @@
                     });
             },
         },
+        created() {
+            this.copiedUser = this.lodash.clone(this.user);
+        },
         computed: {
             ...mapGetters({
                 user: 'getProfile',
@@ -339,6 +393,15 @@
             },
             phone() {
                 return this.user.phone;
+            },
+            changedFields() {
+                const fields = {};
+                Object.keys(this.user).forEach((key) => {
+                    if (!this.lodash.isEqual(this.user[key], this.copiedUser[key])) {
+                        fields[key] = this.user[key];
+                    }
+                });
+                return fields;
             },
         },
         watch: {

@@ -28,7 +28,7 @@
                     </p>
                     <h3 class="title">
                         <span>
-                            <animated-number :value="selectedItems.length" />
+                            <animated-number :value="selectedItems ? selectedItems.length: 0" />
                             {{currentClinic.currencyCode}}
                         </span>
                     </h3>
@@ -59,7 +59,7 @@
         <t-wizard-add-billing
             @onProcedureAdd="onProcedureAdd"
             :isDialogVisible.sync="showInvoiceForm"
-            :selectedProcedures="selectedItems"
+            :selectedProcedures="selectedItems || []"
             :allProcedures="tableData"
             :currencyCode="currentClinic.currencyCode"
         />
@@ -67,10 +67,7 @@
 </template>
 <script>
     import { mapGetters } from 'vuex';
-    import {
-        TWizardAddBilling,
-        AnimatedNumber,
-    } from '@/components';
+    import components from '@/components';
     import { USER_BILLING_COLUMNS } from '@/constants';
     import PatientBillingItems from './PatientBillingItems.vue';
     import PatientBillingInvoices from './PatientBillingInvoices.vue';
@@ -79,10 +76,10 @@
     const randomMC = require('random-material-color');
 
     export default {
+        name: 'patient-billing',
         mixins: [tObjProp],
         components: {
-            TWizardAddBilling,
-            AnimatedNumber,
+            ...components,
             PatientBillingItems,
             PatientBillingInvoices,
         },
@@ -132,7 +129,7 @@
             tableData() {
                 const procedures = [];
                 if (this.patient.plans) {
-                    this.patient.plans.forEach((plan) => {
+                    Object.values(this.patient.plans).forEach((plan) => {
                         if (plan.state === 1 && plan.procedures) {
                             plan.procedures.forEach((p) => {
                                 procedures.push({
@@ -184,8 +181,7 @@
 
         methods: {
             onCreateInvoice(items) {
-                console.log(items);
-                this.selectedItems = items;
+                this.selectedItems = items || [];
                 this.showInvoiceForm = true;
             },
             onProcedureAdd(p) {

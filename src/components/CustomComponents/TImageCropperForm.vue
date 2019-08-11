@@ -61,11 +61,11 @@
   </md-dialog>
 </template>
 <script>
-    import { AnimatedNumber } from '@/components';
+    
     import { NOTIFY } from '@/constants';
 
     export default {
-        name: 'TimageCropperForm',
+        name: 't-image-cropper-form',
         prop: 'fd',
         props: {
             maxFileSize: {
@@ -102,7 +102,7 @@
             },
         },
         components: {
-            AnimatedNumber,
+          'animated-number': () => import('@/components/AnimatedNumber'),
         },
         data() {
             return {
@@ -169,6 +169,7 @@
             },
             dataURItoBlob(dataURI) {
                 // convert base64/URLEncoded data component to raw binary data held in a string
+                console.log(dataURI)
                 let byteString;
                 if (dataURI.split(',')[0].indexOf('base64') >= 0) {
                     byteString = atob(dataURI.split(',')[1]);

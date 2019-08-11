@@ -321,11 +321,12 @@
 </template>
 
 <script>
-    import { Modal } from '@/components';
+    import components from '@/components';
 
     export default {
+      name:'notifications',
         components: {
-            Modal,
+            ...components,
         },
         props: {
             registerImg: {

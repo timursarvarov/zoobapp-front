@@ -4,7 +4,7 @@
         <div
             class="md-layout-item md-size-33 md-medium-size-50 md-small-size-70 md-xsmall-size-100"
         >
-            <form>
+            <!-- <form> -->
                 <login-card header-color="green">
                     <h4 slot="title" class="title">Log in</h4>
                     <md-button
@@ -28,7 +28,7 @@
                 {'md-error': errors.has('username')}]"
                         >
                             <md-icon>face</md-icon>
-                            <label>User Name...</label>
+                            <label>User Name</label>
                             <md-input
                                 ref="username"
                                 autocomplete="username"
@@ -67,7 +67,7 @@
                             {'md-valid': !errors.has('password') && touched.password}]"
                         >
                             <md-icon>lock_outline</md-icon>
-                            <label>Password...</label>
+                            <label>Password</label>
                             <md-input
                                 ref="password"
                                 autocomplete="password"
@@ -92,20 +92,23 @@
                         class="md-simple md-success md-lg"
                     >Lets Go</md-button>
                 </login-card>
-            </form>
+            <!-- </form> -->
         </div>
         <forgot-password :showForm.sync="showForgot"/>
     </div>
 </template>
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
-    import { LoginCard } from '@/components';
-    import { AUTH_REQUEST, NOTIFY, CLINIC_AUTH_REQUEST } from '@/constants';
+    import components from '@/components';
+    import {
+        AUTH_REQUEST, NOTIFY, CLINIC_AUTH_REQUEST, SERVER_ERRORS,
+    } from '@/constants';
     import ForgotPassword from './ForgotPassword.vue';
 
     export default {
+        name: 'login',
         components: {
-            LoginCard,
+            ...components,
             SlideYDownTransition,
             ForgotPassword,
         },
@@ -145,7 +148,7 @@
                 this.touched.password = true;
             },
             login() {
-                //  this.$router.push('/choose_clinic');
+                //  this.$router.push('choose_clinic');
                 //  return;
                 const { username, password } = this;
                 if (this.errors.has('username') || !this.username) {
@@ -163,22 +166,21 @@
                     return;
                 }
                 this.$store.dispatch(AUTH_REQUEST, { username, password }).then(
-                    // eslint-disable-next-line no-unused-vars
-                    (response) => {
-                        const { data } = response;
-
-                        if (data.organizations.length === 1) {
-                            this.setClinic(data);
+                    (result) => {
+                        if (result.organizations.length === 1) {
+                            this.setClinic(result);
                         } else {
-                            this.$router.push('/choose_clinic');
+                            this.$router.push('choose_clinic');
                         }
                     },
                     (error) => {
-                        if (error.response.data.message === 'Wrong password') {
-                            this.showErrorsValidate('password');
-                        }
-                        if (error.response.data.message === 'Invalid login') {
-                            this.showErrorsValidate('username');
+                        if (error.code === SERVER_ERRORS.codes.LoginErrorCode) {
+                            if (error.message === SERVER_ERRORS.messages.InvalidLoginErrorMessage) {
+                                this.showErrorsValidate('username');
+                            }
+                            if (error.message === SERVER_ERRORS.messages.WrongPasswordErrorMessage) {
+                                this.showErrorsValidate('password');
+                            }
                         }
                     },
                 );
@@ -190,18 +192,15 @@
                         accessToken: data.accessToken,
                     })
                     .then(
-                        // eslint-disable-next-line no-unused-vars
-                        (response) => {
-                            this.$router.push('/');
-                        },
-                        (error) => {
-                            if (error && error.response) {
-                                if (error.response.data.message === 'Clinic Authorization failed') {
-                                    this.showErrorsValidate('password');
-                                }
-                                if (error.response.data.message === 'Invalid login') {
-                                    this.showErrorsValidate('username');
-                                }
+                        (result) => {
+                            if (result.accessToken) {
+                                this.$router.push({ name: 'Dashboard', params: { lang: this.$i18n.locale } });
+                                this.$store.dispatch(NOTIFY, {
+                                    settings: {
+                                        type: 'success',
+                                        message: `Loging in ${data.organizations[0].name}`,
+                                    },
+                                });
                             }
                         },
                     );

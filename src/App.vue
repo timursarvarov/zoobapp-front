@@ -9,9 +9,10 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    import { AUTH_INIT } from '@/constants';
+    import { AUTH_INIT, AVAILABLE_LANGUAGES } from '@/constants';
 
     export default {
+        name: 'App',
         computed: {
             ...mapGetters({
                 getNotify: 'getNotify',
@@ -19,14 +20,21 @@
                 isProfileLoaded: 'isProfileLoaded',
                 lang: 'getLang',
             }),
+            languages() {
+                return AVAILABLE_LANGUAGES;
+            },
         },
         mounted() {
-            this.$i18n.locale = this.lang;
-            if (this.refreshTokenExist) {
-                this.$store.dispatch(AUTH_INIT);
-            } else {
-                this.$router.push('/login');
-            }
+            // this.$i18n.locale = this.lang;
+            // const route = Object.assign({}, this.$route);
+            // route.params.lang = this.lang;
+            // this.$router.push(route);
+            // this.$i18n.lang = this.lang;
+            // if (this.refreshTokenExist) {
+            //     this.$store.dispatch(AUTH_INIT);
+            // } else {
+            //     this.$router.push('login');
+            // }
         },
         watch: {
             getNotify: {
@@ -42,7 +50,7 @@
             },
             isProfileLoaded(value) {
                 if (!value) {
-                    this.$router.push('/login');
+                    // this.$router.push('login');
                 }
             },
         },

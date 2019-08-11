@@ -1,10 +1,11 @@
-/* eslint-disable */
+/* eslint-disable no-param-reassign */
+import Vue from 'vue';
 import {
     USER_REQUEST,
     USER_ERROR,
     USER_SUCCESS,
     USER_LOGOUT,
-    USER_SET_PARAM,
+    USER_PROP_SET,
 } from '@/constants';
 
 export default {
@@ -20,12 +21,12 @@ export default {
     [USER_LOGOUT]: (state) => {
         state.profile = {};
     },
-    [USER_SET_PARAM]: (
+    [USER_PROP_SET]: (
         state, {
-            type,
-            value
-        }
+            propKey,
+            propValue,
+        },
     ) => {
-        state.profile[type] = value;
+        Vue.set(state.profile, propKey, propValue);
     },
 };

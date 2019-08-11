@@ -61,9 +61,8 @@
     } from '@/constants';
 
     export default {
+        name: 'tooth',
         mixins: [tObjProp],
-        components: {
-        },
         props: {
             prefer: {
                 type: String,

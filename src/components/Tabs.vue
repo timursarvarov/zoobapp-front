@@ -53,6 +53,7 @@
 
 <script>
     export default {
+      name:'tabs',
         props: {
             flexColumn: Boolean,
             navPillsIcons: Boolean,

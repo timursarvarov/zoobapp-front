@@ -40,8 +40,8 @@
 
     export default {
         name: 'collapse',
-        components: {
-            CollapseTransition,
+         components: {
+              CollapseTransition,
         },
         props: {
             collapse: Array,

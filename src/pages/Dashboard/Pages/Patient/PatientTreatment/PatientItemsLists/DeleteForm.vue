@@ -33,11 +33,12 @@
                             >
                                 <div v-if="loading">
                                     <md-progress-spinner
-                                        class="md-primary"
+                                        class="md-accent"
                                         :md-diameter="12"
                                         :md-stroke="2"
                                         md-mode="indeterminate"
                                     ></md-progress-spinner>
+                                    deleting
                                 </div>
                                 <span v-else>Delete</span>
 
@@ -105,23 +106,20 @@
             deletePlan() {
                 this.loading = true;
                 this.$store.dispatch(PATIENT_PLAN_DELETE, {
-                    params: {
-                        patientId: this.patientID,
-                        planID: this.itemToDelete.ID,
-                    },
+                    planID: this.itemToDelete.ID,
                 }).then(
                     () => {
                         this.$emit('onDeleted', false);
                         this.showFormL = false;
-                        this.loading = false;
                     },
-                ).catch(() => {
+                ).catch((err) => {
+                    console.log(err);
                     this.showFormL = false;
+                }).then(() => {
                     this.loading = false;
                 });
             },
             deleteProcedure() {
-                console.log(this.planID);
                 this.loading = true;
                 this.$store.dispatch(PATIENT_PROCEDURE_DELETE, {
                     patientId: this.patientID,
@@ -130,14 +128,12 @@
                 }).then(
                     () => {
                         this.$emit('onDeleted', false);
-                        this.showFormL = false;
-                        this.loading = false;
-                        console.log('succes');
                     },
                 ).catch((err) => {
+                    console.log(err);
+                }).then(() => {
                     this.showFormL = false;
                     this.loading = false;
-                    console.log(err);
                 });
             },
         },

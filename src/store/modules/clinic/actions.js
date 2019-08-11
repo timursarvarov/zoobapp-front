@@ -1,8 +1,5 @@
 /* eslint-disable */
 import {
-    CLINIC_REQUEST,
-    CLINIC_ERROR,
-    CLINIC_SUCCESS,
     CLINIC_SET_PROPS,
     CLINIC_SET_PROP,
     CLINIC_LOGO_UPLOAD,
@@ -34,19 +31,26 @@ export default {
             }
         }
         return new Promise((resolve, reject) => {
-            commit(CLINIC_REQUEST);
-            axios.put('/organization/',
-                    JSON.stringify(
-                        fields
-                    )
+            commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'loading' });
+            axios.post('/',
+                    JSON.stringify({
+                        jsonrpc: "2.0",
+                        method: "Organizations.Edit",
+                        params: {
+                            name: "My Organization",
+                            description: "My dental clinic"
+                        },
+                        id: 1
+                    })
                 )
                 .then(resp => {
-                    commit(CLINIC_SUCCESS);
+                    console.log(resp)
+                    commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'success' });
                     dispatch(AUTH_REFRESH_TOKEN)
                     resolve(resp);
                 })
                 .catch(err => {
-                    commit(CLINIC_ERROR);
+                    commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
                     reject(err);
                 });
         });
@@ -54,31 +58,50 @@ export default {
     [CLINIC_AUTH_REQUEST]: ({
         commit,
         dispatch,
+        state,
     }, {
         clinicId,
         accessToken
     }) => {
         if (accessToken) {
             return new Promise((resolve, reject) => {
-                commit(CLINIC_REQUEST);
-                axios.post(`/auth/organization/${clinicId}/`)
+                commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'loading' });
+                const refreshingCall = axios.post(`/`,
+                        JSON.stringify({
+                            jsonrpc: '2.0',
+                            method: 'Auth.Organization',
+                            params: {
+                                organizationID: parseInt(clinicId, 10)
+                            },
+                            id: 1
+                        }))
                     .then(resp => {
-                        axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
-                        localStorage.setItem('accessToken', resp.data.accessToken);
-                        localStorage.setItem('expiresAt', resp.data.expiresAt);
-                        localStorage.setItem('refreshToken', resp.data.refreshToken);
-                        dispatch(AUTH_SUCCESS, { resp });
+                        if (resp.data.error) {
+                            commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
+                            localStorage.removeItem('accessToken');
+                            localStorage.removeItem('expiresAt');
+                            localStorage.removeItem('refreshToken');
+                            commit(CLINIC_SET_PROP, { propName: 'isRefreshing', propValue: false });
+                            reject(resp.data.error)
+                        }
+                        console.log('refresh state ', resp)
+                        axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.result.accessToken;
+                        localStorage.setItem('accessToken', resp.data.result.accessToken);
+                        localStorage.setItem('expiresAt', resp.data.result.expiresAt);
+                        // dispatch(AUTH_SUCCESS, { result: resp.data.result });
                         dispatch(AUTH_DECODE_TOKEN);
                         dispatch(USER_REQUEST);
                         dispatch(PATIENTS_RESET);
                         dispatch(PATIENT_RESET);
-                        resolve(resp);
+                        commit(CLINIC_SET_PROP, { propName: 'isRefreshing', propValue: false });
+                        resolve(resp.data.result)
                     })
                     .catch(err => {
-                        if (err.response) {
+                        if (err) {
+                            console.log(err)
                             reject(err);
                         }
-                        commit(CLINIC_ERROR, err);
+                        commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
                         localStorage.removeItem('accessToken');
                         localStorage.removeItem('expiresAt');
                         localStorage.removeItem('refreshToken');
@@ -90,10 +113,7 @@ export default {
         commit
     }, { organization }) => {
         Object.keys(organization).forEach(key => {
-            commit(CLINIC_SET_PROP, {
-                type: key,
-                value: organization[key]
-            });
+            commit(CLINIC_SET_PROP, { propName: key, propValue: organization[key] });
         })
         localStorage.setItem('CLINIC_ID', organization.ID);
         localStorage.setItem('CLINIC_NAME', organization.name);
@@ -114,7 +134,7 @@ export default {
         fd
     }) => {
         return new Promise((resolve, reject) => {
-            commit(CLINIC_REQUEST);
+            commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'loading' });
             axios.post('/organization/logo/',
                     fd, {
                         headers: {
@@ -123,12 +143,12 @@ export default {
                     }
                 )
                 .then(resp => {
-                    commit(CLINIC_SUCCESS);
+                    commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'success' });
                     dispatch(AUTH_REFRESH_TOKEN);
                     resolve(resp);
                 })
                 .catch(err => {
-                    commit(CLINIC_ERROR);
+                    commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
                     reject(err);
                 });
         });
@@ -136,63 +156,81 @@ export default {
     [CLINIC_DIAGNOSIS_GET]: ({
         commit,
     }) => new Promise((resolve, reject) => {
-        commit(CLINIC_REQUEST);
-        axios.get(`/organization/diagnoses/`)
+        commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'loading' });
+        axios.post(`/`,
+                JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'Organizations.GetDiagnoses',
+                    id: 1
+                }))
             .then((resp) => {
-                commit(CLINIC_SET_PROP, {
-                    type: 'diagnosis',
-                    value: resp.data
-                });
-                commit(CLINIC_SUCCESS);
-                resolve(resp.data);
+                if (resp.data.error) {
+                    commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
+                    reject(resp.data.error)
+                }
+                commit(CLINIC_SET_PROP, { propName: 'diagnosis', propValue: resp.data.result });
+                commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'success' });
+                resolve(resp.data.result);
             })
             .catch((err) => {
-                commit(CLINIC_ERROR);
+                commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
                 reject(err);
-            });
+            })
+    }),
+    [CLINIC_MANIPULATIONS_GET]: ({
+        commit,
+    }) => new Promise((resolve, reject) => {
+        commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'loading' });
+        axios.post(`/`,
+                JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'Organizations.GetManipulations',
+                    id: 1
+                }))
+            .then((resp) => {
+                if (resp.data.error) {
+                    commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
+                    reject(resp.data.error)
+                }
+                commit(CLINIC_SET_PROP, { propName: 'manipulations', propValue: resp.data.result });
+                commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'success' });
+                resolve(resp.data.result);
+            })
+            .catch((err) => {
+                commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
+                reject(err);
+            })
+    }),
+    [CLINIC_PROCEDURES_GET]: ({
+        commit,
+    }) => new Promise((resolve, reject) => {
+        commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'loading' });
+        axios.post(`/`,
+                JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'Organizations.GetProcedures',
+                    id: 1
+                }))
+            .then((resp) => {
+                if (resp.data.error) {
+                    commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
+                    reject(resp.data.error)
+                }
+                commit(CLINIC_SET_PROP, { propName: 'procedures', propValue: resp.data.result });
+                commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'success' });
+                resolve(resp.data.result);
+            })
+            .catch((err) => {
+                commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
+                reject(err);
+            })
     }),
     [CLINIC_SET_PROP]: ({
         commit,
     }, { props }) => {
         commit(CLINIC_SET_PROP, {
-            type: props.type,
-            value: props.value
+            propName: props.type,
+            propValue: props.value
         });
     },
-    [CLINIC_PROCEDURES_GET]: ({
-        commit,
-    }) => new Promise((resolve, reject) => {
-        commit(CLINIC_REQUEST);
-        axios.get(`/organization/procedures/`)
-            .then((resp) => {
-                commit(CLINIC_SET_PROP, {
-                    type: 'procedures',
-                    value: resp.data
-                });
-                commit(CLINIC_SUCCESS);
-                resolve(resp.data);
-            })
-            .catch((err) => {
-                commit(CLINIC_ERROR);
-                reject(err);
-            });
-    }),
-    [CLINIC_MANIPULATIONS_GET]: ({
-        commit,
-    }) => new Promise((resolve, reject) => {
-        commit(CLINIC_REQUEST);
-        axios.get(`/organization/manipulations/`)
-            .then((resp) => {
-                commit(CLINIC_SET_PROP, {
-                    type: 'manipulations',
-                    value: resp.data
-                });
-                commit(CLINIC_SUCCESS);
-                resolve(resp.data);
-            })
-            .catch((err) => {
-                commit(CLINIC_ERROR);
-                reject(err);
-            });
-    }),
 };

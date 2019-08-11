@@ -9,63 +9,65 @@
                         <md-icon>assignment</md-icon>
                     </div>
 
-                    <h4 class="title md-layout-item">Paginated Tables</h4>
-
+                    <h4 class="title md-layout-item">
+                        Patients List
+                    </h4>
                 </md-card-header>
                 <md-card-content>
-                    <md-toolbar class="md-transparent"  >
-                            <div class="md-toolbar-section-start  md-layout">
-                            </div>
-                            <div class="md-toolbar-section-end md-layout ml-auto">
-
-                                <md-button @click="showForm=!showForm" class="md-just-icon md-simple">
-                                    <md-icon>settings</md-icon>
-                                </md-button>
-                            </div>
+                    <md-toolbar class="md-transparent">
+                        <div class="md-toolbar-section-start md-layout">
+                    <h4 class="title md-layout-item">
+                        Total Patients:
+                        <animated-number :value="patientsNum" />
+                    </h4>
+                        </div>
+                        <div class="md-toolbar-section-end md-layout ml-auto">
+                            <md-button @click="showForm=!showForm" class="md-just-icon md-simple">
+                                <md-icon>settings</md-icon>
+                            </md-button>
+                        </div>
                     </md-toolbar>
-                      <md-toolbar class="md-transparent"  >
-                            <div class="md-toolbar-section-start  md-layout">
-                                <div class=" md-size-50 md-small-size-100">
-                                    <md-field>
-                                        <label for="pages">Per page</label>
-                                        <md-select
-                                            v-model="queryParams.pagination.perPage"
-                                            name="pages"
-                                        >
-                                            <md-option
-                                                v-for="item in perPageOptions"
-                                                :key="item"
-                                                :label="item"
-                                                :value="item"
-                                            >{{ item }}</md-option>
-                                        </md-select>
-                                    </md-field>
-                                </div >
+                    <md-toolbar class="md-transparent">
+                        <div class="md-toolbar-section-start md-layout">
+                            <div class="md-size-50 md-small-size-100">
+                                <md-field>
+                                    <label for="pages">Per page</label>
+                                    <md-select
+                                        v-model="queryParams.pagination.perPage"
+                                        name="pages"
+                                    >
+                                        <md-option
+                                            v-for="item in perPageOptions"
+                                            :key="item"
+                                            :label="item"
+                                            :value="item"
+                                        >{{ item }}</md-option>
+                                    </md-select>
+                                </md-field>
                             </div>
-                            <div class="md-toolbar-section-end ml-auto">
-                                <div style="width: 300px" >
-                                    <md-field :class="{'no-after-no-before': searching}" >
-                                        <label>Search for patient</label>
-                                        <md-input
-                                            type="search"
-                                            class="mb-3"
-
-                                            v-model="queryParams.searchQuery"
-                                        ></md-input>
-                                    </md-field>
-                                    <md-progress-bar
-                                        v-if="searching"
-                                        class="underline-progress"
-                                        :md-stroke="1"
-                                        md-mode="indeterminate">
-                                    </md-progress-bar>
-                                </div>
+                        </div>
+                        <div class="md-toolbar-section-end ml-auto">
+                            <div style="width: 300px">
+                                <md-field :class="{'no-after-no-before': searching}">
+                                    <label>Search for patient</label>
+                                    <md-input
+                                        type="search"
+                                        class="mb-3"
+                                        v-model="queryParams.searchQuery"
+                                    ></md-input>
+                                </md-field>
+                                <md-progress-bar
+                                    v-if="searching"
+                                    class="underline-progress"
+                                    :md-stroke="1"
+                                    md-mode="indeterminate"
+                                ></md-progress-bar>
                             </div>
+                        </div>
                     </md-toolbar>
-                    <div class="table-wrapper" >
-                        <div  class="md-layout mx-auto table-wrapper-preloader"
-                            v-if="searching" >
-                            <div  style="height:60px;margin: auto;" >
+                    <div class="table-wrapper">
+                        <div class="md-layout mx-auto table-wrapper-preloader" v-if="searching">
+                            <div style="height:60px;margin: auto;">
                                 <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
                             </div>
                         </div>
@@ -77,37 +79,42 @@
                             :md-sort-fn="customSort"
                             class="table-striped paginated-table table-hover"
                         >
-                            <div style="height: 250px; position: inherit; overflow:hidden;" >
-                            <slide-x-left-transition  >
-                                <md-table-empty-state
-                                    sltyle="min-height: 250px;"
-                                    v-show="status === 'success' "
-                                    md-label="No patients found"
-                                    :md-description="`No user found for this '${queryParams.searchQuery}' query.
+                            <div style="height: 250px; position: inherit; overflow:hidden;">
+                                <slide-x-left-transition>
+                                    <md-table-empty-state
+                                        sltyle="min-height: 250px;"
+                                        v-show="status === 'success' "
+                                        md-label="No patients found"
+                                        :md-description="`No user found for this '${queryParams.searchQuery}' query.
                                     Try a different search term or create a new user.`"
-                                >
-                                    <md-button class="md-primary md-raised" @click="$patientAddForm.showPatientAddForm(true);" >Create New User</md-button>
-                                </md-table-empty-state>
-                            </slide-x-left-transition>
-                            <slide-x-left-transition  >
-                                <md-table-empty-state
-                                    sltyle="min-height: 250px;"
-                                    v-show="status === 'loading'"
-                                    md-label="Loading..."
-                                    :md-description="`Please be patient, just a few seconds...`"
-                                >
-                            </md-table-empty-state>
-                            </slide-x-left-transition>
-                            <slide-x-left-transition  >
-                                <md-table-empty-state
-                                    sltyle="min-height: 250px;"
-                                    v-show="status === 'error' "
-                                    md-label="Ooopps"
-                                    :md-description="`Something wrong with connection`"
-                                >
-                                <md-button class="md-primary md-raised" @click="search">retry</md-button>
-                            </md-table-empty-state>
-                            </slide-x-left-transition>
+                                    >
+                                        <md-button
+                                            class="md-primary md-raised"
+                                            @click="$patientAddForm.showPatientAddForm(true);"
+                                        >Create New User</md-button>
+                                    </md-table-empty-state>
+                                </slide-x-left-transition>
+                                <slide-x-left-transition>
+                                    <md-table-empty-state
+                                        sltyle="min-height: 250px;"
+                                        v-show="status === 'loading'"
+                                        md-label="Loading..."
+                                        :md-description="`Please be patient, just a few seconds...`"
+                                    ></md-table-empty-state>
+                                </slide-x-left-transition>
+                                <slide-x-left-transition>
+                                    <md-table-empty-state
+                                        sltyle="min-height: 250px;"
+                                        v-show="status === 'error' "
+                                        md-label="Ooopps"
+                                        :md-description="`Something wrong with connection`"
+                                    >
+                                        <md-button
+                                            class="md-primary md-raised"
+                                            @click="search"
+                                        >retry</md-button>
+                                    </md-table-empty-state>
+                                </slide-x-left-transition>
                             </div>
 
                             <md-table-row
@@ -126,36 +133,39 @@
                                     :md-label="getFieldName(field.key).toString()"
                                     @click="goToPatient(item)"
                                 >
-                                    <div class="pointer"
-                                        @click="goToPatient(item)">
-                                        <div class="md-layout md-alignment-center-left md-gutter patient-name"
-                                            v-if="field.key === 'name'">
+                                    <div class="pointer" @click="goToPatient(item)">
+                                        <div
+                                            class="md-layout md-alignment-center-left md-gutter patient-name"
+                                            v-if="field.key === 'name'"
+                                        >
+                                            <t-avatar
+                                                :textToColor="item.ID"
+                                                :imageSrc="item.avatar"
+                                                :title="item.firstName + ' ' + item.lastName"
+                                                :notification="item.allergy && item.allergy.length ? 'A' : ''"
+                                            />
 
-
-                                                    <t-avatar
-                                                        :textToColor="item.ID"
-                                                        :imageSrc="item.avatar"
-                                                        :title="item.firstName + ' ' + item.lastName"
-                                                        :notification="item.allergy && item.allergy.length ? 'A' : ''"
-                                                    />
-
-                                                <span class="md-layout-item patient-name" >
-                                                    <span>{{item.lastName | capitilize}}</span>
-                                                    <br>
-                                                    <span>{{item.firstName | capitilize}}</span>
-                                                </span>
+                                            <span class="md-layout-item patient-name">
+                                                <span>{{item.lastName | capitilize}}</span>
+                                                <br />
+                                                <span>{{item.firstName | capitilize}}</span>
+                                            </span>
                                         </div>
 
                                         <div v-else-if="item[field.key] === null">1</div>
-                                        <div class="pointer"
+                                        <div
+                                            class="pointer"
                                             @click="goToPatient(item)"
-                                            v-else-if="(typeof item[field.key]) === 'array'">
+                                            v-else-if="(typeof item[field.key]) === 'array'"
+                                        >
                                             111
                                             <div
                                                 v-if="field.key === 'files' && item[field.key]"
                                                 class="md-layout md-alignment-left-center"
                                             >
-                                                <span class="md-layout-item">{{item[field.key].length }}</span>
+                                                <span
+                                                    class="md-layout-item"
+                                                >{{item[field.key].length }}</span>
                                             </div>
                                         </div>
 
@@ -164,16 +174,15 @@
                                                 v-if="field.key === 'createdBy'"
                                                 class="md-layout md-alignment-left-center"
                                             >
-
-                                                    <t-avatar
-                                                        :small="true"
-                                                        :planColor="item[field.key].ID"
-                                                        :imageSrc="item[field.key].avatar"
-                                                        :title="item[field.key].firstName + ' ' + item[field.key].lastName"
-                                                    />
+                                                <t-avatar
+                                                    :small="true"
+                                                    :planColor="item[field.key].ID"
+                                                    :imageSrc="item[field.key].avatar"
+                                                    :title="item[field.key].firstName + ' ' + item[field.key].lastName"
+                                                />
                                                 <span class="md-layout-item">
                                                     <span>{{item[field.key].lastName | capitilize}}</span>
-                                                    <br>
+                                                    <br />
                                                     <span>{{item[field.key].firstName | capitilize}}</span>
                                                 </span>
                                             </div>
@@ -181,23 +190,23 @@
                                                 v-else-if="field.key === 'allergy'"
                                             >{{item[field.key].join(', ') }}</div>
                                         </div>
-                                        <div class="pointer"
+                                        <div
+                                            class="pointer"
                                             @click="goToPatient(item)"
                                             v-else-if="(typeof item[field.key]) === 'string' || field.key === 'avatar'"
                                         >
                                             <span
                                                 v-if="$moment(item[field.key], $moment.ISO_8601, true).isValid()"
                                             >
-                                                <small
-                                                    v-if="field.key==='birthday'"
-                                                >{{ $moment().diff(item[field.key], 'years') }} years
-                                                <br>
+                                                <small v-if="field.key==='birthday'">
+                                                    {{ $moment().diff(item[field.key], 'years') }} years
+                                                    <br />
                                                     <small>{{ item[field.key] | moment("calendar")}}</small>
                                                 </small>
 
                                                 <div v-else>
                                                     <small>{{ item[field.key] | moment("from") }}</small>
-                                                    <br>
+                                                    <br />
                                                     <small>{{ item[field.key] | moment("calendar")}}</small>
                                                 </div>
                                             </span>
@@ -206,9 +215,11 @@
                                             >{{item[field.key] | capitilize}}</span>
                                             <span v-else>{{item[field.key]}}</span>
                                         </div>
-                                        <div class="pointer"
+                                        <div
+                                            class="pointer"
                                             @click="goToPatient(item)"
-                                        v-else-if="(typeof item[field.key]) === 'number'">
+                                            v-else-if="(typeof item[field.key]) === 'number'"
+                                        >
                                             <span v-if="field.key === 'phone'">
                                                 <span>+{{ item[field.key]}}</span>
                                             </span>
@@ -226,7 +237,7 @@
                                     </div>
                                 </md-table-cell>
 
-                                <md-table-cell md-label="Actions" class="text-right" >
+                                <md-table-cell md-label="Actions" class="text-right">
                                     <md-button
                                         v-show="item.allergy && item.allergy.length > 0"
                                         class="md-just-icon md-danger md-simple"
@@ -236,13 +247,11 @@
                                     </md-button>
                                     <md-button
                                         class="md-just-icon md-info md-simple"
-                                        :to="{ name: 'Profile', params :{patientId : item.ID}}"
+                                        :to="{ name: 'Bio', params :{patientId : item.ID}}"
                                     >
                                         <md-icon>open_in_new</md-icon>
                                     </md-button>
-                                    <md-button
-                                        class="md-just-icon md-warning md-simple"
-                                    >
+                                    <md-button class="md-just-icon md-warning md-simple">
                                         <md-icon>more_vert</md-icon>
                                     </md-button>
                                 </md-table-cell>
@@ -253,7 +262,9 @@
                                 <tfoot>
                                     <tr>
                                         <th class="md-table-head">
-                                            <div class="md-table-head-container md-ripple md-disabled">
+                                            <div
+                                                class="md-table-head-container md-ripple md-disabled"
+                                            >
                                                 <div class="md-table-head-label">Select</div>
                                             </div>
                                         </th>
@@ -262,12 +273,16 @@
                                             :key="item.key"
                                             class="md-table-head"
                                         >
-                                            <div class="md-table-head-container md-ripple md-disabled">
+                                            <div
+                                                class="md-table-head-container md-ripple md-disabled"
+                                            >
                                                 <div class="md-table-head-label">{{item.title}}</div>
                                             </div>
                                         </th>
                                         <th class="md-table-head">
-                                            <div class="md-table-head-container md-ripple md-disabled">
+                                            <div
+                                                class="md-table-head-container md-ripple md-disabled"
+                                            >
                                                 <div class="md-table-head-label">Actions</div>
                                             </div>
                                         </th>
@@ -288,9 +303,7 @@
                 </md-card-content>
                 <md-card-actions md-alignment="space-between">
                     <div class>
-                        <p
-                            class="card-category"
-                        >Showing {{from + 1}} to {{to}} of {{totalPages}} entries</p>
+                        <p class="card-category">Showing {{from + 1}} to {{to}} of {{total}} entries</p>
                     </div>
                     <pagination
                         class="pagination-no-border pagination-success"
@@ -301,9 +314,15 @@
                 </md-card-actions>
             </md-card>
         </div>
-         <md-snackbar v-if="selectedPatients" :md-position="'center'" :md-duration="true ? Infinity : 4000" :md-active.sync="showSnackbar" md-persistent>
-                <span>{{selectedPatients.length}} Patients selected</span>
-                <md-button class="md-primary" @click="showSnackbar = false">Retry</md-button>
+        <md-snackbar
+            v-if="selectedPatients"
+            :md-position="'center'"
+            :md-duration="true ? Infinity : 4000"
+            :md-active.sync="showSnackbar"
+            md-persistent
+        >
+            <span>{{selectedPatients.length}} Patients selected</span>
+            <md-button class="md-primary" @click="showSnackbar = false">Retry</md-button>
         </md-snackbar>
     </div>
 </template>
@@ -313,10 +332,9 @@
     import StarRating from 'vue-star-rating';
     import { mapGetters } from 'vuex';
     import { setTimeout } from 'timers';
-    import { Pagination, TAvatar, TTableEditor } from '@/components';
+    import components from '@/components';
     import {
         PATIENTS_REQUEST,
-        AUTH_LOGOUT,
         USER_PATIENTS_COLUMNS,
     } from '@/constants';
     import { tObjProp } from '@/mixins';
@@ -325,10 +343,8 @@
         name: 'patients-list',
         mixins: [tObjProp],
         components: {
-            TTableEditor,
-            Pagination,
+            ...components,
             StarRating,
-            TAvatar,
             SlideXLeftTransition,
         },
         data: () => ({
@@ -338,7 +354,7 @@
             perPageOptions: [25, 50],
             tableData: [],
             selectedPatients: [],
-            totalPages: 500,
+            total: 0,
             queryParams: {
                 currentSort: 'created',
                 currentSortOrder: 'desc',
@@ -391,8 +407,11 @@
             goToPatient(patient) {
                 if (patient) {
                     this.$router.push({
-                        name: 'Profile',
-                        params: { patientId: patient.ID },
+                        name: 'Bio',
+                        params: {
+                            lang: this.$i18n.locale,
+                            patientId: patient.ID,
+                        },
                     });
                 }
             },
@@ -419,56 +438,56 @@
             // });
             },
             handleLike(item) {
-                // swal({
-                //     title: `You liked ${item.name}`,
-                //     buttonsStyling: false,
-                //     type: 'success',
-                //     confirmButtonClass: 'md-button md-success',
-                // });
+            // swal({
+            //     title: `You liked ${item.name}`,
+            //     buttonsStyling: false,
+            //     type: 'success',
+            //     confirmButtonClass: 'md-button md-success',
+            // });
             },
             handleShowAllergy(item) {
-                // swal({
-                //     title: 'Attention!',
-                //     buttonsStyling: false,
-                //     html: ` ${item.firstName} ${
-                //         item.lastName
-                //     } has allergy! Please dont use: <h3> ${item.allergy.join(
-                //         ', ',
-                //     )} </h3>`,
-                //     type: 'warning',
-                //     confirmButtonClass: 'md-button md-success',
-                //     confirmButtonText: 'OK, I will not use them!',
-                // });
+            // swal({
+            //     title: 'Attention!',
+            //     buttonsStyling: false,
+            //     html: ` ${item.firstName} ${
+            //         item.lastName
+            //     } has allergy! Please dont use: <h3> ${item.allergy.join(
+            //         ', ',
+            //     )} </h3>`,
+            //     type: 'warning',
+            //     confirmButtonClass: 'md-button md-success',
+            //     confirmButtonText: 'OK, I will not use them!',
+            // });
             },
             handleEdit(item) {
-                // swal({
-                //     title: `You want to edit ${item.name}`,
-                //     buttonsStyling: false,
-                //     confirmButtonClass: 'md-button md-info',
-                // });
+            // swal({
+            //     title: `You want to edit ${item.name}`,
+            //     buttonsStyling: false,
+            //     confirmButtonClass: 'md-button md-info',
+            // });
             },
             handleDelete(item) {
-                // swal({
-                //     title: 'Are you sure?',
-                //     text: "You won't be able to revert this!",
-                //     type: 'warning',
-                //     showCancelButton: true,
-                //     confirmButtonClass: 'md-button md-success btn-fill',
-                //     cancelButtonClass: 'md-button md-danger btn-fill',
-                //     confirmButtonText: 'Yes, delete it!',
-                //     buttonsStyling: false,
-                // }).then((result) => {
-                //     if (result.value) {
-                //         this.deleteRow(item);
-                //         swal({
-                //             title: 'Deleted!',
-                //             text: `You deleted ${item.name}`,
-                //             type: 'success',
-                //             confirmButtonClass: 'md-button md-success btn-fill',
-                //             buttonsStyling: false,
-                //         });
-                //     }
-                // });
+            // swal({
+            //     title: 'Are you sure?',
+            //     text: "You won't be able to revert this!",
+            //     type: 'warning',
+            //     showCancelButton: true,
+            //     confirmButtonClass: 'md-button md-success btn-fill',
+            //     cancelButtonClass: 'md-button md-danger btn-fill',
+            //     confirmButtonText: 'Yes, delete it!',
+            //     buttonsStyling: false,
+            // }).then((result) => {
+            //     if (result.value) {
+            //         this.deleteRow(item);
+            //         swal({
+            //             title: 'Deleted!',
+            //             text: `You deleted ${item.name}`,
+            //             type: 'success',
+            //             confirmButtonClass: 'md-button md-success btn-fill',
+            //             buttonsStyling: false,
+            //         });
+            //     }
+            // });
             },
             deleteRow(item) {
                 const indexToDelete = this.tableData.findIndex(
@@ -497,10 +516,15 @@
                                 toStore: true,
                             },
                         })
-                        .then((resp) => {
-                            vm.tableData = resp;
+                        .then((result) => {
+                            vm.tableData = result.patients || [];
                             vm.searching = false;
-                            return resp;
+                            vm.total = Math.ceil(
+                                result.patientsNum
+                                    / vm.queryParams.pagination.perPage,
+                            );
+                            vm.removeClass();
+                            return result;
                         })
                         .catch((err) => {
                             vm.searching = false;
@@ -527,11 +551,15 @@
                 this.search();
             } else {
                 this.tableData = this.patients;
+                this.total = Math.ceil(
+                    this.patientsNum / this.queryParams.pagination.perPage,
+                );
             }
         },
         computed: {
             ...mapGetters({
                 patients: 'getPatients',
+                patientsNum: 'getPatientsNum',
                 status: 'patientsStatus',
                 availablePatientsTableColumns: 'availablePatientsTableColumns',
             }),
@@ -548,6 +576,9 @@
                     * (this.queryParams.pagination.currentPage - 1)
                 );
             },
+            totalPages() {
+                return Math.ceil(this.total / this.queryParams.pagination.perPage);
+            },
         },
         watch: {
             queryParams: {
@@ -559,37 +590,35 @@
             selectedPatients() {
                 this.showSnackbar = true;
             },
-            patients() {
-                this.removeClass();
-            },
         },
     };
 </script>
 
 <style lang="scss" >
 .patients-list-wrapper {
-    .no-after-no-before{
-        &:after, &:before{
-            display:none;
-            }
+    .no-after-no-before {
+        &:after,
+        &:before {
+            display: none;
+        }
     }
-    .underline-progress{
-            position: absolute;
-            bottom: 10px;
-            height: 2px;
-            width: inherit;
-            margin: 0;
+    .underline-progress {
+        position: absolute;
+        bottom: 10px;
+        height: 2px;
+        width: inherit;
+        margin: 0;
     }
-    .table-wrapper{
+    .table-wrapper {
         position: inherit;
-        .patient-name{
+        .patient-name {
             // max-width: 90%;
             text-overflow: ellipsis;
             overflow: hidden;
         }
-        .patient-name{
+        .patient-name {
             text-overflow: ellipsis;
-            width: fit-content
+            width: fit-content;
         }
         .md-tabs-content .with-header table thead {
             display: contents;
@@ -597,8 +626,8 @@
         .paginated-table table > tbody > tr > td {
             width: fit-content;
         }
-        table > thead > tr > th.md-table-head.md-table-cell-selection{
-            .md-table-head-label{
+        table > thead > tr > th.md-table-head.md-table-cell-selection {
+            .md-table-head-label {
                 width: 30px;
                 margin-left: 23px;
             }
@@ -607,10 +636,10 @@
             position: absolute;
             margin-top: 15px;
         }
-        .table-wrapper-preloader{
+        .table-wrapper-preloader {
             position: absolute;
             z-index: 30;
-            top:0;
+            top: 0;
             left: 0;
             right: 0;
             bottom: 0;
@@ -623,8 +652,8 @@
         margin-left: 20px;
         margin-right: 20px;
     }
-     .pointer{
-                cursor: pointer;
-            }
+    .pointer {
+        cursor: pointer;
+    }
 }
 </style>

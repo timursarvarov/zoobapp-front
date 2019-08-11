@@ -53,14 +53,15 @@
 </template>
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
-    import { JawAddLocations } from '@/components';
+
     import { tObjProp } from '@/mixins';
 
     export default {
+        name: 't-locations-wizard-items',
         mixins: [tObjProp],
         components: {
             SlideYDownTransition,
-            JawAddLocations,
+            'jaw-add-locations': () => import('@/components/CustomComponents/Jaw/JawAddLocations'),
         },
         model: {
             prop: 'newItemParams',

@@ -165,25 +165,24 @@
 
 <script>
     import Fuse from 'fuse.js';
-    import { Pagination, TAvatar, TFilePreview } from '@/components';
+
     // import swal from 'sweetalert2';
     import 'viewerjs/dist/viewer.css';
     import { tObjProp } from '@/mixins';
+    import components from '@/components';
 
     export default {
         name: 't-files-list',
         mixins: [tObjProp],
         components: {
-            Pagination,
-            TAvatar,
-            TFilePreview,
+            ...components,
         },
         props: {
             paginated: {
                 type: Boolean,
                 default: () => true,
             },
-            access_token: {
+            access_token:{
                 type: String,
                 default: '',
             },

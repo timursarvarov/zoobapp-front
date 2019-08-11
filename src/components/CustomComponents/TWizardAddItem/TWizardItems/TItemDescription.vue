@@ -44,13 +44,13 @@
     </div>
 </template>
 <script>
-    import { TAutoComplite, TWuswug } from '@/components';
+
 
     export default {
         name: 't-item-description',
         components: {
-            TAutoComplite,
-            TWuswug,
+            't-wuswug': () => import('@/components/CustomComponents/TWuswug'),
+            't-auto-complite': () => import('@/components/CustomComponents/TAutoComplite'),
         },
         model: {
             prop: 'description',

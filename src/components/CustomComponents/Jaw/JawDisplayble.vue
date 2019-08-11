@@ -84,7 +84,8 @@
     </div>
 </template>
 <script>
-    import Tooth from '@/components/CustomComponents/Jaw/Tooth';
+    // import Tooth from '@/components/CustomComponents/Jaw/Tooth';
+
     import {
         TEETH_ADDULT_ALL,
         TEETH_DEFAULT_LOCATIONS,
@@ -97,8 +98,9 @@
     } from '@/constants';
 
     export default {
+        name: 'jaw-displaybale',
         components: {
-            Tooth,
+            tooth: () => import('./Tooth'),
         },
         props: {
             item: {

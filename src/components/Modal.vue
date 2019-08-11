@@ -23,6 +23,7 @@
 
 <script>
     export default {
+      name:'modal',
         methods: {
             closeModal() {
                 this.$emit('close');

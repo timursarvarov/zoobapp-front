@@ -18,11 +18,11 @@
 
 <script>
 
-    import { TDropzone } from '@/components';
+    
     import { AUTH_REFRESH_TOKEN } from '@/constants';
 
     export default {
-        name: 't-files-add-form',
+        name: 't-files-add-form2',
         processRefreshToken: false,
         props: {
             url: {
@@ -55,7 +55,7 @@
             },
         },
         components: {
-            TDropzone,
+            't-dropzone': () => import('./TDropzone'),
         },
         data() {
             return {};

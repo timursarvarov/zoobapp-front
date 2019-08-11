@@ -487,14 +487,15 @@
 /* eslint-disable func-names */
     import { SlideYDownTransition } from 'vue2-transitions';
     import { CoolSelect } from 'vue-cool-select';
-    import { AnimatedNumber } from '@/components';
+
 
     export default {
+        name: 't-add-billing',
         components: {
             // TAutoComplite,
-            AnimatedNumber,
             SlideYDownTransition,
             CoolSelect,
+            'animated-number': () => import('@/components/AnimatedNumber'),
         },
         props: {
             size: {

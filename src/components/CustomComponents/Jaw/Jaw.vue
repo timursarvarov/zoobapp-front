@@ -340,8 +340,7 @@
 </template>
 <script>
     import jawSVGjs from '@/components/CustomComponents/Jaw/jawSVG';
-    import jawMenu from '@/components/CustomComponents/Jaw/JawMenu';
-    import { AnimatedNumber } from '@/components';
+    // import jawMenu from '@/components/CustomComponents/Jaw/JawMenu';
     import { tObjProp, jawFunctions } from '@/mixins';
     import {
         TEETH_ADDULT_ALL,
@@ -355,10 +354,11 @@
     } from '@/constants';
 
     export default {
+        name: 'jaw',
         mixins: [tObjProp, jawFunctions],
         components: {
-            AnimatedNumber,
-            jawMenu,
+            'jaw-menu': () => import('./JawMenu'),
+            'animated-number': () => import('@/components/AnimatedNumber'),
         },
         props: {
             jaw: {

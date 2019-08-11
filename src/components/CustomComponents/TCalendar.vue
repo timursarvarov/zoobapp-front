@@ -2,10 +2,10 @@
     <FullCalendar
         class="t-f-calendar"
         :header="{
-                                left: 'prev, next, today',
-                                center: 'title',
-                                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek,'
-                            }"
+            left: 'prev, next, today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek,'
+        }"
         :nowIndicator="true"
         ref="fullCalendar"
         @dateClick="handleDateClick"
@@ -39,7 +39,7 @@
         components: {
             FullCalendar,
         },
-        name: 'tCallendar',
+        name: 't-callendar',
         data() {
             return {
                 calendarApi: null,

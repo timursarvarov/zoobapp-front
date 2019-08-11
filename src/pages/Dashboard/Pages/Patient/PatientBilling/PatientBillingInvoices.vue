@@ -3,7 +3,7 @@
     <div class="items-list-wrapper">
         <md-table
             :md-selected-value.sync="selectedItems"
-            v-model="tableData"
+            :value="tableData"
             :md-sort.sync="currentSort"
             :md-sort-order.sync="currentSortOrder"
             :md-sort-fn="customSort"
@@ -42,8 +42,8 @@
                     :md-sort-by=" item[field.key] ? item[field.key].toString() : ''"
                 >
                     <div :class="field.key" v-if="field.key === 'ID'">{{ item.ID }}</div>
-                    <div :class="field.key" v-else-if="field.key === 'procedures'">{{ item.procedures.length }}</div>
-                    <div :class="field.key" v-else-if="field.key === 'payments'">{{ item.payments.length }}</div>
+                    <div :class="field.key" v-else-if="field.key === 'procedures' && item.procedures">{{ item.procedures.length }}</div>
+                    <div :class="field.key" v-else-if="field.key === 'payments' && item.payments">{{ item.payments.length }}</div>
                     <div :class="field.key" v-else-if="field.key === 'round'">{{ item.round }}</div>
                     <div :class="field.key" v-else-if="field.key === 'discount'">
                         {{ item.discount || 0}}%
@@ -107,7 +107,7 @@
 </template>
 <script>
     import { mapGetters } from 'vuex';
-    import { TAvatar, TTableEditor } from '@/components';
+    import components from '@/components';
     import {
         USER_INVOICE_COLUMNS,
     } from '@/constants';
@@ -115,10 +115,10 @@
     import { tObjProp } from '@/mixins';
 
     export default {
+        name: 'patient-billing-invoices',
         mixins: [tObjProp],
         components: {
-            TAvatar,
-            TTableEditor,
+            ...components,
         },
         props: {
             items: {

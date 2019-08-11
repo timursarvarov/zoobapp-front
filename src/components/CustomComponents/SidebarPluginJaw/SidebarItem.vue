@@ -1,76 +1,73 @@
 <template>
-  <component
-    :is="baseComponent"
-    :to="link.path ? link.path : '/'"
-    :class=" {active : isActive(link.path)}"
-    tag="li"
-  >
-    <a
-      v-if="isMenu"
-      href="#"
-      class="nav-link sidebar-menu-item"
-      :aria-expanded="!collapsed"
-      data-toggle="collapse"
-      @click.prevent="collapseMenu"
+    <component
+        :is="baseComponent"
+        :to="link.path ? link.path : '/'"
+        :class=" {active : isActive(link.path)}"
+        tag="li"
     >
-    <div
-      v-if="link.acronim"
-        class="avatar-box"
+        <!-- :to="$i18nRoute({ name: link.name ? link.name : '/'})" -->
+            <!-- href="#" -->
+        <a
+            v-if="isMenu"
+            class="nav-link sidebar-menu-item"
+            :aria-expanded="!collapsed"
+            data-toggle="collapse"
+            @click.prevent="collapseMenu"
         >
-        <t-avatar
-          v-if="link.acronim"
-          :textToColor="link.textToColor"
-          :imageSrc="link.img"
-          :title="link.acronim"
-          :notification= "link.notification"
-        />
-      </div>
-      <md-icon v-else>{{link.icon}}</md-icon>
-      <p>
-        <span class="nav-link-title">{{link.name | capitilize}}</span>
-        <b class="caret"></b>
-      </p>
-    </a>
+            <div v-if="link.acronim" class="avatar-box">
+                <t-avatar
+                    v-if="link.acronim"
+                    :textToColor="link.textToColor"
+                    :imageSrc="link.img"
+                    :title="link.acronim"
+                    :notification="link.notification"
+                />
+            </div>
+            <md-icon v-else>{{link.icon}}</md-icon>
+            <p>
+                <span class="nav-link-title">{{link.name | capitilize}}</span>
+                <b class="caret"></b>
+            </p>
+        </a>
 
-    <collapse-transition>
-      <div v-if="$slots.default || this.isMenu" v-show="!collapsed">
-        <ul class="nav">
-          <slot></slot>
-        </ul>
-      </div>
-    </collapse-transition>
+        <collapse-transition>
+            <div v-if="$slots.default || this.isMenu" v-show="!collapsed">
+                <ul class="nav">
+                    <slot></slot>
+                </ul>
+            </div>
+        </collapse-transition>
 
-    <slot name="title" v-if="children.length === 0 && !$slots.default && link.path">
-      <component
-        :to="link.path"
-        @click.native="linkClick"
-        :is="elementType(link, false)"
-        :class="{active: link.active}"
-        class="nav-link"
-        :target="link.target"
-        :href="link.path.active"
-      >
-        <template v-if="addLink">
-          <span class="sidebar-mini">{{linkPrefix}}</span>
-          <span class="sidebar-normal">{{link.name}}</span>
-        </template>
-        <template v-else>
-          <md-icon>{{link.icon}}</md-icon>
-          <p>{{link.name}}</p>
-        </template>
-      </component>
-    </slot>
-  </component>
+        <slot name="title" v-if="children.length === 0 && !$slots.default && link.path">
+            <component
+                :to="link.path"
+                @click.native="linkClick"
+                :is="elementType(link, false)"
+                :class="{active: link.active}"
+                class="nav-link"
+                :target="link.target"
+                :href="link.path.active"
+            >
+                <template v-if="addLink">
+                    <span class="sidebar-mini">{{linkPrefix}}</span>
+                    <span class="sidebar-normal">{{link.name}}</span>
+                </template>
+                <template v-else>
+                    <md-icon>{{link.icon}}</md-icon>
+                    <p>{{link.name}}</p>
+                </template>
+            </component>
+        </slot>
+    </component>
 </template>
 <script>
     import { CollapseTransition } from 'vue2-transitions';
-    import { TAvatar } from '@/components';
 
     export default {
         name: 'sidebar-item',
         components: {
+            't-avatar': () => import('@/components/CustomComponents/TAvatar'),
             CollapseTransition,
-            TAvatar,
         },
         props: {
             menu: {
@@ -146,7 +143,9 @@
                 let i;
                 for (i = 0; i < 3; i += 1) {
                     c = parseInt(hexL.substr(i * 2, 2), 16);
-                    c = Math.round(Math.min(Math.max(0, c + c * lumL), 255)).toString(16);
+                    c = Math.round(
+                        Math.min(Math.max(0, c + c * lumL), 255),
+                    ).toString(16);
                     rgb += `00${c}`.substr(c.length);
                 }
             },
@@ -226,23 +225,23 @@
 </script>
 <style lang="scss">
 .sidebar-menu-item {
-  cursor: pointer;
-  p {
-    nav-link-title {
-      overflow: hidden;
-      text-overflow: ellipsis;
+    cursor: pointer;
+    p {
+        nav-link-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
-  }
-  .avatar-box {
-    margin-right: 5px ;
-    margin-bottom: -7px;
-    margin-left: -10px;
-    margin-top: -11px;
-    float: left;
-  }
-  .acronim {
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    // font-size: 0.9rem;
-  }
+    .avatar-box {
+        margin-right: 5px;
+        margin-bottom: -7px;
+        margin-left: -10px;
+        margin-top: -11px;
+        float: left;
+    }
+    .acronim {
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        // font-size: 0.9rem;
+    }
 }
 </style>

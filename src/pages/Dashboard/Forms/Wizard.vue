@@ -36,9 +36,10 @@
     import SecondStep from './Wizard/SecondStep.vue';
     import ThirdStep from './Wizard/ThirdStep.vue';
     // import swal from 'sweetalert2';
-    import { SimpleWizard, WizardTab } from '@/components';
+    import components from '@/components';
 
     export default {
+      name: 'wizard-form',
         data() {
             return {
                 wizardModel: {},
@@ -48,8 +49,7 @@
             FirstStep,
             SecondStep,
             ThirdStep,
-            SimpleWizard,
-            WizardTab,
+            ...components,
         },
         methods: {
             validateStep(ref) {

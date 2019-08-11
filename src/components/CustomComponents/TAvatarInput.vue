@@ -43,14 +43,13 @@
     </div>
 </template>
 <script>
-    import TImageCropperForm from './TImageCropperForm.vue';
     import { NOTIFY } from '@/constants';
 
     const randomMC = require('random-material-color');
 
     export default {
         components: {
-            TImageCropperForm,
+            't-image-cropper-form': () => import('./TImageCropperForm'),
         },
         name: 't-avatar-inptut',
         props: {

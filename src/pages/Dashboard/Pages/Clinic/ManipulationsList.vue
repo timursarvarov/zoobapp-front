@@ -259,11 +259,10 @@
     import StarRating from 'vue-star-rating';
     // import swal from 'sweetalert2';
     import { mapGetters } from 'vuex';
-    import { Pagination, TTableEditor, TAvatar } from '@/components';
+    import components from '@/components';
     import {
         PATIENTS_REQUEST,
         AUTH_LOGOUT,
-        PATIENTS_LIST_COLUMNS,
     } from '@/constants';
     import { tObjProp } from '@/mixins';
 
@@ -271,10 +270,8 @@
         name: 'patients-list',
         mixins: [tObjProp],
         components: {
-            Pagination,
             StarRating,
-            TTableEditor,
-            TAvatar,
+            ...components,
         },
         data: () => ({
             showForm: false,

@@ -1,39 +1,71 @@
-<template>
-    <div class="patient-profile-wrapper" >
-        <nav-tabs-card  v-show="patient.ID">
+bio<template>
+    <div class="patient-profile-wrapper">
+        <nav-tabs-card v-show="patient.ID">
             <template slot="content">
                 <!-- <span class="md-nav-tabs-title">Set new:</span> -->
-                <md-tabs :class="['md-' + currentTabColor()]" md-alignment="left">
-                    <md-tab id="tab-diagnose" md-icon="local_hospital" md-label="Treatment">
+                <md-tabs
+                    md-sync-route
+                    class="md-success"
+                    md-alignment="left">
+                    <md-tab
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/bio`"
+                        id="tab-bio"
+                        md-icon="account_box"
+                        md-label="BIO"
+                    >
+                        <div class="md-layout">
+                            <patient-bio />
+                        </div>
+                    </md-tab>
+                    <md-tab
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`"
+                        id="tab-treatment"
+                        md-icon="local_hospital"
+                        md-label="Treatment"
+                    >
                         <div class="md-layout">
                             <patient-treatment ref="treatment" />
                         </div>
                     </md-tab>
-                    <md-tab id="tab-anamnes" md-icon="account_box" md-label="BIO">
+                    <md-tab
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/billing`"
+                        id="tab-billing"
+                        md-icon="account_balance"
+                        md-label="Billing"
+                    >
                         <div class="md-layout">
-                            <patient-card />
+                            <patient-billing></patient-billing>
                         </div>
                     </md-tab>
-
-                    <md-tab id="tab-billing" md-icon="account_balance" md-label="Billing">
-                        <patient-billing />
-                    </md-tab>
-                    <md-tab id="tab-notes" md-icon="question_answer" md-label="Notes">
+                    <md-tab
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/notes`"
+                        id="tab-notes"
+                        md-icon="question_answer"
+                        md-label="Notes"
+                    >
                         <notes />
                     </md-tab>
-                    <md-tab id="tab-files" md-icon="folder_shared" md-label="Files">
+                    <md-tab
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/files`"
+                        id="tab-files"
+                        md-icon="folder_shared"
+                        md-label="Files"
+                    >
                         <patient-files />
                     </md-tab>
                 </md-tabs>
             </template>
         </nav-tabs-card>
-        <div class="jaw md-layout-item" v-show="!patient.ID && patientStatus ==='loading'"  >
-             <div style="margin:auto; height:100%" class="md-layout mx-auto patient-wrapper-preloader"
-                    v-if="true" >
-                    <div  style="height:60px;margin: auto;" >
-                        <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
-                    </div>
+        <div class="jaw md-layout-item" v-show="!patient.ID && patientStatus ==='loading'">
+            <div
+                style="margin:auto; height:100%"
+                class="md-layout mx-auto patient-wrapper-preloader"
+                v-if="true"
+            >
+                <div style="height:60px;margin: auto;">
+                    <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
                 </div>
+            </div>
         </div>
         <div v-show="!patient.ID && patientStatus ==='error'" class="jaw md-layout-item">
             <md-empty-state
@@ -49,16 +81,12 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    import { NavTabsCard } from '@/components';
+    // import  NavTabsTable from '@/components/Cards/NavTabsTable';
+    import NavTabsCard from '@/components/Cards/NavTabsCard';
+    import components from '@/components';
+    import PatientBio from './PatientBio/PatientBio';
+    import PatientBilling from './PatientBilling/PatientBilling';
     import { PATIENT_GET, NOTIFY } from '@/constants';
-
-    import {
-        PatientTreatment,
-        Notes,
-        PatientFiles,
-        PatientCard,
-        PatientBilling,
-    } from '@/pages';
 
     export default {
         beforeRouteEnter(to, from, next) {
@@ -100,12 +128,16 @@
             next();
         },
         components: {
-            NavTabsCard,
-            PatientTreatment,
-            Notes,
-            PatientFiles,
-            PatientCard,
-            PatientBilling,
+            // NavTabsCard,
+            'patient-treatment': () => import('./PatientTreatment/PatientTreatment'),
+            'patient-files': () => import('./PatientFiles/PatientFiles'),
+            'patient-billing': () => import('./PatientBilling/PatientBilling'),
+            'patient-bio': () => import('./PatientBio/PatientBio'),
+            notes: () => import('./Notes'),
+            // NavTabsTable,
+            // PatientBio,
+            // PatientBilling,
+            ...components,
         },
         name: 'PatientProfile',
         data() {
@@ -117,16 +149,12 @@
             };
         },
         methods: {
-            currentTabColor() {
-                let color = '';
-                color = 'success';
-                return color;
-            },
             getPatient() {
                 if (
                     this.$route.params.patientId
                     && (this.patient.ID === null
-                    || this.patient.ID !== parseInt(this.$route.params.patientId, 10))
+                    || this.patient.ID
+                        !== parseInt(this.$route.params.patientId, 10))
                 ) {
                     this.$store
                         .dispatch(PATIENT_GET, {
@@ -175,14 +203,14 @@
 </script>
 <style lang="scss" >
 .patient-profile-wrapper {
-     .patient-wrapper-preloader{
-            position: absolute;
-            z-index: 30;
-            top:0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
+    .patient-wrapper-preloader {
+        position: absolute;
+        z-index: 30;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
     .md-tabs-navigation {
         overflow-x: auto;
         overflow-y: auto;

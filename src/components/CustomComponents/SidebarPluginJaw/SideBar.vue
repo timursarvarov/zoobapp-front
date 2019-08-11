@@ -1,82 +1,70 @@
 <template>
-  <div
-    class="sidebar"
-    :data-color="activeColor"
-    :data-image="backgroundImage"
-    :data-background-color="backgroundColor"
-    :style="sidebarStyle"
-  >
-
-    <div class="logo">
-
-      <a
-        :href="link"
-        class="simple-text logo-mini"
-        target="_blank"
-        :style="[{'margin-left': notification ? '15px': '17px'}]"
-      >
-       <div
-        class="logo-box"
-        :style="[{'margin-top': notification ? '-11px': '-8px'}]"
-        >
-        <t-avatar
-          :textToColor="title"
-          :title="title"
-          :imageSrc="logo"
-          :notification="notification"
-        />
-       </div>
-      </a>
-      <a
-        :href="link"
-        class="simple-text logo-normal"
-        target="_blank"
-      >
-        <template v-if="$route.meta.rtlActive">{{rtlTitle}}</template>
-        <template v-else>{{title}}</template>
-      </a>
-      <div class="navbar-minimize">
-        <md-button
-          id="minimizeSidebar"
-          class="md-round md-just-icon md-transparent"
-          @click="minimizeSidebar"
-        >
-          <i class="material-icons text_align-center visible-on-sidebar-regular">more_vert</i>
-          <i class="material-icons design_bullet-list-67 visible-on-sidebar-mini">view_list</i>
-        </md-button>
-      </div>
-    </div>
     <div
-      class="sidebar-wrapper"
-      ref="sidebarScrollArea"
+        class="sidebar"
+        :data-color="activeColor"
+        :data-image="backgroundImage"
+        :data-background-color="backgroundColor"
+        :style="sidebarStyle"
     >
-      <slot></slot>
-      <md-list class="nav">
-        <slot name="links">
-          <sidebar-item
-            v-for="(link, index) in sidebarLinks"
-            :key="link.name + index"
-            :link="link"
-          >
-
-            <sidebar-item
-              v-for="(subLink, index) in link.children"
-              :key="subLink.name + index"
-              :link="subLink"
+        <div class="logo">
+            <a
+                :href="link"
+                class="simple-text logo-mini"
+                target="_blank"
+                :style="[{'margin-left': notification ? '15px': '17px'}]"
             >
-            </sidebar-item>
-          </sidebar-item>
-        </slot>
-      </md-list>
+                <div class="logo-box" :style="[{'margin-top': notification ? '-11px': '-8px'}]">
+                    <t-avatar
+                        :textToColor="title"
+                        :title="title"
+                        :imageSrc="logo"
+                        :notification="notification"
+                    />
+                </div>
+            </a>
+            <a :href="link" class="simple-text logo-normal" target="_blank">
+                <template v-if="$route.meta.rtlActive">{{rtlTitle}}</template>
+                <template v-else>{{title}}</template>
+            </a>
+            <div class="navbar-minimize">
+                <md-button
+                    id="minimizeSidebar"
+                    class="md-round md-just-icon md-transparent"
+                    @click="minimizeSidebar"
+                >
+                    <i class="material-icons text_align-center visible-on-sidebar-regular">more_vert</i>
+                    <i
+                        class="material-icons design_bullet-list-67 visible-on-sidebar-mini"
+                    >view_list</i>
+                </md-button>
+            </div>
+        </div>
+        <div class="sidebar-wrapper" ref="sidebarScrollArea">
+            <slot></slot>
+            <md-list class="nav">
+                <slot name="links">
+                    <sidebar-item
+                        v-for="(link, index) in sidebarLinks"
+                        :key="link.name + index"
+                        :link="link"
+                    >
+                        <sidebar-item
+                            v-for="(subLink, index) in link.children"
+                            :key="subLink.name + index"
+                            :link="subLink"
+                        ></sidebar-item>
+                    </sidebar-item>
+                </slot>
+            </md-list>
+        </div>
     </div>
-  </div>
 </template>
 <script>
-    import { TAvatar } from '@/components';
 
     export default {
         components: {
-            TAvatar,
+            't-avatar': () => import('@/components/CustomComponents/TAvatar'),
+            'sidebar-item': () => import('./SidebarItem'),
         },
         name: 'sidebar',
         props: {
@@ -170,20 +158,19 @@
 </script>
 <style lang="scss">
 @media (min-width: 992px) {
-  .navbar-search-form-mobile,
-  .nav-mobile-menu {
-    display: none;
-  }
+    .navbar-search-form-mobile,
+    .nav-mobile-menu {
+        display: none;
+    }
 }
 .logo-box {
-    margin-right: 5px ;
+    margin-right: 5px;
     margin-bottom: 0;
     margin-left: 0;
     float: left;
-  }
-    .logo-mini {
-      width: 40px !important;
-      overflow: visible!important;
-
-    }
+}
+.logo-mini {
+    width: 40px !important;
+    overflow: visible !important;
+}
 </style>

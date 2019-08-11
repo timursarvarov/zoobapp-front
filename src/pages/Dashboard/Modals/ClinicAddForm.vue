@@ -227,6 +227,7 @@
 
 
     export default {
+      name: 'clinic-add-form',
         components: {
             SlideYDownTransition,
         },

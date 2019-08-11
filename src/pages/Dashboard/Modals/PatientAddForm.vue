@@ -324,6 +324,7 @@
     import { PATIENT_CREATE, NOTIFY, PATIENT_PARAMS_SET } from '@/constants';
 
     export default {
+        name: 'patient-add-form',
         components: {
             SlideYDownTransition,
         },
@@ -384,7 +385,6 @@
             },
             unsetAutofill(ref) {
                 this.$refs[ref].$el.setAttribute('autocomplete', Math.random());
-                console.log(ref, this.$refs[ref].$el);
             },
             setOpenProfileAfterCreation() {
                 localStorage.setItem(
@@ -435,16 +435,18 @@
                                     color: 'fgh',
                                 },
                             })
-                            .then((response) => {
-                                if (response) {
-                                    this.loading = false;
+                            .then((patient) => {
+                                if (patient) {
                                     if (this.openProfile) {
                                         this.$store.dispatch(PATIENT_PARAMS_SET, {
-                                            patient: response.data,
+                                            patient,
                                         });
                                         this.$router.push({
-                                            name: 'Profile',
-                                            params: { patientId: response.data.ID },
+                                            name: 'Procedures',
+                                            params: {
+                                                lang: this.$i18n.locale,
+                                                patientId: patient.ID,
+                                            },
                                         });
                                     }
                                     if (this.closeAddForm) {
@@ -454,7 +456,7 @@
                                     this.$store.dispatch(NOTIFY, {
                                         settings: {
                                             message:
-                                                `${response.data.firstName} ${response.data.lastName} added`,
+                                                `${patient.firstName} ${patient.lastName} added`,
                                             type: 'success',
                                         },
                                     });
@@ -463,6 +465,8 @@
                     }
                 }).catch((err) => {
                     console.log(err);
+                }).then(() => {
+                    this.loading = false;
                 });
             },
         },

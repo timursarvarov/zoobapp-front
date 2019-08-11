@@ -64,21 +64,31 @@
 
             <md-card-actions>
                 <md-button
+                    :disabled="loading"
                     native-type="submit"
                     @click.native.prevent="validate"
                     class="md-success"
-                >Update Password</md-button>
+                >
+                <span v-if="loading">
+                    Loading
+                </span>
+                <span v-else >
+                    Update Password
+                </span>
+
+                </md-button>
             </md-card-actions>
         </md-card>
     </form>
 </template>
 <script>
-    import { USER_UPDATE_PASSWORD, NOTIFY } from '@/constants';
+    import { USER_UPDATE, NOTIFY } from '@/constants';
 
     export default {
-        name: 'PassworForm',
+        name: 'password-form',
         data() {
             return {
+                loading: false,
                 oldPassword: '',
                 newPassword: '',
                 rNewPassword: '',
@@ -108,9 +118,10 @@
             updatePassword() {
                 this.$validator.validateAll().then((result) => {
                     if (result) {
+                        this.loading = true;
                         this.$store
-                            .dispatch(USER_UPDATE_PASSWORD, {
-                                pw: {
+                            .dispatch(USER_UPDATE, {
+                                user: {
                                     password: this.oldPassword,
                                     password_new: this.newPassword,
                                 },
@@ -125,7 +136,7 @@
                                         settings: {
                                             message:
                                                 'Password updated successfully',
-                                            type: 'primary',
+                                            type: 'success',
                                         },
                                     });
                                 }
@@ -139,6 +150,9 @@
                                         this.showErrorsValidate('oldPassword');
                                     }
                                 }
+                            })
+                            .then(() => {
+                                this.loading = false;
                             });
                     }
                 });

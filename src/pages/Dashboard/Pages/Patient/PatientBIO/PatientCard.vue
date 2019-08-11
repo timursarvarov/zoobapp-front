@@ -177,7 +177,7 @@
                      <div class="md-layout-item md-size-100">
                         <md-chips
                             :disabled="loading"
-                            v-model="patient.allergy"
+                            v-model="allergy"
                             class="md-danger"
                             md-placeholder="Add allergy..."
                         ></md-chips>
@@ -215,15 +215,15 @@
     import { SlideYDownTransition } from 'vue2-transitions';
     import StarRating from 'vue-star-rating';
     import { PATIENT_AVATAR_UPLOAD, PATIENT_UPDATE, NOTIFY } from '@/constants';
-    import { TAvatarInput } from '@/components';
+    import components from '@/components';
 
     const randomMC = require('random-material-color');
 
     export default {
         components: {
+            ...components,
             SlideYDownTransition,
             StarRating,
-            TAvatarInput,
             // generator,
         },
         name: 'patient-card',
@@ -352,6 +352,16 @@
                     text: this.firstName + this.lastName + this.phone + this.email,
                 });
                 return color;
+            },
+            allergy: {
+                // getter
+                get() {
+                    return this.patient.allergy || [];
+                },
+                // setter
+                set(newValue) {
+                    this.patient.allergy = newValue;
+                },
             },
             email() {
                 return this.patient.email;

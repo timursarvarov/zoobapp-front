@@ -37,10 +37,10 @@
 </template>
 <script>
     import { mapGetters } from 'vuex';
-    import { CLINIC_AUTH_REQUEST, NOTIFY } from '@/constants';
+    import { CLINIC_AUTH_REQUEST } from '@/constants';
 
     export default {
-        components: {},
+        name: 'clinic-select',
         data() {
             return {
                 checkedClinicId: null,
@@ -50,7 +50,7 @@
             setClinic() {
                 const currentTime = Math.floor(Date.now() / 1000);
                 if (this.expiresAt < currentTime) {
-                    this.$router.push('/login');
+                    this.$router.push({ name: 'login', params: { lang: this.$i18n.locale } });
                 } else {
                     this.$store
                         .dispatch(CLINIC_AUTH_REQUEST, {
@@ -58,9 +58,10 @@
                             accessToken: this.accessToken,
                         })
                         .then(
-                            // eslint-disable-next-line no-unused-vars
                             (response) => {
-                                this.$router.push('/');
+                                if (response) {
+                                    this.$router.push({ name: 'dashboard', params: { lang: this.$i18n.locale } });
+                                }
                             },
                             (error) => {
                                 if (error && error.response) {

@@ -83,6 +83,7 @@
     import { ImageCropperForm } from '@/pages';
 
     export default {
+        name: 'set-clinic',
         components: {
             SlideYDownTransition,
             ImageCropperForm,

@@ -98,9 +98,7 @@
                 :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
                 <slot v-if="hideSlot" name="empty-space"></slot>
             </div>
-
         </div>
-    </div>
     </div>
 
 </template>
@@ -108,7 +106,7 @@
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
     import Fuse from 'fuse.js';
-    import CustomCollapse from '@/components/CustomComponents/CustomCollapse';
+    
     import { tObjProp } from '@/mixins';
 
     const fuseOptions = {
@@ -140,8 +138,8 @@
         name: 'collapsable-search-panel',
         mixins: [tObjProp],
         components: {
-            CustomCollapse,
             SlideYDownTransition,
+            'custom-collapse': () => import('./CustomCollapse'),
         },
         props: {
             selectedTeeth: {
@@ -285,7 +283,7 @@
             },
             getFilteredItems() {
                 this.searched = this.copyObj(this.itemOriginal).slice(0);
-                const grooup = [];
+                const group = [];
                 this.searched.forEach((itemsGroupe) => {
                     const fuseResults = new Fuse(
                         itemsGroupe.codes,
@@ -314,7 +312,7 @@
                         });
 
                         if (results.length > 0) {
-                            grooup.push({
+                            group.push({
                                 code: itemsGroupe.code,
                                 title: itemsGroupe.title,
                                 codes: results,
@@ -322,7 +320,7 @@
                         }
                     }
                 });
-                return grooup;
+                return group;
             },
         },
         computed: {

@@ -21,62 +21,74 @@
 
                     <div class="md-collapse" :class="{'off-canvas-sidebar': responsive}">
                         <md-list>
-                            <md-list-item  to="/dashboard" v-if="isStateAuthenticated">
-                                <!-- <router-link to="/dashboard" > -->
-                                    <md-icon>dashboard</md-icon>Dashboard
+                            <md-list-item to="dashboard" v-if="isStateAuthenticated">
+                                <!-- <router-link to="dashboard" > -->
+                                <md-icon>dashboard</md-icon>Dashboard
                                 <!-- </router-link> -->
                             </md-list-item>
                             <md-list-item @click="linkClick">
-                                <router-link to="/pricing" >
+                                <router-link to="pricing">
                                     <md-icon>attach_money</md-icon>Pricing
                                 </router-link>
                             </md-list-item>
-                            <md-list-item  @click="linkClick">
-                                <router-link to="/register" >
+                            <md-list-item @click="linkClick">
+                                <router-link to="register">
                                     <md-icon>person_add</md-icon>Register
                                 </router-link>
                             </md-list-item>
                             <md-list-item @click="linkClick">
-                                    <router-link to="/login" >
-                                        <md-icon>fingerprint</md-icon>login
-                                    </router-link>
+                                <router-link to="login">
+                                    <md-icon>fingerprint</md-icon>login
+                                </router-link>
                             </md-list-item>
-                            <md-list-item v-if="isProfileLoaded"  @click="linkClick">
-                                <router-link to="/lock" >
+                            <md-list-item v-if="isProfileLoaded" @click="linkClick">
+                                <router-link to="lock">
                                     <md-icon>lock_open</md-icon>lock
                                 </router-link>
                             </md-list-item>
                             <li class="md-list-item">
-                                  <a
-                                        class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                                    >
-                            <div class="md-list-item-content">
-                                <drop-down direction="down">
-                                    <md-button
-                                        slot="title"
-                                        class="md-simple  md-list-item-content "
-                                        data-toggle="dropdown"
-                                    >
-
-                                        <md-icon>language</md-icon>
-                                        <span>{{$i18n.locale}}</span>
-                                        <p class="hidden-lg hidden-md">Language</p>
-                                    </md-button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li v-for="(loc, index) in $i18n.availableLocales" :key="index"
-                                            @click="$i18n.locale = loc"
-                                            :class="[{'selected-menu-top-navbar': $i18n.locale === loc }]"
-                                        >
-                                            <a
-                                                :style="{color:  $i18n.locale === loc ? '#fff!important': ''}"
-                                                href="#"
-                                            >{{loc}}</a>
-                                        </li>
-                                    </ul>
-                                </drop-down>
-                            </div>
-                            </a>
-                    </li>
+                                <a
+                                    class="md-list-item-router md-list-item-container md-button-clean dropdown"
+                                >
+                                    <div class="md-list-item-content">
+                                        <drop-down direction="down">
+                                            <md-button
+                                                slot="title"
+                                                class="md-simple dropdown-toggle md-list-item-content"
+                                                data-toggle="dropdown"
+                                            >
+                                                <md-icon>
+                                                    <img
+                                                        style="margin-right:10px"
+                                                        :src="`./assets/images/flags/${$i18n.locale}.png`"
+                                                    />
+                                                </md-icon>
+                                                <span>{{languages[$i18n.locale].name}}</span>
+                                                <p class="hidden-lg hidden-md">Language</p>
+                                            </md-button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li
+                                                    v-for="(lang, key) in languages"
+                                                    v-show="lang.code!==$i18n.locale"
+                                                    :key="key"
+                                                    @click="changeLanguage(lang)"
+                                                    :class="[{'selected-menu-top-navbar': $i18n.locale === lang.code }]"
+                                                >
+                                                    <a
+                                                        :style="{color:  $i18n.locale === lang.code ? '#fff!important': ''}"
+                                                    >
+                                                        <img
+                                                            style="margin-right:10px"
+                                                            :src="`./assets/images/flags/${lang.code}.png`"
+                                                        />
+                                                        {{languages[lang.code].name}}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </drop-down>
+                                    </div>
+                                </a>
+                            </li>
                         </md-list>
                     </div>
                 </div>
@@ -129,9 +141,15 @@
 <script>
     import { ZoomCenterTransition } from 'vue2-transitions';
     import { mapGetters } from 'vuex';
-    import { LOGIN_BACKGROUND_URL } from '@/constants';
+    import {
+        LOGIN_BACKGROUND_URL,
+        AVAILABLE_LANGUAGES,
+        LOCAL_STORAGE,
+        USER_UPDATE,
+    } from '@/constants';
 
     export default {
+        name: 'auth-layout',
         components: {
             ZoomCenterTransition,
         },
@@ -175,15 +193,26 @@
                 };
             },
             setPageClass() {
-                console.log(this.$route);
                 return `${this.$route.name}-page`.toLowerCase();
+            },
+            languages() {
+                return AVAILABLE_LANGUAGES;
             },
         },
         methods: {
-            setLang() {
-                const systemLang = navigator.language.split('-')[0];
-                if (this.$i18n.availableLocales.includes(systemLang)) {
-                    this.$i18n.locale = systemLang;
+            changeLanguage(lang) {
+                localStorage.setItem(LOCAL_STORAGE.undefinedUser.lang, lang.code);
+                this.$i18n.locale = lang.code;
+                const route = Object.assign({}, this.$route);
+                route.params.lang = lang.code;
+                this.$router.push(route);
+                this.$i18n.lang = lang.code;
+                if (this.isProfileLoaded) {
+                    this.$store.dispatch(USER_UPDATE, {
+                        user: {
+                            lang: lang.backendCode,
+                        },
+                    });
                 }
             },
             toggleSidebarPage() {

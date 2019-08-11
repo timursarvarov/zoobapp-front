@@ -68,7 +68,9 @@
 
 </template>
 <script>
-    export default {};
+    export default {
+      name: 'content-footer',
+    };
 </script>
 <style>
 </style>

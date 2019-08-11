@@ -1,4 +1,5 @@
 export default {
-  patients: [],
-  status: '',
+    patients: [],
+    patientsNum: 0,
+    status: '',
 };

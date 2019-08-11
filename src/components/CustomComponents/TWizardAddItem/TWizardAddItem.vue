@@ -133,17 +133,17 @@
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
     import { mapGetters } from 'vuex';
-    import TItemToothLocations from './TWizardItems/TItemToothLocations.vue';
-    import TItemDescription from './TWizardItems/TItemDescription.vue';
-    import TItemManipulations from './TWizardItems/TItemManipulations.vue';
-    import TItemFiles from './TWizardItems/TItemFiles.vue';
-    import TItemAppointment from './TWizardItems/TItemAppointment.vue';
-    import { SimpleWizard, WizardTab } from '@/components';
+    // import TItemToothLocations from './TWizardItems/TItemToothLocations.vue';
+    // import TItemDescription from './TWizardItems/TItemDescription.vue';
+    // import TItemManipulations from './TWizardItems/TItemManipulations.vue';
+    // import TItemFiles from './TWizardItems/TItemFiles.vue';
+    // import TItemAppointment from './TWizardItems/TItemAppointment.vue';
+    
     import { tObjProp } from '@/mixins';
     import {
         NOTIFY,
         PATIENT_PROCEDURE_SET,
-        PATIENT_MANIPULATION_SET,
+        // PATIENT_MANIPULATION_SET,
     } from '@/constants';
 
     export default {
@@ -226,14 +226,8 @@
             };
         },
         components: {
-            SimpleWizard,
-            WizardTab,
+            'simple-wizard': () => import('@/components/CustomComponents/TWizard/Wizard'),
             SlideYDownTransition,
-            TItemDescription,
-            TItemFiles,
-            TItemManipulations,
-            TItemToothLocations,
-            TItemAppointment,
         },
         methods: {
             setProcedure() {
@@ -247,7 +241,6 @@
                     this.$store
                         .dispatch(PATIENT_PROCEDURE_SET, {
                             planID: this.currentPlan.ID,
-                            patientID: this.patient.ID,
                             procedure,
                         })
                         .then(

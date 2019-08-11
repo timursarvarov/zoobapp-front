@@ -42,12 +42,13 @@
     </div>
 </template>
 <script>
-    import { TAutoComplite, TWuswug } from '@/components';
+    
 
     export default {
+        name: 't-itm-description',
         components: {
-            TAutoComplite,
-            TWuswug,
+            't-auto-complite': () => import('./TAutoComplite'),
+            't-wuswug': () => import('./TWuswug'),
         },
         model: {
             prop: 'description',

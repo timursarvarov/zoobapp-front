@@ -1,18 +1,16 @@
 /* eslint-disable */
 import {
+    AUTH_SET_PROP,
     AUTH_REQUEST,
-    AUTH_ERROR,
-    AUTH_SUCCESS,
     AUTH_LOGOUT,
     AUTH_LOCK,
-    AUTH_REFRESH_ERROR,
     AUTH_REFRESH_TOKEN,
     AUTH_DECODE_TOKEN,
     USER_REQUEST,
     USER_LOGOUT,
     AUTH_INIT,
     CLINIC_SET_PROPS,
-    CLINICS_SET,
+    CLINICS_PROP_SET,
     USER_SET_PARAM,
     USER_INITIAL,
     TEETH_INITIATION_ETHALON
@@ -33,7 +31,7 @@ export default {
             axios.defaults.headers.common.Authorization = '';
         }
         return new Promise((resolve, reject) => {
-            commit(AUTH_REQUEST);
+            commit(AUTH_SET_PROP, { propName: 'status', propValue: 'loading' });
             axios.post('/',
                     JSON.stringify({
                         jsonrpc: '2.0',
@@ -46,64 +44,30 @@ export default {
                     })
                 )
                 .then(resp => {
-                    axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
-                    dispatch(AUTH_SUCCESS, { resp });
-                    localStorage.setItem('accessToken', resp.result.accessToken);
-                    localStorage.setItem('expiresAt', resp.result.expiresAt);
-                    localStorage.setItem('refreshToken', resp.result.refreshToken);
-                    axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
-                    // dispatch(USER_REQUEST);
-                    dispatch(CLINICS_SET, { clinics: resp.result.organizations });
-                    resolve(resp);
+                    if (resp.data.error) {
+                        commit(AUTH_SET_PROP, { propName: 'status', propValue: 'error' });
+                        reject(resp.data.error)
+                    }
+                    axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.result.accessToken;
+                    commit(AUTH_SET_PROP, { propName: 'status', propValue: 'success' });
+                    commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
+                    if (resp.data.result.accessToken) commit(AUTH_SET_PROP, { propName: 'accessToken', propValue: resp.data.result.accessToken });
+                    localStorage.setItem('accessToken', resp.data.result.accessToken);
+                    localStorage.setItem('expiresAt', resp.data.result.expiresAt);
+                    localStorage.setItem('refreshToken', resp.data.result.refreshToken);
+                    axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.result.accessToken;
+                    dispatch(CLINICS_PROP_SET, { clinics: resp.data.result.organizations });
+                    resolve(resp.data.result);
                 })
                 .catch(err => {
-                    if (err.response) {
-                        reject(err);
-                    }
-                    commit(AUTH_ERROR, err);
+                    console.log(err)
+                    commit(AUTH_SET_PROP, { propName: 'status', propValue: 'error' });
+                    commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
                     localStorage.removeItem('accessToken');
+                    reject(err);
                 });
         });
     },
-    // [AUTH_REQUEST]: ({
-    //     commit,
-    //     dispatch
-    // }, {
-    //     username,
-    //     password
-    // }) => {
-    //     const token = axios.defaults.headers.common.Authorization;
-    //     if (token) {
-    //         axios.defaults.headers.common.Authorization = '';
-    //     }
-    //     return new Promise((resolve, reject) => {
-    //         commit(AUTH_REQUEST);
-    //         axios.post('/auth/authentication/',
-    //                 JSON.stringify({
-    //                     username: username,
-    //                     password: password
-    //                 })
-    //             )
-    //             .then(resp => {
-    //                 axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
-    //                 dispatch(AUTH_SUCCESS, { resp });
-    //                 localStorage.setItem('accessToken', resp.data.accessToken);
-    //                 localStorage.setItem('expiresAt', resp.data.expiresAt);
-    //                 localStorage.setItem('refreshToken', resp.data.refreshToken);
-    //                 axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
-    //                 // dispatch(USER_REQUEST);
-    //                 dispatch(CLINICS_SET, { clinics: resp.data.organizations });
-    //                 resolve(resp);
-    //             })
-    //             .catch(err => {
-    //                 if (err.response) {
-    //                     reject(err);
-    //                 }
-    //                 commit(AUTH_ERROR, err);
-    //                 localStorage.removeItem('accessToken');
-    //             });
-    //     });
-    // },
     [AUTH_REFRESH_TOKEN]: ({
         commit,
         dispatch,
@@ -113,25 +77,42 @@ export default {
         const clinicId = localStorage.getItem('CLINIC_ID');
         if (!refreshToken) return;
         return new Promise((resolve, reject) => {
-            commit(AUTH_REQUEST);
-            axios.post(`/auth/refreshToken/${clinicId}/`,
+            commit(AUTH_SET_PROP, { propName: 'status', propValue: 'loading' });
+            axios.post('/',
                     JSON.stringify({
-                        refreshToken: refreshToken,
+                        jsonrpc: '2.0',
+                        method: 'Auth.RefreshToken',
+                        params: {
+                            organizationID: parseInt(clinicId, 10),
+                            refreshToken: refreshToken
+                        },
+                        id: 1
                     })
                 )
                 .then(resp => {
-                    localStorage.setItem('accessToken', resp.data.accessToken);
-                    localStorage.setItem('expiresAt', resp.data.expiresAt);
-                    localStorage.setItem('refreshToken', resp.data.refreshToken);
-                    axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.accessToken;
-                    dispatch(AUTH_SUCCESS, { resp });
+                    if (resp.data.error) {
+                        commit(AUTH_SET_PROP, { propName: 'status', propValue: 'error' });
+                        commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
+                        commit(AUTH_SET_PROP, { propName: 'hasRefreshTokenError', propValue: true });
+                        // dispatch(USER_LOGOUT);
+                        localStorage.removeItem('accessToken');
+                        localStorage.removeItem('refreshToken');
+                        reject(resp.data.error)
+                    }
+                    localStorage.setItem('accessToken', resp.data.result.accessToken);
+                    localStorage.setItem('expiresAt', resp.data.result.expiresAt);
+                    axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.result.accessToken;
+                    commit(AUTH_SET_PROP, { propName: 'status', propValue: 'success' });
+                    commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
+                    if (resp.data.result.accessToken) commit(AUTH_SET_PROP, { propName: 'accessToken', propValue: resp.data.result.accessToken });
                     dispatch(AUTH_DECODE_TOKEN);
-                    resolve(resp.data.accessToken);
+                    resolve(resp.data.result);
                 })
                 .catch(err => {
-                    commit(AUTH_ERROR, err);
-                    dispatch(AUTH_REFRESH_ERROR);
-                    dispatch(USER_LOGOUT);
+                    commit(AUTH_SET_PROP, { propName: 'status', propValue: 'error' });
+                    commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
+                    commit(AUTH_SET_PROP, { propName: 'hasRefreshTokenError', propValue: true });
+                    // dispatch(USER_LOGOUT);
                     localStorage.removeItem('accessToken');
                     localStorage.removeItem('refreshToken');
                     reject(err);
@@ -139,22 +120,13 @@ export default {
         })
     },
 
-    [AUTH_SUCCESS]: ({
-        commit,
-    }, {
-        resp
-    }) => {
-        if (resp.data) {
-            commit(AUTH_SUCCESS, resp);
-        }
-    },
     [AUTH_INIT]: ({
         dispatch,
     }) => {
         dispatch(USER_INITIAL);
         const clinics = JSON.parse(localStorage.getItem('CLINICS'));
         if (clinics) {
-            dispatch(CLINICS_SET, { clinics });
+            dispatch(CLINICS_PROP_SET, { clinics });
         }
         dispatch(AUTH_DECODE_TOKEN);
         dispatch(TEETH_INITIATION_ETHALON);
@@ -166,8 +138,8 @@ export default {
         dispatch
     }) => {
         return new Promise((resolve, reject) => {
-            commit(AUTH_LOGOUT);
             dispatch(USER_LOGOUT);
+            commit(AUTH_SET_PROP, { propName: 'accessToken', propValue: '' });
             localStorage.removeItem('accessToken');
             localStorage.removeItem('expiresAt');
             localStorage.removeItem('refreshToken');
@@ -194,19 +166,14 @@ export default {
     },
     [AUTH_LOCK]: ({
         commit,
-        // dispatch,
+        dispatch,
     }) => {
         return new Promise((resolve, reject) => {
             localStorage.removeItem('expiresAt');
             localStorage.removeItem('refreshToken');
             localStorage.removeItem('accessToken');
-            commit(AUTH_LOGOUT);
+            commit(AUTH_SET_PROP, { propName: 'accessToken', propValue: '' });
             resolve();
         });
-    },
-    [AUTH_REFRESH_ERROR]: ({
-        commit,
-    }) => {
-        commit(AUTH_REFRESH_ERROR);
     },
 };

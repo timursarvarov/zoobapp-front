@@ -318,11 +318,12 @@
 </template>
 
 <script>
-    import { Slider } from '@/components';
+    import components from '@/components';
 
     export default {
+      name: 'extended-forms',
         components: {
-            Slider,
+            ...components,
         },
         props: {
             regularImg: {

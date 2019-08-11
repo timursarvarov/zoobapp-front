@@ -70,18 +70,19 @@
 <script>
     import { mapGetters } from 'vuex';
     import { SlideYDownTransition } from 'vue2-transitions';
-    import { LockCard } from '@/components';
+    import components from '@/components';
     import ForgotPassword from './ForgotPassword.vue';
     import { AUTH_REQUEST, NOTIFY } from '@/constants';
 
     export default {
+        name: 'lock',
         beforeRouteEnter(to, from, next) {
             localStorage.setItem('lastRoutePathBeforeLock', from.path);
             next();
         },
 
         components: {
-            LockCard,
+            ...components,
             ForgotPassword,
             SlideYDownTransition,
         },

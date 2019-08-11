@@ -135,12 +135,13 @@
 <script>
     import { mapGetters } from 'vuex';
     import Fuse from 'fuse.js';
-    import { Pagination } from '@/components';
+    import components from '@/components';
     // import swal from 'sweetalert2';
 
     export default {
+      name: 'procedures-list',
         components: {
-            Pagination,
+            ...components,
         },
         computed: {
             /** *

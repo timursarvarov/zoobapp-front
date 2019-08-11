@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 
 <template>
     <div :id="id" ref="dropzoneElement" :class="{ ' dropzone': includeStyling }">
@@ -11,6 +12,7 @@
 import Dropzone from "dropzone"; //eslint-disable-line
     Dropzone.autoDiscover = false;
     export default {
+        name: 'dropzone',
         props: {
             id: {
                 type: String,
@@ -72,25 +74,25 @@ import Dropzone from "dropzone"; //eslint-disable-line
             this.dropzone.on('thumbnail', (file, dataUrl) => {
                 vm.$emit('vdropzone-thumbnail', file, dataUrl);
             });
-            this.dropzone.on('addedfile', function (file) {
-                let isDuplicate = false;
+            this.dropzone.on('addedfile', (file) => {
+                // let isDuplicate = false;
                 if (vm.duplicateCheck) {
                     if (this.files.length) {
-                        let _i;
-                        let _len;
+                        let i;
+                        let len;
                         for (
-                            _i = 0, _len = this.files.length;
-                            _i < _len - 1;
-                            _i += 1 // -1 to exclude current file
+                            i = 0, len = this.files.length;
+                            i < len - 1;
+                            i += 1 // -1 to exclude current file
                         ) {
                             if (
-                                this.files[_i].name === file.name
-                                && this.files[_i].size === file.size
-                                && this.files[_i].lastModifiedDate.toString()
+                                this.files[i].name === file.name
+                                && this.files[i].size === file.size
+                                && this.files[i].lastModifiedDate.toString()
                                     === file.lastModifiedDate.toString()
                             ) {
                                 this.removeFile(file);
-                                isDuplicate = true;
+                                // isDuplicate = true;
                                 vm.$emit('vdropzone-duplicate-file', file);
                             }
                         }

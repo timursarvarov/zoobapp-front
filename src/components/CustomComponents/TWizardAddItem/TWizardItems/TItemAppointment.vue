@@ -5,17 +5,16 @@
         {'min-width': size.width ? `${size.width}px`: `70vw`},
         {'min-height': `${size.height}px`} ]"
     >
-        <div class='md-layout-item' >
-            <t-calendar v-if="showAppointment"/>
+        <div class="md-layout-item">
+            <t-calendar v-if="showAppointment" />
         </div>
     </div>
 </template>
 <script>
-    import TCalendar from '@/components/CustomComponents/TCalendar.vue';
-
     export default {
+        name: 't-item-appointment',
         components: {
-            TCalendar,
+            't-calendar': () => import('@/components/CustomComponents/TCalendar'),
         },
         props: {
             size: {
@@ -29,8 +28,7 @@
         },
         data() {
             return {
-                modelValidations: {
-                },
+                modelValidations: {},
             };
         },
         methods: {
@@ -42,7 +40,6 @@
                 });
             },
         },
-        computed: {
-        },
+        computed: {},
     };
 </script>

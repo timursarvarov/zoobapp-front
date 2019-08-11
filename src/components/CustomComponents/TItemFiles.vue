@@ -38,7 +38,7 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    import { TFilesList, TFilesAddForm } from '@/components';
+
     import { tObjProp } from '@/mixins';
     import {
         AUTH_REFRESH_TOKEN,
@@ -51,8 +51,8 @@
         name: 'patient-files',
         mixins: [tObjProp],
         components: {
-            TFilesList,
-            TFilesAddForm,
+            't-files-add-form': () => import('./TFilesAddForm'),
+            't-files-list': () => import('./TFilesList'),
         },
         props: {
             size: {

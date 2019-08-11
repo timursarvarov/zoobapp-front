@@ -93,8 +93,8 @@
                 default: () => false,
             },
             plans: {
-                type: Array,
-                default: () => [],
+                type: Object,
+                default: () => {},
             },
         },
         components: {
@@ -131,12 +131,12 @@
             //     this.$validator.reset();
             // },
             setInitialName() {
-                this.planName = `Plan № ${this.plans ? this.plans.length + 1 : 1}`;
+                this.planName = `Plan № ${this.plans ? Object.keys(this.plans).length + 1 : 1}`;
             },
             setPlansNames() {
                 this.names = [];
                 if (this.plans) {
-                    this.plans.forEach((plan, index) => {
+                    Object.values(this.plans).forEach((plan, index) => {
                         this.names[index] = plan.name;
                     });
                 }
@@ -146,17 +146,13 @@
                     this.$validator.validateAll().then((result) => {
                         if (result) {
                             this.loading = true;
-                            const params = {
-                                patientId: this.patientId,
-                                planName: this.planName,
-                            };
                             this.$store.dispatch(PATIENT_PLAN_SET, {
-                                params,
+                                planName: this.planName,
                             }).then(
                                 (resp) => {
-                                    console.log(resp);
                                     if (resp) {
-                                        this.$emit('onPlanCreated', resp);
+                                        // this.$emit('onPlanCreated', resp);
+
                                         this.$store.dispatch(NOTIFY, {
                                             settings: {
                                                 message: `${this.planName} plan added`,
@@ -164,11 +160,14 @@
                                             },
                                         });
                                         this.$validator.reset();
-                                        this.loading = false;
                                         this.showFormL = false;
                                     }
                                 },
-                            );
+                            ).catch((err) => {
+                                console.log(err);
+                            }).then(() => {
+                                this.loading = false;
+                            });
                         }
                     });
                 }

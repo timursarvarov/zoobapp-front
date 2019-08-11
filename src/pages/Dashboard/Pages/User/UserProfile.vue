@@ -22,6 +22,7 @@
     // import CalendarForm from './UserProfile/CalendarForm';
 
     export default {
+        name: 'user-profile',
         components: {
             UserCard,
             PasswordForm,

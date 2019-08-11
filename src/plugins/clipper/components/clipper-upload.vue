@@ -8,6 +8,7 @@
 
 <script>
     export default {
+        name: 'clipper-upload',
         mounted() {
             this.uploadEl = this.$el.querySelector('.upload');
         },

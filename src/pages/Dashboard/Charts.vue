@@ -173,11 +173,12 @@
 </template>
 
 <script>
-    import { ChartCard } from '@/components';
+    import components from '@/components';
 
     export default {
+      name:'charts',
         components: {
-            ChartCard,
+            ...components,
         },
         data() {
             return {

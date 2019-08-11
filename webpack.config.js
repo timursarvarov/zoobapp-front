@@ -1,3 +1,6 @@
+/* eslint-disable func-names */
+/* eslint-disable no-unused-vars */
+/* eslint-disable global-require */
 const path = require('path');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
@@ -10,7 +13,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 console.log(path.resolve(__dirname, 'dist'));
 
-module.exports = function(env, arg) {
+module.exports = function (env, arg) {
     return {
         mode: env.production ? 'production' : 'development',
         entry: {
@@ -60,8 +63,8 @@ module.exports = function(env, arg) {
                     test: /\.js$/,
                     loader: 'babel-loader',
                     exclude: file => (
-                        /node_modules/.test(file) &&
-                        !/\.vue\.js/.test(file)
+                        /node_modules/.test(file)
+                        && !/\.vue\.js/.test(file)
                     ),
                 },
                 {

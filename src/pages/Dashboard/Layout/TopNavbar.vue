@@ -8,14 +8,14 @@
             <!-- <md-progress-bar
                 v-if="loading"
                 :md-stroke="2"
-            md-mode="indeterminate"></md-progress-bar> -->
+            md-mode="indeterminate"></md-progress-bar>-->
         </div>
         <div class="md-toolbar-row">
             <div class="md-toolbar-section-start">
                 <h3 class="md-title">
                     <template
                         class="md-layout md-alignment-left-center"
-                        v-if="$route.name === 'Profile' && (patient.firstName || patient.secondName) "
+                        v-if="$route.name === 'PatientTreatmentent' && (patient.firstName || patient.secondName) "
                     >
                         <t-avatar
                             class="patient-header-avatar"
@@ -39,7 +39,6 @@
                     <span v-else>{{$route.name}}</span>
                 </h3>
             </div>
-
             <div class="md-toolbar-section-end">
                 <md-button
                     class="md-just-icon md-round md-round md-simple md-toolbar-toggle"
@@ -74,14 +73,14 @@
                         @search="getPatients"
                     >
                         <template slot="input-end">
-                                <md-button
+                            <md-button
                                 @click=" searchTerm=null"
                                 tabindex="-1"
                                 v-show="searchTerm"
                                 class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                             >
                                 <md-icon class="success">close</md-icon>
-                        </md-button>
+                            </md-button>
                         </template>
                         <template slot="input-start">
                             <label for="input">Search for patient</label>
@@ -91,45 +90,45 @@
                                 v-if="searching"
                                 class="underline-progress-bar"
                                 :md-stroke="2"
-                            md-mode="indeterminate"></md-progress-bar>
+                                md-mode="indeterminate"
+                            ></md-progress-bar>
                         </template>
                         <template slot="no-data">
                             <div v-if="!serverError && ( searchText.length<3)">
                                 <div class="md-layout">
-                                    <div
-                                    >
-                                        <md-subheader>
-                                        Type at least 3 letters to search by phone, email or name
-                                        </md-subheader>
+                                    <div>
+                                        <md-subheader
+                                            class="text-center"
+                                        >Type at least 3 letters to search by phone, email or name</md-subheader>
                                     </div>
                                 </div>
                             </div>
                             <div v-else-if="noData">
                                 <div class="md-layout">
-                                <div
-                                    class="md-size-100 md-layout md-alignment-center-center"
-                                    style="white-space: pre-wrap;oveflow:hidden; padding: 0 0 15px 0;"
-                                >
-                                    <span
-                                        class="md-layout-item"
-                                    >No patients matching "{{ searchText }}" were found.</span>
-                                </div>
-                                <div class="md-layout md-layout-item md-alignment-center md-size-100">
-                                    <md-button
-                                        class="md-success md-sm"
-                                        @click="showPatientAddForm()"
-                                    >Create patient</md-button>
-                                </div>
+                                    <div
+                                        class="md-size-100 md-layout md-alignment-center-center"
+                                        style="white-space: pre-wrap;oveflow:hidden; padding: 0 0 15px 0;"
+                                    >
+                                        <span
+                                            class="md-layout-item"
+                                        >No patients matching "{{ searchText }}" were found.</span>
+                                    </div>
+                                    <div
+                                        class="md-layout md-layout-item md-alignment-center md-size-100"
+                                    >
+                                        <md-button
+                                            class="md-success md-sm"
+                                            @click="showPatientAddForm()"
+                                        >Create patient</md-button>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div v-else-if="serverError" >
-                                <md-subheader>
-                                    Connection problems
-                                </md-subheader>
+                            <div v-else-if="serverError">
+                                <md-subheader class="text-center">Connection problems</md-subheader>
 
                                 <md-button
-                                    class="md-success md-layout-item mx-auto md-sm"
+                                    class="md-success md-layout-item md-sm"
                                     @click="getPatients()"
                                 >Retry</md-button>
                             </div>
@@ -145,24 +144,22 @@
                                         :notification="item.allergy && item.allergy.length ? 'A' : ''"
                                     />
                                     <div class="md-serched-list-item-text text-left">
-                                        <span >
+                                        <span>
                                             {{ item.firstName | capitilize}} {{ item.lastName | capitilize }}
                                             <br />
                                         </span>
-                                        <span v-if="item.phone">
-                                            {{ "+" + item.phone }}
-                                        </span>
+                                        <span v-if="item.phone">{{ "+" + item.phone }}</span>
                                     </div>
                                 </md-button>
                             </div>
                         </template>
-                        <template v-if="patients.length >1" slot="after-items">
+                        <template v-if="patients ? patients.length >1 : false" slot="after-items">
                             <div style="display: flex;">
                                 <div style="flex-grow:1" class="md-layout-item">
                                     <infinite-loading
                                         @infinite="infiniteHandler"
                                         :identifier="infiniteId"
-                                        :key="patients.length"
+                                        :key="patients ? patients.length: 0"
                                     >
                                         <div slot="spinner">
                                             <md-progress-spinner
@@ -172,35 +169,43 @@
                                             />
                                         </div>
                                         <div slot="no-results">
-                                            <md-subheader>No more patients</md-subheader>
+                                            <div class="md-title text-center">No more patients</div>
                                         </div>
                                         <div slot="error" slot-scope="{ trigger }">
                                             <div class="md-layout">
-                                            <div
-                                                class="md-layout-item"
-                                                style="padding: 15px 0;"
-                                            >
-                                            <md-subheader>
-                                                Oops! Connection problems
-                                            </md-subheader>
+                                                <div
+                                                    class="md-layout-item"
+                                                    style="padding: 15px 0;"
+                                                >
+                                                    <md-subheader
+                                                        class="text-center"
+                                                    >Oops! Connection problems</md-subheader>
                                                     <div class="md-layout-item md-size-100">
                                                         <md-button
                                                             class="md-primary md-layout-item mx-auto md-sm"
                                                             @click="trigger"
                                                         >Retry</md-button>
                                                     </div>
+                                                </div>
                                             </div>
-                                        </div>
                                         </div>
                                     </infinite-loading>
                                 </div>
                             </div>
                         </template>
+                        <template v-if="totalPatients" slot="after-items-fixed">
+                            <div style="display: flex;">
+                                <div style="flex-grow:1" class="md-layout-item">
+                                    <md-subheader
+                                        class="text-center"
+                                    >Total found: {{totalPatients}} patients</md-subheader>
+                                </div>
+                            </div>
+                        </template>
                     </cool-select>
                     <md-list>
-                        <md-list-item >
-                            <router-link
-                                to="/">
+                        <md-list-item>
+                            <router-link to="/">
                                 <i class="material-icons">dashboard</i>
                                 <p class="hidden-lg hidden-md">Dashboard</p>
                             </router-link>
@@ -278,35 +283,54 @@
                                             </li>
                                             <li>
                                                 <a
-                                                    class="dropdown-toggle"
                                                     :class="{'open': multiLevel1}"
                                                     @click="multiLevel1 = !multiLevel1"
+                                                    class="dropdown-toggle"
                                                 >
-                                                    Current language:
-                                                    <span
-                                                        style="text-transform: uppercase;"
-                                                    >&nbsp;{{$i18n.locale}}</span>
+                                                    <img
+                                                        style="margin-right:10px"
+                                                        :src="`./assets/images/flags/${$i18n.locale}.png`"
+                                                    />
+                                                    {{languages[$i18n.locale].name}}
                                                 </a>
                                                 <ul class="dropdown-menu">
-                                                    <li v-for="(loc, index) in $i18n.availableLocales" :key="index"
-                                                        @click="$i18n.locale = loc "
-                                                        :class="[{'selected-menu-top-navbar': $i18n.locale === loc }]"
+                                                    <li
+                                                        v-for="(lang, key) in languages"
+                                                        v-show="lang.code!==$i18n.locale"
+                                                        :key="key"
+                                                        @click=" setLanguage(lang.code)"
+                                                        :class="[{'selected-menu-top-navbar': $i18n.locale === lang.code }]"
                                                     >
                                                         <a
                                                             @click="multiLevel1 = !multiLevel1"
-                                                            :style="{color:  $i18n.locale === loc ? '#fff!important': ''}"
-                                                            href="#"
-                                                        >{{loc}}</a>
+                                                            :style="{color:  $i18n.locale === lang.code ? '#fff!important': ''}"
+                                                        >
+                                                            <img
+                                                                style="margin-right:10px"
+                                                                :src="`./assets/images/flags/${lang.code}.png`"
+                                                            />
+                                                            {{languages[lang.code].name}}
+                                                        </a>
                                                     </li>
                                                 </ul>
                                             </li>
-                                            <li>
+                                            <li >
                                                 <a
-                                                    class="dropdown-toggle"
-                                                    :class="{'open': multiLevel}"
+                                                    :class="
+                                                    [
+                                                        {'open': multiLevel},
+                                                        {'dropdown-toggle': clinics && clinics.length > 1},
+                                                    ]"
                                                     @click="toggleMultiLevel"
-                                                >Change Clinic</a>
-                                                <ul class="dropdown-menu">
+                                                >    <img
+                                                        style="margin-right:10px; height:24px; width:24px; border-radius:50%"
+                                                        :src="currnentClinic.logo"
+                                                    />
+                                                    {{currnentClinic.name}}
+                                                    {{currnentClinic.id}}
+                                                </a>
+                                                <ul v-if="clinics && clinics.length > 1"
+                                                    class="dropdown-menu">
                                                     <li
                                                         @click="setClinic(clinic.ID), toggleMultiLevel()"
                                                         :class="[{'selected-menu-top-navbar': clinic.ID === currnentClinic.ID }]"
@@ -316,7 +340,12 @@
                                                         <a
                                                             :style="{color: clinic.ID === currnentClinic.ID ? '#fff!important': ''}"
                                                             href="#"
-                                                        >{{clinic.name | capitilize }}{{clinic.ID }}</a>
+                                                        >
+                                                            <img
+                                                                style="margin-right:10px; height:24px; width:24px; border-radius:50%"
+                                                                :src="clinic.logo"
+                                                            />
+                                                            {{clinic.name | capitilize }}{{clinic.ID }}</a>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -339,25 +368,29 @@ import {
     AUTH_LOGOUT,
     PATIENTS_REQUEST,
     AUTH_LOCK,
-    NOTIFY
+    NOTIFY,
+    AVAILABLE_LANGUAGES,
+    LOCAL_STORAGE,
+    USER_UPDATE,
+
 } from "@/constants";
 import { mapGetters } from "vuex";
-import { TAutoComplite, TAvatar } from "@/components";
+import components from "@/components";
 import { CoolSelect } from "vue-cool-select";
 import InfiniteLoading from "vue-infinite-loading";
 
 export default {
     components: {
-        TAutoComplite,
-        TAvatar,
+        ...components,
         CoolSelect,
         InfiniteLoading
     },
     data() {
         return {
+            totalPatients: 0,
             callbackLauncher: null,
             infiniteId: 1,
-            searchText: '',
+            searchText: "",
             searchTerm: "",
             patients: [],
             coolSelectFocus: false,
@@ -371,6 +404,19 @@ export default {
         };
     },
     methods: {
+        setLanguage(lang) {
+             localStorage.setItem(LOCAL_STORAGE.undefinedUser.lang, lang);
+                this.$i18n.locale = lang;
+                const route = Object.assign({}, this.$route);
+                route.params.lang = lang;
+                this.$router.push(route);
+                this.$i18n.lang = lang;
+                this.$store.dispatch(USER_UPDATE, {
+                    user: {
+                        lang: lang.backendCode,
+                    },
+                });
+        },
         setClinic(clinicId) {
             this.$store
                 .dispatch(CLINIC_AUTH_REQUEST, {
@@ -411,37 +457,44 @@ export default {
         goToPatient(patient) {
             if (patient) {
                 this.$router.push({
-                    name: "Profile",
+                    name: "PatientTreatmentent",
                     params: { patientId: patient.ID }
                 });
             }
         },
         infiniteHandler($state) {
-             this.page += 1;
+            this.page += 1;
             this.$store
                 .dispatch(PATIENTS_REQUEST, {
                     params: {
                         perPage: this.perPage,
                         page: this.page,
-                        search: this.searchTerm,
+                        search: this.searchText,
                         toStore: false
                     }
                 })
                 .then(resp => {
                     if (resp) {
-                        this.searching = false;
-                        if(resp.length < this.perPage) {
-                                $state.complete();
-                            } else{
-                                $state.loaded();
-                            }
-                                this.patients.push(...resp);
-
+                        console.log(resp);
+                        if (!resp.patients) {
+                            $state.complete();
+                        } else if (resp.patients.length < this.perPage) {
+                            $state.complete();
+                        } else {
+                            $state.loaded();
                         }
+                        if (resp.patients) {
+                            this.patients.push(...resp.patients);
+                        }
+                    }
                 })
                 .catch(err => {
+                    console.log(err);
                     $state.error();
-                });;
+                })
+                .then(() => {
+                    this.searching = false;
+                });
         },
         getPatients() {
             this.lastSearchItem = this.searchText;
@@ -451,10 +504,10 @@ export default {
                 } else {
                     this.noData = false;
                     this.serverError = false;
-                    this.searching =  true;
+                    this.searching = true;
                     const vm = this;
                     const DELAY = 400;
-                    if (this.callbackLauncher) {
+                    if (vm.callbackLauncher) {
                         clearTimeout(vm.callbackLauncher);
                     }
                     this.page = 1;
@@ -465,21 +518,31 @@ export default {
                             vm.$store
                                 .dispatch(PATIENTS_REQUEST, {
                                     params: {
-                                        perPage: this.perPage,
-                                        page: this.page,
-                                        search: this.searchText,
+                                        perPage: vm.perPage,
+                                        page: vm.page,
+                                        search: vm.searchText,
                                         toStore: false
                                     }
                                 })
                                 .then(resp => {
-                                    if (resp) {
-                                        vm.searching = false;
-                                        if(resp.length === 0){
+                                    if (resp.patients) {
+                                        if (resp.patients.length === 0) {
                                             vm.noData = true;
                                         }
-                                        vm.patients = resp;
+                                        vm.patients = resp.patients;
+                                        vm.totalPatients = resp.patientsNum;
+                                    } else {
+                                        vm.noData = true;
+                                        vm.totalPatients = 0;
                                     }
                                     resolve(resp);
+                                })
+                                .catch(err => {
+                                    vm.serverError = true;
+                                    console.log(err);
+                                })
+                                .then(() => {
+                                    vm.searching = false;
                                 })
                         );
                     }, DELAY);
@@ -504,14 +567,14 @@ export default {
         },
         logout() {
             this.$store.dispatch(AUTH_LOGOUT).then(() => {
-                this.$router.push("/login");
+                this.$router.push({ name :"Login", params: { lang: this.$i18n.locale } });
             });
         },
         lock() {
             this.$store.dispatch(AUTH_LOCK).then(() => {
-                this.$router.push("/lock");
+                this.$router.push("lock");
             });
-        },
+        }
     },
     computed: {
         ...mapGetters({
@@ -522,8 +585,11 @@ export default {
             accessToken: "fetchStateAccessToken",
             expiresAt: "expiresAt",
             lang: "getLang"
-        })
-    },
+        }),
+        languages() {
+            return AVAILABLE_LANGUAGES;
+        }
+    }
 };
 </script>
 

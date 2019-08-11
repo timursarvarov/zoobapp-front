@@ -75,6 +75,7 @@
     import { SlideYDownTransition } from 'vue2-transitions';
 
     export default {
+      name: 'login-form',
         components: {
             SlideYDownTransition,
         },

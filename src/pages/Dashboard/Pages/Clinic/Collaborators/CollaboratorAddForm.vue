@@ -53,6 +53,7 @@
     import { COLLABORATOR_CREATE, NOTIFY } from '@/constants';
 
     export default {
+        name: 'collabolator-add-form',
         components: {
             SlideYDownTransition,
         },

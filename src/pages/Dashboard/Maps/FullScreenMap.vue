@@ -8,6 +8,7 @@
     GoogleMapsLoader.KEY = API_KEY;
 
     export default {
+        name: 'full-screen-map',
         data() {
             return {
                 nav: null,

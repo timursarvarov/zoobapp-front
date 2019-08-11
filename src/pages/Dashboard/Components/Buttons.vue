@@ -153,11 +153,12 @@
 
 </template>
 <script>
-    import { Pagination } from '@/components';
+    import components from '@/components';
 
     export default {
+      name:'buttons',
         components: {
-            Pagination,
+            ...components,
         },
         data() {
             return {

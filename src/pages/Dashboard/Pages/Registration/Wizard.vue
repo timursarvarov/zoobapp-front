@@ -60,13 +60,14 @@
     import SetAccount from './Wizard/SetAccount.vue';
     import SetClinic from './Wizard/SetClinic.vue';
     // import swal from 'sweetalert2';
-    import { SimpleWizard, WizardTab } from '@/components';
+    import components from '@/components';
     import {
         USER_REGISTER,
         NOTIFY,
         AUTH_REQUEST,
         CLINIC_LOGO_UPLOAD,
         CLINIC_UPDATE,
+        SERVER_ERRORS,
     } from '@/constants';
 
     export default {
@@ -106,12 +107,7 @@
             };
         },
         components: {
-            GetEmail,
-            CheckEmail,
-            SetAccount,
-            SetClinic,
-            SimpleWizard,
-            WizardTab,
+            ...components,
         },
         methods: {
             updateClinicLogo(fd) {
@@ -227,30 +223,21 @@
                             },
                         })
                         .then(
-                            (response) => {
-                                // this.$router.push('/');
-                                console.log(response);
-                                // return true;
+                            () => {
                                 resolve(this.login());
                             },
                             (error) => {
-                                const err = error.response.data.error;
-                                if (err === 'user_name exist') {
-                                    this.errorAccount.message = 'Username already exist';
+                                if (error.code === SERVER_ERRORS.codes.ServerErrorCode) {
+                                    this.errorAccount.message = error.message;
                                     this.errorAccount.exceptions.push(
                                         this.account.username,
                                     );
-                                } else {
-                                    this.$store.dispatch(NOTIFY, {
-                                        settings: {
-                                            message: 'error.response.data.error',
-                                            type: 'warning',
-                                        },
+                                    this.$refs.step3.showErrorsValidate({
+                                        message: error.message,
+                                        type: 'username',
                                     });
                                 }
-                                // eslint-disable-next-line
-                            reject(false);
-                            // return false;
+                                reject();
                             },
                         );
                 });

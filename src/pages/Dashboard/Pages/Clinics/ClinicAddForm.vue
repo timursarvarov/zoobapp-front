@@ -92,6 +92,7 @@
     const randomMC = require('random-material-color');
 
     export default {
+        name: 'clinic-add-form',
         components: {
             SlideYDownTransition,
         },

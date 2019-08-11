@@ -221,16 +221,12 @@
 <script>
     import { Printd } from 'printd';
     import { mapGetters } from 'vuex';
-    import { Tooth, TAvatar, TFilesList } from '@/components';
     import printFormCss from './print-form-css';
     import formCss from './form-css';
 
     export default {
         name: 't-files-list',
         components: {
-            Tooth,
-            TAvatar,
-            TFilesList,
         },
         props: {
             title: {

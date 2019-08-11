@@ -165,6 +165,7 @@
             </div>
 
             <div class="content-wrapper">
+                {{currentManipulations}}
                 <md-table :value="currentManipulations"
                     table-header-color="green">
                     <md-table-empty-state
@@ -253,7 +254,7 @@
     import { mapGetters } from 'vuex';
     import { CoolSelect } from 'vue-cool-select';
     import { SlideYDownTransition } from 'vue2-transitions';
-    import { AnimatedNumber } from '@/components';
+
     import {
         PATIENT_MANIPULATION_SET,
         NOTIFY,
@@ -268,9 +269,9 @@
             required: true,
         },
         components: {
-            AnimatedNumber,
             CoolSelect,
             SlideYDownTransition,
+            'animated-number': () => import('@/components/AnimatedNumber'),
         },
         model: {
             prop: 'description',

@@ -308,14 +308,14 @@
         TIMEZONES,
         COMMON_CURRENCY,
     } from '@/constants';
-    import { TAvatarInput } from '@/components';
+    import components from '@/components';
 
     export default {
+        name: 'clinic-settings',
         components: {
             SlideYDownTransition,
-            TAvatarInput,
+            ...components,
         },
-        name: 'currentClinic-settings',
         props: {
             buttonColor: {
                 type: String,

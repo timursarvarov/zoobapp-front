@@ -73,7 +73,7 @@
   </md-dialog>
 </template>
 <script>
-    import { AnimatedNumber } from '@/components';
+    import components from '@/components';
     import { NOTIFY } from '@/constants';
 
     export default {
@@ -114,7 +114,7 @@
             },
         },
         components: {
-            AnimatedNumber,
+            ...components,
         },
         data() {
             return {

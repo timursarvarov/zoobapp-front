@@ -23,7 +23,7 @@
             >
         </items-list>
         <t-tabs
-                v-if="patient.plans  && patient.plans.length > 0 && currentType === 'procedures' "
+                v-if="patient.plans && currentType === 'procedures' && patient.currentPlan "
                 @onChangeTab="onChangeTab"
                 ref="tabs"
                 :tab-name="tabHeaders"
@@ -31,12 +31,12 @@
                 class="procedures-tabs"
             >
                 <div
-                    v-for="(plan, index) of this.patient.plans"
+                    v-for="(plan, name, index) in this.patient.plans"
                     :slot="`tab-pane-${index+1}`"
                     :key="plan.ID"
                     >
                         <items-list
-                            :key="plan.ID"
+                            :key="name"
                             @onJawChanged="recalculateJaw()"
                             @toggleItemVisibility="toggleItemVisibility"
                             @showItemInfo="showItemInfo"
@@ -54,27 +54,24 @@
                         </items-list>
                     </div>
                     <template slot="footer-actions">
-                        <div class=" md-layout ml-auto">
-                            <div class="ml-auto">
-                                <md-button class="md-simple"
-                                    @click="showDeleteForm = true"
-                                    >
-                                    Delete plan
-                                </md-button>
-                                <md-button
-                                    :disabled="currentPlan.state === 1 "
-                                    class="md-success"
-                                    @click="editPLanField( currentPlan.ID, 'state', 1)" >
-                                    Approve plan
-                                </md-button>
-                            </div>
-                        </div>
-                    </template>
+    <div class="md-layout ml-auto"
+        v-if="patient.currentPlan">
+        <div class="ml-auto">
+            <md-button class="md-simple" @click="showDeleteForm = true">Delete plan</md-button>
+            <md-button
+                :disabled="patient.currentPlan.state === 1 "
+                class="md-success"
+                @click="editPLanField( patient.currentPlan.ID, 'state', 1)"
+            >Approve plan</md-button>
+        </div>
+    </div>
+</template>
         </t-tabs>
         <delete-form
+            v-if="patient.currentPlan"
             text="Delete Plan?"
             :showForm.sync="showDeleteForm"
-            :itemToDelete="currentPlan"
+            :itemToDelete="patient.currentPlan"
             :patientID="patient.ID"
             currentType='plan'
             @onDeleted="onPlanDeleted"
@@ -85,13 +82,11 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    import {
-        PATIENT_PLAN_EDIT,
-        PATIENT_PLANS_GET,
-    } from '@/constants';
-    import {
-        TTabs,
-    } from '@/components';
+    import { PATIENT_PLAN_EDIT,
+    PATIENT_PLANS_GET,
+    PATIENT_PLAN_CURRENT_SET,
+     } from '@/constants';
+    import components from '@/components';
     import ItemsList from './ItemsList.vue';
     import DeleteForm from './DeleteForm.vue';
     import { tObjProp } from '@/mixins';
@@ -99,7 +94,7 @@
     export default {
         mixins: [tObjProp],
         components: {
-            TTabs,
+            ...components,
             ItemsList,
             DeleteForm,
         },
@@ -118,31 +113,9 @@
                 jawHeight: 0,
                 showParams: {},
                 loadingAllPLans: false,
-                tabHeaders: [],
             };
         },
         methods: {
-            initiateTabHeaders() {
-                this.tabHeaders = [];
-                if (this.patient.plans) {
-                    this.headers = Object.values(this.patient.plans).forEach((p, i) => {
-                        this.tabHeaders[i] = {
-                            ID: p.ID,
-                            name: p.name,
-                            state: p.state === 1 ? 'approved' : '',
-                            price: this.getPlanTotalPrice(p),
-                        };
-                    });
-                }
-            },
-            pushToHeader(p) {
-                this.tabHeaders.push({
-                    ID: p.ID,
-                    name: p.name,
-                    state: '',
-                    price: '',
-                });
-            },
             getProcedures(procedures = []) {
                 const planProcedures = [];
                 if (procedures) {
@@ -152,9 +125,8 @@
                 }
                 return planProcedures;
             },
-            onChangeTab(index) {
-                this.focusedPlanID = this.patient.plans[index].ID;
-                this.$emit('onChangeTab', index);
+            onChangeTab(plan) {
+                this.$store.dispatch(PATIENT_PLAN_CURRENT_SET,{plan});
             },
             toggleItemVisibility(itemId, itemType) {
                 this.$emit('toggleItemVisibility', itemId, itemType);
@@ -162,60 +134,36 @@
             showItemInfo(params) {
                 this.$emit('showItemInfo', params);
             },
-            onPlanCreated(p) {
-                this.pushToHeader(p);
-                this.focusOnTab(p.ID);
-            },
             onPlanDeleted() {
-                this.initiatePlans();
+                this.initialSetCurrentPlan();
             },
             getAllPlans() {
                 if (!this.patient.ID) return;
                 this.$emit('onLoadingAllPlans', true);
-                this.$store.dispatch(PATIENT_PLANS_GET, {
-                    patientId: this.patient.ID,
-                }).then(
-                    (resp) => {
+                this.$store
+                    .dispatch(PATIENT_PLANS_GET)
+                    .then((result) => {
                         this.$emit('onLoadingAllPlans', false);
-                        if (resp.length > 0) {
-                            this.initiatePlans();
-                        }
-                    },
-                ).catch((err) => {
-                    this.$emit('onLoadingAllPlans', false);
-                    console.log(err);
-                });
+                        this.initialSetCurrentPlan();
+                    })
+                    .catch((err) => {
+                        this.$emit('onLoadingAllPlans', false);
+                        console.log(err);
+                    });
             },
-            focusOnTab(ID) {
-                this.focusedPlanID = ID;
-                if (!this.patient.plans) return;
-                const index = this.patient.plans.findIndex(p => p.ID === ID);
-                if (this.$refs.tabs && index > -1) {
-                    this.$refs.tabs.switchPanel(this.patient.plans[index]);
+            initialSetCurrentPlan(){
+                if(this.patient.plans){
+                    let currentPlan = Object.values(this.patient.plans).find(plan =>  plan.state === 1)
+                    if(!currentPlan){
+                        currentPlan = Object.values(this.patient.plans)[0]
+                    }
+                    this.$store.dispatch(PATIENT_PLAN_CURRENT_SET, {plan : currentPlan})
                 }
             },
-            initiatePlans() {
-                if (!this.patient.plans) return;
-                this.tabHeaders = [];
-                this.initiateTabHeaders();
-                const approvedIndex = this.patient.plans.findIndex(p => p.state === 1);
-                if (approvedIndex > -1) {
-                    this.focusOnTab(this.patient.plans[approvedIndex].ID);
-                    this.$emit('onChangeTab', approvedIndex);
-                } else if (this.patient.plans.length > 0) {
-                    this.$emit('onChangeTab', 0);
-                    this.focusOnTab(this.patient.plans[0].ID);
-                }
-            },
-            changeTabHeaders(ID) {
-                if (!this.patient.plans) return;
-                const pIndex = this.patient.plans.findIndex(p => p.ID === ID);
-                const tabPlanIndex = this.tabHeaders.findIndex(p => p.ID === ID);
-                if (pIndex > -1 && tabPlanIndex > -1) {
-                    this.tabHeaders[tabPlanIndex].state = this.patient.plans[pIndex].state === 1 ? 'approved' : '';
-                    this.tabHeaders[tabPlanIndex].background = this.patient.plans[pIndex].state === 1 ? '#00bcd4' : '';
-                    this.tabHeaders[tabPlanIndex].price = this.getPlanTotalPrice(this.patient.plans[pIndex]);
-                }
+            focusOnTab(plan) {
+                if (!this.patient.plans || !this.$refs.tabs) return;
+
+                this.$refs.tabs.switchPanel(plan);
             },
             editPLanField(planId, key, value) {
                 this.$store.dispatch(PATIENT_PLAN_EDIT, {
@@ -244,7 +192,9 @@
                         }
                     });
                 }
-                return totalPrice ? `${totalPrice} ${this.currentClinic.currencyCode}` : '';
+                return totalPrice
+                    ? `${totalPrice} ${this.currentClinic.currencyCode}`
+                    : '';
             },
         },
         computed: {
@@ -253,23 +203,25 @@
                 currentClinic: 'getCurrentClinic',
                 getProceduresByIds: 'getProceduresByIds',
             }),
-            // procedures() {
-            //     this.patient.procedures;
-            // },
-            currentPlan() {
-                if (!this.patient.plans) return {};
-                const index = this.patient.plans.findIndex(p => p.ID === this.focusedPlanID);
-                if (index > -1) {
-                    return this.patient.plans[index];
+            tabHeaders() {
+                const tabHeaders = [];
+                if (this.patient.plans) {
+                    Object.values(this.patient.plans).forEach((p, i) => {
+                        tabHeaders[i] = {
+                            ...p,
+                            price: this.getPlanTotalPrice(p),
+                        };
+                    });
                 }
-                return {};
+                return tabHeaders;
             },
         },
         created() {
             if (this.patient.plans && this.patient.plans.length < 1) {
                 this.getAllPlans();
             } else {
-                this.initiatePlans();
+                this.initialSetCurrentPlan();
+                // this.initiatePlans();
             }
         },
         watch: {
@@ -279,15 +231,17 @@
                     this.getAllPlans();
                 }
             },
+            'patient.currentPlan': function (plan) {
+                console.log(plan)
+                if (plan) {
+                    this.focusOnTab(plan)
+                }
+            },
         },
     };
 </script>
 <style lang="scss">
 .set-diagnose-form {
-    // .md-checkbox {
-    //     padding-top: 7px;
-    //     margin-left: 17px;
-    // }
     .tab-content > div {
         flex-grow: 1;
     }

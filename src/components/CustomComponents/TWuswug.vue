@@ -144,6 +144,7 @@
     } from 'tiptap-extensions';
 
     export default {
+        name: 't-wuswug',
         props: {
             content: {
                 type: String,

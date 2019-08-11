@@ -157,7 +157,6 @@
     export default {
         name: 'jaw-add-locations',
         mixins: [tObjProp, jawFunctions],
-        components: {},
         model: {
             prop: 'newItemParams',
             event: 'updateItemParams',

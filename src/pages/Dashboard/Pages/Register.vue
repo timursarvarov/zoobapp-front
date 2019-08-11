@@ -215,12 +215,13 @@
 </template>
 <script>
     import { SlideYDownTransition, SlideXLeftTransition } from 'vue2-transitions';
-    import { SignupCard } from '@/components';
+    import components from '@/components';
     import { USER_REGISTER, NOTIFY } from '@/constants';
 
     export default {
+        name: 'register',
         components: {
-            SignupCard,
+            ...components,
             SlideYDownTransition,
             SlideXLeftTransition,
         },

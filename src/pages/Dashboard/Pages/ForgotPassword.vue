@@ -54,6 +54,7 @@
     import { NOTIFY } from '@/constants';
 
     export default {
+        name: 'forgot-password',
         components: {
             SlideYDownTransition,
         },

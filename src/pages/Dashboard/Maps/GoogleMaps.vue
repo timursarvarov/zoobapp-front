@@ -56,6 +56,7 @@
     GoogleMapsLoader.KEY = API_KEY;
 
     export default {
+      name: 'google-maps',
         methods: {
             initSattelliteMap() {
                 // Satellite Map

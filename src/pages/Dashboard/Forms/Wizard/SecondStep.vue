@@ -28,11 +28,12 @@
   </div>
 </template>
 <script>
-    import { IconCheckbox } from '@/components';
+    import components from '@/components';
 
     export default {
+      name: 'second-step',
         components: {
-            IconCheckbox,
+            ...components,
         },
         data() {
             return {
