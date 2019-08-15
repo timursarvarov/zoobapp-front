@@ -1,12 +1,21 @@
-import { LOCAL_STORAGE, AVAILABLE_LANGUAGES } from '@/constants';
+import { LOCAL_STORAGE, AVAILABLE_LANGUAGES, DEFAULT_LANGUAGE } from '@/constants';
 
 export default {
     getProfile: state => state.profile,
     isProfileLoaded: state => !!state.profile.ID,
     teethSystem: state => state.teethSystem,
-    favoriteDiagnosis: state => state.favoriteDiagnosis,
-    favoriteAnamnesis: state => state.favoriteAnamnesis,
-    favoriteProcedures: state => state.favoriteProcedures,
+    favoriteAnamnesis() {
+        const favoriteItems = localStorage.getItem([LOCAL_STORAGE.favoriteItems.anamnesis]);
+        return favoriteItems ? JSON.parse(favoriteItems) : [];
+    },
+    favoriteProcedures() {
+        const favoriteItems = localStorage.getItem([LOCAL_STORAGE.favoriteItems.procedures]);
+        return favoriteItems ? JSON.parse(favoriteItems) : [];
+    },
+    favoriteDiagnosis() {
+        const favoriteItems = localStorage.getItem([LOCAL_STORAGE.favoriteItems.diagnosis]);
+        return favoriteItems ? JSON.parse(favoriteItems) : [];
+    },
     procedureDescriptions: state => state.procedureDescriptions,
     anamnesDescriptions: state => state.anamnesDescriptions,
     diagnoseDescriptions: state => state.diagnoseDescriptions,
@@ -16,15 +25,7 @@ export default {
     availableInvoiceTableColumns: state => state.availableInvoiceTableColumns,
     getLang: (state) => {
         if (state.profile.ID) {
-            if (state.profile.lang === 1) {
-                return 'en';
-            }
-            if (state.profile.lang === 2) {
-                return 'ru';
-            }
-            if (state.profile.lang === 3) {
-                return 'uz';
-            }
+            return state.profile.lang;
         }
         const systemLang = navigator.language.split('-')[0];
         const undefinedUserLanguage = localStorage.getItem(LOCAL_STORAGE.undefinedUser.lang);
@@ -34,7 +35,6 @@ export default {
         if (systemLang && systemLang in AVAILABLE_LANGUAGES) {
             return systemLang;
         }
-
-        return 'en';
+        return DEFAULT_LANGUAGE;
     },
 };

@@ -5,8 +5,6 @@
         :class=" {active : isActive(link.path)}"
         tag="li"
     >
-        <!-- :to="$i18nRoute({ name: link.name ? link.name : '/'})" -->
-            <!-- href="#" -->
         <a
             v-if="isMenu"
             class="nav-link sidebar-menu-item"

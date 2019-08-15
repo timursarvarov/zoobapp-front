@@ -442,7 +442,7 @@
                                             patient,
                                         });
                                         this.$router.push({
-                                            name: 'Procedures',
+                                            name: 'Treatment',
                                             params: {
                                                 lang: this.$i18n.locale,
                                                 patientId: patient.ID,

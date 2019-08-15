@@ -50,7 +50,7 @@ export default {
                         reject(resp.data.error);
                     }
                     commit(USER_SUCCESS);
-                    Object.keys(resp.data.result).forEach((key) => {
+                    Object.keys(fields).forEach((key) => {
                         commit(USER_PROP_SET, {
                             propKey: key,
                             propValue: resp.data.result[key],

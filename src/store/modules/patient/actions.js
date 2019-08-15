@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
     PATIENT_CREATE,
     PATIENT_GET,
+    PATIENT_EDIT,
     PATIENT_PARAM_SET,
     PATIENT_PARAMS_SET,
     PATIENT_SUB_PARAM_DELETE,
@@ -16,7 +17,6 @@ import {
     PATIENT_PLAN_CURRENT_SET,
     PATIENT_PLAN_DELETE,
     PATIENT_PLAN_EDIT,
-    PATIENT_PLANS_GET,
     PATIENT_PARAM_DELETE,
     PATIENT_PARAM_PUSH,
     PATIENT_DIAGNOSE_SET,
@@ -27,7 +27,6 @@ import {
     PATIENT_ITEM_VISIBILITY_TOGGLE,
     PATIENT_ANAMNES_SET,
     PATIENT_ANAMNES_UPDATE,
-    PATIENT_RESET,
     PATIENT_SUB_PARAM_SET,
     PATIENT_SUB_PARAMS_SET,
     PATIENT_SUB_PARAM_PUSH,
@@ -194,14 +193,6 @@ export default {
             paramValue: props,
         });
     },
-    [PATIENT_RESET]: ({
-        commit,
-        state,
-    }) => {
-        Object.keys(state).forEach((key) => {
-            commit(PATIENT_PARAM_SET, { paramName: key, paramValue: null });
-        });
-    },
     [PATIENT_CREATE]: ({
         commit,
         dispatch,
@@ -231,6 +222,38 @@ export default {
                 }
                 commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
                 dispatch(PATIENTS_PATIENT_ADD, { patient: resp.data.result });
+                resolve(resp.data.result);
+            })
+            .catch((err) => {
+                commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+                reject(err);
+            });
+    }),
+    [PATIENT_EDIT]: ({
+        commit,
+        state,
+    }, {
+        params,
+    }) => new Promise((resolve, reject) => {
+        commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'loading' });
+        axios.post('/',
+                JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'Patients.Edit',
+                    params: {
+                        patientID: state.ID,
+                        ...params,
+                    },
+                    id: 1,
+                }))
+            .then((resp) => {
+                if (resp.data.error) {
+                    commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+                    reject(resp.data.error);
+                }
+                Object.keys(params).forEach((key) => {
+                    commit(PATIENT_PARAM_SET, { paramName: key, paramValue: resp.data.result[key] });
+                });
                 resolve(resp.data.result);
             })
             .catch((err) => {
@@ -275,40 +298,40 @@ export default {
                 reject(err);
             });
     }),
-    [PATIENT_PLANS_GET]: ({
-        commit,
-        state,
-    }) => new Promise((resolve, reject) => {
-        commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'loading' });
-        axios.post('/',
-                JSON.stringify({
-                    jsonrpc: '2.0',
-                    method: 'Patients.GetPlans',
-                    params: {
-                        patientID: parseInt(state.ID, 10),
-                    },
-                    id: 1,
-                }))
-            .then((resp) => {
-                if (resp.data.error) {
-                    commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
-                    reject(resp.data.error);
-                }
-                if (resp.data.result.plans === null) resolve(null);
-                Object.keys(resp.data.result).forEach((key) => {
-                    commit(PATIENT_PARAM_SET, {
-                        paramName: key,
-                        paramValue: resp.data.result[key],
-                    });
-                });
-                commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
-                resolve(resp.data.result);
-            })
-            .catch((err) => {
-                commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
-                reject(err);
-            });
-    }),
+    // [PATIENT_PLANS_GET]: ({
+    //     commit,
+    //     state,
+    // }) => new Promise((resolve, reject) => {
+    //     commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'loading' });
+    //     axios.post('/',
+    //             JSON.stringify({
+    //                 jsonrpc: '2.0',
+    //                 method: 'Patients.GetPlans',
+    //                 params: {
+    //                     patientID: parseInt(state.ID, 10),
+    //                 },
+    //                 id: 1,
+    //             }))
+    //         .then((resp) => {
+    //             if (resp.data.error) {
+    //                 commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+    //                 reject(resp.data.error);
+    //             }
+    //             if (resp.data.result.plans === null) resolve(null);
+    //             Object.keys(resp.data.result).forEach((key) => {
+    //                 commit(PATIENT_PARAM_SET, {
+    //                     paramName: key,
+    //                     paramValue: resp.data.result[key],
+    //                 });
+    //             });
+    //             commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
+    //             resolve(resp.data.result);
+    //         })
+    //         .catch((err) => {
+    //             commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+    //             reject(err);
+    //         });
+    // }),
     [PATIENT_PROCEDURE_SET]: ({
         commit,
         state,
@@ -347,19 +370,19 @@ export default {
                 });
                 // добавляем процедуру в массиы процедур
                 commit(PATIENT_PARAM_PUSH, {
-                        paramName: 'procedures',
-                        paramValue: procedureN,
-                        paramKey: `${procedureN.ID}`,
-                    })
-                    // записываем дефолтные манипуляции
+                    paramName: 'procedures',
+                    paramValue: procedureN,
+                    paramKey: `${procedureN.ID}`,
+                });
+                // записываем дефолтные манипуляции
                 if (manipulations) {
-                    manipulations.forEach(m => {
+                    manipulations.forEach((m) => {
                         commit(PATIENT_PARAM_PUSH, {
                             paramName: 'manipulations',
                             paramValue: {...m, justAdded: true },
                             paramKey: `${m.ID}`,
-                        })
-                    })
+                        });
+                    });
                 }
 
                 // commit(PATIENT_SUB_PARAM_PUSH, {
@@ -493,6 +516,7 @@ export default {
     [PATIENT_PLAN_DELETE]: ({
         commit,
         state,
+        dispatch,
     }, {
         planID,
     }) => new Promise((resolve, reject) => {
@@ -512,7 +536,8 @@ export default {
                     commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
                     reject(resp.data.error);
                 }
-                commit(PATIENT_PARAM_DELETE, { paramName: 'plans', paramIndex: planID, });
+                commit(PATIENT_PARAM_DELETE, { paramName: 'plans', paramIndex: planID });
+                dispatch(PATIENT_PLAN_CURRENT_SET);
                 commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
                 resolve(resp.data.result);
             })
@@ -580,8 +605,17 @@ export default {
     }, {
         plan,
     }) => new Promise((resolve, reject) => {
-        commit(PATIENT_PARAM_SET, { paramName: 'currentPlan', paramValue: plan });
-        resolve(newInvoice);
+        console.log('set plan', plan);
+        if (plan) {
+            commit(PATIENT_PARAM_SET, { paramName: 'currentPlan', paramValue: plan });
+        } else if (state.plans) {
+            const currentPlan = Object.values(state.plans).find(planL => planL.state === 1);
+            if (!currentPlan) {
+                commit(PATIENT_PARAM_SET, { paramName: 'currentPlan', paramValue: Object.values(state.plans)[0] });
+            }
+            commit(PATIENT_PARAM_SET, { paramName: 'currentPlan', paramValue: currentPlan });
+        }
+        resolve(plan);
     }).catch((err) => {
         console.log(err);
     }),
@@ -681,7 +715,6 @@ export default {
             });
         });
         // ! убрать после выпуска в backend
-        commit(PATIENT_PARAM_SET, { paramName: 'plans', paramValue: null });
         commit(PATIENT_PARAM_SET, { paramName: 'diagnosis', paramValue: null });
         commit(PATIENT_PARAM_SET, { paramName: 'anamnesis', paramValue: null });
         dispatch(PATIENTS_PATIENT_UPDATE, {
@@ -711,9 +744,19 @@ export default {
                     commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
                     reject(resp.data.error);
                 }
+                const patient = resp.data.result.patients[0];
                 dispatch(PATIENT_PARAMS_SET, {
-                    patient: resp.data.result.patients[0],
+                    patient,
                 });
+                // initial Set CurrentPlan
+                if (patient.plans) {
+                    const currentPlan = Object.values(patient.plans).find(plan => plan.state === 1);
+                    if (!currentPlan) {
+                        dispatch(PATIENT_PLAN_CURRENT_SET, { plan: Object.values(patient.plans)[0] });
+                    } else {
+                        dispatch(PATIENT_PLAN_CURRENT_SET, { plan: currentPlan });
+                    }
+                }
                 commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
                 resolve(resp.data.result.patients[0]);
             })

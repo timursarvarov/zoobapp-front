@@ -1,4 +1,4 @@
-bio<template>
+<template>
     <div class="patient-profile-wrapper">
         <nav-tabs-card v-show="patient.ID">
             <template slot="content">
@@ -14,17 +14,17 @@ bio<template>
                         md-label="BIO"
                     >
                         <div class="md-layout">
-                            <patient-bio />
+                            <router-view name ="Bio"/>
                         </div>
                     </md-tab>
-                    <md-tab
+                     <md-tab
                         :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`"
                         id="tab-treatment"
                         md-icon="local_hospital"
                         md-label="Treatment"
                     >
                         <div class="md-layout">
-                            <patient-treatment ref="treatment" />
+                            <router-view name="Treatment"/>
                         </div>
                     </md-tab>
                     <md-tab
@@ -34,7 +34,7 @@ bio<template>
                         md-label="Billing"
                     >
                         <div class="md-layout">
-                            <patient-billing></patient-billing>
+                            <router-view name ="Billing"/>
                         </div>
                     </md-tab>
                     <md-tab
@@ -43,7 +43,7 @@ bio<template>
                         md-icon="question_answer"
                         md-label="Notes"
                     >
-                        <notes />
+                    <router-view name ="Notes" />
                     </md-tab>
                     <md-tab
                         :to="`/${$i18n.locale}/patient/${patient.ID}/files`"
@@ -51,7 +51,7 @@ bio<template>
                         md-icon="folder_shared"
                         md-label="Files"
                     >
-                        <patient-files />
+                    <router-view name ="Files" />
                     </md-tab>
                 </md-tabs>
             </template>
@@ -81,12 +81,8 @@ bio<template>
 
 <script>
     import { mapGetters } from 'vuex';
-    // import  NavTabsTable from '@/components/Cards/NavTabsTable';
-    import NavTabsCard from '@/components/Cards/NavTabsCard';
     import components from '@/components';
-    import PatientBio from './PatientBio/PatientBio';
-    import PatientBilling from './PatientBilling/PatientBilling';
-    import { PATIENT_GET, NOTIFY } from '@/constants';
+    import { PATIENT_GET } from '@/constants';
 
     export default {
         beforeRouteEnter(to, from, next) {
@@ -128,15 +124,6 @@ bio<template>
             next();
         },
         components: {
-            // NavTabsCard,
-            'patient-treatment': () => import('./PatientTreatment/PatientTreatment'),
-            'patient-files': () => import('./PatientFiles/PatientFiles'),
-            'patient-billing': () => import('./PatientBilling/PatientBilling'),
-            'patient-bio': () => import('./PatientBio/PatientBio'),
-            notes: () => import('./Notes'),
-            // NavTabsTable,
-            // PatientBio,
-            // PatientBilling,
             ...components,
         },
         name: 'PatientProfile',
@@ -176,28 +163,11 @@ bio<template>
                 patientStatus: 'getPatientStatus',
             }),
         },
+        mounted() {
+            // this.activeTab = 'tab-bio';
+        },
         created() {
             this.getPatient();
-        },
-        watch: {
-            $route() {
-                if (
-                    this.$route.params.patientId
-                    && (this.patient.ID === null
-                    || this.patient.ID
-                        !== parseInt(this.$route.params.patientId, 10))
-                ) {
-                    this.$store.dispatch(PATIENT_GET, {
-                        patientId: this.$route.params.patientId,
-                    });
-                    this.$store.dispatch(NOTIFY, {
-                        settings: {
-                            message: 'Patient changed',
-                            type: 'success',
-                        },
-                    });
-                }
-            },
         },
     };
 </script>

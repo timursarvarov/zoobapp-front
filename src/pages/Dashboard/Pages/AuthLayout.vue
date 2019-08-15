@@ -210,7 +210,7 @@
                 if (this.isProfileLoaded) {
                     this.$store.dispatch(USER_UPDATE, {
                         user: {
-                            lang: lang.backendCode,
+                            lang: lang.code,
                         },
                     });
                 }

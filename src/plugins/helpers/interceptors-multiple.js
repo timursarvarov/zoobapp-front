@@ -14,74 +14,13 @@ import {
 // for multiple requests
 export default function() {
     // response
-    const isAlreadyFetchingAccessToken = false;
-    let subscribers = [];
-
-    function onAccessTokenFetched(accessToken) {
-        subscribers = subscribers.filter(callback => callback(accessToken));
-    }
-
-    function addSubscriber(callback) {
-        subscribers.push(callback);
-    }
-
-
-    // request
-    // const isRefreshing = false;
-    // let failedQueue = [];
-
-    // const issueToken = () => new Promise((resolve, reject) => {
-    //     store.dispatch(AUTH_REFRESH_TOKEN).then((result) => {
-    //         resolve(result.accessToken);
-    //     });
-    // });
-
-    // const processQueue = (error, token = null) => {
-    //     failedQueue.forEach((prom) => {
-    //         if (error) {
-    //             prom.reject(error);
-    //         } else {
-    //             prom.resolve(token);
-    //         }
-    //     });
-
-    //     failedQueue = [];
-    // };
-
-    // let sentRequestToRefresh = false;
-
-    // const requests = [];
-
-    // axios.interceptors.request.use((config) => {
-    //     const expiresAt = localStorage.getItem('expiresAt');
-    //     const currentTime = Math.floor(Date.now() / 1000);
-
-    //     const originalRequest = config;
-
-    //     const requestData = JSON.parse(originalRequest.data);
-
-    //     if ((expiresAt && currentTime) &&
-    //         expiresAt < currentTime &&
-    //         requestData.method !== 'Auth.RefreshToken' &&
-    //         requestData.method !== 'Auth.Authentication' &&
-    //         requestData.method !== 'Auth.Registration'
-    //     ) {
-    //         sentRequestToRefresh = true;
-
-    //         return issueToken().then((token) => {
-    //             sentRequestToRefresh = true;
-    //             originalRequest.headers.Authorization = `Bearer ${token}`;
-
-    //             return Promise.resolve(originalRequest);
-    //         });
-    //     }
-
-    //     return originalRequest;
-    // }, error => Promise.reject(error));
-
     const issueToken = () => new Promise((resolve, reject) => {
         store.dispatch(AUTH_REFRESH_TOKEN).then((result) => {
             resolve(result.accessToken);
+        }).catch((err) => {
+            // USER_LOGOUT
+            console.log(err);
+            reject(err);
         });
     });
     let sentRequestToRefreshToken = false;
@@ -117,12 +56,14 @@ export default function() {
         }
         return response;
     }, (error) => {
+        store.dispatch(LOADER_STOP);
         const { config, response: { status } } = error;
         if (status) {
             const { refreshToken, hasRefreshTokenError } = store.state.auth;
             const originalRequest = config;
-            if (status === 401 && refreshToken && !sentRequestToRefreshToken && !hasRefreshTokenError) {
-                // if (status === 401) {
+            if (status === 401 &&
+                refreshToken &&
+                !hasRefreshTokenError) {
                 if (!sentRequestToRefreshToken) {
                     sentRequestToRefreshToken = true;
 
@@ -141,8 +82,6 @@ export default function() {
                     });
                 });
 
-                console.log(requestPromise);
-
                 return requestPromise;
             }
             store.dispatch(NOTIFY, {
@@ -152,10 +91,8 @@ export default function() {
                     message: error.response.data.error ? error.response.data.error : 'No data to show',
                 },
             });
-
             store.dispatch(LOADER_STOP);
         } else if (error.request) {
-            console.log(error);
             store.dispatch(NOTIFY, {
                 settings: {
                     type: 'danger',
@@ -163,7 +100,7 @@ export default function() {
                     message: 'The request was made but no response was received',
                 },
             });
-        } else if (error != 'Cancel') {
+        } else if (error !== 'Cancel') {
             store.dispatch(NOTIFY, {
                 settings: {
                     type: 'danger',
@@ -171,8 +108,6 @@ export default function() {
                 },
             });
         }
-
-        store.dispatch(LOADER_STOP);
         return Promise.reject(error);
     });
 }

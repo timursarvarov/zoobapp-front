@@ -19,9 +19,6 @@ export default {
     },
     status: '',
     teethSystem: 'fdi',
-    favoriteDiagnosis: ['K00.3', 'K00.7', 'K01.1'],
-    favoriteProcedures: ['1.3', '2.7', '4.1', '9.1'],
-    favoriteAnamnesis: ['1.3', '2.7', '4.1', '9.1'],
     diagnoseDescriptions: [{
             title: 'description #1',
             description: 'some cool and long description',

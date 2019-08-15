@@ -1,3 +1,15 @@
+.wrjaw{
+    position: relative;
+    .loader-wrapper {
+        background: rgba(white, 0.7);
+        position: absolute;
+        z-index: 30;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
 .jaw-wrapper {
     user-select: none;
     width: 100%;
@@ -6,6 +18,15 @@
     background: rgba(white, 0.4);
     border-radius: 5px;
     min-height: 30vh;
+    .jaw-wrapper-teeth{
+        height:100%;
+        overflow:hiden;
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
     .dropdown-menu li {
         padding: 0px 0px 0px 16px;
         .md-radio {

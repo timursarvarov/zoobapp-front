@@ -4,10 +4,9 @@
         <div class="mx-auto" style="flex-grow:1;">
             <jaw
                 :selectedTeeth="selectedTeeth"
+                :ageCategory="!!patient.ageCategory"
                 @onSelectedTeeth='onSelectedTeeth'
                 @showToothInfo='showToothInfo'
-                @toggleItemVisibility='toggleItemVisibility'
-                @onChangeAgeCategory='onChangeAgeCategory'
                 @onSizeChanged='matchHeight'
                 :jaw="jaw"
                 :patientItems="{
@@ -18,75 +17,47 @@
                 :teethSystem="currentClinic.teethSystem"
                 :type="currentType"
                 >
-                    <template slot="title-start">
-                        <!-- <md-tabs md-sync-route  class="t-md-tabs">
-                            <md-tab id="tab-home"
-                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/procedures`"
-                                md-label="Procedures"></md-tab>
-                            <md-tab id="tab-pages"
-                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/diagnoses`"
+                <template slot="title-start">
+                    <md-tabs md-sync-route  class="t-md-tabs"
+                        :class="currentType">
+                        <md-tab id="tab-home"
+                            :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/procedures`"
+                            md-label="Procedures"></md-tab>
+                        <md-tab id="tab-pages" class="diagnosis"
+                            :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/diagnosis`"
                             md-label="Diagnoses"></md-tab>
-                            <md-tab :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/anamnes`"
-                            id="tab-posts" md-label="Anamnes"></md-tab>
-                        </md-tabs> -->
-                            <div class="md-layout">
-                                <div class="md-layout-item">
-                                <md-button
-                                    @click.stop="currentType = 'procedures'"
-                                    class=" md-sm"
-                                    :class="[
-                                        {'md-success' : currentType === 'procedures' },
-                                        {'md-simple' :  currentType !== 'procedures' }
-                                        ]">
-                                        procedure
-                                </md-button>
-                                <md-button
-                                    @click.stop="currentType = 'diagnosis'"
-                                    class=" md-sm"
-                                    :class="[
-                                        {'md-primary' : currentType === 'diagnosis' },
-                                        {'md-simple' :  currentType !== 'diagnosis' }
-                                        ]" >
-                                        diagnose
-                                </md-button>
-                                <md-button
-                                    @click.stop="currentType = 'anamnesis'"
-                                    class=" md-sm"
-                                    :class="[
-                                        {'md-info' : currentType === 'anamnesis' },
-                                        {'md-simple' :  currentType !== 'anamnesis' }
-                                        ]" >
-                                        anamnes
-                                </md-button>
-                            </div>
-                        </div>
-                    </template>
-                </jaw>
+                        <md-tab
+                            :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`"
+                        id="tab-posts" md-label="Anamnes"></md-tab>
+                    </md-tabs>
+                </template>
+            </jaw>
         </div>
     </div>
-    <patient-items-search
-        class="md-layout-item md-layout md-small-size-100 md-xsmall-size-100 md-gutter md-medium-size-50 md-size-50"
-        :customHeight="jawHeight"
-        :selectedTeeth="selectedTeeth"
-        :currentType="currentType"
-        :recalculateItems="recalculateCollapseItems"
-        :currentPlan="patient.currentPlan || {}"
-        :loadingAllPLans="loadingAllPLans"
-        @addPlan="addPlan"
-        @onSelectItem="selectItem"
-    />
-    <div class="md-layout-item  md-size-100" >
-        <patient-items-lists
-            ref='items-lists'
-            :currentType="currentType"
-            :ageCategory="ageCategory"
-            :plans="patient.plans"
-            @onChangeTab="onChangeTab"
-            @toggleItemVisibility='toggleItemVisibility'
-            @showItemInfo='selectItem'
-            @onLoadingAllPlans="onLoadingAllPlans"
+    <keep-alive>
+        <router-view
+            name='search'
+            class="md-layout-item md-layout md-small-size-100 md-xsmall-size-100 md-gutter md-medium-size-50 md-size-50"
+            :customHeight="jawHeight"
+            :selectedTeeth="selectedTeeth"
+            :recalculateItems="recalculateCollapseItems"
+            :currentPlan="patient.currentPlan || {}"
+            :hideSlot="!patient.currentPlan"
+            @addPlan="addPlan"
+            @onSelectItem="selectItem"
         />
-    </div>
+    </keep-alive>
+    <keep-alive>
+        <div class="md-layout-item  md-size-100" >
+            <router-view
+                name='list'
+                ref='items-lists'
+                :currentType="currentType"
+                :plans="patient.plans"
+                @showItemInfo='selectItem'
+            />
+        </div>
+    </keep-alive>
 
     <div class="md-layout-item md-layout md-size-100" >
 
@@ -110,7 +81,6 @@
             :showForm.sync="showAddPlan"
             :plans="patient.plans"
             :patientId="patient.ID"
-            @onLoadingAllPlans="onLoadingAllPlans"
         />
         <t-print-form
             :patient="patient"
@@ -140,7 +110,6 @@
     import {
         NOTIFY,
         PATIENT_DIAGNOSE_SET,
-        PATIENT_ITEM_VISIBILITY_TOGGLE,
         PATIENT_DIAGNOSE_UPDATE,
         PATIENT_PROCEDURE_SET,
         PATIENT_ANAMNES_UPDATE,
@@ -149,22 +118,21 @@
     } from '@/constants';
     import PlanAddForm from './PlanAddForm.vue';
     import components from '@/components';
-    import PatientItemsLists from './PatientItemsLists/PatientItemsLists.vue';
-    import PatientItemsSearch from './PatientItemsSearch.vue';
+    // import PatientItemsLists from './PatientItemsLists/PatientItemsLists.vue';
+    // import PatientItemsSearch from './PatientItemsSearch.vue';
     import { tObjProp } from '@/mixins';
 
     export default {
         mixins: [tObjProp],
         components: {
-            PatientItemsSearch,
-            PatientItemsLists,
+            // 'patient-items-search': () => import('./PatientItemsSearch.vue'),
+            // PatientItemsLists,
             PlanAddForm,
             ...components,
         },
         data() {
             return {
                 currentType: 'procedures',
-                focusedPlanID: null,
                 showToothDiagnosis: false,
                 showAddItemWizard: false,
                 jawHeight: 0,
@@ -176,14 +144,9 @@
                 loadingAllPLans: false,
                 showPrint: false,
                 selecteditemLocal: {},
-                ageCategory: 'adultTeeth',
             };
         },
         methods: {
-            onChangeAgeCategory(c) {
-                this.ageCategory = c || 'adultTeeth';
-                this.onRecalculateCollapseItems();
-            },
             onRecalculateCollapseItems() {
                 this.recalculateCollapseItems = !this.recalculateCollapseItems;
             },
@@ -202,28 +165,12 @@
             onShowPrint() {
                 this.showPrint = true;
             },
-            onChangeTab(planID) {
-                this.focusedPlanID = planID;
-                this.recalculateJawProcedure();
-            },
             editItem(item) {
                 if (!this.isEmpty(item.teeth)) {
                     this.selectedTeeth = Object.keys(item.teeth);
                 }
                 this.selecteditemLocal = item;
                 this.showAddItemWizard = true;
-            },
-            toggleItemVisibility(itemId, itemType) {
-                if (itemId) {
-                    this.$store.dispatch(PATIENT_ITEM_VISIBILITY_TOGGLE, {
-                        params: {
-                            itemId,
-                            type: itemType,
-                            planId: this.patient.currentPlan.ID,
-                        },
-                    });
-                }
-                this.recalculateJaw(itemType);
             },
 
             showItemInfo(params) {
@@ -236,9 +183,6 @@
             },
             onSelectedTeeth(teeth) {
                 this.selectedTeeth = teeth;
-            },
-            onLoadingAllPlans(isLoading) {
-                this.loadingAllPLans = isLoading;
             },
             saveEditedAnamnes(a) {
                 this.$store.dispatch(PATIENT_ANAMNES_UPDATE, {
@@ -292,7 +236,6 @@
                         });
                     }
                     if (this.currentType === 'procedures') {
-                        jaw;
                         this.$store.dispatch(PATIENT_PROCEDURE_SET, {
                             planID: this.patient.currentPlan.ID,
                             procedure: itemL,
@@ -349,16 +292,16 @@
                                     (kLocation) => {
                                         if (
                                             kLocation
-                                        in this.jaw[localType][toothId]
+                                            in this.jaw[localType][toothId]
                                         ) {
                                             if (
                                                 !diagnose.teeth[toothId][kLocation]
                                             ) {
                                                 this.jaw[localType][toothId][
                                                     kLocation
-                                                ] =                                                diagnose.teeth[toothId][
-                                                        kLocation
-                                                    ];
+                                                ] = diagnose.teeth[toothId][
+                                                    kLocation
+                                                ];
                                             }
                                         } else {
                                             this.jaw[localType][toothId][
@@ -385,7 +328,7 @@
                                         (kLocation) => {
                                             if (
                                                 kLocation
-                                            in this.jaw.procedures[toothId]
+                                                in this.jaw.procedures[toothId]
                                             ) {
                                                 if (
                                                     !procedure.teeth[toothId][
@@ -394,16 +337,16 @@
                                                 ) {
                                                     this.jaw.procedures[toothId][
                                                         kLocation
-                                                    ] =                                                    procedure.teeth[toothId][
-                                                            kLocation
-                                                        ];
+                                                    ] = procedure.teeth[toothId][
+                                                        kLocation
+                                                    ];
                                                 }
                                             } else {
                                                 this.jaw.procedures[toothId][
                                                     kLocation
-                                                ] =                                                procedure.teeth[toothId][
-                                                        kLocation
-                                                    ];
+                                                ] = procedure.teeth[toothId][
+                                                    kLocation
+                                                ];
                                             }
                                         },
                                     );
@@ -412,6 +355,9 @@
                         });
                     }
                 }
+            },
+            switchType(type) {
+                this.currentType = type;
             },
         },
         computed: {
@@ -475,16 +421,23 @@
                 return itemToShow;
             },
         },
+        created() {
+            if (this.currenttype !== this.$route.name) {
+                this.switchType(this.$route.name);
+            }
+        },
         watch: {
+            // eslint-disable-next-line func-names
             'patient.currentPlan': function (plan) {
-                console.log(plan);
-                if (plan) {
-                    const rec = new Promise((resolve) => {
-                        this.recalculateJawProcedure();
-                    });
-                    rec;
+                if (this.patient.currentPlan && this.patient.currentPlan.ID !== plan.ID) {
+                    this.recalculateJawProcedure();
                 }
+            },
+            $route(val) {
+                this.switchType(val.name);
             },
         },
     };
 </script>
+<style lang="scss">
+</style>

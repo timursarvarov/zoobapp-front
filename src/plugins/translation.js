@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { AVAILABLE_LANGUAGES, DEFAULT_LANGUAGE } from '@/constants/';
-import { i18n } from '@/plugins/vue-i18n';
+import { AVAILABLE_LANGUAGES } from '@/constants/';
+import i18n from '@/plugins/vue-i18n';
+import store from '@/store';
 
 const Trans = {
     get defaultLanguage() {
-        return DEFAULT_LANGUAGE;
+        return store.getters.getLang;
     },
     get supportedLanguages() {
         return Object.keys(AVAILABLE_LANGUAGES);
@@ -60,11 +61,11 @@ const Trans = {
      */
     changeLanguage(lang) {
         if (!Trans.isLangSupported(lang)) return Promise.reject(new Error('Language not supported'));
-        if (i18n.locale === lang) return Promise.resolve(lang); // has been loaded prior
+        if (i18n.locale === lang) return Promise.resolve(lang).catch((err) => { console.log(err); }); // has been loaded prior
         return Trans.loadLanguageFile(lang).then((msgs) => {
             i18n.setLocaleMessage(lang, msgs.default || msgs);
             return Trans.setI18nLanguageInServices(lang);
-        });
+        }).catch((err) => { console.log(err); });
     },
     /**
      * Async loads a translation file
@@ -72,7 +73,7 @@ const Trans = {
      * @return {Promise<*>|*}
      */
     loadLanguageFile(lang) {
-        return import ( /* webpackChunkName: "lang-[request]" */ `@/lang/${lang}.json`);
+        return import(/* webpackChunkName: "lang-[request]" */ `@/lang/${lang}.json`);
     },
     /**
      * Checks if a lang is supported
@@ -109,4 +110,5 @@ const Trans = {
     },
 };
 
+// eslint-disable-next-line import/prefer-default-export
 export { Trans };

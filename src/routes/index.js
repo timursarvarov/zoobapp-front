@@ -13,7 +13,6 @@ export default new Router({
         if (savedPosition) {
             return savedPosition;
         }
-
         return { x: 0, y: 0 };
     },
 });

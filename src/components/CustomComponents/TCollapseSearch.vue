@@ -1,14 +1,14 @@
 <template lang="html">
     <div class="t-collapse-search-wrapper noselect">
 
-        <div v-if="loading"
+        <div v-show="loading"
             class="no-plan-space"
                 :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
             <md-empty-state>
                 <md-progress-spinner md-mode="indeterminate"/>
             </md-empty-state>
         </div>
-        <div v-else >
+        <div v-show="!loading" >
 
             <md-toolbar  class=" md-transparent no-side-padding md-layout md-alignment-top-space-between collapse-toolbar__items" >
                 <div class="collapse-actions md-small-size-100 md-size-50" >
@@ -18,7 +18,7 @@
                 <div class="collapse-actions md-small-size-100 md-size-50" >
                     <div class=" collapse-toolbar__grow">
                         <md-field class="no-margin " >
-                            <label>Search {{itemType}}</label>
+                            <label>Search {{type}}</label>
                             <md-input v-model="search"  > </md-input>
                             <slide-y-down-transition>
                             <md-button @click="search = ''"  v-show="search.length > 0" class="md-simple md-icon-button md-dense md-input-action ">
@@ -34,16 +34,16 @@
                             class="md-mini md-just-icon md-simple md-round"
                         >
                             <md-icon :class="[{rotate:toggleAll }]" >keyboard_arrow_down</md-icon>
-                            <md-tooltip md-delay="500">Show all {{itemType}}</md-tooltip>
+                            <md-tooltip md-delay="500">Show all {{type}}</md-tooltip>
                         </md-button>
                     </div>
                 </div>
             </md-toolbar>
 
-            <div v-if="!hideSlot && getItems.length > 0" class="collapse-wrapper "  :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
+            <div v-show="!hideSlot && getItems.length > 0" class="collapse-wrapper "  :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
                 <custom-collapse
-                        :colorCollapse="colorCollapse"
-                        v-if="!hideSlot"
+                        :colorCollapse="classType"
+                        v-show="!hideSlot"
                         class=""
                             :collapse="itemsGroup"
                             icon="keyboard_arrow_down"
@@ -72,7 +72,7 @@
 
                                     </div>
 
-                                    <md-button  :class="[{[`md-${colorCollapse}`] : isFavorite(item)}, 'md-simple', 'md-list-action', 'md-icon-button']"   :md-ripple="false" >
+                                    <md-button  :class="[{[`md-${classType}`] : isFavorite(item)}, 'md-simple', 'md-list-action', 'md-icon-button']"   :md-ripple="false" >
                                     <md-icon >star</md-icon>
                                     <md-tooltip  md-delay="700">Add to Favorite</md-tooltip>
                                     </md-button>
@@ -85,18 +85,19 @@
                 </custom-collapse>
             </div>
 
-            <div v-if="getItems.length == 0 && !hideSlot"
+            <div v-show="getItems.length == 0 && !hideSlot"
                 class="no-plan-space"
                 :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
                 <md-empty-state
+                    :class="getClassType"
                     md-icon="sentiment_dissatisfied"
-                    :md-label="`No matching ${this.itemType}`"
+                    :md-label="`No matching ${type}`"
                     md-description="Try another search params">
                 </md-empty-state>
             </div>
             <div class="no-plan-space"
                 :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
-                <slot v-if="hideSlot" name="empty-space"></slot>
+                <slot v-show="hideSlot" name="empty-space"></slot>
             </div>
         </div>
     </div>
@@ -106,7 +107,7 @@
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
     import Fuse from 'fuse.js';
-    
+
     import { tObjProp } from '@/mixins';
 
     const fuseOptions = {
@@ -158,10 +159,6 @@
                 type: Array,
                 default: () => [],
             },
-            itemType: {
-                type: String,
-                default: () => 'Items',
-            },
             recalculateItems: {
                 type: Boolean,
                 default: () => false,
@@ -172,7 +169,15 @@
             },
             hideSlot: {
                 type: Boolean,
-                default: () => true,
+                default: () => false,
+            },
+            classType: {
+                type: String,
+                default: () => 'primary',
+            },
+            type: {
+                type: String,
+                default: () => 'diagnosis',
             },
         },
         data() {
@@ -219,7 +224,7 @@
                 const favoriteItems = {
                     code: '★',
                     codes: [],
-                    title: `Favorite ${this.itemType}`,
+                    title: `Favorite ${this.type}`,
                 };
                 if (this.favoriteItems.length > 0) {
                     this.favoriteItems.forEach((fitem) => {
@@ -249,7 +254,9 @@
                     const favoriteIndex = this.items.findIndex(
                         item => item.code === '★',
                     );
-                    this.items.splice(favoriteIndex, 1);
+                    if(favoriteIndex > -1){
+                        this.items.splice(favoriteIndex, 1);
+                    }
                 }
             },
             namespace(object, path) {
@@ -327,14 +334,8 @@
             filteredItems() {
                 return this.getFilteredItems();
             },
-            colorCollapse() {
-                if (this.itemType === 'diagnosis') {
-                    return 'primary';
-                }
-                if (this.itemType === 'anamnesis') {
-                    return 'info';
-                }
-                return 'success';
+            getClassType() {
+                return `md-${this.classType}`;
             },
             getToggleAll() {
                 if (this.search || this.toggleAll) {
@@ -359,10 +360,6 @@
             this.searched = this.copyObj(this.itemOriginal);
         },
         watch: {
-            itemType() {
-                this.loadData();
-                this.searched = this.copyObj(this.itemOriginal);
-            },
             recalculateItems() {
                 this.loadData();
                 this.searched = this.copyObj(this.itemOriginal);

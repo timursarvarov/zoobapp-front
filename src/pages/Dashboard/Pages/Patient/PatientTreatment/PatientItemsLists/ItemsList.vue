@@ -2,7 +2,7 @@
 <template>
     <div class="items-list-wrapper">
         <div class="t-toolbar" >
-            <md-toolbar v-if="currentType==='procedures'" class="md-transparent">
+            <md-toolbar v-if="$route.name==='procedures'" class="md-transparent">
                 <div class="md-layout">
                     <div class="md-layout-item t-toolbar__section md-size-20 ">
                         <p class=" t-toolbar__section-text">
@@ -54,13 +54,13 @@
         </div>
         <md-empty-state
                 v-if="items.length < 1"
-                :md-label="`No ${currentType} found`"
-                :md-description="`No ${currentType}  found. Scroll top, and create new ${currentType} .`"
+                :md-label="`No ${$route.name} found`"
+                :md-description="`No ${$route.name}  found. Scroll top, and create new ${$route.name} .`"
             >
                 <md-button class="md-primary md-raised" @click="scrollToTop()">Scroll Top</md-button>
         </md-empty-state>
         <div v-else >
-            <md-toolbar v-if="currentType==='procedures'" class="md-transparent">
+            <md-toolbar v-if="$route.name==='procedures'" class="md-transparent">
                 <div class="md-toolbar-section-start md-layout">
                 </div>
                 <div class="md-toolbar-section-end ml-auto">
@@ -144,8 +144,8 @@
                 </md-table-toolbar>-->
 
                 <md-table-empty-state
-                    :md-label="`No ${currentType} found`"
-                    :md-description="`No ${currentType}  found. Scroll top, and create new ${currentType} .`"
+                    :md-label="`No ${$route.name} found`"
+                    :md-description="`No ${$route.name}  found. Scroll top, and create new ${$route.name} .`"
                 >
                     <md-button class="md-primary md-raised" @click="scrollToTop()">Scroll Top</md-button>
                 </md-table-empty-state>
@@ -157,7 +157,7 @@
                     ]"
                     slot="md-table-row"
                     :key="item.id || item.ID"
-                    :md-selectable="currentType ==='procedures'?'multiple':'single'"
+                    :md-selectable="$route.name ==='procedures'?'multiple':'single'"
                     slot-scope="{ item }"
                 >
                     <md-table-cell
@@ -266,7 +266,7 @@
                         <md-button
                             v-show="ifDiagnoseHasLocations(item.teeth)"
                             class="md-just-icon md-simple"
-                            @click.native="$emit('toggleItemVisibility', item, currentType)"
+                            @click.native="toggleItemVisibility(item, $route.name)"
                         >
                             <md-icon v-if="item.showInJaw">visibility</md-icon>
                             <md-icon v-else>visibility_off</md-icon>
@@ -301,7 +301,7 @@
         <t-table-editor
             icon="settings"
             color="success"
-            :title="`Set ${currentType} columns order`"
+            :title="`Set ${$route.name} columns order`"
             :availableTableColumns="computedAvailableItemsTableColumns"
             :tableColumns="itemsTableColumns"
             :showForm.sync="showTableEditor"
@@ -313,7 +313,7 @@
             :showForm.sync="showDeleteForm"
             :itemToDelete="itemToDelete"
             :patientID="patient.ID"
-            :currentType="currentType"
+            :currentType="$route.name"
             :planID="plan.ID"
         />
 
@@ -330,7 +330,7 @@
                         <span>
                             Selected:
                             <animated-number :value="selectedItems.length" />
-                            {{currentType}}
+                            {{$route.name}}
                         </span>
                     </div>
                     <div class="md-layout-item">
@@ -355,6 +355,7 @@
         USER_DIAGNOSIS_COLUMNS,
         USER_ANAMNESIS_COLUMNS,
         USER_PROCEDURES_COLUMNS,
+        PATIENT_ITEM_VISIBILITY_TOGGLE,
     } from '@/constants';
     import DeleteForm from './DeleteForm.vue';
     import { tObjProp } from '@/mixins';
@@ -460,6 +461,18 @@
         },
 
         methods: {
+            toggleItemVisibility(itemId, itemType) {
+                if (itemId) {
+                    this.$store.dispatch(PATIENT_ITEM_VISIBILITY_TOGGLE, {
+                        params: {
+                            itemId,
+                            type: itemType,
+                            planId: this.patient.currentPlan.ID,
+                        },
+                    });
+                }
+                this.recalculateJaw(itemType);
+            },
             getSubManips(manipulations) {
                 let total = 0;
                 if (!Array.isArray(manipulations)) {
@@ -510,6 +523,7 @@
             getFieldName(key) {
                 const field = this.defaultFields.find(f => f.key === key);
                 if (field) {
+                    console.log(field)
                     return field.title;
                 }
                 return '';
@@ -624,10 +638,10 @@
                 console.log(result);
                 this.searchedData = result;
             },
-            currentType() {
-                this.setItemsTableColumns();
-                this.setComputedAvailableItemsTableColumns();
-            },
+            // $route() {
+            //     this.setItemsTableColumns();
+            //     this.setComputedAvailableItemsTableColumns();
+            // },
             selectedItems() {
                 this.showSnackbar = this.selectedItems.length > 0;
             },

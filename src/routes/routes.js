@@ -251,44 +251,80 @@ const patientPages = {
     component: load('Layout/DashboardLayout'),
     name: 'PatientTreatmentent',
     beforeEnter: ifAuthenticated,
-    redirect: `/${Trans.getUserSupportedLang()}/patient/:patientId/bio`,
+    redirect: `/${Trans.getUserSupportedLang()}/patient/:patientId/treatment`,
 
     children: [{
         path: ':patientId',
-        component: load('Pages/Patient/PatientProfile'),
+        components: {
+            default: load('Pages/Patient/PatientProfile'),
+        },
         name: 'PatientTreatmententItems',
         beforeEnter: ifAuthenticated,
-        redirect: `/${Trans.getUserSupportedLang()}/patient/:patientId/bio`,
+        redirect: `/${Trans.getUserSupportedLang()}/patient/:patientId/treatment`,
         children: [{
                 path: 'notes',
                 name: 'Notes',
-                component: load('Pages/Patient/Notes'),
+                components: {
+                    Notes: load('Pages/Patient/Notes'),
+                },
             },
             {
                 path: 'bio',
                 name: 'Bio',
-                component: load('Pages/Patient/PatientBio/PatientBio'),
+                components: {
+                    Bio: load('Pages/Patient/PatientBio/PatientBio'),
+                },
             },
             {
                 path: 'files',
                 name: 'Files',
-                component: load('Pages/Patient/PatientFiles/PatientFiles'),
+                components: {
+                    Files: load('Pages/Patient/PatientFiles/PatientFiles'),
+                },
             },
             {
                 path: 'billing',
                 name: 'Billing',
-                component: load('Pages/Patient/PatientBilling/PatientBilling'),
+                components: {
+                    Billing: load('Pages/Patient/PatientBilling/PatientBilling'),
+                },
             },
             {
                 path: 'treatment',
-                name: 'Treatments',
-                // redirect: `/${Trans.getUserSupportedLang()}/patient/:patientId/treatment/procedures`,
-                // children: [{
-                //     alias: ['diagnoses', 'procedures'],
-                //     path: 'anamnes',
-                //     name: 'Treatment',
-                //     component: load('Pages/Patient/PatientProfile'),
-                // }, ],
+                name: 'Treatment',
+                components: {
+                    Treatment: load('Pages/Patient/PatientTreatment/PatientTreatment'),
+                },
+                redirect: `/${Trans.getUserSupportedLang()}/patient/:patientId/treatment/procedures`,
+                children: [{
+                        path: 'diagnosis',
+                        name: 'diagnosis',
+                        components: {
+                            search: load('Pages/Patient/PatientTreatment/PatientItemsSearch/PatientDiagnosisSearch'),
+                            list: load('Pages/Patient/PatientTreatment/PatientItemsLists/PatientDiagnosisList'),
+                        },
+                    },
+                    {
+                        path: 'anamnesis',
+                        name: 'anamnesis',
+                        components: {
+                            search: load('Pages/Patient/PatientTreatment/PatientItemsSearch/PatientAnamnesisSearch'),
+                            list: load('Pages/Patient/PatientTreatment/PatientItemsLists/PatientAnamnesisList'),
+                        },
+                    },
+                    {
+                        path: 'procedures',
+                        name: 'procedures',
+                        components: {
+                            search: load('Pages/Patient/PatientTreatment/PatientItemsSearch/PatientProceduresSearch'),
+                            list: load('Pages/Patient/PatientTreatment/PatientItemsLists/PatientIProceduresList'),
+                        },
+                        children: [{
+                            path: ':planID',
+                            name: 'plan',
+                        }],
+                    },
+                ],
             },
         ],
     }],

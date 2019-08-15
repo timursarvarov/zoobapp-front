@@ -9,17 +9,15 @@
                         <md-icon>assignment</md-icon>
                     </div>
 
-                    <h4 class="title md-layout-item">
-                        Patients List
-                    </h4>
+                    <h4 class="title md-layout-item">Patients List</h4>
                 </md-card-header>
                 <md-card-content>
                     <md-toolbar class="md-transparent">
                         <div class="md-toolbar-section-start md-layout">
-                    <h4 class="title md-layout-item">
-                        Total Patients:
-                        <animated-number :value="patientsNum" />
-                    </h4>
+                            <h4 class="title md-layout-item">
+                                Total Patients:
+                                <animated-number :value="patientsNum" />
+                            </h4>
                         </div>
                         <div class="md-toolbar-section-end md-layout ml-auto">
                             <md-button @click="showForm=!showForm" class="md-just-icon md-simple">
@@ -131,9 +129,9 @@
                                     v-for="field  in patientsTableColumns"
                                     :key="field.key"
                                     :md-label="getFieldName(field.key).toString()"
-                                    @click="goToPatient(item)"
+                                    @click="getPatient(item)"
                                 >
-                                    <div class="pointer" @click="goToPatient(item)">
+                                    <div class="pointer" @click="getPatient(item)">
                                         <div
                                             class="md-layout md-alignment-center-left md-gutter patient-name"
                                             v-if="field.key === 'name'"
@@ -155,7 +153,7 @@
                                         <div v-else-if="item[field.key] === null">1</div>
                                         <div
                                             class="pointer"
-                                            @click="goToPatient(item)"
+                                            @click="getPatient(item)"
                                             v-else-if="(typeof item[field.key]) === 'array'"
                                         >
                                             111
@@ -192,7 +190,7 @@
                                         </div>
                                         <div
                                             class="pointer"
-                                            @click="goToPatient(item)"
+                                            @click="getPatient(item)"
                                             v-else-if="(typeof item[field.key]) === 'string' || field.key === 'avatar'"
                                         >
                                             <span
@@ -217,7 +215,7 @@
                                         </div>
                                         <div
                                             class="pointer"
-                                            @click="goToPatient(item)"
+                                            @click="getPatient(item)"
                                             v-else-if="(typeof item[field.key]) === 'number'"
                                         >
                                             <span v-if="field.key === 'phone'">
@@ -247,7 +245,7 @@
                                     </md-button>
                                     <md-button
                                         class="md-just-icon md-info md-simple"
-                                        :to="{ name: 'Bio', params :{patientId : item.ID}}"
+                                        :to="{ name: 'Treatment', params :{ lang: $i18n.locale, patientId : item.ID}}"
                                     >
                                         <md-icon>open_in_new</md-icon>
                                     </md-button>
@@ -336,6 +334,8 @@
     import {
         PATIENTS_REQUEST,
         USER_PATIENTS_COLUMNS,
+        PATIENT_GET,
+        NOTIFY,
     } from '@/constants';
     import { tObjProp } from '@/mixins';
 
@@ -413,6 +413,33 @@
                             patientId: patient.ID,
                         },
                     });
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: 'Patient changed',
+                            type: 'success',
+                        },
+                    });
+                }
+            },
+            getPatient(patient) {
+                if (patient.ID) {
+                    if (this.patient.ID && this.patient.ID === patient.ID) {
+                        this.$store.dispatch(PATIENT_GET, {
+                            patientId: this.$route.params.patientId,
+                        })
+                            .then((patientResponse) => {
+                                if (patientResponse) {
+                                    this.goToPatient(patientResponse);
+                                }
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            })
+                            .then(() => {
+                            });
+                    } else {
+                        this.goToPatient(patient);
+                    }
                 }
             },
             customSort(value) {
@@ -559,6 +586,7 @@
         computed: {
             ...mapGetters({
                 patients: 'getPatients',
+                patient: 'getPatient',
                 patientsNum: 'getPatientsNum',
                 status: 'patientsStatus',
                 availablePatientsTableColumns: 'availablePatientsTableColumns',

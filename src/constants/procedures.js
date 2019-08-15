@@ -455,7 +455,7 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P13',
-                ageCategory: ['adultTeeth'],
+                ageCategory: [0],
                 state: '',
             },
             {
@@ -465,7 +465,7 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P14',
-                ageCategory: ['adultTeeth'],
+                ageCategory: [0],
                 state: '',
             },
             {
@@ -474,7 +474,7 @@ export default [{
                 description: '',
                 price: 12,
                 templateCode: 'P14',
-                ageCategory: ['adultTeeth'],
+                ageCategory: [0],
                 state: '',
             },
             {
@@ -484,7 +484,7 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P14',
-                ageCategory: ['adultTeeth'],
+                ageCategory: [0],
                 state: '',
             },
             {
@@ -494,7 +494,7 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P15',
-                ageCategory: ['adultTeeth'],
+                ageCategory: [0],
                 state: '',
             },
             {
@@ -504,7 +504,7 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P16',
-                ageCategory: ['adultTeeth'],
+                ageCategory: [0],
                 state: '',
             },
             {
@@ -514,7 +514,7 @@ export default [{
                 price: 12,
                 available: true,
                 templateCode: 'P16',
-                ageCategory: ['adultTeeth'],
+                ageCategory: [0],
                 state: '',
             },
         ],

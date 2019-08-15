@@ -25,16 +25,11 @@
             },
         },
         mounted() {
-            // this.$i18n.locale = this.lang;
-            // const route = Object.assign({}, this.$route);
-            // route.params.lang = this.lang;
-            // this.$router.push(route);
-            // this.$i18n.lang = this.lang;
-            // if (this.refreshTokenExist) {
-            //     this.$store.dispatch(AUTH_INIT);
-            // } else {
-            //     this.$router.push('login');
-            // }
+            if (this.refreshTokenExist) {
+                this.$store.dispatch(AUTH_INIT);
+            } else {
+                this.$router.push({ name: 'Login', params: { lang: this.$i18n.locale } });
+            }
         },
         watch: {
             getNotify: {

@@ -13,4 +13,9 @@ export default {
     undefinedUser: {
         lang: 'UNDEFINED_USER_LANG',
     },
+    favoriteItems: {
+        diagnosis: 'FAVORITE_DIAGNOSIS',
+        anamnesis: 'FAVORITE_ANAMNESIS',
+        procedures: 'FAVORITE_PROCEDURES',
+    },
 };

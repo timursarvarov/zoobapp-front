@@ -90,13 +90,13 @@
         },
         methods: {
             deleteItem() {
-                if (this.currentType === 'procedures') {
+                if (this.$route.name === 'procedures') {
                     this.deleteProcedure();
                 }
-                if (this.currentType === 'diagnosis') {
+                if (this.$route.name === 'diagnosis') {
                     this.deleteDiagnose();
                 }
-                if (this.currentType === 'anamnesis') {
+                if (this.$route.name === 'anamnesis') {
                     this.deleteAnamnes();
                 }
                 if (this.currentType === 'plan') {

@@ -86,6 +86,7 @@
 </template>
 <script>
     import { tObjProp } from '@/mixins';
+    import { PATIENT_ITEM_VISIBILITY_TOGGLE } from '@/constants';
 
     export default {
         name: 'jaw-menu',
@@ -131,10 +132,6 @@
                 type: Number,
                 default: () => 5,
             },
-            // hasOtherItemTypes: {
-            //     type: Boolean,
-            //     default: () => false,
-            // },
         },
         data() {
             return {
@@ -144,8 +141,18 @@
         },
         methods: {
             toggleItemVisibility(item, type) {
-                this.$emit('toggleItemVisibility', item.id, type);
+                if (item.id) {
+                    this.$store.dispatch(PATIENT_ITEM_VISIBILITY_TOGGLE, {
+                        params: {
+                            itemId: item.id,
+                            type,
+                            planId: this.patient.currentPlan.ID,
+                        },
+                    });
+                }
+                this.$emit('recalculateJaw');
             },
+
             menuClick(event, item, toothId, type) {
                 const params = {
                     itemId: item.id,
@@ -245,7 +252,7 @@
         font-weight: 800;
     }
     .t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures):not(.tooth-selected)   {
-        // box-shadow:none;
+        box-shadow:none;
         background-color: white!important;
         color: grey!important;
     }

@@ -23,5 +23,5 @@ export default {
     rating: null,
     color: null,
     files: [],
-
+    ageCategory: null,
 };

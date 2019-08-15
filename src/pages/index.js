@@ -1,7 +1,7 @@
 import ImageCropperForm from './Dashboard/Modals/ImageCropperForm.vue';
 
 // import PatientCard from './Dashboard/Pages/Patient/PatientBIO/PatientCard.vue';
-import PatientTreatment from './Dashboard/Pages/Patient/PatientTreatment/PatientTreatment.vue';
+// import PatientTreatment from './Dashboard/Pages/Patient/PatientTreatment/PatientTreatment.vue';
 // import ItemsList from './Dashboard/Pages/Patient/PatientTreatment/ItemsList.vue';
 // import Notes from './Dashboard/Pages/Patient/Notes.vue';
 // import PatientFiles from './Dashboard/Pages/Patient/PatientFiles/PatientFiles.vue';
@@ -13,7 +13,7 @@ import UserCard from './Dashboard/Pages/UserProfile/UserCard.vue';
 export {
     ImageCropperForm,
     // PatientCard,
-    PatientTreatment,
+    // PatientTreatment,
     // ItemsList,
     // Notes,
     // PatientFiles,

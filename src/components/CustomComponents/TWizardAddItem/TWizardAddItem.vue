@@ -133,12 +133,14 @@
 <script>
     import { SlideYDownTransition } from 'vue2-transitions';
     import { mapGetters } from 'vuex';
-    // import TItemToothLocations from './TWizardItems/TItemToothLocations.vue';
-    // import TItemDescription from './TWizardItems/TItemDescription.vue';
-    // import TItemManipulations from './TWizardItems/TItemManipulations.vue';
-    // import TItemFiles from './TWizardItems/TItemFiles.vue';
-    // import TItemAppointment from './TWizardItems/TItemAppointment.vue';
-    
+    import TItemToothLocations from './TWizardItems/TItemToothLocations.vue';
+    import TItemDescription from './TWizardItems/TItemDescription.vue';
+    import TItemManipulations from './TWizardItems/TItemManipulations.vue';
+    import TItemFiles from './TWizardItems/TItemFiles.vue';
+    import TItemAppointment from './TWizardItems/TItemAppointment.vue';
+    import SimpleWizard from '../TWizard/Wizard';
+    import WizardTab from '../TWizard/WizardTab';
+
     import { tObjProp } from '@/mixins';
     import {
         NOTIFY,
@@ -226,8 +228,14 @@
             };
         },
         components: {
-            'simple-wizard': () => import('@/components/CustomComponents/TWizard/Wizard'),
             SlideYDownTransition,
+            TItemToothLocations,
+            TItemDescription,
+            TItemManipulations,
+            TItemFiles,
+            TItemAppointment,
+            SimpleWizard,
+            WizardTab,
         },
         methods: {
             setProcedure() {
