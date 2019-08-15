@@ -1,29 +1,34 @@
 <template lang="html">
     <div class="md-layout-item  md-size-100" >
-        <keep-alive>
-            <items-list
-                v-if="currentType === 'anamnesis' && patient.anamnesis && patient.anamnesis.length > 0"
-                :items="patient.anamnesis||[]"
-                @showItemInfo="showItemInfo"
-                @onJawChanged="recalculateJaw()"
-                @toggleItemVisibility="toggleItemVisibility"
-                :teethSystem="currentClinic.teethSystem"
-                currentType="anamnesis"
-            >
-            </items-list>
-        </keep-alive>
-        <items-list
-            v-if="currentType === 'diagnosis' && patient.diagnosis &&  patient.diagnosis.length > 0"
-            :items="patient.diagnosis||[]"
-            @showItemInfo="showItemInfo"
-            @onJawChanged="recalculateJaw()"
-            @toggleItemVisibility="toggleItemVisibility"
-            :teethSystem="currentClinic.teethSystem"
-            currentType="diagnosis"
-            >
-        </items-list>
+        <md-tabs md-sync-route  class="t-md-tabs"
+            :class="currentType">
+            <md-tab
+                :id="`tab-plan-${plan.ID}`"
+                v-for="(plan, name, index) in this.patient.plans"
+                :key="index"
+                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/procedures/${plan.ID}`"
+                :md-label="plan.name">
+                {{plan}}
+                <items-list
+                            :key="name"
+                            @onJawChanged="recalculateJaw()"
+                            @showItemInfo="showItemInfo"
+                            :teethSystem="currentClinic.teethSystem"
+                            currentType="procedures"
+                            :items="getProceduresByIds(plan.procedures) || []"
+                            :plan="plan"
+                        >
+                        <template v-if="plan.state === 1" slot="title-start" >
+                                <h4 class="title text-success">
+                                    Plan approved
+                                </h4>
+
+                        </template>
+                        </items-list>
+            </md-tab>
+        </md-tabs>
         <t-tabs
-                v-if="patient.plans && currentType === 'procedures' && patient.currentPlan "
+                v-if="patient.plans && $route.name ==='procedures' && patient.currentPlan "
                 @onChangeTab="onChangeTab"
                 ref="tabs"
                 :tab-name="tabHeaders"
@@ -38,7 +43,6 @@
                         <items-list
                             :key="name"
                             @onJawChanged="recalculateJaw()"
-                            @toggleItemVisibility="toggleItemVisibility"
                             @showItemInfo="showItemInfo"
                             :teethSystem="currentClinic.teethSystem"
                             currentType="procedures"
@@ -74,7 +78,6 @@
             :itemToDelete="patient.currentPlan"
             :patientID="patient.ID"
             currentType='plan'
-            @onDeleted="onPlanDeleted"
         />
 
     </div>
@@ -82,10 +85,10 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    import { PATIENT_PLAN_EDIT,
-    PATIENT_PLANS_GET,
-    PATIENT_PLAN_CURRENT_SET,
-     } from '@/constants';
+    import {
+        PATIENT_PLAN_EDIT,
+        PATIENT_PLAN_CURRENT_SET,
+    } from '@/constants';
     import components from '@/components';
     import ItemsList from './ItemsList.vue';
     import DeleteForm from './DeleteForm.vue';
@@ -126,39 +129,12 @@
                 return planProcedures;
             },
             onChangeTab(plan) {
-                this.$store.dispatch(PATIENT_PLAN_CURRENT_SET,{plan});
-            },
-            toggleItemVisibility(itemId, itemType) {
-                this.$emit('toggleItemVisibility', itemId, itemType);
+                if (this.patient.currentPlan && this.patient.currentPlan.ID !== plan.ID) {
+                    this.$store.dispatch(PATIENT_PLAN_CURRENT_SET, { plan });
+                }
             },
             showItemInfo(params) {
                 this.$emit('showItemInfo', params);
-            },
-            onPlanDeleted() {
-                this.initialSetCurrentPlan();
-            },
-            getAllPlans() {
-                if (!this.patient.ID) return;
-                this.$emit('onLoadingAllPlans', true);
-                this.$store
-                    .dispatch(PATIENT_PLANS_GET)
-                    .then((result) => {
-                        this.$emit('onLoadingAllPlans', false);
-                        this.initialSetCurrentPlan();
-                    })
-                    .catch((err) => {
-                        this.$emit('onLoadingAllPlans', false);
-                        console.log(err);
-                    });
-            },
-            initialSetCurrentPlan(){
-                if(this.patient.plans){
-                    let currentPlan = Object.values(this.patient.plans).find(plan =>  plan.state === 1)
-                    if(!currentPlan){
-                        currentPlan = Object.values(this.patient.plans)[0]
-                    }
-                    this.$store.dispatch(PATIENT_PLAN_CURRENT_SET, {plan : currentPlan})
-                }
             },
             focusOnTab(plan) {
                 if (!this.patient.plans || !this.$refs.tabs) return;
@@ -216,25 +192,17 @@
                 return tabHeaders;
             },
         },
-        created() {
-            if (this.patient.plans && this.patient.plans.length < 1) {
-                this.getAllPlans();
-            } else {
-                this.initialSetCurrentPlan();
-                // this.initiatePlans();
-            }
-        },
         watch: {
             // eslint-disable-next-line func-names
-            'patient.ID': function (val) {
-                if (val) {
-                    this.getAllPlans();
-                }
-            },
+            // 'patient.ID': function (val) {
+            //     if (val) {
+            //         // this.getAllPlans();
+            //     }
+            // },
+            // eslint-disable-next-line func-names
             'patient.currentPlan': function (plan) {
-                console.log(plan)
                 if (plan) {
-                    this.focusOnTab(plan)
+                    this.focusOnTab(plan);
                 }
             },
         },
