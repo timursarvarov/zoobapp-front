@@ -141,69 +141,69 @@ if (environment === 'development') {
 //                 ],
 //             },
 //         ],
-//         // rules: [{
-//         //         test: /\.vue$/,
-//         //         loader: 'vue-loader',
-//         //         options: {
-//         //             loaders: {
-//         //                 scss: [
-//         //                     'vue-style-loader',
-//         //                     'css-loader',
-//         //                     'sass-loader',
-//         //                 ],
-//         //             },
-//         //         },
-//         //     },
-//         //     {
-//         //         test: /\.js$/,
-//         //         loader: 'babel-loader',
-//         //         exclude: file => (
-//         //             /node_modules/.test(file)
-//         //             && !/\.vue\.js/.test(file)
-//         //         ),
-//         //     },
-//         //     {
-//         //         test: /\.css$/,
-//         //         use: [
-//         //             'vue-style-loader',
-//         //             'css-loader',
-//         //         ],
-//         //     },
-//         //     {
-//         //         test: /\.scss$/,
-//         //         use: [
-//         //             isDev ? MiniCSSExtractPlugin.loader : 'vue-style-loader',
-//         //             'css-loader',
-//         //             {
-//         //                 loader: 'postcss-loader',
-//         //                 options: {
-//         //                     plugins: [
-//         //                         autoprefixer({
-//         //                             // browsers: ['last 16 version']
-//         //                         }),
-//         //                     ],
-//         //                 },
-//         //             },
-//         //             'sass-loader',
-//         //         ],
-//         //     },
-//         //     {
-//         //         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
-//         //         loader: 'url-loader',
-//         //         options: {
-//         //             limit: 10000,
-//         //             name: 'images/[name].[ext]',
-//         //         },
-//         //     },
-//         //     {
-//         //         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-//         //         loader: 'url-loader',
-//         //         options: {
-//         //             limit: 10000,
-//         //             name: 'fonts/[name].[hash:7].[ext]',
-//         //         },
-//         //     },
-//         // ],
+        // rules: [{
+        //         test: /\.vue$/,
+        //         loader: 'vue-loader',
+        //         options: {
+        //             loaders: {
+        //                 scss: [
+        //                     'vue-style-loader',
+        //                     'css-loader',
+        //                     'sass-loader',
+        //                 ],
+        //             },
+        //         },
+        //     },
+        //     {
+        //         test: /\.js$/,
+        //         loader: 'babel-loader',
+        //         exclude: file => (
+        //             /node_modules/.test(file)
+        //             && !/\.vue\.js/.test(file)
+        //         ),
+        //     },
+        //     {
+        //         test: /\.css$/,
+        //         use: [
+        //             'vue-style-loader',
+        //             'css-loader',
+        //         ],
+        //     },
+        //     {
+        //         test: /\.scss$/,
+        //         use: [
+        //             isDev ? MiniCSSExtractPlugin.loader : 'vue-style-loader',
+        //             'css-loader',
+        //             {
+        //                 loader: 'postcss-loader',
+        //                 options: {
+        //                     plugins: [
+        //                         autoprefixer({
+        //                             // browsers: ['last 16 version']
+        //                         }),
+        //                     ],
+        //                 },
+        //             },
+        //             'sass-loader',
+        //         ],
+        //     },
+        //     {
+        //         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
+        //         loader: 'url-loader',
+        //         options: {
+        //             limit: 10000,
+        //             name: 'images/[name].[ext]',
+        //         },
+        //     },
+        //     {
+        //         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        //         loader: 'url-loader',
+        //         options: {
+        //             limit: 10000,
+        //             name: 'fonts/[name].[hash:7].[ext]',
+        //         },
+        //     },
+        // ],
 //     },
 //     devServer: {
 //         compress: true,

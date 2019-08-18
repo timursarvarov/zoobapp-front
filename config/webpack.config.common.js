@@ -51,6 +51,25 @@ const webpackConfig = {
                     { loader: 'sass-loader', options: { sourceMap: isDev } },
                 ],
             },
+            {
+                test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        sourceMap: isDev,
+                        limit: 8192,
+                        name: 'images/[name].[ext]',
+                    },
+                }],
+            },
+            {
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: 'fonts/[name].[hash:7].[ext]',
+                },
+            },
         ],
     },
     plugins: [
