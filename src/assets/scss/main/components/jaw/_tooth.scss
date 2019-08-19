@@ -1,0 +1,101 @@
+.tooth {
+    display: flex;
+    transition: 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-property: all;
+    transition-duration: 0.9s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0s;
+    position: relative;
+    .tooth-content {
+        transition: 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        transition-property: all;
+        transition-duration: 0.9s;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-delay: 0s;
+    }
+    .isToothShownDiagnose {
+        transition: 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        transition-property: all;
+        transition-duration: 0.9s;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-delay: 0s;
+        background-color: rgba(161, 161, 161, 0.33);
+    }
+    svg {
+        -webkit-perspective: 2000;
+        -webkit-backface-visibility: hidden;
+        // transition: none;
+        // position: relative;
+        // z-index: 5;
+        flex-grow: 1;
+        flex-basis: 100%;
+        height: 100%;
+        .bridge {
+            fill: #3535ed;
+        }
+        .root:not(.diagnose):not(.selected):not(.anamnes):not(.procedure) {
+            fill: rgb(255, 255, 183);
+            stroke: #000;
+            stroke-width: 0.45px;
+        }
+        .coronaLingualIncisalDistal,
+        .coronaLingualIncisalMiddle,
+        .coronaLingualIncisionMesial,
+        .coronaLingualMiddleDistal,
+        .coronaLingualMiddleMiddle,
+        .coronaLingualMiddleMesial,
+        .coronaLingualCervicalDistal,
+        .coronaLingualCervicalMiddle,
+        .coronaLingualCervicalMesial,
+        .coronaLabialIncisalDistal,
+        .coronaLabialIncisalMiddle,
+        .coronaLabialIncisionMesial,
+        .coronaLabialMiddleDistal,
+        .coronaLabialMiddleMiddle,
+        .coronaLabialMiddleMesial,
+        .coronaLabialCervicalDistal,
+        .coronaLabialCervicalMiddle,
+        .coronaLabialCervicalMesial,
+        .coronaTopBuccal,
+        .coronaTopMedial,
+        .coronaTopLingual,
+        .coronaTopDistal,
+        .coronaTopOclusial,
+        .root,
+        .bone,
+        .bridge,
+        .crown,
+        .braces,
+        .implant,
+        .bridge,
+        .coronaLingual,
+        .coronaTop,
+        .coronaLabial,
+        .coronaLingual,
+        .coronaTop,
+        .coronaLabial {
+            fill: #fff;
+            stroke: #000;
+            stroke-width: 0.45px;
+        }
+        .gum {
+            stroke: #ffb900;
+            stroke-linejoin: round;
+            stroke-width: 4px;
+            fill: none;
+        }
+        .hide {
+            display: none;
+        }
+        .paradontit1,
+        .paradontit2,
+        .paradontit3,
+        .paradontit4 {
+            opacity: 1;
+            stroke: #f73403;
+            stroke-linejoin: round;
+            stroke-width: 4px;
+            fill: none !important;
+        }
+    }
+}

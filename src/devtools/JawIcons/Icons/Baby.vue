@@ -1,0 +1,120 @@
+<template>
+  <svg
+    version="1.1"
+    id="Слой_1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0px"
+    y="0px"
+    viewBox="0 0 96.7 95.3"
+    style="enable-background:new 0 0 96.7 95.3;"
+    xml:space="preserve"
+  >
+    <title>Baby</title>
+    <g id="Слой_2_1_">
+      <g id="_лой_1">
+        <g id="_Группа_">
+          <path
+            id="_Контур_"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M6.5,56.6c-2.7,1-4.6,3.3-4.9,6.1c-0.1,3.1,1.6,5.9,4.3,7.2"
+          />
+          <path
+            id="_Контур_2"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M90.3,56.6c2.7,1,4.5,3.3,4.9,6.1c0.1,3.1-1.6,5.9-4.3,7.2"
+          />
+          <g id="_Группа_2">
+
+            <path
+              id="_Прямоугольник_"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M45.3,27.8l4.3,0.1c0.6,0,1.1,0.5,1.1,1.1l-0.1,4.3c0,0.6-0.5,1.1-1.1,1.1l-4.3-0.1c-0.6,0-1.1-0.5-1.1-1.2l0,0l0.1-4.3
+					C44.2,28.3,44.7,27.8,45.3,27.8L45.3,27.8z"
+            />
+            <path
+              id="_Контур_3"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M40.1,25.1c-2.1-1.1-4.3-1.8-6.7-2c-1.1-0.1-2.1,0.6-2.3,1.6c-0.4,1.7-0.7,3.4-0.8,5.1c-0.1,2.2,0.1,4.5,0.5,6.7
+					c0.2,1.1,1.2,1.8,2.3,1.7c1.2-0.1,2.4-0.4,3.6-0.7c1-0.3,1.9-0.6,2.8-1"
+            />
+            <path
+              id="_Контур_4"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M55.4,25.1c2.1-1.1,4.3-1.8,6.7-2c1.1-0.1,2,0.6,2.3,1.6c0.4,1.7,0.7,3.4,0.8,5.1c0.1,2.2-0.1,4.5-0.5,6.7
+					c-0.2,1.1-1.2,1.8-2.3,1.7c-1.2-0.1-2.4-0.4-3.6-0.7c-1-0.3-1.9-0.6-2.8-1"
+            />
+          </g>
+          <path
+            id="_Контур_5"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M44.6,21.7c-4.6-5.1-4.2-13,0.9-17.6c4.1-3.7,10.4-3.4,14.1,0.7C62.4,8,62.2,13,59,16c-2.6,2.4-6.6,2.2-9-0.4"
+          />
+          <path
+            id="_Контур_6"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M64.6,46.5c0,0,5.2,0.2,7,5"
+          />
+          <path
+            id="_Контур_7"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M31.3,46.5c0,0-5.2,0.2-7,5"
+          />
+          <path
+            id="_Контур_8"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M64.3,90.8c13.8-4.9,23.5-15.9,23.5-28.7c0-11.1-7.2-20.8-18.1-26.4"
+          />
+          <path
+            id="_Контур_9"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M22.5,38.3C14.2,44.1,8.9,52.6,8.9,62.1c0,12.5,9.2,23.3,22.6,28.4"
+          />
+          <path
+            id="_Контур_10"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M43.1,63.5c1.1-1.5,2.8-2.5,4.6-2.6c2,0,3.9,1,5.1,2.6"
+          />
+          <path
+            id="_Контур_11"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M35,55.3c0,1-0.8,1.8-1.8,1.8s-1.8-0.8-1.8-1.8s0.8-1.8,1.8-1.8l0,0C34.2,53.5,35,54.3,35,55.3z"
+          />
+          <path
+            id="_Контур_12"
+            style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+            d="
+				M64.3,55.3c0,1-0.8,1.8-1.8,1.8s-1.8-0.8-1.8-1.8s0.8-1.8,1.8-1.8l0,0C63.4,53.4,64.3,54.3,64.3,55.3L64.3,55.3z"
+          />
+          <g id="_Группа_3">
+            <path
+              id="_Контур_13"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M55.4,91c-4.9,4.1-12.2,3.5-16.4-1.4s-3.5-12.2,1.4-16.4c4.9-4.1,12.2-3.5,16.4,1.3C60.9,79.5,60.3,86.8,55.4,91L55.4,91z"
+            />
+            <path
+              id="_Контур_14"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M50.3,82.2c0,1.3-1.1,2.4-2.4,2.4c-1.3,0-2.4-1.1-2.4-2.4s1.1-2.4,2.4-2.4l0,0C49.2,79.8,50.3,80.8,50.3,82.2z"
+            />
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
+
+</template>

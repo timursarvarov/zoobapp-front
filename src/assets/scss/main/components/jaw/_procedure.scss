@@ -1,0 +1,76 @@
+.tooth {
+    .set-procedures {
+        .procedures {
+            opacity: 0.4;
+        }
+    }
+    .procedures {
+        &.tooth-number {
+            color: $brand-success;
+        }
+        &.coronaLingualIncisalDistal,
+        &.coronaLingualIncisalMiddle,
+        &.coronaLingualIncisionMesial,
+        &.coronaLingualMiddleDistal,
+        &.coronaLingualMiddleMiddle,
+        &.coronaLingualMiddleMesial,
+        &.coronaLingualCervicalDistal,
+        &.coronaLingualCervicalMiddle,
+        &.coronaLingualCervicalMesial,
+        &.coronaLabialIncisalDistal,
+        &.coronaLabialIncisalMiddle,
+        &.coronaLabialIncisionMesial,
+        &.coronaLabialMiddleDistal,
+        &.coronaLabialMiddleMiddle,
+        &.coronaLabialMiddleMesial,
+        &.coronaLabialCervicalDistal,
+        &.coronaLabialCervicalMiddle,
+        &.coronaLabialCervicalMesial,
+        &.coronaTopBuccal,
+        &.coronaTopMedial,
+        &.coronaTopLingual,
+        &.coronaTopDistal,
+        &.coronaTopOclusial,
+        &.implant,
+        &.silant,
+        &.crown,
+        &.braces,
+        &.bridge,
+        &.veneer,
+        &.silant {
+            fill: $brand-success !important;
+            stroke: #020202;
+            stroke-width: 0.25px;
+        }
+        &.periodontit {
+            stroke-width: 2px;
+        }
+        &.coronaLingual,
+        &.coronaTop,
+        &.coronaLabial {
+            stroke: $brand-success;
+            stroke-width: 2px;
+        }
+        &.rootCanal {
+            stroke-width: 2px;
+        }
+        &.periodontit,
+        &.rootCanal,
+        &.bone {
+            fill: $brand-success !important;
+            stroke-width: 0;
+            opacity: 0.6;
+        }
+        &.gum,
+        &.paradontit1,
+        &.paradontit2,
+        &.paradontit3,
+        &.paradontit4 {
+            opacity: 1;
+            stroke: $brand-success;
+            stroke-linejoin: round;
+            stroke-width: 4px;
+            fill: none !important;
+        }
+    }
+}

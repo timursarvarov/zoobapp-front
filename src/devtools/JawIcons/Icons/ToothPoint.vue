@@ -1,0 +1,67 @@
+<template>
+  <svg
+    version="1.1"
+    id="Слой_1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0px"
+    y="0px"
+    viewBox="0 0 98.5 100.9"
+    style="enable-background:new 0 0 98.5 100.9;"
+    xml:space="preserve"
+  >
+    <title>Tooth Point</title>
+    <g id="Слой_2_1_">
+      <g id="_лой_1">
+        <g id="_Группа_">
+          <g id="_Группа_2">
+            <path
+              id="_Контур_"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M53.6,99.4L53.6,99.4c-2.4,0-4.3-1.9-4.3-4.3l0,0v-8.2c0-4.2-0.7-8.3-2.2-12.2l-1.2-3.2c-0.7-1.8-2.4-3-4.3-3l0,0
+					c-2,0-3.7,1.2-4.4,3.1L36,75.1c-1.3,3.7-1.9,7.5-1.9,11.4v8.7c0,2.4-1.9,4.3-4.3,4.3l0,0l0,0c-1.5,0-2.9-0.8-3.7-2.1l-3-5.2
+					c-5-8.6-8-18.2-8.8-28.2c-0.4-4.3-1.7-8.4-3.8-12.1L6,44c-3-5.1-4.5-11-4.5-16.9l0,0c-0.1-5.6,1.3-11.1,4-16
+					c3.6-6,10-9.7,17-9.6l0,0c1.2,0,2.3,0.1,3.5,0.3l15.7,2.8"
+            />
+            <path
+              id="_Контур_2"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M41.7,4.6l15.7-2.8c1.1-0.2,2.3-0.3,3.5-0.3l0,0c7-0.1,13.6,3.6,17.1,9.6c2.7,4.9,4.1,10.4,3.9,16l0,0c0,2-0.2,4-0.5,6"
+            />
+            <path
+              id="_Контур_3"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M37.9,13.8l-9.5-2.1c-4.2-1-8.6,0.4-11.4,3.6c-0.2,0.2-0.4,0.5-0.6,0.7c-1.6,2.3-2.4,5-2.4,7.7"
+            />
+          </g>
+          <g id="_Группа_3">
+            <path
+              id="_Контур_4"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M71.5,48.7l1-18.2c0.2-2.6-1.8-4.8-4.4-5l0,0l0,0c-2.6-0.2-4.8,1.8-5,4.4c0,0.1,0,0.1,0,0.2l-0.3,29.3c0,0-2.5-6.5-11.6-9.5
+					C45.4,48,43.4,54,43.4,54l1,0.7c1.7,1.1,3.3,2.4,4.7,3.9l0,0c1.8,1.9,3.2,4.2,4.3,6.6l8.1,18.3L62.8,96h27.4v-8.8l0,0
+					c3.2-5,5.2-10.8,5.7-16.8L97,56.9c0.2-2.5-1.7-4.8-4.2-5l-3.1-0.3"
+            />
+            <path
+              id="_Контур_5"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M72,41l6,0.8c2.3,0.3,3.9,2.4,3.7,4.7L81,54.2"
+            />
+            <path
+              id="_Контур_6"
+              style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;"
+              d="
+					M81.8,45l5,0.9c1.9,0.3,3.3,2.1,3.1,4.1l-1,9.3"
+            />
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
+
+</template>
