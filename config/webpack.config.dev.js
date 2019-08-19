@@ -1,9 +1,11 @@
-const webpack = require('webpack');
-const merge = require('webpack-merge');
+'use strict';
+
+const webpack              = require('webpack');
+const merge                = require('webpack-merge');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const helpers = require('./helpers');
-const commonConfig = require('./webpack.config.common');
-const environment = require('./env/dev.env');
+const helpers              = require('./helpers');
+const commonConfig         = require('./webpack.config.common');
+const environment          = require('./env/dev.env');
 
 const webpackConfig = merge(commonConfig, {
     mode: 'development',
@@ -12,18 +14,18 @@ const webpackConfig = merge(commonConfig, {
         path: helpers.root('dist'),
         publicPath: '/',
         filename: 'js/[name].bundle.js',
-        chunkFilename: 'js/[id].chunk.js',
+        chunkFilename: 'js/[id].chunk.js'
     },
     optimization: {
         runtimeChunk: 'single',
         splitChunks: {
-            chunks: 'all',
-        },
+            chunks: 'all'
+        }
     },
     plugins: [
         new webpack.EnvironmentPlugin(environment),
         new webpack.HotModuleReplacementPlugin(),
-        new FriendlyErrorsPlugin(),
+        new FriendlyErrorsPlugin()
     ],
     devServer: {
         compress: true,
@@ -31,11 +33,11 @@ const webpackConfig = merge(commonConfig, {
         hot: true,
         open: true,
         overlay: true,
-        port: 8080,
+        port: 8000,
         stats: {
-            normal: true,
-        },
-    },
+            normal: true
+        }
+    }
 });
 
 module.exports = webpackConfig;
