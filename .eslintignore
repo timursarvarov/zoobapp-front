@@ -1,0 +1,4 @@
+/src/devtools/**
+/src/constants/**
+/src/plugins/translation.js
+/output.js
