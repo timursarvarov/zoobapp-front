@@ -1,5 +1,4 @@
 
-
 // Jaw Icons
 import IconAdult from './Adult.vue';
 import IconAnalgesic from './Analgesic.vue';

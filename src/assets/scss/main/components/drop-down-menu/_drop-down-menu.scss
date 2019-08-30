@@ -2,7 +2,8 @@
     width: max-content;
     li {
         a {
-            width: 100%;
+            // margin: 0 5px 0 5px;
+            // width: 100%;
             img {
                 margin-right: 10px;
                 height: 24px;
@@ -13,7 +14,8 @@
                 margin-right: 10px;
                 height: 24px;
                 width: 24px;
-                border-radius: 50%
+                border-radius: 50%;
+                color: $black-color !important;
             }
             .avatar-wrapper {
                 margin: 0 10px 0 0 !important;

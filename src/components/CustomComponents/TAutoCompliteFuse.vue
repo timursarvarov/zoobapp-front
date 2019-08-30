@@ -1,22 +1,27 @@
 
 <template>
-    <md-field class="md-autocomplete" :class="fieldClasses" md-clearable :md-inline="isBoxLayout">
+    <md-field
+        class="md-autocomplete"
+        :class="fieldClasses"
+        md-clearable
+        :md-inline="isBoxLayout"
+    >
         <md-menu
             md-direction="bottom-start"
             :md-dense="mdDense"
             md-align-trigger
             :md-active.sync="showMenu"
             md-size="auto"
-            :mdCloseOnClick="true"
-            :mdCloseOnSelect="true"
+            :md-close-on-click="true"
+            :md-close-on-select="true"
         >
             <!-- md-full-width -->
             <md-input
-                tabindex="-1"
-                ref='input'
-                v-model="searchTerm"
-                v-bind="$attrs"
                 :id="mdInputId"
+                ref="input"
+                v-model="searchTerm"
+                tabindex="-1"
+                v-bind="$attrs"
                 :name="mdInputName"
                 :maxlength="mdInputMaxlength"
                 :placeholder="mdInputPlaceholder"
@@ -28,48 +33,56 @@
                 @blur="hideOptions"
             />
             <md-menu-content
-                :class="contentClasses"
                 v-show="hasScopedEmptySlot || hasFilteredItems"
                 ref="scrolable"
+                :class="contentClasses"
             >
-                <div class="md-autocomplete-loading" v-if="isPromisePending">
-                    <md-progress-spinner :md-diameter="40" :md-stroke="4" md-mode="indeterminate" />
+                <div
+                    v-if="isPromisePending"
+                    class="md-autocomplete-loading"
+                >
+                    <md-progress-spinner
+                        :md-diameter="40"
+                        :md-stroke="4"
+                        md-mode="indeterminate"
+                    />
                 </div>
 
                 <transition name="fade">
                     <div
-                        class="md-autocomplete-items"
                         v-show="hasFilteredItems"
                         ref="md-menu-content"
+                        class="md-autocomplete-items"
                     >
                         <md-menu-item
+                            v-for="(item, index) in list"
                             :id="index + 0"
+                            :key="index + 0"
+                            :ref=" 'item' + index"
                             class="list-item"
                             tabindex="-1"
-                            v-for="(item, index) in list"
-                            :key="index + 0"
                             @click.stop.prevent="selectItem(item, $event)"
                             v-on="$listeners"
-                            :ref=" 'item' + index"
                             @keyup.down="mooveFocusItems(index+1)"
                             @keyup.up="mooveFocusItems(index-1)"
                         >
                             <!-- @click[canClick]="cantClick" -->
                             <slot
+                                v-if="$scopedSlots['md-autocomplete-item']"
                                 name="md-autocomplete-item"
                                 :item="item"
                                 :index="index"
                                 :term="searchTerm"
-                                v-if="$scopedSlots['md-autocomplete-item']"
                             />
-                            <template v-else>{{ item }}</template>
+                            <template v-else>
+                                {{ item }}
+                            </template>
                         </md-menu-item>
                         <infinite-loading
-                        :key="list.length"
-                            @infinite="infiniteHandler"
+                            :key="list.length"
                             :identifier="infiniteId"
+                            @infinite="infiniteHandler"
                         >
-
                             <div slot="spinner">
                                 <md-progress-spinner
                                     :md-diameter="40"
@@ -79,11 +92,19 @@
                             </div>
                             <div slot="no-more">
                                 <md-subheader>No more manipulations</md-subheader>
-                                </div>
-                            <div slot="no-results">No results message</div>
-                            <div slot="error" slot-scope="{ trigger }">
+                            </div>
+                            <div slot="no-results">
+                                No results message
+                            </div>
+                            <div
+                                slot="error"
+                                slot-scope="{ trigger }"
+                            >
                                 Error message, click
-                                <a href="javascript:;" @click="trigger">here</a> to retry
+                                <a
+                                    href="javascript:;"
+                                    @click="trigger"
+                                >here</a> to retry
                             </div>
                         </infinite-loading>
                     </div>
@@ -91,7 +112,10 @@
 
                 <md-menu-item v-show="hasScopedEmptySlot && !hasFilteredItems">
                     <div class="md-autocomplete-empty">
-                        <slot name="md-autocomplete-empty" :term="searchTerm" />
+                        <slot
+                            name="md-autocomplete-empty"
+                            :term="searchTerm"
+                        />
                     </div>
                 </md-menu-item>
             </md-menu-content>

@@ -1,55 +1,55 @@
 /* eslint-disable */
 <template>
     <div>
-        <router-view></router-view>
-        <notifications></notifications>
+        <router-view />
+        <notifications />
     </div>
 </template>
 
 
 <script>
-    import { mapGetters } from 'vuex';
-    import { AUTH_INIT, AVAILABLE_LANGUAGES } from '@/constants';
+import { mapGetters } from 'vuex';
+import { AUTH_INIT, AVAILABLE_LANGUAGES } from '@/constants';
 
-    export default {
-        name: 'App',
-        computed: {
-            ...mapGetters({
-                getNotify: 'getNotify',
-                refreshTokenExist: 'fetchStateRefreshToken',
-                isProfileLoaded: 'isProfileLoaded',
-                lang: 'getLang',
-            }),
-            languages() {
-                return AVAILABLE_LANGUAGES;
-            },
+export default {
+    name: 'App',
+    computed: {
+        ...mapGetters({
+            getNotify: 'getNotify',
+            refreshTokenExist: 'fetchStateRefreshToken',
+            isProfileLoaded: 'isProfileLoaded',
+            lang: 'getLang',
+        }),
+        languages() {
+            return AVAILABLE_LANGUAGES;
         },
-        mounted() {
-            if (this.refreshTokenExist) {
-                this.$store.dispatch(AUTH_INIT);
-            } else {
-                this.$router.push({ name: 'Login', params: { lang: this.$i18n.locale } });
+    },
+    watch: {
+        getNotify: {
+            handler() {
+                const newNotify = {};
+                const el = this;
+                Object.keys(el.getNotify).forEach((key) => {
+                    newNotify[key] = el.getNotify[key];
+                });
+                this.$notify(newNotify);
+            },
+            deep: true,
+        },
+        isProfileLoaded(value) {
+            if (!value) {
+                // this.$router.push('login');
             }
         },
-        watch: {
-            getNotify: {
-                handler() {
-                    const newNotify = {};
-                    const el = this;
-                    Object.keys(el.getNotify).forEach((key) => {
-                        newNotify[key] = el.getNotify[key];
-                    });
-                    this.$notify(newNotify);
-                },
-                deep: true,
-            },
-            isProfileLoaded(value) {
-                if (!value) {
-                    // this.$router.push('login');
-                }
-            },
-        },
-    };
+    },
+    mounted() {
+        if (this.refreshTokenExist) {
+            this.$store.dispatch(AUTH_INIT);
+        } else {
+            this.$router.push({ name: 'Login', params: { lang: this.lang } });
+        }
+    },
+};
 </script>
 <style lang="scss" src="./assets/scss/main/main.scss">
 .md-menu-content {

@@ -36,14 +36,14 @@ export default {
         return new Promise((resolve, reject) => {
             commit(USER_REQUEST);
             axios.post('/',
-                    JSON.stringify({
-                        jsonrpc: '2.0',
-                        method: 'Account.Edit',
-                        params: {
-                            ...fields,
-                        },
-                        id: 1,
-                    }))
+                JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'Account.Edit',
+                    params: {
+                        ...fields,
+                    },
+                    id: 1,
+                }))
                 .then((resp) => {
                     if (resp.data.error) {
                         commit(USER_ERROR);
@@ -70,10 +70,10 @@ export default {
     }) => new Promise((resolve, reject) => {
         commit(USER_REQUEST);
         axios.post('/', JSON.stringify({
-                jsonrpc: '2.0',
-                method: 'Account.Get',
-                id: 1,
-            }))
+            jsonrpc: '2.0',
+            method: 'Account.Get',
+            id: 1,
+        }))
             .then((resp) => {
                 if (resp.data.error) {
                     commit(USER_ERROR);
@@ -132,17 +132,17 @@ export default {
     }) => new Promise((resolve, reject) => {
         commit(USER_REQUEST);
         axios.post('/',
-                JSON.stringify({
-                    jsonrpc: '2.0',
-                    method: 'Auth.Registration',
-                    params: {
-                        username: params.username,
-                        firstName: params.firstName,
-                        lastName: params.lastName,
-                        password: params.password,
-                    },
-                    id: 1,
-                }))
+            JSON.stringify({
+                jsonrpc: '2.0',
+                method: 'Auth.Registration',
+                params: {
+                    username: params.username,
+                    firstName: params.firstName,
+                    lastName: params.lastName,
+                    password: params.password,
+                },
+                id: 1,
+            }))
             .then((resp) => {
                 if (resp.data.error) {
                     commit(USER_ERROR);
@@ -163,11 +163,11 @@ export default {
     }) => new Promise((resolve, reject) => {
         commit(USER_REQUEST);
         axios.post('/account/photo/',
-                fd, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                })
+            fd, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
             .then((resp) => {
                 commit(USER_SUCCESS);
                 commit(USER_PROP_SET, {

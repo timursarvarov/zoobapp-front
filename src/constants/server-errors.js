@@ -13,7 +13,7 @@ export default {
         InvalidOrganizationErrorMessage: 'invalid organization',
         OrganizationIDParamRequiredErrorMessage: 'organizationID param required',
         PatientIDParamRequiredErrorMessage: 'patientID param required',
-        PlanIDParamRequiredErrorMessage: 'planID param required',
+        planIDParamRequiredErrorMessage: 'planID param required',
         ProcedureIDParamRequiredErrorMessage: 'procedureID param required',
         RefreshTokenParamRequiredErrorMessage: 'refreshToken param required',
         UsernameParamRequiredErrorMessage: 'username param required',

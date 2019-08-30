@@ -6,7 +6,7 @@ import {
     AUTH_LOCK,
     AUTH_REFRESH_TOKEN,
     AUTH_DECODE_TOKEN,
-    USER_REQUEST,
+    // USER_REQUEST,
     USER_LOGOUT,
     AUTH_INIT,
     CLINIC_SET_PROPS,
@@ -60,7 +60,7 @@ export default {
                     resolve(resp.data.result);
                 })
                 .catch(err => {
-                    console.log(err)
+                    reject(err);
                     commit(AUTH_SET_PROP, { propName: 'status', propValue: 'error' });
                     commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
                     localStorage.removeItem('accessToken');

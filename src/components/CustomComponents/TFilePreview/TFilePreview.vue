@@ -2,39 +2,44 @@
     <div class="file-preview-wrapper">
         <!-- <div class="file-preview mx-auto" :style="[{width: width +'px'},{height:height+'px'}]"> -->
         <div class="file-preview">
-            <div class="file-picture"
-             :style="[
+            <div
+                class="file-picture"
+                :style="[
                     {'object-fit': 'cover'},
                     {width: 100+'%'},
                     {height: height + 'px'},
-                    ]">
+                ]"
+            >
                 <transition name="fade">
                     <img
+                        v-show="loaded && url"
                         :class="{'img-to-preview': mimeTypeClass(mimeType).some(v=> v === 'file-image')}"
-                        @click="$emit('show', '.img-to-preview')"
                         :style="[
                             {'object-fit': 'cover'},
                             {width: 100+'%'},
                             {height: height + 'px'},
-                            ]"
+                        ]"
                         :src="url"
+                        @click="$emit('show', '.img-to-preview')"
                         @load="onLoaded"
-                        v-show="loaded && url"
                     >
                 </transition>
                 <transition name="fade">
                     <!-- :style="[{width: width +'px'},{height:height+'px'}]" -->
                     <div
-                        :style="[
-                    {'object-fit': 'cover'},
-                    {width: 100+'%'},
-                    {height: height + 'px'},
-                    ]"
                         v-show="!loaded"
+                        :style="[
+                            {'object-fit': 'cover'},
+                            {width: 100+'%'},
+                            {height: height + 'px'},
+                        ]"
                         class="md-layout mx-auto mimetype-wrapper"
                     >
                         <div class="md-layout-item md-layout mx-auto mimetype">
-                            <md-icon class="md-layout-item" :style="{color: computedColor}">
+                            <md-icon
+                                class="md-layout-item"
+                                :style="{color: computedColor}"
+                            >
                                 <font-awesome-icon
                                     :size="`${iconSize}x`"
                                     :icon="mimeTypeClass(mimeType)"
@@ -45,73 +50,73 @@
                 </transition>
             </div>
         </div>
-        <div class='file-title' >
-            <small>{{title}}</small>
+        <div class="file-title">
+            <small>{{ title }}</small>
         </div>
     </div>
 </template>
 <script>
-    import mimetype2fa from './mime-type2fa';
+import mimetype2fa from './mime-type2fa';
 
-    const randomMC = require('random-material-color');
+const randomMC = require('random-material-color');
 
-    export default {
-        name: 't-file-preview',
-        props: {
-            color: {
-                type: String,
-                default: '',
-            },
-            url: {
-                type: String,
-                default: '',
-            },
-            mimeType: {
-                type: String,
-                default: '',
-            },
-            iconSize: {
-                type: Number,
-                default: 1,
-            },
-            width: {
-                type: Number,
-                default: 60,
-            },
-            height: {
-                type: Number,
-                default: 60,
-            },
-            title: {
-                type: String,
-                default: '',
-            },
+export default {
+    name: 'TFilePreview',
+    props: {
+        color: {
+            type: String,
+            default: '',
         },
-        data() {
-            return {
-                loaded: false,
-            };
+        url: {
+            type: String,
+            default: '',
         },
-        methods: {
-            mimeTypeClass(m) {
-                return mimetype2fa(m, { prefix: 'far ' }).split(' ');
-            },
-            onLoaded() {
-                this.loaded = true;
-            },
+        mimeType: {
+            type: String,
+            default: '',
         },
-        computed: {
-            computedColor() {
-                if (this.color) {
-                    return this.color;
-                }
-                const color = randomMC.getColor({
-                    text: this.mimeType,
-                });
-                return color;
-            },
+        iconSize: {
+            type: Number,
+            default: 1,
         },
-    };
+        width: {
+            type: Number,
+            default: 60,
+        },
+        height: {
+            type: Number,
+            default: 60,
+        },
+        title: {
+            type: String,
+            default: '',
+        },
+    },
+    data() {
+        return {
+            loaded: false,
+        };
+    },
+    computed: {
+        computedColor() {
+            if (this.color) {
+                return this.color;
+            }
+            const color = randomMC.getColor({
+                text: this.mimeType,
+            });
+            return color;
+        },
+    },
+    methods: {
+        mimeTypeClass(m) {
+            return mimetype2fa(m, { prefix: 'far ' }).split(' ');
+        },
+        onLoaded() {
+            this.loaded = true;
+        },
+    },
+};
 </script>
 <style lang="scss">
 .file-preview-wrapper {

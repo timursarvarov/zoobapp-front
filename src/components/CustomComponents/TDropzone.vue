@@ -1,8 +1,15 @@
 /* eslint-disable func-names */
 
 <template>
-    <div :id="id" ref="dropzoneElement" :class="{ ' dropzone': includeStyling }">
-        <div v-if="useCustomSlot" class="dz-message">
+    <div
+        :id="id"
+        ref="dropzoneElement"
+        :class="{ ' dropzone': includeStyling }"
+    >
+        <div
+            v-if="useCustomSlot"
+            class="dz-message"
+        >
             <slot>Drop files here to upload</slot>
         </div>
     </div>
@@ -10,301 +17,301 @@
 
 <script>
 import Dropzone from "dropzone"; //eslint-disable-line
-    Dropzone.autoDiscover = false;
-    export default {
-        name: 'dropzone',
-        props: {
-            id: {
-                type: String,
-                required: true,
-                default: 'dropzone',
-            },
-            options: {
-                type: Object,
-                required: true,
-            },
-            includeStyling: {
-                type: Boolean,
-                default: true,
-                required: false,
-            },
-            destroyDropzone: {
-                type: Boolean,
-                default: true,
-                required: false,
-            },
-            duplicateCheck: {
-                type: Boolean,
-                default: false,
-                required: false,
-            },
-            useCustomSlot: {
-                type: Boolean,
-                default: false,
-                required: false,
-            },
+Dropzone.autoDiscover = false;
+export default {
+    name: 'Dropzone',
+    props: {
+        id: {
+            type: String,
+            required: true,
+            default: 'dropzone',
         },
-        data() {
-            return {
-                wasQueueAutoProcess: true,
+        options: {
+            type: Object,
+            required: true,
+        },
+        includeStyling: {
+            type: Boolean,
+            default: true,
+            required: false,
+        },
+        destroyDropzone: {
+            type: Boolean,
+            default: true,
+            required: false,
+        },
+        duplicateCheck: {
+            type: Boolean,
+            default: false,
+            required: false,
+        },
+        useCustomSlot: {
+            type: Boolean,
+            default: false,
+            required: false,
+        },
+    },
+    data() {
+        return {
+            wasQueueAutoProcess: true,
+        };
+    },
+    computed: {
+        dropzoneSettings() {
+            const defaultValues = {
+                thumbnailWidth: 200,
+                thumbnailHeight: 200,
             };
+            Object.keys(this.options).forEach(function (key) {
+                defaultValues[key] = this.options[key];
+            }, this);
+            return defaultValues;
         },
-        computed: {
-            dropzoneSettings() {
-                const defaultValues = {
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 200,
-                };
-                Object.keys(this.options).forEach(function (key) {
-                    defaultValues[key] = this.options[key];
-                }, this);
-                return defaultValues;
-            },
-        },
-        mounted() {
-            if (this.$isServer && this.hasBeenMounted) {
-                return;
-            }
-            this.hasBeenMounted = true;
-            this.dropzone = new Dropzone(
-                this.$refs.dropzoneElement,
-                this.dropzoneSettings,
-            );
-            const vm = this;
-            this.dropzone.on('thumbnail', (file, dataUrl) => {
-                vm.$emit('vdropzone-thumbnail', file, dataUrl);
-            });
-            this.dropzone.on('addedfile', (file) => {
-                // let isDuplicate = false;
-                if (vm.duplicateCheck) {
-                    if (this.files.length) {
-                        let i;
-                        let len;
-                        for (
-                            i = 0, len = this.files.length;
-                            i < len - 1;
-                            i += 1 // -1 to exclude current file
-                        ) {
-                            if (
-                                this.files[i].name === file.name
+    },
+    mounted() {
+        if (this.$isServer && this.hasBeenMounted) {
+            return;
+        }
+        this.hasBeenMounted = true;
+        this.dropzone = new Dropzone(
+            this.$refs.dropzoneElement,
+            this.dropzoneSettings,
+        );
+        const vm = this;
+        this.dropzone.on('thumbnail', (file, dataUrl) => {
+            vm.$emit('vdropzone-thumbnail', file, dataUrl);
+        });
+        this.dropzone.on('addedfile', (file) => {
+            // let isDuplicate = false;
+            if (vm.duplicateCheck) {
+                if (this.files.length) {
+                    let i;
+                    let len;
+                    for (
+                        i = 0, len = this.files.length;
+                        i < len - 1;
+                        i += 1 // -1 to exclude current file
+                    ) {
+                        if (
+                            this.files[i].name === file.name
                                 && this.files[i].size === file.size
                                 && this.files[i].lastModifiedDate.toString()
                                     === file.lastModifiedDate.toString()
-                            ) {
-                                this.removeFile(file);
-                                // isDuplicate = true;
-                                vm.$emit('vdropzone-duplicate-file', file);
-                            }
+                        ) {
+                            this.removeFile(file);
+                            // isDuplicate = true;
+                            vm.$emit('vdropzone-duplicate-file', file);
                         }
                     }
                 }
-                vm.$emit('vdropzone-file-added', file);
-            });
-            this.dropzone.on('addedfiles', (files) => {
-                vm.$emit('vdropzone-files-added', files);
-            });
-            this.dropzone.on('removedfile', (file) => {
-                vm.$emit('vdropzone-removed-file', file);
-                if (file.manuallyAdded) vm.dropzone.options.maxFiles++;
-            });
-            this.dropzone.on('success', (file, response) => {
-                vm.$emit('vdropzone-success', file, response);
-            });
-            this.dropzone.on('successmultiple', (file, response) => {
-                vm.$emit('vdropzone-success-multiple', file, response);
-            });
-            this.dropzone.on('error', (file, message, xhr) => {
-                vm.$emit('vdropzone-error', file, message, xhr);
-            });
-            this.dropzone.on('errormultiple', (files, message, xhr) => {
-                vm.$emit('vdropzone-error-multiple', files, message, xhr);
-            });
-            this.dropzone.on('sending', (file, xhr, formData) => {
-                vm.$emit('vdropzone-sending', file, xhr, formData);
-            });
-            this.dropzone.on('sendingmultiple', (file, xhr, formData) => {
-                vm.$emit('vdropzone-sending-multiple', file, xhr, formData);
-            });
-            this.dropzone.on('complete', (file) => {
-                vm.$emit('vdropzone-complete', file);
-            });
-            this.dropzone.on('completemultiple', (files) => {
-                vm.$emit('vdropzone-complete-multiple', files);
-            });
-            this.dropzone.on('canceled', (file) => {
-                vm.$emit('vdropzone-canceled', file);
-            });
-            this.dropzone.on('canceledmultiple', (files) => {
-                vm.$emit('vdropzone-canceled-multiple', files);
-            });
-            this.dropzone.on('maxfilesreached', (files) => {
-                vm.$emit('vdropzone-max-files-reached', files);
-            });
-            this.dropzone.on('maxfilesexceeded', (file) => {
-                vm.$emit('vdropzone-max-files-exceeded', file);
-            });
-            this.dropzone.on('processing', (file) => {
-                vm.$emit('vdropzone-processing', file);
-            });
-            this.dropzone.on('processingmultiple', (files) => {
-                vm.$emit('vdropzone-processing-multiple', files);
-            });
-            this.dropzone.on('uploadprogress', (file, progress, bytesSent) => {
-                vm.$emit('vdropzone-upload-progress', file, progress, bytesSent);
-            });
-            this.dropzone.on(
-                'totaluploadprogress',
-                (totaluploadprogress, totalBytes, totalBytesSent) => {
-                    vm.$emit(
-                        'vdropzone-total-upload-progress',
-                        totaluploadprogress,
-                        totalBytes,
-                        totalBytesSent,
-                    );
-                },
-            );
-            this.dropzone.on('reset', () => {
-                vm.$emit('vdropzone-reset');
-            });
-            this.dropzone.on('queuecomplete', () => {
-                vm.$emit('vdropzone-queue-complete');
-            });
-            this.dropzone.on('drop', (event) => {
-                vm.$emit('vdropzone-drop', event);
-            });
-            this.dropzone.on('dragstart', (event) => {
-                vm.$emit('vdropzone-drag-start', event);
-            });
-            this.dropzone.on('dragend', (event) => {
-                vm.$emit('vdropzone-drag-end', event);
-            });
-            this.dropzone.on('dragenter', (event) => {
-                vm.$emit('vdropzone-drag-enter', event);
-            });
-            this.dropzone.on('dragover', (event) => {
-                vm.$emit('vdropzone-drag-over', event);
-            });
-            this.dropzone.on('dragleave', (event) => {
-                vm.$emit('vdropzone-drag-leave', event);
-            });
-            vm.$emit('vdropzone-mounted');
-        },
-        beforeDestroy() {
-            if (this.destroyDropzone) this.dropzone.destroy();
-        },
-        methods: {
-            manuallyAddFile(file, fileUrl) {
-                file.manuallyAdded = true;
-                this.dropzone.emit('addedfile', file);
-                let containsImageFileType = false;
-                if (
-                    fileUrl.indexOf('.png') > -1
+            }
+            vm.$emit('vdropzone-file-added', file);
+        });
+        this.dropzone.on('addedfiles', (files) => {
+            vm.$emit('vdropzone-files-added', files);
+        });
+        this.dropzone.on('removedfile', (file) => {
+            vm.$emit('vdropzone-removed-file', file);
+            if (file.manuallyAdded) vm.dropzone.options.maxFiles++;
+        });
+        this.dropzone.on('success', (file, response) => {
+            vm.$emit('vdropzone-success', file, response);
+        });
+        this.dropzone.on('successmultiple', (file, response) => {
+            vm.$emit('vdropzone-success-multiple', file, response);
+        });
+        this.dropzone.on('error', (file, message, xhr) => {
+            vm.$emit('vdropzone-error', file, message, xhr);
+        });
+        this.dropzone.on('errormultiple', (files, message, xhr) => {
+            vm.$emit('vdropzone-error-multiple', files, message, xhr);
+        });
+        this.dropzone.on('sending', (file, xhr, formData) => {
+            vm.$emit('vdropzone-sending', file, xhr, formData);
+        });
+        this.dropzone.on('sendingmultiple', (file, xhr, formData) => {
+            vm.$emit('vdropzone-sending-multiple', file, xhr, formData);
+        });
+        this.dropzone.on('complete', (file) => {
+            vm.$emit('vdropzone-complete', file);
+        });
+        this.dropzone.on('completemultiple', (files) => {
+            vm.$emit('vdropzone-complete-multiple', files);
+        });
+        this.dropzone.on('canceled', (file) => {
+            vm.$emit('vdropzone-canceled', file);
+        });
+        this.dropzone.on('canceledmultiple', (files) => {
+            vm.$emit('vdropzone-canceled-multiple', files);
+        });
+        this.dropzone.on('maxfilesreached', (files) => {
+            vm.$emit('vdropzone-max-files-reached', files);
+        });
+        this.dropzone.on('maxfilesexceeded', (file) => {
+            vm.$emit('vdropzone-max-files-exceeded', file);
+        });
+        this.dropzone.on('processing', (file) => {
+            vm.$emit('vdropzone-processing', file);
+        });
+        this.dropzone.on('processingmultiple', (files) => {
+            vm.$emit('vdropzone-processing-multiple', files);
+        });
+        this.dropzone.on('uploadprogress', (file, progress, bytesSent) => {
+            vm.$emit('vdropzone-upload-progress', file, progress, bytesSent);
+        });
+        this.dropzone.on(
+            'totaluploadprogress',
+            (totaluploadprogress, totalBytes, totalBytesSent) => {
+                vm.$emit(
+                    'vdropzone-total-upload-progress',
+                    totaluploadprogress,
+                    totalBytes,
+                    totalBytesSent,
+                );
+            },
+        );
+        this.dropzone.on('reset', () => {
+            vm.$emit('vdropzone-reset');
+        });
+        this.dropzone.on('queuecomplete', () => {
+            vm.$emit('vdropzone-queue-complete');
+        });
+        this.dropzone.on('drop', (event) => {
+            vm.$emit('vdropzone-drop', event);
+        });
+        this.dropzone.on('dragstart', (event) => {
+            vm.$emit('vdropzone-drag-start', event);
+        });
+        this.dropzone.on('dragend', (event) => {
+            vm.$emit('vdropzone-drag-end', event);
+        });
+        this.dropzone.on('dragenter', (event) => {
+            vm.$emit('vdropzone-drag-enter', event);
+        });
+        this.dropzone.on('dragover', (event) => {
+            vm.$emit('vdropzone-drag-over', event);
+        });
+        this.dropzone.on('dragleave', (event) => {
+            vm.$emit('vdropzone-drag-leave', event);
+        });
+        vm.$emit('vdropzone-mounted');
+    },
+    beforeDestroy() {
+        if (this.destroyDropzone) this.dropzone.destroy();
+    },
+    methods: {
+        manuallyAddFile(file, fileUrl) {
+            file.manuallyAdded = true;
+            this.dropzone.emit('addedfile', file);
+            let containsImageFileType = false;
+            if (
+                fileUrl.indexOf('.png') > -1
                     || fileUrl.indexOf('.jpg') > -1
                     || fileUrl.indexOf('.jpeg') > -1
-                ) { containsImageFileType = true; }
-                if (
-                    this.dropzone.options.createImageThumbnails
+            ) { containsImageFileType = true; }
+            if (
+                this.dropzone.options.createImageThumbnails
                     && containsImageFileType
                     && file.size
                         <= this.dropzone.options.maxThumbnailFilesize * 1024 * 1024
-                ) {
-                    fileUrl && this.dropzone.emit('thumbnail', file, fileUrl);
-                    const thumbnails = file.previewElement.querySelectorAll(
-                        '[data-dz-thumbnail]',
-                    );
-                    for (let i = 0; i < thumbnails.length; i += 1) {
-                        thumbnails[i].style.width = `${
-                            this.dropzoneSettings.thumbnailWidth
-                        }px`;
-                        thumbnails[i].style.height = `${
-                            this.dropzoneSettings.thumbnailHeight
-                        }px`;
-                        thumbnails[i].style['object-fit'] = 'contain';
-                    }
+            ) {
+                fileUrl && this.dropzone.emit('thumbnail', file, fileUrl);
+                const thumbnails = file.previewElement.querySelectorAll(
+                    '[data-dz-thumbnail]',
+                );
+                for (let i = 0; i < thumbnails.length; i += 1) {
+                    thumbnails[i].style.width = `${
+                        this.dropzoneSettings.thumbnailWidth
+                    }px`;
+                    thumbnails[i].style.height = `${
+                        this.dropzoneSettings.thumbnailHeight
+                    }px`;
+                    thumbnails[i].style['object-fit'] = 'contain';
                 }
-                this.dropzone.emit('complete', file);
-                if (this.dropzone.options.maxFiles) { this.dropzone.options.maxFiles--; }
-                this.dropzone.files.push(file);
-                this.$emit('vdropzone-file-added-manually', file);
-            },
-            setOption(option, value) {
-                this.dropzone.options[option] = value;
-            },
-            removeAllFiles(bool) {
-                this.dropzone.removeAllFiles(bool);
-            },
-            processQueue() {
-                const dropzoneEle = this.dropzone;
-                this.dropzone.processQueue();
-                this.dropzone.on('success', () => {
-                    dropzoneEle.options.autoProcessQueue = true;
-                });
-                this.dropzone.on('queuecomplete', () => {
-                    dropzoneEle.options.autoProcessQueue = false;
-                });
-            },
-            init() {
-                return this.dropzone.init();
-            },
-            destroy() {
-                return this.dropzone.destroy();
-            },
-            updateTotalUploadProgress() {
-                return this.dropzone.updateTotalUploadProgress();
-            },
-            getFallbackForm() {
-                return this.dropzone.getFallbackForm();
-            },
-            getExistingFallback() {
-                return this.dropzone.getExistingFallback();
-            },
-            setupEventListeners() {
-                return this.dropzone.setupEventListeners();
-            },
-            removeEventListeners() {
-                return this.dropzone.removeEventListeners();
-            },
-            disable() {
-                return this.dropzone.disable();
-            },
-            enable() {
-                return this.dropzone.enable();
-            },
-            filesize(size) {
-                return this.dropzone.filesize(size);
-            },
-            accept(file, done) {
-                return this.dropzone.accept(file, done);
-            },
-            addFile(file) {
-                return this.dropzone.addFile(file);
-            },
-            removeFile(file) {
-                this.dropzone.removeFile(file);
-            },
-            getAcceptedFiles() {
-                return this.dropzone.getAcceptedFiles();
-            },
-            getRejectedFiles() {
-                return this.dropzone.getRejectedFiles();
-            },
-            getFilesWithStatus() {
-                return this.dropzone.getFilesWithStatus();
-            },
-            getQueuedFiles() {
-                return this.dropzone.getQueuedFiles();
-            },
-            getUploadingFiles() {
-                return this.dropzone.getUploadingFiles();
-            },
-            getAddedFiles() {
-                return this.dropzone.getAddedFiles();
-            },
-            getActiveFiles() {
-                return this.dropzone.getActiveFiles();
-            },
+            }
+            this.dropzone.emit('complete', file);
+            if (this.dropzone.options.maxFiles) { this.dropzone.options.maxFiles--; }
+            this.dropzone.files.push(file);
+            this.$emit('vdropzone-file-added-manually', file);
         },
-    };
+        setOption(option, value) {
+            this.dropzone.options[option] = value;
+        },
+        removeAllFiles(bool) {
+            this.dropzone.removeAllFiles(bool);
+        },
+        processQueue() {
+            const dropzoneEle = this.dropzone;
+            this.dropzone.processQueue();
+            this.dropzone.on('success', () => {
+                dropzoneEle.options.autoProcessQueue = true;
+            });
+            this.dropzone.on('queuecomplete', () => {
+                dropzoneEle.options.autoProcessQueue = false;
+            });
+        },
+        init() {
+            return this.dropzone.init();
+        },
+        destroy() {
+            return this.dropzone.destroy();
+        },
+        updateTotalUploadProgress() {
+            return this.dropzone.updateTotalUploadProgress();
+        },
+        getFallbackForm() {
+            return this.dropzone.getFallbackForm();
+        },
+        getExistingFallback() {
+            return this.dropzone.getExistingFallback();
+        },
+        setupEventListeners() {
+            return this.dropzone.setupEventListeners();
+        },
+        removeEventListeners() {
+            return this.dropzone.removeEventListeners();
+        },
+        disable() {
+            return this.dropzone.disable();
+        },
+        enable() {
+            return this.dropzone.enable();
+        },
+        filesize(size) {
+            return this.dropzone.filesize(size);
+        },
+        accept(file, done) {
+            return this.dropzone.accept(file, done);
+        },
+        addFile(file) {
+            return this.dropzone.addFile(file);
+        },
+        removeFile(file) {
+            this.dropzone.removeFile(file);
+        },
+        getAcceptedFiles() {
+            return this.dropzone.getAcceptedFiles();
+        },
+        getRejectedFiles() {
+            return this.dropzone.getRejectedFiles();
+        },
+        getFilesWithStatus() {
+            return this.dropzone.getFilesWithStatus();
+        },
+        getQueuedFiles() {
+            return this.dropzone.getQueuedFiles();
+        },
+        getUploadingFiles() {
+            return this.dropzone.getUploadingFiles();
+        },
+        getAddedFiles() {
+            return this.dropzone.getAddedFiles();
+        },
+        getActiveFiles() {
+            return this.dropzone.getActiveFiles();
+        },
+    },
+};
 </script>
 
 <style lang="scss">

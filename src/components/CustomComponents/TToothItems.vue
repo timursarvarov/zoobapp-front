@@ -1,23 +1,30 @@
 <template>
-    <md-dialog v-if="showForm" class="tooth-diagnosis-form" :md-active.sync="showFormLocal">
+    <md-dialog
+        v-if="showForm"
+        class="tooth-diagnosis-form"
+        :md-active.sync="showFormLocal"
+    >
         <div>
             <md-card>
                 <md-card-header class="md-card-header-icon md-card-header-green">
                     <div class="card-icon">
-                        <md-icon>{{icon}}</md-icon>
+                        <md-icon>{{ icon }}</md-icon>
                     </div>
                     <h4 class="title">
-                        <b>{{item.code}}</b>
-                        {{item.title}}
+                        <b>{{ item.code }}</b>
+                        {{ item.title }}
                     </h4>
                 </md-card-header>
                 <md-card-content>
-                    <div ref="contentWrapper" class="content-wrapper">
+                    <div
+                        ref="contentWrapper"
+                        class="content-wrapper"
+                    >
                         <div class="md-layout">
                             <div class="teeth-content md-layout-item mx-auto">
                                 <div
-                                    class="teeth-content__wrapper mx-auto"
                                     v-if="otherTeeth.length > 0 "
+                                    class="teeth-content__wrapper mx-auto"
                                 >
                                     <div
                                         v-for="(cJaw, key) in compJaw"
@@ -27,14 +34,14 @@
                                         <tooth
                                             v-for="toothId in cJaw"
                                             :key="toothId"
-                                            :showNumber="false"
-                                            :toothId="toothId"
+                                            :show-number="false"
+                                            :tooth-id="toothId"
                                             :jaw="jaw"
-                                            :selectedItem="item"
-                                            :teethSystem="teethSystem"
-                                            :originalItems="originalItems"
+                                            :selected-item="item"
+                                            :teeth-system="teethSystem"
+                                            :original-items="originalItems"
                                             :type="type"
-                                            :scaleSize="3.5"
+                                            :scale-size="3.5"
                                         />
                                     </div>
                                 </div>
@@ -46,14 +53,14 @@
                                             <t-avatar
                                                 class="author-avatar"
                                                 :small="true"
-                                                :textToColor="item.author.ID"
-                                                :imageSrc="item.author.avatar"
+                                                :text-to-color="item.author.ID"
+                                                :image-src="item.author.avatar"
                                                 :title="item.author.firstName + ' ' + item.author.lastName"
                                             />
                                         </md-avatar>
                                         <div class="md-list-item-text">
-                                            <span>{{item.author.lastName | capitilize}}</span>
-                                            <span>{{item.author.firstName | capitilize}}</span>
+                                            <span>{{ item.author.lastName | capitilize }}</span>
+                                            <span>{{ item.author.firstName | capitilize }}</span>
                                         </div>
                                     </md-list-item>
 
@@ -61,8 +68,8 @@
                                         v-if="item.date"
                                     >
                                         <div class="md-list-item-text">
-                                        <span>{{ item.date | moment("from") | capitilize }}</span>
-                                        <span>{{item.date | moment("calendar")}}</span>
+                                            <span>{{ item.date | moment("from") | capitilize }}</span>
+                                            <span>{{ item.date | moment("calendar") }}</span>
                                         </div>
                                     </md-list-item>
                                 </md-list>
@@ -71,28 +78,43 @@
 
                         <div v-if="showEmptyState()">
                             <div v-if="item.manipulations && item.manipulations.length>0">
-                                <md-toolbar class="md-transparent"> <span class="md-title">Manipulations </span> </md-toolbar>
+                                <md-toolbar class="md-transparent">
+                                    <span class="md-title">Manipulations </span>
+                                </md-toolbar>
                                 <div class="md-layout-item">
                                     <md-table
                                         v-model="item.manipulations"
                                         table-header-color="green"
                                     >
-                                        <md-table-row slot="md-table-row" slot-scope="{ item }">
+                                        <md-table-row
+                                            slot="md-table-row"
+                                            slot-scope="{ item }"
+                                        >
                                             <md-table-cell
                                                 md-label="Code"
-                                            >{{ item.manipulation.code }}</md-table-cell>
+                                            >
+                                                {{ item.manipulation.code }}
+                                            </md-table-cell>
                                             <md-table-cell
                                                 md-label="Title"
-                                            >{{ item.manipulation.title }}</md-table-cell>
+                                            >
+                                                {{ item.manipulation.title }}
+                                            </md-table-cell>
                                             <md-table-cell
                                                 md-label="Qty"
                                                 class="manipulations-input"
-                                            >{{item.num}}</md-table-cell>
+                                            >
+                                                {{ item.num }}
+                                            </md-table-cell>
                                             <md-table-cell>*</md-table-cell>
-                                            <md-table-cell md-label="Price">{{ item.price }}</md-table-cell>
+                                            <md-table-cell md-label="Price">
+                                                {{ item.price }}
+                                            </md-table-cell>
                                             <md-table-cell
                                                 md-label="Total"
-                                            >{{ item.price * item.num }} {{currencyCode}}</md-table-cell>
+                                            >
+                                                {{ item.price * item.num }} {{ currencyCode }}
+                                            </md-table-cell>
                                         </md-table-row>
                                     </md-table>
                                     <div class="footer-table md-table">
@@ -105,7 +127,9 @@
                                                         >
                                                             <div
                                                                 class="md-table-head-label"
-                                                            >Total manipulations: {{item.manipulations.length}}</div>
+                                                            >
+                                                                Total manipulations: {{ item.manipulations.length }}
+                                                            </div>
                                                         </div>
                                                     </th>
                                                     <th class="md-table-head">
@@ -114,8 +138,8 @@
                                                         >
                                                             <div class="md-table-head-label">
                                                                 Total price:
-                                                                {{totalPrice}}
-                                                                {{currencyCode}}
+                                                                {{ totalPrice }}
+                                                                {{ currencyCode }}
                                                             </div>
                                                         </div>
                                                     </th>
@@ -125,29 +149,36 @@
                                     </div>
                                 </div>
                             </div>
-                            <div >
-                                <md-toolbar class="md-transparent"> <span class="md-title">Description </span> </md-toolbar>
-                                <div  v-html="item.description" class="md-layout-item"></div>
+                            <div>
+                                <md-toolbar class="md-transparent">
+                                    <span class="md-title">Description </span>
+                                </md-toolbar>
+                                <div
+                                    class="md-layout-item"
+                                    v-html="item.description"
+                                />
                             </div>
-                            <div v-if="files.length > 0" >
-                                <md-toolbar class="md-transparent"> <span class="md-title">Files </span> </md-toolbar>
+                            <div v-if="files.length > 0">
+                                <md-toolbar class="md-transparent">
+                                    <span class="md-title">Files </span>
+                                </md-toolbar>
                                 <div class="md-layout-item imgcontainer files md-layout">
                                     <div
-                                        v-viewer="options"
-                                        class="md-xsmall-size-100 md-layout-item md-size-50 md-medium-size-33 md-small-size-50 file-wrapper"
                                         v-for="(file, key) in files"
                                         :key="key"
+                                        v-viewer="options"
+                                        class="md-xsmall-size-100 md-layout-item md-size-50 md-medium-size-33 md-small-size-50 file-wrapper"
                                     >
-                                        <t-file-preview
-                                            @show="show"
+                                        <t-files-add-form
                                             :width="360"
-                                            :iconSize="4"
+                                            :icon-size="4"
                                             :title="file.name"
                                             :height="240"
                                             :url="file.url"
-                                            :mimeType="file.mimeType"
-                                            :showOverlay="true"
-                                            overlayIcon="visibility"
+                                            :mime-type="file.mimeType"
+                                            :show-overlay="true"
+                                            overlay-icon="visibility"
+                                            @show="show"
                                         />
                                     </div>
                                 </div>
@@ -159,239 +190,249 @@
                                 md-icon="list"
                                 md-label="No description to show"
                                 md-description="No description was created"
-                            ></md-empty-state>
+                            />
                         </div>
                     </div>
                 </md-card-content>
                 <md-card-actions>
-                    <md-button @click="$emit('onPrint', item, type), showFormLocal=false">Print</md-button>
+                    <md-button @click="$emit('onPrint', item, type), showFormLocal=false">
+                        Print
+                    </md-button>
                     <md-button
                         class="md-info"
                         @click="$emit('editItem', item, type), showFormLocal=false"
-                    >Edit</md-button>
-                    <md-button class="md-success" @click="showFormLocal = !showFormLocal">OK</md-button>
+                    >
+                        Edit
+                    </md-button>
+                    <md-button
+                        class="md-success"
+                        @click="showFormLocal = !showFormLocal"
+                    >
+                        OK
+                    </md-button>
                 </md-card-actions>
             </md-card>
         </div>
     </md-dialog>
 </template>
 <script>
-    
-    import {
-        TEETH_ADDULT_ALL,
-        TEETH_DEFAULT_LOCATIONS,
-        TEETH_ADDULT_BOTTOM,
-        TEETH_ADDULT_TOP,
-        TEETH_BABY_BOTTOM,
-        TEETH_BABY_TOP,
-        TEETH_BABY_ALL,
-        TEETH_ALL,
-    } from '@/constants';
 
-    export default {
-        name: 't-tooth-items',
-        components: {
-            't-file-preview': () => import('@/components/CustomComponents/TFilesAddForm'),
+import {
+    TEETH_ADDULT_ALL,
+    TEETH_DEFAULT_LOCATIONS,
+    TEETH_ADDULT_BOTTOM,
+    TEETH_ADDULT_TOP,
+    TEETH_BABY_BOTTOM,
+    TEETH_BABY_TOP,
+    TEETH_BABY_ALL,
+    TEETH_ALL,
+} from '@/constants';
+import TFilesAddForm from '@/components/CustomComponents/TFilesAddForm';
+
+export default {
+    name: 'TToothItems',
+    components: {
+        TFilesAddForm,
+    },
+    props: {
+        files: {
+            type: Array,
+            default: () => [],
         },
-        props: {
-            files: {
-                type: Array,
-                default: () => [],
-            },
-            currencyCode: {
-                type: String,
-                default: () => '',
-            },
-            access_token: {
-                type: String,
-                default: '',
-            },
-            buttonColor: {
-                type: String,
-                default: '',
-            },
-            teethSystem: {
-                type: Number,
-                default: () => 1,
-            },
-            showForm: {
-                type: Boolean,
-                default: false,
-            },
-            item: {
-                type: Object,
-                default: () => ({
-                    description: '',
-                    manipulations: [],
-                    otherTeeth: [],
-                }),
-            },
-            toothId: {
-                type: String,
-                default: '0',
-            },
-            icon: {
-                type: String,
-                default: 'list',
-            },
-            patientItems: {
-                type: Array,
-                default: () => [],
-            },
-            type: {
-                type: String,
-                default: () => 'diagnosis',
-            },
-            originalItems: {
-                type: Array,
-                default: () => [],
-            },
-            jaw: {
-                type: Object,
-                default: () => {},
-            },
-            title: {
-                type: String,
-                default: () => 'Tooth Diagnosis',
-            },
+        currencyCode: {
+            type: String,
+            default: () => '',
         },
-        data() {
-            return {
-                options: {
-                    filter(image) {
-                        return image.classList.contains('img-to-preview');
-                    },
+        accessToken: {
+            type: String,
+            default: '',
+        },
+        buttonColor: {
+            type: String,
+            default: '',
+        },
+        teethSystem: {
+            type: Number,
+            default: () => 1,
+        },
+        showForm: {
+            type: Boolean,
+            default: false,
+        },
+        item: {
+            type: Object,
+            default: () => ({
+                description: '',
+                manipulations: [],
+                otherTeeth: [],
+            }),
+        },
+        toothId: {
+            type: String,
+            default: '0',
+        },
+        icon: {
+            type: String,
+            default: 'list',
+        },
+        patientItems: {
+            type: Array,
+            default: () => [],
+        },
+        type: {
+            type: String,
+            default: () => 'diagnosis',
+        },
+        originalItems: {
+            type: Array,
+            default: () => [],
+        },
+        jaw: {
+            type: Object,
+            default: () => {},
+        },
+        title: {
+            type: String,
+            default: () => 'Tooth Diagnosis',
+        },
+    },
+    data() {
+        return {
+            options: {
+                filter(image) {
+                    return image.classList.contains('img-to-preview');
                 },
-                columns: [
-                    {
-                        key: 'filePreview',
-                        title: 'Preview',
-                        sortable: false,
-                    },
-                    {
-                        key: 'name',
-                        title: 'Name',
-                        sortable: true,
-                    },
-                    {
-                        key: 'filesize',
-                        title: 'File Size',
-                        sortable: true,
-                    },
-                ],
-            };
+            },
+            columns: [
+                {
+                    key: 'filePreview',
+                    title: 'Preview',
+                    sortable: false,
+                },
+                {
+                    key: 'name',
+                    title: 'Name',
+                    sortable: true,
+                },
+                {
+                    key: 'filesize',
+                    title: 'File Size',
+                    sortable: true,
+                },
+            ],
+        };
+    },
+    computed: {
+        totalPrice() {
+            let sum = 0;
+            if (this.item.manipulations && this.item.manipulations.length > 0) {
+                this.item.manipulations.forEach((manip) => {
+                    sum += manip.price * manip.num;
+                });
+            }
+            return sum;
         },
-        methods: {
-            show() {
+        otherTeeth() {
+            let teeth = [];
+            if (this.item.teeth) {
+                teeth = Object.keys(this.item.teeth);
+            }
+            return teeth;
+        },
+        diagnosisTitles() {
+            const titles = [];
+            this.diagnosisWithTooth.forEach((diagnose, index) => {
+                titles.push(
+                    `${index + 1} - ${diagnose.code} ${diagnose.title}`,
+                );
+            });
+            return titles;
+        },
+        diagnosisWithTooth() {
+            const diagnosis = [];
+            this.patientItems.forEach((diagnose) => {
+                if (
+                    diagnose.teeth
+                        && Object.keys(diagnose.teeth).includes(this.toothId)
+                ) {
+                    diagnosis.push(diagnose);
+                }
+            });
+            return diagnosis;
+        },
+        showFormLocal: {
+            // геттер:
+            get() {
+                return this.showForm;
+            },
+            // сеттер:
+            set(newValue) {
+                this.$emit('update:showForm', newValue);
+            },
+        },
+        teeth() {
+            return TEETH_ALL;
+        },
+        babyTeeth() {
+            return TEETH_BABY_ALL;
+        },
+        adultTeeth() {
+            return TEETH_ADDULT_ALL;
+        },
+        topAdultTeeth() {
+            return TEETH_ADDULT_TOP;
+        },
+        bottomAdultTeeth() {
+            return TEETH_ADDULT_BOTTOM;
+        },
+        topBabyTeeth() {
+            return TEETH_BABY_TOP;
+        },
+        bottomBabyTeeth() {
+            return TEETH_BABY_BOTTOM;
+        },
+        defaultLocations() {
+            return TEETH_DEFAULT_LOCATIONS;
+        },
+        jawType() {
+            if (this.item.teeth && this.item.teeth.length > 0) {
+                const firstToothId = Object.keys(this.item.teeth)[0];
+                if (this.babyTeeth.includes(firstToothId)) {
+                    return 'babyTeeth';
+                }
+            }
+            return 'adultTeeth';
+        },
+        compJaw() {
+            if (this.jawType === 'babyTeeth') {
+                const jaw = [this.topBabyTeeth, this.bottomBabyTeeth];
+                return jaw;
+            }
+            const jaw = [this.topAdultTeeth, this.bottomAdultTeeth];
+            return jaw;
+        },
+    },
+    methods: {
+        show() {
             // const vuer = this.$el.querySelector('.images').$vuer;
             // console.log(this.$el.querySelector('.img-to-preview'));
             // const vuer = this.$el.querySelector('.img-to-preview').$vuer
             //  const vuer = this.$el.querySelector('.images').$vuer
             // vuer.show()
-            },
-            showEmptyState() {
-                if (
-                    (this.item.description && this.item.description.length > 0)
+        },
+        showEmptyState() {
+            if (
+                (this.item.description && this.item.description.length > 0)
                     || (this.item.manipulations
                     && this.item.manipulations.length > 0)
                     || (this.files && this.files.length > 0)
-                ) {
-                    return true;
-                }
-                return false;
-            },
+            ) {
+                return true;
+            }
+            return false;
         },
-        computed: {
-            totalPrice() {
-                let sum = 0;
-                if (this.item.manipulations && this.item.manipulations.length > 0) {
-                    this.item.manipulations.forEach((manip) => {
-                        sum += manip.price * manip.num;
-                    });
-                }
-                return sum;
-            },
-            otherTeeth() {
-                let teeth = [];
-                if (this.item.teeth) {
-                    teeth = Object.keys(this.item.teeth);
-                }
-                return teeth;
-            },
-            diagnosisTitles() {
-                const titles = [];
-                this.diagnosisWithTooth.forEach((diagnose, index) => {
-                    titles.push(
-                        `${index + 1} - ${diagnose.code} ${diagnose.title}`,
-                    );
-                });
-                return titles;
-            },
-            diagnosisWithTooth() {
-                const diagnosis = [];
-                this.patientItems.forEach((diagnose) => {
-                    if (
-                        diagnose.teeth
-                        && Object.keys(diagnose.teeth).includes(this.toothId)
-                    ) {
-                        diagnosis.push(diagnose);
-                    }
-                });
-                return diagnosis;
-            },
-            showFormLocal: {
-                // геттер:
-                get() {
-                    return this.showForm;
-                },
-                // сеттер:
-                set(newValue) {
-                    this.$emit('update:showForm', newValue);
-                },
-            },
-            teeth() {
-                return TEETH_ALL;
-            },
-            babyTeeth() {
-                return TEETH_BABY_ALL;
-            },
-            adultTeeth() {
-                return TEETH_ADDULT_ALL;
-            },
-            topAdultTeeth() {
-                return TEETH_ADDULT_TOP;
-            },
-            bottomAdultTeeth() {
-                return TEETH_ADDULT_BOTTOM;
-            },
-            topBabyTeeth() {
-                return TEETH_BABY_TOP;
-            },
-            bottomBabyTeeth() {
-                return TEETH_BABY_BOTTOM;
-            },
-            defaultLocations() {
-                return TEETH_DEFAULT_LOCATIONS;
-            },
-            jawType() {
-                if (this.item.teeth && this.item.teeth.length > 0) {
-                    const firstToothId = Object.keys(this.item.teeth)[0];
-                    if (this.babyTeeth.includes(firstToothId)) {
-                        return 'babyTeeth';
-                    }
-                }
-                return 'adultTeeth';
-            },
-            compJaw() {
-                if (this.jawType === 'babyTeeth') {
-                    const jaw = [this.topBabyTeeth, this.bottomBabyTeeth];
-                    return jaw;
-                }
-                const jaw = [this.topAdultTeeth, this.bottomAdultTeeth];
-                return jaw;
-            },
-        },
-    };
+    },
+};
 </script>
 <style lang="scss">
 .md-dialog.tooth-diagnosis-form {

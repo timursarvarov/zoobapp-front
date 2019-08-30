@@ -37,83 +37,83 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 
-    import { tObjProp } from '@/mixins';
-    import {
-        AUTH_REFRESH_TOKEN,
-        PATIENT_ADD_SUB_PROP,
-        BASE_URL,
-    // eslint-disable-next-line import/no-unresolved
-    } from '@/constants';
+import { tObjProp } from '@/mixins';
+import {
+  AUTH_REFRESH_TOKEN,
+  PATIENT_ADD_SUB_PROP,
+  BASE_URL,
+  // eslint-disable-next-line import/no-unresolved
+} from '@/constants';
 
-    export default {
-        name: 'patient-files',
-        mixins: [tObjProp],
-        components: {
-            't-files-add-form': () => import('./TFilesAddForm'),
-            't-files-list': () => import('./TFilesList'),
-        },
-        props: {
-            size: {
-                type: Object,
-                default: () => {},
-            },
-        },
-        data() {
-            return {
-                columns: [{
-                              key: 'filePreview',
-                              title: 'Preview',
-                              sortable: false,
-                          },
-                          {
-                              key: 'name',
-                              title: 'Name',
-                              sortable: true,
-                          },
-                          {
-                              key: 'filesize',
-                              title: 'File Size',
-                              sortable: true,
-                          },
-                ],
-            };
-        },
-        methods: {
-            onSuccess(response) {
-                this.$store.dispatch(PATIENT_ADD_SUB_PROP, {
-                    params: {
-                        propName: 'files',
-                        value: response[0],
-                    },
-                });
-            },
-            validate() {
-                return this.$validator.validateAll().then((res) => {
-                    this.$emit('on-validated', res, 'step3');
-                    return res;
-                });
-            },
-        },
-        computed: {
-            ...mapGetters({
-                access_token: 'fetchStateAccessToken',
-                patient: 'getPatient',
-                tokenExpiresAt: 'expiresAt',
-            }),
-            url() {
-                return `${BASE_URL}/patients/${
-                    this.patient ? this.patient.ID : ''
-                }/files/`;
-            },
-            authRefreshToken() {
-                return AUTH_REFRESH_TOKEN;
-            },
-            patientAddSubProp() {
-                return PATIENT_ADD_SUB_PROP;
-            },
-
-        },
+export default {
+  name: 'patient-files',
+  mixins: [tObjProp],
+  components: {
+    't-files-add-form': () => import('./TFilesAddForm'),
+    't-files-list': () => import('./TFilesList'),
+  },
+  props: {
+    size: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  data() {
+    return {
+      columns: [{
+        key: 'filePreview',
+        title: 'Preview',
+        sortable: false,
+      },
+      {
+        key: 'name',
+        title: 'Name',
+        sortable: true,
+      },
+      {
+        key: 'filesize',
+        title: 'File Size',
+        sortable: true,
+      },
+      ],
     };
+  },
+  methods: {
+    onSuccess(response) {
+      this.$store.dispatch(PATIENT_ADD_SUB_PROP, {
+        params: {
+          propName: 'files',
+          value: response[0],
+        },
+      });
+    },
+    validate() {
+      return this.$validator.validateAll().then((res) => {
+        this.$emit('on-validated', res, 'step3');
+        return res;
+      });
+    },
+  },
+  computed: {
+    ...mapGetters({
+      access_token: 'fetchStateAccessToken',
+      patient: 'getPatient',
+      tokenExpiresAt: 'expiresAt',
+    }),
+    url() {
+      return `${BASE_URL}/patients/${
+        this.patient ? this.patient.ID : ''
+      }/files/`;
+    },
+    authRefreshToken() {
+      return AUTH_REFRESH_TOKEN;
+    },
+    patientAddSubProp() {
+      return PATIENT_ADD_SUB_PROP;
+    },
+
+  },
+};
 </script>

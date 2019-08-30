@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* eslint-disable max-len */
 import axios from 'axios';
 import {
     PATIENT_CREATE,
@@ -10,13 +12,12 @@ import {
     PATIENT_UPDATE,
     PATIENT_UNSET,
     PATIENT_NOTE_CREATE,
-    PATIENTS_PATIENT_UPDATE,
     PATIENT_ADD_SUB_PROP,
     PATIENT_FILE_DOWNLOAD,
     PATIENT_PLAN_SET,
-    PATIENT_PLAN_CURRENT_SET,
     PATIENT_PLAN_DELETE,
     PATIENT_PLAN_EDIT,
+    PATIENT_PLAN_SWITCH_CURRENT,
     PATIENT_PARAM_DELETE,
     PATIENT_PARAM_PUSH,
     PATIENT_DIAGNOSE_SET,
@@ -25,21 +26,53 @@ import {
     PATIENT_PROCEDURE_SET,
     PATIENT_PROCEDURE_DELETE,
     PATIENT_ITEM_VISIBILITY_TOGGLE,
+    PATIENT_ITEM_JUST_ADDED_TOGGLE,
     PATIENT_ANAMNES_SET,
     PATIENT_ANAMNES_UPDATE,
     PATIENT_SUB_PARAM_SET,
     PATIENT_SUB_PARAMS_SET,
     PATIENT_SUB_PARAM_PUSH,
     PATIENT_INVOICE_SET,
-    PATIENTS_PATIENT_ADD,
     PATIENT_MANIPULATION_SET,
     PATIENT_PARAM_REWRITE,
     PATIENT_MANIPULATION_EDIT,
     PATIENT_MANIPULATION_DELETE,
+    PATIENT_JAW_UPDATE,
+    PATIENTS_PATIENT_UPDATE,
+    PATIENTS_PATIENT_ADD,
     TEETH_INITIATION,
 } from '@/constants';
+import recalculateJaw from '@/plugins/recalculateJaw'
+
+function delay(ms) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve();
+        }, ms)
+    });
+}
 
 export default {
+    [PATIENT_JAW_UPDATE]: ({
+        commit,
+        rootGetters
+    }) => {
+
+        const patientItems = {
+            procedures: rootGetters.getPatientCurrentPlanProcedures,
+            diagnosis: rootGetters.getPatientDiagnosis,
+            ananmnesis: rootGetters.getPatientAnamnesis,
+        };
+        const jaw = recalculateJaw(rootGetters.jawEthalon, patientItems);
+        commit(PATIENT_PARAM_SET, { paramName: 'jaw', paramValue: jaw });
+    },
+    [PATIENT_ITEM_JUST_ADDED_TOGGLE]: ({
+        commit,
+    }, {
+        params
+    }) => {
+        delay(5000).then(() => commit(PATIENT_SUB_PARAMS_SET, {...params }));
+    },
     [PATIENT_AVATAR_UPLOAD]: ({
         commit,
         state,
@@ -159,11 +192,11 @@ export default {
     }, {
         params,
     }) => {
-        const { itemId, type, planId } = params;
+        const { itemId, type, planID } = params;
         let itemIndex = -1;
         let planIndex = -1;
-        if (planId && type === 'procedures') {
-            planIndex = state.patient.plans.findIndex(plan => plan.ID === planId);
+        if (planID && type === 'procedures') {
+            planIndex = state.patient.plans.findIndex(plan => plan.ID === planID);
 
             if (planIndex > -1) {
                 itemIndex = state.patient.plans[planIndex].procedures.findIndex(item => item.id === itemId);
@@ -265,6 +298,7 @@ export default {
     [PATIENT_PLAN_SET]: ({
         commit,
         state,
+        dispatch,
     }, {
         planName,
     }) => new Promise((resolve, reject) => {
@@ -291,6 +325,7 @@ export default {
                 });
                 commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
                 commit(PATIENT_PARAM_SET, { paramName: 'currentPlan', paramValue: resp.data.result });
+                dispatch(PATIENT_PLAN_SWITCH_CURRENT, { planID: resp.data.result.ID });
                 resolve(resp.data.result);
             })
             .catch((err) => {
@@ -298,46 +333,13 @@ export default {
                 reject(err);
             });
     }),
-    // [PATIENT_PLANS_GET]: ({
-    //     commit,
-    //     state,
-    // }) => new Promise((resolve, reject) => {
-    //     commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'loading' });
-    //     axios.post('/',
-    //             JSON.stringify({
-    //                 jsonrpc: '2.0',
-    //                 method: 'Patients.GetPlans',
-    //                 params: {
-    //                     patientID: parseInt(state.ID, 10),
-    //                 },
-    //                 id: 1,
-    //             }))
-    //         .then((resp) => {
-    //             if (resp.data.error) {
-    //                 commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
-    //                 reject(resp.data.error);
-    //             }
-    //             if (resp.data.result.plans === null) resolve(null);
-    //             Object.keys(resp.data.result).forEach((key) => {
-    //                 commit(PATIENT_PARAM_SET, {
-    //                     paramName: key,
-    //                     paramValue: resp.data.result[key],
-    //                 });
-    //             });
-    //             commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
-    //             resolve(resp.data.result);
-    //         })
-    //         .catch((err) => {
-    //             commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
-    //             reject(err);
-    //         });
-    // }),
     [PATIENT_PROCEDURE_SET]: ({
         commit,
         state,
+        getters,
+        dispatch,
     }, {
         procedure,
-        planID,
     }) => new Promise((resolve, reject) => {
         commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'loading' });
         axios.post('/',
@@ -346,8 +348,8 @@ export default {
                     method: 'Patients.AddProcedure',
                     params: {
                         patientID: state.ID,
-                        planID,
-                        procedureID: procedure.procedureID,
+                        planID: getters.getCurrentPlanID,
+                        catalogProcedureID: procedure.procedureID,
                         teeth: procedure.teeth,
                     },
                     id: 1,
@@ -361,12 +363,13 @@ export default {
                 const { procedure: procedureN, manipulations } = resp.data.result;
                 procedureN.justAdded = true;
                 // записали ID процедуру в план
-                commit(PATIENT_SUB_PARAMS_SET, {
+                commit(PATIENT_SUB_PARAM_PUSH, {
                     paramName: 'plans',
                     paramIndex: procedureN.planID,
                     subParamName: 'procedures',
-                    subParamIndexArray: state.plans[procedureN.planID].procedures ? state.plans[procedureN.planID].procedures.length : 0,
-                    subParamsValue: procedureN.ID,
+                    subParamIndex: state.plans[procedureN.planID].procedures ? state.plans[procedureN.planID].procedures.length : 0,
+                    subParamKey: procedureN.ID,
+                    subParamValue: procedureN,
                 });
                 // добавляем процедуру в массиы процедур
                 commit(PATIENT_PARAM_PUSH, {
@@ -374,7 +377,15 @@ export default {
                     paramValue: procedureN,
                     paramKey: `${procedureN.ID}`,
                 });
-                // записываем дефолтные манипуляции
+                dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+                        params: {
+                            paramName: 'procedures',
+                            paramIndex: procedureN.ID,
+                            subParamName: 'justAdded',
+                            subParamValue: false,
+                        }
+                    })
+                    // записываем дефолтные манипуляции
                 if (manipulations) {
                     manipulations.forEach((m) => {
                         commit(PATIENT_PARAM_PUSH, {
@@ -382,136 +393,228 @@ export default {
                             paramValue: {...m, justAdded: true },
                             paramKey: `${m.ID}`,
                         });
+                        dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+                            params: {
+                                paramName: 'manipulations',
+                                paramIndex: m.ID,
+                                subParamName: 'justAdded',
+                                subParamValue: false,
+                            }
+                        })
                     });
                 }
-
-                // commit(PATIENT_SUB_PARAM_PUSH, {
-                //     paramName: 'plans',
-                //     paramIndex: procedureN.planID,
-                //     subParamName: 'procedures',
-                //     subParamIndex: state.plans[procedureN.planID].procedures ? state.plans[procedureN.planID].procedures.length : 0,
-                //     subParamKey: procedureN.ID,
-                //     subParamValue: procedureN,
-                // });
-                // if (resp.data.result.manipulations) {
-                //     resp.data.result.manipulations.forEach((m) => {
-                //         commit(PATIENT_PARAM_PUSH, { paramName: 'manipulations', paramValue: m });
-                //     });
-                // }
+                dispatch(PATIENT_JAW_UPDATE);
                 resolve(procedureN);
             })
             .catch((err) => {
-                console.log(err);
                 commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+                console.error(err)
                 reject(err);
             });
     }),
     [PATIENT_PROCEDURE_DELETE]: ({
         commit,
         state,
+        getters,
+        dispatch,
     }, {
-        procedureID,
-        planID,
-
+        procedure,
     }) => new Promise((resolve, reject) => {
-        const paramIndex = state.patient.plans.findIndex(plan => plan.ID === planID);
-        const subParamIndex = state.patient.plans[paramIndex].procedures.findIndex(ID => ID === procedureID);
-        return Promise.resolve(
-            commit(PATIENT_SUB_PARAM_DELETE, {
-                param: 'plans',
-                paramIndex,
-                subParam: 'procedures',
-                subParamIndex,
-                subParamID: procedureID,
-            }),
-        ).then((resp) => {
-            commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
-            resolve(resp);
-        }).catch((err) => {
-            commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
-            console.log(err);
-            reject(err);
-        });
+        commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'loading' });
+        axios.post('/',
+                JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'Patients.DeleteProcedure',
+                    params: {
+                        patientID: state.ID,
+                        procedureID: procedure.ID,
+                    },
+                    id: 1,
+                }))
+            .then((resp) => {
+                if (resp.data.error) {
+                    commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+                    reject(resp.data.error);
+                }
+                commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
+                // удаляем ассоциированные манипуляции
+                if (procedure.manipulations) {
+                    procedure.manipulations.forEach(manipulationID => {
+                        commit(PATIENT_SUB_PARAM_DELETE, {
+                            param: 'procedures',
+                            paramIndex: procedure.ID,
+                            subParam: 'manipulations',
+                            subParamIndex: state.procedures[procedure.ID].manipulations.findIndex(mID => mID === manipulationID),
+                            subParamID: manipulationID,
+                        });
+                    })
+                }
+                commit(PATIENT_SUB_PARAM_DELETE, {
+                    param: 'plans',
+                    paramIndex: procedure.planID,
+                    subParam: 'procedures',
+                    subParamIndex: state.plans[procedure.planID].procedures.findIndex(pID => pID === procedure.ID),
+                    subParamID: procedure.ID,
+                });
+                dispatch(PATIENT_JAW_UPDATE);
+                resolve(resp.data);
+            })
+            .catch((err) => {
+                commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+                console.error(err)
+                reject(err);
+            });
     }),
     [PATIENT_MANIPULATION_DELETE]: ({
         commit,
         state,
     }, {
-        procedureID,
         manipulationID,
-        patientID,
+        procedureID,
 
     }) => new Promise((resolve, reject) => {
-        const subParamIndex = state.patient.procedures[procedureID].manipulations.findIndex(ID => ID === manipulationID);
-        return Promise.resolve(
+        axios.post('/',
+            JSON.stringify({
+                jsonrpc: '2.0',
+                method: 'Patients.DeleteManipulation',
+                params: {
+                    patientID: state.ID,
+                    manipulationID,
+                },
+                id: 1,
+            })
+        ).then((resp) => {
+            if (resp.data.error) {
+                commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+                reject(resp.data.error);
+            }
+            const manipulationParamsN = {
+                ...resp.data.result,
+                justAdded: true,
+            };
+            // e манипуляцию в массив манипуляций
             commit(PATIENT_SUB_PARAM_DELETE, {
                 param: 'procedures',
                 paramIndex: procedureID,
                 subParam: 'manipulations',
-                subParamIndex,
+                subParamIndex: state.procedures[procedureID].manipulations.findIndex(mID => mID === manipulationID),
                 subParamID: manipulationID,
-            }),
-        ).then((resp) => {
+            });
             commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
-            resolve(resp);
+            resolve(resp.data.result);
         }).catch((err) => {
             commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
-            console.log(err);
+
             reject(err);
         });
     }),
     [PATIENT_MANIPULATION_SET]: ({
         commit,
         state,
+        dispatch,
     }, {
-        manipulationParams,
-        initiated,
-
+        manipulationParams
     }) => new Promise((resolve, reject) => {
-        const manipulationParamsN = manipulationParams;
-        manipulationParamsN.justAdded = true;
-        Promise.resolve(
-            console.log(manipulationParams), commit(PATIENT_SUB_PARAM_PUSH, {
-                paramName: 'procedures',
-                paramIndex: manipulationParamsN.procedureID,
-                subParamName: 'manipulations',
-                subParamIndex: state.patient.procedures[manipulationParamsN.procedureID] && state.patient.procedures[manipulationParamsN.procedureID].manipulations ? state.patient.procedures[manipulationParamsN.procedureID].manipulations.length : 0,
-                subParamKey: manipulationParamsN.ID,
-                subParamValue: manipulationParamsN,
-            }),
-        ).then((resp) => {
-            commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
-            resolve(manipulationParamsN);
-        }).catch((err) => {
-            commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
-            console.log(err);
-            reject(err);
-        });
+        axios.post('/',
+                JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'Patients.AddManipulation',
+                    params: {
+                        patientID: state.ID,
+                        ...manipulationParams,
+                    },
+                    id: 1,
+                }))
+            .then((resp) => {
+                if (resp.data.error) {
+                    commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+                    reject(resp.data.error);
+                }
+                const manipulationParamsN = {
+                    ...resp.data.result,
+                    justAdded: true,
+                };
+                // записали манипуляцию в массив манипуляций
+                commit(PATIENT_PARAM_PUSH, {
+                    paramName: 'manipulations',
+                    paramValue: manipulationParamsN,
+                    paramKey: `${manipulationParamsN.ID}`,
+                });
+                let manipulationsIDs = state.procedures[manipulationParams.procedureID].manipulations || [];
+                manipulationsIDs.push(manipulationParamsN.ID)
+                    // записали ID манипуляции в процедуру
+                commit(PATIENT_SUB_PARAM_PUSH, {
+                    paramName: 'procedures',
+                    paramIndex: manipulationParamsN.procedureID,
+                    subParamName: 'manipulations',
+                    subParamIndex: state.procedures[manipulationParamsN.procedureID].manipulations ? state.procedures[manipulationParamsN.procedureID].manipulations.length : 0,
+                    subParamKey: manipulationParamsN.ID,
+                    subParamValue: manipulationParamsN,
+                });
+                dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+                    params: {
+                        paramName: 'manipulations',
+                        paramIndex: manipulationParamsN.ID,
+                        subParamName: 'justAdded',
+                        subParamValue: false,
+                    }
+                })
+                resolve(manipulationParamsN);
+            })
+            .catch((err) => {
+                commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+                console.log(err)
+                reject(err);
+            });
     }),
     [PATIENT_MANIPULATION_EDIT]: ({
         commit,
         state,
+        dispatch,
     }, {
         manipulationParams,
 
     }) => new Promise((resolve, reject) => {
-        const manipulationParamsN = manipulationParams;
-        manipulationParamsN.justAdded = true;
-        Promise.resolve(
-            console.log(manipulationParams),
-            commit(PATIENT_PARAM_REWRITE, {
-                paramName: 'manipulations',
-                paramIndex: manipulationParamsN.ID,
-                paramValue: manipulationParamsN,
-            }),
-        ).then((resp) => {
-            commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
-            resolve(true);
-        }).catch((err) => {
-            commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
-            console.log(err);
-            reject(err);
-        });
+        axios.post('/',
+                JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'Patients.EditManipulation',
+                    params: {
+                        patientID: state.ID,
+                        ...manipulationParams,
+                    },
+                    id: 1,
+                }))
+            .then((resp) => {
+                if (resp.data.error) {
+                    commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+                    reject(resp.data.error);
+                }
+                const manipulationParamsN = {
+                    ...resp.data.result,
+                    justAdded: true,
+                };
+                // записали манипуляцию в массив манипуляций
+                commit(PATIENT_PARAM_PUSH, {
+                    paramName: 'manipulations',
+                    paramValue: manipulationParamsN,
+                    paramKey: `${manipulationParamsN.ID}`,
+                });
+                dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+                    params: {
+                        paramName: 'manipulations',
+                        paramIndex: manipulationParamsN.ID,
+                        subParamName: 'justAdded',
+                        subParamValue: false,
+
+                    }
+                })
+                resolve(manipulationParamsN);
+            })
+            .catch((err) => {
+                commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+                reject(err);
+            });
     }),
     [PATIENT_PLAN_DELETE]: ({
         commit,
@@ -537,7 +640,6 @@ export default {
                     reject(resp.data.error);
                 }
                 commit(PATIENT_PARAM_DELETE, { paramName: 'plans', paramIndex: planID });
-                dispatch(PATIENT_PLAN_CURRENT_SET);
                 commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
                 resolve(resp.data.result);
             })
@@ -549,6 +651,7 @@ export default {
     [PATIENT_DIAGNOSE_SET]: ({
         commit,
         state,
+        dispatch,
     }, {
         diagnose,
     }) => {
@@ -557,6 +660,16 @@ export default {
             paramKey: state.diagnosis && state.diagnosis.length ? state.diagnosis.length : 0,
             paramValue: diagnose,
         });
+        dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+            params: {
+                paramName: 'diagnosis',
+                paramIndex: diagnose.ID,
+                subParamName: 'justAdded',
+                subParamValue: false,
+
+            }
+        })
+        dispatch(PATIENT_JAW_UPDATE);
     },
     [PATIENT_ANAMNES_SET]: ({
         commit,
@@ -569,6 +682,16 @@ export default {
             paramKey: state.anamnesis && state.anamnesis.length ? state.anamnesis.length : 0,
             paramValue: anamnes,
         });
+        dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+            params: {
+
+                paramName: 'anamnesis',
+                paramIndex: anamnes.ID,
+                subParamName: 'justAdded',
+                subParamValue: false,
+            }
+        });
+        dispatch(PATIENT_JAW_UPDATE);
     },
     [PATIENT_SUB_PARAM_SET]: ({
         commit,
@@ -577,7 +700,7 @@ export default {
     }) => new Promise((resolve, reject) => {
         commit(PATIENT_SUB_PARAM_SET, params);
         resolve(true);
-    }).catch(err => console.log(err)),
+    }).catch(err => reject(err)),
 
     [PATIENT_INVOICE_SET]: ({
         commit,
@@ -597,45 +720,42 @@ export default {
             resolve(newInvoice);
     }).catch((err) => {
         reject(err);
-        console.log(err);
     }),
-    [PATIENT_PLAN_CURRENT_SET]: ({
+
+    [PATIENT_PLAN_SWITCH_CURRENT]: ({
         commit,
         state,
+        dispatch,
     }, {
-        plan,
-    }) => new Promise((resolve, reject) => {
-        console.log('set plan', plan);
-        if (plan) {
-            commit(PATIENT_PARAM_SET, { paramName: 'currentPlan', paramValue: plan });
-        } else if (state.plans) {
-            const currentPlan = Object.values(state.plans).find(planL => planL.state === 1);
-            if (!currentPlan) {
-                commit(PATIENT_PARAM_SET, { paramName: 'currentPlan', paramValue: Object.values(state.plans)[0] });
-            }
-            commit(PATIENT_PARAM_SET, { paramName: 'currentPlan', paramValue: currentPlan });
+        planID,
+    }) => {
+        if (planID) {
+            Object.keys(state.plans).forEach(pID => {
+                commit(PATIENT_SUB_PARAMS_SET, {
+                    paramName: 'plans',
+                    paramIndex: pID,
+                    subParamName: 'current',
+                    subParamValue: parseInt(planID, 10) === parseInt(pID, 10),
+                });
+            })
         }
-        resolve(plan);
-    }).catch((err) => {
-        console.log(err);
-    }),
+        dispatch(PATIENT_JAW_UPDATE);
+    },
 
     [PATIENT_PLAN_EDIT]: ({
         commit,
         state,
     }, {
-        planId,
+        planID,
         key,
         value,
     }) => {
-        const pIndex = state.patient.plans.findIndex(pplan => pplan.ID === planId);
-        if (pIndex !== -1) {
-            commit(PATIENT_PARAM_REWRITE, {
-                paramName: 'plans',
-                paramIndex: pIndex,
-                paramValue: value,
-            });
-        }
+        commit(PATIENT_SUB_PARAMS_SET, {
+            paramName: 'plans',
+            paramIndex: planID,
+            subParamName: key,
+            subParamValue: value,
+        });
     },
 
     [PATIENT_PROCEDURE_UPDATE]: ({
@@ -644,11 +764,11 @@ export default {
     }, {
         params,
     }) => {
-        const { procedure, planId } = params;
+        const { procedure, planID } = params;
         let procedureIndex = -1;
         let planIndex = -1;
-        if (planId) {
-            planIndex = state.patient.plans.findIndex(plan => plan.ID === planId);
+        if (planID) {
+            planIndex = state.patient.plans.findIndex(plan => plan.ID === planID);
             if (planIndex > -1) {
                 procedureIndex = state.patient.plans[planIndex].procedures.findIndex(item => item.id === procedure.id);
             }
@@ -726,7 +846,7 @@ export default {
         commit,
         dispatch,
     }, {
-        patientId,
+        patientID,
     }) => new Promise((resolve, reject) => {
         dispatch(PATIENT_UNSET);
         commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'loading' });
@@ -735,7 +855,7 @@ export default {
                     jsonrpc: '2.0',
                     method: 'Patients.Get',
                     params: {
-                        patientID: parseInt(patientId, 10),
+                        patientID: parseInt(patientID, 10),
                     },
                     id: 1,
                 }))
@@ -748,16 +868,8 @@ export default {
                 dispatch(PATIENT_PARAMS_SET, {
                     patient,
                 });
-                // initial Set CurrentPlan
-                if (patient.plans) {
-                    const currentPlan = Object.values(patient.plans).find(plan => plan.state === 1);
-                    if (!currentPlan) {
-                        dispatch(PATIENT_PLAN_CURRENT_SET, { plan: Object.values(patient.plans)[0] });
-                    } else {
-                        dispatch(PATIENT_PLAN_CURRENT_SET, { plan: currentPlan });
-                    }
-                }
                 commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
+                dispatch(PATIENT_JAW_UPDATE);
                 resolve(resp.data.result.patients[0]);
             })
             .catch((err) => {

@@ -1,3 +1,4 @@
+import VueMaterial from 'vue-material';
 // Vuex plugin. Used on as global state
 import store from '@/store';
 // Notifications plugin. Used on Notifications page
@@ -20,7 +21,6 @@ import { PatientAddForm } from './pages/Dashboard/Modals';
 // import ClinicAddForm from './pages/Dashboard/Modals';
 // Tabs plugin. Used on Panels page.
 
-import VueMaterial from 'vue-material';
 
 // asset imports
 import 'vue-material/dist/vue-material.min.css';

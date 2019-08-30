@@ -1,3 +1,9 @@
 .md-snackbar {
-    max-width: 70vw
+    max-width: 70vw;
+    .snackbar-text-wrapper {
+        text-overflow: ellipsis;
+        max-width: calc(70vw - 290px);
+        overflow: hidden;
+        white-space: nowrap;
+    }
 }

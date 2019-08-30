@@ -1,3 +1,4 @@
+/* eslint-disable */
 import axios from 'axios';
 import { AVAILABLE_LANGUAGES } from '@/constants/';
 import i18n from '@/plugins/vue-i18n';
@@ -22,7 +23,6 @@ const Trans = {
      */
     getUserSupportedLang() {
         const userPreferredLang = Trans.getUserLang();
-
         // Check if user preferred browser lang is supported
         if (Trans.isLangSupported(userPreferredLang.lang)) {
             return userPreferredLang.lang;
@@ -37,7 +37,10 @@ const Trans = {
      * Returns the users preferred language
      */
     getUserLang() {
-        const lang = window.navigator.language || window.navigator.userLanguage || Trans.defaultLanguage;
+        const lang =
+            Trans.defaultLanguage ||
+            window.navigator.language ||
+            window.navigator.userLanguage
         return {
             lang,
             langNoISO: lang.split('-')[0],
@@ -60,12 +63,16 @@ const Trans = {
      * @return {Promise<any>}
      */
     changeLanguage(lang) {
-        if (!Trans.isLangSupported(lang)) return Promise.reject(new Error('Language not supported'));
-        if (i18n.locale === lang) return Promise.resolve(lang).catch((err) => { console.log(err); }); // has been loaded prior
+        if (!Trans.isLangSupported(lang)) {
+            return Promise.reject(new Error('Language not supported'));
+        }
+        if (i18n.locale === lang) {
+            return Promise.resolve(lang).catch((err) => { throw new Error(err); });
+        } // has been loaded prior
         return Trans.loadLanguageFile(lang).then((msgs) => {
             i18n.setLocaleMessage(lang, msgs.default || msgs);
             return Trans.setI18nLanguageInServices(lang);
-        }).catch((err) => { console.log(err); });
+        }).catch((err) => { throw new Error(err); });
     },
     /**
      * Async loads a translation file
@@ -73,7 +80,8 @@ const Trans = {
      * @return {Promise<*>|*}
      */
     loadLanguageFile(lang) {
-        return import(/* webpackChunkName: "lang-[request]" */ `@/lang/${lang}.json`);
+        // eslint-disable-next-line
+        return import ( /* webpackChunkName: "lang-[request]" */ `@/lang/${lang}.json`);
     },
     /**
      * Checks if a lang is supported

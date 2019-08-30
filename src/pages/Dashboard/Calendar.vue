@@ -1,7 +1,9 @@
 <template>
     <div>
         <div class="header text-center">
-            <h3 class="title">FullCalendar.io</h3>
+            <h3 class="title">
+                FullCalendar.io
+            </h3>
             <p class="category">
                 Handcrafted by our friends from
                 <a
@@ -19,7 +21,7 @@
             <div class="md-layout-item md-size-80 mx-auto">
                 <md-card class="md-card-calendar">
                     <md-card-content>
-                       <t-calendar/>
+                        <t-calendar />
                     </md-card-content>
                 </md-card>
             </div>
@@ -27,24 +29,24 @@
     </div>
 </template>
 <script>
-    import components from '@/components';
+import components from '@/components';
 
-    export default {
-        name:'calendar',
-        components: {
+export default {
+    name: 'Calendar',
+    components: {
         ...components,
-        },
-        data() {
-            return {
-            };
-        },
-        methods: {
-        },
-        computed: {
-        },
-        mounted() {
-        },
-    };
+    },
+    data() {
+        return {
+        };
+    },
+    computed: {
+    },
+    mounted() {
+    },
+    methods: {
+    },
+};
 </script>
 <style lang="scss" >
 .text-center {

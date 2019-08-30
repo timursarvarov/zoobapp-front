@@ -17,8 +17,15 @@
     }
 }
 
+.to-delete {
+    background-color: lighten($brand-warning, 43.5%) !important;
+    -webkit-transition: background-color 1000ms linear;
+    -ms-transition: background-color 1000ms linear;
+    transition: background-color 1000ms linear;
+}
+
 .editable-mode {
-    background-color: lighten( $brand-info, 43.5%)!important;
+    background-color: lighten($brand-info, 43.5%) !important;
     transition-duration: 300ms;
     .md-table-cell-container {
         // color: $white-color;
@@ -40,7 +47,6 @@
     }
     to {
         color: rgba(0, 0, 0, 0.87);
-        ;
     }
 }
 
@@ -125,5 +131,5 @@
 }
 
 .table-no-actions .paginated-table .md-table-head:nth-child(6) {
-    text-align: left!important;
+    text-align: left !important;
 }

@@ -1,371 +1,403 @@
+/* eslint-disable vue/no-v-html */
 <template lang="html">
     <div class="t-collapse-search-wrapper noselect">
-
-        <div v-show="loading"
+        <div
+            v-show="loading"
             class="no-plan-space"
-                :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
+            :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]"
+        >
             <md-empty-state>
-                <md-progress-spinner md-mode="indeterminate"/>
+                <md-progress-spinner md-mode="indeterminate" />
             </md-empty-state>
         </div>
-        <div v-show="!loading" >
-
-            <md-toolbar  class=" md-transparent no-side-padding md-layout md-alignment-top-space-between collapse-toolbar__items" >
-                <div class="collapse-actions md-small-size-100 md-size-50" >
-                    <slot name="title-start-1"></slot>
-                    <slot name="title-start-2"></slot>
+        <div v-show="!loading">
+            <md-toolbar class=" md-transparent no-side-padding md-layout md-alignment-top-space-between collapse-toolbar__items">
+                <div class="collapse-actions md-small-size-100 md-size-50">
+                    <slot name="title-start-1" />
+                    <slot name="title-start-2" />
                 </div>
-                <div class="collapse-actions md-small-size-100 md-size-50" >
+                <div class="collapse-actions md-small-size-100 md-size-50">
                     <div class=" collapse-toolbar__grow">
-                        <md-field class="no-margin " >
-                            <label>Search {{type}}</label>
-                            <md-input v-model="search"  > </md-input>
+                        <md-field class="no-margin ">
+                            <label>Search {{ type }}</label>
+                            <md-input v-model="search" />
                             <slide-y-down-transition>
-                            <md-button @click="search = ''"  v-show="search.length > 0" class="md-simple md-icon-button md-dense md-input-action ">
-                                <md-icon :style="{ color: getItems.length === 0 ? '#9c27b0 !important': '' }"
-                                >close</md-icon>
-                            </md-button>
+                                <md-button
+                                    v-show="search.length > 0"
+                                    class="md-simple md-icon-button md-dense md-input-action "
+                                    @click="search = ''"
+                                >
+                                    <md-icon
+                                        :style="{ color: getItems.length === 0 ? '#9c27b0 !important': '' }"
+                                    >
+                                        close
+                                    </md-icon>
+                                </md-button>
                             </slide-y-down-transition>
                         </md-field>
                     </div>
                     <div class="ml-auto collapse-toolbar__nogrow">
                         <md-button
-                            @click="toggleAll=!toggleAll"
                             class="md-mini md-just-icon md-simple md-round"
+                            @click="toggleAll=!toggleAll"
                         >
-                            <md-icon :class="[{rotate:toggleAll }]" >keyboard_arrow_down</md-icon>
-                            <md-tooltip md-delay="500">Show all {{type}}</md-tooltip>
+                            <md-icon :class="[{rotate:toggleAll }]">
+                                keyboard_arrow_down
+                            </md-icon>
+                            <md-tooltip md-delay="500">
+                                Show all {{ type }}
+                            </md-tooltip>
                         </md-button>
                     </div>
                 </div>
             </md-toolbar>
 
-            <div v-show="!hideSlot && getItems.length > 0" class="collapse-wrapper "  :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
+            <div
+                v-show="!hideSlot && getItems.length > 0"
+                class="collapse-wrapper "
+                :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]"
+            >
                 <custom-collapse
-                        :colorCollapse="classType"
-                        v-show="!hideSlot"
-                        class=""
-                            :collapse="itemsGroup"
-                            icon="keyboard_arrow_down"
-                            color-collapse="primary"
-                            :toggleAll = "getToggleAll"
+                    v-show="!hideSlot"
+                    :color-collapse="classType"
+                    class=""
+                    :collapse="itemsGroup"
+                    icon="keyboard_arrow_down"
+                    :toggle-all="getToggleAll"
+                >
+                    <template
+                        v-for="(itemGroup, key) in getItems"
+                        :slot="'md-collapse-pane-'+(parseInt(key) + 1)"
+                    >
+                        <div
+                            :key="key"
+                            class="list-wrapper"
                         >
-
-                        <template  v-for="(itemGroup, key) in getItems" :slot="'md-collapse-pane-'+(parseInt(key) + 1)" >
-                            <div class="list-wrapper"   :key="key">
-                            <md-list class=" md-dense" >
-                                <md-list-item  @click="itemClick($event, item)"
-                                :class="[{dental: !isEmpty(item.locations) && selectedTeeth.length == 0 }]"
-                                class="item"
-                                v-ripple v-for="(item, keyd) in itemGroup.codes" :key="keyd" >
-
-
-                                    <div class="item-code" >
-                                    <h6  v-html="item.code"></h6>
+                            <md-list class=" md-dense">
+                                <md-list-item
+                                    v-for="(item, keyd) in itemGroup.codes"
+                                    :key="keyd"
+                                    v-ripple
+                                    :class="[{dental: !lodash.isEmpty(item.locations) && selectedTeeth.length == 0 }]"
+                                    class="item"
+                                    @click="itemClick($event, item)"
+                                >
+                                    <div class="item-code">
+                                        <h6 v-html="item.code" />
                                     </div>
 
-                                    <div class="md-list-item-text" >
-
-                                    <span  v-html="item.title"></span>
-                                    <small class="description text-warning" v-if="!isEmpty(item.locations) && selectedTeeth.length == 0" > Please firstly choose a tooth  </small>
-                                    <small class="description" v-else  v-html="item.description">Horizontal Tabs</small>
-
+                                    <div class="md-list-item-text">
+                                        <span v-html="item.title" />
+                                        <small
+                                            v-if="!lodash.isEmpty(item.locations) && selectedTeeth.length == 0"
+                                            class="description text-warning"
+                                        > Please firstly choose a tooth  </small>
+                                        <small
+                                            v-else
+                                            class="description"
+                                            v-html="item.description"
+                                        />
                                     </div>
 
-                                    <md-button  :class="[{[`md-${classType}`] : isFavorite(item)}, 'md-simple', 'md-list-action', 'md-icon-button']"   :md-ripple="false" >
-                                    <md-icon >star</md-icon>
-                                    <md-tooltip  md-delay="700">Add to Favorite</md-tooltip>
+                                    <md-button
+                                        :class="[{[`md-${classType}`] : isFavorite(item)}, 'md-simple', 'md-list-action', 'md-icon-button']"
+                                        :md-ripple="false"
+                                    >
+                                        <md-icon>star</md-icon>
+                                        <md-tooltip md-delay="700">
+                                            Add to Favorite
+                                        </md-tooltip>
                                     </md-button>
-
-
                                 </md-list-item>
-                                </md-list>
-                                </div>
-                        </template>
+                            </md-list>
+                        </div>
+                    </template>
                 </custom-collapse>
             </div>
 
-            <div v-show="getItems.length == 0 && !hideSlot"
+            <div
+                v-show="getItems.length == 0 && !hideSlot"
                 class="no-plan-space"
-                :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
+                :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]"
+            >
                 <md-empty-state
                     :class="getClassType"
                     md-icon="sentiment_dissatisfied"
                     :md-label="`No matching ${type}`"
-                    md-description="Try another search params">
-                </md-empty-state>
+                    md-description="Try another search params"
+                />
             </div>
-            <div class="no-plan-space"
-                :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]" >
-                <slot v-show="hideSlot" name="empty-space"></slot>
+            <div
+                v-show="hideSlot"
+                class="no-plan-space"
+                :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]"
+            >
+                <slot name="empty-space" />
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
-    import { SlideYDownTransition } from 'vue2-transitions';
-    import Fuse from 'fuse.js';
+import { SlideYDownTransition } from 'vue2-transitions';
+import Fuse from 'fuse.js';
+import CustomCollapse  from './CustomCollapse';
 
-    import { tObjProp } from '@/mixins';
-
-    const fuseOptions = {
-        findAllMatches: true,
-        include: ['score', 'matches'],
-        includeMatches: true,
-        threshold: 0.5,
-        location: 0,
-        distance: 3,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: [
-            {
-                name: 'title',
-                weight: 0.1,
-            },
-            {
-                name: 'description',
-                weight: 0.9,
-            },
-            {
-                name: 'code',
-                weight: 0.2,
-            },
-        ],
-    };
-
-    export default {
-        name: 'collapsable-search-panel',
-        mixins: [tObjProp],
-        components: {
-            SlideYDownTransition,
-            'custom-collapse': () => import('./CustomCollapse'),
+const fuseOptions = {
+    findAllMatches: true,
+    include: ['score', 'matches'],
+    includeMatches: true,
+    threshold: 0.5,
+    location: 0,
+    distance: 3,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: [
+        {
+            name: 'title',
+            weight: 0.1,
         },
-        props: {
-            selectedTeeth: {
-                type: Array,
-                default: () => [],
-            },
-            items: {
-                type: Array,
-                default: () => [],
-            },
-            customHeight: {
-                type: Number,
-                default: () => 1,
-            },
-            favoriteItems: {
-                type: Array,
-                default: () => [],
-            },
-            recalculateItems: {
-                type: Boolean,
-                default: () => false,
-            },
-            loading: {
-                type: Boolean,
-                default: () => false,
-            },
-            hideSlot: {
-                type: Boolean,
-                default: () => false,
-            },
-            classType: {
-                type: String,
-                default: () => 'primary',
-            },
-            type: {
-                type: String,
-                default: () => 'diagnosis',
-            },
+        {
+            name: 'description',
+            weight: 0.9,
         },
-        data() {
-            return {
-                search: '',
-                searched: [],
-                firstTabs: [],
-                toggleAll: false,
-                fuse: false,
-                //   filter: {},
-                itemOriginal: [],
-                selecteditem: {},
-            };
+        {
+            name: 'code',
+            weight: 0.2,
         },
-        methods: {
-            isFavorite(item) {
-                if (this.favoriteItems.includes(item.code)) {
-                    return true;
-                }
-                return false;
-            },
-            itemClick(event, item) {
-                if (event.target.classList.contains('md-icon')) {
-                    this.$emit('onSetFavoritem', item);
-                    this.loadData();
-                } else {
-                    this.$emit('onSelected', item);
-                }
-            },
-            loadData() {
-                this.search = '';
-                this.unshiftFavoriteItems();
-                this.searched = this.copyObj(this.items);
-                Object.values(this.searched).forEach((group) => {
-                    group.codes.forEach((item) => {
-                        // eslint-disable-next-line
-                    item.constCode = this.copyObj(item.code).slice(0);
-                    });
-                });
-                this.itemOriginal = this.copyObj(this.searched);
-                this.fuse = new Fuse(this.items, fuseOptions);
-            },
-            unshiftFavoriteItems() {
-                const favoriteItems = {
-                    code: '★',
-                    codes: [],
-                    title: `Favorite ${this.type}`,
-                };
-                if (this.favoriteItems.length > 0) {
-                    this.favoriteItems.forEach((fitem) => {
-                        Object.values(this.items).forEach((group) => {
-                            let favoriteD = null;
-                            if (group.codes && group.code !== '★') {
-                                favoriteD = group.codes.find(
-                                    item => item.code === fitem,
-                                );
-                            }
-                            if (favoriteD) {
-                                favoriteItems.codes.push(favoriteD);
-                            }
-                        });
-                    });
-                }
-                if (favoriteItems.codes.length > 0) {
-                    const favoriteIndex = this.items.findIndex(
-                        item => item.code === '★',
-                    );
-                    if (favoriteIndex === -1) {
-                        this.items.unshift(favoriteItems);
-                    } else {
-                        this.items.splice(favoriteIndex, 1, favoriteItems);
-                    }
-                } else {
-                    const favoriteIndex = this.items.findIndex(
-                        item => item.code === '★',
-                    );
-                    if(favoriteIndex > -1){
-                        this.items.splice(favoriteIndex, 1);
-                    }
-                }
-            },
-            namespace(object, path) {
-                return path
-                    .split('.')
-                    .reduce((value, index) => value[index], object);
-            },
-            setValue(object, path, newValue) {
-                const paths = path.split('.');
-                let count = 0;
-                // eslint-disable-next-line
-            paths.reduce((value, index) => {
-                    count += 1;
-                    if (count >= paths.length) {
-                        // eslint-disable-next-line
-                    value[index] = newValue;
-                    } else {
-                        const nValue = value[index];
-                        return nValue;
-                    }
-                }, object);
-            },
-            highlightText(sourceString, startIndex, endIndex) {
-                return `${sourceString.substring(
-                    0,
-                    startIndex,
-                )}<span class="highlight">${sourceString.substring(
-                    startIndex,
-                    endIndex + 1,
-                )}</span>${sourceString.substring(endIndex + 1)}`;
-            },
-            getFilteredItems() {
-                this.searched = this.copyObj(this.itemOriginal).slice(0);
-                const group = [];
-                this.searched.forEach((itemsGroupe) => {
-                    const fuseResults = new Fuse(
-                        itemsGroupe.codes,
-                        fuseOptions,
-                    ).search(this.search);
-                    const results = [];
-                    if (fuseResults.length > 0) {
-                        Object.values(fuseResults).forEach((result) => {
-                            result.matches.forEach((match) => {
-                                let text = this.namespace(result.item, match.key);
-                                if (text) {
-                                    let offset = 0;
+    ],
+};
 
-                                    match.indices.forEach((index) => {
-                                        text = this.highlightText(
-                                            text,
-                                            index[0] + offset,
-                                            index[1] + offset,
-                                        );
-                                        offset += 31;
-                                    });
-                                    this.setValue(result.item, match.key, text);
-                                }
-                            });
-                            results.push(result.item);
-                        });
-
-                        if (results.length > 0) {
-                            group.push({
-                                code: itemsGroupe.code,
-                                title: itemsGroupe.title,
-                                codes: results,
-                            });
-                        }
-                    }
-                });
-                return group;
-            },
+export default {
+    name: 'CollapsableSearchPanel',
+    components: {
+        SlideYDownTransition,
+        CustomCollapse,
+    },
+    props: {
+        selectedTeeth: {
+            type: Array,
+            default: () => [],
         },
-        computed: {
-            filteredItems() {
-                return this.getFilteredItems();
-            },
-            getClassType() {
-                return `md-${this.classType}`;
-            },
-            getToggleAll() {
-                if (this.search || this.toggleAll) {
-                    return true;
-                }
-                return this.toggleAll;
-            },
-            getItems() {
-                return this.search === '' ? this.searched : this.filteredItems;
-            },
-
-            itemsGroup() {
-                const dGroup = [];
-                this.getItems.forEach((element) => {
-                    dGroup.push(`${element.code}    ${element.title}`);
-                });
-                return dGroup;
-            },
+        items: {
+            type: Array,
+            default: () => [],
         },
-        mounted() {
+        customHeight: {
+            type: Number,
+            default: () => 1,
+        },
+        favoriteItems: {
+            type: Array,
+            default: () => [],
+        },
+        recalculateItems: {
+            type: Boolean,
+            default: () => false,
+        },
+        loading: {
+            type: Boolean,
+            default: () => false,
+        },
+        hideSlot: {
+            type: Boolean,
+            default: () => false,
+        },
+        classType: {
+            type: String,
+            default: () => 'primary',
+        },
+        type: {
+            type: String,
+            default: () => 'diagnosis',
+        },
+    },
+    data() {
+        return {
+            search: '',
+            searched: [],
+            firstTabs: [],
+            toggleAll: false,
+            fuse: false,
+            //   filter: {},
+            itemOriginal: [],
+            selecteditem: {},
+        };
+    },
+    computed: {
+        filteredItems() {
+            return this.getFilteredItems();
+        },
+        getClassType() {
+            return `md-${this.classType}`;
+        },
+        getToggleAll() {
+            if (this.search || this.toggleAll) {
+                return true;
+            }
+            return this.toggleAll;
+        },
+        getItems() {
+            return this.search === '' ? this.searched : this.filteredItems;
+        },
+
+        itemsGroup() {
+            const dGroup = [];
+            this.getItems.forEach((element) => {
+                dGroup.push(`${element.code}    ${element.title}`);
+            });
+            return dGroup;
+        },
+    },
+    watch: {
+        recalculateItems() {
             this.loadData();
-            this.searched = this.copyObj(this.itemOriginal);
+            this.searched = this.lodash.cloneDeep(this.itemOriginal);
         },
-        watch: {
-            recalculateItems() {
+    },
+    mounted() {
+        this.loadData();
+        this.searched = this.lodash.cloneDeep(this.itemOriginal);
+    },
+    methods: {
+        isFavorite(item) {
+            if (this.favoriteItems.includes(item.code)) {
+                return true;
+            }
+            return false;
+        },
+        itemClick(event, item) {
+            if (event.target.classList.contains('md-icon')) {
+                this.$emit('onSetFavoritem', item);
                 this.loadData();
-                this.searched = this.copyObj(this.itemOriginal);
-            },
+            } else {
+                this.$emit('onSelected', item);
+            }
         },
-    };
+        loadData() {
+            this.search = '';
+            this.unshiftFavoriteItems();
+            this.searched = this.lodash.cloneDeep(this.items);
+            Object.values(this.searched).forEach((group) => {
+                group.codes.forEach((item) => {
+                    // eslint-disable-next-line
+                    item.constCode = this.lodash.cloneDeep(item.code).slice(0);
+                });
+            });
+            this.itemOriginal = this.lodash.cloneDeep(this.searched);
+            this.fuse = new Fuse(this.items, fuseOptions);
+        },
+        unshiftFavoriteItems() {
+            const favoriteItems = {
+                code: '★',
+                codes: [],
+                title: `Favorite ${this.type}`,
+            };
+            if (this.favoriteItems.length > 0) {
+                this.favoriteItems.forEach((fitem) => {
+                    Object.values(this.items).forEach((group) => {
+                        let favoriteD = null;
+                        if (group.codes && group.code !== '★') {
+                            favoriteD = group.codes.find(
+                                item => item.code === fitem,
+                            );
+                        }
+                        if (favoriteD) {
+                            favoriteItems.codes.push(favoriteD);
+                        }
+                    });
+                });
+            }
+            if (favoriteItems.codes.length > 0) {
+                const favoriteIndex = this.items.findIndex(
+                    item => item.code === '★',
+                );
+                if (favoriteIndex === -1) {
+                    this.items.unshift(favoriteItems);
+                } else {
+                    this.items.splice(favoriteIndex, 1, favoriteItems);
+                }
+            } else {
+                const favoriteIndex = this.items.findIndex(
+                    item => item.code === '★',
+                );
+                if (favoriteIndex > -1) {
+                    this.items.splice(favoriteIndex, 1);
+                }
+            }
+        },
+        namespace(object, path) {
+            return path
+                .split('.')
+                .reduce((value, index) => value[index], object);
+        },
+        setValue(object, path, newValue) {
+            const paths = path.split('.');
+            let count = 0;
+            // eslint-disable-next-line
+            paths.reduce((value, index) => {
+                count += 1;
+                if (count >= paths.length) {
+                    // eslint-disable-next-line
+                    value[index] = newValue;
+                } else {
+                    const nValue = value[index];
+                    return nValue;
+                }
+            }, object);
+        },
+        highlightText(sourceString, startIndex, endIndex) {
+            return `${sourceString.substring(
+                0,
+                startIndex,
+            )}<span class="highlight">${sourceString.substring(
+                startIndex,
+                endIndex + 1,
+            )}</span>${sourceString.substring(endIndex + 1)}`;
+        },
+        getFilteredItems() {
+            this.searched = this.lodash.cloneDeep(this.itemOriginal).slice(0);
+            const group = [];
+            this.searched.forEach((itemsGroupe) => {
+                const fuseResults = new Fuse(
+                    itemsGroupe.codes,
+                    fuseOptions,
+                ).search(this.search);
+                const results = [];
+                if (fuseResults.length > 0) {
+                    Object.values(fuseResults).forEach((result) => {
+                        result.matches.forEach((match) => {
+                            let text = this.namespace(result.item, match.key);
+                            if (text) {
+                                let offset = 0;
+
+                                match.indices.forEach((index) => {
+                                    text = this.highlightText(
+                                        text,
+                                        index[0] + offset,
+                                        index[1] + offset,
+                                    );
+                                    offset += 31;
+                                });
+                                this.setValue(result.item, match.key, text);
+                            }
+                        });
+                        results.push(result.item);
+                    });
+
+                    if (results.length > 0) {
+                        group.push({
+                            code: itemsGroupe.code,
+                            title: itemsGroupe.title,
+                            codes: results,
+                        });
+                    }
+                }
+            });
+            return group;
+        },
+    },
+};
 </script>
 <style lang="scss">
 .t-collapse-search-wrapper {

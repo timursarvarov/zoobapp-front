@@ -1,28 +1,28 @@
-@mixin md-tabs-spec ( $brand-primary, $indicator, $mdb-text-color-primary) {
+@mixin md-tabs-spec($brand-primary, $indicator, $mdb-text-color-primary) {
     .md-tabs-navigation {
         @include md-theme-property(background-color, $brand-primary, background);
         .md-button {
             @if $mdb-text-color-primary==text-primary {
-                @include md-theme-property(color, $mdb-text-color-primary, $brand-primary, .7);
+                @include md-theme-property(color, $mdb-text-color-primary, $brand-primary, 0.7);
                 &[disabled] {
-                    @include md-theme-property(color, $mdb-text-color-primary, $brand-primary, .38);
+                    @include md-theme-property(color, $mdb-text-color-primary, $brand-primary, 0.38);
                 }
                 .md-icon {
-                    @include md-theme-property(color, $mdb-text-color-primary, $brand-primary, .7);
+                    @include md-theme-property(color, $mdb-text-color-primary, $brand-primary, 0.7);
                     svg {
-                        @include md-theme-property(fill, $mdb-text-color-primary, $brand-primary, .7);
+                        @include md-theme-property(fill, $mdb-text-color-primary, $brand-primary, 0.7);
                     }
                 }
             }
             @else {
-                @include md-theme-property(color, text-primary, $brand-primary, .7);
+                @include md-theme-property(color, text-primary, $brand-primary, 0.7);
                 &[disabled] {
-                    @include md-theme-property(color, text-primary, $brand-primary, .38);
+                    @include md-theme-property(color, text-primary, $brand-primary, 0.38);
                 }
                 .md-icon {
-                    @include md-theme-property(color, text-primary, $brand-primary, .7);
+                    @include md-theme-property(color, text-primary, $brand-primary, 0.7);
                     svg {
-                        @include md-theme-property(fill, text-primary, $brand-primary, .7);
+                        @include md-theme-property(fill, text-primary, $brand-primary, 0.7);
                     }
                 }
             }
@@ -43,49 +43,74 @@
 }
 
 .t-md-tabs.md-tabs {
+    overflow: visible !important;
     &.procedures {
         .md-button.md-tab-nav-button {
+            overflow: visible !important;
             &.md-active {
-                background: $brand-success!important;
+                background: $brand-success !important;
             }
         }
     }
     &.diagnosis {
         .md-button.md-tab-nav-button {
+            overflow: visible !important;
             &.md-active {
-                background: $brand-primary!important;
+                background: $brand-primary !important;
             }
         }
     }
     &.anamnesis {
         .md-button.md-tab-nav-button {
+            overflow: visible !important;
             &.md-active {
-                background: $brand-info!important;
+                background: $brand-info !important;
             }
         }
+    }
+    .notification {
+        position: absolute;
+        top: -6px;
+        border: 1px solid #fff;
+        right: 2px;
+        font-size: 9px;
+        background: #f44336;
+        color: #ffffff;
+        z-index: 10;
+        min-width: 20px;
+        padding: 0px 5px;
+        height: 20px;
+        border-radius: 10px;
+        text-align: center;
+        line-height: 19px;
+        vertical-align: middle;
+        display: block;
     }
 }
 
 .t-md-tabs.md-tabs {
     padding: 0;
     .md-tabs-navigation {
-        margin: 0!important;
-        padding: 0!important;
+        overflow: visible !important;
+        margin: 0 !important;
+        padding: 0 !important;
         background: $white-color !important;
-        box-shadow: none!important;
+        box-shadow: none !important;
         .md-button.md-tab-nav-button {
-            color: $gray-color!important;
-            padding: 0!important;
+            color: $gray-color !important;
+            padding: 0 !important;
             font-size: $mdb-btn-font-size-sm;
             height: 36px;
             &.md-active {
-                color: $mdb-text-color-light!important;
+                color: $mdb-text-color-light !important;
             }
             .md-ripple {
-                padding: 0.40625rem 1.25rem !important;
+                overflow: visible !important;
+                padding: 0.40625rem 1.85rem !important;
+                // padding: 0.40625rem 1.25rem !important;
                 font-size: $mdb-btn-font-size-sm;
                 .md-button-content {
-                    padding: 0!important;
+                    padding: 0 !important;
                 }
             }
         }

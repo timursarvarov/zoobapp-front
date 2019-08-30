@@ -1,5 +1,8 @@
 <template>
-    <div class="tooth-menu__wrapper" :class="direction + '-tooth-menu__wrapper'">
+    <div
+        class="tooth-menu__wrapper"
+        :class="direction + '-tooth-menu__wrapper'"
+    >
         <!-- :md-offset-x="127+offset"
         :md-offset-y="-36"-->
         <md-menu
@@ -13,7 +16,7 @@
         >
             <!-- :disabled="items.length === 0 && !hasOtherItemTypes" -->
             <md-button
-                :disabled="isEmpty(items)"
+                :disabled="lodash.isEmpty(items)"
                 :class="[
                     { 'has-items': items[type] && items[type].length > 0},
                     { [type]: items[type] && items[type].length > 0},
@@ -31,51 +34,63 @@
                     minHeight: buttonWidth + 'em',
                     borderRdius: 20 + 'px',
                     fontSize:'0.8em',
-                    }"
+                }"
                 md-menu-trigger
-            >{{toothId | toCurrentTeethSystem(teethSystem)}}</md-button>
+            >
+                {{ toothId | toCurrentTeethSystem(teethSystem) }}
+            </md-button>
 
             <md-menu-content
-                class="md-select-menu">
+                class="md-select-menu"
+            >
                 <template v-for="(subItems, name, index) in items">
-                    <md-menu-item :key="index"
-                    class="tooth-menu-item item-categoty">
-                      <b>{{name | capitilize}}:</b>
+                    <md-menu-item
+                        :key="index"
+                        class="tooth-menu-item item-categoty"
+                    >
+                        <b>{{ name | capitilize }}:</b>
                     </md-menu-item>
                     <md-menu-item
-                        class="tooth-menu-item"
-                        @click="menuClick($event, item, toothId, name)"
                         v-for="(item, key) in subItems"
                         :key="`${key}${index}`"
+                        class="tooth-menu-item"
                         :md-ripple="false"
                         :class="[
-                        {'no-locations': item.hasLocations},
-                        {[`tooth-${name}-content`]: true}
+                            {'no-locations': item.hasLocations},
+                            {[`tooth-${name}-content`]: true}
                         ]"
+                        @click="menuClick($event, item, toothId, name)"
                     >
                         <div class="tooth-diagnosis-content__item">
                             <div class="tooth-items-code">
                                 <span>
-                                    <b>{{item.code}}</b>
+                                    <b>{{ item.code }}</b>
                                 </span>
                             </div>
                             <div class="tooth-diagnosis-text">
                                 <span class="tooth-diagnosis-text-item">
-                                    <span>{{item.title}}</span>
+                                    <span>{{ item.title }}</span>
                                 </span>
                             </div>
                         </div>
 
-                        <div v-show="item.hasLocations" class="tooth-diagnosis-actions">
+                        <div
+                            v-show="item.hasLocations"
+                            class="tooth-diagnosis-actions"
+                        >
                             <md-button
-                                @click.stop="toggleItemVisibility(item, name)"
                                 :class="[
-                            {'md-info': item.showInJaw}
-                            ]"
+                                    {'md-info': item.showInJaw}
+                                ]"
                                 class="md-just-icon md-simple md-round"
+                                @click.stop="toggleItemVisibility(item, name)"
                             >
-                                <md-icon v-if="item.showInJaw">visibility</md-icon>
-                                <md-icon v-else>visibility_off</md-icon>
+                                <md-icon v-if="item.showInJaw">
+                                    visibility
+                                </md-icon>
+                                <md-icon v-else>
+                                    visibility_off
+                                </md-icon>
                             </md-button>
                         </div>
                     </md-menu-item>
@@ -85,113 +100,159 @@
     </div>
 </template>
 <script>
-    import { tObjProp } from '@/mixins';
-    import { PATIENT_ITEM_VISIBILITY_TOGGLE } from '@/constants';
+// import { tObjProp } from '@/mixins';
+import { mapGetters } from 'vuex';
+import {
+    PATIENT_ITEM_VISIBILITY_TOGGLE,
+    EB_SHOW_ITEM_WIZARD,
+} from '@/constants';
+import EventBus from '@/plugins/event-bus';
 
-    export default {
-        name: 'jaw-menu',
-        mixins: [tObjProp],
-        props: {
-            items: {
-                type: Object,
-                default: () => {},
-            },
-            selected: {
-                type: Boolean,
-                default: () => false,
-            },
-            btnClass: {
-                type: String,
-                default: () => 'md-primary',
-            },
-            toothId: {
-                type: String,
-                default: () => '',
-            },
-            teethSystem: {
-                type: Number,
-                default: () => 1,
-            },
-            windowWidth: {
-                type: Number,
-                default: () => 1,
-            },
-            direction: {
-                type: String,
-                default: () => 'top',
-            },
-            align: {
-                type: String,
-                default: () => 'center',
-            },
-            type: {
-                type: String,
-                default: () => 'diagnosis',
-            },
-            offset: {
-                type: Number,
-                default: () => 5,
-            },
+export default {
+    name: 'JawMenu',
+    props: {
+        selected: {
+            type: Boolean,
+            default: () => false,
         },
-        data() {
-            return {
-                opened: false,
-                hover: '',
+        btnClass: {
+            type: String,
+            default: () => 'md-primary',
+        },
+        toothId: {
+            type: String,
+            default: () => '',
+        },
+        teethSystem: {
+            type: Number,
+            default: () => 1,
+        },
+        windowWidth: {
+            type: Number,
+            default: () => 1,
+        },
+        direction: {
+            type: String,
+            default: () => 'top',
+        },
+        align: {
+            type: String,
+            default: () => 'center',
+        },
+        type: {
+            type: String,
+            default: () => 'diagnosis',
+        },
+        offset: {
+            type: Number,
+            default: () => 5,
+        },
+    },
+    data() {
+        return {
+            opened: false,
+            hover: '',
+        };
+    },
+    computed: {
+        ...mapGetters({
+            diagnosis: 'getPatientDiagnosis',
+            anamnesis: 'getPatientAnamnesis',
+            procedures: "getPatientCurrentPlanProcedures",
+            getCurrentClinicOriginalItem: 'getCurrentClinicOriginalItem',
+
+        }),
+        items(){
+            let items = {};
+            const patientItems = {
+                diagnosis: this.diagnosis,
+                anamnesis : this.anamnesis,
+                procedures : this.procedures
             };
-        },
-        methods: {
-            toggleItemVisibility(item, type) {
-                if (item.id) {
-                    this.$store.dispatch(PATIENT_ITEM_VISIBILITY_TOGGLE, {
-                        params: {
-                            itemId: item.id,
-                            type,
-                            planId: this.patient.currentPlan.ID,
-                        },
-                    });
-                }
-                this.$emit('recalculateJaw');
-            },
-
-            menuClick(event, item, toothId, type) {
-                const params = {
-                    itemId: item.id,
-                    toothId,
-                    type,
-                };
-                this.$emit('showItem', params);
-            },
-        },
-        computed: {
-            hasOtherItemTypes() {
-                let hasItems = false;
-                Object.keys(this.items).forEach((category) => {
-                    if (category !== this.type && this.items[category].length > 0) {
-                        hasItems = true;
+            Object.keys(patientItems).forEach( itemType=>{
+                patientItems[itemType].forEach( patientItemW=>{
+                    if(patientItemW.teeth && this.toothId in patientItemW.teeth){
+                        if(! (itemType in items)){ items[itemType] =[] }
+                        items[itemType].push({
+                            //!удалить после реализации code  на бэкенде
+                            code: this.getItemSCode(patientItemW),
+                            hasLocations: !this.lodash.isEmpty(patientItemW.teeth[this.toothId]),
+                            ...patientItemW,
+                        })
                     }
-                });
-                return hasItems;
-            },
-            buttonWidth() {
-                if (this.windowWidth < 600) {
-                    return 2.3;
-                }
-                if (this.windowWidth >= 600 && this.windowWidth < 960) {
-                    return 2.3;
-                }
-                if (this.windowWidth <= 1280 && this.windowWidth > 960) {
-                    return 1.8;
-                }
-                if (this.windowWidth < 1920 && this.windowWidth > 1280) {
-                    return 2.3;
-                }
-                if (this.windowWidth >= 1920) {
-                    return 2.3;
-                }
-                return 4;
-            },
+                })
+            })
+            return items
         },
-    };
+        hasOtherItemTypes() {
+            let hasItems = false;
+            Object.keys(this.items).forEach((category) => {
+                if (category !== this.type && this.items[category].length > 0) {
+                    hasItems = true;
+                }
+            });
+            return hasItems;
+        },
+        buttonWidth() {
+            if (this.windowWidth < 600) {
+                return 2.3;
+            }
+            if (this.windowWidth >= 600 && this.windowWidth < 960) {
+                return 2.3;
+            }
+            if (this.windowWidth <= 1280 && this.windowWidth > 960) {
+                return 1.8;
+            }
+            if (this.windowWidth < 1920 && this.windowWidth > 1280) {
+                return 2.3;
+            }
+            if (this.windowWidth >= 1920) {
+                return 2.3;
+            }
+            return 4;
+        },
+    },
+    methods: {
+        //!удалить после реализации code  на бэкенде
+        getItemSCode(patientItemW){
+            let code = '';
+            let item = ''
+            let catalogID = ''
+            if(this.type === 'diagnosis'){
+                catalogID = patientItemW.catalogDiagnoseID
+            }else if(this.type === 'procedures'){
+                catalogID = patientItemW.catalogProcedureID
+            }else if(this.type === 'anamnesis'){
+                catalogID = patientItemW.catalogAnamnesID
+            }
+            code = this.getCurrentClinicOriginalItem(this.type, catalogID).code;
+            return code;
+
+        },
+        toggleItemVisibility(item, type) {
+            if (item.id) {
+                this.$store.dispatch(PATIENT_ITEM_VISIBILITY_TOGGLE, {
+                    params: {
+                        itemId: item.id,
+                        type,
+                    },
+                });
+            }
+        },
+
+        menuClick(event, item, toothId, type) {
+            const params = {
+                item,
+                toothId,
+                type,
+            };
+            this.emitClick(params)
+        },
+        emitClick(params) {
+            EventBus.$emit(EB_SHOW_ITEM_WIZARD,  params );
+        }
+    },
+};
 </script>
 
  <style lang="scss" >

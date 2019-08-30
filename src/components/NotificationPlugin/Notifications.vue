@@ -16,22 +16,22 @@
   </div>
 </template>
 <script>
-    export default {
-      name: 'notifications',
-        components: {
-            notification: () => import('./Notification'),
-        },
-        data() {
-            return {
-                notifications: this.$notifications.state,
-            };
-        },
-        methods: {
-            removeNotification(timestamp) {
-                this.$notifications.removeNotification(timestamp);
-            },
-        },
+export default {
+  name: 'notifications',
+  components: {
+    notification: () => import('./Notification'),
+  },
+  data() {
+    return {
+      notifications: this.$notifications.state,
     };
+  },
+  methods: {
+    removeNotification(timestamp) {
+      this.$notifications.removeNotification(timestamp);
+    },
+  },
+};
 </script>
 <style lang="scss">
 .notifications {

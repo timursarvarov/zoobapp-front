@@ -485,216 +485,216 @@
 </template>
 <script>
 /* eslint-disable func-names */
-    import { SlideYDownTransition } from 'vue2-transitions';
-    import { CoolSelect } from 'vue-cool-select';
+import { SlideYDownTransition } from 'vue2-transitions';
+import { CoolSelect } from 'vue-cool-select';
 
 
-    export default {
-        name: 't-add-billing',
-        components: {
-            // TAutoComplite,
-            SlideYDownTransition,
-            CoolSelect,
-            'animated-number': () => import('@/components/AnimatedNumber'),
+export default {
+  name: 't-add-billing',
+  components: {
+    // TAutoComplite,
+    SlideYDownTransition,
+    CoolSelect,
+    'animated-number': () => import('@/components/AnimatedNumber'),
+  },
+  props: {
+    size: {
+      type: Object,
+      default: () => {},
+    },
+    invoiceToCreate: {
+      type: Object,
+      default: () => {},
+    },
+    selectedProcedures: {
+      type: Array,
+      default: () => [],
+    },
+    allProcedures: {
+      type: Array,
+      default: () => [],
+    },
+    showAppointment: {
+      type: Boolean,
+      default: () => false,
+    },
+    currencyCode: {
+      type: String,
+      default: () => '',
+    },
+  },
+  data() {
+    return {
+      disabledDates: date => date < this.currentDate,
+      invoice: {
+        dueDate: null,
+        createdDate: null,
+        discount: null,
+        round: null,
+        tax: null,
+        note: null,
+        total: null,
+        payments: [],
+        procedures: [],
+      },
+      currentDate: new Date(),
+      manipulationsNum: 0,
+      selectedProcedure: '',
+      modelValidations: {
+        dueDate: {
         },
-        props: {
-            size: {
-                type: Object,
-                default: () => {},
-            },
-            invoiceToCreate: {
-                type: Object,
-                default: () => {},
-            },
-            selectedProcedures: {
-                type: Array,
-                default: () => [],
-            },
-            allProcedures: {
-                type: Array,
-                default: () => [],
-            },
-            showAppointment: {
-                type: Boolean,
-                default: () => false,
-            },
-            currencyCode: {
-                type: String,
-                default: () => '',
-            },
+        discount: {
         },
-        data() {
-            return {
-                disabledDates: date => date < this.currentDate,
-                invoice: {
-                    dueDate: null,
-                    createdDate: null,
-                    discount: null,
-                    round: null,
-                    tax: null,
-                    note: null,
-                    total: null,
-                    payments: [],
-                    procedures: [],
-                },
-                currentDate: new Date(),
-                manipulationsNum: 0,
-                selectedProcedure: '',
-                modelValidations: {
-                    dueDate: {
-                    },
-                    discount: {
-                    },
-                    tax: {
-                        min: 0,
-                    },
-                    round: {
-                        min: 0,
-                    },
-                },
-                touched: {
-                    dueDate: false,
-                    discount: false,
-                    tax: false,
-                    round: false,
-                },
-            };
+        tax: {
+          min: 0,
         },
-        methods: {
-            calculateManipulations(m = []) {
-                let sum = 0;
-                m.forEach((manip) => {
-                    sum += manip.price * manip.num;
-                });
-                return sum;
-            },
-            focusOn(ref) {
-                if (!this.$refs[ref]) {
-                    return;
-                }
-                this.$refs[ref].$el.focus();
-            },
-            validate() {
-                this.touched.tax = true;
-                this.touched.round = true;
-                this.touched.discount = true;
-                this.touched.dueDate = true;
-                return this.$validator.validateAll().then((res) => {
-                    this.$emit('on-validated', res, 'step2');
-                    this.$emit('validated-code', this.code);
-                    this.$emit('onCreateInvoice', this.invoice);
-                    return res;
-                });
-            },
-            setProcedureToAdd(procedure) {
-                this.procedureToAdd = procedure;
-            },
-            addProcedure() {
-                this.selectedProcedure = '';
-                this.$emit('onProcedureAdd', this.procedureToAdd);
-                this.invoice.procedures.push(this.procedureToAdd.id);
-            },
-            getGreenToRed(percent) {
-                let p = '';
-                if (percent < 0) {
-                    p = 100 - 0;
-                } else if (percent > 100) {
-                    p = 100 - 100;
-                } else {
-                    p = 100 - percent;
-                }
-                const r = p < 50 ? 225 : Math.floor(255 - (p * 2 - 100) * 255 / 100);
-                const g = p >= 50 ? 225 : Math.floor((p * 2) * 255 / 100);
-                return `rgb(${r},${g},0)`;
-            },
+        round: {
+          min: 0,
         },
-        computed: {
-            unselectedProcedures() {
-                const procedures = this.allProcedures.filter(p => !this.selectedProcedures.find(searchedP => searchedP.id === p.id));
-                return procedures || [];
-            },
-            afterDiscount() {
-                const absDics = (this.calculateProcedures / 100) * this.invoice.discount;
-                const disc = this.calculateProcedures - absDics;
-                return disc > 0 ? parseInt(disc, 10) : 0;
-            },
-            discountSum() {
-                const absDics = (this.calculateProcedures / 100) * this.invoice.discount;
-                return absDics;
-            },
-            afterRound() {
-                const r = this.invoice.round > 0 ? this.invoice.round : 0;
-                return parseInt(r, 10);
-            },
-            roundPercentage() {
-                let percentage = 0;
-                if (this.afterDiscount !== 0) {
-                    const percent = this.afterDiscount / 100;
-                    const absDifferent = this.afterDiscount - this.afterRound;
-                    percentage = absDifferent / percent;
-                }
-                return percentage;
-            },
-            afterTax() {
-                const tax = this.invoice.tax < 0 ? 0 : this.invoice.tax;
-                const absTax = parseInt(((this.afterRound / 100) * tax), 10);
-                const taxAbs = parseInt(this.afterRound, 10) + absTax;
-                return taxAbs > 0 ? taxAbs : 0;
-            },
-            taxSum() {
-                const absTax = this.afterRound ? ((this.afterRound / 100) * this.invoice.tax) : 0;
-                return this.invoice.tax > 0 ? absTax : 0;
-            },
-            calculateProcedures() {
-                let sum = 0;
-                this.selectedProcedures.forEach((p) => {
-                    if (p.manipulations) {
-                        sum += this.calculateManipulations(p.manipulations);
-                    }
-                });
-                return sum;
-            },
-        },
-        watch: {
-            'invoice.discount': function () {
-                this.touched.discount = true;
-                this.invoice.round = this.afterDiscount;
-            },
-            afterDiscount(value) {
-                this.invoice.round = value;
-            },
-            'invoice.dueDate': function () {
-                this.touched.dueDate = true;
-            },
-            'invoice.tax': function () {
-                this.touched.tax = true;
-                this.invoice.total = this.afterTax;
-            },
-            afterTax(val) {
-                this.invoice.total = val;
-            },
-            'invoice.round': function (value) {
-                if (!value) {
-                    this.invoice.round = this.afterDiscount;
-                }
-                this.touched.round = true;
-            },
-            invoice: {
-                handler(newValue) {
-                    this.$emit('onCreateInvoice', newValue);
-                },
-                deep: true,
-            },
-        },
-        created() {
-            this.invoice.procedures.push(this.selectedProcedures.map(p => p.id));
-            this.invoice.round = this.afterDiscount;
-            this.invoice.total = this.afterTax;
-            if (!this.invoice.createdDate) {
-                this.invoice.createdDate = new Date();
-            }
-        },
+      },
+      touched: {
+        dueDate: false,
+        discount: false,
+        tax: false,
+        round: false,
+      },
     };
+  },
+  methods: {
+    calculateManipulations(m = []) {
+      let sum = 0;
+      m.forEach((manip) => {
+        sum += manip.price * manip.num;
+      });
+      return sum;
+    },
+    focusOn(ref) {
+      if (!this.$refs[ref]) {
+        return;
+      }
+      this.$refs[ref].$el.focus();
+    },
+    validate() {
+      this.touched.tax = true;
+      this.touched.round = true;
+      this.touched.discount = true;
+      this.touched.dueDate = true;
+      return this.$validator.validateAll().then((res) => {
+        this.$emit('on-validated', res, 'step2');
+        this.$emit('validated-code', this.code);
+        this.$emit('onCreateInvoice', this.invoice);
+        return res;
+      });
+    },
+    setProcedureToAdd(procedure) {
+      this.procedureToAdd = procedure;
+    },
+    addProcedure() {
+      this.selectedProcedure = '';
+      this.$emit('onProcedureAdd', this.procedureToAdd);
+      this.invoice.procedures.push(this.procedureToAdd.id);
+    },
+    getGreenToRed(percent) {
+      let p = '';
+      if (percent < 0) {
+        p = 100 - 0;
+      } else if (percent > 100) {
+        p = 100 - 100;
+      } else {
+        p = 100 - percent;
+      }
+      const r = p < 50 ? 225 : Math.floor(255 - (p * 2 - 100) * 255 / 100);
+      const g = p >= 50 ? 225 : Math.floor((p * 2) * 255 / 100);
+      return `rgb(${r},${g},0)`;
+    },
+  },
+  computed: {
+    unselectedProcedures() {
+      const procedures = this.allProcedures.filter(p => !this.selectedProcedures.find(searchedP => searchedP.id === p.id));
+      return procedures || [];
+    },
+    afterDiscount() {
+      const absDics = (this.calculateProcedures / 100) * this.invoice.discount;
+      const disc = this.calculateProcedures - absDics;
+      return disc > 0 ? parseInt(disc, 10) : 0;
+    },
+    discountSum() {
+      const absDics = (this.calculateProcedures / 100) * this.invoice.discount;
+      return absDics;
+    },
+    afterRound() {
+      const r = this.invoice.round > 0 ? this.invoice.round : 0;
+      return parseInt(r, 10);
+    },
+    roundPercentage() {
+      let percentage = 0;
+      if (this.afterDiscount !== 0) {
+        const percent = this.afterDiscount / 100;
+        const absDifferent = this.afterDiscount - this.afterRound;
+        percentage = absDifferent / percent;
+      }
+      return percentage;
+    },
+    afterTax() {
+      const tax = this.invoice.tax < 0 ? 0 : this.invoice.tax;
+      const absTax = parseInt(((this.afterRound / 100) * tax), 10);
+      const taxAbs = parseInt(this.afterRound, 10) + absTax;
+      return taxAbs > 0 ? taxAbs : 0;
+    },
+    taxSum() {
+      const absTax = this.afterRound ? ((this.afterRound / 100) * this.invoice.tax) : 0;
+      return this.invoice.tax > 0 ? absTax : 0;
+    },
+    calculateProcedures() {
+      let sum = 0;
+      this.selectedProcedures.forEach((p) => {
+        if (p.manipulations) {
+          sum += this.calculateManipulations(p.manipulations);
+        }
+      });
+      return sum;
+    },
+  },
+  watch: {
+    'invoice.discount': function () {
+      this.touched.discount = true;
+      this.invoice.round = this.afterDiscount;
+    },
+    afterDiscount(value) {
+      this.invoice.round = value;
+    },
+    'invoice.dueDate': function () {
+      this.touched.dueDate = true;
+    },
+    'invoice.tax': function () {
+      this.touched.tax = true;
+      this.invoice.total = this.afterTax;
+    },
+    afterTax(val) {
+      this.invoice.total = val;
+    },
+    'invoice.round': function (value) {
+      if (!value) {
+        this.invoice.round = this.afterDiscount;
+      }
+      this.touched.round = true;
+    },
+    invoice: {
+      handler(newValue) {
+        this.$emit('onCreateInvoice', newValue);
+      },
+      deep: true,
+    },
+  },
+  created() {
+    this.invoice.procedures.push(this.selectedProcedures.map(p => p.id));
+    this.invoice.round = this.afterDiscount;
+    this.invoice.total = this.afterTax;
+    if (!this.invoice.createdDate) {
+      this.invoice.createdDate = new Date();
+    }
+  },
+};
 </script>
 
 <style lang="scss">

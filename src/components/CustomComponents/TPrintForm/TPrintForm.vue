@@ -1,31 +1,44 @@
 <template>
-    <md-dialog v-if="showForm"
+    <md-dialog
+        v-if="showForm"
         :md-click-outside-to-close="false"
-        class="tooth-diagnosis-form" :md-active.sync="showFormLocal">
+        class="tooth-diagnosis-form"
+        :md-active.sync="showFormLocal"
+    >
         <md-card>
             <md-card-header class="md-card-header-icon md-card-header-green">
                 <div class="card-icon">
-                    <md-icon>{{icon}}</md-icon>
+                    <md-icon>{{ icon }}</md-icon>
                 </div>
-                <h4 class="title">{{title}}</h4>
+                <h4 class="title">
+                    {{ title }}
+                </h4>
             </md-card-header>
 
-            <md-card-content class="content" id="myelement">
+            <md-card-content
+                id="myelement"
+                class="content"
+            >
                 <div class="print">
                     <div class="A4 sheet">
-                        <div class="page-header" style="text-align: center">
-                            {{currentClinic.name}}
+                        <div
+                            class="page-header"
+                            style="text-align: center"
+                        >
+                            {{ currentClinic.name }}
                             <br>
                         </div>
 
-                        <div class="page-footer">ZoobApp</div>
+                        <div class="page-footer">
+                            ZoobApp
+                        </div>
 
                         <table>
                             <thead>
                                 <tr>
                                     <td>
                                         <!--place holder for the fixed-position header-->
-                                        <div class="page-header-space"></div>
+                                        <div class="page-header-space" />
                                     </td>
                                 </tr>
                             </thead>
@@ -34,34 +47,43 @@
                                 <tr>
                                     <td>
                                         <!--*** CONTENT GOES HERE ***-->
-                                        <div class="page" style="line-height: 3;">
+                                        <div
+                                            class="page"
+                                            style="line-height: 3;"
+                                        >
                                             <div class="yui-t7">
                                                 <div class="inner">
                                                     <div class="hd">
                                                         <div class="hd-wrapper">
                                                             <div class="yui-u first">
-                                                                <h3>{{patient.firstName + ' ' + patient.lastName}}</h3>
+                                                                <h3>{{ patient.firstName + ' ' + patient.lastName }}</h3>
                                                             </div>
 
                                                             <div class="yui-u">
                                                                 <div class="contact-info">
-                                                                    <div class="contact-info__item" v-if="patient.email">
+                                                                    <div
+                                                                        v-if="patient.email"
+                                                                        class="contact-info__item"
+                                                                    >
                                                                         <b> Email: </b>
-                                                                        <span> {{patient.email}}</span>
+                                                                        <span> {{ patient.email }}</span>
                                                                     </div>
-                                                                    <div class="contact-info__item" v-if="patient.allergy.length > 0"
+                                                                    <div
+                                                                        v-if="patient.allergy.length > 0"
+                                                                        class="contact-info__item"
                                                                     >
-                                                                        <span>allergy: {{patient.allergy}}</span>
+                                                                        <span>allergy: {{ patient.allergy }}</span>
                                                                     </div>
-                                                                    <div class="contact-info__item"
+                                                                    <div
                                                                         v-if="patient.phone"
+                                                                        class="contact-info__item"
                                                                     >
-                                                                    <b> Phone: </b>
-                                                                        <span>+{{patient.phone}}</span>
+                                                                        <b> Phone: </b>
+                                                                        <span>+{{ patient.phone }}</span>
                                                                     </div>
-                                                                    <div class="contact-info__item" >
+                                                                    <div class="contact-info__item">
                                                                         <b> Date:</b>
-                                                                        <span> {{new Date | moment("ll") }}</span>
+                                                                        <span> {{ new Date | moment("ll") }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -80,7 +102,9 @@
                                                                     <div class="yui-u">
                                                                         <p
                                                                             class="enlarge"
-                                                                        >Progressively evolve cross-platform ideas before impactful infomediaries. Energistically visualize tactical initiatives before cross-media catalysts for change.</p>
+                                                                        >
+                                                                            Progressively evolve cross-platform ideas before impactful infomediaries. Energistically visualize tactical initiatives before cross-media catalysts for change.
+                                                                        </p>
                                                                     </div>
                                                                 </div>
 
@@ -116,7 +140,9 @@
                                                                             <li>CSS</li>
                                                                             <li
                                                                                 class="last"
-                                                                            >Javascript</li>
+                                                                            >
+                                                                                Javascript
+                                                                            </li>
                                                                         </ul>
 
                                                                         <ul class="talent">
@@ -124,13 +150,17 @@
                                                                             <li>PHP</li>
                                                                             <li
                                                                                 class="last"
-                                                                            >CVS / Subversion</li>
+                                                                            >
+                                                                                CVS / Subversion
+                                                                            </li>
                                                                         </ul>
 
                                                                         <ul class="talent">
                                                                             <li>OS X</li>
                                                                             <li>Windows XP/Vista</li>
-                                                                            <li class="last">Linux</li>
+                                                                            <li class="last">
+                                                                                Linux
+                                                                            </li>
                                                                         </ul>
                                                                     </div>
                                                                 </div>
@@ -204,7 +234,7 @@
                                 <tr>
                                     <td>
                                         <!--place holder for the fixed-position footer-->
-                                        <div class="page-footer-space"></div>
+                                        <div class="page-footer-space" />
                                     </td>
                                 </tr>
                             </tfoot>
@@ -213,70 +243,75 @@
                 </div>
             </md-card-content>
             <md-card-actions md-alignment="right">
-                <md-button @click="print" class="md-success">Print</md-button>
+                <md-button
+                    class="md-success"
+                    @click="print"
+                >
+                    Print
+                </md-button>
             </md-card-actions>
         </md-card>
     </md-dialog>
 </template>
 <script>
-    import { Printd } from 'printd';
-    import { mapGetters } from 'vuex';
-    import printFormCss from './print-form-css';
-    import formCss from './form-css';
+import { Printd } from 'printd';
+import { mapGetters } from 'vuex';
+import printFormCss from './print-form-css';
+import formCss from './form-css';
 
-    export default {
-        name: 't-files-list',
-        components: {
+export default {
+    name: 'TFilesList',
+    components: {
+    },
+    props: {
+        title: {
+            type: String,
+            default: '',
         },
-        props: {
-            title: {
-                type: String,
-                default: '',
+        showForm: {
+            type: Boolean,
+            default: false,
+        },
+        icon: {
+            type: String,
+            default: 'add_a_photo',
+        },
+        patient: {
+            type: Object,
+            default: () => {},
+        },
+    },
+    data() {
+        return {
+            editor: null,
+        };
+    },
+    methods: {
+        print() {
+            const d = new Printd();
+            d.print(document.getElementById('myelement'), [
+                printFormCss,
+                formCss,
+            ]);
+        },
+    },
+    computed: {
+        ...mapGetters({
+            currentClinic: 'getCurrentClinic',
+        }),
+        showFormLocal: {
+            // геттер:
+            get() {
+                console.log(this.showForm);
+                return this.showForm;
             },
-            showForm: {
-                type: Boolean,
-                default: false,
-            },
-            icon: {
-                type: String,
-                default: 'add_a_photo',
-            },
-            patient: {
-                type: Object,
-                default: () => {},
+            // сеттер:
+            set(newValue) {
+                this.$emit('update:showForm', newValue);
             },
         },
-        data() {
-            return {
-                editor: null,
-            };
-        },
-        methods: {
-            print() {
-                const d = new Printd();
-                d.print(document.getElementById('myelement'), [
-                    printFormCss,
-                    formCss,
-                ]);
-            },
-        },
-        computed: {
-            ...mapGetters({
-                currentClinic: 'getCurrentClinic',
-            }),
-            showFormLocal: {
-                // геттер:
-                get() {
-                    console.log(this.showForm);
-                    return this.showForm;
-                },
-                // сеттер:
-                set(newValue) {
-                    this.$emit('update:showForm', newValue);
-                },
-            },
-        },
-    };
+    },
+};
 </script>
 <style lang="scss">
 .md-dialog.tooth-diagnosis-form {

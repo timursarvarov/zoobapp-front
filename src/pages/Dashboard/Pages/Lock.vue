@@ -3,54 +3,66 @@
         <div class="md-layout-item md-size-50 md-small-size-100">
             <form>
                 <lock-card>
-                    <div class="avatar-container" slot="imageProfile">
+                    <div
+                        slot="imageProfile"
+                        class="avatar-container"
+                    >
                         <div class="avatarC">
                             <div
                                 v-if="!user.avatar"
                                 class="md-layout md-alignment-center-center wrapper-acronim"
                             >
                                 <div class="md-layout-item acronim">
-                                    <span>{{(user.firstName + ' ' + user.lastName) | acronim }}</span>
+                                    <span>{{ (user.firstName + ' ' + user.lastName) | acronim }}</span>
                                 </div>
                             </div>
                             <div
                                 v-else
                                 class="avatar"
-                                :style="{'background-image':  'url(' + user.avatar + ')'}"
-                            ></div>
+                                :style="{'background-image': 'url(' + user.avatar + ')'}"
+                            />
                         </div>
                     </div>
                     <h4
                         slot="title"
                         class="title"
-                    >{{user.firstName | capitilize}} {{user.lastName | capitilize}}</h4>
+                    >
+                        {{ user.firstName | capitilize }} {{ user.lastName | capitilize }}
+                    </h4>
                     <div slot="content">
                         <md-field
                             :class="[{'md-error': errors.has('password')},
-            {'md-valid': !errors.has('password') && touched.password}]"
+                                     {'md-valid': !errors.has('password') && touched.password}]"
                         >
                             <md-icon>lock_outline</md-icon>
                             <label>Enter Password</label>
                             <md-input
                                 v-model="password"
+                                ref="password"
+                                v-validate="modelValidations.password"
                                 type="password"
                                 autocomplete="password"
-                                v-on:keyup.enter="login()"
                                 data-vv-name="password"
                                 required
-                                v-validate="modelValidations.password"
-                                ref="password"
-                            ></md-input>
-                            <span class="md-error">{{errors.first('password')}}</span>
-                            <span class="md-error">{{errors.first('username')}}</span>
+                                @keyup.enter="login()"
+                            />
+                            <span class="md-error">{{ errors.first('password') }}</span>
+                            <span class="md-error">{{ errors.first('username') }}</span>
                             <slide-y-down-transition>
-                                <md-icon class="error" v-show="errors.has('password')">close</md-icon>
+                                <md-icon
+                                    v-show="errors.has('password')"
+                                    class="error"
+                                >
+                                    close
+                                </md-icon>
                             </slide-y-down-transition>
                             <slide-y-down-transition>
                                 <md-icon
-                                    class="success"
                                     v-show="!errors.has('password') && touched.password"
-                                >done</md-icon>
+                                    class="success"
+                                >
+                                    done
+                                </md-icon>
                             </slide-y-down-transition>
                         </md-field>
                         <div class="md-layout">
@@ -60,122 +72,128 @@
                             >Forgot password?</small>
                         </div>
                     </div>
-                    <md-button @click="login()" class="md-success md-round" slot="footer">Unlock</md-button>
+                    <md-button
+                        slot="footer"
+                        class="md-success md-round"
+                        @click="login()"
+                    >
+                        Unlock
+                    </md-button>
                 </lock-card>
             </form>
-            <forgot-password :showForm.sync="showForgot"/>
+            <forgot-password :show-form.sync="showForgot" />
         </div>
     </div>
 </template>
 <script>
-    import { mapGetters } from 'vuex';
-    import { SlideYDownTransition } from 'vue2-transitions';
-    import components from '@/components';
-    import ForgotPassword from './ForgotPassword.vue';
-    import { AUTH_REQUEST, NOTIFY } from '@/constants';
+import { mapGetters } from 'vuex';
+import { SlideYDownTransition } from 'vue2-transitions';
+import components from '@/components';
+import ForgotPassword from './ForgotPassword.vue';
+import { AUTH_REQUEST, NOTIFY } from '@/constants';
 
-    export default {
-        name: 'lock',
-        beforeRouteEnter(to, from, next) {
-            localStorage.setItem('lastRoutePathBeforeLock', from.path);
-            next();
-        },
+export default {
+    name: 'Lock',
+    beforeRouteEnter(to, from, next) {
+        localStorage.setItem('lastRoutePathBeforeLock', from.path);
+        next();
+    },
 
-        components: {
-            ...components,
-            ForgotPassword,
-            SlideYDownTransition,
-        },
-        data() {
-            return {
-                showForgot: false,
-                password: null,
-                image: './img/faces/avatar.jpg',
-                touched: {
-                    password: false,
+    components: {
+        ...components,
+        ForgotPassword,
+        SlideYDownTransition,
+    },
+    data() {
+        return {
+            showForgot: false,
+            password: null,
+            image: './img/faces/avatar.jpg',
+            touched: {
+                password: false,
+            },
+            modelValidations: {
+                password: {
+                    required: true,
+                    min: 5,
                 },
-                modelValidations: {
-                    password: {
-                        required: true,
-                        min: 5,
+            },
+        };
+    },
+    computed: {
+        ...mapGetters({
+            user: 'getProfile',
+        }),
+    },
+    mounted() {
+        this.$refs.password.$el.focus();
+    },
+    methods: {
+        validate() {
+            this.$validator.validateAll().then((isValid) => {
+                this.$emit('on-submit', this.registerForm, isValid);
+            });
+            this.touched.password = true;
+        },
+        login() {
+            if (this.errors.has('password') || !this.password) {
+                this.$store.dispatch(NOTIFY, {
+                    settings: { message: 'Please, enter valid password' },
+                });
+                this.showErrorsValidate('password');
+                return;
+            }
+            const { user, password } = this;
+            this.$store
+                .dispatch(AUTH_REQUEST, { username: user.userName, password })
+                .then(
+                    (response) => {
+                        const lastRoutePathBeforeLock = localStorage.getItem('lastRoutePathBeforeLock');
+                        if (lastRoutePathBeforeLock) {
+                            this.$router.push(lastRoutePathBeforeLock);
+                        } else {
+                            this.$router.push('/');
+                        }
+                        this.$store.dispatch(NOTIFY, {
+                            settings: {
+                                message: `Welcome ${user.firstName}  ${user.lastName}`,
+                                type: 'info',
+                            },
+                        });
                     },
-                },
-            };
+                    (error) => {
+                        if (error.response.data.message === 'Wrong password') {
+                            this.showErrorsValidate('password');
+                        }
+                        if (error.response.data.message === 'Invalid login') {
+                            this.showErrorsValidate('username');
+                        }
+                    },
+                );
         },
-        computed: {
-            ...mapGetters({
-                user: 'getProfile',
-            }),
-        },
-        methods: {
-            validate() {
-                this.$validator.validateAll().then((isValid) => {
-                    this.$emit('on-submit', this.registerForm, isValid);
-                });
-                this.touched.password = true;
-            },
-            login() {
-                if (this.errors.has('password') || !this.password) {
-                    this.$store.dispatch(NOTIFY, {
-                        settings: { message: 'Please, enter valid password' },
-                    });
-                    this.showErrorsValidate('password');
-                    return;
-                }
-                const { user, password } = this;
-                this.$store
-                    .dispatch(AUTH_REQUEST, { username: user.userName, password })
-                    .then(
-                        (response) => {
-                            const lastRoutePathBeforeLock = localStorage.getItem('lastRoutePathBeforeLock');
-                            if (lastRoutePathBeforeLock) {
-                                this.$router.push(lastRoutePathBeforeLock);
-                            } else {
-                                this.$router.push('/');
-                            }
-                            this.$store.dispatch(NOTIFY, {
-                                settings: {
-                                    message: `Welcome ${user.firstName}  ${user.lastName}`,
-                                    type: 'info',
-                                },
-                            });
-                        },
-                        (error) => {
-                            if (error.response.data.message === 'Wrong password') {
-                                this.showErrorsValidate('password');
-                            }
-                            if (error.response.data.message === 'Invalid login') {
-                                this.showErrorsValidate('username');
-                            }
-                        },
-                    );
-            },
-            showErrorsValidate(errField = 'username') {
-                const field = this.$validator.fields.find({
-                    name: errField,
-                    scope: this.$options.scope,
-                });
-                if (!field) return;
-                this.$validator.errors.add({
-                    id: errField,
-                    field: errField,
-                    msg:
+        showErrorsValidate(errField = 'username') {
+            const field = this.$validator.fields.find({
+                name: errField,
+                scope: this.$options.scope,
+            });
+            if (!field) return;
+            this.$validator.errors.add({
+                id: errField,
+                field: errField,
+                msg:
                         errField === 'username'
                             ? 'Invalid login'
                             : 'Wrong password',
-                    scope: this.$options.scope,
-                });
-                field.setFlags({
-                    invalid: true,
-                    valid: false,
-                    validated: true,
-                });
-            },
+                scope: this.$options.scope,
+            });
+            field.setFlags({
+                invalid: true,
+                valid: false,
+                validated: true,
+            });
         },
-        mounted() {
-            this.$refs.password.$el.focus();
-        },
-    };
+    },
+};
 </script>
 <style lang="scss" >
 .lock-wrapper {

@@ -4,23 +4,27 @@
         class="md-transparent top-navbar-wrapper"
         :class="{'md-toolbar-absolute md-white md-fixed-top': $route.meta.navbarAbsolute}"
     >
-        <div class="wrapper-progress-bar">
+        <div
+            class="wrapper-progress-bar"
+            style="position:absolute; top:0;"
+        >
             <md-progress-bar
                 v-if="loading"
                 :md-stroke="2"
-            md-mode="indeterminate"></md-progress-bar>
+                md-mode="indeterminate"
+            />
         </div>
         <div class="md-toolbar-row">
             <div class="md-toolbar-section-start">
                 <h3 class="md-title">
                     <template
+                        v-if="$route.params.patientID && (patient.firstName || patient.secondName) "
                         class="md-layout md-alignment-left-center"
-                        v-if="$route.params.patientId && (patient.firstName || patient.secondName) "
                     >
                         <t-avatar
                             class="patient-header-avatar"
-                            :textToColor="patient.ID"
-                            :imageSrc="patient.avatar"
+                            :text-to-color="patient.ID"
+                            :image-src="patient.avatar"
                             :title="patient.firstName + ' ' + patient.lastName"
                         />
                         <span class="patient_header_title md-layout-item">
@@ -28,15 +32,15 @@
                             {{ `${patient.lastName }` | capitilize }}
                         </span>
                         <md-button
-                            @click="handleAllergy(patient.allergy)"
-                            v-if="patient.allergy &&  patient.allergy.length>0"
+                            v-if="patient.allergy && patient.allergy.length>0"
                             class="md-icon-button md-simple md-danger md-round md-just-icon"
+                            @click="handleAllergy(patient.allergy)"
                         >
                             <md-icon>report_problem</md-icon>
                             <md-tooltip>Attention allergy!</md-tooltip>
                         </md-button>
                     </template>
-                    <span v-else>{{$route.name}}</span>
+                    <span v-else>{{ $route.name }}</span>
                 </h3>
             </div>
             <div class="md-toolbar-section-end">
@@ -45,19 +49,22 @@
                     :class="{toggled: $sidebar.showSidebar}"
                     @click="toggleSidebar"
                 >
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar" />
+                    <span class="icon-bar" />
+                    <span class="icon-bar" />
                 </md-button>
                 <div class="md-collapse">
-                    <t-cool-select-patient-search/>
+                    <t-cool-select-patient-search />
                     <md-list>
                         <li class="md-list-item">
                             <a
-                                @click="goTo('/')"
                                 class="md-list-item-router md-list-item-container md-button-clean"
+                                @click="goTo('/')"
                             >
-                                <div v-ripple class="md-list-item-content">
+                                <div
+                                    v-ripple
+                                    class="md-list-item-content"
+                                >
                                     <i class="material-icons">dashboard</i>
                                     <p class="hidden-lg hidden-md">Dashboard</p>
                                 </div>
@@ -68,7 +75,10 @@
                                 class="md-list-item-router md-list-item-container md-button-clean"
                                 @click="showPatientAddForm()"
                             >
-                                <div v-ripple class="md-list-item-content">
+                                <div
+                                    v-ripple
+                                    class="md-list-item-content"
+                                >
                                     <i class="material-icons">person_add</i>
                                     <p class="hidden-lg hidden-md">Add patient</p>
                                 </div>
@@ -116,7 +126,10 @@
                                 class="md-list-item-router md-list-item-container md-button-clean dropdown"
                             >
                                 <div class="md-list-item-content">
-                                    <drop-down multiLevel direction="down">
+                                    <drop-down
+                                        multi-level
+                                        direction="down"
+                                    >
                                         <md-button
                                             slot="title"
                                             class="md-button md-round md-just-icon md-simple"
@@ -126,63 +139,82 @@
                                             <p class="hidden-lg hidden-md">More</p>
                                         </md-button>
                                         <ul class="dropdown-menu dropdown-menu-right">
-                                            <li  class="md-layout" >
-                                                <router-link tag="a" to="/pages/user" class="md-layout-item" >
-                                                <t-avatar
-                                                    small
-                                                    :textToColor="user.ID"
-                                                    :noImgTag="true"
-                                                    :imageSrc="user.avatar"
-                                                    :title="user.firstName + ' ' + user.lastName"
-                                                />
+                                            <li class="md-layout">
+                                                <router-link
+                                                    tag="a"
+                                                    to="/pages/user"
+                                                    class="md-layout-item"
+                                                >
+                                                    <t-avatar
+                                                        small
+                                                        :text-to-color="user.ID"
+                                                        :no-img-tag="true"
+                                                        :image-src="user.avatar"
+                                                        :title="user.firstName + ' ' + user.lastName"
+                                                    />
                                                     My Profile
                                                 </router-link>
                                             </li>
-                                            <li @click="showPatientAddForm()" class="md-layout">
-                                                <a href="#" class="md-layout-item">
+                                            <li
+                                                class="md-layout"
+                                                @click="showPatientAddForm()"
+                                            >
+                                                <a
+                                                    href="#"
+                                                    class="md-layout-item"
+                                                >
                                                     <md-icon>person_add</md-icon>
                                                     Add Patient
                                                 </a>
                                             </li>
-                                            <li @click="lock()" class="md-layout">
-                                                <a href="#" class="md-layout-item">
+                                            <li
+                                                class="md-layout"
+                                                @click="lock()"
+                                            >
+                                                <a
+                                                    href="#"
+                                                    class="md-layout-item"
+                                                >
                                                     <md-icon>lock</md-icon>
                                                     Lock
                                                 </a>
                                             </li>
-                                            <li @click="logout()" class="md-layout" >
+                                            <li
+                                                class="md-layout"
+                                                @click="logout()"
+                                            >
                                                 <a
                                                     href="#"
                                                 >
-                                                            <md-icon>arrow_back</md-icon>
-                                                            Logout
+                                                    <md-icon>arrow_back</md-icon>
+                                                    Logout
                                                 </a>
                                             </li>
-                                            <li class="md-layout" >
+                                            <li class="md-layout">
                                                 <a
                                                     :class="
-                                                    [
-                                                        {'open': multiLevel},
-                                                        {'dropdown-toggle': clinics && clinics.length > 1},
-                                                    ]"
+                                                        [
+                                                            {'open': multiLevel},
+                                                            {'dropdown-toggle': clinics && clinics.length > 1},
+                                                        ]"
                                                     @click="toggleMultiLevel"
                                                 >
                                                     <img
                                                         style="margin-right:10px; height:24px; width:24px; border-radius:50%"
                                                         :src="currnentClinic.logo"
-                                                    />
-                                                    {{currnentClinic.name}}
-                                                    {{currnentClinic.id}}
+                                                    >
+                                                    {{ currnentClinic.name }}
+                                                    {{ currnentClinic.id }}
                                                 </a>
                                                 <ul
                                                     v-if="clinics && clinics.length > 1"
                                                     class="dropdown-menu"
                                                 >
                                                     <li
-                                                        @click="setClinic(clinic.ID), toggleMultiLevel()"
-                                                        :class="[{'selected-menu-top-navbar': clinic.ID === currnentClinic.ID }]"
                                                         v-for="(clinic, index) in clinics"
                                                         :key="index"
+                                                        :class="[{'selected-menu-top-navbar': clinic.ID === currnentClinic.ID }]"
+                                                        @click="setClinic(clinic.ID), toggleMultiLevel()"
                                                     >
                                                         <a
                                                             :style="{color: clinic.ID === currnentClinic.ID ? '#fff!important': ''}"
@@ -191,8 +223,8 @@
                                                             <img
                                                                 style="margin-right:10px; height:24px; width:24px; border-radius:50%"
                                                                 :src="clinic.logo"
-                                                            />
-                                                            {{clinic.name | capitilize }}{{clinic.ID }}
+                                                            >
+                                                            {{ clinic.name | capitilize }}{{ clinic.ID }}
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -210,120 +242,120 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
-    import components from '@/components';
-    import {
-        CLINIC_AUTH_REQUEST,
-        AUTH_LOGOUT,
-        PATIENTS_REQUEST,
-        AUTH_LOCK,
-        NOTIFY,
-        AVAILABLE_LANGUAGES,
-    } from '@/constants';
+import { mapGetters } from 'vuex';
+import components from '@/components';
+import {
+    CLINIC_AUTH_REQUEST,
+    AUTH_LOGOUT,
+    PATIENTS_REQUEST,
+    AUTH_LOCK,
+    NOTIFY,
+    AVAILABLE_LANGUAGES,
+} from '@/constants';
 
-    export default {
-        components: {
-            ...components,
+export default {
+    components: {
+        ...components,
+    },
+    data() {
+        return {
+            totalPatients: 0,
+            callbackLauncher: null,
+            infiniteId: 1,
+            searchText: '',
+            searchTerm: '',
+            patients: [],
+            coolSelectFocus: false,
+            serverError: false,
+            searching: false,
+            multiLevel: false,
+            noData: false,
+            perPage: 20,
+            page: 1,
+        };
+    },
+    methods: {
+        goTo(route) {
+            this.$router.push(route);
         },
-        data() {
-            return {
-                totalPatients: 0,
-                callbackLauncher: null,
-                infiniteId: 1,
-                searchText: '',
-                searchTerm: '',
-                patients: [],
-                coolSelectFocus: false,
-                serverError: false,
-                searching: false,
-                multiLevel: false,
-                noData: false,
-                perPage: 20,
-                page: 1,
-            };
-        },
-        methods: {
-            goTo(route) {
-                this.$router.push(route);
-            },
-            setClinic(clinicId) {
-                this.$store
-                    .dispatch(CLINIC_AUTH_REQUEST, {
-                        clinicId,
-                        accessToken: this.accessToken,
-                    })
-                    .then(
-                        // eslint-disable-next-line no-unused-vars
-                        (response) => {
-                            this.$router.push('/');
-                            this.$store.dispatch(NOTIFY, {
-                                settings: {
-                                    message: 'Clinic changed',
-                                    type: 'success',
-                                    icon: 'domain',
-                                },
-                            });
-                        },
-                        (error) => {
-                            if (error && error.response) {
-                                if (
-                                    error.response.data.message === 'Wrong password'
-                                ) {
-                                    this.showErrorsValidate('password');
-                                }
-                                if (
-                                    error.response.data.message === 'Invalid login'
-                                ) {
-                                    this.showErrorsValidate('username');
-                                }
+        setClinic(clinicId) {
+            this.$store
+                .dispatch(CLINIC_AUTH_REQUEST, {
+                    clinicId,
+                    accessToken: this.accessToken,
+                })
+                .then(
+                    // eslint-disable-next-line no-unused-vars
+                    (response) => {
+                        this.$router.push('/');
+                        this.$store.dispatch(NOTIFY, {
+                            settings: {
+                                message: 'Clinic changed',
+                                type: 'success',
+                                icon: 'domain',
+                            },
+                        });
+                    },
+                    (error) => {
+                        if (error && error.response) {
+                            if (
+                                error.response.data.message === 'Wrong password'
+                            ) {
+                                this.showErrorsValidate('password');
                             }
-                        },
-                    );
-            },
-            toggleMultiLevel() {
-                this.multiLevel = !this.multiLevel;
-            },
-            toggleSidebar() {
-                this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
-            },
-            showPatientAddForm() {
-                this.$patientAddForm.showPatientAddForm(true);
-            },
-            minimizeSidebar() {
-                if (this.$sidebar) {
-                    this.$sidebar.toggleMinimize();
-                }
-            },
-            logout() {
-                this.$store.dispatch(AUTH_LOGOUT).then(() => {
-                    this.$router.push({
-                        name: 'Login',
-                        params: { lang: this.$i18n.locale },
-                    });
-                });
-            },
-            lock() {
-                this.$store.dispatch(AUTH_LOCK).then(() => {
-                    this.$router.push('lock');
-                });
-            },
+                            if (
+                                error.response.data.message === 'Invalid login'
+                            ) {
+                                this.showErrorsValidate('username');
+                            }
+                        }
+                    },
+                );
         },
-        computed: {
-            ...mapGetters({
-                loading: 'loading',
-                patient: 'getPatient',
-                clinics: 'getClinics',
-                user: 'getProfile',
-                currnentClinic: 'getCurrentClinic',
-                accessToken: 'fetchStateAccessToken',
-                expiresAt: 'expiresAt',
-                lang: 'getLang',
-            }),
-            languages() {
-                return AVAILABLE_LANGUAGES;
-            },
+        toggleMultiLevel() {
+            this.multiLevel = !this.multiLevel;
         },
-    };
+        toggleSidebar() {
+            this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+        },
+        showPatientAddForm() {
+            this.$patientAddForm.showPatientAddForm(true);
+        },
+        minimizeSidebar() {
+            if (this.$sidebar) {
+                this.$sidebar.toggleMinimize();
+            }
+        },
+        logout() {
+            this.$store.dispatch(AUTH_LOGOUT).then(() => {
+                this.$router.push({
+                    name: 'Login',
+                    params: { lang: this.$i18n.locale },
+                });
+            });
+        },
+        lock() {
+            this.$store.dispatch(AUTH_LOCK).then(() => {
+                this.$router.push('lock');
+            });
+        },
+    },
+    computed: {
+        ...mapGetters({
+            loading: 'loading',
+            patient: 'getPatient',
+            clinics: 'getClinics',
+            user: 'getProfile',
+            currnentClinic: 'getCurrentClinic',
+            accessToken: 'fetchStateAccessToken',
+            expiresAt: 'expiresAt',
+            lang: 'getLang',
+        }),
+        languages() {
+            return AVAILABLE_LANGUAGES;
+        },
+    },
+};
 </script>
 
 <style lang="scss">

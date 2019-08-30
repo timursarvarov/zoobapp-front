@@ -6,9 +6,9 @@ requireComponentContext.keys().forEach((fileName) => {
     const componentName = Vue.lodash.upperFirst(
         Vue.lodash.camelCase(
             fileName
-            .split('/')
-            .pop()
-            .replace(/\.\w+$/, ''),
+                .split('/')
+                .pop()
+                .replace(/\.\w+$/, ''),
         ),
     );
     const componentConfig = requireComponentContext(fileName);

@@ -1,24 +1,27 @@
 <template>
     <div>
         <md-dialog
-            @md-opened="focusOn('planName')"
             class="plan-add-form"
             :md-active.sync="showFormL"
+            @md-opened="focusOn('planName')"
         >
             <div>
                 <md-card>
                     <md-card-header
-                        class="md-card-header-icon ">
+                        class="md-card-header-icon "
+                    >
                         <div class="card-icon md-card-header-green">
-                            <md-icon>{{icon}}</md-icon>
+                            <md-icon>{{ icon }}</md-icon>
                         </div>
-                        <h4 class="name">{{title}}</h4>
+                        <h4 class="name">
+                            {{ title }}
+                        </h4>
                     </md-card-header>
                     <md-card-content class="md-layout">
-                        <slot="content"/>
+                        <slot="content" />
                     </md-card-content>
                     <md-card-actions md-alignment="right">
-                        <slot="actions"/>
+                        <slot="actions" />
                     </md-card-actions>
                 </md-card>
             </div>
@@ -26,41 +29,41 @@
     </div>
 </template>
 <script>
-    export default {
-        name: 't-dialog-form',
-        props: {
-            icon: {
-                type: String,
-                default: () => 'playlist_add',
-            },
-            title: {
-                type: String,
-                default: () => '',
-            },
-            showForm: {
-                type: Boolean,
-                default: () => false,
-            },
+export default {
+    name: 'TDialogForm',
+    props: {
+        icon: {
+            type: String,
+            default: () => 'playlist_add',
         },
-        data() {
-            return {
-            };
+        title: {
+            type: String,
+            default: () => '',
         },
-        methods: {
+        showForm: {
+            type: Boolean,
+            default: () => false,
         },
-        computed: {
-            showFormL: {
-                get() {
-                    return this.showForm;
-                },
-                set(value) {
-                    this.$emit('update:showForm', value);
-                },
+    },
+    data() {
+        return {
+        };
+    },
+    computed: {
+        showFormL: {
+            get() {
+                return this.showForm;
+            },
+            set(value) {
+                this.$emit('update:showForm', value);
             },
         },
-        watch: {
-        },
-    };
+    },
+    watch: {
+    },
+    methods: {
+    },
+};
 </script>
 <style lang="scss" >
 .md-dialog.plan-add-form {

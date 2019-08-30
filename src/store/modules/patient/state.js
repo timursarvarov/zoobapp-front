@@ -13,7 +13,7 @@ export default {
     allergy: [],
     notes: [],
     plans: [],
-    currentPlan: null,
+    manipulations: null,
     procedures: {},
     diagnosis: [],
     invoices: [],
@@ -24,4 +24,5 @@ export default {
     color: null,
     files: [],
     ageCategory: null,
+    jaw: null,
 };

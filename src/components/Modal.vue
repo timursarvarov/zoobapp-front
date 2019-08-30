@@ -1,35 +1,37 @@
 <template>
-  <transition name="modal">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container" v-click-outside="closeModal">
+    <transition name="modal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div
+                    v-click-outside="closeModal"
+                    class="modal-container"
+                >
+                    <div class="modal-header">
+                        <slot name="header" />
+                    </div>
 
-          <div class="modal-header">
-            <slot name="header"></slot>
-          </div>
+                    <div class="modal-body text-center">
+                        <slot name="body" />
+                    </div>
 
-          <div class="modal-body text-center">
-            <slot name="body"></slot>
-          </div>
-
-          <div class="modal-footer">
-            <slot name="footer"></slot>
-          </div>
+                    <div class="modal-footer">
+                        <slot name="footer" />
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </transition>
+    </transition>
 </template>
 
 <script>
-    export default {
-      name:'modal',
-        methods: {
-            closeModal() {
-                this.$emit('close');
-            },
+export default {
+    name: 'Modal',
+    methods: {
+        closeModal() {
+            this.$emit('close');
         },
-    };
+    },
+};
 </script>
 
 <style lang="scss">

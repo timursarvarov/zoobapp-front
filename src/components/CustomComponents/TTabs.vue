@@ -2,45 +2,55 @@
     <md-card
         class="md-card-tabs"
         :class="[
-      {'flex-column': flexColumn},
-      {'nav-pills-iconsd': navPillsIcons},
-      {'md-card-plain': plain}
-    ]"
+            {'flex-column': flexColumn},
+            {'nav-pills-iconsd': navPillsIcons},
+            {'md-card-plain': plain}
+        ]"
     >
         <md-card-header>
-            <slot name="header-title"></slot>
+            <slot name="header-title" />
         </md-card-header>
         <md-card-content>
             <md-list class="nav-tabs">
                 <md-list-item
                     v-for="(item, index) of tabName"
-                    @click="switchPanel(tabName[index]), $emit('onChangeTab', item)"
                     :key="item.ID"
                     :class="[
                         {active: isActivePanel(tabName[index])},
                         {[getColorButton(colorButton)]: isActivePanel(tabName[index])}]"
+                    @click="switchPanel(tabName[index]), $emit('onChangeTab', item)"
                 >
                     <div class="md-button-content">
-                        {{tabName[index].name | capitilize}}
+                        {{ tabName[index].name | capitilize }}
                         <small
                             v-if="tabName[index].price"
-                        >{{tabName[index].price}}</small>
-                        <md-icon v-if="navPillsIcons">{{tabName[index].icon}}</md-icon>
+                        >{{ tabName[index].price }}</small>
+                        <md-icon v-if="navPillsIcons">
+                            {{ tabName[index].icon }}
+                        </md-icon>
                         <span
                             v-if="tabName[index].state"
                             :style="{background: tabName[index].background}"
                             class="notification"
-                        >{{tabName[index].state}}</span>
+                        >{{ tabName[index].state }}</span>
                     </div>
                 </md-list-item>
             </md-list>
 
-            <transition name="fade" mode="out-in">
+            <transition
+                name="fade"
+                mode="out-in"
+            >
                 <div class="tab-content">
                     <template v-for="(item, index) in tabName">
                         <template v-if="isActivePanel(tabName[index])">
-                            <div :class="getTabContent(index + 1)" :key="item.ID">
-                                <slot :name="getTabContent(index + 1)">This is the default text!</slot>
+                            <div
+                                :key="item.ID"
+                                :class="getTabContent(index + 1)"
+                            >
+                                <slot :name="getTabContent(index + 1)">
+                                    This is the default text!
+                                </slot>
                             </div>
                         </template>
                     </template>
@@ -48,57 +58,57 @@
             </transition>
         </md-card-content>
         <md-card-actions>
-            <slot name="footer-actions"></slot>
+            <slot name="footer-actions" />
         </md-card-actions>
     </md-card>
 </template>
 
 <script>
-    export default {
-        name: 't-tabs',
-        props: {
-            flexColumn: Boolean,
-            navPillsIcons: Boolean,
-            plain: Boolean,
-            tabIcon: Array,
-            tabName: {
-                type: Array,
-                default: () => {},
-            },
-            tabStatus: {
-                type: Array,
-                default: () => {},
-            },
-            colorButton: {
-                type: String,
-                default: '',
-            },
+export default {
+    name: 'TTabs',
+    props: {
+        flexColumn: Boolean,
+        navPillsIcons: Boolean,
+        plain: Boolean,
+        tabIcon: Array,
+        tabName: {
+            type: Array,
+            default: () => {},
         },
-        data() {
-            return {
-                activePanel: this.tabName[this.selectedPanelIndex()],
-            };
+        tabStatus: {
+            type: Array,
+            default: () => {},
         },
-        computed: {},
-        methods: {
-            switchPanel(panel) {
-                console.log(panel);
-                this.activePanel = panel;
-            },
-            isActivePanel(panel) {
-                return this.activePanel.ID === panel.ID;
-            },
-            getColorButton(colorButton) {
-                return `md-${colorButton}`;
-            },
-            getTabContent(index) {
-                return `tab-pane-${index}`;
-            },
-            selectedPanelIndex() {
-                return 0;
-            },
+        colorButton: {
+            type: String,
+            default: '',
         },
-    };
+    },
+    data() {
+        return {
+            activePanel: this.tabName[this.selectedPanelIndex()],
+        };
+    },
+    computed: {},
+    methods: {
+        switchPanel(panel) {
+            console.log(panel);
+            this.activePanel = panel;
+        },
+        isActivePanel(panel) {
+            return this.activePanel.ID === panel.ID;
+        },
+        getColorButton(colorButton) {
+            return `md-${colorButton}`;
+        },
+        getTabContent(index) {
+            return `tab-pane-${index}`;
+        },
+        selectedPanelIndex() {
+            return 0;
+        },
+    },
+};
 </script>
 
 <style lang="scss" >

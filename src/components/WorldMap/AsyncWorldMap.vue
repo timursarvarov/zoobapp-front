@@ -10,23 +10,23 @@ it contains 2 big libraries (jquery and jquery vector maps)
        2 unnecessary libs that we only need for this page :)
    */
 
-    const WorldMap = () => ({
-        component: import('./WorldMap.vue'),
+const WorldMap = () => ({
+  component: import('./WorldMap.vue'),
 
-        delay: 200,
-    });
-    export default {
-        name: 'async-world-map',
-        components: {
-            WorldMap,
-        },
-        props: {
-            data: {
-                type: Object,
-                default: () => ({}),
-            },
-        },
-    };
+  delay: 200,
+});
+export default {
+  name: 'async-world-map',
+  components: {
+    WorldMap,
+  },
+  props: {
+    data: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+};
 </script>
 <style>
 </style>

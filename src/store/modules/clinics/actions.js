@@ -14,15 +14,15 @@ export default {
     }) => new Promise((resolve, reject) => {
         commit(CLINICS_PROP_SET, { propKey: 'status', propName: 'loading' });
         axios.post('/',
-                JSON.stringify({
-                    jsonrpc: '2.0',
-                    method: 'Organizations.Edit',
-                    params: {
-                        name: clinic.name,
-                        description: clinic.description,
-                    },
-                    id: 1,
-                }))
+            JSON.stringify({
+                jsonrpc: '2.0',
+                method: 'Organizations.Edit',
+                params: {
+                    name: clinic.name,
+                    description: clinic.description,
+                },
+                id: 1,
+            }))
             .then((resp) => {
                 //! переделать по API resp.data.result
                 if (resp.data.error) {

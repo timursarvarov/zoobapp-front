@@ -1,70 +1,67 @@
 
 <template lang="html">
-    <div class="md-layout-item  md-size-100" >
-        {{patient.plans}}
-            <items-list
-                v-if="$route.name ==='anamnesis' && patient.anamnesis && patient.anamnesis.length > 0"
-                :items="patient.anamnesis||[]"
-                @showItemInfo="showItemInfo"
-                @onJawChanged="recalculateJaw()"
-                :teethSystem="currentClinic.teethSystem"
-                currentType="anamnesis"
-            >
-            </items-list>
-            <delete-form
-                v-if="patient.currentPlan"
-                text="Delete Plan?"
-                :showForm.sync="showDeleteForm"
-                :itemToDelete="patient.currentPlan"
-                :patientID="patient.ID"
-                currentType='plan'
-            />
-            </div>
+    <div class="md-layout-item  md-size-100">
+        <items-list
+            v-if="$route.name ==='anamnesis' && patient.anamnesis && patient.anamnesis.length > 0"
+            :items="patient.anamnesis||[]"
+            :teeth-system="currentClinic.teethSystem"
+            current-type="anamnesis"
+            @showItemInfo="showItemInfo"
+            @onJawChanged="recalculateJaw()"
+        />
+        <delete-form
+            v-if="patient.currentPlan"
+            text="Delete Plan?"
+            :show-form.sync="showDeleteForm"
+            :item-to-delete="patient.currentPlan"
+            :patient-i-d="patient.ID"
+            current-type="plan"
+        />
+    </div>
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
-    import {
-        PATIENT_PLAN_EDIT,
-        PATIENT_PLAN_CURRENT_SET,
-        PATIENT_ITEM_VISIBILITY_TOGGLE,
-    } from '@/constants';
-    import components from '@/components';
-    import ItemsList from './ItemsList.vue';
-    import DeleteForm from './DeleteForm.vue';
-    import { tObjProp } from '@/mixins';
+import { mapGetters } from 'vuex';
+import {
+    PATIENT_PLAN_EDIT,
+    PATIENT_ITEM_VISIBILITY_TOGGLE,
+} from '@/constants';
+import components from '@/components';
+import ItemsList from './ItemsList.vue';
+import DeleteForm from './DeleteForm.vue';
+import { tObjProp } from '@/mixins';
 
-    export default {
-        mixins: [tObjProp],
-        components: {
-            ...components,
-            ItemsList,
-            DeleteForm,
+export default {
+    components: {
+        ...components,
+        ItemsList,
+        DeleteForm,
+    },
+    mixins: [tObjProp],
+    props: {
+        currentType: {
+            type: String,
+            default: 'anamnesis',
         },
-        props: {
-            currentType: {
-                type: String,
-                default: 'anamnesis',
-            },
+    },
+    data() {
+        return {
+            showDeleteForm: false,
+        };
+    },
+    computed: {
+        ...mapGetters({
+            patient: 'getPatient',
+            currentClinic: 'getCurrentClinic',
+            getProceduresByIds: 'getProceduresByIds',
+        }),
+    },
+    methods: {
+        showItemInfo(params) {
+            this.$emit('showItemInfo', params);
         },
-        data() {
-            return {
-                showDeleteForm: false,
-            };
-        },
-        methods: {
-            showItemInfo(params) {
-                this.$emit('showItemInfo', params);
-            },
-        },
-        computed: {
-            ...mapGetters({
-                patient: 'getPatient',
-                currentClinic: 'getCurrentClinic',
-                getProceduresByIds: 'getProceduresByIds',
-            }),
-        },
-    };
+    },
+};
 </script>
 <style lang="scss">
 .set-diagnose-form {

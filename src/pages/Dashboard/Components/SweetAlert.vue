@@ -1,5 +1,5 @@
 <template>
-  <div>
+    <div>
     <!-- <div class="header text-center">
       <h3 class="title">Sweet Alert 2</h3>
       <p class="category">A beautiful plugin, that replace the
@@ -111,7 +111,7 @@
         </div>
       </div>
     </div> -->
-  </div>
+    </div>
 </template>
 <script>
 //   import swal from 'sweetalert2';

@@ -1,14 +1,32 @@
 .t-toolbar {
+    padding: 15px;
     background-color: #ececec !important;
     border-radius: 10px;
-    &__section {
+    flex-grow: 1;
+    &__section:not(:first-child) {
         // flex-grow: 1;
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
+        text-align: right;
+        flex-grow: 1;
+        justify-content: flex-end;
     }
-    &__section-text {
+    &__section:first-child {
         // flex-grow: 1;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: flex-start;
+    }
+    &__section-text:not(:first-child) {
+        &:first-child {
+            flex-grow: 1;
+            display: flex;
+            align-self: flex-end;
+            justify-content: flex-end;
+        }
         // max-width: 30%;
         text-overflow: ellipsis;
         // white-space: nowrap;
@@ -16,5 +34,10 @@
     .md-toolbar .md-field:after,
     .md-toolbar .md-field:before {
         bottom: 1px;
+    }
+    .md-menu {
+        // position: absolute;
+        // top: 15px;
+        // right: 15px;
     }
 }

@@ -1,92 +1,102 @@
 <template>
-  <div
-    @click="close()"
-    data-notify="container"
-    class="alert open alert-with-icon"
-    role="alert"
-    :class="[verticalAlign, horizontalAlign, alertType]"
-    :style="customPosition"
-    data-notify-position="top-center">
-    <button
-      type="button"
-      aria-hidden="true"
-      class="close"
-      data-notify="dismiss"
-      @click="close">×
-    </button>
-    <i data-notify="icon" class="material-icons" v-if="icon">{{icon}}</i>
-    <span data-notify="message" v-html="message"></span>
-  </div>
+    <div
+        data-notify="container"
+        class="alert open alert-with-icon"
+        role="alert"
+        :class="[verticalAlign, horizontalAlign, alertType]"
+        :style="customPosition"
+        data-notify-position="top-center"
+        @click="close()"
+    >
+        <button
+            type="button"
+            aria-hidden="true"
+            class="close"
+            data-notify="dismiss"
+            @click="close"
+        >
+            ×
+        </button>
+        <i
+            v-if="icon"
+            data-notify="icon"
+            class="material-icons"
+        >{{ icon }}</i>
+        <span
+            data-notify="message"
+            v-html="message"
+        />
+    </div>
 </template>
 <script>
-    export default {
-        name: 'notification',
-        props: {
-            message: String,
-            icon: String,
-            verticalAlign: {
-                type: String,
-                default: 'top',
-            },
-            horizontalAlign: {
-                type: String,
-                default: 'center',
-            },
-            type: {
-                type: String,
-                default: 'info',
-            },
-            timeout: {
-                type: Number,
-                default: 3500,
-            },
-            timestamp: {
-                type: Date,
-                default: () => new Date(),
-            },
+export default {
+    name: 'Notification',
+    props: {
+        message: String,
+        icon: String,
+        verticalAlign: {
+            type: String,
+            default: 'top',
         },
-        data() {
-            return {
-                elmHeight: 0,
-            };
+        horizontalAlign: {
+            type: String,
+            default: 'center',
         },
-        computed: {
-            hasIcon() {
-                return this.icon && this.icon.length > 0;
-            },
-            alertType() {
-                return `alert-${this.type}`;
-            },
-            customPosition() {
-                const initialMargin = 20;
-                const alertHeight = this.elmHeight + 10;
-                const sameAlertsCount = this.$notifications.state.filter(alert => (
-                    alert.horizontalAlign === this.horizontalAlign
+        type: {
+            type: String,
+            default: 'info',
+        },
+        timeout: {
+            type: Number,
+            default: 3500,
+        },
+        timestamp: {
+            type: Date,
+            default: () => new Date(),
+        },
+    },
+    data() {
+        return {
+            elmHeight: 0,
+        };
+    },
+    computed: {
+        hasIcon() {
+            return this.icon && this.icon.length > 0;
+        },
+        alertType() {
+            return `alert-${this.type}`;
+        },
+        customPosition() {
+            const initialMargin = 20;
+            const alertHeight = this.elmHeight + 10;
+            const sameAlertsCount = this.$notifications.state.filter(alert => (
+                alert.horizontalAlign === this.horizontalAlign
                     && alert.verticalAlign === this.verticalAlign
                     && alert.timestamp <= this.timestamp
-                )).length;
-                const pixels = (sameAlertsCount - 1) * alertHeight + initialMargin;
-                const styles = {};
-                if (this.verticalAlign === 'top') {
-                    styles.top = `${pixels}px`;
-                } else {
-                    styles.bottom = `${pixels}px`;
-                }
-                return styles;
-            },
-        },
-        methods: {
-            close() {
-                this.$emit('on-close', this.timestamp);
-            },
-        },
-        mounted() {
-            this.elmHeight = this.$el.clientHeight;
-            if (this.timeout) {
-                setTimeout(this.close, this.timeout);
+            )).length;
+            const pixels = (sameAlertsCount - 1) * alertHeight + initialMargin;
+            const styles = {};
+            if (this.verticalAlign === 'top') {
+                styles.top = `${pixels}px`;
+            } else {
+                styles.bottom = `${pixels}px`;
             }
+            return styles;
         },
-    };
+    },
+    mounted() {
+        this.elmHeight = this.$el.clientHeight;
+        if (this.timeout) {
+            setTimeout(this.close, this.timeout);
+        }
+    },
+    methods: {
+        close() {
+            this.$emit('on-close', this.timestamp);
+        },
+    },
+};
 </script>
 <style lang="scss" scoped>
 @media screen and (max-width: 991px) {

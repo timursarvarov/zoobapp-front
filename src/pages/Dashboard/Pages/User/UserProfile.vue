@@ -1,34 +1,34 @@
 <template>
-  <div class="content user-profile">
-    <div class="md-layout">
-      <div class="md-layout-item md-medium-size-100 md-size-66">
-        <user-card button-color="success"/>
-      </div>
+    <div class="content user-profile">
+        <div class="md-layout">
+            <div class="md-layout-item md-medium-size-100 md-size-66">
+                <user-card button-color="success" />
+            </div>
 
-      <div class="md-layout-item md-medium-size-100 md-size-33">
-        <password-form header-color="green"/>
-      </div>
+            <div class="md-layout-item md-medium-size-100 md-size-33">
+                <password-form header-color="green" />
+            </div>
 
-      <div class="md-layout-item md-medium-size-100 md-size-33">
-        <!-- <calendar-form header-color="green"/> -->
-      </div>
+            <div class="md-layout-item md-medium-size-100 md-size-33">
+                <!-- <calendar-form header-color="green"/> -->
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-    import UserCard from '@/pages/Dashboard/Pages/User/UserProfile/UserCard.vue';
-    import PasswordForm from '@/pages/Dashboard/Pages/User/UserProfile/PasswordForm.vue';
-    // import CalendarForm from './UserProfile/CalendarForm';
+import UserCard from '@/pages/Dashboard/Pages/User/UserProfile/UserCard.vue';
+import PasswordForm from '@/pages/Dashboard/Pages/User/UserProfile/PasswordForm.vue';
+// import CalendarForm from './UserProfile/CalendarForm';
 
-    export default {
-        name: 'user-profile',
-        components: {
-            UserCard,
-            PasswordForm,
-            // CalendarForm,
-        },
-    };
+export default {
+    name: 'UserProfile',
+    components: {
+        UserCard,
+        PasswordForm,
+    // CalendarForm,
+    },
+};
 </script>
 <style lang="scss">
 // .user-profile {

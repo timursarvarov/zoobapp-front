@@ -1,109 +1,174 @@
 <template>
     <div class="patient-profile-wrapper">
-        <nav-tabs-card v-show="patient.ID">
+        <nav-tabs-card v-if="patient.ID">
             <template slot="content">
                 <!-- <span class="md-nav-tabs-title">Set new:</span> -->
                 <md-tabs
                     md-sync-route
                     class="md-success"
-                    md-alignment="left">
+                    md-alignment="left"
+                >
                     <md-tab
-                        :to="`/${$i18n.locale}/patient/${patient.ID}/bio`"
                         id="tab-bio"
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/bio`"
                         md-icon="account_box"
                         md-label="BIO"
                     >
                         <div class="md-layout">
-                            <router-view name ="Bio"/>
+                            <keep-alive>
+                                <router-view name="Bio" />
+                            </keep-alive>
                         </div>
                     </md-tab>
-                     <md-tab
-                        :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`"
+                    <md-tab
                         id="tab-treatment"
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`"
                         md-icon="local_hospital"
                         md-label="Treatment"
                     >
                         <div class="md-layout">
-                            <router-view name="Treatment"/>
+                            <keep-alive>
+                                <router-view name="TreatmentChild" />
+                                <router-view name="itemsList" />
+                            </keep-alive>
                         </div>
                     </md-tab>
                     <md-tab
-                        :to="`/${$i18n.locale}/patient/${patient.ID}/billing`"
                         id="tab-billing"
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/billing`"
                         md-icon="account_balance"
                         md-label="Billing"
                     >
                         <div class="md-layout">
-                            <router-view name ="Billing"/>
+                            <router-view name="Billing" />
                         </div>
                     </md-tab>
                     <md-tab
-                        :to="`/${$i18n.locale}/patient/${patient.ID}/notes`"
                         id="tab-notes"
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/notes`"
                         md-icon="question_answer"
                         md-label="Notes"
                     >
-                    <router-view name ="Notes" />
+                        <router-view name="Notes" />
                     </md-tab>
                     <md-tab
-                        :to="`/${$i18n.locale}/patient/${patient.ID}/files`"
                         id="tab-files"
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/files`"
                         md-icon="folder_shared"
                         md-label="Files"
                     >
-                    <router-view name ="Files" />
+                        <router-view name="Files" />
                     </md-tab>
                 </md-tabs>
             </template>
         </nav-tabs-card>
-        <div class="jaw md-layout-item" v-show="!patient.ID && patientStatus ==='loading'">
+        <router-view name="itemsList" />
+        <div
+            v-show="!patient.ID && patientStatus ==='loading'"
+            class="jaw md-layout-item"
+        >
             <div
+                v-if="true"
                 style="margin:auto; height:100%"
                 class="md-layout mx-auto patient-wrapper-preloader"
-                v-if="true"
             >
                 <div style="height:60px;margin: auto;">
-                    <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+                    <md-progress-spinner md-mode="indeterminate" />
                 </div>
             </div>
         </div>
-        <div v-show="!patient.ID && patientStatus ==='error'" class="jaw md-layout-item">
+        <div
+            v-show="!patient.ID && patientStatus ==='error'"
+            class="jaw md-layout-item"
+        >
             <md-empty-state
                 md-icon="error"
                 md-label="No connection"
                 md-description="No server connection"
             >
-                <md-button @click="getPatient" class="md-primary md-raised">RETRY</md-button>
+                <md-button
+                    class="md-primary md-raised"
+                    @click="getPatient"
+                >
+                    RETRY
+                </md-button>
             </md-empty-state>
         </div>
     </div>
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
-    import components from '@/components';
-    import { PATIENT_GET } from '@/constants';
+import { mapGetters } from 'vuex';
+import components from '@/components';
+import { PATIENT_GET } from '@/constants';
+import store from '@/store'
 
-    export default {
-        beforeRouteEnter(to, from, next) {
-            next((vm) => {
-                if (vm.patient.ID) {
-                    let firstName = '';
-                    let lastName = '';
-                    if (typeof vm.patient.firstName === 'string') {
-                        firstName = vm.patient.firstName.charAt(0).toUpperCase()
-                            + vm.patient.firstName.slice(1);
-                    }
-                    if (typeof vm.patient.lastName === 'string') {
-                        lastName = vm.patient.lastName.charAt(0).toUpperCase()
-                            + vm.patient.lastName.slice(1);
-                    }
-
-                    document.title = `${firstName} ${lastName} - ZoobApp`;
+export default {
+    beforeRouteEnter(to, from, next) {
+        if (!store.getters.getPatient.ID || `${store.getters.getPatient.ID}` !== `${to.params.patientID}`) {
+            store.dispatch(PATIENT_GET, {
+                patientID: to.params.patientID,
+            }).then((patient) => {
+                if (patient) {
+                    next((vm) => {
+                        vm.setWindowTitle();
+                    });
                 }
+            }).catch((err => {
+                throw new Error(err);
+            })).then(()=>{
+                next();
             });
-        },
-        beforeRouteUpdate(to, from, next) {
+        }else {
+            next();
+        }
+    },
+    beforeRouteUpdate(to, from, next) {
+        if (!this.patient.ID || `${this.patient.ID}` !== `${to.params.patientID}`) {
+            store.dispatch(PATIENT_GET, {
+                patientID: to.params.patientID,
+            }).then((patient) => {
+                if (patient) {
+                    next(() => {
+                        this.setWindowTitle();
+                    });
+                }
+            }).catch((err => {
+                throw new Error(err);
+            })).then(()=>{
+                next();
+            });
+        } else {
+            next();
+        }
+    },
+    beforeRouteLeave(to, from, next) {
+        document.title = 'ZoobApp';
+        next();
+    },
+    name: 'PatientProfile',
+    components: {
+        ...components,
+    },
+    data() {
+        return {
+            showDialog: false,
+            actionSize: {},
+            selectedTeeth: [],
+            selectedDiagnose: [],
+        };
+    },
+    computed: {
+        ...mapGetters({
+            jaw: 'jaw',
+            patient: 'getPatient',
+            patientStatus: 'getPatientStatus',
+        }),
+    },
+    created() {
+    },
+    methods: {
+        setWindowTitle(){
             if (this.patient.ID) {
                 let firstName = '';
                 let lastName = '';
@@ -117,59 +182,28 @@
                 }
                 document.title = `${firstName} ${lastName} - ZoobApp`;
             }
-            next();
         },
-        beforeRouteLeave(to, from, next) {
-            document.title = 'ZoobApp';
-            next();
-        },
-        components: {
-            ...components,
-        },
-        name: 'PatientProfile',
-        data() {
-            return {
-                showDialog: false,
-                actionSize: {},
-                selectedTeeth: [],
-                selectedDiagnose: [],
-            };
-        },
-        methods: {
-            getPatient() {
-                if (
-                    this.$route.params.patientId
+        getPatient() {
+            if (
+                this.$route.params.patientID
                     && (this.patient.ID === null
                     || this.patient.ID
-                        !== parseInt(this.$route.params.patientId, 10))
-                ) {
-                    this.$store
-                        .dispatch(PATIENT_GET, {
-                            patientId: this.$route.params.patientId,
-                        })
-                        .then((patient) => {
-                            if (patient) {
-                                document.title = `${patient.firstName} ${patient.lastName} `
+                        !== parseInt(this.$route.params.patientID, 10))
+            ) {
+                this.$store
+                    .dispatch(PATIENT_GET, {
+                        patientID: this.$route.params.patientID,
+                    })
+                    .then((patient) => {
+                        if (patient) {
+                            document.title = `${patient.firstName} ${patient.lastName} `
                                     + ' - ZoobApp';
-                            }
-                        });
-                }
-            },
+                        }
+                    });
+            }
         },
-        computed: {
-            ...mapGetters({
-                jaw: 'jaw',
-                patient: 'getPatient',
-                patientStatus: 'getPatientStatus',
-            }),
-        },
-        mounted() {
-            // this.activeTab = 'tab-bio';
-        },
-        created() {
-            this.getPatient();
-        },
-    };
+    },
+};
 </script>
 <style lang="scss" >
 .patient-profile-wrapper {

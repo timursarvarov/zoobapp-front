@@ -1,18 +1,18 @@
 /* eslint-disable */
 <template>
-  <div class='clipper-range'>
-    <div
-      class='wrap'
-      v-stream:mousedown='mousedown$'
-      v-stream:touchstart='touchstart$'
-    >
-      <div class='stick'></div>
-      <div
-        class='bar'
-        :style='barStyle'
-      ></div>
+    <div class="clipper-range">
+        <div
+            v-stream:mousedown="mousedown$"
+            v-stream:touchstart="touchstart$"
+            class="wrap"
+        >
+            <div class="stick" />
+            <div
+                class="bar"
+                :style="barStyle"
+            />
+        </div>
     </div>
-  </div>
 </template>
 
 <script>

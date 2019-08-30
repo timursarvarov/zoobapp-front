@@ -7,20 +7,19 @@ import {
     LOADER_START,
     NOTIFY,
     SERVER_ERRORS,
-    USER_LOGOUT,
+    // USER_LOGOUT,
 } from '@/constants';
 
 
 // for multiple requests
 export default function() {
     // response
-    const issueToken = () => new Promise((resolve, reject) => {
+    const issueToken = () => new Promise((resolve) => {
         store.dispatch(AUTH_REFRESH_TOKEN).then((result) => {
             resolve(result.accessToken);
         }).catch((err) => {
-            // USER_LOGOUT
-            console.log(err);
-            reject(err);
+            store.dispatch(USER_LOGOUT);
+            throw new Error(err);
         });
     });
     let sentRequestToRefreshToken = false;
@@ -51,7 +50,7 @@ export default function() {
                 },
             });
             if (response.data.error.code === SERVER_ERRORS.codes.InvalidTokenErrorCode) {
-                // store.dispatch(USER_LOGOUT);
+                store.dispatch(USER_LOGOUT);
             }
         }
         return response;

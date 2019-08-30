@@ -8,10 +8,10 @@ Ripple.color = 'rgba(0, 0, 0, 0.1)';
  */
 
 const GlobalDirectives = {
-  install(Vue) {
-    Vue.directive('click-outside', vClickOutside);
-    Vue.directive('ripple', Ripple);
-  },
+    install(Vue) {
+        Vue.directive('click-outside', vClickOutside);
+        Vue.directive('ripple', Ripple);
+    },
 };
 
 export default GlobalDirectives;

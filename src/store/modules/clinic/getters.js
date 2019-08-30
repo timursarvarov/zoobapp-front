@@ -6,7 +6,16 @@ import {
 } from '@/constants';
 
 export default {
-    getCurrentManipulations: state => state.manipulations || [],
+    getCurrentManipulations: state => {
+        let manipulations = [];
+        state.manipulations.forEach(m => {
+            manipulations.push({
+                ...m,
+                text: `${m.code} - ${m.title}`
+            })
+        })
+        return manipulations;
+    },
     getUngroupedProcedures: state => state.procedures || [],
     getUngroupedDiagnosis: state => state.diagnosis || [],
     getCurrentClinic: (state) => {
@@ -26,7 +35,7 @@ export default {
         });
         return clinic;
     },
-    getCurrentDiagnosis: (state, getters) => {
+    getCurrentClinicDiagnosis: (state, getters) => {
         const diagnosis = [];
         if (state.diagnosis) {
             state.diagnosis.forEach((group) => {
@@ -39,7 +48,7 @@ export default {
         }
         return diagnosis;
     },
-    getCurrentProcedures: (state, getters) => {
+    getCurrentClinicProcedures: (state, getters) => {
         const procedures = [];
         if (state.procedures) {
             state.procedures.forEach((group) => {
@@ -52,7 +61,7 @@ export default {
         }
         return procedures;
     },
-    getCurrentAnamnesis: (state, getters) => {
+    getCurrentClinicAnamnesis: (state, getters) => {
         const anamnesis = [];
         if (state.anamnesis) {
             state.anamnesis.forEach((group) => {
@@ -64,5 +73,12 @@ export default {
             });
         }
         return anamnesis;
+    },
+    getCurrentClinicOriginalItem: (state, getters) => (type, catalogID) => {
+        let item = {};
+        if (state[`ungrouped${type}`]) {
+            item = state[`ungrouped${type}`][catalogID]
+        }
+        return item || {};
     },
 };

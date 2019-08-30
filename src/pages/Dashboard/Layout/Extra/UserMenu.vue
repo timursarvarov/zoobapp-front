@@ -1,123 +1,123 @@
 <template>
-  <div class="user">
-    <div class="photo">
-      <img
-        :src="avatar"
-        alt="avatar"
-      />
-    </div>
-    <div class="user-info">
-      <a
-        data-toggle="collapse"
-        :aria-expanded="!isClosed"
-        @click.stop="toggleMenu"
-        @click.capture="clicked"
-      >
-        <span v-if="$route.meta.rtlActive">
-          {{rtlTitle}}
-          <b class="caret"></b>
-        </span>
-        <span v-else>
-          {{title}}
-          <b class="caret"></b>
-        </span>
-      </a>
-
-      <collapse-transition>
-        <div v-show="!isClosed">
-          <ul class="nav">
-            <slot>
-              <li>
-                <a
-                  v-if="$route.meta.rtlActive"
-                  href="#vue"
-                >
-                  <span class="sidebar-mini">مع</span>
-                  <span class="sidebar-normal">ملف</span>
-                </a>
-                <a
-                  v-else
-                  href="#vue"
-                >
-                  <span class="sidebar-mini">MP</span>
-                  <span class="sidebar-normal">My Profile</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  v-if="$route.meta.rtlActive"
-                  href="#vue"
-                >
-                  <span class="sidebar-mini">هوع</span>
-                  <span class="sidebar-normal">تعديل الملف الشخصي</span>
-                </a>
-                <a
-                  v-else
-                  href="#vue"
-                >
-                  <span class="sidebar-mini">EP</span>
-                  <span class="sidebar-normal">Edit Profile</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  v-if="$route.meta.rtlActive"
-                  href="#vue"
-                >
-                  <span class="sidebar-mini">و</span>
-                  <span class="sidebar-normal">إعدادات</span>
-                </a>
-                <a
-                  v-else
-                  href="#vue"
-                >
-                  <span class="sidebar-mini">S</span>
-                  <span class="sidebar-normal">Settings</span>
-                </a>
-              </li>
-            </slot>
-          </ul>
+    <div class="user">
+        <div class="photo">
+            <img
+                :src="avatar"
+                alt="avatar"
+            >
         </div>
-      </collapse-transition>
+        <div class="user-info">
+            <a
+                data-toggle="collapse"
+                :aria-expanded="!isClosed"
+                @click.stop="toggleMenu"
+                @click.capture="clicked"
+            >
+                <span v-if="$route.meta.rtlActive">
+                    {{ rtlTitle }}
+                    <b class="caret" />
+                </span>
+                <span v-else>
+                    {{ title }}
+                    <b class="caret" />
+                </span>
+            </a>
+
+            <collapse-transition>
+                <div v-show="!isClosed">
+                    <ul class="nav">
+                        <slot>
+                            <li>
+                                <a
+                                    v-if="$route.meta.rtlActive"
+                                    href="#vue"
+                                >
+                                    <span class="sidebar-mini">مع</span>
+                                    <span class="sidebar-normal">ملف</span>
+                                </a>
+                                <a
+                                    v-else
+                                    href="#vue"
+                                >
+                                    <span class="sidebar-mini">MP</span>
+                                    <span class="sidebar-normal">My Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    v-if="$route.meta.rtlActive"
+                                    href="#vue"
+                                >
+                                    <span class="sidebar-mini">هوع</span>
+                                    <span class="sidebar-normal">تعديل الملف الشخصي</span>
+                                </a>
+                                <a
+                                    v-else
+                                    href="#vue"
+                                >
+                                    <span class="sidebar-mini">EP</span>
+                                    <span class="sidebar-normal">Edit Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    v-if="$route.meta.rtlActive"
+                                    href="#vue"
+                                >
+                                    <span class="sidebar-mini">و</span>
+                                    <span class="sidebar-normal">إعدادات</span>
+                                </a>
+                                <a
+                                    v-else
+                                    href="#vue"
+                                >
+                                    <span class="sidebar-mini">S</span>
+                                    <span class="sidebar-normal">Settings</span>
+                                </a>
+                            </li>
+                        </slot>
+                    </ul>
+                </div>
+            </collapse-transition>
+        </div>
     </div>
-  </div>
 </template>
 <script>
-    import { CollapseTransition } from 'vue2-transitions';
+import { CollapseTransition } from 'vue2-transitions';
 
-    export default {
-      name: 'user-menu',
-        components: {
-            CollapseTransition,
+export default {
+    name: 'UserMenu',
+    components: {
+        CollapseTransition,
+    },
+    props: {
+        title: {
+            type: String,
+            default: 'Tania Andrew',
         },
-        props: {
-            title: {
-                type: String,
-                default: 'Tania Andrew',
-            },
-            rtlTitle: {
-                type: String,
-                default: 'تانيا أندرو',
-            },
-            avatar: {
-                type: String,
-                default: './img/faces/avatar.jpg',
-            },
+        rtlTitle: {
+            type: String,
+            default: 'تانيا أندرو',
         },
-        data() {
-            return {
-                isClosed: true,
-            };
+        avatar: {
+            type: String,
+            default: './img/faces/avatar.jpg',
         },
-        methods: {
-            clicked(e) {
-                e.preventDefault();
-            },
-            toggleMenu() {
-                this.isClosed = !this.isClosed;
-            },
+    },
+    data() {
+        return {
+            isClosed: true,
+        };
+    },
+    methods: {
+        clicked(e) {
+            e.preventDefault();
         },
-    };
+        toggleMenu() {
+            this.isClosed = !this.isClosed;
+        },
+    },
+};
 </script>
 <style>
 .collapsed {

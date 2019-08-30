@@ -1,65 +1,65 @@
 <template>
-  <li :class="[{'timeline-inverted': inverted}, {'timeline-simple': !inverted}]">
-    <slot name="badge">
-      <div
-        class="timeline-badge"
-        :class="badgeAvatar.color == null? '' : badgeType"
-        :style="[{'background-color':
-        badgeAvatar.img == null ||
-        badgeAvatar.acronim == null ? '': `${badgeAvatar.color}`}]"
-      >
-          <img
-            v-if="badgeAvatar.img"
-            :src="badgeAvatar.img"
-            alt="avatar"
-          />
-          <span v-if="badgeAvatar.acronim">
-            {{badgeAvatar.acronim}}
-          </span>
-          <span v-else>
-            <md-icon>{{ badgeIcon }}</md-icon>
-          </span>
-      </div>
-    </slot>
-    <div class="timeline-panel">
-      <div class="timeline-heading">
-        <slot name="header"></slot>
-      </div>
-      <div
-        class="timeline-body"
-        v-if="$slots.content"
-      >
-        <slot name="content"></slot>
-      </div>
-      <h6 v-if="$slots.footer">
-        <slot name="footer"></slot>
-      </h6>
-    </div>
-  </li>
+    <li :class="[{'timeline-inverted': inverted}, {'timeline-simple': !inverted}]">
+        <slot name="badge">
+            <div
+                class="timeline-badge"
+                :class="badgeAvatar.color == null? '' : badgeType"
+                :style="[{'background-color':
+                    badgeAvatar.img == null ||
+                    badgeAvatar.acronim == null ? '': `${badgeAvatar.color}`}]"
+            >
+                <img
+                    v-if="badgeAvatar.img"
+                    :src="badgeAvatar.img"
+                    alt="avatar"
+                >
+                <span v-if="badgeAvatar.acronim">
+                    {{ badgeAvatar.acronim }}
+                </span>
+                <span v-else>
+                    <md-icon>{{ badgeIcon }}</md-icon>
+                </span>
+            </div>
+        </slot>
+        <div class="timeline-panel">
+            <div class="timeline-heading">
+                <slot name="header" />
+            </div>
+            <div
+                v-if="$slots.content"
+                class="timeline-body"
+            >
+                <slot name="content" />
+            </div>
+            <h6 v-if="$slots.footer">
+                <slot name="footer" />
+            </h6>
+        </div>
+    </li>
 </template>
 <script>
-    export default {
-        name: 'time-line-item',
-        props: {
-            inverted: Boolean,
-            badgeType: {
-                type: String,
-                default: 'success',
-            },
-            badgeColor: {
-                type: String,
-                default: '',
-            },
-            badgeIcon: {
-                type: String,
-                default: '',
-            },
-            badgeAvatar: {
-                type: Object,
-                default: () => ({ img: null, acronim: null, color: 'null' }),
-            },
+export default {
+    name: 'TimeLineItem',
+    props: {
+        inverted: Boolean,
+        badgeType: {
+            type: String,
+            default: 'success',
         },
-    };
+        badgeColor: {
+            type: String,
+            default: '',
+        },
+        badgeIcon: {
+            type: String,
+            default: '',
+        },
+        badgeAvatar: {
+            type: Object,
+            default: () => ({ img: null, acronim: null, color: 'null' }),
+        },
+    },
+};
 </script>
 <style lang="scss" scoped>
 .timeline-badge{

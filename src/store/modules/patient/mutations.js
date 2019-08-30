@@ -1,10 +1,11 @@
 import Vue from 'vue';
+
 import {
     PATIENT_LOGOUT,
     PATIENT_PARAM_SET,
     PATIENT_PARAM_PUSH,
     PATIENT_PARAM_DELETE,
-    PATIENT_ITEM_VISIBILITY_TOGGLE,
+    // PATIENT_ITEM_VISIBILITY_TOGGLE,
     PATIENT_SUB_PARAMS_SET,
     PATIENT_SUB_PARAM_PUSH,
     PATIENT_PARAM_REWRITE,
@@ -13,34 +14,33 @@ import {
 
 export default {
     [PATIENT_LOGOUT]: (state) => {
-        Object.keys(state).map((key) => {
+        Object.keys(state).forEach((key) => {
             Vue.set(state, key, null);
         });
     },
-    [PATIENT_ITEM_VISIBILITY_TOGGLE]: (state, { params }) => {
-        // if (params.planIndex >= 0 && params.type === 'procedures') {
-        //     if (state.plans[params.planIndex].procedures[params.itemIndex].showInJaw) {
-        //         state.plans[params.planIndex].procedures[params.itemIndex].showInJaw = false;
-        //     } else {
-        //         state.plans[params.planIndex].procedures[params.itemIndex].showInJaw = true;
-        //     }
-        // } else if (state[params.type][params.itemIndex].showInJaw) {
-        //     state[params.type][params.itemIndex].showInJaw = false;
-        // } else {
-        //     state[params.type][params.itemIndex].showInJaw = true;
-        // }
-    },
+    // [PATIENT_ITEM_VISIBILITY_TOGGLE]: (state, { params }) => {
+    // if (params.planIndex >= 0 && params.type === 'procedures') {
+    //     if (state.plans[params.planIndex].procedures[params.itemIndex].showInJaw) {
+    //         state.plans[params.planIndex].procedures[params.itemIndex].showInJaw = false;
+    //     } else {
+    //         state.plans[params.planIndex].procedures[params.itemIndex].showInJaw = true;
+    //     }
+    // } else if (state[params.type][params.itemIndex].showInJaw) {
+    //     state[params.type][params.itemIndex].showInJaw = false;
+    // } else {
+    //     state[params.type][params.itemIndex].showInJaw = true;
+    // }
+    // },
     [PATIENT_SUB_PARAMS_SET]: (state, {
         paramName,
         paramIndex,
         subParamName,
-        subParamIndexArray,
-        subParamsValue,
+        subParamValue,
     }) => {
         if (!state[paramName][paramIndex]) {
-            Vue.set(state[paramName], paramIndex, []);
+            Vue.set(state[paramName], paramIndex, {});
         }
-        Vue.set(state[paramName][paramIndex], subParamName, subParamIndexArray);
+        Vue.set(state[paramName][paramIndex], subParamName, subParamValue);
     },
     [PATIENT_PARAM_REWRITE]: (state, {
         paramName,
@@ -48,7 +48,7 @@ export default {
         paramValue,
     }) => {
         if (!state[paramName]) {
-            Vue.set(state, paramName, []);
+            Vue.set(state, paramName, {});
         }
         Vue.set(state[paramName], paramIndex, paramValue);
     },

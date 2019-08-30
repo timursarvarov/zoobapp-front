@@ -166,87 +166,87 @@
 </template>
 <script>
 /* eslint-disable func-names */
-    import { SlideYDownTransition } from 'vue2-transitions';
+import { SlideYDownTransition } from 'vue2-transitions';
 
 
-    export default {
-        name: 't-add-billing-item',
-        components: {
-            'animated-number': () => import('@/components/AnimatedNumber'),
-            // TAutoComplite,
-            SlideYDownTransition,
+export default {
+  name: 't-add-billing-item',
+  components: {
+    'animated-number': () => import('@/components/AnimatedNumber'),
+    // TAutoComplite,
+    SlideYDownTransition,
+  },
+  props: {
+    invoice: {
+      type: Object,
+      default: () => {},
+    },
+    currencyCode: {
+      type: String,
+      default: () => '',
+    },
+  },
+  data() {
+    return {
+      disabledDates: date => date < this.currentDate,
+      modelValidations: {
+        paymentAmmount: {
+          min: 0,
         },
-        props: {
-            invoice: {
-                type: Object,
-                default: () => {},
-            },
-            currencyCode: {
-                type: String,
-                default: () => '',
-            },
-        },
-        data() {
-            return {
-                disabledDates: date => date < this.currentDate,
-                modelValidations: {
-                    paymentAmmount: {
-                        min: 0,
-                    },
-                },
-                payment: {
-                    ammount: null,
-                    type: null,
-                    created: null,
-                },
-                paymentAmmount: null,
-                touched: {
-                    paymentAmmount: false,
-                },
-            };
-        },
-        methods: {
-            calculateManipulations(m = []) {
-                let sum = 0;
-                m.forEach((manip) => {
-                    sum += manip.price * manip.num;
-                });
-                return sum;
-            },
-            focusOn(ref) {
-                if (!this.$refs[ref]) {
-                    return;
-                }
-                this.$refs[ref].$el.focus();
-            },
-            validate() {
-                this.touched.paymentAmmount = true;
-                return this.$validator.validateAll().then((res) => {
-                    this.$emit('on-validated', res, 'step2');
-                    this.$emit('validated-code', this.code);
-                    this.$emit('onCreatePayment', this.invoice);
-                    return res;
-                });
-            },
-            setProcedureToAdd(procedure) {
-                this.procedureToAdd = procedure;
-            },
-            addPayment() {
-                this.$emit('onProcedureAdd', this.procedureToAdd);
-            },
-        },
-        computed: {
-
-        },
-        created() {
-            this.payment.ammount = this.invoice.total;
-        },
-        watch: {
-            'invoice.total': function (val) {
-                this.payment.ammount = val;
-            },
-        },
+      },
+      payment: {
+        ammount: null,
+        type: null,
+        created: null,
+      },
+      paymentAmmount: null,
+      touched: {
+        paymentAmmount: false,
+      },
     };
+  },
+  methods: {
+    calculateManipulations(m = []) {
+      let sum = 0;
+      m.forEach((manip) => {
+        sum += manip.price * manip.num;
+      });
+      return sum;
+    },
+    focusOn(ref) {
+      if (!this.$refs[ref]) {
+        return;
+      }
+      this.$refs[ref].$el.focus();
+    },
+    validate() {
+      this.touched.paymentAmmount = true;
+      return this.$validator.validateAll().then((res) => {
+        this.$emit('on-validated', res, 'step2');
+        this.$emit('validated-code', this.code);
+        this.$emit('onCreatePayment', this.invoice);
+        return res;
+      });
+    },
+    setProcedureToAdd(procedure) {
+      this.procedureToAdd = procedure;
+    },
+    addPayment() {
+      this.$emit('onProcedureAdd', this.procedureToAdd);
+    },
+  },
+  computed: {
+
+  },
+  created() {
+    this.payment.ammount = this.invoice.total;
+  },
+  watch: {
+    'invoice.total': function (val) {
+      this.payment.ammount = val;
+    },
+  },
+};
 </script>
 
 <style lang="scss">

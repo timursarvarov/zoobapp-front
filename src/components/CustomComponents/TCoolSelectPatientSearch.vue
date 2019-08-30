@@ -1,34 +1,36 @@
 <template>
     <cool-select
+        v-model="searchTerm"
         class="patient-select with-action md-field"
         :class="[
-        {'md-focused': coolSelectFocus || searchTerm},
-        {'no-after-no-before': searching}
+            {'md-focused': coolSelectFocus || searchTerm},
+            {'no-after-no-before': searching}
         ]"
         style="width:300px;"
-        @focus="coolSelectFocus = true"
-        @blur="coolSelectFocus = false"
         tabindex="0"
-        v-model="searchTerm"
-        :searchText.sync="searchText"
+        :search-text.sync="searchText"
         :items="patients"
         :loading="searching"
         item-text="firstName"
         disable-filtering-by-search
-        loadingIndicator="spinner"
-        :arrowsDisableInstantSelection="true"
-        :disableFirstItemSelectOnEnter="true"
-        @select="getPatient"
+        loading-indicator="spinner"
+        :arrows-disable-instant-selection="true"
+        :disable-first-item-select-on-enter="true"
+        @focus="coolSelectFocus = true"
+        @blur="coolSelectFocus = false"
+        @select="goToPatient"
         @search="getPatients"
     >
         <template slot="input-end">
             <md-button
-                @click=" searchTerm=null"
-                tabindex="-1"
                 v-show="searchTerm"
+                tabindex="-1"
                 class="md-button md-icon-button md-dense md-input-action noselect md-simple"
+                @click=" searchTerm=null"
             >
-                <md-icon class="success">close</md-icon>
+                <md-icon class="success">
+                    close
+                </md-icon>
             </md-button>
         </template>
         <template slot="input-start">
@@ -40,7 +42,7 @@
                 class="underline-progress-bar"
                 :md-stroke="2"
                 md-mode="indeterminate"
-            ></md-progress-bar>
+            />
         </template>
         <template slot="no-data">
             <div v-if="!serverError && ( searchText.length<3)">
@@ -48,7 +50,9 @@
                     <div>
                         <md-subheader
                             class="text-center"
-                        >Type at least 3 letters to search by phone, email or name</md-subheader>
+                        >
+                            Type at least 3 letters to search by phone, email or name
+                        </md-subheader>
                     </div>
                 </div>
             </div>
@@ -66,18 +70,31 @@
                         <md-button
                             class="md-success md-sm"
                             @click="showPatientAddForm()"
-                        >Create patient</md-button>
+                        >
+                            Create patient
+                        </md-button>
                     </div>
                 </div>
             </div>
 
             <div v-else-if="serverError">
-                <md-subheader class="text-center">Connection problems</md-subheader>
+                <md-subheader class="text-center">
+                    Connection problems
+                </md-subheader>
 
-                <md-button class="md-success md-layout-item md-sm" @click="getPatients()">Retry</md-button>
+                <md-button
+                    class="md-success md-layout-item md-sm"
+                    @click="getPatients()"
+                >
+                    Retry
+                </md-button>
             </div>
         </template>
-        <template v-if="item" slot="item" slot-scope="{ item }">
+        <template
+            v-if="item"
+            slot="item"
+            slot-scope="{ item }"
+        >
             <div style="display: flex;">
                 <md-button
                     class="IZ-select-button btn-avatar md-button"
@@ -85,15 +102,15 @@
                 >
                     <t-avatar
                         class="search-avatar"
-                        :textToColor="item.ID"
-                        :imageSrc="item.avatar"
+                        :text-to-color="item.ID"
+                        :image-src="item.avatar"
                         :title="item.firstName + ' ' + item.lastName"
                         :notification="item.allergy && item.allergy.length ? 'A' : ''"
                     />
                     <div class="md-serched-list-item-text text-left">
                         <span>
-                            {{ item.firstName | capitilize}} {{ item.lastName | capitilize }}
-                            <br />
+                            {{ item.firstName | capitilize }} {{ item.lastName | capitilize }}
+                            <br>
                         </span>
                         <span v-if="item.phone">{{ "+" + item.phone }}</span>
                     </div>
@@ -116,13 +133,19 @@
                 </md-button> -->
             </div>
         </template>
-        <template v-if="patients ? patients.length >1 : false" slot="after-items">
+        <template
+            v-if="patients ? patients.length >1 : false"
+            slot="after-items"
+        >
             <div style="display: flex;">
-                <div style="flex-grow:1" class="md-layout-item">
+                <div
+                    style="flex-grow:1"
+                    class="md-layout-item"
+                >
                     <infinite-loading
-                        @infinite="infiniteHandler"
-                        :identifier="infiniteId"
                         :key="patients ? patients.length: 0"
+                        :identifier="infiniteId"
+                        @infinite="infiniteHandler"
                     >
                         <div slot="spinner">
                             <md-progress-spinner
@@ -132,17 +155,29 @@
                             />
                         </div>
                         <div slot="no-results">
-                            <div class="md-title text-center">No more patients</div>
+                            <div class="md-title text-center">
+                                No more patients
+                            </div>
                         </div>
-                        <div slot="error" slot-scope="{ trigger }">
+                        <div
+                            slot="error"
+                            slot-scope="{ trigger }"
+                        >
                             <div class="md-layout">
-                                <div class="md-layout-item" style="padding: 15px 0;">
-                                    <md-subheader class="text-center">Oops! Connection problems</md-subheader>
+                                <div
+                                    class="md-layout-item"
+                                    style="padding: 15px 0;"
+                                >
+                                    <md-subheader class="text-center">
+                                        Oops! Connection problems
+                                    </md-subheader>
                                     <div class="md-layout-item md-size-100">
                                         <md-button
                                             class="md-primary md-layout-item mx-auto md-sm"
                                             @click="trigger"
-                                        >Retry</md-button>
+                                        >
+                                            Retry
+                                        </md-button>
                                     </div>
                                 </div>
                             </div>
@@ -151,10 +186,18 @@
                 </div>
             </div>
         </template>
-        <template v-if="totalPatients" slot="after-items-fixed">
+        <template
+            v-if="totalPatients"
+            slot="after-items-fixed"
+        >
             <div style="display: flex;">
-                <div style="flex-grow:1" class="md-layout-item">
-                    <md-subheader class="text-center">Total found: {{totalPatients}} patients</md-subheader>
+                <div
+                    style="flex-grow:1"
+                    class="md-layout-item"
+                >
+                    <md-subheader class="text-center">
+                        Total found: {{ totalPatients }} patients
+                    </md-subheader>
                 </div>
             </div>
         </template>
@@ -208,7 +251,7 @@ export default {
                     name: 'Bio',
                     params: {
                         lang: this.$i18n.locale,
-                        patientId: patient.ID,
+                        patientID: patient.ID,
                     },
                 });
                  this.$store.dispatch(NOTIFY, {
@@ -219,28 +262,6 @@ export default {
                     });
             }
         },
-        getPatient(patient) {
-                if ( patient.ID !== null){
-                    if ( patient.ID !== this.patient.ID){
-                            this.searching = false;
-                            this.$store
-                                .dispatch(PATIENT_GET, {
-                                    patientId: this.$route.params.patientId,
-                                })
-                                .then((patient) => {
-                                    if (patient) {
-                                        this.goToPatient(patient)
-                                    }
-                                }).catch((err)=>{
-                                    console.log(err)
-                                }).then(()=>{
-                                    this.searching = false;
-                                });
-                    } else{
-                        this.goToPatient(patient)
-                    }
-                }
-            },
         infiniteHandler($state) {
             this.page += 1;
             this.$store
@@ -267,7 +288,7 @@ export default {
                     }
                 })
                 .catch(err => {
-                    console.log(err);
+                    throw new Error(err);;
                     $state.error();
                 })
                 .then(() => {
@@ -317,7 +338,7 @@ export default {
                                 })
                                 .catch(err => {
                                     vm.serverError = true;
-                                    console.log(err);
+                                    throw new Error(err);;
                                 })
                                 .then(() => {
                                     vm.searching = false;

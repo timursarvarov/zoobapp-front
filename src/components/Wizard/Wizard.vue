@@ -1,83 +1,112 @@
 /* eslint-disable */
 <template>
-  <div class="wizard-container">
-    <form @submit.prevent>
-      <!--        You can switch " data-color="primary" "
+    <div class="wizard-container">
+        <form @submit.prevent>
+            <!--        You can switch " data-color="primary" "
       with one of the next bright colors: "green", "orange", "red", "blue"       -->
-      <md-card class="md-card-wizard active" :data-color="tabColor">
-        <md-card-header>
-          <slot name="header">
-            <h3 class="card-title">{{title}}</h3>
-            <h3 class="description">{{subTitle}}</h3>
-          </slot>
-        </md-card-header>
-        <div class="wizard-navigation">
-          <ul class="nav nav-pills" role="tablist">
-            <li v-for="(tab, index) in tabs"
-                :key="tab.title"
-                role="tab"
-                :tabindex="tab.checked ? 0 : ''"
-                :id="`step-${tab.tabId}`"
-                :aria-controls="tab.tabId"
-                :aria-disabled="tab.active"
-                :aria-selected="tab.active"
-                :ref="`tab-${index}`"
-                class="nav-item wizard-tab-link"
-                :style="linkWidth">
-              <a class="nav-link"
-              @click="navigateToTab(index)"
-              :class="[{'disabled-wizard-link': !tab.checked},
-              {active: tab.active}, {checked: tab.checked}]"
-              data-toggle="tab">
-                <tab-item-content :tab="tab"></tab-item-content>
-              </a>
-            </li>
-          </ul>
-          <div class="moving-tab"
-               :class="{'error-link': activeTab.hasError}"
-               v-if="activeTab"
-               style="transition: transform 0.5s cubic-bezier(0.29, 1.42, 0.79, 1); width: 100%;"
-               :style="movingTabStyles">
-            <tab-item-content :tab="activeTab" :moving-tab="true"></tab-item-content>
-          </div>
-        </div>
+            <md-card
+                class="md-card-wizard active"
+                :data-color="tabColor"
+            >
+                <md-card-header>
+                    <slot name="header">
+                        <h3 class="card-title">
+                            {{ title }}
+                        </h3>
+                        <h3 class="description">
+                            {{ subTitle }}
+                        </h3>
+                    </slot>
+                </md-card-header>
+                <div class="wizard-navigation">
+                    <ul
+                        class="nav nav-pills"
+                        role="tablist"
+                    >
+                        <li
+                            v-for="(tab, index) in tabs"
+                            :id="`step-${tab.tabId}`"
+                            :key="tab.title"
+                            :ref="`tab-${index}`"
+                            role="tab"
+                            :tabindex="tab.checked ? 0 : ''"
+                            :aria-controls="tab.tabId"
+                            :aria-disabled="tab.active"
+                            :aria-selected="tab.active"
+                            class="nav-item wizard-tab-link"
+                            :style="linkWidth"
+                        >
+                            <a
+                                class="nav-link"
+                                :class="[{'disabled-wizard-link': !tab.checked},
+                                         {active: tab.active}, {checked: tab.checked}]"
+                                data-toggle="tab"
+                                @click="navigateToTab(index)"
+                            >
+                                <tab-item-content :tab="tab" />
+                            </a>
+                        </li>
+                    </ul>
+                    <div
+                        v-if="activeTab"
+                        class="moving-tab"
+                        :class="{'error-link': activeTab.hasError}"
+                        style="transition: transform 0.5s cubic-bezier(0.29, 1.42, 0.79, 1); width: 100%;"
+                        :style="movingTabStyles"
+                    >
+                        <tab-item-content
+                            :tab="activeTab"
+                            :moving-tab="true"
+                        />
+                    </div>
+                </div>
 
-        <md-card-content>
-          <div class="tab-content">
-            <slot :activeIndex="activeTabIndex"
-                  :activeTab="activeTab">
-            </slot>
-          </div>
-        </md-card-content>
+                <md-card-content>
+                    <div class="tab-content">
+                        <slot
+                            :activeIndex="activeTabIndex"
+                            :activeTab="activeTab"
+                        />
+                    </div>
+                </md-card-content>
 
-        <md-card-actions md-alignment="space-between">
-          <slot name="footer"
-                :next-tab="nextTab"
-                :prev-tab="prevTab">
-            <div>
-              <md-button v-if="activeTabIndex > 0"
-                        @click.native="prevTab"
-                        class="btn-previous">
-                {{prevButtonText}}
-              </md-button>
-            </div>
+                <md-card-actions md-alignment="space-between">
+                    <slot
+                        name="footer"
+                        :next-tab="nextTab"
+                        :prev-tab="prevTab"
+                    >
+                        <div>
+                            <md-button
+                                v-if="activeTabIndex > 0"
+                                class="btn-previous"
+                                @click.native="prevTab"
+                            >
+                                {{ prevButtonText }}
+                            </md-button>
+                        </div>
 
-            <div>
-              <md-button v-if="activeTabIndex < tabCount -1"
-                        @click.native="nextTab"
-                        class="btn-next md-success">
-                {{nextButtonText}}
-              </md-button>
-              <md-button
-                v-else
-                class="md-success"
-                @click.native="nextTab">{{finishButtonText}}</md-button>
-            </div>
-          </slot>
-        </md-card-actions>
-      </md-card>
-    </form>
-  </div>
+                        <div>
+                            <md-button
+                                v-if="activeTabIndex < tabCount -1"
+                                class="btn-next md-success"
+                                @click.native="nextTab"
+                            >
+                                {{ nextButtonText }}
+                            </md-button>
+                            <md-button
+                                v-else
+                                class="md-success"
+                                @click.native="nextTab"
+                            >
+                                {{ finishButtonText }}
+                            </md-button>
+                        </div>
+                    </slot>
+                </md-card-actions>
+            </md-card>
+        </form>
+    </div>
 </template>
 <script>
 /* eslint-disable */

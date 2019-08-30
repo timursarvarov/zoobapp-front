@@ -1,7 +1,16 @@
 import { LOCATIONS } from '@/constants';
 
-export default function filterItems(items = [], filterAvailable) {
+export default function filterItems(items = [], NoNeedGroupilized, filterAvailable) {
     let filteredItems = [];
+    if (NoNeedGroupilized) {
+        items.forEach(item => {
+            filteredItems[item.ID] = {
+                ...LOCATIONS[item.templateID],
+                ...item,
+            };
+        })
+        return filteredItems
+    }
     items.forEach((item) => {
         let groupIndex = filteredItems.findIndex(
             el => el.code === item.categoryCode,
@@ -12,15 +21,15 @@ export default function filterItems(items = [], filterAvailable) {
                 title: item.title,
                 codes: [],
             }) - 1;
-        }else{
+        } else {
             // if (item.available && !filterAvailable) {
-                filteredItems[groupIndex].codes.push({
-                    ...LOCATIONS[item.templateID],
-                    ...item,
-                });
+            filteredItems[groupIndex].codes.push({
+                ...LOCATIONS[item.templateID],
+                ...item,
+            });
             // }
         }
     });
     filteredItems = filteredItems.filter(el => el.codes.length !== 0);
     return filteredItems;
-};
+}

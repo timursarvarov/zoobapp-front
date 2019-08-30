@@ -49,150 +49,150 @@
   </div>
 </template>
 <script>
-    import { mapGetters } from 'vuex';
-    import { SlideYDownTransition } from 'vue2-transitions';
-    
-    import { tObjProp } from '@/mixins';
+import { mapGetters } from 'vuex';
+import { SlideYDownTransition } from 'vue2-transitions';
 
-    export default {
-        name: 't-item-tooth-locations',
-        mixins: [tObjProp],
-        components: {
-            SlideYDownTransition,
-            'jaw-add-locations': () => import('@/components/CustomComponents/Jaw/JawAddLocations'),
+import { tObjProp } from '@/mixins';
+
+export default {
+  name: 't-item-tooth-locations',
+  mixins: [tObjProp],
+  components: {
+    SlideYDownTransition,
+    'jaw-add-locations': () => import('@/components/CustomComponents/Jaw/JawAddLocations'),
+  },
+  model: {
+    prop: 'newDiagnoseParams',
+    event: 'updateDiagonoseParams',
+  },
+  props: {
+    error: {
+      type: Object,
+      default: () => ({
+        message: 'Choose tooth or disease location',
+        type: 'locations',
+        show: 'false',
+      }),
+    },
+    jaw: {
+      type: Object,
+      default: () => {},
+    },
+    defaultLocations: {
+      type: Object,
+      default: () => {},
+    },
+    locationType: {
+      type: String,
+      default: () => 'diagnosis',
+    },
+    // локации оригинального диагноза для проверки валидации
+    originalLocations: {
+      type: Object,
+      default: () => {},
+    },
+    prefer: {
+      type: String,
+      default: () => 'diagnose',
+    },
+    selectedItem: {
+      type: Object,
+      default: () => ({
+        title: '',
+        code: '',
+      }),
+    },
+    selectedTeeth: {
+      type: Array,
+      default: () => [],
+    },
+    newDiagnoseParams: {
+      type: Object,
+      default: () => {},
+    },
+    teethSchema: {
+      type: Object,
+      default: () => {},
+    },
+    teethSystem: {
+      type: Number,
+      default: () => 1,
+      // 1 = FDI World Dental Federation notation
+      // 2 = Universal numbering system
+      // 3 = Palmer notation method
+    },
+  },
+  data() {
+    return {
+      diagnoseLocal: {},
+      modelValidations: {
+        locations: {
+          required: true,
         },
-        model: {
-            prop: 'newDiagnoseParams',
-            event: 'updateDiagonoseParams',
-        },
-        props: {
-            error: {
-                type: Object,
-                default: () => ({
-                    message: 'Choose tooth or disease location',
-                    type: 'locations',
-                    show: 'false',
-                }),
-            },
-            jaw: {
-                type: Object,
-                default: () => {},
-            },
-            defaultLocations: {
-                type: Object,
-                default: () => {},
-            },
-            locationType: {
-                type: String,
-                default: () => 'diagnosis',
-            },
-            // локации оригинального диагноза для проверки валидации
-            originalLocations: {
-                type: Object,
-                default: () => {},
-            },
-            prefer: {
-                type: String,
-                default: () => 'diagnose',
-            },
-            selectedItem: {
-                type: Object,
-                default: () => ({
-                    title: '',
-                    code: '',
-                }),
-            },
-            selectedTeeth: {
-                type: Array,
-                default: () => [],
-            },
-            newDiagnoseParams: {
-                type: Object,
-                default: () => {},
-            },
-            teethSchema: {
-                type: Object,
-                default: () => {},
-            },
-            teethSystem: {
-                type: Number,
-                default: () => 1,
-                // 1 = FDI World Dental Federation notation
-                // 2 = Universal numbering system
-                // 3 = Palmer notation method
-            },
-        },
-        data() {
-            return {
-                diagnoseLocal: {},
-                modelValidations: {
-                    locations: {
-                        required: true,
-                    },
-                },
-                dialogWidth: '',
-                locations: '',
-                touched: {
-                    locations: false,
-                },
-            };
-        },
-        methods: {
-            matchWidth() {
-                if (this.$refs.parent) {
-                    this.dialogWidth = this.$refs.parent.clientWidth;
-                    const size = {
-                        width: this.$refs.parent.clientWidth,
-                        height: this.$refs.parent.clientHeight,
-                    };
-                    this.$emit('mounted-size', size);
-                }
-            },
-            validate() {
-                return this.$validator.validateAll().then((res) => {
-                    this.$emit('on-validated', res);
-                    this.matchWidth();
-                    return res;
-                });
-            },
-            isValidLoctions() {
-                if (this.originalLocations === undefined) {
-                    return true;
-                }
-                if (this.isEmpty(this.originalLocations)) {
-                    return true;
-                }
-                return !this.isEmpty(this.diagnoseLocal.teeth);
-            },
-        },
-        computed: {
-            ...mapGetters({
-                diagnosis: 'getDiagnosis',
-                anamnesis: 'getProcedures',
-                procedures: 'getProcedures',
-            }),
-            originalItemsGrouped() {
-                return this[this.locationType];
-            },
-            newDiagnoseParamsLocal: {
-                get() {
-                    return this.newDiagnoseParams;
-                },
-                set(newValue) {
-                    this.$emit('updateDiagonoseParams', newValue);
-                    this.diagnoseLocal = {};
-                    this.diagnoseLocal = newValue;
-                    this.locations = this.isValidLoctions() ? 1 : '';
-                },
-            },
-        },
-        created() {
-            this.locations = this.isValidLoctions() ? 1 : '';
-        },
-        watch: {
-            locations() {
-                this.touched.locations = true;
-            },
-        },
+      },
+      dialogWidth: '',
+      locations: '',
+      touched: {
+        locations: false,
+      },
     };
+  },
+  methods: {
+    matchWidth() {
+      if (this.$refs.parent) {
+        this.dialogWidth = this.$refs.parent.clientWidth;
+        const size = {
+          width: this.$refs.parent.clientWidth,
+          height: this.$refs.parent.clientHeight,
+        };
+        this.$emit('mounted-size', size);
+      }
+    },
+    validate() {
+      return this.$validator.validateAll().then((res) => {
+        this.$emit('on-validated', res);
+        this.matchWidth();
+        return res;
+      });
+    },
+    isValidLoctions() {
+      if (this.originalLocations === undefined) {
+        return true;
+      }
+      if (this.isEmpty(this.originalLocations)) {
+        return true;
+      }
+      return !this.isEmpty(this.diagnoseLocal.teeth);
+    },
+  },
+  computed: {
+    ...mapGetters({
+      diagnosis: 'getDiagnosis',
+      anamnesis: 'getProcedures',
+      procedures: 'getProcedures',
+    }),
+    originalItemsGrouped() {
+      return this[this.locationType];
+    },
+    newDiagnoseParamsLocal: {
+      get() {
+        return this.newDiagnoseParams;
+      },
+      set(newValue) {
+        this.$emit('updateDiagonoseParams', newValue);
+        this.diagnoseLocal = {};
+        this.diagnoseLocal = newValue;
+        this.locations = this.isValidLoctions() ? 1 : '';
+      },
+    },
+  },
+  created() {
+    this.locations = this.isValidLoctions() ? 1 : '';
+  },
+  watch: {
+    locations() {
+      this.touched.locations = true;
+    },
+  },
+};
 </script>

@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import axios from 'axios';
 import filterItems from '@/plugins/items-groupelizer';
 import {
@@ -10,7 +11,7 @@ import {
     CLINIC_MANIPULATIONS_GET,
     CLINIC_AUTH_REQUEST,
     AUTH_DECODE_TOKEN,
-    AUTH_SUCCESS,
+    // AUTH_SUCCESS,
     AUTH_REFRESH_TOKEN,
     USER_REQUEST,
     PATIENT_UNSET,
@@ -82,7 +83,6 @@ export default {
                             commit(CLINIC_SET_PROP, { propName: 'isRefreshing', propValue: false });
                             reject(resp.data.error);
                         }
-                        console.log('refresh state ', resp);
                         axios.defaults.headers.common.Authorization = `Bearer ${resp.data.result.accessToken}`;
                         localStorage.setItem('accessToken', resp.data.result.accessToken);
                         localStorage.setItem('expiresAt', resp.data.result.expiresAt);
@@ -95,7 +95,7 @@ export default {
                     })
                     .catch((err) => {
                         if (err) {
-                            console.log(err);
+                            reject(err);
                             reject(err);
                         }
                         commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
@@ -136,7 +136,7 @@ export default {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
-                }, )
+                })
             .then((resp) => {
                 commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'success' });
                 dispatch(AUTH_REFRESH_TOKEN);
@@ -162,8 +162,9 @@ export default {
                     commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
                     reject(resp.data.error);
                 }
-                const gropalizedItems = filterItems(resp.data.result);
-                commit(CLINIC_SET_PROP, { propName: 'diagnosis', propValue: gropalizedItems });
+                commit(CLINIC_SET_PROP, { propName: 'diagnosis', propValue: filterItems(resp.data.result) });
+                commit(CLINIC_SET_PROP, { propName: 'ungroupeddiagnosis', propValue: resp.data.result });
+                commit(CLINIC_SET_PROP, { propName: 'ungroupeddiagnosis', propValue: filterItems(resp.data.result, 'NoNeedGroupilized') });
                 commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'success' });
                 resolve(resp.data.result);
             })
@@ -174,8 +175,10 @@ export default {
     }),
     [CLINIC_PROCEDURES_GET]: ({
         commit,
+        dispatch,
     }) => new Promise((resolve, reject) => {
         commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'loading' });
+        dispatch(CLINIC_MANIPULATIONS_GET);
         axios.post('/',
                 JSON.stringify({
                     jsonrpc: '2.0',
@@ -189,6 +192,10 @@ export default {
                 }
                 // const gropalizedItems = filterItems(resp.data.result);
                 commit(CLINIC_SET_PROP, { propName: 'procedures', propValue: filterItems(resp.data.result) });
+                commit(CLINIC_SET_PROP, { propName: 'ungroupedprocedures', propValue: filterItems(resp.data.result, 'NoNeedGroupilized') });
+                commit(CLINIC_SET_PROP, { propName: 'ungroupedanamnesis', propValue: filterItems(resp.data.result, 'NoNeedGroupilized') });
+                commit(CLINIC_SET_PROP, { propName: 'ungroupedanamnesis', propValue: resp.data.result });
+                commit(CLINIC_SET_PROP, { propName: 'anamnesis', propValue: filterItems(resp.data.result) });
                 commit(CLINIC_SET_PROP, { propName: 'anamnesis', propValue: filterItems(resp.data.result) });
                 commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'success' });
                 resolve(resp.data.result);

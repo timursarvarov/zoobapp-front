@@ -1,42 +1,62 @@
 <template>
     <div class="md-layout history-notes-wrapper">
         <div class="md-layout-item md-size-100">
-            <time-line plain :type="simpleTimeline">
+            <time-line
+                plain
+                :type="simpleTimeline"
+            >
                 <time-line-item
                     :class="{'timeline-inverted': responsive}"
                     badge-type="info"
                     badge-icon="edit"
                 >
-                    <t-badge slot="header" type="info">Create a note</t-badge>
+                    <t-badge
+                        slot="header"
+                        type="info"
+                    >
+                        Create a note
+                    </t-badge>
 
                     <div slot="content">
                         <md-field
                             :class="[
-              {'md-valid': !errors.has('noteText') && touched.noteText},
-              {'md-error': errors.has('noteText')}]"
+                                {'md-valid': !errors.has('noteText') && touched.noteText},
+                                {'md-error': errors.has('noteText')}]"
                         >
                             <label>Write a cool note</label>
                             <md-textarea
+                                v-model="noteText"
+                                v-validate="modelValidations.noteText"
                                 class="md-info"
                                 data-vv-name="noteText"
                                 required
-                                v-model="noteText"
-                                v-validate="modelValidations.noteText"
-                            ></md-textarea>
-                            <span class="md-error">{{errors.first('noteText')}}</span>
+                            />
+                            <span class="md-error">{{ errors.first('noteText') }}</span>
                             <slide-y-down-transition>
-                                <md-icon class="error" v-show="errors.has('noteText')">close</md-icon>
+                                <md-icon
+                                    v-show="errors.has('noteText')"
+                                    class="error"
+                                >
+                                    close
+                                </md-icon>
                             </slide-y-down-transition>
                             <slide-y-down-transition>
                                 <md-icon
-                                    class="success"
                                     v-show="!errors.has('noteText') && touched.noteText"
-                                >done</md-icon>
+                                    class="success"
+                                >
+                                    done
+                                </md-icon>
                             </slide-y-down-transition>
                         </md-field>
                     </div>
                     <div slot="footer">
-                        <md-button @click="createNote()" class="md-info">Add note</md-button>
+                        <md-button
+                            class="md-info"
+                            @click="createNote()"
+                        >
+                            Add note
+                        </md-button>
                     </div>
                 </time-line-item>
                 <time-line-item
@@ -45,26 +65,31 @@
                     :inverted="note.author.ID !== user.ID"
                     badge-type="danger"
                     badge-icon="card_travel"
-                    :badgeAvatar="{
-            // TODO поменять на цвет автора после добавления в api
-            color: user.color,
-            acronim: (note.author.firstName ? note.author.firstName[0]:'')
-            + (note.author.lastName ? note.author.lastName[0]:''),
-            img:note.author.avatar,}"
+                    :badge-avatar="{
+                        // TODO поменять на цвет автора после добавления в api
+                        color: user.color,
+                        acronim: (note.author.firstName ? note.author.firstName[0]:'')
+                            + (note.author.lastName ? note.author.lastName[0]:''),
+                        img:note.author.avatar,}"
                 >
                     <t-badge
                         slot="header"
                         type="danger"
-                        :textToColor="user.ID"
-                    >{{note.author.firstName + ' ' + note.author.lastName}}</t-badge>
+                        :text-to-color="user.ID"
+                    >
+                        {{ note.author.firstName + ' ' + note.author.lastName }}
+                    </t-badge>
                     <div slot="content">
-                        <div v-if="note.author.ID !== user.ID" slot="content">
-                            {{note.note}}
-                            <hr />
+                        <div
+                            v-if="note.author.ID !== user.ID"
+                            slot="content"
+                        >
+                            {{ note.note }}
+                            <hr>
                         </div>
                         <div v-else>
                             <p slot="content">
-                                {{note.note}}
+                                {{ note.note }}
                             </p>
                             <!-- <md-field>
                                 <label>Textarea</label>
@@ -73,7 +98,7 @@
                         </div>
                         <h6 class="md-layout-item">
                             <md-icon>access_time</md-icon>
-                            {{note.created | moment("from", "now")}}
+                            {{ note.created | moment("from", "now") }}
                         </h6>
                     </div>
 
@@ -91,8 +116,17 @@
                         </div>
                     </div> -->
                 </time-line-item>
-                <time-line-item inverted badge-type="danger" badge-icon="card_travel">
-                    <t-badge slot="header" type="danger">Another Title</t-badge>
+                <time-line-item
+                    inverted
+                    badge-type="danger"
+                    badge-icon="card_travel"
+                >
+                    <t-badge
+                        slot="header"
+                        type="danger"
+                    >
+                        Another Title
+                    </t-badge>
                     <p slot="content">
                         Wifey made the best Father's Day meal ever.
                         So thankful so happy so blessed. Thank you for making my family
@@ -107,8 +141,17 @@
                     </h6>
                 </time-line-item>
 
-                <time-line-item inverted badge-type="info" badge-icon="fingerprint">
-                    <t-badge slot="header" type="info">Another Title</t-badge>
+                <time-line-item
+                    inverted
+                    badge-type="info"
+                    badge-icon="fingerprint"
+                >
+                    <t-badge
+                        slot="header"
+                        type="info"
+                    >
+                        Another Title
+                    </t-badge>
                     <div slot="content">
                         <p>
                             Called I Miss the Old Kanye That’s all it was
@@ -121,7 +164,7 @@
                             favorite piece of furniture we own It wasn’t
                             any Kanyes Set on his goals Kanye
                         </p>
-                        <hr />
+                        <hr>
                         <drop-down direction="down">
                             <md-button
                                 slot="title"
@@ -130,7 +173,10 @@
                             >
                                 <md-icon>build</md-icon>
                             </md-button>
-                            <ul class="dropdown-menu" :class="{'dropdown-menu-right': !responsive}">
+                            <ul
+                                class="dropdown-menu"
+                                :class="{'dropdown-menu-right': !responsive}"
+                            >
                                 <li>
                                     <a href="#">Mike John responded to your email</a>
                                 </li>
@@ -156,7 +202,12 @@
                     badge-type="warning"
                     badge-icon="flight_land"
                 >
-                    <t-badge slot="header" type="warning">Another Title</t-badge>
+                    <t-badge
+                        slot="header"
+                        type="warning"
+                    >
+                        Another Title
+                    </t-badge>
                     <p slot="content">
                         Tune into Big Boy's 92.3 I'm about
                         to play the first single from Cruel Winter Tune into Big Boy's 92.3 I'm
@@ -172,99 +223,99 @@
     </div>
 </template>
 <script>
-    import { mapGetters } from 'vuex';
-    import { SlideYDownTransition } from 'vue2-transitions';
-    import components from '@/components';
-    import { PATIENT_NOTE_CREATE, NOTIFY } from '@/constants';
+import { mapGetters } from 'vuex';
+import { SlideYDownTransition } from 'vue2-transitions';
+import components from '@/components';
+import { PATIENT_NOTE_CREATE, NOTIFY } from '@/constants';
 
-    export default {
-        name: 'note',
-        components: {
-            SlideYDownTransition,
-            ...components,
-        },
-        data() {
-            return {
-                noteText: null,
-                responsive: false,
-                touched: {
-                    noteText: false,
+export default {
+    name: 'Note',
+    components: {
+        SlideYDownTransition,
+        ...components,
+    },
+    data() {
+        return {
+            noteText: null,
+            responsive: false,
+            touched: {
+                noteText: false,
+            },
+            modelValidations: {
+                noteText: {
+                    required: true,
+                    min: 10,
                 },
-                modelValidations: {
-                    noteText: {
-                        required: true,
-                        min: 10,
-                    },
-                },
-            };
+            },
+        };
+    },
+    computed: {
+        ...mapGetters({
+            patient: 'getPatient',
+            user: 'getProfile',
+        }),
+        simpleTimeline() {
+            if (this.responsive) {
+                return 'simple';
+            }
+            return '';
         },
-        computed: {
-            ...mapGetters({
-                patient: 'getPatient',
-                user: 'getProfile',
-            }),
-            simpleTimeline() {
-                if (this.responsive) {
-                    return 'simple';
-                }
-                return '';
-            },
-            noteTextL() {
-                return this.noteText;
-            },
+        noteTextL() {
+            return this.noteText;
         },
-        methods: {
-            validate() {
-                this.$validator.validateAll().then((isValid) => {
-                    this.$emit('on-submit', this.registerForm, isValid);
-                });
-                this.touched.noteText = true;
-            },
-            onResponsiveInverted() {
-                if (window.innerWidth < 768) {
-                    this.responsive = true;
-                } else {
-                    this.responsive = false;
-                }
-            },
-            createNote() {
-                this.$validator.validateAll().then((result) => {
-                    if (result) {
-                        this.$store
-                            .dispatch(PATIENT_NOTE_CREATE, {
-                                note: this.noteText,
-                            })
-                            .then((note) => {
-                                console.log(note);
-                                this.noteText = null;
-                                this.$nextTick(() => this.$validator.reset());
+    },
+    watch: {
+        noteTextL() {
+            this.touched.noteText = true;
+        },
+    },
+    mounted() {
+        this.onResponsiveInverted();
+        window.addEventListener('resize', this.onResponsiveInverted);
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize', this.onResponsiveInverted);
+    },
+    methods: {
+        validate() {
+            this.$validator.validateAll().then((isValid) => {
+                this.$emit('on-submit', this.registerForm, isValid);
+            });
+            this.touched.noteText = true;
+        },
+        onResponsiveInverted() {
+            if (window.innerWidth < 768) {
+                this.responsive = true;
+            } else {
+                this.responsive = false;
+            }
+        },
+        createNote() {
+            this.$validator.validateAll().then((result) => {
+                if (result) {
+                    this.$store
+                        .dispatch(PATIENT_NOTE_CREATE, {
+                            note: this.noteText,
+                        })
+                        .then((note) => {
+                            console.log(note);
+                            this.noteText = null;
+                            this.$nextTick(() => this.$validator.reset());
 
-                                if (note) {
-                                    this.$store.dispatch(NOTIFY, {
-                                        settings: {
-                                            message: 'Note added!',
-                                            type: 'primary',
-                                        },
-                                    });
-                                }
-                            });
-                    }
-                });
-            },
+                            if (note) {
+                                this.$store.dispatch(NOTIFY, {
+                                    settings: {
+                                        message: 'Note added!',
+                                        type: 'primary',
+                                    },
+                                });
+                            }
+                        });
+                }
+            });
         },
-        watch: {
-            noteTextL() {
-                this.touched.noteText = true;
-            },
-        },
-        mounted() {
-            this.onResponsiveInverted();
-            window.addEventListener('resize', this.onResponsiveInverted);
-        },
-        beforeDestroy() {
-            window.removeEventListener('resize', this.onResponsiveInverted);
-        },
-    };
+    },
+};
 </script>
 <style lang="scss" >
 .history-notes-wrapper {
