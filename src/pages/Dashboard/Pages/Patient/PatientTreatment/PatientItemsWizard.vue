@@ -1,8 +1,8 @@
 <template>
     <t-wizard-add-item
         v-if="showAddItemWizard"
-        :steps="stepsForWizard"
         :selected-item="selectedItem"
+        :steps="stepsForWizard"
         :jaw="patient.jaw"
         :is-dialog-visible.sync="showAddItemWizard"
         :current-type="type"

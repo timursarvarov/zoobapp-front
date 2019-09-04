@@ -199,7 +199,7 @@
                         >
                             <div
                                 class="md-layout"
-                                style="max-width:40px;"
+                                style="max-w    idth:40px;"
                             >
                                 <t-avatar
                                     :small="true"

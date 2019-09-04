@@ -41,14 +41,17 @@
                                         v-if="item.title"
                                         class="text-left"
                                     >{{ `${item.code} - ${item.title}` }}
-                                        <span v-if="item.teeth"> &nbsp;
-                                            teeth:
-                                            <span
-                                                v-for="(toothID, toothKey) in item.teeth"
-                                                :key="toothKey"
-                                            >
-                                                {{ toothKey | toCurrentTeethSystem }}, &nbsp;
-                                            </span>
+                                    </span>
+                                    <span
+                                        v-if="item.teeth"
+                                        class="teeth md-layout-item"
+                                    >
+                                        <span
+                                            v-for="(toothID, toothKey) in item.teeth"
+                                            :key="toothKey"
+                                            class="tooth procedures"
+                                        >
+                                            {{ toothKey | toCurrentTeethSystem }}
                                         </span>
                                     </span>
 
@@ -108,17 +111,20 @@
                         <b>{{ key+1 }}</b>
                     </div>
                     <div class="procedure_header-title">
-                        <div class="md-layout-item md-size-100">
+                        <div class="md-layout md-layout-item md-size-100">
                             <b>{{ p.code }} - {{ p.title }}</b>
-                            <span v-if="p.teeth"> &nbsp;
-                                teeth:
-                                <span
-                                    v-for="(toothID, toothKey) in p.teeth"
-                                    :key="toothKey"
-                                >
-                                    {{ toothKey | toCurrentTeethSystem }}, &nbsp;
-                                </span>
+                        <span
+                            v-if="p.teeth"
+                            class="teeth md-layout-item"
+                        >
+                            <span
+                                v-for="(toothID, toothKey) in p.teeth"
+                                :key="toothKey"
+                                class="tooth procedures"
+                            >
+                                {{ toothKey | toCurrentTeethSystem }}
                             </span>
+                        </span>
                         </div>
                         <div class="md-layout-item md-size-100">
                             <small>{{ patient.plans[p.planID].title }}</small>

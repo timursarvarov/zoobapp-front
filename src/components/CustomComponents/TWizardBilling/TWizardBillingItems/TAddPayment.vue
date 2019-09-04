@@ -160,14 +160,13 @@
 /* eslint-disable func-names */
 import { SlideYDownTransition } from 'vue2-transitions';
 import TToolbarRow from '@/components/CustomComponents/TToolbarRow';
-import AnimatedNumber from '@/components/AnimatedNumber';
+// import AnimatedNumber from '@/components/AnimatedNumber';
 import { mapGetters } from 'vuex';
 
 
 export default {
     name: 'TAddPaymentItem',
     components: {
-        AnimatedNumber,
         TToolbarRow,
         SlideYDownTransition,
     },

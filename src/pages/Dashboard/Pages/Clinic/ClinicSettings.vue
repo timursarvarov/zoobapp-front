@@ -421,9 +421,6 @@ export default {
             },
         };
     },
-    created() {
-        this.loadData();
-    },
     computed: {
         ...mapGetters({
             currentClinic: 'getCurrentClinic',
@@ -445,6 +442,9 @@ export default {
         tax() {
             this.touched.tax = true;
         },
+    },
+    created() {
+        this.loadData();
     },
     methods: {
         focusOn(ref) {

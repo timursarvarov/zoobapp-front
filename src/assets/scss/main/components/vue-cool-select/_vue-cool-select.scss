@@ -231,6 +231,38 @@
                         span {
                             font-size: 0.8rem;
                         }
+                        .teeth {
+                            display: flex;
+                            flex-wrap: wrap;
+                            .tooth {
+                                width: fit-content;
+                                border: 1px solid #fff;
+                                font-size: 12px;
+                                color: #ffffff;
+                                min-width: 20px;
+                                padding: 1px 6px;
+                                height: 20px;
+                                border-radius: 10px;
+                                text-align: center;
+                                line-height: 18px;
+                            }
+                            // .tooth:not(.md-primary):not(.md-success):not(.md-info):not(.md-warning) {
+                            //     background: #f44336;
+                            // }
+                            .tooth.billing,
+                            .tooth.procedures {
+                                background: $brand-success;
+                            }
+                            .tooth.anamnesis {
+                                background: $brand-info;
+                            }
+                            .tooth.diagnosis {
+                                background: $brand-primary;
+                            }
+                            .tooth.md-warning {
+                                background: $brand-warning;
+                            }
+                        }
                     }
                 }
             }

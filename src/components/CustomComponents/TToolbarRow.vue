@@ -47,6 +47,7 @@
 import animatedNumber from '@/components/AnimatedNumber';
 
 export default {
+    name: "TToolbarRow",
     components: {
         animatedNumber
     },
