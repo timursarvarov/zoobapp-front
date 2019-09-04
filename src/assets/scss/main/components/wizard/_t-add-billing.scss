@@ -1,0 +1,87 @@
+.add-billing {
+    .just-added {
+        animation-name: color_change;
+        animation-duration: 3s;
+        animation-iteration-count: 1;
+        animation-direction: alternate;
+        .md-table-cell-container {
+            animation-name: text_color_change;
+            animation-duration: 3s;
+            animation-iteration-count: 1;
+            animation-direction: alternate;
+        }
+    }
+    .to-delete {
+        background-color: lighten($brand-warning, 43.5%) !important;
+        -webkit-transition: background-color 1000ms linear;
+        -ms-transition: background-color 1000ms linear;
+        transition: background-color 1000ms linear;
+    }
+    .editable-mode {
+        background-color: lighten($brand-info, 43.5%) !important;
+        transition-duration: 300ms;
+        .md-table-cell-container {
+            // color: $white-color;
+        }
+    }
+    @keyframes color_change {
+        from {
+            background-color: $brand-primary;
+        }
+        to {
+            background-color: none;
+        }
+    }
+    @keyframes text_color_change {
+        from {
+            color: $white-color;
+        }
+        to {
+            color: rgba(0, 0, 0, 0.87);
+        }
+    }
+    .procedure {
+        hr {
+            opacity: 0.7;
+            height: 2px;
+            margin: 0;
+        }
+        &_header {
+            display: flex;
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            &-title {
+                flex-grow: 1;
+            }
+            &-num {
+                padding: 0 15px;
+            }
+            &-price {
+                display: flex;
+                padding: 0 15px;
+            }
+        }
+        &_manipulations {
+            padding-left: 30px;
+            .manipulation-title {
+                width: 50%;
+            }
+        }
+    }
+    .manipulations-input__action {
+        max-width: 70px;
+    }
+    .category {
+        white-space: nowrap;
+    }
+    .md-datepicker {
+        transform: translate(0, 0);
+    }
+    .total {
+        margin-bottom: 20px !important;
+    }
+    .md-datepicker-dialog {
+        transform: translate(0, 0);
+    }
+}
