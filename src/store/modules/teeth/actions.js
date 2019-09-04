@@ -37,6 +37,7 @@ export default {
         }
 
         commit(TEETH_INITIATION, { type: 'diagnosis', value: jaw.diagnosis });
+        commit(TEETH_INITIATION, { type: 'anamnesis', value: jaw.anamnesis });
     },
     [TEETH_INITIATION_ETHALON]: ({ commit }) => {
         const jaw = {

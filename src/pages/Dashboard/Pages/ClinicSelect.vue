@@ -55,6 +55,13 @@ export default {
             checkedClinicId: null,
         };
     },
+    computed: {
+        ...mapGetters({
+            clinics: 'getClinics',
+            accessToken: 'fetchStateAccessToken',
+            expiresAt: 'expiresAt',
+        }),
+    },
     methods: {
         setClinic() {
             const currentTime = Math.floor(Date.now() / 1000);
@@ -85,13 +92,6 @@ export default {
                     );
             }
         },
-    },
-    computed: {
-        ...mapGetters({
-            clinics: 'getClinics',
-            accessToken: 'fetchStateAccessToken',
-            expiresAt: 'expiresAt',
-        }),
     },
 };
 </script>

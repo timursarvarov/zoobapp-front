@@ -2,8 +2,10 @@
 import {
     TEETH_SCHEMA,
 } from '@/constants';
+import store from '@/store';
 
-export default function toCurrentTeethSystem(toothID, currentSystem = 1, returnName = false) {
+export default function toCurrentTeethSystem(toothID, returnName = false) {
+    const currentSystem = store.getters.getCurrentClinic.teethSystem;
     if (typeof toothID === 'undefined') {
         return;
     }

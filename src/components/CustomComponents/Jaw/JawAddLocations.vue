@@ -19,7 +19,7 @@
                                     :key="index"
                                     :value="value"
                                 >
-                                    {{ value | toCurrentTeethSystem(teethSystem) }} - {{ value | toCurrentTeethSystem(teethSystem, true) }}
+                                    {{ value | toCurrentTeethSystem }} - {{ value | toCurrentTeethSystem(true) }}
                                 </md-option>
                             </md-select>
                         </md-field>
@@ -129,7 +129,7 @@
                             @click="toothClick($event, toothId)"
                         >
                             <div class="tooth-number noselect">
-                                <span>{{ toothId | toCurrentTeethSystem(teethSystem) }}</span>
+                                <span>{{ toothId | toCurrentTeethSystem }}</span>
                             </div>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

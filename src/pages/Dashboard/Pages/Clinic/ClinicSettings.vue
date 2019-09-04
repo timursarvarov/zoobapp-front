@@ -421,6 +421,31 @@ export default {
             },
         };
     },
+    created() {
+        this.loadData();
+    },
+    computed: {
+        ...mapGetters({
+            currentClinic: 'getCurrentClinic',
+        }),
+    },
+    watch: {
+        url() {
+            this.touched.url = true;
+        },
+        email() {
+            this.touched.email = true;
+        },
+        phone() {
+            this.touched.phone = true;
+        },
+        name() {
+            this.touched.name = true;
+        },
+        tax() {
+            this.touched.tax = true;
+        },
+    },
     methods: {
         focusOn(ref) {
             if (!this.$refs[ref]) {
@@ -575,31 +600,6 @@ export default {
             this.selectedCurrency = this.currentClinic.currencyCode;
             this.description = this.currentClinic.description;
         },
-    },
-    computed: {
-        ...mapGetters({
-            currentClinic: 'getCurrentClinic',
-        }),
-    },
-    watch: {
-        url() {
-            this.touched.url = true;
-        },
-        email() {
-            this.touched.email = true;
-        },
-        phone() {
-            this.touched.phone = true;
-        },
-        name() {
-            this.touched.name = true;
-        },
-        tax() {
-            this.touched.tax = true;
-        },
-    },
-    created() {
-        this.loadData();
     },
 };
 </script>

@@ -5,11 +5,10 @@
         :class="{'md-toolbar-absolute md-white md-fixed-top': $route.meta.navbarAbsolute}"
     >
         <div
-            class="wrapper-progress-bar"
-            style="position:absolute; top:0;"
+            class="the-main-progress-bar"
         >
             <md-progress-bar
-                v-if="loading"
+                v-show="loading"
                 :md-stroke="2"
                 md-mode="indeterminate"
             />
@@ -274,6 +273,21 @@ export default {
             page: 1,
         };
     },
+    computed: {
+        ...mapGetters({
+            loading: 'loading',
+            patient: 'getPatient',
+            clinics: 'getClinics',
+            user: 'getProfile',
+            currnentClinic: 'getCurrentClinic',
+            accessToken: 'fetchStateAccessToken',
+            expiresAt: 'expiresAt',
+            lang: 'getLang',
+        }),
+        languages() {
+            return AVAILABLE_LANGUAGES;
+        },
+    },
     methods: {
         goTo(route) {
             this.$router.push(route);
@@ -340,21 +354,6 @@ export default {
             });
         },
     },
-    computed: {
-        ...mapGetters({
-            loading: 'loading',
-            patient: 'getPatient',
-            clinics: 'getClinics',
-            user: 'getProfile',
-            currnentClinic: 'getCurrentClinic',
-            accessToken: 'fetchStateAccessToken',
-            expiresAt: 'expiresAt',
-            lang: 'getLang',
-        }),
-        languages() {
-            return AVAILABLE_LANGUAGES;
-        },
-    },
 };
 </script>
 
@@ -374,6 +373,20 @@ export default {
     right: 0;
     width: 100%;
     height: 5px;
+}
+.the-main-progress-bar {
+    position: fixed;
+    top: 1px;
+    right: 0;
+    width: 100%;
+    height: 5px;
+    .md-progress-bar{
+        left: 0;
+        top: 1px;
+        position: absolute;
+        right: 0;
+        width: 100vw;
+    }
 }
 .patient_header_title {
     overflow: hidden;

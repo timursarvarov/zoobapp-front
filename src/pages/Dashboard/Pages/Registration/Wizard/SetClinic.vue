@@ -124,6 +124,28 @@ export default {
             },
         };
     },
+    computed: {
+        ...mapGetters({
+            currentClinic: 'getCurrentClinic',
+        }),
+    },
+    watch: {
+        error: {
+            handler(val) {
+                if (val.message) {
+                    this.showErrorsValidate(val);
+                    this.error.message = '';
+                }
+            },
+            deep: true,
+        },
+        clinicName() {
+            this.touched.clinicName = true;
+        },
+        fd() {
+            this.$emit('addedLogo', this.fd);
+        },
+    },
     methods: {
         focusOn(ref) {
             if (!this.$refs[ref]) {
@@ -193,28 +215,6 @@ export default {
                 valid: false,
                 validated: true,
             });
-        },
-    },
-    computed: {
-        ...mapGetters({
-            currentClinic: 'getCurrentClinic',
-        }),
-    },
-    watch: {
-        error: {
-            handler(val) {
-                if (val.message) {
-                    this.showErrorsValidate(val);
-                    this.error.message = '';
-                }
-            },
-            deep: true,
-        },
-        clinicName() {
-            this.touched.clinicName = true;
-        },
-        fd() {
-            this.$emit('addedLogo', this.fd);
         },
     },
 };

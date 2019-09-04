@@ -1,23 +1,27 @@
 .patient-select {
     .IZ-select__menu {
-        min-width: unset!important;
+        min-width: unset !important;
     }
 }
 
 .no-margin {
-    margin: 0!important;
+    margin: 0 !important;
 }
 
 .with-action {
     .md-input-action {
         top: 8px;
         .md-button-content {
-            background-color: transparent!important;
+            background-color: transparent !important;
         }
     }
     input {
-        margin-right: 41px!important;
+        margin-right: 41px !important;
     }
+}
+
+.IZ-select:after {
+    height: 2px;
 }
 
 .IZ-select:not(.md-focused) {
@@ -42,7 +46,7 @@
 }
 
 .IZ-select:not(.no-margin) {
-    margin: 6px 0 18px!important;
+    margin: 6px 0 18px !important;
 }
 
 .IZ-select {
@@ -76,23 +80,23 @@
             background-size: 0%;
             transition: none;
             &:target {
-                background-color: transparent!important;
+                background-color: transparent !important;
                 background-size: 0%;
             }
             &:active {
-                background-color: transparent!important;
+                background-color: transparent !important;
                 background-size: 0%;
             }
             &:active:hover {
-                background-color: transparent!important;
+                background-color: transparent !important;
                 background-size: 0%;
             }
             &:checked {
-                background-color: transparent!important;
+                background-color: transparent !important;
                 background-size: 0%;
             }
             &:hover {
-                background-color: transparent!important;
+                background-color: transparent !important;
                 background-size: 0%;
             }
             .IZ-selection {
@@ -125,7 +129,7 @@
         .IZ-select__input--focused {
             background-color: transparent;
             &:hover {
-                background-color: transparent!important;
+                background-color: transparent !important;
             }
         }
         .IZ-select__input--has-menu {
@@ -133,7 +137,7 @@
             align-items: stretch;
             .IZ-selection {
                 max-width: 90%;
-                flex-grow: 1
+                flex-grow: 1;
             }
         }
     }
@@ -148,7 +152,7 @@
         position: absolute;
         bottom: -14px;
         font-size: 12px;
-        transition: .3s
+        transition: 0.3s;
     }
     .IZ-select__menu {
         min-width: 62vw;
@@ -169,21 +173,21 @@
         }
         .IZ-select__item:not(.IZ-select__item--selected) {
             .IZ-select-button {
-                opacity: 1!important;
+                opacity: 1 !important;
                 color: #555555 !important;
-                background-color: transparent!important;
+                background-color: transparent !important;
                 box-shadow: none;
             }
         }
         .IZ-select__item--selected {
             .IZ-select-button {
                 color: white !important;
-                background-color: #9c27b0!important;
+                background-color: #9c27b0 !important;
             }
         }
         .IZ-select__item {
             padding: 0;
-            margin: 0 .3125rem;
+            margin: 0 0.3125rem;
             &:not(:last-child) {
                 margin-bottom: 5px;
             }
@@ -206,10 +210,10 @@
                 flex-grow: 1;
                 &:hover {
                     background-color: #9c27b0 !important;
-                    color: #FFF !important;
+                    color: #fff !important;
                 }
                 .md-ripple {
-                    padding: 12px 6px!important;
+                    padding: 12px 6px !important;
                     .md-button-content {
                         text-transform: none;
                         width: 100%;

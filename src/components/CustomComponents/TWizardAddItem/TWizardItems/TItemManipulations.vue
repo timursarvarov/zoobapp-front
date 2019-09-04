@@ -212,10 +212,10 @@
                 />
                 <md-table-row
                     slot="md-table-row"
-                    slot-scope="{ item, index }"
+                    slot-scope="{ item }"
                     :class="[
                         {'just-added': item.justAdded},
-                        {'editable-mode': item.editing},
+                        {'editable-mode': item.editing && manipulationToEdit.ID },
                     ]"
                 >
                     <md-table-cell md-label="Code">
@@ -241,7 +241,7 @@
                     <md-table-cell class="actions">
                         <md-button
                             class="md-just-icon md-round md-info md-simple"
-                            @click.native="setEditedManipulation(item ,index), item.editing = true"
+                            @click.native="setEditedManipulation(item), item.editing = true"
                         >
                             <md-icon>edit</md-icon>
                         </md-button>
@@ -632,7 +632,7 @@ export default {
         setEditedManipulation(manipulation) {
             this.setEditingClass(manipulation);
             this.manipulationToEdit = manipulation;
-            this.selectedManipulationID = manipulation.ID;
+            this.selectedManipulationID = manipulation.catalogManipulationID;
             this.manipulationPrice = manipulation.price;
             this.manipulationsNum = manipulation.qty;
             this.focusOn('qty');

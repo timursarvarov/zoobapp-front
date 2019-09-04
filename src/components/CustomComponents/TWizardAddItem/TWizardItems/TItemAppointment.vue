@@ -2,44 +2,48 @@
     <div
         class="wizard-tab-content"
         :style="[
-        {'min-width': size.width ? `${size.width}px`: `70vw`},
-        {'min-height': `${size.height}px`} ]"
+            {'min-width': size.width ? `${size.width}px`: `70vw`},
+            {'min-height': `${size.height}px`} ]"
     >
-        <div class="md-layout-item">
-            <t-calendar v-if="showAppointment" />
+        <div
+            v-if="showAppointment"
+            class="md-layout-item"
+        >
+            <t-calendar />
         </div>
     </div>
 </template>
 <script>
+import TCalendar from '@/components/CustomComponents/TCalendar.vue';
 export default {
-  name: 't-item-appointment',
-  components: {
-    't-calendar': () => import('@/components/CustomComponents/TCalendar'),
-  },
-  props: {
-    size: {
-      type: Object,
-      default: () => {},
+    name: 'TItemAppointment',
+    components: {
+        TCalendar,
     },
-    showAppointment: {
-      type: Boolean,
-      default: () => false,
+    props: {
+        size: {
+            type: Object,
+            default: () => {},
+        },
+        showAppointment: {
+            type: Boolean,
+            default: () => false,
+        },
     },
-  },
-  data() {
-    return {
-      modelValidations: {},
-    };
-  },
-  methods: {
-    validate() {
-      return this.$validator.validateAll().then((res) => {
-        this.$emit('on-validated', res, 'step2');
-        this.$emit('validated-code', this.code);
-        return res;
-      });
+    data() {
+        return {
+            modelValidations: {},
+        };
     },
-  },
-  computed: {},
+    methods: {
+        validate() {
+            console.log(this.showAppointment)
+            return this.$validator.validateAll().then((res) => {
+                this.$emit('on-validated', res, 'step2');
+                this.$emit('validated-code', this.code);
+                return res;
+            });
+        },
+    },
 };
 </script>

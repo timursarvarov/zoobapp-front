@@ -1,5 +1,7 @@
 <template>
-    <div class="patient-profile-wrapper">
+    <div
+        class="patient-profile-wrapper"
+    >
         <nav-tabs-card v-if="patient.ID">
             <template slot="content">
                 <!-- <span class="md-nav-tabs-title">Set new:</span> -->
@@ -15,9 +17,7 @@
                         md-label="BIO"
                     >
                         <div class="md-layout">
-                            <keep-alive>
-                                <router-view name="Bio" />
-                            </keep-alive>
+                            <router-view name="Bio" />
                         </div>
                     </md-tab>
                     <md-tab
@@ -27,10 +27,7 @@
                         md-label="Treatment"
                     >
                         <div class="md-layout">
-                            <keep-alive>
-                                <router-view name="TreatmentChild" />
-                                <router-view name="itemsList" />
-                            </keep-alive>
+                            <router-view name="treatmentchild" />
                         </div>
                     </md-tab>
                     <md-tab
@@ -60,9 +57,9 @@
                         <router-view name="Files" />
                     </md-tab>
                 </md-tabs>
+                <patient-items-wizard />
             </template>
         </nav-tabs-card>
-        <router-view name="itemsList" />
         <div
             v-show="!patient.ID && patientStatus ==='loading'"
             class="jaw md-layout-item"
@@ -94,6 +91,23 @@
                 </md-button>
             </md-empty-state>
         </div>
+        <div
+            v-show="!patient.ID && patientStatus ==='notExist'"
+            class="jaw md-layout-item"
+        >
+            <md-empty-state
+                md-icon="person_outline"
+                md-label="No patient found"
+                md-description="you don't allowed to see this patient or patient do not exist"
+            >
+                <md-button
+                    class="md-primary md-raised"
+                    @click="$patientAddForm.showPatientAddForm(true)"
+                >
+                    Create new patient
+                </md-button>
+            </md-empty-state>
+        </div>
     </div>
 </template>
 
@@ -102,6 +116,7 @@ import { mapGetters } from 'vuex';
 import components from '@/components';
 import { PATIENT_GET } from '@/constants';
 import store from '@/store'
+import PatientItemsWizard from './PatientTreatment/PatientItemsWizard'
 
 export default {
     beforeRouteEnter(to, from, next) {
@@ -115,30 +130,9 @@ export default {
                     });
                 }
             }).catch((err => {
-                throw new Error(err);
-            })).then(()=>{
                 next();
-            });
+            }))
         }else {
-            next();
-        }
-    },
-    beforeRouteUpdate(to, from, next) {
-        if (!this.patient.ID || `${this.patient.ID}` !== `${to.params.patientID}`) {
-            store.dispatch(PATIENT_GET, {
-                patientID: to.params.patientID,
-            }).then((patient) => {
-                if (patient) {
-                    next(() => {
-                        this.setWindowTitle();
-                    });
-                }
-            }).catch((err => {
-                throw new Error(err);
-            })).then(()=>{
-                next();
-            });
-        } else {
             next();
         }
     },
@@ -149,6 +143,7 @@ export default {
     name: 'PatientProfile',
     components: {
         ...components,
+        PatientItemsWizard,
     },
     data() {
         return {
@@ -164,8 +159,16 @@ export default {
             patient: 'getPatient',
             patientStatus: 'getPatientStatus',
         }),
+        routePatientID(){
+            return this.$route.params.patientID
+        }
     },
-    created() {
+    watch:{
+        routePatientID(val){
+            if(`${this.patient.ID}` !== `${val}`){
+                this. getPatient();
+            }
+        }
     },
     methods: {
         setWindowTitle(){
@@ -195,10 +198,7 @@ export default {
                         patientID: this.$route.params.patientID,
                     })
                     .then((patient) => {
-                        if (patient) {
-                            document.title = `${patient.firstName} ${patient.lastName} `
-                                    + ' - ZoobApp';
-                        }
+                        this.setWindowTitle();
                     });
             }
         },

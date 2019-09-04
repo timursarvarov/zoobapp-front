@@ -3,7 +3,7 @@ const jawFunctions = {
     methods: {
         preferableJawClasses(toothId, location, jaw, prefer) {
             let toothClass = '';
-            if (prefer.length === 0) {
+            if (this.lodash.isEmpty(jaw) || !prefer || prefer.length === 0) {
                 return toothClass;
             }
             if (prefer.includes('anamnesis')) {
@@ -25,7 +25,7 @@ const jawFunctions = {
         },
         isHidingLocation(toothId, location, jaw, prefer, defaultLocations) {
             // если не установлен прдедпочитаемы вид (prefer) то возвращаем значение по умолчанию
-            if (prefer.length === 0) {
+            if (this.lodash.isEmpty(jaw) || prefer.length === 0) {
                 return !defaultLocations[location];
             }
             // полчаем дефолтное значение локации

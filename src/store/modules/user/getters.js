@@ -20,8 +20,10 @@ export default {
     anamnesDescriptions: state => state.anamnesDescriptions,
     diagnoseDescriptions: state => state.diagnoseDescriptions,
     availablePatientsTableColumns: state => state.availablePatientsTableColumns,
-    availableItemsTableColumns: state => state.availableItemsTableColumns,
-    availableBillingTableColumns: state => state.availableBillingTableColumns,
+    getAvailableAnamnesTableColumns: state => state.availableAnamnesTableColumns,
+    getAvailableDiagnosisTableColumns: state => state.availableDiagnosisTableColumns,
+    getAvailableProceduresTableColumns: state => state.availableProceduresTableColumns,
+    getAvailableBillingTableColumns: state => state.availableBillingTableColumns,
     availableInvoiceTableColumns: state => state.availableInvoiceTableColumns,
     getLang: (state) => {
         if (state.profile.ID) {

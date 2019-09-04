@@ -115,7 +115,11 @@
                             <span
                                 v-for="toothId in Object.keys(item.teeth)"
                                 :key="toothId"
-                            >{{ toothId | toCurrentTeethSystem(teethSystem) }},&nbsp;</span>
+                            >
+
+                                {{ toothId | toCurrentTeethSystem }},&nbsp;
+
+                            </span>
                         </div>
 
                         <div
@@ -262,15 +266,6 @@
             @selected="setColumns"
         />
 
-        <!-- <delete-form
-            text="Delete Plan?"
-            :show-form.sync="showDeleteForm"
-            :item-to-delete="itemToDelete"
-            :patient-id="patient.ID"
-            :current-type="currentType"
-            :plan-id="plan.ID"
-        /> -->
-
         <md-snackbar
             :md-position="'center'"
             :md-duration="true ? Infinity : 4000"
@@ -278,40 +273,40 @@
             text="Delete currentType?"
             md-persistent
         >
-            <div class="md-layout">
-                <div class="md-layout md-layout-item">
-                    <div class="md-layout-item">
-                        <span>
-                            Selected:
-                            <animated-number :value="selectedItems.length" />
-                            {{ currentType }}
-                        </span>
-                    </div>
-                    <div class="md-layout-item">
-                        <animated-number :value="getPlanTotalPrice(selectedItems)" />
-                        {{ currentClinic.currencyCode }}
-                    </div>
-                </div>
-                <div class="md-layout md-layout-item">
-                    <md-button
-                        class="md-simple"
-                        @click="showSnackbar = false"
-                    >
-                        Delete
-                    </md-button>
-                    <md-button
-                        class="md-simple"
-                        @click="showSnackbar = false"
-                    >
-                        Create invoice
-                    </md-button>
-                    <md-button
-                        class="md-success"
-                        @click="showSnackbar = false"
-                    >
-                        Complete
-                    </md-button>
-                </div>
+            <div class="snackbar-text-wrapper">
+                Selected:
+                <animated-number :value="selectedItems.length" />
+                {{ currentType }} for
+                <animated-number :value="getPlanTotalPrice(selectedItems)" />
+                {{ currentClinic.currencyCode }}
+            </div>
+            <div>
+                <md-button
+                    v-if="selectedItems.length === items.length"
+                    class="md-simple"
+                    @click="selectedItems = []"
+                >
+                    Unselect
+                </md-button>
+                <md-button
+                    v-else
+                    class="md-simple"
+                    @click="selectedItems = items"
+                >
+                    Select all
+                </md-button>
+                <md-button
+                    class="md-simple"
+                    @click="showSnackbar = false"
+                >
+                    Create invoice
+                </md-button>
+                <md-button
+                    class="md-success"
+                    @click="showSnackbar = false"
+                >
+                    Complete
+                </md-button>
             </div>
         </md-snackbar>
         <md-snackbar
@@ -374,7 +369,6 @@ import {
     EB_SHOW_ITEM_WIZARD,
     NOTIFY,
 } from '@/constants';
-import DeleteForm from './DeleteForm.vue';
 import EventBus from '@/plugins/event-bus';
 
 export default {
@@ -487,6 +481,11 @@ export default {
         selectedItems() {
             this.showSnackbar = this.selectedItems.length > 0;
         },
+        showDeleteItemSnackbar(val) {
+            if(!val){
+                this.itemToDelete = ""
+            }
+        },
     },
     mounted() {
     // Fuse search initialization.
@@ -501,6 +500,11 @@ export default {
     },
 
     methods: {
+        selectAll(){
+            console.log(this.selectedItems)
+            this.selectedItems = this.items;
+            console.log(this.selectedItems)
+        },
         toggleItemVisibility(itemId, itemType) {
             if (itemId) {
                 this.$store.dispatch(PATIENT_ITEM_VISIBILITY_TOGGLE, {
@@ -524,13 +528,14 @@ export default {
         },
         getPlanTotalPrice(items) {
             let totalPrice = 0;
+            let manips =[];
             if (!Array.isArray(items)) {
                 return totalPrice;
             }
             if (items) {
                 items.forEach((p) => {
-                    if (p.manipulations) {
-                        totalPrice += this.getItemTotalPrice(p.manipulations);
+                    if (p.ID) {
+                        totalPrice += this.getManipulationsByProcedureID(p.ID).reduce((a, b) => a + (b.totalPrice || 0), 0);
                     }
                 });
             }

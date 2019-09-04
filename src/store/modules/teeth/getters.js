@@ -8,6 +8,6 @@ export default {
     teethAdultTop: state => state.teethAdultTop,
     teethAdultBottom: state => state.teethAdultBottom,
     teethSchema: state => state.teethSchema,
-    jaw: state => state.jaw,
+    jaw: state => state.jaw || {},
     jawEthalon: state => state.jawEthalon,
 };

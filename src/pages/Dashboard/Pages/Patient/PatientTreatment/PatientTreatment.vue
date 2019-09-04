@@ -8,7 +8,7 @@
                 <jaw
                     :selected-teeth="selectedTeeth"
                     :age-category="!!patient.ageCategory"
-                    :jaw="patient.jaw"
+                    :jaw="patient.jaw || {}"
                     :patient-items="{
                         diagnosis: patient.diagnosis,
                         procedures: currentPlanProcedures,
@@ -20,9 +20,11 @@
                     @showToothInfo="showToothInfo"
                     @onSizeChanged="matchHeight"
                 >
-                    <template slot="title-start">
+                    <template
+                        v-if="patient.ID"
+                        slot="title-start"
+                    >
                         <md-tabs
-                            md-dynamic-height
                             md-sync-route
                             class="t-md-tabs"
                             :class="currentType"
@@ -115,7 +117,6 @@
                 :single-item-name="singleItemName"
                 @on-created="saveItem"
             /> -->
-            <patient-items-wizard />
         </div>
     </div>
 </template>
@@ -134,14 +135,12 @@ import {
     PATIENT_JAW_UPDATE,
 } from '@/constants';
 import PlanAddForm from './PlanAddForm';
-import PatientItemsWizard from './PatientItemsWizard';
 import components from '@/components';
 // import { tObjProp } from '@/mixins';
 import EventBus from '@/plugins/event-bus';
 
 export default {
     beforeRouteEnter (to, from, next) {
-        console.log(to, from)
         next(vm=>{
             if(from.name){
                 if(to.params.planID){
@@ -169,7 +168,6 @@ export default {
     },
     components: {
         PlanAddForm,
-        PatientItemsWizard,
         ...components,
     },
     data() {

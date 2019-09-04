@@ -37,7 +37,7 @@
                 }"
                 md-menu-trigger
             >
-                {{ toothId | toCurrentTeethSystem(teethSystem) }}
+                {{ toothId | toCurrentTeethSystem }}
             </md-button>
 
             <md-menu-content

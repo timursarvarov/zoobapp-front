@@ -12,7 +12,7 @@
             :class="{unselected: !selectedItem.teeth[toothId],}"
             class="single-tooth-number"
         >
-            {{ toothId | toCurrentTeethSystem(teethSystem) }}
+            {{ toothId | toCurrentTeethSystem }}
         </div>
         <div
             :ref="toothId"

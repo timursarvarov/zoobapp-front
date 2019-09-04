@@ -59,7 +59,7 @@ export default {
     }) => {
 
         const patientItems = {
-            procedures: rootGetters.getPatientCurrentPlanProcedures,
+            procedures: rootGetters.getPatientCurrentAndAproovedPlanProcedures,
             diagnosis: rootGetters.getPatientDiagnosis,
             ananmnesis: rootGetters.getPatientAnamnesis,
         };
@@ -71,7 +71,7 @@ export default {
     }, {
         params
     }) => {
-        delay(5000).then(() => commit(PATIENT_SUB_PARAMS_SET, {...params }));
+        delay(3000).then(() => commit(PATIENT_SUB_PARAMS_SET, {...params }));
     },
     [PATIENT_AVATAR_UPLOAD]: ({
         commit,
@@ -861,16 +861,21 @@ export default {
                 }))
             .then((resp) => {
                 if (resp.data.error) {
-                    commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+                    // ! переделать на сервер код ерорс SERVER_ERRORS.codes.InvalidTokenErrorCode с маратом
+                    if (resp.data.error.code === -32000) {
+                        commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'notExist' });
+                    } else {
+                        commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });
+                    }
                     reject(resp.data.error);
+                } else {
+                    dispatch(PATIENT_PARAMS_SET, {
+                        patient: resp.data.result.patients[0],
+                    });
+                    commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
+                    dispatch(PATIENT_JAW_UPDATE);
+                    resolve(resp.data.result.patients[0]);
                 }
-                const patient = resp.data.result.patients[0];
-                dispatch(PATIENT_PARAMS_SET, {
-                    patient,
-                });
-                commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'success' });
-                dispatch(PATIENT_JAW_UPDATE);
-                resolve(resp.data.result.patients[0]);
             })
             .catch((err) => {
                 commit(PATIENT_PARAM_SET, { paramName: 'status', paramValue: 'error' });

@@ -55,23 +55,6 @@ export default {
             },
         };
     },
-    methods: {
-        onSuccess(response) {
-            this.$store.dispatch(PATIENT_ADD_SUB_PROP, {
-                params: {
-                    propName: 'files',
-                    value: response[0],
-                },
-            });
-        },
-        validate() {
-            return this.$validator.validateAll().then((res) => {
-                this.$emit('on-validated', res, 'step2');
-                this.$emit('validated-code', this.code);
-                return res;
-            });
-        },
-    },
     computed: {
         ...mapGetters({
             access_token: 'fetchStateAccessToken',
@@ -96,6 +79,23 @@ export default {
             return this.patient.files || [];
         },
 
+    },
+    methods: {
+        onSuccess(response) {
+            this.$store.dispatch(PATIENT_ADD_SUB_PROP, {
+                params: {
+                    propName: 'files',
+                    value: response[0],
+                },
+            });
+        },
+        validate() {
+            return this.$validator.validateAll().then((res) => {
+                this.$emit('on-validated', res, 'step2');
+                this.$emit('validated-code', this.code);
+                return res;
+            });
+        },
     },
 };
 </script>

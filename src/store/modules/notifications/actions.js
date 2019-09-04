@@ -9,7 +9,6 @@ export default {
         settings
     }) => {
         let set = settings;
-        console.log(set.message)
         if (set.message) {
             if (Array.isArray(set.message)) {
                 set.message.forEach(m => {

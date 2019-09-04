@@ -324,9 +324,29 @@ const patientPages = {
                     requiresAuth: true,
                     disableScroll: true,
                 },
+                redirect: `/:lang/patient/:patientID/billing/unbilled_procedures`,
                 components: {
                     Billing: load('Pages/Patient/PatientBilling/PatientBilling'),
                 },
+                children: [{
+                        path: 'unbilled_procedures',
+                        name: 'unbilledProcedures',
+                        meta: {
+                            requiresAuth: true,
+                            disableScroll: true,
+                        },
+                        component: load('Pages/Patient/PatientBilling/PatientBillingUnbiledProcedures'),
+                    },
+                    {
+                        path: 'invoices',
+                        name: 'invoices',
+                        meta: {
+                            requiresAuth: true,
+                            disableScroll: true,
+                        },
+                        component: load('Pages/Patient/PatientBilling/PatientBillingInvoices'),
+                    },
+                ]
             },
             {
                 path: 'treatment',
@@ -336,7 +356,7 @@ const patientPages = {
                     disableScroll: true,
                 },
                 components: {
-                    TreatmentChild: load('Pages/Patient/PatientTreatment/PatientTreatment'),
+                    treatmentchild: load('Pages/Patient/PatientTreatment/PatientTreatment'),
                 },
                 redirect: `/:lang/patient/:patientID/treatment/plan`,
                 children: [{

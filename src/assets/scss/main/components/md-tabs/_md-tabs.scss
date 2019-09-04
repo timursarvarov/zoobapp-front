@@ -44,6 +44,14 @@
 
 .t-md-tabs.md-tabs {
     overflow: visible !important;
+    &.billng {
+        .md-button.md-tab-nav-button {
+            overflow: visible !important;
+            &.md-active {
+                background: $brand-success !important;
+            }
+        }
+    }
     &.procedures {
         .md-button.md-tab-nav-button {
             overflow: visible !important;
@@ -68,13 +76,27 @@
             }
         }
     }
+    .notification:not(.md-primary):not(.md-success):not(.md-info):not(.md-warning) {
+        background: #f44336;
+    }
+    .notification.md-success {
+        background: $brand-success;
+    }
+    .notification.md-info {
+        background: $brand-info;
+    }
+    .notification.md-primary {
+        background: $brand-primary;
+    }
+    .notification.md-warning {
+        background: $brand-warning;
+    }
     .notification {
         position: absolute;
-        top: -6px;
+        top: -10px;
         border: 1px solid #fff;
         right: 2px;
         font-size: 9px;
-        background: #f44336;
         color: #ffffff;
         z-index: 10;
         min-width: 20px;

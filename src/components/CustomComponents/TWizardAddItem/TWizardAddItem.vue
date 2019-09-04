@@ -14,10 +14,6 @@
                     @tab-change="onTabChange"
                 >
                     <template slot="header">
-                        {{ selectedItemLocal.ID }}
-                        needToSaveItem() :{{ needToSaveItem() }}
-                        needToSaveEdited() :{{ needToSaveEdited() }}
-                        {{ itemToCreate.ID }}
                         <h5 class="title">
                             {{ singleItemName | capitilize }}
                             <span v-if="itemToCreate.ID">edit:</span>
@@ -51,7 +47,7 @@
                                         v-for="(item, key) in itemToCreate.teeth"
                                         :key="key + 0"
                                         class="list-item"
-                                    >{{ key | toCurrentTeethSystem(currentClinic.teethSystem) }}</span>
+                                    >{{ key | toCurrentTeethSystem }}</span>
                                 </transition-group>
                             </span>
                         </span>
@@ -77,7 +73,6 @@
                             :current-type="currentType"
                             @mounted-size="setSize"
                         />
-                        <!-- @onToothSelected="onToothSelected" -->
                     </wizard-tab>
 
                     <wizard-tab
@@ -376,7 +371,6 @@ export default {
 
                 }
                 else if(this.needToSaveEdited()) {
-                    console.log('here we update item====================')
                     this.itemToCreate.teeth = this.lodash.cloneDeep(this.itemToCompare.teeth);
                     return true;
                 }else {
@@ -386,16 +380,11 @@ export default {
             return false;
         },
         onTabChange(oldTab, newTab) {
-            // странные значения newTab
-            // 1 = первый таб
-            // 3 = второй таб
-            // 5 = третий таб
-            // 7 = четвертый таб
-            // 9 = пятый таб
-            this.currentTab = newTab.$attrs.name;
-            // console.log(newTab)
-            if (this.currentType === 'procedures') {
-                this.showAppointment = true;
+            this.currentTab = newTab.name;
+            if (this.currentTab === 'appointment') {
+                this.$nextTick(() => {
+                    this.showAppointment = true;
+                })
             }
         },
         // инициируем локальный диагноз

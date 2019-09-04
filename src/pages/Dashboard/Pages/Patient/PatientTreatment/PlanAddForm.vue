@@ -95,7 +95,7 @@ export default {
         SlideYDownTransition,
     },
     props: {
-        patientID: {
+        patientId: {
             type: Number,
             default: () => 0,
         },
@@ -192,6 +192,14 @@ export default {
                                     });
                                     this.$validator.reset();
                                     this.showFormL = false;
+                                    this.$router.push({
+                                        name: 'procedures',
+                                        params: {
+                                            lang: this.$i18n.locale,
+                                            patientID: this.patientId,
+                                            planID: resp.ID,
+                                        },
+                                    });
                                 }
                             },
                         ).catch((err) => {

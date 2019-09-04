@@ -307,6 +307,53 @@ export default {
             },
         };
     },
+    computed: {
+        ...mapGetters({
+            patient: 'getPatient',
+        }),
+        patientColor() {
+            const color = randomMC.getColor({
+                text: this.firstName + this.lastName + this.phone + this.email,
+            });
+            return color;
+        },
+        allergy: {
+            // getter
+            get() {
+                return this.patient.allergy || [];
+            },
+            // setter
+            set(newValue) {
+                this.patient.allergy = newValue;
+            },
+        },
+        email() {
+            return this.patient.email;
+        },
+        firstName() {
+            return this.patient.firstName;
+        },
+        lastName() {
+            return this.patient.lastName;
+        },
+        phone() {
+            return this.patient.phone;
+        },
+    },
+    watch: {
+        email() {
+            this.touched.email = true;
+        },
+        firstName() {
+            this.touched.firstName = true;
+        },
+        lastName() {
+            this.touched.lastName = true;
+        },
+        phone() {
+            this.touched.phone = true;
+        },
+    },
     methods: {
         getColorButton(buttonColor) {
             return `md-${buttonColor}`;
@@ -378,53 +425,6 @@ export default {
         },
     },
 
-    computed: {
-        ...mapGetters({
-            patient: 'getPatient',
-        }),
-        patientColor() {
-            const color = randomMC.getColor({
-                text: this.firstName + this.lastName + this.phone + this.email,
-            });
-            return color;
-        },
-        allergy: {
-            // getter
-            get() {
-                return this.patient.allergy || [];
-            },
-            // setter
-            set(newValue) {
-                this.patient.allergy = newValue;
-            },
-        },
-        email() {
-            return this.patient.email;
-        },
-        firstName() {
-            return this.patient.firstName;
-        },
-        lastName() {
-            return this.patient.lastName;
-        },
-        phone() {
-            return this.patient.phone;
-        },
-    },
-    watch: {
-        email() {
-            this.touched.email = true;
-        },
-        firstName() {
-            this.touched.firstName = true;
-        },
-        lastName() {
-            this.touched.lastName = true;
-        },
-        phone() {
-            this.touched.phone = true;
-        },
-    },
 };
 </script>
 <style lang="scss" >

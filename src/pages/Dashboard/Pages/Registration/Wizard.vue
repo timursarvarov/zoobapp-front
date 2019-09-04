@@ -121,6 +121,11 @@ export default {
             clinicName: '',
         };
     },
+    computed: {
+        ...mapGetters({
+            currentClinic: 'getCurrentClinic',
+        }),
+    },
     methods: {
         updateClinicLogo(fd) {
             this.$store
@@ -312,11 +317,6 @@ export default {
             //     buttonsStyling: false,
             // });
         },
-    },
-    computed: {
-        ...mapGetters({
-            currentClinic: 'getCurrentClinic',
-        }),
     },
 };
 </script>

@@ -28,14 +28,14 @@ import {
 } from '@/constants';
 import components from '@/components';
 import ItemsList from './ItemsList.vue';
-import DeleteForm from './DeleteForm.vue';
+// import DeleteForm from './DeleteForm.vue';
 import { tObjProp } from '@/mixins';
 
 export default {
     components: {
         ...components,
         ItemsList,
-        DeleteForm,
+        // DeleteForm,
     },
     mixins: [tObjProp],
     props: {

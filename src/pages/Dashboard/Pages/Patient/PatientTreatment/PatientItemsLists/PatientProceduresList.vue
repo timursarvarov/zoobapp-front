@@ -4,56 +4,9 @@
         <md-toolbar
             class="md-transparent"
         >
-            <div
-                class="md-toolbar-row t-toolbar"
-                style="margin-top:20px;margin-bottom:20px;"
-            >
-                <div class="md-layout">
-                    <div class="md-layout-item t-toolbar__section md-size-16 ">
-                        <div class=" t-toolbar__section-text">
-                            <b>Plan Name</b>
-                        </div>
-                        <h3 class="title t-toolbar__section-text">
-                            {{ currentPlan.name }}
-                        </h3>
-                    </div>
-                    <div class="md-layout-item  t-toolbar__section md-size-16 ">
-                        <div class=" t-toolbar__section-text">
-                            <b>Unbilled procedures</b>
-                        </div>
-                        <h3 class="title t-toolbar__section-text">
-                            <animated-number :value="currentPlanProcedures.length" />
-                        </h3>
-                    </div>
-                    <div class="md-layout-item  t-toolbar__section md-size-16 ">
-                        <div class=" t-toolbar__section-text ">
-                            <b>Total Procedures</b>
-                        </div>
-                        <h3 class="title t-toolbar__section-text">
-                            <animated-number :value="currentPlanProcedures.length" />
-                        </h3>
-                    </div>
-                    <div class="md-layout-item  t-toolbar__section md-size-16 ">
-                        <div class=" t-toolbar__section-text">
-                            <b>Total Manipulations</b>
-                        </div>
-                        <h3 class="title t-toolbar__section-text">
-                            <animated-number
-                                :value="manipulationsByPlanID(currentPlan.ID).length"
-                            />
-                        </h3>
-                    </div>
-                    <div class="md-layout-item  t-toolbar__section md-size-16 ">
-                        <div class=" t-toolbar__section-text">
-                            <b>Total Price</b>
-                        </div>
-                        <h3 class="title t-toolbar__section-text">
-                            <animated-number :value="getPlanTotalPrice" />
-                            {{ currentClinic.currencyCode }}
-                        </h3>
-                    </div>
-                </div>
-            </div>
+            <t-toolbar-row
+                :headers="headers"
+            />
             <div class="md-toolbar-row">
                 <div class="md-toolbar-section-start">
                     {{ currentPlan.state }}
@@ -70,7 +23,7 @@
                     </md-button>
                     <md-button
                         class="md-simple"
-                        @click="showSnackbar = true"
+                        @click="showDeleteItemSnackbar = true"
                     >
                         <md-icon>
                             delete
@@ -79,63 +32,65 @@
                     </md-button>
                     <md-button
                         class="md-primary"
+                        @click="approovePlan(currentPlanID)"
                     >
                         <md-icon>
                             check
                         </md-icon>
-                        Make primary
+                        Approve plan
                     </md-button>
                 </div>
             </div>
         </md-toolbar>
-        <items-list
+        <t-nosology-table
             :items="currentPlanProcedures"
-            :teeth-system="currentClinic.teethSystem"
             current-type="procedures"
-            @showItemInfo="showItemInfo"
-            @onJawChanged="recalculateJaw()"
+            :selected-items="selectedItems"
+            @onSelected="onSelected"
         />
         <md-snackbar
+            v-if="showDeleteItemSnackbar"
             :md-position="'center'"
-            :md-duration="true ? Infinity : 4000"
-            :md-active.sync="showSnackbar"
+            :md-duration="10000"
+            :md-active.sync="showDeleteItemSnackbar"
             md-persistent
         >
-            <div class="snackbar-text-wrapper">
-                Delete
-                {{ currentPlan.name }}?
-            </div>
-            <div>
-                <md-button
-                    class="md-simple"
-                    @click="showSnackbar = false"
-                >
-                    cancel
-                </md-button>
-                <md-button
-                    :disabled="deleting"
-                    class="md-warning"
-                    @click="deletePlan()"
-                >
-                    <div v-if="deleting">
-                        <md-progress-spinner
-                            class="t-white"
-                            :md-diameter="12"
-                            :md-stroke="2"
-                            md-mode="indeterminate"
-                        />
-                &nbsp;
-                        <span>
-                            Deleting...
-                        </span>
-                    </div>
-                    <span v-else>
-                        <md-icon>
-                            delete
-                        </md-icon>
-                        delete
-                    </span>
-                </md-button>
+            <div class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100">
+                <div class="snackbar-text-wrapper ">
+                    Selected:
+                    <animated-number :value="selectedItems.length" />
+                    procedures for
+                    <animated-number :value="selectedItemsPrice" />
+                    {{ currentClinic.currencyCode }}
+                </div>
+                <div class="snackbar-action-wrapper  ml-auto md-alignment-center-right ">
+                    <md-button
+                        v-if="selectedItems.length === currentPlanProcedures.length"
+                        class="md-simple"
+                        @click="unselectAll()"
+                    >
+                        Unselect
+                    </md-button>
+                    <md-button
+                        v-else
+                        class="md-simple"
+                        @click="selectedItems = currentPlanProcedures"
+                    >
+                        Select all
+                    </md-button>
+                    <md-button
+                        class="md-simple"
+                        @click="showDeleteItemSnackbar = false"
+                    >
+                        Complete
+                    </md-button>
+                    <md-button
+                        class="md-success"
+                        @click="showCreateInvoice()"
+                    >
+                        Create invoice
+                    </md-button>
+                </div>
             </div>
         </md-snackbar>
     </div>
@@ -150,12 +105,10 @@ import {
     PATIENT_ITEM_VISIBILITY_TOGGLE,
 } from '@/constants';
 import components from '@/components';
-import ItemsList from './ItemsList.vue';
 
 export default {
     components: {
         ...components,
-        ItemsList,
     },
     props:{
         currentPlan: {
@@ -165,8 +118,9 @@ export default {
     },
     data() {
         return {
-            showSnackbar: false,
+            showDeleteItemSnackbar: false,
             deleting: false,
+            selectedItems: []
         };
     },
     computed: {
@@ -175,12 +129,81 @@ export default {
             currentClinic: 'getCurrentClinic',
             currentPlanProcedures: 'getPatientCurrentPlanProcedures',
             manipulationsByPlanID: 'getManipulationsByPlanID',
+            getManipulationsByProcedureIDs: 'getManipulationsByProcedureIDs',
+            currentPlanID: 'getCurrentPlanID',
         }),
         getPlanTotalPrice() {
             return  this.manipulationsByPlanID(this.currentPlan.ID).reduce((a, b) => a + (b.totalPrice || 0), 0);
         },
+        selectedItemsPrice(){
+            let sum = this.getManipulationsByProcedureIDs(this.selectedItems.map(p => p.ID)).reduce((a, b) => a + b.totalPrice, 0);
+            return sum || 0
+        },
+        headers(){
+            const headers = [
+                {
+                    title: 'Plan Name',
+                    subTitlePrefix: null,
+                    subTitlePostfix: null,
+                    valuePrefix: this.currentPlan.name,
+                    valuePostfix: null,
+                },
+                {
+                    title: 'Unbilled Procedures',
+                    subTitlePrefix: null,
+                    subTitlePostfix: null,
+                    subTitleToFix: 0,
+                    valuePrefix: parseInt(this.currentPlanProcedures.length, 10),
+                    valueToFix: 0,
+                    valuePostfix: null,
+                },
+                {
+                    title: 'Total Procedures',
+                    subTitlePrefix: null,
+                    subTitlePostfix: null,
+                    subTitleToFix: 0,
+                    valuePrefix: parseInt(this.currentPlanProcedures.length, 10),
+                    valueToFix: 0,
+                    valuePostfix: null,
+                },
+                {
+                    title: 'Total Manipulations',
+                    subTitlePrefix: null,
+                    subTitlePostfix: null,
+                    subTitleToFix: 0,
+                    valuePrefix: parseInt(this.manipulationsByPlanID(this.currentPlan.ID).length, 10),
+                    valueToFix: 0,
+                    valuePostfix: null,
+                },
+                {
+                    title: 'Total Price',
+                    subTitlePrefix: null,
+                    subTitlePostfix: null,
+                    subTitleToFix: 0,
+                    valuePrefix: parseInt(this.getPlanTotalPrice, 10),
+                    valueToFix: 2,
+                    valuePostfix: this.currentClinic.currencyCode,
+                },
+            ];
+            return headers;
+        },
     },
     methods: {
+        unselectAll(){
+            this.selectedItems = [];
+            this.showDeleteItemSnackbar = false;
+        },
+        approovePlan(planID){
+            this.$store.dispatch(PATIENT_PLAN_EDIT, {
+                planID,
+                key: 'state',
+                value: 1,
+            })
+        },
+        onSelected(items) {
+            this.selectedItems = items;
+            this.showDeleteItemSnackbar = items.length > 0;
+        },
         showItemInfo(params) {
             this.$emit('showItemInfo', params);
         },
@@ -199,7 +222,7 @@ export default {
                 planID: this.currentPlan.ID,
 
             }).then().catch((err) => {
-                this.showSnackbar = false;
+                this.showDeleteItemSnackbar = false;
                 if(this.lodash.isEmpty(this.patient.plans)){
                     this.redirectToPlan()
                 }
@@ -212,7 +235,7 @@ export default {
                 console.log(err);
             }).then(() => {
                 this.deleting = false;
-                this.showSnackbar = false;
+                this.showDeleteItemSnackbar = false;
             });
         },
     },

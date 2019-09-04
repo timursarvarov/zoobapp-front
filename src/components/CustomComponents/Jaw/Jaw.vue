@@ -23,7 +23,6 @@
                     <slot name="title-start" />
                     <slot name="title-end" />
                 </div>
-
                 <md-menu
                     :md-offset-x="127"
                     :md-close-on-select="false"
@@ -33,10 +32,14 @@
                 >
                     <md-button
                         md-menu-trigger
-                        class="md-button md-just-icon md-round md-simple md-block"
+                        class="md-button md-butoon-with-notification md-just-icon md-round md-simple md-block"
                         data-toggle="dropdown"
                     >
                         <md-icon>more_vert</md-icon>
+                        <span
+                            v-if="shouldShowNotification"
+                            class="notification md-success"
+                        >{{ ageCategoryBaby ? 'A':'B' }}</span>
                     </md-button>
 
                     <md-menu-content>
@@ -45,6 +48,10 @@
                                 v-model="ageCategoryBaby"
                             >
                                 Baby teeth
+                                <span
+                                    v-if="shouldShowNotification"
+                                    class="notification md-success"
+                                >{{ ageCategoryBaby ? 'A':'B' }}</span>
                             </md-switch>
                         </md-menu-item>
                         <md-menu-item>
@@ -471,6 +478,42 @@ export default {
             });
             return teeth;
         },
+        shouldShowNotification(){
+
+            if(this.ageCategoryBaby){
+                return this.hasAdultTeeth
+            }
+            return this.hasBabyTeeth
+
+        },
+        hasAdultTeeth(){
+            if(this.lodash.isEmpty(this.jaw)) return false;
+            let  has =false
+            Object.keys(this.jaw).forEach((type) => {
+                if(!this.lodash.isEmpty(this.jaw[type])){
+                    Object.keys(this.jaw[type]).forEach(toothID=>{
+                        if(!this.lodash.isEmpty(this.jaw[type][toothID] )){
+                            has = this.adultTeeth.includes(`${toothID}`) || has
+                        }
+                    })
+                }
+            });
+            return has
+        },
+        hasBabyTeeth(){
+            if(this.lodash.isEmpty(this.jaw)) return false;
+            let  has =false
+            Object.keys(this.jaw).forEach((type) => {
+                if(!this.lodash.isEmpty(this.jaw[type])){
+                    Object.keys(this.jaw[type]).forEach(toothID=>{
+                        if(!this.lodash.isEmpty(this.jaw[type][toothID] )){
+                            has = this.babyTeeth.includes(`${toothID}`) || has
+                        }
+                    })
+                }
+            });
+            return has;
+        },
         btnClass() {
             if (this.type === 'diagnosis') {
                 return 'md-primary';
@@ -584,7 +627,6 @@ export default {
 
     methods: {
         changeAgeCategory(category) {
-            console.log(category);
             this.isCalculatingJaw = true;
             this.$store.dispatch(PATIENT_EDIT, {
                 params: {

@@ -1,9 +1,36 @@
 .md-snackbar {
+    // width: fit-content;
     max-width: 70vw;
-    .snackbar-text-wrapper {
-        text-overflow: ellipsis;
-        max-width: calc(70vw - 290px);
-        overflow: hidden;
-        white-space: nowrap;
+    min-width: 70vw;
+    @media screen and (max-width: 1200px) {
+        max-width: 100vw;
+    }
+    @media screen and (max-width: 600px) {
+        max-width: 100vw;
+    }
+    max-height: 120px;
+    width: fit-content;
+    .md-snackbar-content {
+        max-height: 120px;
+        max-width: 100vw;
+        position: relative;
+        // display: flex;
+        .snackbar-text-wrapper {
+            // max-width: 60vw;
+            @media screen and (max-width: 600px) {
+                min-width: calc(100vw - 40px);
+            }
+            padding: 10px 0;
+            text-overflow: ellipsis;
+            // max-width: calc(70vw - 290px);
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .snackbar-action-wrapper {
+            padding: 10px 0;
+            // text-overflow: ellipsis;
+            // max-width: calc(70vw - 290px);
+            // overflow: hidden;
+        }
     }
 }

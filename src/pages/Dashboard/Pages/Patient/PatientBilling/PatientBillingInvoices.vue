@@ -1,6 +1,58 @@
 
 <template>
     <div class="items-list-wrapper">
+        <md-toolbar
+            class="md-transparent"
+        >
+            <div
+                class="md-toolbar-row t-toolbar"
+                style="margin-top:20px;margin-bottom:20px;"
+            >
+                <div class="md-layout">
+                    <div class="md-layout-item t-toolbar__section md-size-16 ">
+                        <div class=" t-toolbar__section-text">
+                            <b>Ballance</b>
+                        </div>
+                        <h3 class="title t-toolbar__section-text">
+                            {{ }}
+                        </h3>
+                    </div>
+                    <div class="md-layout-item  t-toolbar__section md-size-16 ">
+                        <div class=" t-toolbar__section-text">
+                            <b>Unbilled procedures</b>
+                        </div>
+                        <h3 class="title t-toolbar__section-text">
+                            <animated-number />
+                        </h3>
+                    </div>
+                    <div class="md-layout-item  t-toolbar__section md-size-16 ">
+                        <div class=" t-toolbar__section-text ">
+                            <b>All invoices</b>
+                        </div>
+                        <h3 class="title t-toolbar__section-text">
+                            <animated-number />
+                        </h3>
+                    </div>
+                    <div class="md-layout-item  t-toolbar__section md-size-16 ">
+                        <div class=" t-toolbar__section-text">
+                            <b>Discounts</b>
+                        </div>
+                        <h3 class="title t-toolbar__section-text">
+                            <animated-number />
+                        </h3>
+                    </div>
+                    <div class="md-layout-item  t-toolbar__section md-size-16 ">
+                        <div class=" t-toolbar__section-text">
+                            <b>Tax</b>
+                        </div>
+                        <h3 class="title t-toolbar__section-text">
+                            <animated-number />
+                            {{ currentClinic.currencyCode }}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </md-toolbar>
         <md-table
             :md-selected-value.sync="selectedItems"
             :value="tableData"
@@ -117,7 +169,7 @@
 
                     <div v-else-if="field.key === 'total'">
                         {{ item.total }}
-                        <small>{{ clinic.currencyCode }}</small>
+                        <small>{{ currentClinic.currencyCode }}</small>
                     </div>
                     <div v-else-if="field.key === 'tax'">
                         {{ item.tax || 0 }}%
@@ -156,15 +208,12 @@ import components from '@/components';
 import {
     USER_INVOICE_COLUMNS,
 } from '@/constants';
-// import swal from 'sweetalert2';
-import { tObjProp } from '@/mixins';
 
 export default {
     name: 'PatientBillingInvoices',
     components: {
         ...components,
     },
-    mixins: [tObjProp],
     props: {
         items: {
             type: Array,
@@ -204,7 +253,7 @@ export default {
             teethSchema: 'teethSchema',
             jaw: 'jaw',
             patient: 'getPatient',
-            clinic: 'getCurrentClinic',
+            currentClinic: 'getCurrentClinic',
             availableInvoiceTableColumns: 'availableInvoiceTableColumns',
         }),
         invoices() {

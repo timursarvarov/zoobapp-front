@@ -43,7 +43,7 @@
                         textTocolor: patient.ID,
                         acronim: patient.firstName + ' '+ patient.lastName,
                         notification: patient.allergy.length > 0 ? 'A' : '',
-                        path: `patient/${patient.ID}/profile/`
+                        path: `/${$i18n.locale}/patient/${patient.ID}/bio/`
                     }"
                     class="separated-down"
                 />
@@ -243,6 +243,16 @@ export default {
         // UserMenu,
         ZoomCenterTransition,
     },
+    computed: {
+        ...mapGetters({
+            patient: 'getPatient',
+            currentClinic: 'getCurrentClinic',
+            selectedClinic: 'getCurrentClinic',
+        }),
+        backgroundImage() {
+            return SIDEBAR_BACKGROUND_URL;
+        },
+    },
     mounted() {
         const docClasses = document.body.classList;
         const isWindows = navigator.platform.startsWith('Win');
@@ -277,16 +287,6 @@ export default {
             if (this.$sidebar.showSidebar) {
                 this.$sidebar.displaySidebar(false);
             }
-        },
-    },
-    computed: {
-        ...mapGetters({
-            patient: 'getPatient',
-            currentClinic: 'getCurrentClinic',
-            selectedClinic: 'getCurrentClinic',
-        }),
-        backgroundImage() {
-            return SIDEBAR_BACKGROUND_URL;
         },
     },
 };

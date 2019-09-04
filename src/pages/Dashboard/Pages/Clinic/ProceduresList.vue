@@ -148,6 +148,23 @@ export default {
     components: {
         ...components,
     },
+    data() {
+        return {
+            currentSort: 'name',
+            currentSortOrder: 'asc',
+            pagination: {
+                perPage: 25,
+                currentPage: 1,
+                perPageOptions: [25, 50, 100],
+                total: 0,
+            },
+            footerTable: ['Name', 'Email', 'Age', 'Salary', 'Actions'],
+            searchQuery: '',
+            propsToSearch: ['name', 'email', 'age'],
+            searchedData: [],
+            fuseSearch: null,
+        };
+    },
     computed: {
     /** *
              * Returns a page from the searched data or the whole data.
@@ -188,23 +205,6 @@ export default {
                 ? this.searchedData.length
                 : this.tableData.length;
         },
-    },
-    data() {
-        return {
-            currentSort: 'name',
-            currentSortOrder: 'asc',
-            pagination: {
-                perPage: 25,
-                currentPage: 1,
-                perPageOptions: [25, 50, 100],
-                total: 0,
-            },
-            footerTable: ['Name', 'Email', 'Age', 'Salary', 'Actions'],
-            searchQuery: '',
-            propsToSearch: ['name', 'email', 'age'],
-            searchedData: [],
-            fuseSearch: null,
-        };
     },
     watch: {
     /**
