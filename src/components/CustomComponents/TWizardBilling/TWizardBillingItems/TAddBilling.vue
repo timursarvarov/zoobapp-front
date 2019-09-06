@@ -1,51 +1,35 @@
 <template>
     <div class="wizard-tab-content add-billing">
         <md-toolbar class="toolbar-jaw  t-toolbar md-transparent">
-            <t-toolbar-row
-                :headers="headers"
-            />
+            <t-toolbar-row :headers="headers" />
             <div
                 v-if="unselectedProcedures.length > 0"
                 class="md-layout md-toolbar-row md-size-100 md-alignment-center-space-beetwen"
             >
-                <div
-                    ref="autocomplete"
-                    class="manipulations-autocomplite md-layout-item"
-                >
+                <div ref="autocomplete" class="manipulations-autocomplite md-layout-item">
                     <cool-select
                         ref="autocomplete"
                         v-model="selectedProcedure"
                         class="with-action md-field"
-                        :class="[
-                            {'md-focused': coolSelectFocus },
-                        ]"
+                        :class="[{ 'md-focused': coolSelectFocus }]"
                         tabindex="1"
                         :items="unselectedProcedures"
                         :arrows-disable-instant-selection="true"
                         :disable-first-item-select-on-enter="true"
                         item-text="text"
                         item-value="title"
-                        :placeholder="selectedProcedure ? '': 'Select unbilled procedures'"
+                        :placeholder="selectedProcedure ? '' : 'Select unbilled procedures'"
                         @focus="coolSelectFocus = true"
                         @blur="coolSelectFocus = false"
                         @select="setProcedureToAdd"
                     >
-                        <template
-                            v-if="item"
-                            slot="item"
-                            slot-scope="{ item }"
-                        >
+                        <template v-if="item" slot="item" slot-scope="{ item }">
                             <div style="display: flex;">
                                 <md-button class="IZ-select-button md-layout-item">
-                                    <span
-                                        v-if="item.title"
-                                        class="text-left"
-                                    >{{ `${item.code} - ${item.title}` }}
+                                    <span v-if="item.title" class="text-left"
+                                        >{{ `${item.code} - ${item.title}` }}
                                     </span>
-                                    <span
-                                        v-if="item.teeth"
-                                        class="teeth md-layout-item"
-                                    >
+                                    <span v-if="item.teeth" class="teeth md-layout-item">
                                         <span
                                             v-for="(toothID, toothKey) in item.teeth"
                                             :key="toothKey"
@@ -55,10 +39,14 @@
                                         </span>
                                     </span>
 
-                                    <span
-                                        class="text-right"
-                                    >
-                                        {{ `${getManipulationsByProcedureID(item.ID).reduce((a, b) => a + (b.totalPrice || 0), 0)}` }} {{ currencyCode }}
+                                    <span class="text-right">
+                                        {{
+                                            `${getManipulationsByProcedureID(item.ID).reduce(
+                                                (a, b) => a + (b.totalPrice || 0),
+                                                0
+                                            )}`
+                                        }}
+                                        {{ currencyCode }}
                                     </span>
                                 </md-button>
                             </div>
@@ -71,7 +59,8 @@
                                 <span
                                     class="md-layout-item md-size-100"
                                     style="white-space: pre-wrap;oveflow:hidden;"
-                                >No procedures were found.</span>
+                                    >No procedures were found.</span
+                                >
                             </div>
                         </template>
                     </cool-select>
@@ -81,7 +70,7 @@
                 >
                     <md-button
                         :disabled="!selectedProcedure"
-                        :class="[{'md-primary': selectedProcedure}]"
+                        :class="[{ 'md-primary': selectedProcedure }]"
                         class="md-button md-just-icon md-round"
                         @click="addProcedure()"
                     >
@@ -96,35 +85,25 @@
                 v-for="(p, key) in selectedProcedures"
                 :key="key"
                 class="procedure"
-                :class="[
-                    {'just-added': p.justAdded},
-                    {'to-delete': p.ID === itemToDelete.ID},
-                ]"
+                :class="[{ 'just-added': p.justAdded }, { 'to-delete': p.ID === itemToDelete.ID }]"
             >
-                <hr
-                    class="md-size-100 md-layout-item"
-                >
-                <div
-                    class="procedure_header"
-                >
+                <hr class="md-size-100 md-layout-item" />
+                <div class="procedure_header">
                     <div class="procedure_header-num">
-                        <b>{{ key+1 }}</b>
+                        <b>{{ key + 1 }}</b>
                     </div>
                     <div class="procedure_header-title">
                         <div class="md-layout md-layout-item md-size-100">
                             <b>{{ p.code }} - {{ p.title }}</b>
-                        <span
-                            v-if="p.teeth"
-                            class="teeth md-layout-item"
-                        >
-                            <span
-                                v-for="(toothID, toothKey) in p.teeth"
-                                :key="toothKey"
-                                class="tooth procedures"
-                            >
-                                {{ toothKey | toCurrentTeethSystem }}
+                            <span v-if="p.teeth" class="teeth md-layout-item">
+                                <span
+                                    v-for="(toothID, toothKey) in p.teeth"
+                                    :key="toothKey"
+                                    class="tooth procedures"
+                                >
+                                    {{ toothKey | toCurrentTeethSystem }}
+                                </span>
                             </span>
-                        </span>
                         </div>
                         <div class="md-layout-item md-size-100">
                             <small>{{ patient.plans[p.planID].title }}</small>
@@ -133,14 +112,19 @@
                     <div class="procedure_header-price">
                         <div class="procedure_header-created md-layout-item">
                             <span class="md-medium-hide">
-                                {{ p.created | moment("from") }}
-                                <br>
+                                {{ p.created | moment('from') }}
+                                <br />
                             </span>
-                            <small>{{ p.created | moment("calendar") }}</small>
+                            <small>{{ p.created | moment('calendar') }}</small>
                         </div>
                         <animated-number
                             :to-fix="2"
-                            :value="getManipulationsByProcedureID(p.ID).reduce((a, b) => a + (b.totalPrice || 0), 0)"
+                            :value="
+                                getManipulationsByProcedureID(p.ID).reduce(
+                                    (a, b) => a + (b.totalPrice || 0),
+                                    0
+                                )
+                            "
                         />
                         &nbsp;{{ currencyCode }}
                     </div>
@@ -159,54 +143,42 @@
                         class="no-header small"
                         table-header-color="green"
                     >
-                        <md-table-row
-                            slot="md-table-row"
-                            slot-scope="{ item }"
-                        >
+                        <md-table-row slot="md-table-row" slot-scope="{ item }">
                             <md-table-cell md-label="Code">
                                 <small>{{ item.code }}</small>
                             </md-table-cell>
-                            <md-table-cell
-                                class="manipulation-title"
-                                md-label="Title"
-                            >
+                            <md-table-cell class="manipulation-title" md-label="Title">
                                 <small>{{ item.title }}</small>
                             </md-table-cell>
-                            <md-table-cell
-                                md-label="Qty"
-                                class="manipulations-input"
-                            >
+                            <md-table-cell md-label="Qty" class="manipulations-input">
                                 <small>{{ item.qty }}</small>
                             </md-table-cell>
                             <md-table-cell>*</md-table-cell>
                             <md-table-cell md-label="Price">
-                                <small>{{ (item.price? item.price: 0).toFixed(2) }}</small>
+                                <small>{{ (item.price ? item.price : 0).toFixed(2) }}</small>
                             </md-table-cell>
                             <md-table-cell md-label="Total">
-                                <small>{{ (item.totalPrice).toFixed(2) }} &nbsp;{{ currencyCode }}</small>
+                                <small
+                                    >{{ item.totalPrice.toFixed(2) }} &nbsp;{{
+                                        currencyCode
+                                    }}</small
+                                >
                             </md-table-cell>
                         </md-table-row>
                     </md-table>
                 </div>
             </div>
         </div>
-        <hr>
+        <hr />
         <div class="md-layout">
             <div class="total md-layout-item md-layout md-size-100">
                 <div class="md-layout-item text-right">
                     <div>
-                        <div
-                            class="category"
-                        >
+                        <div class="category">
                             <b>Sum</b>
                         </div>
-                        <h3
-                            class="title"
-                        >
-                            <animated-number
-                                :to-fix="2"
-                                :value="totalPrice"
-                            />
+                        <h3 class="title">
+                            <animated-number :to-fix="2" :value="totalPrice" />
                             <small>&nbsp;{{ currencyCode }}</small>
                         </h3>
                     </div>
@@ -219,9 +191,12 @@
                 <div class="md-layout-item md-size-30">
                     <md-field
                         :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('discount') && touched.discount},
-                            {'md-error': errors.has('discount')}]"
+                            { 'with-subline': true },
+                            {
+                                'md-valid': !errors.has('discount') && touched.discount
+                            },
+                            { 'md-error': errors.has('discount') }
+                        ]"
                     >
                         <label>Discount %</label>
                         <md-input
@@ -240,7 +215,7 @@
                                 v-show="errors.has('discount')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="invoice.discount='',focusOn('discount')"
+                                @click="(invoice.discount = ''), focusOn('discount')"
                             >
                                 <md-icon class="error">
                                     close
@@ -262,25 +237,14 @@
                 </div>
                 <div class="total text-right md-layout-item md-layout md-size-30">
                     <div>
-                        <p
-                            class="category"
-                            :style="{color: getGreenToRed(invoice.discount)}"
-                        >
-                            <b>After Discount </b>&nbsp;(
-                            - <animated-number
-                                :to-fix="2"
-                                :value="discountSum||0"
-                            />
-                            <small>&nbsp;{{ currencyCode }}</small>)
+                        <p class="category" :style="{ color: getGreenToRed(invoice.discount) }">
+                            <b>After Discount </b>&nbsp;( -
+                            <animated-number :to-fix="2" :value="discountSum || 0" />
+                            <small>&nbsp;{{ currencyCode }}</small
+                            >)
                         </p>
-                        <h3
-                            :style="{color: getGreenToRed(invoice.discount)}"
-                            class="title"
-                        >
-                            <animated-number
-                                :to-fix="2"
-                                :value="afterDiscount"
-                            />
+                        <h3 :style="{ color: getGreenToRed(invoice.discount) }" class="title">
+                            <animated-number :to-fix="2" :value="afterDiscount" />
                             <small>&nbsp;{{ currencyCode }}</small>
                         </h3>
                     </div>
@@ -294,9 +258,10 @@
                 <div class="md-layout-item md-size-30">
                     <md-field
                         :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('tax') && touched.tax},
-                            {'md-error': errors.has('tax')}]"
+                            { 'with-subline': true },
+                            { 'md-valid': !errors.has('tax') && touched.tax },
+                            { 'md-error': errors.has('tax') }
+                        ]"
                     >
                         <label>Tax %</label>
                         <md-input
@@ -314,7 +279,7 @@
                                 v-show="errors.has('tax')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="invoice.tax='',focusOn('tax')"
+                                @click="(invoice.tax = ''), focusOn('tax')"
                             >
                                 <md-icon class="error">
                                     close
@@ -325,7 +290,10 @@
                             <md-button
                                 v-show="!errors.has('tax') && touched.tax"
                                 tabindex="-1"
-                                class="md-button md-icon-button md-dense md-input-action noselect md-simple"
+                                class="md-button
+                                md-icon-button md-dense
+                                md-input-action
+                                noselect md-simple"
                             >
                                 <md-icon class="success">
                                     done
@@ -336,23 +304,14 @@
                 </div>
                 <div class="total text-right md-layout-item md-layout md-size-30">
                     <div>
-                        <p
-                            class="category"
-                        >
+                        <p class="category">
                             <b>After Tax</b>&nbsp;(
-                            <animated-number
-                                :to-fix="2"
-                                :value="taxSum"
-                            />
-                            <small>&nbsp;{{ currencyCode }}</small>)
+                            <animated-number :to-fix="2" :value="taxSum" />
+                            <small>&nbsp;{{ currencyCode }}</small
+                            >)
                         </p>
-                        <h3
-                            class="title"
-                        >
-                            <animated-number
-                                :to-fix="2"
-                                :value="afterTax"
-                            />
+                        <h3 class="title">
+                            <animated-number :to-fix="2" :value="afterTax" />
                             <small>&nbsp;{{ currencyCode }}</small>
                         </h3>
                     </div>
@@ -365,12 +324,15 @@
                 <div class="md-layout-item md-size-30">
                     <md-datepicker
                         v-model="invoice.dueDate"
-                        v-validate="{'is_after': new Date()}"
+                        v-validate="{ is_after: new Date() }"
                         md-immediately
                         :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('dueDate') && touched.dueDate},
-                            {'md-error': errors.has('dueDate')}]"
+                            { 'with-subline': true },
+                            {
+                                'md-valid': !errors.has('dueDate') && touched.dueDate
+                            },
+                            { 'md-error': errors.has('dueDate') }
+                        ]"
                         name="dueDate"
                         :md-disabled-dates="disabledDates"
                     >
@@ -381,7 +343,7 @@
                                 v-show="errors.has('dueDate')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="invoice.dueDate='',focusOn('dueDate')"
+                                @click="(invoice.dueDate = ''), focusOn('dueDate')"
                             >
                                 <md-icon class="error">
                                     close
@@ -392,7 +354,11 @@
                             <md-button
                                 v-show="!errors.has('dueDate') && touched.dueDate"
                                 tabindex="-1"
-                                class="md-button md-icon-button md-dense md-input-action noselect md-simple"
+                                class="md-button
+                                md-icon-button md-dense
+                                md-input-action
+                                noselect
+                                md-simple"
                             >
                                 <md-icon class="success">
                                     done
@@ -403,38 +369,26 @@
                 </div>
                 <div class="total text-right md-layout-item md-layout md-size-30">
                     <div>
-                        <p
-                            class="category"
-                        >
+                        <p class="category">
                             <b>Due date</b>
                         </p>
-                        <h3
-                            v-if="invoice.dueDate"
-                            class="title"
-                        >
+                        <h3 v-if="invoice.dueDate" class="title">
                             {{ invoice.dueDate | moment('ll') }}
                         </h3>
                     </div>
                 </div>
             </div>
-            <hr class="md-layout-item md-size-100">
+            <hr class="md-layout-item md-size-100" />
             <div
                 style="padding-bottom:22px;"
                 class="md-layout-item md-layout text-right  md-size-100"
             >
                 <div class="md-layout-item ">
-                    <p
-                        class="category"
-                    >
+                    <p class="category">
                         <b>Total Sum</b>
                     </p>
-                    <h2
-                        class="title"
-                    >
-                        <animated-number
-                            :to-fix="2"
-                            :value="afterTax"
-                        />
+                    <h2 class="title">
+                        <animated-number :to-fix="2" :value="afterTax" />
                         <small>&nbsp;{{ currencyCode }}</small>
                     </h2>
                 </div>
@@ -452,21 +406,16 @@
         >
             <div class="snackbar-text-wrapper">
                 Delete
-                {{ itemToDelete.code }} -
-                {{ itemToDelete.title }}?
+                {{ itemToDelete.code }} - {{ itemToDelete.title }}?
             </div>
             <div>
                 <md-button
                     class="md-simple"
-                    @click="showDeleteItemSnackbar = false, itemToDelete = {}"
+                    @click="(showDeleteItemSnackbar = false), (itemToDelete = {})"
                 >
                     cancel
                 </md-button>
-                <md-button
-                    :disabled="deleting"
-                    class="md-warning"
-                    @click="deleteItem()"
-                >
+                <md-button :disabled="deleting" class="md-warning" @click="deleteItem()">
                     <div v-if="deleting">
                         <md-progress-spinner
                             class="t-white"
@@ -474,7 +423,7 @@
                             :md-stroke="2"
                             md-mode="indeterminate"
                         />
-                &nbsp;
+                        &nbsp;
                         <span>
                             Deleting...
                         </span>
@@ -496,9 +445,8 @@ import { SlideYDownTransition } from 'vue2-transitions';
 import { CoolSelect } from 'vue-cool-select';
 import { mapGetters } from 'vuex';
 import animatedNumber from '@/components/AnimatedNumber';
-import {NOTIFY} from '@/constants';
+import { NOTIFY } from '@/constants';
 import TToolbarRow from '@/components/CustomComponents/TToolbarRow';
-
 
 export default {
     name: 'TAddBilling',
@@ -506,7 +454,7 @@ export default {
         SlideYDownTransition,
         CoolSelect,
         TToolbarRow,
-        animatedNumber,
+        animatedNumber
     },
     model: {
         prop: 'selectedProcedures',
@@ -515,16 +463,16 @@ export default {
     props: {
         size: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         invoiceToCreate: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         selectedProcedures: {
             type: Array,
-            default: () => [],
-        },
+            default: () => []
+        }
     },
     data() {
         return {
@@ -538,9 +486,9 @@ export default {
                 note: null,
                 total: null,
                 payments: [],
-                procedures: [],
+                procedures: []
             },
-            deleting:false,
+            deleting: false,
             showDeleteItemSnackbar: false,
             itemToDelete: {},
             coolSelectFocus: false,
@@ -548,34 +496,32 @@ export default {
             manipulationsNum: 0,
             selectedProcedure: '',
             modelValidations: {
-                dueDate: {
-                },
-                discount: {
-                },
+                dueDate: {},
+                discount: {},
                 tax: {
-                    min: 0,
+                    min: 0
                 },
                 round: {
-                    min: 0,
-                },
+                    min: 0
+                }
             },
             touched: {
                 dueDate: false,
                 discount: false,
                 tax: false,
-                round: false,
-            },
+                round: false
+            }
         };
     },
     computed: {
         ...mapGetters({
-            patient:'getPatient',
+            patient: 'getPatient',
             getManipulationsByProcedureID: 'getManipulationsByProcedureID',
             getManipulationsByProcedureIDs: 'getManipulationsByProcedureIDs',
-            getAproovedPlansProcedures: 'getAproovedPlansProcedures',
-            clinic: 'getCurrentClinic',
+            getUnbilledAndAproovedPlansProcedures: 'getUnbilledAndAproovedPlansProcedures',
+            clinic: 'getCurrentClinic'
         }),
-        headers(){
+        headers() {
             const headers = [
                 {
                     title: 'Sum',
@@ -584,49 +530,57 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: this.totalPrice,
                     valuePostfix: this.currencyCode,
-                    valueToFix: 2,
+                    valueToFix: 2
                 },
                 {
                     title: 'Discount',
                     subTitlePrefix: parseInt(this.invoice.discount, 10) || 0,
                     subTitlePostfix: '%',
                     subTitleToFix: 0,
-                    valuePrefix:  parseInt(this.discountSum, 10),
+                    valuePrefix: parseInt(this.discountSum, 10),
                     valueToFix: 2,
-                    valuePostfix: this.currencyCode,
+                    valuePostfix: this.currencyCode
                 },
                 {
                     title: 'Tax',
-                    subTitlePrefix:  parseInt(this.invoice.tax, 10) || 0,
-                    subTitlePostfix:  '%',
+                    subTitlePrefix: parseInt(this.invoice.tax, 10) || 0,
+                    subTitlePostfix: '%',
                     subTitleToFix: 0,
                     valuePrefix: parseInt(this.taxSum, 10),
                     valueToFix: 2,
-                    valuePostfix:this.currencyCode,
+                    valuePostfix: this.currencyCode
                 },
                 {
                     title: 'Total sum',
-                    subTitlePrefix: parseInt(this.getManipulationsByProcedureIDs(this.selectedProcedures.map(p => p.ID)).length, 10),
+                    subTitlePrefix: parseInt(
+                        this.getManipulationsByProcedureIDs(this.selectedProcedures.map(p => p.ID))
+                            .length,
+                        10
+                    ),
                     subTitlePostfix: 'manipulations',
                     subTitleToFix: 0,
                     valuePrefix: parseInt(this.afterTax, 10),
                     valueToFix: 2,
-                    valuePostfix: this.currencyCode,
-                },
+                    valuePostfix: this.currencyCode
+                }
             ];
             return headers;
         },
-        currencyCode(){
-            return this.clinic.currencyCode
+        currencyCode() {
+            return this.clinic.currencyCode;
         },
-        totalPrice(){
-            let sum = this.getManipulationsByProcedureIDs(this.selectedProcedures.map(p => p.ID)).reduce((a, b) => a + b.totalPrice, 0);
-            return sum || 0
+        totalPrice() {
+            const sum = this.getManipulationsByProcedureIDs(
+                this.selectedProcedures.map(p => p.ID)
+            ).reduce((a, b) => a + b.totalPrice, 0);
+            return sum || 0;
         },
         unselectedProcedures() {
-            const procedures = this.getAproovedPlansProcedures.filter(p => !this.selectedProcedures.find(searchedP => searchedP.ID === p.ID));
+            const procedures = this.getUnbilledAndAproovedPlansProcedures.filter(
+                p => !this.selectedProcedures.find(searchedP => searchedP.ID === p.ID)
+            );
             procedures.forEach((p, i) => {
-                procedures[i]['text'] = `${p.code} - ${p.title}`;
+                procedures[i].text = `${p.code} - ${p.title}`;
             });
             return procedures || [];
         },
@@ -641,27 +595,27 @@ export default {
         },
         afterTax() {
             const tax = this.invoice.tax < 0 ? 0 : this.invoice.tax;
-            const absTax = parseInt(((this.afterDiscount / 100) * tax), 10);
+            const absTax = parseInt((this.afterDiscount / 100) * tax, 10);
             const taxAbs = parseInt(this.afterDiscount, 10) + absTax;
             return taxAbs > 0 ? taxAbs : 0;
         },
         taxSum() {
-            const absTax = this.afterDiscount ? ((this.afterDiscount / 100) * this.invoice.tax) : 0;
+            const absTax = this.afterDiscount ? (this.afterDiscount / 100) * this.invoice.tax : 0;
             return this.invoice.tax > 0 ? absTax : 0;
-        },
+        }
     },
     watch: {
-        'invoice.discount': function () {
+        'invoice.discount': function() {
             this.touched.discount = true;
             // this.invoice.round = this.afterDiscount;
         },
         // afterDiscount(value) {
         //     this.invoice.round = value;
         // },
-        'invoice.dueDate': function () {
+        'invoice.dueDate': function() {
             this.touched.dueDate = true;
         },
-        'invoice.tax': function () {
+        'invoice.tax': function() {
             this.touched.tax = true;
             this.invoice.total = this.afterTax;
         },
@@ -678,11 +632,11 @@ export default {
             handler(newValue) {
                 this.$emit('onCreateInvoice', newValue);
             },
-            deep: true,
-        },
+            deep: true
+        }
     },
     created() {
-        this.invoice.procedures = this.selectedProcedures.map(p=>p.ID);
+        this.invoice.procedures = this.selectedProcedures.map(p => p.ID);
         this.invoice.tax = this.clinic.tax;
         this.invoice.total = this.afterTax;
         if (!this.invoice.created) {
@@ -690,13 +644,13 @@ export default {
         }
     },
     methods: {
-        setItemToDelete(item){
+        setItemToDelete(item) {
             this.showDeleteItemSnackbar = true;
-            this.itemToDelete= item
+            this.itemToDelete = item;
         },
-        deleteItem(){
-            let index  = this.selectedProcedures.findIndex(p=> p.ID === this.itemToDelete.ID)
-            if(index > -1){
+        deleteItem() {
+            const index = this.selectedProcedures.findIndex(p => p.ID === this.itemToDelete.ID);
+            if (index > -1) {
                 this.selectedProcedures.splice(index, 1);
             }
             this.showDeleteItemSnackbar = false;
@@ -712,7 +666,7 @@ export default {
             this.touched.round = true;
             this.touched.discount = true;
             this.touched.dueDate = true;
-            return this.$validator.validateAll().then((res) => {
+            return this.$validator.validateAll().then(res => {
                 this.$emit('on-validated', res, 'step2');
                 this.$emit('validated-code', this.code);
                 this.$emit('onCreateInvoice', this.invoice);
@@ -728,11 +682,12 @@ export default {
             this.$emit('change', this.procedureToAdd);
             this.$store.dispatch(NOTIFY, {
                 settings: {
-                    message: `Procedure ${this.procedureToAdd.code} ${this.procedureToAdd.title} added to invoice list`,
-                    type: 'success',
-                },
+                    message: `Procedure ${this.procedureToAdd.code} ${
+                        this.procedureToAdd.title
+                    } added to invoice list`,
+                    type: 'success'
+                }
             });
-
         },
         getGreenToRed(percent) {
             let p = '';
@@ -743,10 +698,10 @@ export default {
             } else {
                 p = 100 - percent;
             }
-            const r = p < 50 ? 225 : Math.floor(255 - (p * 2 - 100) * 255 / 100);
-            const g = p >= 50 ? 225 : Math.floor((p * 2) * 255 / 100);
+            const r = p < 50 ? 225 : Math.floor(255 - ((p * 2 - 100) * 255) / 100);
+            const g = p >= 50 ? 225 : Math.floor((p * 2 * 255) / 100);
             return `rgb(${r},${g},0)`;
-        },
-    },
+        }
+    }
 };
 </script>

@@ -1,4 +1,3 @@
-
 <template lang="html">
     <div
         class="md-toolbar-row md-layout t-toolbar"
@@ -16,7 +15,8 @@
                         <animated-number
                             :to-fix="head.subTitleToFix"
                             :value="head.subTitlePrefix"
-                        /> &nbsp;
+                        />
+                        &nbsp;
                         {{ head.subTitlePostfix }}
                     </small>
                     <small v-else>
@@ -47,17 +47,15 @@
 import animatedNumber from '@/components/AnimatedNumber';
 
 export default {
-    name: "TToolbarRow",
+    name: 'TToolbarRow',
     components: {
         animatedNumber
     },
-    props:{
+    props: {
         headers: {
             type: Array,
-            default: ()=>[],
+            default: () => []
         }
-    },
+    }
 };
 </script>
-<style lang="scss">
-

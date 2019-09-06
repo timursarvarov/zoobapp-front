@@ -120,7 +120,7 @@ import PatientItemsWizard from './PatientTreatment/PatientItemsWizard'
 
 export default {
     beforeRouteEnter(to, from, next) {
-        if (!store.getters.getPatient.ID || `${store.getters.getPatient.ID}` !== `${to.params.patientID}`) {
+        if (!store.getters.getPatient.ID || (`${store.getters.getPatient.ID}` !== `${to.params.patientID}`)) {
             store.dispatch(PATIENT_GET, {
                 patientID: to.params.patientID,
             }).then((patient) => {
@@ -130,7 +130,8 @@ export default {
                     });
                 }
             }).catch((err => {
-                next();
+                next(to);
+                throw err;
             }))
         }else {
             next();

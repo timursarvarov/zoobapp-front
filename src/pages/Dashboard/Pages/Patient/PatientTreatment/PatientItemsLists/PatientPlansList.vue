@@ -25,7 +25,7 @@
                 :id="`${plan.ID}`"
                 :key="key"
                 md-dynamic-height
-                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan/${plan.ID}/procedures`"
+                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan/${plan.ID}`"
                 :md-label="`${plan.name} ${getPlanTotalPrice(plan.ID)}`"
                 :md-template-data="{
                     badge: plan.state === 1 ? 'aprooved':'',
@@ -60,7 +60,6 @@ import {
     PATIENT_PLAN_SWITCH_CURRENT,
 } from '@/constants';
 import components from '@/components';
-import ItemsList from './ItemsList.vue';
 
 export default {
     beforeRouteEnter(to, from, next) {

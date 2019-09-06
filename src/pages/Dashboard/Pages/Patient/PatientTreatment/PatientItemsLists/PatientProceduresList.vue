@@ -42,12 +42,27 @@
                 </div>
             </div>
         </md-toolbar>
+        <router-view></router-view>
         <t-nosology-table
             :items="currentPlanProcedures"
             current-type="procedures"
             :selected-items="selectedItems"
             @onSelected="onSelected"
-        />
+        >
+        <template slot="emptyState">
+            <md-table-empty-state
+                    :md-label="`No procedures found`"
+                    md-description="Scroll top, and create a new one"
+                >
+                    <md-button
+                        class="md-primary md-raised"
+                        @click="scrollToTop()"
+                    >
+                        Scroll Top
+                    </md-button>
+                </md-table-empty-state>
+        </template>
+        </t-nosology-table>
         <md-snackbar
             v-if="showDeleteItemSnackbar"
             :md-position="'center'"
@@ -102,7 +117,6 @@ import {
     NOTIFY,
     PATIENT_PLAN_EDIT,
     PATIENT_PLAN_DELETE,
-    PATIENT_ITEM_VISIBILITY_TOGGLE,
 } from '@/constants';
 import components from '@/components';
 
@@ -189,6 +203,9 @@ export default {
         },
     },
     methods: {
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
         unselectAll(){
             this.selectedItems = [];
             this.showDeleteItemSnackbar = false;
@@ -208,6 +225,7 @@ export default {
             this.$emit('showItemInfo', params);
         },
         redirectToPlan(){
+            console.log('redirested')
             this.$router.push({
                 name: 'procedures',
                 params: {
@@ -232,8 +250,7 @@ export default {
                         type: 'success',
                     },
                 });
-                console.log(err);
-            }).then(() => {
+    }).then(() => {
                 this.deleting = false;
                 this.showDeleteItemSnackbar = false;
             });

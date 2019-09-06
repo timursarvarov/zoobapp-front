@@ -24,7 +24,7 @@ export default {
     getAvailableDiagnosisTableColumns: state => state.availableDiagnosisTableColumns,
     getAvailableProceduresTableColumns: state => state.availableProceduresTableColumns,
     getAvailableBillingTableColumns: state => state.availableBillingTableColumns,
-    availableInvoiceTableColumns: state => state.availableInvoiceTableColumns,
+    getAvailableInvoiceTableColumns: state => state.availableInvoiceTableColumns,
     getLang: (state) => {
         if (state.profile.ID) {
             return state.profile.lang;

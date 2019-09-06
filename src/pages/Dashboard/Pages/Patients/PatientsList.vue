@@ -143,7 +143,6 @@
                                     :key="field.key"
                                     :md-sort-by="field.key"
                                     :md-label="getFieldName(field.key).toString()"
-                                    @click="goToPatient(item)"
                                 >
                                     <div
                                         class="pointer"
@@ -491,37 +490,17 @@ export default {
             this.patientsTableColumns = columns2 || columns1;
         },
         goToPatient(patient) {
+            const lang = this.$i18n.locale;
             if (patient) {
                 this.$router.push({
                     name: 'Bio',
                     params: {
-                        lang: this.$i18n.locale,
+                        lang,
                         patientID: patient.ID,
                     },
                 });
             }
         },
-        // goToPatient(patient) {
-        //     if (patient.ID) {
-        //         if (this.patient.ID && this.patient.ID === patient.ID) {
-        //             this.$store.dispatch(PATIENT_GET, {
-        //                 patientID: this.$route.params.patientID,
-        //             })
-        //                 .then((patientResponse) => {
-        //                     if (patientResponse) {
-        //                         this.goToPatient(patientResponse);
-        //                     }
-        //                 })
-        //                 .catch((err) => {
-        //                     throw new Error(err);
-        //                 })
-        //                 .then(() => {
-        //                 });
-        //         } else {
-        //             this.goToPatient(patient);
-        //         }
-        //     }
-        // },
         customSort(value) {
             return value;
         },
@@ -670,44 +649,44 @@ export default {
         width: inherit;
         margin: 0;
     }
-    .table-wrapper {
-        position: inherit;
-        .patient-name {
-            // max-width: 90%;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
-        .patient-name {
-            text-overflow: ellipsis;
-            width: fit-content;
-        }
-        .md-tabs-content .with-header table thead {
-            display: contents;
-        }
-        .paginated-table table > tbody > tr > td {
-            width: fit-content;
-        }
-        table > thead > tr > th.md-table-head.md-table-cell-selection {
-            .md-table-head-label {
-                width: 30px;
-                margin-left: 23px;
-            }
-        }
-        .table-settings {
-            position: absolute;
-            margin-top: 15px;
-        }
-        .table-wrapper-preloader {
-            position: absolute;
-            z-index: 30;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: white;
-            opacity: 0.8;
-        }
-    }
+    // .table-wrapper {
+    //     position: inherit;
+    //     .patient-name {
+    //         // max-width: 90%;
+    //         text-overflow: ellipsis;
+    //         overflow: hidden;
+    //     }
+    //     .patient-name {
+    //         text-overflow: ellipsis;
+    //         width: fit-content;
+    //     }
+    //     .md-tabs-content .with-header table thead {
+    //         display: contents;
+    //     }
+    //     .paginated-table table > tbody > tr > td {
+    //         width: fit-content;
+    //     }
+    //     table > thead > tr > th.md-table-head.md-table-cell-selection {
+    //         .md-table-head-label {
+    //             width: 30px;
+    //             margin-left: 23px;
+    //         }
+    //     }
+    //     .table-settings {
+    //         position: absolute;
+    //         margin-top: 15px;
+    //     }
+    //     .table-wrapper-preloader {
+    //         position: absolute;
+    //         z-index: 30;
+    //         top: 0;
+    //         left: 0;
+    //         right: 0;
+    //         bottom: 0;
+    //         background-color: white;
+    //         opacity: 0.8;
+    //     }
+    // }
     .md-card .md-card-actions {
         border: 0;
         margin-left: 20px;

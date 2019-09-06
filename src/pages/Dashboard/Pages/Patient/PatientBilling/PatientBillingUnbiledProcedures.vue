@@ -1,12 +1,7 @@
-
 <template>
     <div class="items-list-wrapper">
-        <md-toolbar
-            class="md-transparent"
-        >
-            <t-toolbar-row
-                :headers="headers"
-            />
+        <md-toolbar class="md-transparent">
+            <t-toolbar-row :headers="headers" />
         </md-toolbar>
         <t-nosology-table
             :items="filteredItems"
@@ -14,10 +9,7 @@
             current-type="billing"
             @onSelected="onSelected"
         >
-            <template
-                v-if="plansListOptions.length>0"
-                slot="toolbar"
-            >
+            <template v-if="plansListOptions.length > 0" slot="toolbar">
                 <md-toolbar class="md-transparent   ">
                     <md-checkbox
                         v-for="planID in plansListOptions"
@@ -29,24 +21,25 @@
                     </md-checkbox>
                 </md-toolbar>
             </template>
-            <template slot="he2ader">
-                <md-field>
-                    <label for="selectedPlans">Selected Plans</label>
-                    <md-select
-                        id="selectedPlans"
-                        v-model="selectedPlans"
-                        name="selectedPlans"
-                        multiple
+             <template slot="emptyState">
+                <md-table-empty-state
+                        :md-label="`No unbilled procedures found`"
+                        md-description="To create invoice, firstly please aproove plan, and select unbilled procedures here"
                     >
-                        <md-option
-                            v-for="planID in plansListOptions"
-                            :key="planID"
-                            :value="planID"
+                        <md-button
+                            class="md-simple md-primary"
+                            :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`"
                         >
-                            {{ patient.plans[planID].name }}{{ getPlanTotalPrice(planID) }}
-                        </md-option>
-                    </md-select>
-                </md-field>
+                            Go to plans
+                        </md-button>
+                        <md-button
+                            v-if="patient.invoices"
+                            class="md-primary"
+                            :to="`/${$i18n.locale}/patient/${patient.ID}/billing/invoices`"
+                        >
+                            Go to Invoices
+                        </md-button>
+                    </md-table-empty-state>
             </template>
         </t-nosology-table>
         <md-snackbar
@@ -66,27 +59,17 @@
                 <md-button
                     v-if="selectedItems.length === filteredItems.length"
                     class="md-simple"
-                    @click="selectedItems = [], showSnackbar=false"
+                    @click="(selectedItems = []), (showSnackbar = false)"
                 >
                     Unselect
                 </md-button>
-                <md-button
-                    v-else
-                    class="md-simple"
-                    @click="selectedItems = filteredItems"
-                >
+                <md-button v-else class="md-simple" @click="selectedItems = filteredItems">
                     Select all
                 </md-button>
-                <md-button
-                    class="md-simple"
-                    @click="showSnackbar = false"
-                >
+                <md-button class="md-simple" @click="showSnackbar = false">
                     Complete
                 </md-button>
-                <md-button
-                    class="md-success"
-                    @click="showCreateInvoice()"
-                >
+                <md-button class="md-success" @click="showCreateInvoice()">
                     Create invoice
                 </md-button>
             </div>
@@ -100,16 +83,15 @@ import { USER_BILLING_COLUMNS } from '@/constants';
 
 export default {
     components: {
-        ...components,
+        ...components
     },
-    props: {
-    },
+    props: {},
     data() {
         return {
             selectedPlans: [],
             selectedItems: [],
             showForm: false,
-            showSnackbar: false,
+            showSnackbar: false
         };
     },
     computed: {
@@ -117,41 +99,44 @@ export default {
             patient: 'getPatient',
             currentClinic: 'getCurrentClinic',
             availableBillingTableColumns: 'availableBillingTableColumns',
-            aproovedPlansProcedures: 'getAproovedPlansProcedures',
+            aproovedPlansProcedures: 'getUnbilledAndAproovedPlansProcedures',
             getManipulationsByProcedureID: 'getManipulationsByProcedureID',
             getManipulationsByProcedureIDs: 'getManipulationsByProcedureIDs',
-            manipulationsByPlanID: 'getManipulationsByPlanID',
+            manipulationsByPlanID: 'getManipulationsByPlanID'
         }),
-        filteredItems(){
-            const procedures = this.lodash.cloneDeep(this.aproovedPlansProcedures)
-            return procedures.filter(p=> {
-                return this.selectedPlans.includes(p.planID)
+        filteredItems() {
+            const procedures = this.lodash.cloneDeep(this.aproovedPlansProcedures);
+            return procedures.filter(p => {
+                return this.selectedPlans.includes(p.planID);
             });
         },
-        items(){
+        items() {
             return this.aproovedPlansProcedures || [];
         },
-        plansListOptions(){
-            let plans = []
+        plansListOptions() {
+            let plans = [];
             this.items.forEach(procedure => {
-                if(!plans.includes(procedure.planID)){
-                    plans.push(procedure.planID)
+                if (!plans.includes(procedure.planID)) {
+                    plans.push(procedure.planID);
                 }
             });
-            return plans
+            return plans;
         },
-        totalPrice(){
-            let sum = this.getManipulationsByProcedureIDs(this.selectedItems.map(p => p.ID)).reduce((a, b) => a + b.totalPrice, 0);
-            return sum || 0
+        totalPrice() {
+            let sum = this.getManipulationsByProcedureIDs(this.selectedItems.map(p => p.ID)).reduce(
+                (a, b) => a + b.totalPrice,
+                0
+            );
+            return sum || 0;
         },
-        headers(){
+        headers() {
             const headers = [
                 {
                     title: 'Ballance',
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     valuePrefix: 2,
-                    valuePostfix: this.currentClinic.currencyCode,
+                    valuePostfix: this.currentClinic.currencyCode
                 },
                 {
                     title: 'Unbilled Procedures',
@@ -160,7 +145,7 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: parseInt(this.items.length, 10),
                     valueToFix: 0,
-                    valuePostfix: null,
+                    valuePostfix: null
                 },
                 {
                     title: 'All invoices',
@@ -169,7 +154,7 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: 0,
                     valueToFix: 0,
-                    valuePostfix: null,
+                    valuePostfix: null
                 },
                 {
                     title: 'Discounts',
@@ -178,7 +163,7 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: 0,
                     valueToFix: 0,
-                    valuePostfix: null,
+                    valuePostfix: null
                 },
                 {
                     title: 'Tax',
@@ -187,93 +172,89 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: 0,
                     valueToFix: 2,
-                    valuePostfix: this.currentClinic.currencyCode,
-                },
+                    valuePostfix: this.currentClinic.currencyCode
+                }
             ];
             return headers;
-        },
+        }
     },
-    watch:{
-        showSnackbar(val){
-            if(!val){
-                this.selectedItems =[];
+    watch: {
+        showSnackbar(val) {
+            if (!val) {
+                this.selectedItems = [];
             }
         }
     },
-    created (){
+    created() {
         this.selectedPlans = this.lodash.cloneDeep(this.plansListOptions);
     },
     methods: {
         showCreateInvoice() {
-            (this.showSnackbar = false),
-            this.$emit('onCreateInvoice', this.selectedItems);
+            (this.showSnackbar = false), this.$emit('onCreateInvoice', this.selectedItems);
         },
         onSelected(items) {
             this.selectedItems = items;
             this.showSnackbar = items.length > 0;
         },
         getPlanTotalPrice(planID) {
-            const totalPrice = this.manipulationsByPlanID(planID).reduce((a, b) => a + (b.totalPrice || 0), 0);
+            const totalPrice = this.manipulationsByPlanID(planID).reduce(
+                (a, b) => a + (b.totalPrice || 0),
+                0
+            );
             return totalPrice
                 ? ` - ${totalPrice.toFixed(2)} ${this.currentClinic.currencyCode}`
                 : '';
-        },
-    },
+        }
+    }
 };
 </script>
 
-<style lang="scss"  >
-.items-list-wrapper {
-    .md-table-cell-container {
-        overflow: hidden;
-        .teeth {
-            max-width: 150px;
-            width: 14vw;
-            min-width: 50px;
-            text-overflow: ellipsis;
-            // word-wrap: break-word;
-            overflow: hidden;
-        }
-        .code {
-            width: 20px;
-        }
-    }
-    .manipulations {
-        max-width: 30vw;
-        .items-manipulations_wrapper {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            align-items: stretch;
-            display: flex;
-            .text-left {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                text-align: left;
-                // max-width: 70%;
-            }
-            .text-right {
-                flex-grow: 1;
-                // max-width: 30%;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                text-align: right;
-            }
-        }
-    }
-    .md-card .md-card-actions {
-        border: 0;
-        margin-left: 20px;
-        margin-right: 20px;
-    }
-    .paginated-table table > tbody > tr > td {
-        width: fit-content;
-    }
-    // .footer-table table > tfoot > tr > th:first-child {
-    //     width: 20px;
-    // }
-    // .footer-table table > tfoot > tr > th:nth-last-child(-n + 2) {
-    //     width: 40px;
-    // }
-}
+<style lang="scss">
+// .items-list-wrapper {
+//     .md-table-cell-container {
+//         overflow: hidden;
+//         .teeth {
+//             max-width: 150px;
+//             width: 14vw;
+//             min-width: 50px;
+//             text-overflow: ellipsis;
+//             // word-wrap: break-word;
+//             overflow: hidden;
+//         }
+//         .code {
+//             width: 20px;
+//         }
+//     }
+//     .manipulations {
+//         max-width: 30vw;
+//         .items-manipulations_wrapper {
+//             text-overflow: ellipsis;
+//             overflow: hidden;
+//             align-items: stretch;
+//             display: flex;
+//             .text-left {
+//                 overflow: hidden;
+//                 text-overflow: ellipsis;
+//                 white-space: nowrap;
+//                 text-align: left;
+//                 // max-width: 70%;
+//             }
+//             .text-right {
+//                 flex-grow: 1;
+//                 // max-width: 30%;
+//                 text-overflow: ellipsis;
+//                 white-space: nowrap;
+//                 text-align: right;
+//             }
+//         }
+//     }
+//     .md-card .md-card-actions {
+//         border: 0;
+//         margin-left: 20px;
+//         margin-right: 20px;
+//     }
+//     .paginated-table table > tbody > tr > td {
+//         width: fit-content;
+//     }
+// }
 </style>

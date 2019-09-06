@@ -9,12 +9,12 @@ import {
     PATIENT_SUB_PARAMS_SET,
     PATIENT_SUB_PARAM_PUSH,
     PATIENT_PARAM_REWRITE,
-    PATIENT_SUB_PARAM_DELETE,
+    PATIENT_SUB_PARAM_DELETE
 } from '@/constants';
 
 export default {
-    [PATIENT_LOGOUT]: (state) => {
-        Object.keys(state).forEach((key) => {
+    [PATIENT_LOGOUT]: state => {
+        Object.keys(state).forEach(key => {
             Vue.set(state, key, null);
         });
     },
@@ -31,35 +31,21 @@ export default {
     //     state[params.type][params.itemIndex].showInJaw = true;
     // }
     // },
-    [PATIENT_SUB_PARAMS_SET]: (state, {
-        paramName,
-        paramIndex,
-        subParamName,
-        subParamValue,
-    }) => {
+    [PATIENT_SUB_PARAMS_SET]: (state, { paramName, paramIndex, subParamName, subParamValue }) => {
         if (!state[paramName][paramIndex]) {
             Vue.set(state[paramName], paramIndex, {});
         }
         Vue.set(state[paramName][paramIndex], subParamName, subParamValue);
     },
-    [PATIENT_PARAM_REWRITE]: (state, {
-        paramName,
-        paramIndex,
-        paramValue,
-    }) => {
+    [PATIENT_PARAM_REWRITE]: (state, { paramName, paramIndex, paramValue }) => {
         if (!state[paramName]) {
             Vue.set(state, paramName, {});
         }
         Vue.set(state[paramName], paramIndex, paramValue);
     },
-    [PATIENT_SUB_PARAM_PUSH]: (state, {
-        paramName,
-        paramIndex,
-        subParamName,
-        subParamIndex,
-        subParamKey,
-        subParamValue,
-    }) => {
+    [PATIENT_SUB_PARAM_PUSH]: (
+        state, { paramName, paramIndex, subParamName, subParamIndex, subParamKey, subParamValue }
+    ) => {
         if (!state[paramName][paramIndex]) {
             Vue.set(state[paramName], paramIndex, []);
         }
@@ -72,37 +58,22 @@ export default {
         }
         Vue.set(state[subParamName], subParamKey, subParamValue);
     },
-    [PATIENT_SUB_PARAM_DELETE]: (state, {
-        param,
-        paramIndex,
-        subParam,
-        subParamIndex,
-        subParamID,
-    }) => {
+    [PATIENT_SUB_PARAM_DELETE]: (
+        state, { param, paramIndex, subParam, subParamIndex, subParamID }
+    ) => {
         Vue.delete(state[param][paramIndex][subParam], subParamIndex);
         Vue.delete(state[subParam], subParamID);
     },
     [PATIENT_PARAM_SET]: (state, { paramName, paramValue }) => {
         Vue.set(state, paramName, paramValue);
     },
-    [PATIENT_PARAM_PUSH]: (
-        state, {
-            paramName,
-            paramValue,
-            paramKey,
-        },
-    ) => {
+    [PATIENT_PARAM_PUSH]: (state, { paramName, paramValue, paramKey }) => {
         if (!state[paramName]) {
             Vue.set(state, paramName, {});
         }
         Vue.set(state[paramName], paramKey, paramValue);
     },
-    [PATIENT_PARAM_DELETE]: (
-        state, {
-            paramName,
-            paramIndex,
-        },
-    ) => {
+    [PATIENT_PARAM_DELETE]: (state, { paramName, paramIndex }) => {
         Vue.delete(state[paramName], paramIndex);
-    },
+    }
 };

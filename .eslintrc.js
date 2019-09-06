@@ -1,25 +1,23 @@
 module.exports = {
     root: true,
-    parser: 'vue-eslint-parser',
-    parserOptions: {
-        parser: 'babel-eslint',
-        ecmaVersion: 2017,
-        sourceType: 'module',
-    },
     env: {
-        browser: true,
+        node: true
     },
-    extends: [
-        // add more generic rulesets here, such as:
-        // 'eslint:recommended',
-        'plugin:vue/recommended',
-        'airbnb-base', 'plugin:vue/essential'
-    ],
+    extends: ['plugin:vue/essential', '@vue/prettier'],
     rules: {
-        // override/add rules settings here, such as:
-        // 'vue/no-unused-vars': 'error'
-        indent: ['error', 4],
-        "vue/html-indent": ["error", 4]
+        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        indent: ['error', 4]
     },
-    plugins: ['vue'],
+    parserOptions: {
+        parser: 'babel-eslint'
+    },
+    overrides: [
+        {
+            files: ['**/__tests__/*.{j,t}s?(x)'],
+            env: {
+                mocha: true
+            }
+        }
+    ]
 };

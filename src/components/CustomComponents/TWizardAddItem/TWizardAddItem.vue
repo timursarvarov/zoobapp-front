@@ -21,33 +21,44 @@
                             &nbsp;
                             <b>{{ selectedItem.code }}</b>
                             {{ selectedItem.title }}
-                            <span
-                                v-if="currentPlan.name"
-                                class="category"
-                            >– {{ currentPlan.name | capitilize }}</span>
+                            <span v-if="currentPlan.name" class="category"
+                                >– {{ currentPlan.name | capitilize }}</span
+                            >
                         </h5>
                         <span>
                             <span
                                 v-if="hasLocationKeyOrSelectedTeeth()"
                                 class="category"
                             >
-                                <span v-if="isEmpty(itemToCreate.teeth)">Please selesct tooth</span>
+                                <span v-if="isEmpty(itemToCreate.teeth)"
+                                    >Please selesct tooth</span
+                                >
                                 <span v-else>
                                     <slide-y-down-transition>
-                                        <span v-show="!isEmpty(originalItem.locations)">For:</span>
+                                        <span
+                                            v-show="
+                                                !isEmpty(originalItem.locations)
+                                            "
+                                            >For:</span
+                                        >
                                     </slide-y-down-transition>
                                     <slide-y-down-transition>
                                         <span
-                                            v-show="isEmpty(originalItem.locations)"
-                                        >Teeth with disease area:</span>
+                                            v-show="
+                                                isEmpty(originalItem.locations)
+                                            "
+                                            >Teeth with disease area:</span
+                                        >
                                     </slide-y-down-transition>
                                 </span>
                                 <transition-group name="list">
                                     <span
-                                        v-for="(item, key) in itemToCreate.teeth"
+                                        v-for="(item,
+                                        key) in itemToCreate.teeth"
                                         :key="key + 0"
                                         class="list-item"
-                                    >{{ key | toCurrentTeethSystem }}</span>
+                                        >{{ key | toCurrentTeethSystem }}</span
+                                    >
                                 </transition-group>
                             </span>
                         </span>
@@ -145,18 +156,18 @@
 <script>
 import { SlideYDownTransition } from 'vue2-transitions';
 import { mapGetters } from 'vuex';
-import TItemToothLocations from './TWizardItems/TItemToothLocations.vue';
-import TItemDescription from './TWizardItems/TItemDescription.vue';
-import TItemManipulations from './TWizardItems/TItemManipulations.vue';
-import TItemFiles from './TWizardItems/TItemFiles.vue';
-import TItemAppointment from './TWizardItems/TItemAppointment.vue';
+import TItemToothLocations from './TWizardItems/TItemToothLocations';
+import TItemDescription from './TWizardItems/TItemDescription';
+import TItemManipulations from './TWizardItems/TItemManipulations';
+import TItemFiles from './TWizardItems/TItemFiles';
+import TItemAppointment from './TWizardItems/TItemAppointment';
 import SimpleWizard from '../TWizard/Wizard';
 import WizardTab from '../TWizard/WizardTab';
 
 import { tObjProp } from '@/mixins';
 import {
     NOTIFY,
-    PATIENT_PROCEDURE_SET,
+    PATIENT_PROCEDURE_SET
     // PATIENT_MANIPULATION_SET,
 } from '@/constants';
 
@@ -170,25 +181,25 @@ export default {
         TItemFiles,
         TItemAppointment,
         SimpleWizard,
-        WizardTab,
+        WizardTab
     },
     mixins: [tObjProp],
     props: {
         isDialogVisible: {
             type: Boolean,
-            default: false,
+            default: false
         },
         jaw: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         currentType: {
             type: String,
-            default: () => 'diagnosis',
+            default: () => 'diagnosis'
         },
         singleItemName: {
             type: String,
-            default: () => 'diagnose',
+            default: () => 'diagnose'
         },
         selectedItem: {
             type: Object,
@@ -196,16 +207,16 @@ export default {
                 ID: '',
                 code: '',
                 title: '',
-                manipulations: [],
-            }),
-        },
+                manipulations: []
+            })
+        }
     },
     data() {
         return {
             errorLocations: {
                 message: 'Choose tooth or disease location',
                 type: 'locations',
-                show: 'false',
+                show: 'false'
             },
             showAppointment: false,
             isLoading: false,
@@ -216,21 +227,21 @@ export default {
             selectedTeethL: [],
             // selectedTeethLocalJaw: [],
             itemToCreate: {
-                ID:null,
+                ID: null,
                 teeth: {},
                 description: '',
                 manipulations: [],
                 code: '',
-                title: '',
+                title: ''
             },
             itemToCompare: {
-                ID:null,
+                ID: null,
                 teeth: {},
                 description: '',
                 manipulations: [],
                 code: '',
-                title: '',
-            },
+                title: ''
+            }
         };
     },
     computed: {
@@ -242,10 +253,10 @@ export default {
             patient: 'getPatient',
             currentPlan: 'getCurrentPlan',
             teethSchema: 'teethSchema',
-            getCurrentClinicOriginalItem: 'getCurrentClinicOriginalItem',
+            getCurrentClinicOriginalItem: 'getCurrentClinicOriginalItem'
         }),
-        teethToWatch(){
-            return this.itemToCreate.teeth
+        teethToWatch() {
+            return this.itemToCreate.teeth;
         },
 
         originalDescriptions() {
@@ -268,18 +279,23 @@ export default {
         },
 
         originalItem() {
-            let catalogID = this.selectedItem[this.getItemCatalogFieldName()]
-            return this.getCurrentClinicOriginalItem(this.currentType, catalogID)
+            const catalogID = this.selectedItem[this.getItemCatalogFieldName()];
+            return this.getCurrentClinicOriginalItem(
+                this.currentType,
+                catalogID
+            );
         },
         selectedItemLocal: {
             get() {
                 return this.selectedItem;
             },
             set(newValue) {
-                Object.keys(newValue).forEach(k=>{
-                    this.itemToCreate.teeth = this.lodash.cloneDeep(newValue.teeth);
-                })
-            },
+                Object.keys(newValue).forEach(() => {
+                    this.itemToCreate.teeth = this.lodash.cloneDeep(
+                        newValue.teeth
+                    );
+                });
+            }
         },
         isDialogVisibleL: {
             get() {
@@ -287,8 +303,8 @@ export default {
             },
             set(value) {
                 this.$emit('update:isDialogVisible', value);
-            },
-        },
+            }
+        }
     },
     created() {
         this.hasLoctionsKey(this.selectedItem.code);
@@ -300,55 +316,60 @@ export default {
             return !this.itemToCreate.ID;
         },
         needToSaveEdited() {
-            return !this.lodash.isEqual(this.itemToCreate.teeth, this.itemToCompare.teeth )
-            if (!this.currentTab || this.currentTab === 'locations') {
-            }
-            return false;
+            return !this.lodash.isEqual(
+                this.itemToCreate.teeth,
+                this.itemToCompare.teeth
+            );
+            // if (!this.currentTab || this.currentTab === 'locations') {
+            // }
+            // return false;
         },
 
-        getItemCatalogFieldName(){
-            if(this.currentType==='diagnosis'){
-                return 'catalogDiagnoseID'
+        getItemCatalogFieldName() {
+            if (this.currentType === 'diagnosis') {
+                return 'catalogDiagnoseID';
             }
-            else if(this.currentType==='procedures'){
-                return 'catalogProcedureID'
+            if (this.currentType === 'procedures') {
+                return 'catalogProcedureID';
             }
-            else if(this.currentType==='anamnesis'){
-                return 'catalogAnamnesID'
-            } else{
-                return null
+            if (this.currentType === 'anamnesis') {
+                return 'catalogAnamnesID';
             }
+            return null;
         },
         setProcedure() {
             const procedure = {
                 procedureID: this.itemToCreate.catalogProcedureID,
-                teeth: this.itemToCreate.teeth,
+                teeth: this.itemToCreate.teeth
             };
             this.isLoading = true;
             return new Promise((resolve, reject) => {
                 this.$store
                     .dispatch(PATIENT_PROCEDURE_SET, {
-                        procedure,
+                        procedure
                     })
                     .then(
-                        (response) => {
+                        response => {
                             this.itemToCreate.ID = response.ID;
                             this.itemToCreate.teeth = response.teeth;
-                            this.itemToCompare = this.lodash.cloneDeep(response);
+                            this.itemToCompare = this.lodash.cloneDeep(
+                                response
+                            );
                             this.isLoading = false;
                             resolve(true);
                         },
-                        (error) => {
+                        error => {
                             this.$store.dispatch(NOTIFY, {
                                 settings: {
                                     message: 'error.response.data.error',
-                                    type: 'warning',
-                                },
+                                    type: 'warning'
+                                }
                             });
                             this.isLoading = false;
                             reject(error);
-                        },
-                    ).catch((err) => {
+                        }
+                    )
+                    .catch(err => {
                         this.isLoading = false;
                         throw new Error(err);
                     });
@@ -357,25 +378,25 @@ export default {
         saveItem() {
             if (this.currentType === 'diagnosis') {
                 this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
-                    diagnose: itemL,
+                    diagnose: itemL
                 });
             }
             if (this.currentType === 'anamnesis') {
                 this.$store.dispatch(PATIENT_ANAMNES_SET, {
-                    anamnes: itemL,
+                    anamnes: itemL
                 });
             }
             if (this.currentType === 'procedures') {
                 if (this.needToSaveItem()) {
                     return Promise.resolve(this.setProcedure());
-
                 }
-                else if(this.needToSaveEdited()) {
-                    this.itemToCreate.teeth = this.lodash.cloneDeep(this.itemToCompare.teeth);
-                    return true;
-                }else {
+                if (this.needToSaveEdited()) {
+                    this.itemToCreate.teeth = this.lodash.cloneDeep(
+                        this.itemToCompare.teeth
+                    );
                     return true;
                 }
+                return true;
             }
             return false;
         },
@@ -384,14 +405,16 @@ export default {
             if (this.currentTab === 'appointment') {
                 this.$nextTick(() => {
                     this.showAppointment = true;
-                })
+                });
             }
         },
         // инициируем локальный диагноз
         initiateLocalItem() {
             this.itemToCreate = this.lodash.cloneDeep(this.selectedItem);
             this.itemToCompare = this.lodash.cloneDeep(this.selectedItem);
-            this.selectedTeethL = this.lodash.cloneDeep(this.selectedItem.teeth);
+            this.selectedTeethL = this.lodash.cloneDeep(
+                this.selectedItem.teeth
+            );
         },
         manipulationsCreated(manipulations) {
             this.itemToCreate.manipulations = manipulations;
@@ -416,7 +439,10 @@ export default {
                 if (!this.hasLoctionsKey()) {
                     return false;
                 }
-                return this.selectedItem.teeth && this.selectedItem.teeth.length > 0;
+                return (
+                    this.selectedItem.teeth &&
+                    this.selectedItem.teeth.length > 0
+                );
             }
             return true;
         },
@@ -427,13 +453,13 @@ export default {
         validateStep(ref) {
             if (ref === 'step1') {
                 if (!this.$refs[ref]) return false;
-                return this.$refs[ref].validate().then((res) => {
+                return this.$refs[ref].validate().then(res => {
                     if (!res) {
                         this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'Please choose tooth locations',
-                                type: 'warning',
-                            },
+                                type: 'warning'
+                            }
                         });
                     }
                     if (res) {
@@ -444,13 +470,13 @@ export default {
             }
             if (ref === 'step2') {
                 if (!this.$refs[ref]) return false;
-                return this.$refs[ref].validate().then((res) => {
+                return this.$refs[ref].validate().then(res => {
                     if (!res) {
                         this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'You have unsaved manipulation',
-                                type: 'warning',
-                            },
+                                type: 'warning'
+                            }
                         });
                     }
                     return res;
@@ -458,13 +484,13 @@ export default {
             }
             if (ref === 'step3') {
                 if (!this.$refs[ref]) return false;
-                return this.$refs[ref].validate().then((res) => {
+                return this.$refs[ref].validate().then(res => {
                     if (!res) {
                         this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'Please add dignose description',
-                                type: 'warning',
-                            },
+                                type: 'warning'
+                            }
                         });
                         return false;
                     }
@@ -473,13 +499,13 @@ export default {
             }
             if (ref === 'step4') {
                 if (!this.$refs[ref]) return false;
-                return this.$refs[ref].validate().then((res) => {
+                return this.$refs[ref].validate().then(res => {
                     if (!res) {
                         this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'Please add dignose description',
-                                type: 'warning',
-                            },
+                                type: 'warning'
+                            }
                         });
                         return false;
                     }
@@ -492,13 +518,13 @@ export default {
             }
             if (ref === 'step5') {
                 if (!this.$refs[ref]) return false;
-                return this.$refs[ref].validate().then((res) => {
+                return this.$refs[ref].validate().then(res => {
                     if (!res) {
                         this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'Please add dignose description',
-                                type: 'warning',
-                            },
+                                type: 'warning'
+                            }
                         });
                         return false;
                     }
@@ -530,7 +556,7 @@ export default {
                 return this.currentType === 'procedures';
             }
             return false;
-        },
-    },
+        }
+    }
 };
 </script>

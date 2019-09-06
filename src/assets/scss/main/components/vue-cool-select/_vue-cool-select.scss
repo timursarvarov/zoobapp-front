@@ -24,24 +24,10 @@
     height: 2px;
 }
 
-.IZ-select:not(.md-focused) {
-    label {
-        // top: 10px;
-    }
-}
-
 .IZ-select.no-after-no-before {
     &:after,
     &:before {
         display: none;
-    }
-}
-
-.IZ-select.md-focused {
-    .IZ-select__input-wrap {
-        label {
-            // top: -10px!important;
-        }
     }
 }
 

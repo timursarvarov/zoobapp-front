@@ -1,16 +1,15 @@
 <template>
     <div class="wizard-tab-content add-payment-form">
         <md-toolbar class="md-transparent">
-            <t-toolbar-row
-                :headers="headers"
-            />
+            <t-toolbar-row :headers="headers" />
             <div class="md-layout md-layout-item md-size-100 md-alignment-center-space-beetwen">
                 <div class="md-layout-item">
                     <md-field
                         :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('paymentAmmount') && touched.paymentAmmount},
-                            {'md-error': errors.has('paymentAmmount')}]"
+                            { 'with-subline': true },
+                            { 'md-valid': !errors.has('paymentAmmount') && touched.paymentAmmount },
+                            { 'md-error': errors.has('paymentAmmount') }
+                        ]"
                     >
                         <label>Pay {{ currencyCode }}</label>
                         <md-input
@@ -27,7 +26,7 @@
                                 v-show="errors.has('paymentAmmount')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="payment.ammount='',focusOn('paymentAmmount')"
+                                @click="(payment.ammount = ''), focusOn('paymentAmmount')"
                             >
                                 <md-icon class="error">
                                     close
@@ -48,22 +47,13 @@
                     </md-field>
                 </div>
                 <div class=" md-inline-checkboxes">
-                    <md-checkbox
-                        v-model="payment.type"
-                        value="cash"
-                    >
+                    <md-checkbox v-model="payment.type" value="cash">
                         Cash
                     </md-checkbox>
-                    <md-checkbox
-                        v-model="payment.type"
-                        value="card"
-                    >
+                    <md-checkbox v-model="payment.type" value="card">
                         Card
                     </md-checkbox>
-                    <md-checkbox
-                        v-model="payment.type"
-                        value="deposit"
-                    >
+                    <md-checkbox v-model="payment.type" value="deposit">
                         Deposit
                     </md-checkbox>
                 </div>
@@ -72,7 +62,7 @@
                 >
                     <md-button
                         :disabled="!payment.ammount"
-                        :class="[{'md-primary': payment.ammount}]"
+                        :class="[{ 'md-primary': payment.ammount }]"
                         class="md-button md-just-icon md-round"
                         @click="addPayment()"
                     >
@@ -82,62 +72,45 @@
             </div>
         </md-toolbar>
 
-        <div
-            v-if="invoice.payments && invoice.payments.length"
-        >
-            <div
-                class="content-wrapper md-card-plain"
-            >
-                <md-table
-                    v-model="invoice.payments"
-                    class="no-header"
-                    table-header-color="green"
-                >
-                    <md-table-row
-                        slot="md-table-row"
-                        slot-scope="{ item }"
-                    >
+        <div v-if="invoice.payments && invoice.payments.length">
+            <div class="content-wrapper md-card-plain">
+                <md-table v-model="invoice.payments" class="no-header" table-header-color="green">
+                    <md-table-row slot="md-table-row" slot-scope="{ item }">
                         <md-table-cell md-label="Code">
                             <small>{{ item.manipulation.code }}</small>
                         </md-table-cell>
-                        <md-table-cell
-                            class="manipulation-title"
-                            md-label="Title"
-                        >
+                        <md-table-cell class="manipulation-title" md-label="Title">
                             <small>{{ item.manipulation.title }}</small>
                         </md-table-cell>
-                        <md-table-cell
-                            md-label="Qty"
-                            class="manipulations-input"
-                        >
+                        <md-table-cell md-label="Qty" class="manipulations-input">
                             <small>{{ item.num }}</small>
                         </md-table-cell>
                         <md-table-cell>*</md-table-cell>
                         <md-table-cell md-label="Price">
-                            <small>{{ (item.price? item.price: 0).toFixed(2) }}</small>
+                            <small>{{ (item.price ? item.price : 0).toFixed(2) }}</small>
                         </md-table-cell>
                         <md-table-cell md-label="Total">
-                            <small>{{ (item.price * item.num).toFixed(2) }} &nbsp;{{ currencyCode }}</small>
+                            <small
+                                >{{ (item.price * item.num).toFixed(2) }} &nbsp;{{
+                                    currencyCode
+                                }}</small
+                            >
                         </md-table-cell>
                     </md-table-row>
                 </md-table>
             </div>
-            <hr>
+            <hr />
             <div class="md-layout">
-                <hr class="md-layout-item md-size-100">
+                <hr class="md-layout-item md-size-100" />
                 <div
                     style="padding-bottom:22px;"
                     class="md-layout-item md-layout text-right  md-size-100"
                 >
                     <div class="md-layout-item ">
-                        <p
-                            class="category"
-                        >
+                        <p class="category">
                             <b>Total Sum</b>
                         </p>
-                        <h2
-                            class="title"
-                        >
+                        <h2 class="title">
                             <!-- <animated-number :toFix="2" :value="afterTax" /> -->
                             <small>&nbsp;{{ currencyCode }}</small>
                         </h2>
@@ -163,50 +136,49 @@ import TToolbarRow from '@/components/CustomComponents/TToolbarRow';
 // import AnimatedNumber from '@/components/AnimatedNumber';
 import { mapGetters } from 'vuex';
 
-
 export default {
     name: 'TAddPaymentItem',
     components: {
         TToolbarRow,
-        SlideYDownTransition,
+        SlideYDownTransition
     },
     props: {
         invoice: {
             type: Object,
-            default: () => {},
-        },
+            default: () => {}
+        }
     },
     data() {
         return {
             disabledDates: date => date < this.currentDate,
             modelValidations: {
                 paymentAmmount: {
-                    min: 0,
-                },
+                    min: 0
+                }
             },
             payment: {
                 ammount: null,
                 type: null,
-                created: null,
+                created: null
             },
             paymentAmmount: null,
             touched: {
-                paymentAmmount: false,
-            },
+                paymentAmmount: false
+            }
         };
     },
     computed: {
         ...mapGetters({
-            patient:'getPatient',
+            patient: 'getPatient',
             getManipulationsByProcedureID: 'getManipulationsByProcedureID',
             getManipulationsByProcedureIDs: 'getManipulationsByProcedureIDs',
-            getAproovedPlansProcedures: 'getAproovedPlansProcedures',
-            clinic: 'getCurrentClinic',
+            getUnbilledAndAproovedPlansProcedures: 'getUnbilledAndAproovedPlansProcedures',
+            clinic: 'getCurrentClinic'
         }),
-        currencyCode(){
-            return this.clinic.currencyCode
+        currencyCode() {
+            return this.clinic.currencyCode;
         },
-        headers(){
+        headers() {
             const headers = [
                 {
                     title: 'To Pay',
@@ -215,25 +187,25 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: 0,
                     valuePostfix: this.currencyCode,
-                    valueToFix: 2,
+                    valueToFix: 2
                 },
                 {
                     title: 'Discount',
                     subTitlePrefix: 0,
                     subTitlePostfix: '%',
                     subTitleToFix: 0,
-                    valuePrefix:  0,
+                    valuePrefix: 0,
                     valueToFix: 2,
-                    valuePostfix: this.currencyCode,
+                    valuePostfix: this.currencyCode
                 },
                 {
                     title: 'Payments',
-                    subTitlePrefix:  0,
-                    subTitlePostfix:  '%',
+                    subTitlePrefix: 0,
+                    subTitlePostfix: '%',
                     subTitleToFix: 0,
                     valuePrefix: 0,
                     valueToFix: 2,
-                    valuePostfix:this.currencyCode,
+                    valuePostfix: this.currencyCode
                 },
                 {
                     title: 'Patient debt',
@@ -242,16 +214,16 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: 0,
                     valueToFix: 2,
-                    valuePostfix: this.currencyCode,
-                },
+                    valuePostfix: this.currencyCode
+                }
             ];
             return headers;
-        },
+        }
     },
     watch: {
-        'invoice.total': function (val) {
+        'invoice.total': function(val) {
             this.payment.ammount = val;
-        },
+        }
     },
     created() {
         this.payment.ammount = this.invoice.total;
@@ -259,7 +231,7 @@ export default {
     methods: {
         calculateManipulations(m = []) {
             let sum = 0;
-            m.forEach((manip) => {
+            m.forEach(manip => {
                 sum += manip.price * manip.num;
             });
             return sum;
@@ -272,7 +244,7 @@ export default {
         },
         validate() {
             this.touched.paymentAmmount = true;
-            return this.$validator.validateAll().then((res) => {
+            return this.$validator.validateAll().then(res => {
                 this.$emit('on-validated', res, 'step2');
                 this.$emit('validated-code', this.code);
                 this.$emit('onCreatePayment', this.invoice);
@@ -284,8 +256,8 @@ export default {
         },
         addPayment() {
             this.$emit('onProcedureAdd', this.procedureToAdd);
-        },
-    },
+        }
+    }
 };
 </script>
 
@@ -294,11 +266,11 @@ export default {
     .manipulations-input__action {
         max-width: 70px;
     }
-    .total{
-        margin-bottom: 20px!important;
+    .total {
+        margin-bottom: 20px !important;
     }
 }
-    .md-datepicker-dialog{
-        transform: translate(0, 0);
-    }
+.md-datepicker-dialog {
+    transform: translate(0, 0);
+}
 </style>

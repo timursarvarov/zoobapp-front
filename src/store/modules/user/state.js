@@ -377,20 +377,16 @@ export default {
             title: 'Procedures',
         },
         {
-            key: 'author',
+            key: 'createdBy',
             title: 'Created By',
         },
         {
-            key: 'round',
-            title: 'Round',
+            key: 'created',
+            title: 'Created',
         },
         {
             key: 'tax',
             title: 'Tax',
-        },
-        {
-            key: 'createdDate',
-            title: 'Created date',
         },
         {
             key: 'total',

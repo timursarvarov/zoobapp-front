@@ -1,4 +1,3 @@
-
 <template>
     <div class="items-list-wrapper">
         <div>
@@ -10,7 +9,8 @@
                 :md-sort.sync="currentSort"
                 :md-sort-order.sync="currentSortOrder"
                 :md-sort-fn="customSort"
-                class="table-striped paginated-table table-with-header table-hover"
+                class="table-striped table-with-header table-hover"
+                :class="extraClass"
             >
                 <md-table-toolbar>
                     <div class="md-layout-item md-size-33">
@@ -34,9 +34,7 @@
                     <div class="md-layout md-layout-item md-size-33">
                         <slot name="header" />
                     </div>
-                    <div
-                        class="md-layout md-layout-item md-size-33 ml-auto"
-                    >
+                    <div class="md-layout md-layout-item md-size-33 ml-auto">
                         <div class="md-layout-item md-size-80">
                             <md-field>
                                 <md-input
@@ -52,7 +50,7 @@
                         <div class="md-layout-item md-size-20  ml-auto">
                             <md-button
                                 class="md-just-icon md-simple"
-                                @click="showTableEditor=!showTableEditor"
+                                @click="showTableEditor = !showTableEditor"
                             >
                                 <md-icon>settings</md-icon>
                             </md-button>
@@ -61,17 +59,13 @@
                 </md-table-toolbar>
                 <div />
                 <md-table-empty-state
+                    v-if="!hasSlot('emptyState')"
                     :md-label="`No ${currentType} found`"
-                    :md-description="`No ${currentType}  found. Scroll top, and create new ${currentType} .`"
-                >
-                    <md-button
-                        class="md-primary md-raised"
-                        @click="scrollToTop()"
-                    >
-                        Scroll Top
-                    </md-button>
-                </md-table-empty-state>
-
+                    :md-description="
+                        `No ${currentType}  found. Scroll top, and create new ${currentType} .`
+                    "
+                />
+                <slot name="emptyState" v-else />
 
                 <md-table-row
                     slot="md-table-row"
@@ -79,10 +73,15 @@
                     slot-scope="{ item }"
                     class="transitionable-row"
                     :class="[
-                        {'just-added': item.justAdded},
-                        {'to-delete': item.ID === itemToDelete.ID},
+                        { 'just-added': item.justAdded },
+                        { 'to-delete': item.ID === itemToDelete.ID }
                     ]"
-                    :md-selectable="currentType ==='procedures' || currentType ==='billing'?'multiple':'single'"
+                    :md-selectable="
+                        currentType === 'procedures' ||
+                        currentType === 'billing'
+                            ? 'multiple'
+                            : 'single'
+                    "
                 >
                     <md-table-cell
                         v-for="field in itemsTableColumns"
@@ -103,7 +102,7 @@
                             :class="field.key"
                         >
                             {{ item.title }}
-                            <br>
+                            <br />
                             <small>{{ item.description }}</small>
                         </div>
                         <div
@@ -117,46 +116,71 @@
                                 class="tooth"
                                 :class="currentType"
                             >
-                                <small> {{ toothId | toCurrentTeethSystem }}</small>
+                                <small>
+                                    {{ toothId | toCurrentTeethSystem }}</small
+                                >
                             </span>
                         </div>
-                        <div
-                            v-else-if="field.key === 'createdBy' && item.createdBy"
+                        <avatar-box
+                            v-else-if="
+                                field.key === 'createdBy' && item.createdBy
+                            "
+                            :item="item.createdBy"
+                        />
+                        <!-- <div
+                            v-else-if="
+                                field.key === 'createdBy' && item.createdBy
+                            "
                             :class="field.key"
                             class="md-layout md-alignment-left-center"
                         >
-                            <div
-                                class="md-layout"
-                                style="max-width:40px;"
-                            >
+                            <div class="md-layout" style="max-width:40px;">
                                 <t-avatar
                                     :small="true"
                                     :text-to-color="item.createdBy.ID"
                                     :image-src="item.createdBy.avatar"
-                                    :title="item.createdBy.firstName + ' ' + item.createdBy.lastName"
+                                    :title="
+                                        item.createdBy.firstName +
+                                            ' ' +
+                                            item.createdBy.lastName
+                                    "
                                 />
                             </div>
                             <span class="md-layout-item">
-                                <span>{{ item.createdBy.lastName | capitilize }}</span>
-                                <br>
-                                <span>{{ item.createdBy.firstName | capitilize }}</span>
+                                <span>{{
+                                    item.createdBy.lastName | capitilize
+                                }}</span>
+                                <br />
+                                <span>{{
+                                    item.createdBy.firstName | capitilize
+                                }}</span>
                             </span>
-                        </div>
+                        </div> -->
 
-                        <div v-if="field.key === 'manipulations' && item.manipulations">
-                            <div>
-                                <small
-                                    v-for="(m, i) in getManipulationsByProcedureID(item.ID)"
-                                    :key="m.ID"
-                                    class="items-manipulations_wrapper"
+                        <div
+                            v-if="
+                                field.key === 'manipulations' &&
+                                    item.manipulations
+                            "
+                            :class="field.key"
+                        >
+                            <small
+                                v-for="(m, i) in getManipulationsByProcedureID(
+                                    item.ID
+                                )"
+                                :key="m.ID"
+                                class="items-manipulations_wrapper"
+                            >
+                                <span class="text-left"
+                                    >{{ i + 1 }}. {{ m.title }}</span
                                 >
-                                    <span class="text-left">{{ i+1 }}. {{ m.title }}</span>
-                                    <span
-                                        class="text-right"
-                                    >{{ m.qty }} * {{ m.price || 0 }} = {{ m.totalPrice || 0 }} {{ currentClinic.currencyCode }}</span>
-                                    <br>
-                                </small>
-                            </div>
+                                <div class="text-right">
+                                    {{ m.qty }} * {{ m.price || 0 }} =
+                                    {{ m.totalPrice || 0 }}
+                                    {{ currentClinic.currencyCode }}
+                                </div>
+                                <br />
+                            </small>
                         </div>
 
                         <div v-if="field.key === 'state'">
@@ -169,41 +193,54 @@
 
                         <div v-if="field.key === 'created' && item.created">
                             <span class="md-medium-hide">
-                                {{ item.created | moment("from") }}
-                                <br>
+                                {{ item.created | moment('from') }}
+                                <br />
                             </span>
-                            <small>{{ item.created | moment("calendar") }}</small>
+                            <small>{{
+                                item.created | moment('calendar')
+                            }}</small>
                         </div>
 
                         <div v-if="field.key === 'updated' && item.updated">
                             <span class="md-medium-hide">
-                                {{ item.updated | moment("from") }}
-                                <br>
+                                {{ item.updated | moment('from') }}
+                                <br />
                             </span>
-                            <small>{{ item.updated | moment("calendar") }}</small>
+                            <small>{{
+                                item.updated | moment('calendar')
+                            }}</small>
                         </div>
 
                         <div v-if="field.key === 'price' && item.manipulations">
                             <span>
-                                {{ getManipulationsByProcedureID(item.ID).reduce((a, b) => a + b.totalPrice, 0) }}
+                                {{
+                                    getManipulationsByProcedureID(
+                                        item.ID
+                                    ).reduce((a, b) => a + b.totalPrice, 0)
+                                }}
                                 <small>{{ currentClinic.currencyCode }}</small>
                             </span>
                             <span class="md-small-hide">
-                                <br>
-                                <small>{{ getManipulationsByProcedureID(item.ID).length }} manipulations</small>
+                                <br />
+                                <small
+                                    >{{
+                                        getManipulationsByProcedureID(item.ID)
+                                            .length
+                                    }}
+                                    manipulations</small
+                                >
                             </span>
                         </div>
                         <div
                             v-if="field.key === 'planID'"
                             class="md-layout md-alignment-center-left"
                         >
-                            <div
-                                class="md-layout"
-                                style="max-w    idth:40px;"
-                            >
+                            <div class="md-layout" style="max-width:40px;">
                                 <t-avatar
                                     :small="true"
-                                    :text-to-color="`${ patient.plans[item.planID].created} ${item.planID}`"
+                                    :text-to-color="
+                                        `${patient.plans[item.planID].created} ${item.planID}`
+                                    "
                                 />
                             </div>
                             <div class="md-layout md-alignment-center-left">
@@ -211,48 +248,93 @@
                                     style="height: fit-content;"
                                     class="md-xsmall-hide"
                                 >
-                                    {{ patient.plans[item.planID].name | capitilize }}
+                                    {{
+                                        patient.plans[item.planID].name
+                                            | capitilize
+                                    }}
                                 </span>
                             </div>
+                        </div>
+                        <div v-if="field.key === 'discount'">
+                            {{ item.discout || 0 }}%
+                        </div>
+                        <div v-if="field.key === 'dueDate' && item.dueDate">
+                            <div v-if="!item.dueDate">
+                                No date
+                            </div>
+                            <div v-else>
+                                <span class="md-medium-hide">
+                                    {{ item.dueDate | moment('from') }}
+                                    <br />
+                                </span>
+                                <small>{{
+                                    item.dueDate | moment('calendar')
+                                }}</small>
+                            </div>
+                        </div>
+                        <div v-if="field.key === 'payments'">
+                            <span v-if="item.payments">
+                                {{ item.payments.length }}
+                            </span>
+                            <span v-else>
+                                No payments
+                            </span>
+                        </div>
+                        <div
+                            v-if="field.key === 'procedures' && item.procedures"
+                        >
+                            {{ item.procedures }}
+                        </div>
+                        <div v-if="field.key === 'tax'">
+                            {{ item.tax || 0 }}%
+                        </div>
+                        <div v-if="field.key === 'total'">
+                            {{ item.total || 0 }}
+                            <small>{{ currentClinic.currencyCode }}</small>
                         </div>
                     </md-table-cell>
 
                     <md-table-cell
-                        class
+                        v-show="currentType !== 'invoices'"
                         md-label="Actions"
                     >
-                        <md-button
-                            v-if="currentType !== 'billing'"
-                            v-show="ifDiagnoseHasLocations(item.teeth)"
-                            class="md-just-icon md-simple"
-                            @click.native="toggleItemVisibility(item, currentType)"
-                        >
-                            <md-icon v-if="item.showInJaw">
-                                visibility
-                            </md-icon>
-                            <md-icon v-else>
-                                visibility_off
-                            </md-icon>
-                        </md-button>
-                        <md-button
-                            class="md-just-icon md-info md-simple"
-                            @click.native="handleEdit(item)"
-                        >
-                            <md-icon>edit</md-icon>
-                        </md-button>
-                        <md-button
-                            class="md-just-icon md-danger md-simple"
-                            @click.native="handleDelete(item)"
-                        >
-                            <md-icon>close</md-icon>
-                        </md-button>
+                        <div>
+                            <md-button
+                                v-if="currentType !== 'billing'"
+                                v-show="ifDiagnoseHasLocations(item.teeth)"
+                                class="md-just-icon md-simple"
+                                @click.native="
+                                    toggleItemVisibility(item, currentType)
+                                "
+                            >
+                                <md-icon v-if="item.showInJaw">
+                                    visibility
+                                </md-icon>
+                                <md-icon v-else>
+                                    visibility_off
+                                </md-icon>
+                            </md-button>
+                            <md-button
+                                class="md-just-icon md-info md-simple"
+                                @click.native="handleEdit(item)"
+                            >
+                                <md-icon>edit</md-icon>
+                            </md-button>
+                            <md-button
+                                class="md-just-icon md-danger md-simple"
+                                @click.native="handleDelete(item)"
+                            >
+                                <md-icon>close</md-icon>
+                            </md-button>
+                        </div>
                     </md-table-cell>
                 </md-table-row>
             </md-table>
             <md-card-actions md-alignment="space-between">
                 <div>
                     <p class="card-category">
-                        Showing {{ from + 1 }} to {{ to }} of {{ total }} entries
+                        Showing {{ from + 1 }} to {{ to }} of
+                        {{ total }} entries
                     </p>
                 </div>
                 <pagination
@@ -278,16 +360,22 @@
             :md-active.sync="showDeleteItemSnackbar"
             md-persistent
         >
-            <div class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100">
+            <div
+                class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100"
+            >
                 <div class="snackbar-text-wrapper ">
-                    Delete {{ singleItemName() }}
-                    {{ itemToDelete.code }} -
+                    Delete {{ singleItemName() }} {{ itemToDelete.code }} -
                     {{ itemToDelete.title }}?
                 </div>
-                <div class="snackbar-action-wrapper  ml-auto md-alignment-center-right ">
+                <div
+                    class="snackbar-action-wrapper  ml-auto md-alignment-center-right "
+                >
                     <md-button
                         class="md-simple"
-                        @click="showDeleteItemSnackbar = false, itemToDelete = {}"
+                        @click="
+                            (showDeleteItemSnackbar = false),
+                                (itemToDelete = {})
+                        "
                     >
                         cancel
                     </md-button>
@@ -303,7 +391,7 @@
                                 :md-stroke="2"
                                 md-mode="indeterminate"
                             />
-                                                        &nbsp;
+                            &nbsp;
                             <span>
                                 Deleting...
                             </span>
@@ -325,18 +413,17 @@ import { mapGetters } from 'vuex';
 import Fuse from 'fuse.js';
 import Pagination from '@/components/Pagination';
 import TTableEditor from '@/components/CustomComponents/TTableEditor';
-import animatedNumber from '@/components/AnimatedNumber';
 import TAvatar from '@/components/CustomComponents/TAvatar';
 import {
     USER_DIAGNOSIS_COLUMNS,
     USER_ANAMNESIS_COLUMNS,
     USER_BILLING_COLUMNS,
     USER_PROCEDURES_COLUMNS,
+    USER_INVOICE_COLUMNS,
     PATIENT_ITEM_VISIBILITY_TOGGLE,
-    PATIENT_ITEM_JUST_ADDED_TOGGLE,
     PATIENT_PROCEDURE_DELETE,
     EB_SHOW_ITEM_WIZARD,
-    NOTIFY,
+    NOTIFY
 } from '@/constants';
 import EventBus from '@/plugins/event-bus';
 
@@ -350,24 +437,28 @@ export default {
     props: {
         plan: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         items: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         teethSystem: {
             type: Number,
-            default: () => 1,
+            default: () => 1
         },
         currentType: {
             type: String,
-            default: () => 'diagnosis',
+            default: () => 'diagnosis'
         },
         selectedItems: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
+        extraClass: {
+            type: String,
+            default: () => 'paginated-table'
+        }
     },
     data() {
         return {
@@ -387,10 +478,10 @@ export default {
                 perPage: 10,
                 currentPage: 1,
                 perPageOptions: [10, 25, 50],
-                total: 0,
+                total: 0
             },
             fuseSearch: null,
-            showDeleteItemSnackbar:false
+            showDeleteItemSnackbar: false
         };
     },
     computed: {
@@ -398,18 +489,24 @@ export default {
             currentClinic: 'getCurrentClinic',
             patient: 'getPatient',
             getAvailableAnamnesTableColumns: 'getAvailableAnamnesTableColumns',
-            getAvailableDiagnosisTableColumns: 'getAvailableDiagnosisTableColumns',
-            getAvailableProceduresTableColumns: 'getAvailableProceduresTableColumns',
+            getAvailableDiagnosisTableColumns:
+                'getAvailableDiagnosisTableColumns',
+            getAvailableProceduresTableColumns:
+                'getAvailableProceduresTableColumns',
             getAvailableBillingTableColumns: 'getAvailableBillingTableColumns',
             getManipulationsByProcedureID: 'getManipulationsByProcedureID',
+            getAvailableInvoiceTableColumns: 'getAvailableInvoiceTableColumns'
         }),
+        slotsPassed() {
+            return this.$slots;
+        },
         selectedItemsL: {
             get() {
                 return this.selectedItems;
             },
             set(value) {
                 this.$emit('onSelected', value);
-            },
+            }
         },
         queriedData() {
             let result = this.tableData;
@@ -449,23 +546,24 @@ export default {
             if (this.currentType === 'procedures') {
                 return USER_PROCEDURES_COLUMNS;
             }
+            if (this.currentType === 'invoices') {
+                return USER_INVOICE_COLUMNS;
+            }
             return USER_DIAGNOSIS_COLUMNS;
         },
         defaultFields() {
             if (this.currentType === 'diagnosis') {
-                return this.getAvailableDiagnosisTableColumns
-            }
-            if (this.currentType === 'anamnesis') {
-                return this.getAvailableAnamnesTableColumns
-            }
-            if (this.currentType === 'billing') {
-                return this.getAvailableBillingTableColumns
-            }
-            if (this.currentType === 'procedures') {
-                return this.getAvailableProceduresTableColumns
-            }
-            return this.getAvailableBillingTableColumns
-        },
+                return this.getAvailableDiagnosisTableColumns;
+            } else if (this.currentType === 'anamnesis') {
+                return this.getAvailableAnamnesTableColumns;
+            } else if (this.currentType === 'billing') {
+                return this.getAvailableBillingTableColumns;
+            } else if (this.currentType === 'procedures') {
+                return this.getAvailableProceduresTableColumns;
+            } else if (this.currentType === 'invoices') {
+                return this.getAvailableInvoiceTableColumns;
+            } else return this.getAvailableBillingTableColumns;
+        }
     },
     watch: {
         searchQuery(value) {
@@ -479,16 +577,16 @@ export default {
             this.showSnackbar = this.selectedItems.length > 0;
         },
         showDeleteItemSnackbar(val) {
-            if(!val){
-                this.itemToDelete = ""
+            if (!val) {
+                this.itemToDelete = '';
             }
-        },
+        }
     },
     mounted() {
-    // Fuse search initialization.
+        // Fuse search initialization.
         this.fuseSearch = new Fuse(this.tableData, {
             keys: Object.values(this.itemsTableColumns).map(val => val.key),
-            threshold: 0.3,
+            threshold: 0.3
         });
     },
     created() {
@@ -497,13 +595,16 @@ export default {
     },
 
     methods: {
+        hasSlot(slotName) {
+            return this.slotsPassed && this.slotsPassed[slotName];
+        },
         toggleItemVisibility(itemId, itemType) {
             if (itemId) {
                 this.$store.dispatch(PATIENT_ITEM_VISIBILITY_TOGGLE, {
                     params: {
                         itemId,
-                        type: itemType,
-                    },
+                        type: itemType
+                    }
                 });
             }
             this.recalculateJaw(itemType);
@@ -520,7 +621,7 @@ export default {
         // },
         setItemsTableColumns() {
             const localStorageColumns = JSON.parse(
-                localStorage.getItem(this.currentTypeToLocalStorage),
+                localStorage.getItem(this.currentTypeToLocalStorage)
             );
             if (localStorageColumns) {
                 this.itemsTableColumns = localStorageColumns;
@@ -532,16 +633,13 @@ export default {
             //! поменять после того как добавять соответствующие поля в беке
             localStorage.setItem(
                 this.currentTypeToLocalStorage,
-                JSON.stringify(e),
+                JSON.stringify(e)
             );
             this.setItemsTableColumns();
             this.setComputedAvailableItemsTableColumns();
         },
-        onSelect(item) {
+        onSelect() {
             this.showSnackbar = !this.showSnackbar;
-        },
-        scrollToTop() {
-            window.scrollTo(0, 0);
         },
         ifDiagnoseHasLocations(teeth) {
             if (!teeth) return false;
@@ -552,41 +650,45 @@ export default {
             show = show !== -1;
             return show;
         },
-        sortBytypes(value){
+        sortBytypes(value) {
             const vm = this;
             const val = value.sort((a, b) => {
                 const sortBy = vm.currentSort;
                 if (Array.isArray(a[vm.currentSort])) {
-                    const aArrayLength = a[vm.currentSort] ? Object.keys(a[vm.currentSort]).length: 0;
-                    const bArrayLength = b[vm.currentSort] ? Object.keys(b[vm.currentSort]).length: 0;
+                    const aArrayLength = a[vm.currentSort]
+                        ? Object.keys(a[vm.currentSort]).length
+                        : 0;
+                    const bArrayLength = b[vm.currentSort]
+                        ? Object.keys(b[vm.currentSort]).length
+                        : 0;
                     const orderLocal = vm.currentSortOrder;
-                    const dflt = orderLocal === 'asc'
-                        ? Number.MAX_VALUE
-                        : -Number.MAX_VALUE;
+                    const dflt =
+                        orderLocal === 'asc'
+                            ? Number.MAX_VALUE
+                            : -Number.MAX_VALUE;
                     const aVal = aArrayLength === null ? dflt : aArrayLength;
                     const bVal = bArrayLength === null ? dflt : bArrayLength;
                     return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
-                } else
-                if (typeof a[vm.currentSort] === 'string') {
+                } else if (typeof a[vm.currentSort] === 'string') {
                     if (vm.currentSortOrder === 'desc') {
                         return a[sortBy].localeCompare(b[sortBy]);
                     }
                     return b[sortBy].localeCompare(a[sortBy]);
-                } else
-                if (typeof a[vm.currentSort] === 'number') {
+                } else if (typeof a[vm.currentSort] === 'number') {
                     const orderLocal = vm.currentSortOrder;
-                    const dflt = orderLocal === 'asc'
-                        ? Number.MAX_VALUE
-                        : -Number.MAX_VALUE;
+                    const dflt =
+                        orderLocal === 'asc'
+                            ? Number.MAX_VALUE
+                            : -Number.MAX_VALUE;
                     const aVal = a[sortBy] === null ? dflt : a[sortBy];
                     const bVal = b[sortBy] === null ? dflt : b[sortBy];
                     return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
-                } else
-                if (typeof a[vm.currentSort] === 'object') {
+                } else if (typeof a[vm.currentSort] === 'object') {
                     const orderLocal = vm.currentSortOrder;
-                    const dflt = orderLocal === 'asc'
-                        ? Number.MAX_VALUE
-                        : -Number.MAX_VALUE;
+                    const dflt =
+                        orderLocal === 'asc'
+                            ? Number.MAX_VALUE
+                            : -Number.MAX_VALUE;
                     const aVal = a[sortBy] === null ? dflt : a[sortBy];
                     const bVal = b[sortBy] === null ? dflt : b[sortBy];
                     return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
@@ -596,32 +698,46 @@ export default {
         },
         customSort(value) {
             const vm = this;
-            if( vm.currentSort === 'teeth'){
+            if (vm.currentSort === 'teeth') {
                 const val = value.sort((a, b) => {
-                    const aTeethLength = a.teeth ? Object.keys(a.teeth).length: 0;
-                    const bTeethLength = b.teeth ? Object.keys(b.teeth).length: 0;
+                    const aTeethLength = a.teeth
+                        ? Object.keys(a.teeth).length
+                        : 0;
+                    const bTeethLength = b.teeth
+                        ? Object.keys(b.teeth).length
+                        : 0;
                     const orderLocal = vm.currentSortOrder;
-                    const dflt = orderLocal === 'asc'
-                        ? Number.MAX_VALUE
-                        : -Number.MAX_VALUE;
+                    const dflt =
+                        orderLocal === 'asc'
+                            ? Number.MAX_VALUE
+                            : -Number.MAX_VALUE;
                     const aVal = aTeethLength === null ? dflt : aTeethLength;
                     const bVal = bTeethLength === null ? dflt : bTeethLength;
                     return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
-                })
+                });
                 return val;
             }
-            if( vm.currentSort === 'price'){
+            if (vm.currentSort === 'price') {
                 const val = value.sort((a, b) => {
-                    const aTeethPrice = this.getManipulationsByProcedureID(a.ID).reduce((a, b) => a + b.totalPrice, 0)||0 ;
-                    const bTeethPrice = this.getManipulationsByProcedureID(b.ID).reduce((a, b) => a + b.totalPrice, 0) || 0;
+                    const aTeethPrice =
+                        this.getManipulationsByProcedureID(a.ID).reduce(
+                            (a, b) => a + b.totalPrice,
+                            0
+                        ) || 0;
+                    const bTeethPrice =
+                        this.getManipulationsByProcedureID(b.ID).reduce(
+                            (a, b) => a + b.totalPrice,
+                            0
+                        ) || 0;
                     const orderLocal = vm.currentSortOrder;
-                    const dflt = orderLocal === 'asc'
-                        ? Number.MAX_VALUE
-                        : -Number.MAX_VALUE;
+                    const dflt =
+                        orderLocal === 'asc'
+                            ? Number.MAX_VALUE
+                            : -Number.MAX_VALUE;
                     const aVal = aTeethPrice === null ? dflt : aTeethPrice;
                     const bVal = bTeethPrice === null ? dflt : bTeethPrice;
                     return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
-                })
+                });
                 return val;
             }
             const val = this.sortBytypes(value);
@@ -631,16 +747,19 @@ export default {
             if (item) {
                 const params = {
                     item,
-                    type : this.currentType === 'billing' ? 'procedures' : this.currentType,
+                    type:
+                        this.currentType === 'billing'
+                            ? 'procedures'
+                            : this.currentType
                 };
-                EventBus.$emit(EB_SHOW_ITEM_WIZARD,  params );
+                EventBus.$emit(EB_SHOW_ITEM_WIZARD, params);
             }
         },
         handleDelete(item) {
             this.itemToDelete = item;
             this.showDeleteItemSnackbar = true;
         },
-        deleteItem(){
+        deleteItem() {
             if (this.currentType === 'procedures') {
                 this.deleteProcedure();
             }
@@ -649,6 +768,9 @@ export default {
             }
             if (this.currentType === 'anamnesis') {
                 this.deleteAnamnes();
+            }
+            if (this.currentType === 'invoices') {
+                console.log('delete invoice');
             }
         },
         singleItemName() {
@@ -660,86 +782,87 @@ export default {
             }
             return 'procedure';
         },
-        notifyItemDeleted(){
+        notifyItemDeleted() {
             this.$store.dispatch(NOTIFY, {
                 settings: {
                     message: `${this.singleItemName()} deleted`,
-                    type: 'success',
-                },
+                    type: 'success'
+                }
             });
         },
         deleteProcedure() {
             this.deleting = true;
-            this.$store.dispatch(PATIENT_PROCEDURE_DELETE, {
-                procedure: this.itemToDelete,
-            })
-                .then(()=>{
+            this.$store
+                .dispatch(PATIENT_PROCEDURE_DELETE, {
+                    procedure: this.itemToDelete
+                })
+                .then(() => {
                     this.deleting = false;
                     this.showDeleteItemSnackbar = false;
-                    this.notifyItemDeleted()
+                    this.notifyItemDeleted();
                 })
-                .catch((err) => {
+                .catch(err => {
                     this.deleting = false;
-                    console.log(err)
                     throw new Error(err);
-                }).then(() => {
+                })
+                .then(() => {
                     this.deleting = false;
                     this.showDeleteItemSnackbar = false;
                 });
-        },
-    },
+        }
+    }
 };
 </script>
 
-<style lang="scss"  >
-.items-list-wrapper {
-    .md-table-cell-container {
-        overflow: hidden;
-        .teeth {
-            max-width: 150px;
-            width: 14vw;
-            min-width: 50px;
-            text-overflow: ellipsis;
-            // word-wrap: break-word;
-            overflow: hidden;
-        }
-        .code {
-            width: 20px;
-        }
-        .items-manipulations_wrapper {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            align-items: stretch;
-            display: flex;
-            .text-left {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                text-align: left;
-                // max-width: 70%;
-            }
-            .text-right {
-                // flex-grow: 1;
-                // // max-width: 30%;
-                // text-overflow: ellipsis;
-                // white-space: nowrap;
-                text-align: right;
-            }
-        }
-    }
-    .md-card .md-card-actions {
-        border: 0;
-        margin-left: 20px;
-        margin-right: 20px;
-    }
-    .paginated-table table > tbody > tr > td {
-        width: fit-content;
-    }
-    // .footer-table table > tfoot > tr > th:first-child {
-    //     width: 20px;
-    // }
-    // .footer-table table > tfoot > tr > th:nth-last-child(-n + 2) {
-    //     width: 40px;
-    // }
-}
+<style lang="scss">
+// .items-list-wrapper {
+//     .md-table-cell-container {
+//         overflow: hidden;
+//         .teeth {
+//             max-width: 150px;
+//             width: 14vw;
+//             min-width: 50px;
+//             text-overflow: ellipsis;
+//             // word-wrap: break-word;
+//             overflow: hidden;
+//         }
+//         .code {
+//             width: 20px;
+//         }
+//         .items-manipulations_wrapper {
+//             text-overflow: ellipsis;
+//             overflow: hidden;
+//             align-items: stretch;
+//             display: flex;
+//             .text-left {
+//                 overflow: hidden;
+//                 text-overflow: ellipsis;
+//                 white-space: nowrap;
+//                 text-align: left;
+//                 // max-width: 70%;
+//             }
+//             .text-right {
+//                 // flex-grow: 1;
+//                 // // max-width: 30%;
+//                 // text-overflow: ellipsis;
+//                 // white-space: nowrap;
+//                 text-align: right;
+//             }
+//         }
+//     }
+//     // .md-card .md-card-actions {
+//     //     border: 0;
+//     //     margin-left: 20px;
+//     //     margin-right: 20px;
+//     // }
+// .paginated-table table > tbody > tr > td {
+//     width: fit-content;
+// }
+// .footer-table table > tfoot > tr > th:first-child {
+//     width: 20px;
+// }
+// .footer-table table > tfoot > tr > th:nth-last-child(-n + 2) {
+//     width: 40px;
+// }
+// }
 </style>

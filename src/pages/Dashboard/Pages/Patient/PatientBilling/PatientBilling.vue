@@ -1,14 +1,13 @@
-
 <template>
     <div class="billing-wrapper md-layout-item">
-        <md-tabs
-            ref="mdTabs"
-            md-sync-route
-            class="t-md-tabs billng"
-        >
+        <md-tabs ref="mdTabs" md-sync-route class="t-md-tabs billng">
             <md-tab
                 id="tab-unbilled_procedures"
-                :to="`/${$i18n.locale}/patient/${patient.ID}/billing/unbilled_procedures`"
+                :to="
+                    `/${$i18n.locale}/patient/${
+                        patient.ID
+                    }/billing/unbilled_procedures`
+                "
                 md-label="Unbilled procedures"
             >
                 <router-view @onCreateInvoice="onCreateInvoice" />
@@ -18,6 +17,14 @@
                 class="diagnosis"
                 :to="`/${$i18n.locale}/patient/${patient.ID}/billing/invoices`"
                 md-label="Invoices"
+            >
+                <router-view />
+            </md-tab>
+            <md-tab
+                id="tab-payments"
+                class="diagnosis"
+                :to="`/${$i18n.locale}/patient/${patient.ID}/billing/payments`"
+                md-label="payments"
             >
                 <router-view />
             </md-tab>
@@ -34,14 +41,11 @@
 <script>
 import { mapGetters } from 'vuex';
 import components from '@/components';
-import { USER_BILLING_COLUMNS } from '@/constants';
-
-const randomMC = require('random-material-color');
 
 export default {
     name: 'PatientBilling',
     components: {
-        ...components,
+        ...components
     },
     data() {
         return {
@@ -60,15 +64,15 @@ export default {
                 perPage: 10,
                 currentPage: 1,
                 perPageOptions: [10, 25, 50],
-                total: 0,
-            },
+                total: 0
+            }
         };
     },
     computed: {
         ...mapGetters({
-            patient: 'getPatient',
+            patient: 'getPatient'
         }),
-        selectedItems(){
+        selectedItems() {
             return this.selectedItemsL || [];
         }
     },
@@ -77,8 +81,10 @@ export default {
     },
 
     methods: {
-        deleteTabStyle(){
-            if (this.$refs.mdTabs) { this.$refs.mdTabs.$children[0].$el.removeAttribute('style') }
+        deleteTabStyle() {
+            if (this.$refs.mdTabs) {
+                this.$refs.mdTabs.$children[0].$el.removeAttribute('style');
+            }
         },
         onCreateInvoice(items) {
             this.selectedItemsL = items || [];
@@ -86,13 +92,13 @@ export default {
         },
         onProcedureAdd(p) {
             this.selectedItems.push(p);
-        },
-    },
+        }
+    }
 };
 </script>
 
 <style lang="scss">
-.billing-wrapper{
+.billing-wrapper {
     margin-top: 10px;
 }
 </style>

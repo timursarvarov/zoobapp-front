@@ -1,14 +1,7 @@
 
 <template lang="html">
     <div class="md-layout-item  md-size-100">
-        <items-list
-            v-if="$route.name ==='anamnesis' && patient.anamnesis && patient.anamnesis.length > 0"
-            :items="patient.anamnesis||[]"
-            :teeth-system="currentClinic.teethSystem"
-            current-type="anamnesis"
-            @showItemInfo="showItemInfo"
-            @onJawChanged="recalculateJaw()"
-        />
+
         <delete-form
             v-if="patient.currentPlan"
             text="Delete Plan?"
@@ -27,15 +20,11 @@ import {
     PATIENT_ITEM_VISIBILITY_TOGGLE,
 } from '@/constants';
 import components from '@/components';
-import ItemsList from './ItemsList.vue';
-import { tObjProp } from '@/mixins';
 
 export default {
     components: {
         ...components,
-        ItemsList,
     },
-    mixins: [tObjProp],
     props: {
         currentType: {
             type: String,

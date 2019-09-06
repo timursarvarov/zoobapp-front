@@ -43,7 +43,7 @@
                         textTocolor: patient.ID,
                         acronim: patient.firstName + ' '+ patient.lastName,
                         notification: patient.allergy.length > 0 ? 'A' : '',
-                        path: `/${$i18n.locale}/patient/${patient.ID}/bio/`
+                        path: `/${$i18n.locale}/patient/${patient.ID}/bio`
                     }"
                     class="separated-down"
                 />

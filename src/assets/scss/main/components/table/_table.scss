@@ -1,174 +1,193 @@
-.md-table-head-label {
-    padding-left: 24px;
-    padding-right: 32px;
-    font-weight: 300;
-}
-
-.just-added {
-    animation-name: color_change;
-    animation-duration: 3s;
-    animation-iteration-count: 1;
-    animation-direction: alternate;
-    .md-table-cell-container {
-        animation-name: text_color_change;
+    .md-table-head-label {
+        padding-left: 24px;
+        padding-right: 32px;
+        font-weight: 300;
+    }
+    
+    .just-added {
+        animation-name: color_change;
         animation-duration: 3s;
         animation-iteration-count: 1;
         animation-direction: alternate;
-    }
-}
-
-.to-delete {
-    background-color: lighten($brand-warning, 43.5%) !important;
-    -webkit-transition: background-color 1000ms linear;
-    -ms-transition: background-color 1000ms linear;
-    transition: background-color 1000ms linear;
-}
-
-.editable-mode {
-    background-color: lighten($brand-info, 43.5%) !important;
-    transition-duration: 300ms;
-    .md-table-cell-container {
-        // color: $white-color;
-    }
-}
-
-@keyframes color_change {
-    from {
-        background-color: $brand-primary;
-    }
-    to {
-        background-color: none;
-    }
-}
-
-@keyframes text_color_change {
-    from {
-        color: $white-color;
-    }
-    to {
-        color: rgba(0, 0, 0, 0.87);
-    }
-}
-
-.md-tabs-content {
-    .table-with-header table thead {
-        display: table-header-group !important;
-        .md-table-head.md-table-cell-selection {
-            .md-table-head-label {
-                padding-right: 0;
-            }
-        }
-    }
-}
-
-.md-tabs-content table thead {
-    display: table-header-group !important;
-}
-
-.no-header table thead {
-    display: none !important;
-}
-
-.small table {
-    .md-table-cell {
-        padding: 6px 4px;
-        font-size: 13px;
-        height: 33px;
-    }
-    .md-table-head {
-        .md-table-head-label {
-            font-size: 13px;
-            height: 20px;
-        }
-    }
-}
-
-// .paginated-table .md-table-head-label:first-child {
-//     padding-right: 0;
-// }
-.text-right {
-    .md-table-cell-container {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-}
-
-.md-table:noty(.table-no-actions) .md-table-head:last-child {
-    text-align: right;
-}
-
-.table-stats {
-    display: flex;
-    align-items: center;
-    text-align: right;
-    flex-flow: row wrap;
-    .td-price .td-total {
-        display: inline-flex;
-        font-weight: 500;
-        font-size: 1.0625rem;
-        margin-right: 50px;
-    }
-    &.table-striped .td-price {
-        border-bottom: 0;
-    }
-    .td-price {
-        font-size: 26px;
-        border-top: 1px solid #ddd;
-        border-bottom: 1px solid #ddd;
-    }
-    .td-price,
-    >div {
-        flex: 0 0 100%;
-        padding: 12px 8px;
-    }
-}
-
-.table-shopping .md-table-head:nth-child(5),
-.table-shopping .md-table-head:nth-child(7),
-.table-shopping .md-table-head:nth-child(6) {
-    text-align: right;
-}
-
-.table-no-actions .paginated-table .md-table-head:nth-child(6) {
-    text-align: left !important;
-}
-
-.md-table {
-    .md-table-cell {
         .md-table-cell-container {
-            .teeth {
-                display: flex;
-                flex-wrap: wrap;
-                .tooth {
-                    width: fit-content;
-                    border: 1px solid #fff;
-                    font-size: 12px;
-                    color: #ffffff;
-                    min-width: 20px;
-                    padding: 0px 6px;
-                    height: 20px;
-                    border-radius: 10px;
-                    text-align: center;
-                    line-height: 18px;
-                }
-                // .tooth:not(.md-primary):not(.md-success):not(.md-info):not(.md-warning) {
-                //     background: #f44336;
-                // }
-                .tooth.billing,
-                .tooth.procedures {
-                    background: $brand-success;
-                }
-                .tooth.anamnesis {
-                    background: $brand-info;
-                }
-                .tooth.diagnosis {
-                    background: $brand-primary;
-                }
-                .tooth.md-warning {
-                    background: $brand-warning;
+            animation-name: text_color_change;
+            animation-duration: 3s;
+            animation-iteration-count: 1;
+            animation-direction: alternate;
+        }
+    }
+    
+    .to-delete {
+        background-color: lighten($brand-warning, 43.5%) !important;
+        -webkit-transition: background-color 1000ms linear;
+        -ms-transition: background-color 1000ms linear;
+        transition: background-color 1000ms linear;
+    }
+    
+    .editable-mode {
+        background-color: lighten($brand-info, 43.5%) !important;
+        transition-duration: 300ms;
+    }
+    
+    @keyframes color_change {
+        from {
+            background-color: ighten($brand-primary, 43.5%);
+        }
+        to {
+            background-color: none;
+        }
+    }
+    
+    @keyframes text_color_change {
+        from {
+            color: $white-color;
+        }
+        to {
+            color: rgba(0, 0, 0, 0.87);
+        }
+    }
+    
+    .md-tabs-content {
+        .table-with-header table thead {
+            display: table-header-group !important;
+            .md-table-head.md-table-cell-selection {
+                .md-table-head-label {
+                    padding-right: 0;
                 }
             }
         }
     }
-}
+    
+    .md-tabs-content table thead {
+        display: table-header-group !important;
+    }
+    
+    .no-header table thead {
+        display: none !important;
+    }
+    
+    .small table {
+        .md-table-cell {
+            padding: 6px 4px;
+            font-size: 13px;
+            height: 33px;
+        }
+        .md-table-head {
+            .md-table-head-label {
+                font-size: 13px;
+                height: 20px;
+            }
+        }
+    }
+    
+    // .paginated-table .md-table-head-label:first-child {
+    //     padding-right: 0;
+    // }
+    .text-right {
+        .md-table-cell-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+    }
+    
+    .md-table:noty(.table-no-actions) .md-table-head:last-child {
+        text-align: right;
+    }
+    
+    .table-stats {
+        display: flex;
+        align-items: center;
+        text-align: right;
+        flex-flow: row wrap;
+        .td-price .td-total {
+            display: inline-flex;
+            font-weight: 500;
+            font-size: 1.0625rem;
+            margin-right: 50px;
+        }
+        &.table-striped .td-price {
+            border-bottom: 0;
+        }
+        .td-price {
+            font-size: 26px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        .td-price,
+        >div {
+            flex: 0 0 100%;
+            padding: 12px 8px;
+        }
+    }
+    
+    .table-shopping .md-table-head:nth-child(5),
+    .table-shopping .md-table-head:nth-child(7),
+    .table-shopping .md-table-head:nth-child(6) {
+        text-align: right;
+    }
+    
+    .table-no-actions .paginated-table .md-table-head:nth-child(6) {
+        text-align: left !important;
+    }
+    
+    .md-table {
+        .md-table-cell {
+            .md-table-cell-container {
+                .teeth {
+                    display: flex;
+                    flex-wrap: wrap;
+                    .tooth {
+                        width: fit-content;
+                        border: 1px solid #fff;
+                        font-size: 12px;
+                        color: #ffffff;
+                        min-width: 20px;
+                        padding: 0px 6px;
+                        height: 20px;
+                        border-radius: 10px;
+                        text-align: center;
+                        line-height: 18px;
+                    }
+                    // .tooth:not(.md-primary):not(.md-success):not(.md-info):not(.md-warning) {
+                    //     background: #f44336;
+                    // }
+                    .tooth.billing,
+                    .tooth.procedures {
+                        background: $brand-success;
+                    }
+                    .tooth.anamnesis {
+                        background: $brand-info;
+                    }
+                    .tooth.diagnosis {
+                        background: $brand-primary;
+                    }
+                    .tooth.md-warning {
+                        background: $brand-warning;
+                    }
+                }
+                .manipulations {
+                    display: flex;
+                    flex-wrap: wrap;
+                    max-width: 600px;
+                    .items-manipulations_wrapper {
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                        max-width: 600px;
+                        .text-left {
+                            // flex-grow: 1;
+                            flex-wrap: nowrap;
+                            flex: 3 1 100px;
+                            max-width: 500px;
+                        }
+                        .text-right {
+                            flex-grow: 1;
+                            align-self: stretch;
+                            max-width: 100px;
+                        }
+                    }
+                }
+            }
+        }
+    }

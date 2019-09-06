@@ -20,13 +20,10 @@
     .editable-mode {
         background-color: lighten($brand-info, 43.5%) !important;
         transition-duration: 300ms;
-        .md-table-cell-container {
-            // color: $white-color;
-        }
     }
     @keyframes color_change {
         from {
-            background-color: $brand-primary;
+            background-color: lighten($brand-primary, 43.5%);
         }
         to {
             background-color: none;

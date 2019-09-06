@@ -8,18 +8,14 @@
             <div>
                 <simple-wizard :finish-button-text="`Save`">
                     <template slot="header">
-                        <div class="title md-alignment-center-space-between md-layout md-transparent">
-                            <div
-                                v-if="invoiceToCreate.id"
-                                class="md-layout-item"
-                            >
+                        <div
+                            class="title md-alignment-center-space-between md-layout md-transparent"
+                        >
+                            <div v-if="invoiceToCreate.ID" class="md-layout-item">
                                 Invoice №
-                                {{ invoiceToCreate.id }}
+                                {{ invoiceToCreate.ID }}
                             </div>
-                            <div
-                                v-else
-                                class="md-layout-item"
-                            >
+                            <div v-else class="md-layout-item">
                                 New Invoice
                             </div>
 
@@ -27,10 +23,7 @@
                                 Created Date
                                 {{ invoiceToCreate.created || new Date() | moment('ll') }}
                             </div>
-                            <div
-                                v-if="invoiceToCreate.dueDate"
-                                class="md-layout-item"
-                            >
+                            <div v-if="invoiceToCreate.dueDate" class="md-layout-item">
                                 Due Date
                                 {{ invoiceToCreate.dueDate | moment('ll') }}
                             </div>
@@ -58,7 +51,7 @@
                             ref="step2"
                             :currency-code="currencyCode"
                             :invoice="invoiceToCreate"
-                            @on-validated="isDialogVisibleL=false"
+                            @on-validated="isDialogVisibleL = false"
                         />
                     </wizard-tab>
                 </simple-wizard>
@@ -73,7 +66,10 @@ import TAddPayment from './TWizardBillingItems/TAddPayment';
 import SimpleWizard from '../TWizard/Wizard';
 import WizardTab from '../TWizard/WizardTab';
 
-import { NOTIFY, PATIENT_INVOICE_SET } from '@/constants';
+import {
+    NOTIFY,
+    PATIENT_INVOICE_SET,
+} from '@/constants';
 
 export default {
     name: 'AddBillingWizard',
@@ -81,29 +77,29 @@ export default {
         TAddBilling,
         TAddPayment,
         SimpleWizard,
-        WizardTab,
+        WizardTab
     },
     props: {
         isDialogVisible: {
             type: Boolean,
-            default: false,
+            default: false
         },
         selectedProcedures: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         allProcedures: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         invoiceToEdit: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         currencyCode: {
             type: String,
-            default: () => '',
-        },
+            default: () => ''
+        }
     },
     data() {
         return {
@@ -111,19 +107,18 @@ export default {
                 dueDate: null,
                 createdDate: null,
                 discount: null,
-                round: null,
                 tax: null,
                 note: null,
                 total: null,
                 procedures: [],
-                payments: [],
+                payments: []
             },
-            selectedProceduresToCreate: [],
+            selectedProceduresToCreate: []
         };
     },
     computed: {
         ...mapGetters({
-            currentUser: 'getProfile',
+            currentUser: 'getProfile'
         }),
         isDialogVisibleL: {
             get() {
@@ -131,97 +126,92 @@ export default {
             },
             set(value) {
                 this.$emit('update:isDialogVisible', value);
-            },
+            }
         },
         selectedProceduresL: {
             get() {
                 return this.selectedProceduresToCreate;
             },
             set(newValue) {
-                console.log(newValue)
                 const newProcedure = {
                     ...newValue,
-                    justAdded: true,
-                }
+                    justAdded: true
+                };
                 this.selectedProceduresToCreate.unshift(newProcedure);
                 this.deleteJustAddedstyleInterval(newProcedure);
-            },
+            }
         },
+        newProceduresToAssociate() {
+            if (!this.invoice.procedures) return [];
+            return this.invoice.procedures.filter(pID =>
+                this.getUnbilledAndAproovedPlansProcedures.find(uP => uP.ID === pID)
+            );
+        }
     },
-    created(){
+    created() {
         this.selectedProceduresToCreate = this.lodash.cloneDeep(this.selectedProcedures);
     },
     methods: {
-        deleteJustAddedstyleInterval(p){
-            const vm = this
+        deleteJustAddedstyleInterval(p) {
             setTimeout(() => {
                 this.deleteStyle(p);
-            }, 3000)
+            }, 3000);
         },
-        deleteStyle(p){
-            const index = this.selectedProceduresToCreate.findIndex(procedure => procedure.ID === p.ID)
-            if(index > -1){
+        deleteStyle(p) {
+            const index = this.selectedProceduresToCreate.findIndex(
+                procedure => procedure.ID === p.ID
+            );
+            if (index > -1) {
                 this.selectedProceduresToCreate[index].justAdded = false;
             }
         },
         setInvoice(i) {
-            console.log(i)
             this.invoiceToCreate = {
                 ...i,
-                author: {
-                    color: this.currentUser.color,
-                    avatar: this.currentUser.avatar,
-                    firstName: this.currentUser.firstName,
-                    lastName: this.currentUser.lastName,
-                },
             };
         },
         saveInvoice() {
-            if (this.invoiceToCreate.id) return true;
-            console.log(this.invoiceToCreate)
+            if (this.invoiceToCreate.ID) return true;
             return new Promise((resolve, reject) => {
                 this.$store
                     .dispatch(PATIENT_INVOICE_SET, {
-                        invoice: this.invoiceToCreate,
+                        invoice: this.invoiceToCreate
                     })
                     .then(
-                        (response) => {
+                        response => {
                             this.setInvoice(response);
-                            console.log(response)
                             resolve(true);
                         },
-                        (error) => {
+                        error => {
                             const err = error.response.data.error;
                             if (err === 'user_name exist') {
                                 this.errorAccount.message = 'Username already exist';
-                                this.errorAccount.exceptions.push(
-                                    this.account.username,
-                                );
+                                this.errorAccount.exceptions.push(this.account.username);
                             } else {
                                 this.$store.dispatch(NOTIFY, {
                                     settings: {
-                                        message: 'error.response.data.error',
-                                        type: 'warning',
-                                    },
+                                        message: error.response.data.error,
+                                        type: 'warning'
+                                    }
                                 });
                             }
                             // eslint-disable-next-line
                             reject(false);
                             // return false;
-                        },
+                        }
                     );
             });
         },
         validateStep(ref) {
             if (ref === 'step1') {
                 if (!this.$refs[ref]) return false;
-                return this.$refs[ref].validate().then((res) => {
+                return this.$refs[ref].validate().then(res => {
                     if (!res) {
                         this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'Please choose diseas locations',
-                                type: 'warning',
-                            },
+                                type: 'warning'
+                            }
                         });
                     }
                     return Promise.resolve(this.saveInvoice());
@@ -230,13 +220,13 @@ export default {
             }
             if (ref === 'step2') {
                 if (!this.$refs[ref]) return false;
-                return this.$refs[ref].validate().then((res) => {
+                return this.$refs[ref].validate().then(res => {
                     if (!res) {
                         this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'Please add manipulation',
-                                type: 'warning',
-                            },
+                                type: 'warning'
+                            }
                         });
                         return false;
                     }
@@ -245,7 +235,7 @@ export default {
                 });
             }
             return false;
-        },
-    },
+        }
+    }
 };
 </script>
