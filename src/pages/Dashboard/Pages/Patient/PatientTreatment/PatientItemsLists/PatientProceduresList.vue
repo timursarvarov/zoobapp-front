@@ -1,21 +1,14 @@
-
 <template lang="html">
     <div class="md-layout-item  md-size-100">
-        <md-toolbar
-            class="md-transparent"
-        >
-            <t-toolbar-row
-                :headers="headers"
-            />
+        <md-toolbar class="md-transparent">
+            <t-toolbar-row :headers="headers" />
             <div class="md-toolbar-row">
                 <div class="md-toolbar-section-start">
                     {{ currentPlan.state }}
                 </div>
 
                 <div class="md-toolbar-section-end">
-                    <md-button
-                        class="md-simple"
-                    >
+                    <md-button class="md-simple">
                         <md-icon>
                             edit
                         </md-icon>
@@ -43,14 +36,15 @@
             </div>
         </md-toolbar>
         <router-view></router-view>
-        <t-nosology-table
-            :items="currentPlanProcedures"
+        <patient-nosology-table
             current-type="procedures"
+            extraClass="no"
+            :items="currentPlanProcedures"
             :selected-items="selectedItems"
             @onSelected="onSelected"
         >
-        <template slot="emptyState">
-            <md-table-empty-state
+            <template slot="emptyState">
+                <md-table-empty-state
                     :md-label="`No procedures found`"
                     md-description="Scroll top, and create a new one"
                 >
@@ -61,8 +55,8 @@
                         Scroll Top
                     </md-button>
                 </md-table-empty-state>
-        </template>
-        </t-nosology-table>
+            </template>
+        </patient-nosology-table>
         <md-snackbar
             v-if="showDeleteItemSnackbar"
             :md-position="'center'"
@@ -70,7 +64,9 @@
             :md-active.sync="showDeleteItemSnackbar"
             md-persistent
         >
-            <div class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100">
+            <div
+                class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100"
+            >
                 <div class="snackbar-text-wrapper ">
                     Selected:
                     <animated-number :value="selectedItems.length" />
@@ -78,9 +74,14 @@
                     <animated-number :value="selectedItemsPrice" />
                     {{ currentClinic.currencyCode }}
                 </div>
-                <div class="snackbar-action-wrapper  ml-auto md-alignment-center-right ">
+                <div
+                    class="snackbar-action-wrapper  ml-auto md-alignment-center-right "
+                >
                     <md-button
-                        v-if="selectedItems.length === currentPlanProcedures.length"
+                        v-if="
+                            selectedItems.length ===
+                                currentPlanProcedures.length
+                        "
                         class="md-simple"
                         @click="unselectAll()"
                     >
@@ -99,10 +100,7 @@
                     >
                         Complete
                     </md-button>
-                    <md-button
-                        class="md-success"
-                        @click="showCreateInvoice()"
-                    >
+                    <md-button class="md-success" @click="showCreateInvoice()">
                         Create invoice
                     </md-button>
                 </div>
@@ -112,22 +110,21 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { mapGetters } from 'vuex';
-import {
-    NOTIFY,
-    PATIENT_PLAN_EDIT,
-    PATIENT_PLAN_DELETE,
-} from '@/constants';
+import { NOTIFY, PATIENT_PLAN_EDIT, PATIENT_PLAN_DELETE } from '@/constants';
 import components from '@/components';
+import PatientNosologyTable from '@/pages/Dashboard/Pages/Patient/PatientNosologyTable';
 
 export default {
     components: {
         ...components,
+        PatientNosologyTable
     },
-    props:{
+    props: {
         currentPlan: {
             type: Object,
-            default: ()=>{},
+            default: () => {}
         }
     },
     data() {
@@ -144,50 +141,66 @@ export default {
             currentPlanProcedures: 'getPatientCurrentPlanProcedures',
             manipulationsByPlanID: 'getManipulationsByPlanID',
             getManipulationsByProcedureIDs: 'getManipulationsByProcedureIDs',
-            currentPlanID: 'getCurrentPlanID',
+            currentPlanID: 'getCurrentPlanID'
         }),
         getPlanTotalPrice() {
-            return  this.manipulationsByPlanID(this.currentPlan.ID).reduce((a, b) => a + (b.totalPrice || 0), 0);
+            return this.manipulationsByPlanID(this.currentPlan.ID).reduce(
+                (a, b) => a + (b.totalPrice || 0),
+                0
+            );
         },
-        selectedItemsPrice(){
-            let sum = this.getManipulationsByProcedureIDs(this.selectedItems.map(p => p.ID)).reduce((a, b) => a + b.totalPrice, 0);
-            return sum || 0
+        selectedItemsPrice() {
+            let sum = this.getManipulationsByProcedureIDs(
+                this.selectedItems.map(p => p.ID)
+            ).reduce((a, b) => a + b.totalPrice, 0);
+            return sum || 0;
         },
-        headers(){
+        headers() {
             const headers = [
                 {
                     title: 'Plan Name',
-                    subTitlePrefix: null,
-                    subTitlePostfix: null,
+                    subTitlePrefix: 'created',
+                    subTitlePostfix:  moment(this.currentPlan.created).format(
+                        "MMM Do YYYY"
+                    ),
                     valuePrefix: this.currentPlan.name,
-                    valuePostfix: null,
+                    valuePostfix: null
                 },
                 {
                     title: 'Unbilled Procedures',
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     subTitleToFix: 0,
-                    valuePrefix: parseInt(this.currentPlanProcedures.length, 10),
+                    valuePrefix: parseInt(
+                        this.currentPlanProcedures.length,
+                        10
+                    ),
                     valueToFix: 0,
-                    valuePostfix: null,
+                    valuePostfix: null
                 },
                 {
                     title: 'Total Procedures',
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     subTitleToFix: 0,
-                    valuePrefix: parseInt(this.currentPlanProcedures.length, 10),
+                    valuePrefix: parseInt(
+                        this.currentPlanProcedures.length,
+                        10
+                    ),
                     valueToFix: 0,
-                    valuePostfix: null,
+                    valuePostfix: null
                 },
                 {
                     title: 'Total Manipulations',
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     subTitleToFix: 0,
-                    valuePrefix: parseInt(this.manipulationsByPlanID(this.currentPlan.ID).length, 10),
+                    valuePrefix: parseInt(
+                        this.manipulationsByPlanID(this.currentPlan.ID).length,
+                        10
+                    ),
                     valueToFix: 0,
-                    valuePostfix: null,
+                    valuePostfix: null
                 },
                 {
                     title: 'Total Price',
@@ -196,26 +209,26 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: parseInt(this.getPlanTotalPrice, 10),
                     valueToFix: 2,
-                    valuePostfix: this.currentClinic.currencyCode,
-                },
+                    valuePostfix: this.currentClinic.currencyCode
+                }
             ];
             return headers;
-        },
+        }
     },
     methods: {
         scrollToTop() {
             window.scrollTo(0, 0);
         },
-        unselectAll(){
+        unselectAll() {
             this.selectedItems = [];
             this.showDeleteItemSnackbar = false;
         },
-        approovePlan(planID){
+        approovePlan(planID) {
             this.$store.dispatch(PATIENT_PLAN_EDIT, {
                 planID,
                 key: 'state',
-                value: 1,
-            })
+                value: 1
+            });
         },
         onSelected(items) {
             this.selectedItems = items;
@@ -224,38 +237,41 @@ export default {
         showItemInfo(params) {
             this.$emit('showItemInfo', params);
         },
-        redirectToPlan(){
-            console.log('redirested')
+        redirectToPlan() {
+            console.log('redirested');
             this.$router.push({
                 name: 'procedures',
                 params: {
                     lang: this.$i18n.locale,
-                    patientID: this.patient.ID,
-                },
+                    patientID: this.patient.ID
+                }
             });
         },
         deletePlan() {
             this.deleting = true;
-            this.$store.dispatch(PATIENT_PLAN_DELETE, {
-                planID: this.currentPlan.ID,
-
-            }).then().catch((err) => {
-                this.showDeleteItemSnackbar = false;
-                if(this.lodash.isEmpty(this.patient.plans)){
-                    this.redirectToPlan()
-                }
-                this.$store.dispatch(NOTIFY, {
-                    settings: {
-                        message: 'Plan deleted',
-                        type: 'success',
-                    },
+            this.$store
+                .dispatch(PATIENT_PLAN_DELETE, {
+                    planID: this.currentPlan.ID
+                })
+                .then()
+                .catch(err => {
+                    this.showDeleteItemSnackbar = false;
+                    if (this.lodash.isEmpty(this.patient.plans)) {
+                        this.redirectToPlan();
+                    }
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: 'Plan deleted',
+                            type: 'success'
+                        }
+                    });
+                })
+                .then(() => {
+                    this.deleting = false;
+                    this.showDeleteItemSnackbar = false;
                 });
-    }).then(() => {
-                this.deleting = false;
-                this.showDeleteItemSnackbar = false;
-            });
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss">

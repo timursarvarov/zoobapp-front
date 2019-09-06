@@ -3,7 +3,7 @@
         <div>
             <slot name="toolbar" />
             <md-table
-                md-fixed-header
+                md-fixed-headere
                 :md-selected-value.sync="selectedItemsL"
                 :value="queriedData || []"
                 :md-sort.sync="currentSort"
@@ -25,9 +25,8 @@
                                     :key="item"
                                     :label="item"
                                     :value="item"
+                                    >{{ item }}</md-option
                                 >
-                                    {{ item }}
-                                </md-option>
                             </md-select>
                         </md-field>
                     </div>
@@ -47,7 +46,7 @@
                                 />
                             </md-field>
                         </div>
-                        <div class="md-layout-item md-size-20  ml-auto">
+                        <div class="md-layout-item md-size-20 ml-auto">
                             <md-button
                                 class="md-just-icon md-simple"
                                 @click="showTableEditor = !showTableEditor"
@@ -116,102 +115,66 @@
                                 class="tooth"
                                 :class="currentType"
                             >
-                                <small>
-                                    {{ toothId | toCurrentTeethSystem }}</small
-                                >
+                                <small>{{
+                                    toothId | toCurrentTeethSystem
+                                }}</small>
                             </span>
                         </div>
                         <avatar-box
                             v-else-if="
                                 field.key === 'createdBy' && item.createdBy
                             "
-                            :item="item.createdBy"
+                            small
+                            :avatar="item.createdBy.avatar"
+                            :id="item.createdBy.ID"
+                            :firstLine="item.createdBy.firstName"
+                            :secondLine="item.createdBy.lastName"
                         />
-                        <!-- <div
-                            v-else-if="
-                                field.key === 'createdBy' && item.createdBy
-                            "
-                            :class="field.key"
-                            class="md-layout md-alignment-left-center"
-                        >
-                            <div class="md-layout" style="max-width:40px;">
-                                <t-avatar
-                                    :small="true"
-                                    :text-to-color="item.createdBy.ID"
-                                    :image-src="item.createdBy.avatar"
-                                    :title="
-                                        item.createdBy.firstName +
-                                            ' ' +
-                                            item.createdBy.lastName
-                                    "
-                                />
-                            </div>
-                            <span class="md-layout-item">
-                                <span>{{
-                                    item.createdBy.lastName | capitilize
-                                }}</span>
-                                <br />
-                                <span>{{
-                                    item.createdBy.firstName | capitilize
-                                }}</span>
-                            </span>
-                        </div> -->
-
-                        <div
+                        <manipulations-box
                             v-if="
                                 field.key === 'manipulations' &&
                                     item.manipulations
                             "
-                            :class="field.key"
-                        >
-                            <small
-                                v-for="(m, i) in getManipulationsByProcedureID(
-                                    item.ID
-                                )"
-                                :key="m.ID"
-                                class="items-manipulations_wrapper"
-                            >
-                                <span class="text-left"
-                                    >{{ i + 1 }}. {{ m.title }}</span
-                                >
-                                <div class="text-right">
-                                    {{ m.qty }} * {{ m.price || 0 }} =
-                                    {{ m.totalPrice || 0 }}
-                                    {{ currentClinic.currencyCode }}
-                                </div>
-                                <br />
-                            </small>
-                        </div>
+                            :procedureId="item.ID"
+                        />
 
-                        <div v-if="field.key === 'state'">
+                        <div v-else-if="field.key === 'state'">
                             <div>{{ item.state }}</div>
                         </div>
 
-                        <div v-if="field.key === 'ID'">
+                        <div v-else-if="field.key === 'ID'">
                             <div>{{ item.ID }}</div>
                         </div>
 
-                        <div v-if="field.key === 'created' && item.created">
+                        <div
+                            v-else-if="field.key === 'created' && item.created"
+                        >
                             <span class="md-medium-hide">
                                 {{ item.created | moment('from') }}
                                 <br />
                             </span>
-                            <small>{{
-                                item.created | moment('calendar')
-                            }}</small>
+                            <small>
+                                {{ item.created | moment('calendar') }}
+                            </small>
                         </div>
 
-                        <div v-if="field.key === 'updated' && item.updated">
+                        <div
+                            v-else-if="field.key === 'updated' && item.updated"
+                        >
                             <span class="md-medium-hide">
                                 {{ item.updated | moment('from') }}
                                 <br />
                             </span>
-                            <small>{{
-                                item.updated | moment('calendar')
-                            }}</small>
+                            <small>
+                                {{ item.updated | moment('calendar') }}
+                            </small>
                         </div>
 
-                        <div v-if="field.key === 'price' && item.manipulations">
+                        <div
+                            v-else-if="
+                                field.key === 'price' && item.manipulations
+                            "
+                        >
                             <span>
                                 {{
                                     getManipulationsByProcedureID(
@@ -222,80 +185,62 @@
                             </span>
                             <span class="md-small-hide">
                                 <br />
-                                <small
-                                    >{{
+                                <small>
+                                    {{
                                         getManipulationsByProcedureID(item.ID)
                                             .length
                                     }}
-                                    manipulations</small
-                                >
+                                    manipulations
+                                </small>
                             </span>
                         </div>
-                        <div
-                            v-if="field.key === 'planID'"
-                            class="md-layout md-alignment-center-left"
-                        >
-                            <div class="md-layout" style="max-width:40px;">
-                                <t-avatar
-                                    :small="true"
-                                    :text-to-color="
-                                        `${patient.plans[item.planID].created} ${item.planID}`
-                                    "
-                                />
-                            </div>
-                            <div class="md-layout md-alignment-center-left">
-                                <span
-                                    style="height: fit-content;"
-                                    class="md-xsmall-hide"
-                                >
-                                    {{
-                                        patient.plans[item.planID].name
-                                            | capitilize
-                                    }}
-                                </span>
-                            </div>
-                        </div>
-                        <div v-if="field.key === 'discount'">
+                        <avatar-box
+                            v-else-if="field.key === 'planID'"
+                            small
+                            :avatar="item.createdBy.avatar"
+                            :id="item.planID"
+                            :firstLine="patient.plans[item.planID].name"
+                        />
+                        <div v-else-if="field.key === 'discount'">
                             {{ item.discout || 0 }}%
                         </div>
-                        <div v-if="field.key === 'dueDate' && item.dueDate">
-                            <div v-if="!item.dueDate">
-                                No date
-                            </div>
+                        <div
+                            v-else-if="field.key === 'dueDate' && item.dueDate"
+                        >
+                            <div v-if="!item.dueDate">No date</div>
                             <div v-else>
                                 <span class="md-medium-hide">
                                     {{ item.dueDate | moment('from') }}
                                     <br />
                                 </span>
-                                <small>{{
-                                    item.dueDate | moment('calendar')
-                                }}</small>
+                                <small>
+                                    {{ item.dueDate | moment('calendar') }}
+                                </small>
                             </div>
                         </div>
-                        <div v-if="field.key === 'payments'">
-                            <span v-if="item.payments">
-                                {{ item.payments.length }}
-                            </span>
-                            <span v-else>
-                                No payments
-                            </span>
+                        <div v-else-if="field.key === 'payments'">
+                            <span v-if="item.payments">{{
+                                item.payments.length
+                            }}</span>
+                            <span v-else>No payments</span>
                         </div>
-                        <div
-                            v-if="field.key === 'procedures' && item.procedures"
-                        >
-                            {{ item.procedures }}
-                        </div>
-                        <div v-if="field.key === 'tax'">
+                        <procedures-box
+                            v-else-if="
+                                field.key === 'procedures' && item.procedures
+                            "
+                            :proceduresIds="item.procedures"
+                        />
+                        <div v-else-if="field.key === 'tax'">
                             {{ item.tax || 0 }}%
                         </div>
-                        <div v-if="field.key === 'total'">
+                        <div class="md-title" v-else-if="field.key === 'total'">
                             {{ item.total || 0 }}
                             <small>{{ currentClinic.currencyCode }}</small>
                         </div>
                     </md-table-cell>
 
                     <md-table-cell
-                        v-show="currentType !== 'invoices'"
+                        v-if="currentType !== 'invoices'"
                         md-label="Actions"
                     >
                         <div>
@@ -307,12 +252,10 @@
                                     toggleItemVisibility(item, currentType)
                                 "
                             >
-                                <md-icon v-if="item.showInJaw">
-                                    visibility
-                                </md-icon>
-                                <md-icon v-else>
-                                    visibility_off
-                                </md-icon>
+                                <md-icon v-if="item.showInJaw"
+                                    >visibility</md-icon
+                                >
+                                <md-icon v-else>visibility_off</md-icon>
                             </md-button>
                             <md-button
                                 class="md-just-icon md-info md-simple"
@@ -363,12 +306,12 @@
             <div
                 class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100"
             >
-                <div class="snackbar-text-wrapper ">
+                <div class="snackbar-text-wrapper">
                     Delete {{ singleItemName() }} {{ itemToDelete.code }} -
                     {{ itemToDelete.title }}?
                 </div>
                 <div
-                    class="snackbar-action-wrapper  ml-auto md-alignment-center-right "
+                    class="snackbar-action-wrapper ml-auto md-alignment-center-right"
                 >
                     <md-button
                         class="md-simple"
@@ -376,12 +319,11 @@
                             (showDeleteItemSnackbar = false),
                                 (itemToDelete = {})
                         "
+                        >cancel</md-button
                     >
-                        cancel
-                    </md-button>
                     <md-button
                         :disabled="deleting"
-                        class="md-warning "
+                        class="md-warning"
                         @click="deleteItem(item)"
                     >
                         <div v-if="deleting">
@@ -390,18 +332,10 @@
                                 :md-diameter="12"
                                 :md-stroke="2"
                                 md-mode="indeterminate"
-                            />
-                            &nbsp;
-                            <span>
-                                Deleting...
-                            </span>
+                            />&nbsp;
+                            <span>Deleting...</span>
                         </div>
-                        <span v-else>
-                            <md-icon>
-                                delete
-                            </md-icon>
-                            delete
-                        </span>
+                        <span v-else> <md-icon>delete</md-icon>delete </span>
                     </md-button>
                 </div>
             </div>
@@ -411,9 +345,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import Fuse from 'fuse.js';
-import Pagination from '@/components/Pagination';
-import TTableEditor from '@/components/CustomComponents/TTableEditor';
-import TAvatar from '@/components/CustomComponents/TAvatar';
+import components from '@/components';
 import {
     USER_DIAGNOSIS_COLUMNS,
     USER_ANAMNESIS_COLUMNS,
@@ -428,11 +360,9 @@ import {
 import EventBus from '@/plugins/event-bus';
 
 export default {
-    name: 'TNosoologyTable',
+    name: 'PatientNosoologyTable',
     components: {
-        Pagination,
-        TTableEditor,
-        TAvatar
+        ...components
     },
     props: {
         plan: {

@@ -1,0 +1,16 @@
+.t-avatar-box{
+    display: flex;
+    &_text{
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        flex-wrap: wrap;
+        display: flex;
+        text-overflow: ellipsis;
+
+        span,small{
+            flex-wrap: wrap;
+            text-overflow: ellipsis;
+        }
+    }
+}

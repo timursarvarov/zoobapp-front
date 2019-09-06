@@ -166,25 +166,38 @@
                         background: $brand-warning;
                     }
                 }
-                .manipulations {
+                .manipulations,
+                .procedures {
                     display: flex;
                     flex-wrap: wrap;
                     max-width: 600px;
+                    width: 100%;
+                    overflow: hidden;
                     .items-manipulations_wrapper {
                         width: 100%;
                         display: flex;
                         justify-content: space-between;
                         max-width: 600px;
                         .text-left {
-                            // flex-grow: 1;
                             flex-wrap: nowrap;
-                            flex: 3 1 100px;
+                            flex: 5 0 200px;
                             max-width: 500px;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
                         }
                         .text-right {
-                            flex-grow: 1;
                             align-self: stretch;
                             max-width: 100px;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            padding-left: 15px;
+                            padding-right: 5px;
+                            margin-left: auto;
+                            min-width: fit-content;
+                            width: auto;
+                            justify-content: space-between;
+                            display: flex
                         }
                     }
                 }

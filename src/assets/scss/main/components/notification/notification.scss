@@ -50,3 +50,37 @@
         display: block;
     }
 }
+.notification:not(.md-primary):not(.md-success):not(.md-info):not(.md-warning) {
+    background: #f44336;
+}
+.notification.md-success {
+    background: $brand-success;
+}
+.notification.md-info {
+    background: $brand-info;
+}
+.notification.md-primary {
+    background: $brand-primary;
+}
+.notification.md-warning {
+    background: $brand-warning;
+}
+.notification {
+    z-index: 10 !important;
+    width: fit-content !important;
+    position: absolute;
+    top: -10px;
+    border: 1px solid #fff;
+    right: -10px;
+    font-size: 9px;
+    color: #ffffff;
+    z-index: 10;
+    min-width: 20px;
+    padding: 0px 5px;
+    height: 20px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 19px;
+    vertical-align: middle;
+    display: block;
+}

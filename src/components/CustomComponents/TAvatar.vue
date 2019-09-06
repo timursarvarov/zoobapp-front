@@ -1,17 +1,18 @@
 <template>
     <div
         class="avatar-wrapper"
-        :style="
-            [{'margin-top': notification ? '6px': '' },
-             {'margin-right': notification ? '8px': 0 }]"
+        :style="[
+            { 'margin-top': notification ? '6px' : '' },
+            { 'margin-right': notification ? '8px' : 0 }
+        ]"
     >
         <md-avatar
-            :class="[{'md-small': small},{'md-avatar-icon':!loaded}]"
+            :class="[{ 'md-small': small }, { 'md-avatar-icon': !loaded }]"
             class="t-avatar"
         >
             <div
                 class="wrapper"
-                :style="{background: !loaded ? gradient: ''}"
+                :style="{ background: !loaded ? gradient : '' }"
             >
                 <transition name="fade">
                     <img
@@ -20,13 +21,15 @@
                         :src="imageSrc"
                         :alt="title | acronim"
                         @load="onLoaded"
-                    >
+                    />
                 </transition>
                 <transition name="fade">
                     <div
                         v-show="!loaded || !imageSrc"
-                        :style="{background: gradient}"
-                        :class="[{'tripple-acr': title.split(' ').length > 2 }]"
+                        :style="{ background: gradient }"
+                        :class="[
+                            { 'tripple-acr': title.split(' ').length > 2 }
+                        ]"
                         class="md-layout md-alignment-center-center avatar-acronim-wrapper"
                     >
                         {{ title | acronim }}
@@ -37,7 +40,10 @@
         <span
             v-if="notification"
             class="notification"
-        >{{ notification }}</span>
+            :class="`${notificationClass}`"
+            >{{ notification }}
+            <md-tooltip>Attention allergy!</md-tooltip>
+        </span>
     </div>
 </template>
 <script>
@@ -48,38 +54,44 @@ export default {
     props: {
         textToColor: {
             type: [String, Number],
-            default: null,
+            default: null
         },
         notification: {
             type: String,
-            default: '',
+            default: ''
         },
         imageSrc: {
             type: String,
-            default: '',
+            default: ''
         },
         noImgTag: {
             type: Boolean,
-            default: false,
+            default: false
         },
         title: {
             type: String,
-            default: '',
+            default: ''
+        },
+        notificationClass: {
+            type: String,
+            default: ''
         },
         small: {
             type: Boolean,
-            default: false,
-        },
+            default: false
+        }
     },
     data() {
         return {
             loaded: false,
-            randomMC: '',
+            randomMC: ''
         };
     },
     computed: {
         computedColor() {
-            const color = this.randomMC.getColor({ text: `${this.textToColor}` });
+            const color = this.randomMC.getColor({
+                text: `${this.textToColor}`
+            });
             return color;
         },
         gradient() {
@@ -89,7 +101,7 @@ export default {
             colors += `,${colorStart},${colorEnd}`;
             colors += ')';
             return colors;
-        },
+        }
     },
     created() {
         this.randomMC = randomMC;
@@ -117,104 +129,13 @@ export default {
             for (i = 0; i < 3; i += 1) {
                 c = parseInt(hexL.substr(i * 2, 2), 16);
                 c = Math.round(
-                    Math.min(Math.max(0, c + c * lumL), 255),
+                    Math.min(Math.max(0, c + c * lumL), 255)
                 ).toString(16);
                 rgb += `00${c}`.substr(c.length);
             }
 
             return rgb;
-        },
-    },
-};
-</script>
-<style lang="scss">
-.avatar-wrapper {
-    margin: 6px;
-    position: relative;
-    width: fit-content;
-    span.notification {
-        z-index: 20;
-        position: absolute;
-        top: -6px !important;
-        border: 1px solid #fff;
-        right: -8px !important;
-        font-size: 12px!important;
-        background: #f44336;
-        color: #ffffff;
-        min-width: 20px;
-        padding: 0px 5px;
-        height: 20px;
-        border-radius: 10px;
-        text-align: center;
-        line-height: 20px!important;
-        display: block;
-    }
-    .md-small{
-          .avatar-acronim-wrapper {
-                font-size: 16px!important;
-                &.tripple-acr {
-                    font-size: 16px!important;
-                }
-            }
-    }
-    .t-avatar.md-avatar {
-        .wrapper {
-            width: 100%;
-            height: 100%;
-            .avatar-div {
-                // width: 100%;
-                // height: 100%;
-                background-position: 50%;
-                background-repeat: no-repeat;
-                background-size: cover;
-                background-color: transparent;
-                margin: 0 auto;
-                .fade-enter-active {
-                    transition: opacity 0.4s ease-out !important;
-                }
-                .fade-enter-to {
-                    opacity: 1 !important;
-                }
-
-                .fade-enter {
-                    opacity: 0 !important;
-                }
-            }
-            .avatar-img {
-                .fade-enter-active {
-                    transition: opacity 0.4s ease-in !important;
-                }
-                .fade-enter-to {
-                    opacity: 1 !important;
-                }
-
-                .fade-enter {
-                    opacity: 0 !important;
-                }
-            }
-            .avatar-acronim-wrapper {
-                font-size: 24px;
-                font-weight: 200;
-                height: 100%;
-                text-align: center;
-                &.tripple-acr {
-                    font-size: 16px!important;
-                }
-                .avatar-acronim {
-                    text-align: center;
-                }
-                .fade-enter-active {
-                    transition: opacity 0.4s ease-in-out;
-                }
-                .fade-enter-to {
-                    opacity: 1 !important;
-                }
-
-                .fade-enter {
-                    opacity: 0 !important;
-                }
-            }
         }
     }
-}
-</style>
+};
+</script>

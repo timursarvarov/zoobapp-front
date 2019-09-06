@@ -1,11 +1,13 @@
 <template>
     <div class="patient-card-wrapper">
         <md-card-content class="md-layout">
-            <div
-                class="md-layout  md-small-size-100 md-size-50"
-            >
-                <div class="md-layout-item md-layout md-size-100 avatart-wrapper">
-                    <div class="md-layout-item  md-small-size-100 md-size-50  md-layout switch md-alignment-center-space-between">
+            <div class="md-layout  md-small-size-100 md-size-50">
+                <div
+                    class="md-layout-item md-layout md-size-100 avatart-wrapper"
+                >
+                    <div
+                        class="md-layout-item  md-small-size-100 md-size-50  md-layout switch md-alignment-center-space-between"
+                    >
                         <t-avatar-input
                             :disabled="loading"
                             :text-to-color="patient.ID"
@@ -16,7 +18,9 @@
                             @on-created="updatepatientAvatar"
                         />
                     </div>
-                    <div class="md-layout-item  md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between">
+                    <div
+                        class="md-layout-item  md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between"
+                    >
                         <div class="md-layout-item">
                             <md-switch v-model="showRating">
                                 Show Rating
@@ -36,8 +40,13 @@
                 <div class="md-layout-item md-size-100">
                     <md-field
                         :class="[
-                            {'md-valid': !errors.has('firstName') && touched.firstName},
-                            {'md-error': errors.has('firstName')}]"
+                            {
+                                'md-valid':
+                                    !errors.has('firstName') &&
+                                    touched.firstName
+                            },
+                            { 'md-error': errors.has('firstName') }
+                        ]"
                     >
                         <label>First Name</label>
                         <md-input
@@ -48,7 +57,9 @@
                             data-vv-name="firstName"
                             required
                         />
-                        <span class="md-error">{{ errors.first('firstName') }}</span>
+                        <span class="md-error">{{
+                            errors.first('firstName')
+                        }}</span>
                         <slide-y-down-transition>
                             <md-icon
                                 v-show="errors.has('firstName')"
@@ -59,7 +70,10 @@
                         </slide-y-down-transition>
                         <slide-y-down-transition>
                             <md-icon
-                                v-show="!errors.has('firstName') && touched.firstName"
+                                v-show="
+                                    !errors.has('firstName') &&
+                                        touched.firstName
+                                "
                                 class="success"
                             >
                                 done
@@ -71,8 +85,12 @@
                 <div class="md-layout-item md-size-100">
                     <md-field
                         :class="[
-                            {'md-valid': !errors.has('lastName') && touched.lastName},
-                            {'md-error': errors.has('lastName')}]"
+                            {
+                                'md-valid':
+                                    !errors.has('lastName') && touched.lastName
+                            },
+                            { 'md-error': errors.has('lastName') }
+                        ]"
                     >
                         <label>Last Name</label>
                         <md-input
@@ -83,7 +101,9 @@
                             data-vv-name="lastName"
                             required
                         />
-                        <span class="md-error">{{ errors.first('lastName') }}</span>
+                        <span class="md-error">{{
+                            errors.first('lastName')
+                        }}</span>
                         <slide-y-down-transition>
                             <md-icon
                                 v-show="errors.has('lastName')"
@@ -94,7 +114,9 @@
                         </slide-y-down-transition>
                         <slide-y-down-transition>
                             <md-icon
-                                v-show="!errors.has('lastName') && touched.lastName"
+                                v-show="
+                                    !errors.has('lastName') && touched.lastName
+                                "
                                 class="success"
                             >
                                 done
@@ -106,8 +128,12 @@
                 <div class="md-layout-item md-size-100">
                     <md-field
                         :class="[
-                            {'md-valid': !errors.has('phone') && touched.phone},
-                            {'md-error': errors.has('phone')}]"
+                            {
+                                'md-valid':
+                                    !errors.has('phone') && touched.phone
+                            },
+                            { 'md-error': errors.has('phone') }
+                        ]"
                     >
                         <label>Phone</label>
                         <span class="md-prefix">+</span>
@@ -119,12 +145,11 @@
                             data-vv-name="phone"
                             required
                         />
-                        <span class="md-error">{{ errors.first('phone') }}</span>
+                        <span class="md-error">{{
+                            errors.first('phone')
+                        }}</span>
                         <slide-y-down-transition>
-                            <md-icon
-                                v-show="errors.has('phone')"
-                                class="error"
-                            >
+                            <md-icon v-show="errors.has('phone')" class="error">
                                 close
                             </md-icon>
                         </slide-y-down-transition>
@@ -140,9 +165,7 @@
                 </div>
             </div>
 
-            <div
-                class="md-layout  md-small-size-100 md-size-50"
-            >
+            <div class="md-layout  md-small-size-100 md-size-50">
                 <div class="md-layout-item md-size-100">
                     <md-field>
                         <label>Source</label>
@@ -173,12 +196,15 @@
                     </md-datepicker>
                 </div>
 
-
                 <div class="md-layout-item md-size-100">
                     <md-field
                         :class="[
-                            {'md-valid': !errors.has('email') && touched.email},
-                            {'md-error': errors.has('email')}]"
+                            {
+                                'md-valid':
+                                    !errors.has('email') && touched.email
+                            },
+                            { 'md-error': errors.has('email') }
+                        ]"
                     >
                         <label>Email Address</label>
                         <md-input
@@ -189,12 +215,11 @@
                             data-vv-name="email"
                             required
                         />
-                        <span class="md-error">{{ errors.first('email') }}</span>
+                        <span class="md-error">{{
+                            errors.first('email')
+                        }}</span>
                         <slide-y-down-transition>
-                            <md-icon
-                                v-show="errors.has('email')"
-                                class="error"
-                            >
+                            <md-icon v-show="errors.has('email')" class="error">
                                 close
                             </md-icon>
                         </slide-y-down-transition>
@@ -215,7 +240,9 @@
                         class="md-danger"
                         md-placeholder="Add allergy..."
                     />
-                    <span class="small helper">Enter allergent name and click "Enter"</span>
+                    <span class="small helper"
+                        >Enter allergent name and click "Enter"</span
+                    >
                 </div>
             </div>
         </md-card-content>
@@ -232,7 +259,7 @@
                         :md-stroke="2"
                         md-mode="indeterminate"
                     />
-                        &nbsp;
+                    &nbsp;
                     <span>
                         Saving...
                     </span>
@@ -259,22 +286,22 @@ export default {
     components: {
         ...components,
         SlideYDownTransition,
-        StarRating,
-    // generator,
+        StarRating
+        // generator,
     },
     props: {
         cardpatientImage: {
             type: String,
-            default: './img/faces/marc.jpg',
+            default: './img/faces/marc.jpg'
         },
         buttonColor: {
             type: String,
-            default: '',
+            default: ''
         },
         avatar: {
             type: String,
-            default: './img/default-avatar.png',
-        },
+            default: './img/default-avatar.png'
+        }
     },
     data() {
         return {
@@ -287,33 +314,33 @@ export default {
                 firstName: false,
                 lastName: false,
                 email: false,
-                phone: false,
+                phone: false
             },
             modelValidations: {
                 lastName: {
-                    required: true,
+                    required: true
                 },
                 firstName: {
                     required: true,
-                    min: 2,
+                    min: 2
                 },
                 email: {
-                    email: true,
+                    email: true
                 },
                 phone: {
                     required: true,
-                    min: 12,
-                },
-            },
+                    min: 12
+                }
+            }
         };
     },
     computed: {
         ...mapGetters({
-            patient: 'getPatient',
+            patient: 'getPatient'
         }),
         patientColor() {
             const color = randomMC.getColor({
-                text: this.firstName + this.lastName + this.phone + this.email,
+                text: this.firstName + this.lastName + this.phone + this.email
             });
             return color;
         },
@@ -325,7 +352,7 @@ export default {
             // setter
             set(newValue) {
                 this.patient.allergy = newValue;
-            },
+            }
         },
         email() {
             return this.patient.email;
@@ -338,7 +365,7 @@ export default {
         },
         phone() {
             return this.patient.phone;
-        },
+        }
     },
     watch: {
         email() {
@@ -352,14 +379,14 @@ export default {
         },
         phone() {
             this.touched.phone = true;
-        },
+        }
     },
     methods: {
         getColorButton(buttonColor) {
             return `md-${buttonColor}`;
         },
         validate() {
-            this.$validator.validateAll().then((isValid) => {
+            this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.registerForm, isValid);
             });
             this.touched.lastName = true;
@@ -371,27 +398,28 @@ export default {
             this.patient.color = this.patientColor;
             this.$validator
                 .validateAll('firstName', 'email', 'phone', 'lastName')
-                .then((result) => {
+                .then(result => {
                     if (result) {
                         this.loading = true;
                         this.$store
                             .dispatch(PATIENT_UPDATE, {
-                                patient: this.patient,
+                                patient: this.patient
                             })
-                            .then((response) => {
+                            .then(response => {
                                 if (response) {
                                     this.loading = false;
                                     this.$store.dispatch(NOTIFY, {
                                         settings: {
                                             message:
-                                                    'Settings updated successfully',
-                                            type: 'success',
-                                        },
+                                                'Settings updated successfully',
+                                            type: 'success'
+                                        }
                                     });
                                 }
-                            }).catch((err) => {
-                                throw new Error(err);
+                            })
+                            .catch(err => {
                                 this.loading = false;
+                                throw new Error(err);
                             });
                     }
                 });
@@ -400,38 +428,37 @@ export default {
         updatepatientAvatar(fd) {
             const patient = {
                 ID: this.patient.ID,
-                fd,
+                fd
             };
 
             this.$store
                 .dispatch(PATIENT_AVATAR_UPLOAD, {
-                    patient,
+                    patient
                 })
                 .then(
-                    (response) => {
+                    response => {
                         console.log(response);
                         this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'Image uploaded',
-                                type: 'success',
-                            },
+                                type: 'success'
+                            }
                         });
                     },
-                    (err) => {
+                    err => {
                         this.selectedFileUrl = null;
                         throw new Error(err);
-                    },
+                    }
                 );
-        },
-    },
-
+        }
+    }
 };
 </script>
-<style lang="scss" >
+<style lang="scss">
 .patient-card-wrapper {
     .md-chips:after {
-    display: block;
-}
+        display: block;
+    }
     .avatart-wrapper {
         padding: 20px;
     }

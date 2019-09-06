@@ -1,0 +1,163 @@
+.t-collapse-search-wrapper {
+    .no-margin{
+        margin: 0!important;
+    }
+    .collapse-toolbar__items {
+        display: flex;
+        justify-content: space-between;
+        .collapse-toolbar__grow {
+            flex-grow: 1;
+        }
+        .collapse-toolbar__nogrow {
+            // padding-left: 15px
+        }
+        .collapse-actions{
+            flex-grow: 1;
+            display: flex;
+        }
+    }
+    .no-side-padding {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    width: 100%;
+    .md-icon {
+        transition: all 250ms ease-in;
+        transition-property: all;
+        transition-duration: 250ms;
+        transition-timing-function: ease-in;
+        transition-delay: 0s;
+    }
+    .rotate {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+    .item-code {
+        margin-right: 24px;
+    }
+    .action-start {
+        max-width: 170px;
+    }
+    .action-button {
+        // max-width: 42px;
+        // min-width: 42px;
+    }
+    .collapse-wrapper {
+        background-color: #ececec6b;
+        border-radius: 10px;
+        overflow: hidden;
+        overflow-y: scroll;
+        // max-height: 40vh;
+        // min-height: 30vh;
+        padding: 6px;
+        &::-webkit-scrollbar {
+            width: 7px;
+            // background-color: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: grey;
+            border-radius: 7px;
+        }
+
+        .md-collapse-label {
+            padding: 10px 10px 10px 0;
+            overflow: hidden;
+            &:after {
+                bottom: 0px;
+            }
+            .md-collapse-title {
+                padding-left: 15px;
+                font-weight: 400;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-right: 25px;
+                .md-icon {
+                    top: 7px;
+                }
+            }
+        }
+        .md-error .md-collapse-label:after {
+            bottom: 6px;
+        }
+
+        .highlight {
+            background-color: rgba(255, 255, 21, 0.979);
+        }
+        .md-list {
+            border-radius: 4px;
+            .md-list-item {
+                margin: 0;
+            }
+            background-color: transparent;
+            // border-style: solid;
+            // border-color: #9b9b9b28;
+            // box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+            border-width: 1px;
+            margin-bottom: 15px;
+            padding: 0;
+        }
+        .md-list-item-content {
+            max-height: 64px;
+            min-height: 44px;
+            height: 44px;
+            padding: 8px;
+            // background-color: rgba(238, 236, 236, 0.201);
+        }
+        .dental {
+            .md-list-item-text {
+                cursor: not-allowed;
+            }
+        }
+        .md-list-item-text {
+            cursor: pointer;
+        }
+        .md-list-action {
+            padding-right: 10px;
+        }
+        // }
+        .md-collapse-content {
+            margin-top: 20px;
+            padding: 0 1vw;
+            .list-wrapper {
+                background-color: transparent;
+            }
+        }
+
+        .highlight {
+            background-color: rgba(255, 255, 21, 0.979);
+        }
+        .md-list-item-content {
+            max-height: 64px;
+            min-height: 44px;
+            height: 44px;
+            padding: 8px;
+            // background-color: rgba(238, 236, 236, 0.201);
+        }
+        .dental {
+            .md-list-item-text {
+                cursor: not-allowed;
+            }
+        }
+        .md-list-item-text {
+            cursor: pointer;
+        }
+        .md-list-action {
+            padding-right: 10px;
+        }
+    }
+    .no-plan-space {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        max-width: 420px;
+        padding: 36px;
+        margin: 0 auto;
+        position: relative;
+        transition: opacity 0.15s cubic-bezier(0, 0, 0.2, 1),
+            transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+        will-change: transform, opacity;
+    }
+}

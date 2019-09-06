@@ -1,15 +1,6 @@
 
 <template lang="html">
     <div class="md-layout-item  md-size-100">
-
-        <delete-form
-            v-if="patient.currentPlan"
-            text="Delete Plan?"
-            :show-form.sync="showDeleteForm"
-            :item-to-delete="patient.currentPlan"
-            :patient-i-d="patient.ID"
-            current-type="plan"
-        />
     </div>
 </template>
 

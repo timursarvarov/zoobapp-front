@@ -1,10 +1,9 @@
 <template lang="html">
     <div class="md-layout md-gutter set-diagnose-form">
-        <div class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
-            <div
-                class="mx-auto"
-                style="flex-grow:1;"
-            >
+        <div
+            class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50"
+        >
+            <div class="mx-auto" style="flex-grow:1;">
                 <jaw
                     :selected-teeth="selectedTeeth"
                     :age-category="!!patient.ageCategory"
@@ -12,7 +11,7 @@
                     :patient-items="{
                         diagnosis: patient.diagnosis,
                         procedures: currentPlanProcedures,
-                        anamnesis: patient.anamnesis,
+                        anamnesis: patient.anamnesis
                     }"
                     :teeth-system="currentClinic.teethSystem"
                     :type="currentType"
@@ -20,10 +19,7 @@
                     @showToothInfo="showToothInfo"
                     @onSizeChanged="matchHeight"
                 >
-                    <template
-                        v-if="patient.ID"
-                        slot="title-start"
-                    >
+                    <template v-if="patient.ID" slot="title-start">
                         <md-tabs
                             md-sync-route
                             class="t-md-tabs"
@@ -31,18 +27,24 @@
                         >
                             <md-tab
                                 id="tab-home"
-                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan`"
+                                :to="
+                                    `/${$i18n.locale}/patient/${patient.ID}/treatment/plan`
+                                "
                                 md-label="Procedures"
                             />
                             <md-tab
                                 id="tab-pages"
                                 class="diagnosis"
-                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/diagnosis`"
+                                :to="
+                                    `/${$i18n.locale}/patient/${patient.ID}/treatment/diagnosis`
+                                "
                                 md-label="Diagnoses"
                             />
                             <md-tab
                                 id="tab-posts"
-                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`"
+                                :to="
+                                    `/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`
+                                "
                                 md-label="Anamnes"
                             />
                         </md-tabs>
@@ -61,10 +63,7 @@
                 @onSelectItem="selectItem"
             />
         </keep-alive>
-        <div
-            style="margin-top:30px;"
-            class="md-layout-item  md-size-100"
-        >
+        <div style="margin-top:30px;" class="md-layout-item  md-size-100">
             <keep-alive>
                 <router-view
                     ref="items-lists"
@@ -99,24 +98,7 @@
                 :patient-id="patient.ID"
                 @onPlanCreated="redirectToProcdures"
             />
-            <t-print-form
-                :patient="patient"
-                :show-form.sync="showPrint"
-            />
-
-            <!-- <t-wizard-add-item
-                v-if="showAddItemWizard && currentPlanID"
-                :steps="stepsForWizard"
-                :selected-teeth="selectedTeeth"
-                :selected-item="selecteditemLocal"
-                :jaw="patient.jaw"
-                :teeth-schema="teethSchema"
-                :teeth-system="currentClinic.teethSystem"
-                :is-dialog-visible.sync="showAddItemWizard"
-                :current-type="currentType"
-                :single-item-name="singleItemName"
-                @on-created="saveItem"
-            /> -->
+            <t-print-form :patient="patient" :show-form.sync="showPrint" />
         </div>
     </div>
 </template>
@@ -125,14 +107,12 @@
 import { mapGetters } from 'vuex';
 import {
     NOTIFY,
-    PATIENT_DIAGNOSE_SET,
     PATIENT_DIAGNOSE_UPDATE,
     PATIENT_PROCEDURE_SET,
     PATIENT_ANAMNES_UPDATE,
-    PATIENT_ANAMNES_SET,
     PATIENT_PROCEDURE_UPDATE,
     EB_SHOW_ITEM_WIZARD,
-    PATIENT_JAW_UPDATE,
+    PATIENT_JAW_UPDATE
 } from '@/constants';
 import PlanAddForm from './PlanAddForm';
 import components from '@/components';
@@ -140,10 +120,10 @@ import components from '@/components';
 import EventBus from '@/plugins/event-bus';
 
 export default {
-    beforeRouteEnter (to, from, next) {
-        next(vm=>{
-            if(from.name){
-                if(to.params.planID){
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            if (from.name) {
+                if (to.params.planID) {
                     vm.currentPlanID = to.params.planID;
                     vm.$router.push({
                         name: 'procedures',
@@ -151,24 +131,24 @@ export default {
                             lang: vm.$i18n.locale,
                             patientID: vm.patient.ID,
                             planID: to.params.planID
-                        },
+                        }
                     });
-                }else if (vm.currentPlanID){
+                } else if (vm.currentPlanID) {
                     vm.$router.push({
                         name: 'procedures',
                         params: {
                             lang: vm.$i18n.locale,
                             patientID: vm.patient.ID,
                             planID: vm.currentPlanID
-                        },
+                        }
                     });
                 }
             }
-        })
+        });
     },
     components: {
         PlanAddForm,
-        ...components,
+        ...components
     },
     data() {
         return {
@@ -184,7 +164,7 @@ export default {
             recalculateCollapseItems: false,
             loadingAllPLans: false,
             showPrint: false,
-            selecteditemLocal: {},
+            selecteditemLocal: {}
         };
     },
     computed: {
@@ -199,10 +179,10 @@ export default {
             getProceduresByIds: 'getProceduresByIds',
             getPatientCurrentPlanProcedures: 'getPatientCurrentPlanProcedures',
             currentPlanID: 'getCurrentPlanID',
-            currentPlanProcedures: 'getPatientCurrentPlanProcedures',
+            currentPlanProcedures: 'getPatientCurrentPlanProcedures'
         }),
-        currentType(){
-            if(this.$route.meta && this.$route.meta.type){
+        currentType() {
+            if (this.$route.meta && this.$route.meta.type) {
                 return this.$route.meta.type;
             }
             return 'procedures';
@@ -211,7 +191,7 @@ export default {
             const originalItems = {
                 anamnesis: this.currentClinic.anamnesisComputed || [],
                 diagnosis: this.currentClinic.diagnosisComputed || [],
-                procedures: this.currentClinic.proceduresComputed || [],
+                procedures: this.currentClinic.proceduresComputed || []
             };
             return originalItems;
         },
@@ -230,7 +210,7 @@ export default {
                 'manipulations',
                 'files',
                 'description',
-                'appointments',
+                'appointments'
             ];
         },
         singleItemName() {
@@ -246,67 +226,71 @@ export default {
             let itemToShow = {};
             if (this.showParams.type === 'procedures') {
                 itemToShow = this.patient.currentPlanProcedures.find(
-                    item => item.id === this.showParams.itemId,
+                    item => item.id === this.showParams.itemId
                 );
                 return itemToShow;
             }
             if (this.patient[this.showParams.type]) {
                 itemToShow = this.patient[this.showParams.type].find(
-                    item => item.id === this.showParams.itemId,
+                    item => item.id === this.showParams.itemId
                 );
             }
             return itemToShow;
-        },
+        }
     },
     watch: {
         $route(val) {
-            if(val.name === 'plan' && this.currentPlanID){
-                this.$nextTick(()=>{
+            if (val.name === 'plan' && this.currentPlanID) {
+                this.$nextTick(() => {
                     this.redirectToProcdures(this.currentPlanID);
                 });
             }
         },
-        currentPlanID(val, old){
-            if(!(old in this.patient.plans)){
-                if(val){
+        currentPlanID(val, old) {
+            if (!(old in this.patient.plans)) {
+                if (val) {
                     this.redirectToProcdures(val);
-                }else{
-                    this.redirectToPlan()
+                } else {
+                    this.redirectToPlan();
                 }
             }
-        },
+        }
     },
-    mounted(){
-        if(this.$route.params && this.$route.params.planID && this.currentPlanID !== this.$route.params.planID){
+    mounted() {
+        if (
+            this.$route.params &&
+            this.$route.params.planID &&
+            this.currentPlanID !== this.$route.params.planID
+        ) {
             this.redirectToProcdures(this.currentPlanID);
         }
     },
     methods: {
-        rec(){
-            this.$store.dispatch(PATIENT_JAW_UPDATE)
+        rec() {
+            this.$store.dispatch(PATIENT_JAW_UPDATE);
         },
-        redirectToProcdures(planID){
-            if(this.$route.name !== 'procedures'){
+        redirectToProcdures(planID) {
+            if (this.$route.name !== 'procedures') {
                 this.$router.push({
                     name: 'procedures',
                     params: {
                         lang: this.$i18n.locale,
                         patientID: this.patient.ID,
                         planID
-                    },
+                    }
                 });
             }
         },
-        redirectToPlan(){
-            if(this.$route.name !== 'plan'){
+        redirectToPlan() {
+            if (this.$route.name !== 'plan') {
                 this.$router.push({
                     name: 'plan',
                     params: {
                         lang: this.$i18n.locale,
-                        patientID: this.patient.ID,
-                    },
+                        patientID: this.patient.ID
+                    }
                 });
-            };
+            }
         },
         onRecalculateCollapseItems() {
             this.recalculateCollapseItems = !this.recalculateCollapseItems;
@@ -316,8 +300,8 @@ export default {
                 this.$store.dispatch(NOTIFY, {
                     settings: {
                         message: 'PLans limit riched (only 10 plans allowed)',
-                        type: 'warning',
-                    },
+                        type: 'warning'
+                    }
                 });
             } else {
                 this.showAddPlan = true;
@@ -326,17 +310,15 @@ export default {
         onShowPrint() {
             this.showPrint = true;
         },
-        getItemCatalogFieldName(){
-            if(this.currentType==='diagnosis'){
-                return 'catalogDiagnoseID'
-            }
-            else if(this.currentType==='procedures'){
-                return 'catalogProcedureID'
-            }
-            else if(this.currentType==='anamnesis'){
-                return 'catalogAnamnesID'
-            } else{
-                return null
+        getItemCatalogFieldName() {
+            if (this.currentType === 'diagnosis') {
+                return 'catalogDiagnoseID';
+            } else if (this.currentType === 'procedures') {
+                return 'catalogProcedureID';
+            } else if (this.currentType === 'anamnesis') {
+                return 'catalogAnamnesID';
+            } else {
+                return null;
             }
         },
         editItem(item) {
@@ -345,13 +327,13 @@ export default {
                 [this.getItemCatalogFieldName()]: item.ID,
                 code: item.code,
                 description: item.description,
-                title: item.title,
-            }
-            Object.keys(this.selectedTeeth).forEach(toothID=>{
-                if(!this.selecteditemLocal.teeth){
-                    this.selecteditemLocal.teeth ={};
+                title: item.title
+            };
+            Object.keys(this.selectedTeeth).forEach(toothID => {
+                if (!this.selecteditemLocal.teeth) {
+                    this.selecteditemLocal.teeth = {};
                 }
-                this.selecteditemLocal.teeth[toothID]={}
+                this.selecteditemLocal.teeth[toothID] = {};
             });
             this.showAddItemWizard = true;
         },
@@ -369,20 +351,20 @@ export default {
         },
         saveEditedAnamnes(a) {
             this.$store.dispatch(PATIENT_ANAMNES_UPDATE, {
-                anamnes: a,
+                anamnes: a
             });
         },
         saveEditedProcedure(p) {
             this.$store.dispatch(PATIENT_PROCEDURE_UPDATE, {
                 params: {
                     procedure: p,
-                    planID: this.currentPlanID,
-                },
+                    planID: this.currentPlanID
+                }
             });
         },
         saveEditedDiagnose(d) {
             this.$store.dispatch(PATIENT_DIAGNOSE_UPDATE, {
-                diagnose: d,
+                diagnose: d
             });
         },
         // saveItem(d) {
@@ -438,45 +420,43 @@ export default {
                 ID: this.user.ID,
                 avatar: this.user.avatar,
                 firstName: this.user.firstName,
-                lastName: this.user.lastName,
+                lastName: this.user.lastName
             };
             procedureL.showInJaw = true;
             procedureL.id = Math.random();
             this.$store.dispatch(PATIENT_PROCEDURE_SET, {
                 planID: this.currentPlanID,
                 procedure: procedureL,
-                patientID: this.patient.ID,
+                patientID: this.patient.ID
             });
-
         },
         selectItem(item) {
             if (item) {
                 const catalogName = this.getItemCatalogFieldName();
-                this.selecteditemLocal={
+                this.selecteditemLocal = {
                     ID: null,
-                    [ this.getItemCatalogFieldName()]: item.ID,
+                    [this.getItemCatalogFieldName()]: item.ID,
                     code: item.code,
                     description: item.description,
-                    title: item.title,
+                    title: item.title
                 };
-                this.selectedTeeth.forEach(toothID=>{
-                    if(!this.selecteditemLocal.teeth){
-                        this.selecteditemLocal.teeth ={};
+                this.selectedTeeth.forEach(toothID => {
+                    if (!this.selecteditemLocal.teeth) {
+                        this.selecteditemLocal.teeth = {};
                     }
-                    this.selecteditemLocal.teeth[toothID]={}
+                    this.selecteditemLocal.teeth[toothID] = {};
                 });
                 const params = {
                     type: this.currentType,
-                    item:this.selecteditemLocal,
-                }
-                EventBus.$emit(EB_SHOW_ITEM_WIZARD,  params );
+                    item: this.selecteditemLocal
+                };
+                EventBus.$emit(EB_SHOW_ITEM_WIZARD, params);
             }
         },
         matchHeight(jawHeight) {
             this.jawHeight = jawHeight;
-        },
-    },
+        }
+    }
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

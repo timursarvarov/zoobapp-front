@@ -2,11 +2,12 @@
     <md-toolbar
         md-elevation="0"
         class="md-transparent top-navbar-wrapper"
-        :class="{'md-toolbar-absolute md-white md-fixed-top': $route.meta.navbarAbsolute}"
+        :class="{
+            'md-toolbar-absolute md-white md-fixed-top':
+                $route.meta.navbarAbsolute
+        }"
     >
-        <div
-            class="the-main-progress-bar"
-        >
+        <div class="the-main-progress-bar">
             <md-progress-bar
                 v-show="loading"
                 :md-stroke="2"
@@ -17,27 +18,47 @@
             <div class="md-toolbar-section-start">
                 <h3 class="md-title">
                     <template
-                        v-if="$route.params.patientID && (patient.firstName || patient.secondName) "
+                        v-if="
+                            $route.params.patientID &&
+                                (patient.firstName || patient.lastName)
+                        "
                         class="md-layout md-alignment-left-center"
                     >
-                        <t-avatar
+                        <avatar-box
+                            v-if="
+                                $route.params.patientID &&
+                                    (patient.firstName || patient.lastName)
+                            "
+                            :avatar="patient.avatar"
+                            :id="patient.ID"
+                            :firstLine="
+                                `${patient.firstName} ${patient.lastName}`
+                            "
+                            :notificationClass="
+                                patient.allergy ? 'warning' : ''
+                            "
+                            :notification="
+                                !lodash.isEmpty(patient.allergy) ? 'A' : ''
+                            "
+                        />
+                        <!-- <t-avatar
                             class="patient-header-avatar"
                             :text-to-color="patient.ID"
                             :image-src="patient.avatar"
                             :title="patient.firstName + ' ' + patient.lastName"
                         />
                         <span class="patient_header_title md-layout-item">
-                            {{ `${patient.firstName }` | capitilize }}
-                            {{ `${patient.lastName }` | capitilize }}
+                            {{ `${patient.firstName}` | capitilize }}
+                            {{ `${patient.lastName}` | capitilize }}
                         </span>
                         <md-button
-                            v-if="patient.allergy && patient.allergy.length>0"
+                            v-if="patient.allergy && patient.allergy.length > 0"
                             class="md-icon-button md-simple md-danger md-round md-just-icon"
                             @click="handleAllergy(patient.allergy)"
                         >
                             <md-icon>report_problem</md-icon>
                             <md-tooltip>Attention allergy!</md-tooltip>
-                        </md-button>
+                        </md-button> -->
                     </template>
                     <span v-else>{{ $route.name }}</span>
                 </h3>
@@ -45,7 +66,7 @@
             <div class="md-toolbar-section-end">
                 <md-button
                     class="md-just-icon md-round md-round md-simple md-toolbar-toggle"
-                    :class="{toggled: $sidebar.showSidebar}"
+                    :class="{ toggled: $sidebar.showSidebar }"
                     @click="toggleSidebar"
                 >
                     <span class="icon-bar" />
@@ -60,10 +81,7 @@
                                 class="md-list-item-router md-list-item-container md-button-clean"
                                 @click="goTo('/')"
                             >
-                                <div
-                                    v-ripple
-                                    class="md-list-item-content"
-                                >
+                                <div v-ripple class="md-list-item-content">
                                     <i class="material-icons">dashboard</i>
                                     <p class="hidden-lg hidden-md">Dashboard</p>
                                 </div>
@@ -74,12 +92,11 @@
                                 class="md-list-item-router md-list-item-container md-button-clean"
                                 @click="showPatientAddForm()"
                             >
-                                <div
-                                    v-ripple
-                                    class="md-list-item-content"
-                                >
+                                <div v-ripple class="md-list-item-content">
                                     <i class="material-icons">person_add</i>
-                                    <p class="hidden-lg hidden-md">Add patient</p>
+                                    <p class="hidden-lg hidden-md">
+                                        Add patient
+                                    </p>
                                 </div>
                             </a>
                         </li>
@@ -96,20 +113,34 @@
                                         >
                                             <md-icon>notifications</md-icon>
                                             <span class="notification">5</span>
-                                            <p class="hidden-lg hidden-md">Notifications</p>
+                                            <p class="hidden-lg hidden-md">
+                                                Notifications
+                                            </p>
                                         </md-button>
-                                        <ul class="dropdown-menu dropdown-menu-right">
+                                        <ul
+                                            class="dropdown-menu dropdown-menu-right"
+                                        >
                                             <li>
-                                                <a href="#">Mike John responded to your email</a>
+                                                <a href="#"
+                                                    >Mike John responded to your
+                                                    email</a
+                                                >
                                             </li>
                                             <li>
-                                                <a href="#">You have 5 new tasks</a>
+                                                <a href="#"
+                                                    >You have 5 new tasks</a
+                                                >
                                             </li>
                                             <li>
-                                                <a href="#">You're now friend with Andrew</a>
+                                                <a href="#"
+                                                    >You're now friend with
+                                                    Andrew</a
+                                                >
                                             </li>
                                             <li>
-                                                <a href="#">Another Notification</a>
+                                                <a href="#"
+                                                    >Another Notification</a
+                                                >
                                             </li>
                                             <li>
                                                 <a href="#">Another One</a>
@@ -125,19 +156,20 @@
                                 class="md-list-item-router md-list-item-container md-button-clean dropdown"
                             >
                                 <div class="md-list-item-content">
-                                    <drop-down
-                                        multi-level
-                                        direction="down"
-                                    >
+                                    <drop-down multi-level direction="down">
                                         <md-button
                                             slot="title"
                                             class="md-button md-round md-just-icon md-simple"
                                             data-toggle="dropdown"
                                         >
                                             <md-icon>more_vert</md-icon>
-                                            <p class="hidden-lg hidden-md">More</p>
+                                            <p class="hidden-lg hidden-md">
+                                                More
+                                            </p>
                                         </md-button>
-                                        <ul class="dropdown-menu dropdown-menu-right">
+                                        <ul
+                                            class="dropdown-menu dropdown-menu-right"
+                                        >
                                             <li class="md-layout">
                                                 <router-link
                                                     tag="a"
@@ -149,7 +181,11 @@
                                                         :text-to-color="user.ID"
                                                         :no-img-tag="true"
                                                         :image-src="user.avatar"
-                                                        :title="user.firstName + ' ' + user.lastName"
+                                                        :title="
+                                                            user.firstName +
+                                                                ' ' +
+                                                                user.lastName
+                                                        "
                                                     />
                                                     My Profile
                                                 </router-link>
@@ -162,7 +198,9 @@
                                                     href="#"
                                                     class="md-layout-item"
                                                 >
-                                                    <md-icon>person_add</md-icon>
+                                                    <md-icon
+                                                        >person_add</md-icon
+                                                    >
                                                     Add Patient
                                                 </a>
                                             </li>
@@ -182,48 +220,80 @@
                                                 class="md-layout"
                                                 @click="logout()"
                                             >
-                                                <a
-                                                    href="#"
-                                                >
-                                                    <md-icon>arrow_back</md-icon>
+                                                <a href="#">
+                                                    <md-icon
+                                                        >arrow_back</md-icon
+                                                    >
                                                     Logout
                                                 </a>
                                             </li>
                                             <li class="md-layout">
                                                 <a
-                                                    :class="
-                                                        [
-                                                            {'open': multiLevel},
-                                                            {'dropdown-toggle': clinics && clinics.length > 1},
-                                                        ]"
+                                                    :class="[
+                                                        { open: multiLevel },
+                                                        {
+                                                            'dropdown-toggle':
+                                                                clinics &&
+                                                                clinics.length >
+                                                                    1
+                                                        }
+                                                    ]"
                                                     @click="toggleMultiLevel"
                                                 >
                                                     <img
                                                         style="margin-right:10px; height:24px; width:24px; border-radius:50%"
-                                                        :src="currnentClinic.logo"
-                                                    >
+                                                        :src="
+                                                            currnentClinic.logo
+                                                        "
+                                                    />
                                                     {{ currnentClinic.name }}
                                                     {{ currnentClinic.id }}
                                                 </a>
                                                 <ul
-                                                    v-if="clinics && clinics.length > 1"
+                                                    v-if="
+                                                        clinics &&
+                                                            clinics.length > 1
+                                                    "
                                                     class="dropdown-menu"
                                                 >
                                                     <li
-                                                        v-for="(clinic, index) in clinics"
+                                                        v-for="(clinic,
+                                                        index) in clinics"
                                                         :key="index"
-                                                        :class="[{'selected-menu-top-navbar': clinic.ID === currnentClinic.ID }]"
-                                                        @click="setClinic(clinic.ID), toggleMultiLevel()"
+                                                        :class="[
+                                                            {
+                                                                'selected-menu-top-navbar':
+                                                                    clinic.ID ===
+                                                                    currnentClinic.ID
+                                                            }
+                                                        ]"
+                                                        @click="
+                                                            setClinic(
+                                                                clinic.ID
+                                                            ),
+                                                                toggleMultiLevel()
+                                                        "
                                                     >
                                                         <a
-                                                            :style="{color: clinic.ID === currnentClinic.ID ? '#fff!important': ''}"
+                                                            :style="{
+                                                                color:
+                                                                    clinic.ID ===
+                                                                    currnentClinic.ID
+                                                                        ? '#fff!important'
+                                                                        : ''
+                                                            }"
                                                             href="#"
                                                         >
                                                             <img
                                                                 style="margin-right:10px; height:24px; width:24px; border-radius:50%"
-                                                                :src="clinic.logo"
-                                                            >
-                                                            {{ clinic.name | capitilize }}{{ clinic.ID }}
+                                                                :src="
+                                                                    clinic.logo
+                                                                "
+                                                            />
+                                                            {{
+                                                                clinic.name
+                                                                    | capitilize
+                                                            }}{{ clinic.ID }}
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -246,15 +316,14 @@ import components from '@/components';
 import {
     CLINIC_AUTH_REQUEST,
     AUTH_LOGOUT,
-    PATIENTS_REQUEST,
     AUTH_LOCK,
     NOTIFY,
-    AVAILABLE_LANGUAGES,
+    AVAILABLE_LANGUAGES
 } from '@/constants';
 
 export default {
     components: {
-        ...components,
+        ...components
     },
     data() {
         return {
@@ -270,7 +339,7 @@ export default {
             multiLevel: false,
             noData: false,
             perPage: 20,
-            page: 1,
+            page: 1
         };
     },
     computed: {
@@ -282,11 +351,11 @@ export default {
             currnentClinic: 'getCurrentClinic',
             accessToken: 'fetchStateAccessToken',
             expiresAt: 'expiresAt',
-            lang: 'getLang',
+            lang: 'getLang'
         }),
         languages() {
             return AVAILABLE_LANGUAGES;
-        },
+        }
     },
     methods: {
         goTo(route) {
@@ -296,21 +365,21 @@ export default {
             this.$store
                 .dispatch(CLINIC_AUTH_REQUEST, {
                     clinicId,
-                    accessToken: this.accessToken,
+                    accessToken: this.accessToken
                 })
                 .then(
                     // eslint-disable-next-line no-unused-vars
-                    (response) => {
+                    response => {
                         this.$router.push('/');
                         this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'Clinic changed',
                                 type: 'success',
-                                icon: 'domain',
-                            },
+                                icon: 'domain'
+                            }
                         });
                     },
-                    (error) => {
+                    error => {
                         if (error && error.response) {
                             if (
                                 error.response.data.message === 'Wrong password'
@@ -323,7 +392,7 @@ export default {
                                 this.showErrorsValidate('username');
                             }
                         }
-                    },
+                    }
                 );
         },
         toggleMultiLevel() {
@@ -344,7 +413,7 @@ export default {
             this.$store.dispatch(AUTH_LOGOUT).then(() => {
                 this.$router.push({
                     name: 'Login',
-                    params: { lang: this.$i18n.locale },
+                    params: { lang: this.$i18n.locale }
                 });
             });
         },
@@ -352,8 +421,8 @@ export default {
             this.$store.dispatch(AUTH_LOCK).then(() => {
                 this.$router.push('lock');
             });
-        },
-    },
+        }
+    }
 };
 </script>
 
@@ -380,7 +449,7 @@ export default {
     right: 0;
     width: 100%;
     height: 5px;
-    .md-progress-bar{
+    .md-progress-bar {
         left: 0;
         top: 1px;
         position: absolute;

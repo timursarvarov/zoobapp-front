@@ -15,13 +15,13 @@ import PatientCard from './PatientCard';
 export default {
     name: 'PatientBio',
     components: {
-        PatientCard,
+        PatientCard
     },
     computed: {
         ...mapGetters({
-            patient: 'getPatient',
-        }),
-    },
+            patient: 'getPatient'
+        })
+    }
 };
 </script>
 <style lang="scss">

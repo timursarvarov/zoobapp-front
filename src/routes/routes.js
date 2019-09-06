@@ -2,7 +2,9 @@ import { Trans } from '@/plugins/translation';
 
 function load(path) {
     return () =>
-        import ( /* webpackChunkName: "[request]" */ `@/pages/Dashboard/${path}.vue`);
+        import(
+            /* webpackChunkName: "[request]" */ `@/pages/Dashboard/${path}.vue`
+        );
 }
 
 const componentsMenu = {
@@ -11,7 +13,8 @@ const componentsMenu = {
     redirect: 'buttons',
     meta: { requiresAuth: true },
     name: 'Components',
-    children: [{
+    children: [
+        {
             path: 'buttons',
             name: 'Buttons',
             meta: { requiresAuth: true },
@@ -61,7 +64,8 @@ const formsMenu = {
     redirect: 'regular',
     name: 'Forms',
     meta: { requiresAuth: true },
-    children: [{
+    children: [
+        {
             path: 'regular',
             name: 'Regular Forms',
             meta: { requiresAuth: true },
@@ -94,7 +98,8 @@ const tablesMenu = {
     redirect: 'regular',
     name: 'Tables',
     meta: { requiresAuth: true },
-    children: [{
+    children: [
+        {
             path: 'regular',
             name: 'Regular Tables',
             meta: { requiresAuth: true },
@@ -121,7 +126,8 @@ const mapsMenu = {
     name: 'Maps',
     meta: { requiresAuth: true },
     redirect: 'google',
-    children: [{
+    children: [
+        {
             path: 'google',
             name: 'Google Maps',
             meta: { requiresAuth: true },
@@ -153,7 +159,8 @@ const pagesMenu = {
     name: 'Pages',
     redirect: 'user',
     meta: { requiresAuth: true },
-    children: [{
+    children: [
+        {
             path: 'user',
             name: 'User Page',
             meta: { requiresAuth: true },
@@ -182,12 +189,14 @@ const Settings = {
     name: 'Settings',
     meta: { requiresAuth: true },
     redirect: 'user',
-    children: [{
-        path: 'user',
-        name: 'My Profile',
-        meta: { requiresAuth: true },
-        component: load('Pages/User/UserProfile')
-    }]
+    children: [
+        {
+            path: 'user',
+            name: 'My Profile',
+            meta: { requiresAuth: true },
+            component: load('Pages/User/UserProfile')
+        }
+    ]
 };
 
 const authPages = {
@@ -196,7 +205,8 @@ const authPages = {
     name: 'Authentication',
     meta: { requiresAuth: false },
     redirect: `/${Trans.getUserSupportedLang()}/login`,
-    children: [{
+    children: [
+        {
             path: 'login',
             name: 'Login',
             meta: { requiresAuth: false },
@@ -207,7 +217,7 @@ const authPages = {
             name: 'Clinic Selection',
             meta: { requiresAuth: true },
             component: load('Pages/ClinicSelect')
-                // beforeEnter: ifAuthenticatedNotselectedClinic,
+            // beforeEnter: ifAuthenticatedNotselectedClinic,
         },
         {
             path: 'register',
@@ -237,193 +247,192 @@ const patientPages = {
     meta: { requiresAuth: true },
     redirect: '/:lang/patient/:patientID/treatment',
 
-    children: [{
-        path: ':patientID',
-        components: {
-            default: load('Pages/Patient/PatientProfile')
-        },
-        name: 'PatientTreatmententItems',
-        meta: {
-            requiresAuth: true,
-            disableScroll: true
-        },
-        // redirect: `/:lang/patient/:patientID/treatment`,
-        children: [{
-                path: 'notes',
-                name: 'Notes',
-                meta: {
-                    requiresAuth: true,
-                    disableScroll: true
-                },
-                components: {
-                    Notes: load('Pages/Patient/Notes')
-                }
+    children: [
+        {
+            path: ':patientID',
+            components: {
+                default: load('Pages/Patient/PatientProfile')
             },
-            {
-                path: 'bio',
-                name: 'Bio',
-                meta: {
-                    requiresAuth: true,
-                    disableScroll: true
-                },
-                components: {
-                    Bio: load('Pages/Patient/PatientBio/PatientBio')
-                }
+            name: 'PatientTreatmententItems',
+            meta: {
+                requiresAuth: true,
+                disableScroll: true
             },
-            {
-                path: 'files',
-                name: 'Files',
-                meta: {
-                    requiresAuth: true,
-                    disableScroll: true
-                },
-                components: {
-                    Files: load('Pages/Patient/PatientFiles/PatientFiles')
-                }
-            },
-            {
-                path: 'billing',
-                name: 'Billing',
-                meta: {
-                    requiresAuth: true,
-                    disableScroll: true
-                },
-                redirect: '/:lang/patient/:patientID/billing/unbilled_procedures',
-                components: {
-                    Billing: load(
-                        'Pages/Patient/PatientBilling/PatientBilling'
-                    )
-                },
-                children: [{
-                        path: 'unbilled_procedures',
-                        name: 'unbilledProcedures',
-                        meta: {
-                            requiresAuth: true,
-                            disableScroll: true
-                        },
-                        component: load(
-                            'Pages/Patient/PatientBilling/PatientBillingUnbiledProcedures'
-                        )
+            // redirect: `/:lang/patient/:patientID/treatment`,
+            children: [
+                {
+                    path: 'notes',
+                    name: 'Notes',
+                    meta: {
+                        requiresAuth: true,
+                        disableScroll: true
                     },
-                    {
-                        path: 'invoices',
-                        name: 'invoices',
-                        meta: {
-                            requiresAuth: true,
-                            disableScroll: true
-                        },
-                        component: load(
-                            'Pages/Patient/PatientBilling/PatientBillingInvoices'
-                        )
-                    },
-                    {
-                        path: 'payments',
-                        name: 'payments',
-                        meta: {
-                            requiresAuth: true,
-                            disableScroll: true
-                        },
-                        component: load(
-                            'Pages/Patient/PatientBilling/PatientBillingPayments'
-                        )
+                    components: {
+                        Notes: load('Pages/Patient/Notes')
                     }
-                ]
-            },
-            {
-                path: 'treatment',
-                name: 'Treatment',
-                meta: {
-                    requiresAuth: true,
-                    disableScroll: true
                 },
-                components: {
-                    treatmentchild: load(
-                        'Pages/Patient/PatientTreatment/PatientTreatment'
-                    )
+                {
+                    path: 'bio',
+                    name: 'Bio',
+                    meta: {
+                        requiresAuth: true,
+                        disableScroll: true
+                    },
+                    components: {
+                        Bio: load('Pages/Patient/PatientBio/PatientBio')
+                    }
                 },
-                // redirect: '/:lang/patient/:patientID/treatment/plan',
-                children: [{
-                        path: 'diagnosis',
-                        name: 'diagnosis',
-                        meta: {
-                            type: 'diagnosis',
-                            requiresAuth: true,
-                            disableScroll: true
-                        },
-                        components: {
-                            search: load(
-                                'Pages/Patient/PatientTreatment/PatientItemsSearch/PatientDiagnosisSearch'
-                            ),
-                            list: load(
-                                'Pages/Patient/PatientTreatment/PatientItemsLists/PatientDiagnosisList'
-                            )
-                        }
+                {
+                    path: 'files',
+                    name: 'Files',
+                    meta: {
+                        requiresAuth: true,
+                        disableScroll: true
                     },
-                    {
-                        path: 'anamnesis',
-                        name: 'anamnesis',
-                        meta: {
-                            type: 'anamnesis',
-                            requiresAuth: true,
-                            disableScroll: true
-                        },
-                        components: {
-                            search: load(
-                                'Pages/Patient/PatientTreatment/PatientItemsSearch/PatientAnamnesisSearch'
-                            ),
-                            list: load(
-                                'Pages/Patient/PatientTreatment/PatientItemsLists/PatientAnamnesisList'
-                            )
-                        }
+                    components: {
+                        Files: load('Pages/Patient/PatientFiles/PatientFiles')
+                    }
+                },
+                {
+                    path: 'billing',
+                    name: 'Billing',
+                    meta: {
+                        requiresAuth: true,
+                        disableScroll: true
                     },
-                    {
-                        path: 'plan',
-                        name: 'plan',
-                        meta: {
-                            type: 'procedures',
-                            requiresAuth: true,
-                            disableScroll: false
-                        },
-                        components: {
-                            search: load(
-                                'Pages/Patient/PatientTreatment/PatientItemsSearch/PatientProceduresSearch'
-                            ),
-                            list: load(
-                                'Pages/Patient/PatientTreatment/PatientItemsLists/PatientPlansList'
-                            ),
-                            itemsList: load(
-                                'Pages/Patient/PatientTreatment/PatientItemsLists/PatientPlansList'
-                            )
-                        },
-                        children: [{
-                            path: ':planID',
-                            name: 'procedures',
+                    redirect:
+                        '/:lang/patient/:patientID/billing/unbilled_procedures',
+                    components: {
+                        Billing: load(
+                            'Pages/Patient/PatientBilling/PatientBilling'
+                        )
+                    },
+                    children: [
+                        {
+                            path: 'unbilled_procedures',
+                            name: 'unbilledProcedures',
                             meta: {
-                                type: 'procedures',
                                 requiresAuth: true,
                                 disableScroll: true
                             },
                             component: load(
-                                'Pages/Patient/PatientTreatment/PatientItemsLists/PatientProceduresList'
-                            ),
-                            // children: [{
-                            //     path: 'procedures',
-                            //     name: 'procedures',
-                            //     meta: {
-                            //         type: 'procedures',
-                            //         requiresAuth: true,
-                            //         disableScroll: true
-                            //     },
-                            //     component: load(
-                            //         'Pages/Patient/PatientTreatment/PatientItemsLists/ItemsList'
-                            //     )
-                            // }]
-                        }]
-                    }
-                ]
-            }
-        ]
-    }]
+                                'Pages/Patient/PatientBilling/PatientBillingUnbiledProcedures'
+                            )
+                        },
+                        {
+                            path: 'invoices',
+                            name: 'invoices',
+                            meta: {
+                                requiresAuth: true,
+                                disableScroll: true
+                            },
+                            component: load(
+                                'Pages/Patient/PatientBilling/PatientBillingInvoices'
+                            )
+                        },
+                        {
+                            path: 'payments',
+                            name: 'payments',
+                            meta: {
+                                requiresAuth: true,
+                                disableScroll: true
+                            },
+                            component: load(
+                                'Pages/Patient/PatientBilling/PatientBillingPayments'
+                            )
+                        }
+                    ]
+                },
+                {
+                    path: 'treatment',
+                    name: 'Treatment',
+                    meta: {
+                        requiresAuth: true,
+                        disableScroll: true
+                    },
+                    components: {
+                        treatmentchild: load(
+                            'Pages/Patient/PatientTreatment/PatientTreatment'
+                        ),
+                        search: load(
+                            'Pages/Patient/PatientTreatment/PatientItemsSearch/PatientProceduresSearch'
+                        )
+                    },
+                    redirect: '/:lang/patient/:patientID/treatment/plan',
+                    children: [
+                        {
+                            path: 'diagnosis',
+                            name: 'diagnosis',
+                            meta: {
+                                type: 'diagnosis',
+                                requiresAuth: true,
+                                disableScroll: true
+                            },
+                            components: {
+                                search: load(
+                                    'Pages/Patient/PatientTreatment/PatientItemsSearch/PatientDiagnosisSearch'
+                                ),
+                                list: load(
+                                    'Pages/Patient/PatientTreatment/PatientItemsLists/PatientDiagnosisList'
+                                )
+                            }
+                        },
+                        {
+                            path: 'anamnesis',
+                            name: 'anamnesis',
+                            meta: {
+                                type: 'anamnesis',
+                                requiresAuth: true,
+                                disableScroll: true
+                            },
+                            components: {
+                                search: load(
+                                    'Pages/Patient/PatientTreatment/PatientItemsSearch/PatientAnamnesisSearch'
+                                ),
+                                list: load(
+                                    'Pages/Patient/PatientTreatment/PatientItemsLists/PatientAnamnesisList'
+                                )
+                            }
+                        },
+                        {
+                            path: 'plan',
+                            name: 'plan',
+                            meta: {
+                                type: 'procedures',
+                                requiresAuth: true,
+                                disableScroll: false
+                            },
+                            components: {
+                                search: load(
+                                    'Pages/Patient/PatientTreatment/PatientItemsSearch/PatientProceduresSearch'
+                                ),
+                                list: load(
+                                    'Pages/Patient/PatientTreatment/PatientItemsLists/PatientPlansList'
+                                ),
+                                itemsList: load(
+                                    'Pages/Patient/PatientTreatment/PatientItemsLists/PatientPlansList'
+                                )
+                            },
+                            children: [
+                                {
+                                    path: ':planID',
+                                    name: 'procedures',
+                                    meta: {
+                                        type: 'procedures',
+                                        requiresAuth: true,
+                                        disableScroll: true
+                                    },
+                                    component: load(
+                                        'Pages/Patient/PatientTreatment/PatientItemsLists/PatientProceduresList'
+                                    )
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 };
 
 const clinicPages = {
@@ -432,7 +441,8 @@ const clinicPages = {
     name: 'Clinic',
     meta: { requiresAuth: true },
     redurect: 'Clinic Settings',
-    children: [{
+    children: [
+        {
             path: 'settings',
             name: 'Clinic Settings',
             meta: { requiresAuth: true },
@@ -459,7 +469,8 @@ const clinicPages = {
     ]
 };
 
-const routes = [{
+const routes = [
+    {
         path: '',
         redirect() {
             return Trans.getUserSupportedLang();
@@ -467,8 +478,7 @@ const routes = [{
     },
     {
         path: '/:lang',
-        component: () =>
-            import ('@/pages/LayoutWrapper.vue'),
+        component: () => import('@/pages/LayoutWrapper.vue'),
         beforeEnter: Trans.routeMiddleware,
         children: [
             componentsMenu,
@@ -484,7 +494,8 @@ const routes = [{
                 path: '',
                 redirect: '/:lang/dashboard',
                 component: load('Layout/DashboardLayout'),
-                children: [{
+                children: [
+                    {
                         path: 'dashboard',
                         name: 'Dashboard',
                         meta: { requiresAuth: true },
@@ -516,15 +527,13 @@ const routes = [{
                     },
                     {
                         path: '*',
-                        component: () =>
-                            import ('@/pages/404.vue')
+                        component: () => import('@/pages/404.vue')
                     }
                 ]
             },
             {
                 path: '*',
-                component: () =>
-                    import ('@/pages/404.vue')
+                component: () => import('@/pages/404.vue')
             }
         ]
     }

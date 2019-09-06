@@ -60,10 +60,11 @@ export default {
         return procedures;
     },
     getPatientCurrentAndAproovedPlanProcedures: (state, rootGetters) => {
+        if (!state.plans) return [];
         const currentPlanID = rootGetters.getCurrentPlanID;
         let allPlanIDs = Object.keys(state.plans).filter(
-            planID => state.plans[planID].state === 1 &&
-            planID !== currentPlanID
+            planID =>
+                state.plans[planID].state === 1 && planID !== currentPlanID
         );
         allPlanIDs.push(currentPlanID);
         let procedures = [];
@@ -98,13 +99,9 @@ export default {
         }
         return procedures;
     },
-    getUnbilledProceduresByIds: (state) => ids => {
+    getUnbilledProceduresByIds: state => ids => {
         const procedures = [];
-        if (
-            ids &&
-            ids.length > 0 &&
-            state.procedures
-        ) {
+        if (ids && ids.length > 0 && state.procedures) {
             ids.forEach(ID => {
                 if (state.procedures[ID] && !state.procedures[ID].invoiceID) {
                     procedures.push({
@@ -156,6 +153,7 @@ export default {
     },
     getUnbilledAndAproovedPlansProcedures: (state, rootGetters) => {
         let procedures = [];
+        if(!state.plans)return procedures;
         Object.values(state.plans).forEach(p => {
             // if (p.state === 1 && p.procedures) {
             if (p.state && p.procedures) {
@@ -175,6 +173,7 @@ export default {
         state.ananmnesis && state.ananmnesis[ID] ? state.ananmnesis[ID] : {},
     getPatientDiagnosisByID: state => ID =>
         state.diagnosis && state.diagnosis[ID] ? state.diagnosis[ID] : {},
-    getInvoicesAll: state => state.invoices ? Object.values(state.invoices) : [],
+    getInvoicesAll: state =>
+        state.invoices ? Object.values(state.invoices) : [],
     getPaymentsAll: state => state.payments || []
 };

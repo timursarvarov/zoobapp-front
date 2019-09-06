@@ -1,0 +1,89 @@
+.avatar-wrapper {
+    margin: 6px;
+    position: relative;
+    width: fit-content;
+    span.notification {
+        z-index: 20;
+        position: absolute;
+        top: -6px !important;
+        border: 1px solid #fff;
+        right: -8px !important;
+        font-size: 12px !important;
+        background: #f44336;
+        color: #ffffff;
+        min-width: 20px;
+        padding: 0px 5px;
+        height: 20px;
+        border-radius: 10px;
+        text-align: center;
+        line-height: 20px !important;
+        display: block;
+    }
+    .md-small {
+        .avatar-acronim-wrapper {
+            font-size: 16px !important;
+            &.tripple-acr {
+                font-size: 16px !important;
+            }
+        }
+    }
+    .t-avatar.md-avatar {
+        .wrapper {
+            width: 100%;
+            height: 100%;
+            .avatar-div {
+                // width: 100%;
+                // height: 100%;
+                background-position: 50%;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-color: transparent;
+                margin: 0 auto;
+                .fade-enter-active {
+                    transition: opacity 0.4s ease-out !important;
+                }
+                .fade-enter-to {
+                    opacity: 1 !important;
+                }
+
+                .fade-enter {
+                    opacity: 0 !important;
+                }
+            }
+            .avatar-img {
+                .fade-enter-active {
+                    transition: opacity 0.4s ease-in !important;
+                }
+                .fade-enter-to {
+                    opacity: 1 !important;
+                }
+
+                .fade-enter {
+                    opacity: 0 !important;
+                }
+            }
+            .avatar-acronim-wrapper {
+                font-size: 24px;
+                font-weight: 200;
+                height: 100%;
+                text-align: center;
+                &.tripple-acr {
+                    font-size: 16px !important;
+                }
+                .avatar-acronim {
+                    text-align: center;
+                }
+                .fade-enter-active {
+                    transition: opacity 0.4s ease-in-out;
+                }
+                .fade-enter-to {
+                    opacity: 1 !important;
+                }
+
+                .fade-enter {
+                    opacity: 0 !important;
+                }
+            }
+        }
+    }
+}

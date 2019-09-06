@@ -1,39 +1,38 @@
 <template>
     <div class="invices-list-wrapper">
-         <t-nosology-table
+        <patient-nosology-table
             :items="getInvoicesAll"
             :selected-items="selectedItems"
             current-type="invoices"
+            extraClass="no"
             @onSelected="onSelected"
         >
-             <template slot="emptyState">
+            <template slot="emptyState">
                 <md-table-empty-state
-                        :md-label="`No invoices found`"
-                        md-description="To create invoice, firstly please aproove plan, and select unbilled procedures here"
-                    >
-                        <md-button
-                            class="md-primary"
-                        >
-                            Create invoice
-                        </md-button>
-                    </md-table-empty-state>
+                    :md-label="`No invoices found`"
+                    md-description="To create invoice, firstly please aproove plan, and select unbilled procedures here"
+                >
+                    <md-button class="md-primary">Create invoice</md-button>
+                </md-table-empty-state>
             </template>
-        </t-nosology-table>
+        </patient-nosology-table>
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
 import components from '@/components';
+import { mapGetters } from 'vuex';
+import PatientNosologyTable from '@/pages/Dashboard/Pages/Patient/PatientNosologyTable';
 
 export default {
     name: 'PatientBillingInvoices',
     components: {
-        ...components
+        ...components,
+        PatientNosologyTable
     },
     props: {},
     data() {
         return {
-            selectedItems:[],
+            selectedItems: []
         };
     },
     computed: {
@@ -44,9 +43,7 @@ export default {
         })
     },
     methods: {
-        onSelected(){
-
-        }
-    },
+        onSelected() {}
+    }
 };
 </script>

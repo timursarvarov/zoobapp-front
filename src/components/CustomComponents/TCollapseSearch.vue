@@ -4,14 +4,19 @@
         <div
             v-show="loading"
             class="no-plan-space"
-            :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]"
+            :style="[
+                { 'max-height': customHeight - 70 + 'px' },
+                { 'min-height': customHeight - 70 + 'px' }
+            ]"
         >
             <md-empty-state>
                 <md-progress-spinner md-mode="indeterminate" />
             </md-empty-state>
         </div>
         <div v-show="!loading">
-            <md-toolbar class=" md-transparent no-side-padding md-layout md-alignment-top-space-between collapse-toolbar__items">
+            <md-toolbar
+                class=" md-transparent no-side-padding md-layout md-alignment-top-space-between collapse-toolbar__items"
+            >
                 <div class="collapse-actions md-small-size-100 md-size-50">
                     <slot name="title-start-1" />
                     <slot name="title-start-2" />
@@ -28,7 +33,12 @@
                                     @click="search = ''"
                                 >
                                     <md-icon
-                                        :style="{ color: getItems.length === 0 ? '#9c27b0 !important': '' }"
+                                        :style="{
+                                            color:
+                                                getItems.length === 0
+                                                    ? '#9c27b0 !important'
+                                                    : ''
+                                        }"
                                     >
                                         close
                                     </md-icon>
@@ -39,9 +49,9 @@
                     <div class="ml-auto collapse-toolbar__nogrow">
                         <md-button
                             class="md-mini md-just-icon md-simple md-round"
-                            @click="toggleAll=!toggleAll"
+                            @click="toggleAll = !toggleAll"
                         >
-                            <md-icon :class="[{rotate:toggleAll }]">
+                            <md-icon :class="[{ rotate: toggleAll }]">
                                 keyboard_arrow_down
                             </md-icon>
                             <md-tooltip md-delay="500">
@@ -55,7 +65,10 @@
             <div
                 v-show="!hideSlot && getItems.length > 0"
                 class="collapse-wrapper "
-                :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]"
+                :style="[
+                    { 'max-height': customHeight - 70 + 'px' },
+                    { 'min-height': customHeight - 70 + 'px' }
+                ]"
             >
                 <custom-collapse
                     v-show="!hideSlot"
@@ -67,18 +80,22 @@
                 >
                     <template
                         v-for="(itemGroup, key) in getItems"
-                        :slot="'md-collapse-pane-'+(parseInt(key) + 1)"
+                        :slot="'md-collapse-pane-' + (parseInt(key) + 1)"
                     >
-                        <div
-                            :key="key"
-                            class="list-wrapper"
-                        >
+                        <div :key="key" class="list-wrapper">
                             <md-list class=" md-dense">
                                 <md-list-item
                                     v-for="(item, keyd) in itemGroup.codes"
                                     :key="keyd"
                                     v-ripple
-                                    :class="[{dental: !lodash.isEmpty(item.locations) && selectedTeeth.length == 0 }]"
+                                    :class="[
+                                        {
+                                            dental:
+                                                !lodash.isEmpty(
+                                                    item.locations
+                                                ) && selectedTeeth.length == 0
+                                        }
+                                    ]"
                                     class="item"
                                     @click="itemClick($event, item)"
                                 >
@@ -89,9 +106,15 @@
                                     <div class="md-list-item-text">
                                         <span v-html="item.title" />
                                         <small
-                                            v-if="!lodash.isEmpty(item.locations) && selectedTeeth.length == 0"
+                                            v-if="
+                                                !lodash.isEmpty(
+                                                    item.locations
+                                                ) && selectedTeeth.length == 0
+                                            "
                                             class="description text-warning"
-                                        > Please firstly choose a tooth  </small>
+                                        >
+                                            Please firstly choose a tooth
+                                        </small>
                                         <small
                                             v-else
                                             class="description"
@@ -100,7 +123,16 @@
                                     </div>
 
                                     <md-button
-                                        :class="[{[`md-${classType}`] : isFavorite(item)}, 'md-simple', 'md-list-action', 'md-icon-button']"
+                                        :class="[
+                                            {
+                                                [`md-${classType}`]: isFavorite(
+                                                    item
+                                                )
+                                            },
+                                            'md-simple',
+                                            'md-list-action',
+                                            'md-icon-button'
+                                        ]"
                                         :md-ripple="false"
                                     >
                                         <md-icon>star</md-icon>
@@ -118,7 +150,10 @@
             <div
                 v-show="getItems.length == 0 && !hideSlot"
                 class="no-plan-space"
-                :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]"
+                :style="[
+                    { 'max-height': customHeight - 70 + 'px' },
+                    { 'min-height': customHeight - 70 + 'px' }
+                ]"
             >
                 <md-empty-state
                     :class="getClassType"
@@ -130,7 +165,10 @@
             <div
                 v-show="hideSlot"
                 class="no-plan-space"
-                :style="[{'max-height': customHeight - 70 + 'px'},{'min-height': customHeight - 70 + 'px'}]"
+                :style="[
+                    { 'max-height': customHeight - 70 + 'px' },
+                    { 'min-height': customHeight - 70 + 'px' }
+                ]"
             >
                 <slot name="empty-space" />
             </div>
@@ -141,7 +179,7 @@
 <script>
 import { SlideYDownTransition } from 'vue2-transitions';
 import Fuse from 'fuse.js';
-import CustomCollapse  from './CustomCollapse';
+import CustomCollapse from './CustomCollapse';
 
 const fuseOptions = {
     findAllMatches: true,
@@ -155,62 +193,62 @@ const fuseOptions = {
     keys: [
         {
             name: 'title',
-            weight: 0.1,
+            weight: 0.1
         },
         {
             name: 'description',
-            weight: 0.9,
+            weight: 0.9
         },
         {
             name: 'code',
-            weight: 0.2,
-        },
-    ],
+            weight: 0.2
+        }
+    ]
 };
 
 export default {
     name: 'CollapsableSearchPanel',
     components: {
         SlideYDownTransition,
-        CustomCollapse,
+        CustomCollapse
     },
     props: {
         selectedTeeth: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         items: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         customHeight: {
             type: Number,
-            default: () => 1,
+            default: () => 1
         },
         favoriteItems: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         recalculateItems: {
             type: Boolean,
-            default: () => false,
+            default: () => false
         },
         loading: {
             type: Boolean,
-            default: () => false,
+            default: () => false
         },
         hideSlot: {
             type: Boolean,
-            default: () => false,
+            default: () => false
         },
         classType: {
             type: String,
-            default: () => 'primary',
+            default: () => 'primary'
         },
         type: {
             type: String,
-            default: () => 'diagnosis',
-        },
+            default: () => 'diagnosis'
+        }
     },
     data() {
         return {
@@ -221,7 +259,7 @@ export default {
             fuse: false,
             //   filter: {},
             itemOriginal: [],
-            selecteditem: {},
+            selecteditem: {}
         };
     },
     computed: {
@@ -243,17 +281,17 @@ export default {
 
         itemsGroup() {
             const dGroup = [];
-            this.getItems.forEach((element) => {
+            this.getItems.forEach(element => {
                 dGroup.push(`${element.code}    ${element.title}`);
             });
             return dGroup;
-        },
+        }
     },
     watch: {
         recalculateItems() {
             this.loadData();
             this.searched = this.lodash.cloneDeep(this.itemOriginal);
-        },
+        }
     },
     mounted() {
         this.loadData();
@@ -278,8 +316,8 @@ export default {
             this.search = '';
             this.unshiftFavoriteItems();
             this.searched = this.lodash.cloneDeep(this.items);
-            Object.values(this.searched).forEach((group) => {
-                group.codes.forEach((item) => {
+            Object.values(this.searched).forEach(group => {
+                group.codes.forEach(item => {
                     // eslint-disable-next-line
                     item.constCode = this.lodash.cloneDeep(item.code).slice(0);
                 });
@@ -291,15 +329,15 @@ export default {
             const favoriteItems = {
                 code: '★',
                 codes: [],
-                title: `Favorite ${this.type}`,
+                title: `Favorite ${this.type}`
             };
             if (this.favoriteItems.length > 0) {
-                this.favoriteItems.forEach((fitem) => {
-                    Object.values(this.items).forEach((group) => {
+                this.favoriteItems.forEach(fitem => {
+                    Object.values(this.items).forEach(group => {
                         let favoriteD = null;
                         if (group.codes && group.code !== '★') {
                             favoriteD = group.codes.find(
-                                item => item.code === fitem,
+                                item => item.code === fitem
                             );
                         }
                         if (favoriteD) {
@@ -310,7 +348,7 @@ export default {
             }
             if (favoriteItems.codes.length > 0) {
                 const favoriteIndex = this.items.findIndex(
-                    item => item.code === '★',
+                    item => item.code === '★'
                 );
                 if (favoriteIndex === -1) {
                     this.items.unshift(favoriteItems);
@@ -319,7 +357,7 @@ export default {
                 }
             } else {
                 const favoriteIndex = this.items.findIndex(
-                    item => item.code === '★',
+                    item => item.code === '★'
                 );
                 if (favoriteIndex > -1) {
                     this.items.splice(favoriteIndex, 1);
@@ -349,33 +387,33 @@ export default {
         highlightText(sourceString, startIndex, endIndex) {
             return `${sourceString.substring(
                 0,
-                startIndex,
+                startIndex
             )}<span class="highlight">${sourceString.substring(
                 startIndex,
-                endIndex + 1,
+                endIndex + 1
             )}</span>${sourceString.substring(endIndex + 1)}`;
         },
         getFilteredItems() {
             this.searched = this.lodash.cloneDeep(this.itemOriginal).slice(0);
             const group = [];
-            this.searched.forEach((itemsGroupe) => {
+            this.searched.forEach(itemsGroupe => {
                 const fuseResults = new Fuse(
                     itemsGroupe.codes,
-                    fuseOptions,
+                    fuseOptions
                 ).search(this.search);
                 const results = [];
                 if (fuseResults.length > 0) {
-                    Object.values(fuseResults).forEach((result) => {
-                        result.matches.forEach((match) => {
+                    Object.values(fuseResults).forEach(result => {
+                        result.matches.forEach(match => {
                             let text = this.namespace(result.item, match.key);
                             if (text) {
                                 let offset = 0;
 
-                                match.indices.forEach((index) => {
+                                match.indices.forEach(index => {
                                     text = this.highlightText(
                                         text,
                                         index[0] + offset,
-                                        index[1] + offset,
+                                        index[1] + offset
                                     );
                                     offset += 31;
                                 });
@@ -389,178 +427,13 @@ export default {
                         group.push({
                             code: itemsGroupe.code,
                             title: itemsGroupe.title,
-                            codes: results,
+                            codes: results
                         });
                     }
                 }
             });
             return group;
-        },
-    },
+        }
+    }
 };
 </script>
-<style lang="scss">
-.t-collapse-search-wrapper {
-    .no-margin{
-        margin: 0!important;
-    }
-    .collapse-toolbar__items {
-        display: flex;
-        justify-content: space-between;
-        .collapse-toolbar__grow {
-            flex-grow: 1;
-        }
-        .collapse-toolbar__nogrow {
-            // padding-left: 15px
-        }
-        .collapse-actions{
-            flex-grow: 1;
-            display: flex;
-        }
-    }
-    .no-side-padding {
-        padding-left: 0;
-        padding-right: 0;
-    }
-    width: 100%;
-    .md-icon {
-        transition: all 250ms ease-in;
-        transition-property: all;
-        transition-duration: 250ms;
-        transition-timing-function: ease-in;
-        transition-delay: 0s;
-    }
-    .rotate {
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-    }
-    .item-code {
-        margin-right: 24px;
-    }
-    .action-start {
-        max-width: 170px;
-    }
-    .action-button {
-        // max-width: 42px;
-        // min-width: 42px;
-    }
-    .collapse-wrapper {
-        background-color: #ececec6b;
-        border-radius: 10px;
-        overflow: hidden;
-        overflow-y: scroll;
-        // max-height: 40vh;
-        // min-height: 30vh;
-        padding: 6px;
-        &::-webkit-scrollbar {
-            width: 7px;
-            // background-color: transparent;
-        }
-        &::-webkit-scrollbar-thumb {
-            background-color: grey;
-            border-radius: 7px;
-        }
-
-        .md-collapse-label {
-            padding: 10px 10px 10px 0;
-            overflow: hidden;
-            &:after {
-                bottom: 0px;
-            }
-            .md-collapse-title {
-                padding-left: 15px;
-                font-weight: 400;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                margin-right: 25px;
-                .md-icon {
-                    top: 7px;
-                }
-            }
-        }
-        .md-error .md-collapse-label:after {
-            bottom: 6px;
-        }
-
-        .highlight {
-            background-color: rgba(255, 255, 21, 0.979);
-        }
-        .md-list {
-            border-radius: 4px;
-            .md-list-item {
-                margin: 0;
-            }
-            background-color: transparent;
-            // border-style: solid;
-            // border-color: #9b9b9b28;
-            // box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-            border-width: 1px;
-            margin-bottom: 15px;
-            padding: 0;
-        }
-        .md-list-item-content {
-            max-height: 64px;
-            min-height: 44px;
-            height: 44px;
-            padding: 8px;
-            // background-color: rgba(238, 236, 236, 0.201);
-        }
-        .dental {
-            .md-list-item-text {
-                cursor: not-allowed;
-            }
-        }
-        .md-list-item-text {
-            cursor: pointer;
-        }
-        .md-list-action {
-            padding-right: 10px;
-        }
-        // }
-        .md-collapse-content {
-            margin-top: 20px;
-            padding: 0 1vw;
-            .list-wrapper {
-                background-color: transparent;
-            }
-        }
-
-        .highlight {
-            background-color: rgba(255, 255, 21, 0.979);
-        }
-        .md-list-item-content {
-            max-height: 64px;
-            min-height: 44px;
-            height: 44px;
-            padding: 8px;
-            // background-color: rgba(238, 236, 236, 0.201);
-        }
-        .dental {
-            .md-list-item-text {
-                cursor: not-allowed;
-            }
-        }
-        .md-list-item-text {
-            cursor: pointer;
-        }
-        .md-list-action {
-            padding-right: 10px;
-        }
-    }
-    .no-plan-space {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        max-width: 420px;
-        padding: 36px;
-        margin: 0 auto;
-        position: relative;
-        transition: opacity 0.15s cubic-bezier(0, 0, 0.2, 1),
-            transform 0.3s cubic-bezier(0, 0, 0.2, 1);
-        will-change: transform, opacity;
-    }
-}
-</style>

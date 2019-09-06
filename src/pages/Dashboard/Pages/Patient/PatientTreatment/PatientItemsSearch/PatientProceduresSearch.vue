@@ -1,7 +1,7 @@
 <template lang="html">
     <div>
         <t-collapse-search
-            :style="[{'max-height': `${customHeight}px`}]"
+            :style="[{ 'max-height': `${customHeight}px` }]"
             class="set-procedure-form"
             :items="currentProcedures"
             :selected-teeth="selectedTeeth"
