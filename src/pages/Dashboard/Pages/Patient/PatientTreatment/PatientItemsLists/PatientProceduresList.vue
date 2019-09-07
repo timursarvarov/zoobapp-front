@@ -24,8 +24,19 @@
                         Delete plan
                     </md-button>
                     <md-button
+                        v-if="currentPlan.state === 1"
+                        class="md-simple"
+                        @click="unApprovePlan(currentPlanID)"
+                    >
+                        <md-icon>
+                            cancel
+                        </md-icon>
+                        not approve
+                    </md-button>
+                    <md-button
+                        v-else
                         class="md-primary"
-                        @click="approovePlan(currentPlanID)"
+                        @click="approvePlan(currentPlanID)"
                     >
                         <md-icon>
                             check
@@ -160,17 +171,17 @@ export default {
                 {
                     title: 'Plan Name',
                     subTitlePrefix: 'created',
-                    subTitlePostfix:  moment(this.currentPlan.created).format(
-                        "MMM Do YYYY"
+                    subTitlePostfix: moment(this.currentPlan.created).format(
+                        'MMM Do YYYY'
                     ),
                     valuePrefix: this.currentPlan.name,
                     valuePostfix: null
                 },
                 {
                     title: 'Unbilled Procedures',
-                    subTitlePrefix: null,
-                    subTitlePostfix: null,
-                    subTitleToFix: 0,
+                    subTitlePrefix: this.unbilledProceduresPrice,
+                    subTitlePostfix: this.currentClinic.currencyCode,
+                    subTitleToFix: 2,
                     valuePrefix: parseInt(
                         this.currentPlanProcedures.length,
                         10
@@ -213,9 +224,29 @@ export default {
                 }
             ];
             return headers;
+        },
+        unbilledProcedures() {
+            return this.currentPlanProcedures.filter(p => !p.invoice);
+        },
+        unbilledProceduresPrice() {
+            return this.totalPrice(this.unbilledProcedures.map(p => p.ID));
         }
     },
     methods: {
+        totalPrice(IDs) {
+            const sum = this.getManipulationsByProcedureIDs(IDs).reduce(
+                (a, b) => a + b.totalPrice,
+                0
+            );
+            return sum || 0;
+        },
+        unApprovePlan(planID) {
+            this.$store.dispatch(PATIENT_PLAN_EDIT, {
+                planID,
+                key: 'state',
+                value: null
+            });
+        },
         scrollToTop() {
             window.scrollTo(0, 0);
         },
@@ -223,7 +254,7 @@ export default {
             this.selectedItems = [];
             this.showDeleteItemSnackbar = false;
         },
-        approovePlan(planID) {
+        approvePlan(planID) {
             this.$store.dispatch(PATIENT_PLAN_EDIT, {
                 planID,
                 key: 'state',
