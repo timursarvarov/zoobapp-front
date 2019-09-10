@@ -1,32 +1,25 @@
 <template>
     <div class="md-card-avatar">
         <div class="picture-container">
-            <div class="picture" :style="{background: !loaded ? gradient: ''}">
+            <div class="picture" :style="{ background: !loaded ? gradient : '' }">
                 <div class="picture-hint md-layout">
                     <md-icon class="md-layout-item md-size-2x">add_a_photo</md-icon>
                 </div>
                 <transition name="fade">
-                    <img
-                        class="avatar"
-                        :src="imageSrc"
-                        @load="onLoaded"
-                        v-show="loaded && imageSrc"
-                        :alt="title | acronim"
-                    >
+                    <img class="avatar" :src="imageSrc" @load="onLoaded" v-show="loaded && imageSrc" :alt="title | acronim" />
                 </transition>
                 <transition name="fade">
                     <div
                         v-show="!loaded || !imageSrc"
                         class="md-layout md-alignment-center-center picture-wrapper-acronim"
-                        :style="{background: gradient}"
+                        :style="{ background: gradient }"
                     >
-                        <div
-                            :class="[{'tripple-acr':  title.split(' ').length > 2 }]"
-                            class="md-layout-item mx-auto acronim"
-                        >{{title | acronim}}</div>
+                        <div :class="[{ 'tripple-acr': title.split(' ').length > 2 }]" class="md-layout-item mx-auto acronim">
+                            {{ title | acronim }}
+                        </div>
                     </div>
                 </transition>
-                <input type="file" @change="onFileChange" ref="imageInserter" accept="image/*">
+                <input type="file" @change="onFileChange" ref="imageInserter" accept="image/*" />
             </div>
         </div>
 
@@ -48,131 +41,129 @@ import { NOTIFY } from '@/constants';
 const randomMC = require('random-material-color');
 
 export default {
-  components: {
-    't-image-cropper-form': () => import('./TImageCropperForm'),
-  },
-  name: 't-avatar-inptut',
-  props: {
-    textToColor: {
-      type: [String, Number],
-      default: null,
+    components: {
+        't-image-cropper-form': () => import('./TImageCropperForm')
     },
-    imageSrc: {
-      type: String,
-      default: '',
+    name: 't-avatar-inptut',
+    props: {
+        textToColor: {
+            type: [String, Number],
+            default: null
+        },
+        imageSrc: {
+            type: String,
+            default: ''
+        },
+        noImgTag: {
+            type: Boolean,
+            default: false
+        },
+        title: {
+            type: String,
+            default: 'pic'
+        },
+        formTitle: {
+            type: String,
+            default: 'Add a picture'
+        },
+        buttonColor: {
+            type: String,
+            default: 'green'
+        },
+        maxFilesize: {
+            type: Number,
+            default: 2000
+        }
     },
-    noImgTag: {
-      type: Boolean,
-      default: false,
+    data() {
+        return {
+            loaded: false,
+            fd: null,
+            showForm: false,
+            image: '',
+            randomMC: null
+        };
     },
-    title: {
-      type: String,
-      default: 'pic',
-    },
-    formTitle: {
-      type: String,
-      default: 'Add a picture',
-    },
-    buttonColor: {
-      type: String,
-      default: 'green',
-    },
-    maxFilesize: {
-      type: Number,
-      default: 2000,
-    },
-  },
-  data() {
-    return {
-      loaded: false,
-      fd: null,
-      showForm: false,
-      image: '',
-      randomMC: null,
-    };
-  },
-  methods: {
-    onLoaded() {
-      this.loaded = true;
-    },
-    onFileChange(e) {
-      const files = e.target.files || e.dataTransfer.files;
-      if (files.length > 0) {
-        this.createImage(files[0]);
-        this.showForm = true;
-        this.clearImage();
-      } else {
-        this.$store.dispatch(NOTIFY, {
-          settings: {
-            message: 'No files selected!',
-            type: 'warning',
-          },
-        });
-      }
-    },
-    colorLuminance(hex, lum) {
-      // eslint-disable-next-line no-unused-vars
-      let lumL = lum;
-      // eslint-disable-next-line no-unused-vars
-      let hexL = hex;
-      // validate hex string
-      hexL = String(hex).replace(/[^0-9a-f]/gi, '');
-      if (hex.length < 6) {
-        hexL = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-      }
-      lumL = lum || 0;
+    methods: {
+        onLoaded() {
+            this.loaded = true;
+        },
+        onFileChange(e) {
+            const files = e.target.files || e.dataTransfer.files;
+            if (files.length > 0) {
+                this.createImage(files[0]);
+                this.showForm = true;
+                this.clearImage();
+            } else {
+                this.$store.dispatch(NOTIFY, {
+                    settings: {
+                        message: 'No files selected!',
+                        type: 'warning'
+                    }
+                });
+            }
+        },
+        colorLuminance(hex, lum) {
+            // eslint-disable-next-line no-unused-vars
+            let lumL = lum;
+            // eslint-disable-next-line no-unused-vars
+            let hexL = hex;
+            // validate hex string
+            hexL = String(hex).replace(/[^0-9a-f]/gi, '');
+            if (hex.length < 6) {
+                hexL = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+            }
+            lumL = lum || 0;
 
-      // convert to decimal and change luminosity
-      let rgb = '#';
-      let c;
-      let i;
-      for (i = 0; i < 3; i += 1) {
-        c = parseInt(hexL.substr(i * 2, 2), 16);
-        c = Math.round(
-          Math.min(Math.max(0, c + c * lumL), 255),
-        ).toString(16);
-        rgb += `00${c}`.substr(c.length);
-      }
+            // convert to decimal and change luminosity
+            let rgb = '#';
+            let c;
+            let i;
+            for (i = 0; i < 3; i += 1) {
+                c = parseInt(hexL.substr(i * 2, 2), 16);
+                c = Math.round(Math.min(Math.max(0, c + c * lumL), 255)).toString(16);
+                rgb += `00${c}`.substr(c.length);
+            }
 
-      return rgb;
+            return rgb;
+        },
+        createImage(file) {
+            const reader = new FileReader();
+            const vm = this;
+            reader.onload = e => {
+                vm.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        clearImage() {
+            const input = this.$refs.imageInserter;
+            input.type = 'text';
+            input.type = 'file';
+        }
     },
-    createImage(file) {
-      const reader = new FileReader();
-      const vm = this;
-      reader.onload = (e) => {
-        vm.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
+    computed: {
+        computedColor() {
+            const color = this.randomMC.getColor({ text: `${this.textToColor}` });
+            return color;
+        },
+        gradient() {
+            let colors = 'linear-gradient(45deg';
+            const colorStart = this.colorLuminance(this.computedColor, -0.4);
+            const colorEnd = this.colorLuminance(this.computedColor, 0.4);
+            colors += `,${colorStart},${colorEnd}`;
+            colors += ')';
+            return colors;
+        }
     },
-    clearImage() {
-      const input = this.$refs.imageInserter;
-      input.type = 'text';
-      input.type = 'file';
+    watch: {
+        fd(file) {
+            // emit
+            this.$emit('on-created', file);
+        }
     },
-  },
-  computed: {
-    computedColor() {
-      const color = this.randomMC.getColor({ text: `${this.textToColor}` });
-      return color;
-    },
-    gradient() {
-      let colors = 'linear-gradient(45deg';
-      const colorStart = this.colorLuminance(this.computedColor, -0.4);
-      const colorEnd = this.colorLuminance(this.computedColor, 0.4);
-      colors += `,${colorStart},${colorEnd}`;
-      colors += ')';
-      return colors;
-    },
-  },
-  watch: {
-    fd(file) {
-      // emit
-      this.$emit('on-created', file);
-    },
-  },
-  created() {
-    this.randomMC = randomMC;
-  },
+    created() {
+        this.randomMC = randomMC;
+    }
 };
 </script>
 <style lang="scss">
@@ -263,7 +254,7 @@ export default {
                 opacity: 0.9;
             }
         }
-        input[type="file"] {
+        input[type='file'] {
             cursor: pointer;
             display: block;
             height: 100%;

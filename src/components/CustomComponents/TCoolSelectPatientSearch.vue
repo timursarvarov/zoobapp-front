@@ -2,10 +2,7 @@
     <cool-select
         v-model="searchTerm"
         class="patient-select with-action md-field"
-        :class="[
-            {'md-focused': coolSelectFocus || searchTerm},
-            {'no-after-no-before': searching}
-        ]"
+        :class="[{ 'md-focused': coolSelectFocus || searchTerm }, { 'no-after-no-before': searching }]"
         style="width:300px;"
         tabindex="0"
         :search-text.sync="searchText"
@@ -26,7 +23,7 @@
                 v-show="searchTerm"
                 tabindex="-1"
                 class="md-button md-icon-button md-dense md-input-action noselect md-simple"
-                @click=" searchTerm=null"
+                @click="searchTerm = null"
             >
                 <md-icon class="success">
                     close
@@ -37,20 +34,13 @@
             <label for="input">Search for patient</label>
         </template>
         <template slot="input-after">
-            <md-progress-bar
-                v-if="searching"
-                class="underline-progress-bar"
-                :md-stroke="2"
-                md-mode="indeterminate"
-            />
+            <md-progress-bar v-if="searching" class="underline-progress-bar" :md-stroke="2" md-mode="indeterminate" />
         </template>
         <template slot="no-data">
-            <div v-if="!serverError && ( searchText.length<3)">
+            <div v-if="!serverError && searchText.length < 3">
                 <div class="md-layout">
                     <div>
-                        <md-subheader
-                            class="text-center"
-                        >
+                        <md-subheader class="text-center">
                             Type at least 3 letters to search by phone, email or name
                         </md-subheader>
                     </div>
@@ -58,19 +48,11 @@
             </div>
             <div v-else-if="noData">
                 <div class="md-layout">
-                    <div
-                        class="md-size-100 md-layout md-alignment-center-center"
-                        style="white-space: pre-wrap;oveflow:hidden; padding: 0 0 15px 0;"
-                    >
-                        <span
-                            class="md-layout-item"
-                        >No patients matching "{{ searchText }}" were found.</span>
+                    <div class="md-size-100 md-layout md-alignment-center-center" style="white-space: pre-wrap;oveflow:hidden; padding: 0 0 15px 0;">
+                        <span class="md-layout-item">No patients matching "{{ searchText }}" were found.</span>
                     </div>
                     <div class="md-layout md-layout-item md-alignment-center md-size-100">
-                        <md-button
-                            class="md-success md-sm"
-                            @click="showPatientAddForm()"
-                        >
+                        <md-button class="md-success md-sm" @click="showPatientAddForm()">
                             Create patient
                         </md-button>
                     </div>
@@ -82,24 +64,14 @@
                     Connection problems
                 </md-subheader>
 
-                <md-button
-                    class="md-success md-layout-item md-sm"
-                    @click="getPatients()"
-                >
+                <md-button class="md-success md-layout-item md-sm" @click="getPatients()">
                     Retry
                 </md-button>
             </div>
         </template>
-        <template
-            v-if="item"
-            slot="item"
-            slot-scope="{ item }"
-        >
+        <template v-if="item" slot="item" slot-scope="{ item }">
             <div style="display: flex;">
-                <md-button
-                    class="IZ-select-button btn-avatar md-button"
-                    tag="button"
-                >
+                <md-button class="IZ-select-button btn-avatar md-button" tag="button">
                     <t-avatar
                         class="search-avatar"
                         :text-to-color="item.ID"
@@ -110,9 +82,9 @@
                     <div class="md-serched-list-item-text text-left">
                         <span>
                             {{ item.firstName | capitilize }} {{ item.lastName | capitilize }}
-                            <br>
+                            <br />
                         </span>
-                        <span v-if="item.phone">{{ "+" + item.phone }}</span>
+                        <span v-if="item.phone">{{ '+' + item.phone }}</span>
                     </div>
                 </md-button>
                 <!-- <md-button class="IZ-select-button btn-avatar">
@@ -133,49 +105,26 @@
                 </md-button> -->
             </div>
         </template>
-        <template
-            v-if="patients ? patients.length >1 : false"
-            slot="after-items"
-        >
+        <template v-if="patients ? patients.length > 1 : false" slot="after-items">
             <div style="display: flex;">
-                <div
-                    style="flex-grow:1"
-                    class="md-layout-item"
-                >
-                    <infinite-loading
-                        :key="patients ? patients.length: 0"
-                        :identifier="infiniteId"
-                        @infinite="infiniteHandler"
-                    >
+                <div style="flex-grow:1" class="md-layout-item">
+                    <infinite-loading :key="patients ? patients.length : 0" :identifier="infiniteId" @infinite="infiniteHandler">
                         <div slot="spinner">
-                            <md-progress-spinner
-                                :md-diameter="40"
-                                :md-stroke="4"
-                                md-mode="indeterminate"
-                            />
+                            <md-progress-spinner :md-diameter="40" :md-stroke="4" md-mode="indeterminate" />
                         </div>
                         <div slot="no-results">
                             <div class="md-title text-center">
                                 No more patients
                             </div>
                         </div>
-                        <div
-                            slot="error"
-                            slot-scope="{ trigger }"
-                        >
+                        <div slot="error" slot-scope="{ trigger }">
                             <div class="md-layout">
-                                <div
-                                    class="md-layout-item"
-                                    style="padding: 15px 0;"
-                                >
+                                <div class="md-layout-item" style="padding: 15px 0;">
                                     <md-subheader class="text-center">
                                         Oops! Connection problems
                                     </md-subheader>
                                     <div class="md-layout-item md-size-100">
-                                        <md-button
-                                            class="md-primary md-layout-item mx-auto md-sm"
-                                            @click="trigger"
-                                        >
+                                        <md-button class="md-primary md-layout-item mx-auto md-sm" @click="trigger">
                                             Retry
                                         </md-button>
                                     </div>
@@ -186,18 +135,10 @@
                 </div>
             </div>
         </template>
-        <template
-            v-if="totalPatients"
-            slot="after-items-fixed"
-        >
+        <template v-if="totalPatients" slot="after-items-fixed">
             <div style="display: flex;">
-                <div
-                    style="flex-grow:1"
-                    class="md-layout-item"
-                >
-                    <md-subheader class="text-center">
-                        Total found: {{ totalPatients }} patients
-                    </md-subheader>
+                <div style="flex-grow:1" class="md-layout-item">
+                    <md-subheader class="text-center"> Total found: {{ totalPatients }} patients </md-subheader>
                 </div>
             </div>
         </template>

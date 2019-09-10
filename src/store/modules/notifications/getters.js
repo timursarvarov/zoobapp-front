@@ -1,3 +1,3 @@
 export default {
-    getNotify: state => state,
+    getNotify: state => state
 };

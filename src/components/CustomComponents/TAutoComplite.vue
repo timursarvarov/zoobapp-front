@@ -1,18 +1,6 @@
-
 <template>
-    <md-field
-        class="md-autocomplete"
-        :class="fieldClasses"
-        md-clearable
-        :md-inline="isBoxLayout"
-    >
-        <md-menu
-            md-direction="bottom-start"
-            :md-dense="mdDense"
-            md-align-trigger
-            :md-active.sync="showMenu"
-            md-size="auto"
-        >
+    <md-field class="md-autocomplete" :class="fieldClasses" md-clearable :md-inline="isBoxLayout">
+        <md-menu md-direction="bottom-start" :md-dense="mdDense" md-align-trigger :md-active.sync="showMenu" md-size="auto">
             <!-- md-full-width -->
             <md-input
                 :id="mdInputId"
@@ -28,35 +16,21 @@
                 @click.stop.prevent="openOnFocus"
                 @keyup.up="mooveFocusItems(-1)"
             />
-            <md-menu-content
-                v-show="hasScopedEmptySlot || hasFilteredItems || openOnFocus"
-                :class="contentClasses"
-            >
-                <div
-                    v-if="isPromisePending"
-                    class="md-autocomplete-loading"
-                >
-                    <md-progress-spinner
-                        :md-diameter="40"
-                        :md-stroke="4"
-                        md-mode="indeterminate"
-                    />
+            <md-menu-content v-show="hasScopedEmptySlot || hasFilteredItems || openOnFocus" :class="contentClasses">
+                <div v-if="isPromisePending" class="md-autocomplete-loading">
+                    <md-progress-spinner :md-diameter="40" :md-stroke="4" md-mode="indeterminate" />
                 </div>
 
                 <transition name="fade">
-                    <div
-                        v-show="hasFilteredItems"
-                        ref="md-menu-content"
-                        class="md-autocomplete-items"
-                    >
+                    <div v-show="hasFilteredItems" ref="md-menu-content" class="md-autocomplete-items">
                         <md-menu-item
                             v-for="(item, index) in getOptions()"
                             :id="index"
                             :key="index"
-                            :ref=" 'item' + index"
+                            :ref="'item' + index"
                             @click.prevent="selectItem(item, $event)"
-                            @keyup.down="mooveFocusItems(index+1)"
-                            @keyup.up="mooveFocusItems(index-1)"
+                            @keyup.down="mooveFocusItems(index + 1)"
+                            @keyup.up="mooveFocusItems(index - 1)"
                         >
                             <slot
                                 v-if="$scopedSlots['md-autocomplete-item']"
@@ -69,19 +43,13 @@
                                 {{ item }}
                             </template>
                         </md-menu-item>
-                        <slot
-                            name="md-last-item"
-                            :term="searchTerm"
-                        />
+                        <slot name="md-last-item" :term="searchTerm" />
                     </div>
                 </transition>
 
                 <md-menu-item v-show="hasScopedEmptySlot && !hasFilteredItems">
                     <div class="md-autocomplete-empty">
-                        <slot
-                            name="md-autocomplete-empty"
-                            :term="searchTerm"
-                        />
+                        <slot name="md-autocomplete-empty" :term="searchTerm" />
                     </div>
                 </md-menu-item>
             </md-menu-content>

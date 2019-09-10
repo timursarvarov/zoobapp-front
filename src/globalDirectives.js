@@ -11,7 +11,7 @@ const GlobalDirectives = {
     install(Vue) {
         Vue.directive('click-outside', vClickOutside);
         Vue.directive('ripple', Ripple);
-    },
+    }
 };
 
 export default GlobalDirectives;

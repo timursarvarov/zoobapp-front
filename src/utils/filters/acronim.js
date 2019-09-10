@@ -3,13 +3,13 @@ export default function acronim(value) {
         return '';
     }
     const words = value.split(' ');
-    const secondtLetter = (x) => {
+    const secondtLetter = x => {
         if (x && x[1]) {
             return x[1].toLowerCase();
         }
         return '';
     };
-    const firsttLetter = (x) => {
+    const firsttLetter = x => {
         if (x && x[0]) {
             return x[0].toUpperCase();
         }

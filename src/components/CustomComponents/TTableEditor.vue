@@ -1,8 +1,5 @@
 <template>
-    <md-dialog
-        class="t-table-editor-form"
-        :md-active.sync="showFormLocal"
-    >
+    <md-dialog class="t-table-editor-form" :md-active.sync="showFormLocal">
         <md-card>
             <md-card-header class="md-card-header-icon md-card-header-green">
                 <div class="card-icon">
@@ -13,10 +10,7 @@
                 </h4>
             </md-card-header>
             <md-card-content>
-                <div
-                    class="group-wrapper"
-                    style="overflow-x: auto"
-                >
+                <div class="group-wrapper" style="overflow-x: auto">
                     <div class="groups md-layout">
                         <div class="group md-layout-item md-size-100">
                             <md-toolbar class="md-transparent">
@@ -33,17 +27,11 @@
                                 behaviour="contain"
                                 @drop="onDrop('newColumns', $event)"
                             >
-                                <Draggable
-                                    v-for="item in newColumns"
-                                    :key="item.key"
-                                >
+                                <Draggable v-for="item in newColumns" :key="item.key">
                                     <div class="draggable-item-horizontal">
                                         <md-subheader class="rotate">
                                             {{ item.title }}
-                                            <span
-                                                class="column-drag-handle"
-                                                style
-                                            >
+                                            <span class="column-drag-handle" style>
                                                 <md-icon>drag_indicator</md-icon>
                                             </span>
                                         </md-subheader>
@@ -67,17 +55,11 @@
                                 behaviour="contain"
                                 @drop="onDrop('availableColumns', $event)"
                             >
-                                <Draggable
-                                    v-for="item in availableColumns"
-                                    :key="item.key"
-                                >
+                                <Draggable v-for="item in availableColumns" :key="item.key">
                                     <div class="draggable-item-horizontal">
                                         <md-subheader class="rotate">
                                             {{ item.title }}
-                                            <span
-                                                class="column-drag-handle"
-                                                style
-                                            >
+                                            <span class="column-drag-handle" style>
                                                 <md-icon>drag_indicator</md-icon>
                                             </span>
                                         </md-subheader>
@@ -93,10 +75,7 @@
                 <md-button @click="showFormLocal = !showFormLocal">
                     Cancel
                 </md-button>
-                <md-button
-                    class="md-success"
-                    @click="showFormLocal = !showFormLocal, setColumns()"
-                >
+                <md-button class="md-success" @click="(showFormLocal = !showFormLocal), setColumns()">
                     Save
                 </md-button>
             </md-card-actions>
@@ -112,60 +91,60 @@ export default {
     prop: 'Columns',
     components: {
         Container,
-        Draggable,
+        Draggable
     },
     props: {
         buttonColor: {
             type: String,
-            default: '',
+            default: ''
         },
         icon: {
             type: String,
-            default: 'add_a_photo',
+            default: 'add_a_photo'
         },
         showForm: {
             type: Boolean,
-            default: () => false,
+            default: () => false
         },
         title: {
             type: String,
-            default: '',
+            default: ''
         },
         availableTableColumns: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         tableColumns: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         columns: {
             type: Object,
-            default: () => {},
-        },
+            default: () => {}
+        }
     },
     data() {
         return {
             items1: generateItems(15, i => ({
                 id: `1${i}`,
-                data: `Draggable 1 - ${i}`,
+                data: `Draggable 1 - ${i}`
             })),
             items2: generateItems(15, i => ({
                 id: `2${i}`,
-                data: `Draggable 2 - ${i}`,
+                data: `Draggable 2 - ${i}`
             })),
             newTableColumn: null,
             newColumns: [
                 {
                     key: 'ID1',
-                    title: 'ID',
+                    title: 'ID'
                 },
                 {
                     key: 'address1',
-                    title: 'Address',
-                },
+                    title: 'Address'
+                }
             ],
-            availableColumns: [],
+            availableColumns: []
         };
     },
     computed: {
@@ -177,17 +156,13 @@ export default {
             // сеттер:
             set(newValue) {
                 this.$emit('update:showForm', newValue);
-            },
-        },
+            }
+        }
     },
     mounted() {
-        this.newColumns = Object.keys(this.tableColumns).map(
-            i => this.tableColumns[i],
-        );
+        this.newColumns = Object.keys(this.tableColumns).map(i => this.tableColumns[i]);
         const vm = this;
-        this.availableColumns = this.availableTableColumns.filter(
-            el => !vm.newColumns.some(f => f.key === el.key),
-        );
+        this.availableColumns = this.availableTableColumns.filter(el => !vm.newColumns.some(f => f.key === el.key));
     },
     methods: {
         shouldAcceptDrop() {
@@ -207,12 +182,11 @@ export default {
         },
         setColumns() {
             this.$emit('selected', this.newColumns);
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss">
-
 .md-dialog.t-table-editor-form {
     background-color: transparent !important;
     box-shadow: none !important;
@@ -226,72 +200,72 @@ export default {
     width: 100%;
     height: 100%;
     transform: none;
-     min-width: 70vw;
+    min-width: 70vw;
     .smooth-dnd-container {
         min-height: 150px;
     }
 
     .md-dialog-container {
         max-width: 70%;
-        .md-card{
+        .md-card {
             min-width: 70vw;
         }
     }
     .groups {
-    flex: 1;
-    display: flex;
-    justify-content: stretch;
-    .draggable-item-horizontal {
-        margin: 5px;
-        height: 150px;
-        line-height: 50px;
-        width: 50px;
-        position: relative;
-        margin-bottom: 2px;
-        margin-top: 2px;
-        user-select: none;
-        text-align: center;
-        display: block;
-        background-color: #fff;
-        outline: 0;
-        border: 1px solid rgba(128, 128, 128, 0.212);
-        border-radius: 3px;
-        transition-duration: 0.4s;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        transition-delay: 0s;
-        -webkit-box-shadow: 0 0 0px 1000px rgb(255, 255, 255) inset;
-        transition: background-color 5000s ease-in-out 0s;
-        .rotate {
-            position: absolute;
-            display: inline-block;
-            bottom: 0px;
-            width: 150px;
-            text-align: right;
-            transform: rotate(-90deg) translateY(50%);
-            transform-origin: left bottom;
-            margin: 0px;
-            padding: 0px;
-            .md-icon {
-                transform: rotate(-90deg);
-                margin: 10px;
+        flex: 1;
+        display: flex;
+        justify-content: stretch;
+        .draggable-item-horizontal {
+            margin: 5px;
+            height: 150px;
+            line-height: 50px;
+            width: 50px;
+            position: relative;
+            margin-bottom: 2px;
+            margin-top: 2px;
+            user-select: none;
+            text-align: center;
+            display: block;
+            background-color: #fff;
+            outline: 0;
+            border: 1px solid rgba(128, 128, 128, 0.212);
+            border-radius: 3px;
+            transition-duration: 0.4s;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-delay: 0s;
+            -webkit-box-shadow: 0 0 0px 1000px rgb(255, 255, 255) inset;
+            transition: background-color 5000s ease-in-out 0s;
+            .rotate {
+                position: absolute;
+                display: inline-block;
+                bottom: 0px;
+                width: 150px;
+                text-align: right;
+                transform: rotate(-90deg) translateY(50%);
+                transform-origin: left bottom;
+                margin: 0px;
+                padding: 0px;
+                .md-icon {
+                    transform: rotate(-90deg);
+                    margin: 10px;
+                }
             }
-        }
-        .column-drag-handle {
-            cursor: move; /* fallback if grab cursor is unsupported */
-            cursor: grab;
-            cursor: -moz-grab;
-            cursor: -webkit-grab;
-            &:active {
-                cursor: grabbing;
-                cursor: -moz-grabbing;
-                cursor: -webkit-grabbing;
+            .column-drag-handle {
+                cursor: move; /* fallback if grab cursor is unsupported */
+                cursor: grab;
+                cursor: -moz-grab;
+                cursor: -webkit-grab;
+                &:active {
+                    cursor: grabbing;
+                    cursor: -moz-grabbing;
+                    cursor: -webkit-grabbing;
+                }
             }
         }
     }
-}
     .group-wrapper {
         min-height: 60vh;
-         padding-bottom: 30px;
+        padding-bottom: 30px;
         max-height: 80vh;
         overflow-y: auto;
         border-style: solid;

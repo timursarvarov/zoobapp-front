@@ -1,5 +1,4 @@
 export default {
-
     teethSystem: 1,
     name: null,
     url: null,
@@ -14,7 +13,7 @@ export default {
     calendarSettings: {
         // минимальная длина слота
         slotDuration: '00:30:00',
-        hiddenDays: [],
+        hiddenDays: []
     },
     diagnosis: null,
     procedures: null,
@@ -26,5 +25,5 @@ export default {
     manipulationsComputed: null,
     isRefreshing: false,
     setRefreshingCall: [],
-    status: '',
+    status: ''
 };

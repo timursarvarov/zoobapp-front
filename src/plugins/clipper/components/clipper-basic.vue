@@ -1,60 +1,32 @@
 <template>
     <div class="clipper-basic">
         <canvas class="hidden-canvas" />
-        <div
-            class="clip-area"
-            :style="areaStyle"
-        >
-            <div
-                class="img-scale"
-                :style="scaleStyle"
-            >
+        <div class="clip-area" :style="areaStyle">
+            <div class="img-scale" :style="scaleStyle">
                 <img
                     :src="src"
                     class="img"
                     :style="rotateStyle"
-                    @load="imgLoaded();emit('load',$event)"
-                    @error="emit('error',$event)"
-                >
-            </div>
-            <div
-                class="zoom-area shadow"
-                :style="posObj"
-            >
-                <div
-                    class="extend outer"
-                    :style="exOuterStyle"
+                    @load="
+                        imgLoaded();
+                        emit('load', $event);
+                    "
+                    @error="emit('error', $event)"
                 />
-                <div
-                    class="extend inner"
-                    :style="exInnerStyle"
-                >
+            </div>
+            <div class="zoom-area shadow" :style="posObj">
+                <div class="extend outer" :style="exOuterStyle" />
+                <div class="extend inner" :style="exInnerStyle">
                     <div class="drag-inset" />
                 </div>
-                <div
-                    v-for="index in 4"
-                    v-show="corner"
-                    :key="'corner'+index"
-                    class="corner"
-                    :class="`corner${index}`"
-                />
-                <div
-                    v-if="grid"
-                    class="grid"
-                >
-                    <div
-                        v-for="index in 4"
-                        :key="'gridItem'+index"
-                        class="grid-item"
-                    />
+                <div v-for="index in 4" v-show="corner" :key="'corner' + index" class="corner" :class="`corner${index}`" />
+                <div v-if="grid" class="grid">
+                    <div v-for="index in 4" :key="'gridItem' + index" class="grid-item" />
                 </div>
                 <slot name="area" />
             </div>
         </div>
-        <div
-            class="placeholder"
-            :style="eptStyle"
-        >
+        <div class="placeholder" :style="eptStyle">
             <slot name="placeholder" />
         </div>
     </div>

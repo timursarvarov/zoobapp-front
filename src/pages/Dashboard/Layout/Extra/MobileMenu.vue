@@ -3,29 +3,18 @@
         <li>
             <md-field>
                 <label>Search</label>
-                <md-input
-                    v-model="search"
-                    type="text"
-                />
+                <md-input v-model="search" type="text" />
             </md-field>
         </li>
         <li>
-            <a
-                href="#"
-                class="dropdown-toggle"
-                data-toggle="dropdown"
-            >
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="material-icons">dashboard</i>
                 <p>Stats</p>
             </a>
         </li>
         <li>
             <drop-down>
-                <a
-                    slot="title"
-                    class="dropdown-toggle"
-                    data-toggle="dropdown"
-                >
+                <a slot="title" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="material-icons">notifications</i>
                     <span class="notification">5</span>
                     <p>Some Actions</p>
@@ -40,11 +29,8 @@
             </drop-down>
         </li>
         <li>
-            <a
-                href="#"
-                data-toggle="dropdown"
-                class="dropdown-toggle"
-            ><i class="material-icons">person</i>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                ><i class="material-icons">person</i>
                 <p>Account</p>
             </a>
         </li>
@@ -65,9 +51,9 @@ export default {
                 'Angela Martin',
                 'Kelly Kapoor',
                 'Ryan Howard',
-                'Kevin Malone',
-            ],
+                'Kevin Malone'
+            ]
         };
-    },
+    }
 };
 </script>

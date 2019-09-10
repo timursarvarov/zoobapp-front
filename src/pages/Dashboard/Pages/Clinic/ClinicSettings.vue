@@ -13,10 +13,7 @@
             <div class="md-layout">
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field
-                        :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('name') && touched.name},
-                            {'md-error': errors.has('name')}]"
+                        :class="[{ 'with-subline': true }, { 'md-valid': !errors.has('name') && touched.name }, { 'md-error': errors.has('name') }]"
                     >
                         <label>Clinic Name</label>
                         <md-input
@@ -28,17 +25,14 @@
                             data-vv-name="name"
                             required
                         />
-                        <span
-                            v-show="!errors.has('name') && touched.name"
-                            class="md-helper-text"
-                        >Enter a cool currentClinic name</span>
+                        <span v-show="!errors.has('name') && touched.name" class="md-helper-text">Enter a cool currentClinic name</span>
                         <span class="md-error">{{ errors.first('name') }}</span>
                         <slide-y-down-transition>
                             <md-button
                                 v-show="errors.has('name')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="name='',focusOn('name')"
+                                @click="(name = ''), focusOn('name')"
                             >
                                 <md-icon class="error">
                                     close
@@ -62,9 +56,10 @@
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field
                         :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('phone') && touched.phone},
-                            {'md-error': errors.has('phone')}]"
+                            { 'with-subline': true },
+                            { 'md-valid': !errors.has('phone') && touched.phone },
+                            { 'md-error': errors.has('phone') }
+                        ]"
                     >
                         <label>Phone</label>
                         <span class="md-prefix">+</span>
@@ -83,7 +78,7 @@
                                 v-show="errors.has('phone')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="phone='',focusOn('phone')"
+                                @click="(phone = ''), focusOn('phone')"
                             >
                                 <md-icon class="error">
                                     close
@@ -107,19 +102,13 @@
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field class="with-subline">
                         <label>Address</label>
-                        <md-input
-                            v-model="address"
-                            type="text"
-                        />
+                        <md-input v-model="address" type="text" />
                     </md-field>
                 </div>
 
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field
-                        :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('url') && touched.url},
-                            {'md-error': errors.has('url')}]"
+                        :class="[{ 'with-subline': true }, { 'md-valid': !errors.has('url') && touched.url }, { 'md-error': errors.has('url') }]"
                     >
                         <label>Clinic web site address</label>
                         <md-input
@@ -138,7 +127,7 @@
                                 v-show="errors.has('url')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="url='',focusOn('url')"
+                                @click="(url = ''), focusOn('url')"
                             >
                                 <md-icon class="error">
                                     close
@@ -162,9 +151,10 @@
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field
                         :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('email') && touched.email},
-                            {'md-error': errors.has('email')}]"
+                            { 'with-subline': true },
+                            { 'md-valid': !errors.has('email') && touched.email },
+                            { 'md-error': errors.has('email') }
+                        ]"
                     >
                         <label>Email</label>
                         <md-input
@@ -183,7 +173,7 @@
                                 v-show="errors.has('email')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="email='',focusOn('email')"
+                                @click="(email = ''), focusOn('email')"
                             >
                                 <md-icon class="error">
                                     close
@@ -206,10 +196,7 @@
 
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field
-                        :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('tax') && touched.tax},
-                            {'md-error': errors.has('tax')}]"
+                        :class="[{ 'with-subline': true }, { 'md-valid': !errors.has('tax') && touched.tax }, { 'md-error': errors.has('tax') }]"
                     >
                         <label>Tax %</label>
                         <md-input
@@ -221,17 +208,14 @@
                             type="number"
                             min="0"
                         />
-                        <span
-                            v-show="!errors.has('tax') && touched.tax"
-                            class="md-helper-text"
-                        >Tax will be added to clients bill</span>
+                        <span v-show="!errors.has('tax') && touched.tax" class="md-helper-text">Tax will be added to clients bill</span>
                         <span class="md-error">{{ errors.first('tax') }}</span>
                         <slide-y-down-transition>
                             <md-button
                                 v-show="errors.has('tax')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="tax='',focusOn('tax')"
+                                @click="(tax = ''), focusOn('tax')"
                             >
                                 <md-icon class="error">
                                     close
@@ -254,12 +238,7 @@
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field class="with-subline">
                         <label for="teethSystem">Teeth System</label>
-                        <md-select
-                            id="teethSystem"
-                            v-model="teethSystem"
-                            :disabled="loading"
-                            name="teethSystem"
-                        >
+                        <md-select id="teethSystem" v-model="teethSystem" :disabled="loading" name="teethSystem">
                             <md-option :value="1">
                                 FDI World Dental Federation notation
                             </md-option>
@@ -275,18 +254,8 @@
                 <div class="md-layout md-layout-item md-size-33">
                     <md-field class="with-subline">
                         <label for="selectedCurrency">Select Currency</label>
-                        <md-select
-                            id="selectedCurrency"
-                            v-model="selectedCurrency"
-                            md-dense
-                            name="selectedCurrency"
-                        >
-                            <md-option
-                                v-for="(item, key) in currency"
-                                :key="key"
-                                :disabled="loading"
-                                :value="item.code"
-                            >
+                        <md-select id="selectedCurrency" v-model="selectedCurrency" md-dense name="selectedCurrency">
+                            <md-option v-for="(item, key) in currency" :key="key" :disabled="loading" :value="item.code">
                                 {{ `${item.code} - ${item.symbol} ${item.name} ` }}
                             </md-option>
                         </md-select>
@@ -295,18 +264,8 @@
                 <div class="md-layout md-layout-item md-size-33">
                     <md-field class="with-subline">
                         <label for="teethSystem">Select UTC Timezone</label>
-                        <md-select
-                            id="selectedCurrency"
-                            v-model="selectedTimezone"
-                            md-dense
-                            name="selectedCurrency"
-                        >
-                            <md-option
-                                v-for="(item, key) in timezones"
-                                :key="key"
-                                :disabled="loading"
-                                :value="item.offset"
-                            >
+                        <md-select id="selectedCurrency" v-model="selectedTimezone" md-dense name="selectedCurrency">
+                            <md-option v-for="(item, key) in timezones" :key="key" :disabled="loading" :value="item.offset">
                                 {{ item.UTC }}
                                 <!-- <small>{{item.cities}}</small> -->
                             </md-option>
@@ -315,10 +274,7 @@
                 </div>
 
                 <div class="md-layout md-layout-item md-size-100">
-                    <md-field
-                        class="with-subline"
-                        maxlength="5"
-                    >
+                    <md-field class="with-subline" maxlength="5">
                         <label>Description</label>
                         <md-textarea v-model="description" />
                     </md-field>
@@ -326,20 +282,10 @@
             </div>
         </md-card-content>
         <md-card-actions>
-            <md-button
-                :disabled="loading"
-                native-type="submit"
-                class="md-raised md-success ml-auto"
-                @click="updateClinicSettings"
-            >
+            <md-button :disabled="loading" native-type="submit" class="md-raised md-success ml-auto" @click="updateClinicSettings">
                 <div v-if="loading">
-                    <md-progress-spinner
-                        class="t-white"
-                        :md-diameter="12"
-                        :md-stroke="2"
-                        md-mode="indeterminate"
-                    />
-                &nbsp;
+                    <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
+                    &nbsp;
                     <span>
                         Saving...
                     </span>
@@ -354,26 +300,20 @@
 <script>
 import { mapGetters } from 'vuex';
 import { SlideYDownTransition } from 'vue2-transitions';
-import {
-    CLINIC_LOGO_UPLOAD,
-    CLINIC_UPDATE,
-    NOTIFY,
-    TIMEZONES,
-    COMMON_CURRENCY,
-} from '@/constants';
+import { CLINIC_LOGO_UPLOAD, CLINIC_UPDATE, NOTIFY, TIMEZONES, COMMON_CURRENCY } from '@/constants';
 import components from '@/components';
 
 export default {
     name: 'ClinicSettings',
     components: {
         SlideYDownTransition,
-        ...components,
+        ...components
     },
     props: {
         buttonColor: {
             type: String,
-            default: '',
-        },
+            default: ''
+        }
     },
     data() {
         return {
@@ -398,33 +338,33 @@ export default {
                 email: false,
                 phone: false,
                 name: false,
-                tax: false,
+                tax: false
             },
             modelValidations: {
                 url: {
-                    url: true,
+                    url: true
                 },
                 email: {
-                    email: true,
+                    email: true
                 },
                 phone: {
                     required: true,
                     min: 12,
-                    max: 20,
+                    max: 20
                 },
                 tax: {
-                    min: 0,
+                    min: 0
                 },
                 name: {
-                    required: true,
-                },
-            },
+                    required: true
+                }
+            }
         };
     },
     computed: {
         ...mapGetters({
-            currentClinic: 'getCurrentClinic',
-        }),
+            currentClinic: 'getCurrentClinic'
+        })
     },
     watch: {
         url() {
@@ -441,7 +381,7 @@ export default {
         },
         tax() {
             this.touched.tax = true;
-        },
+        }
     },
     created() {
         this.loadData();
@@ -455,12 +395,10 @@ export default {
         },
         timezoneSelected(timezoneL) {
             if (timezoneL) {
-                this.timezones.forEach((element) => {
+                this.timezones.forEach(element => {
                     if (`${element.cities}` === timezoneL.cities) {
                         this.currentClinic.timezoneOffset = element.offset;
-                        this.selectedTimezone = `${element.UTC} ${
-                            element.cities
-                        }`;
+                        this.selectedTimezone = `${element.UTC} ${element.cities}`;
                     }
                 });
             }
@@ -468,22 +406,18 @@ export default {
         currencySelected(currency) {
             console.log(currency);
             if (currency) {
-                Object.values(this.currency).forEach((element) => {
+                Object.values(this.currency).forEach(element => {
                     if (element.code === currency.code) {
                         this.currentClinic.currencyCode = element.code;
-                        this.selectedCurrency = `${element.symbol} ${
-                            element.name
-                        } ${element.code}`;
+                        this.selectedCurrency = `${element.symbol} ${element.name} ${element.code}`;
                     }
                 });
             }
         },
         validate() {
-            this.$validator
-                .validate('url', 'email', 'phone', 'name', 'tax')
-                .then((isValid) => {
-                    this.$emit('on-submit', this.registerForm, isValid);
-                });
+            this.$validator.validate('url', 'email', 'phone', 'name', 'tax').then(isValid => {
+                this.$emit('on-submit', this.registerForm, isValid);
+            });
             this.touched.url = true;
             this.touched.email = true;
             this.touched.phone = true;
@@ -491,20 +425,20 @@ export default {
         updateClinicLogo(fd) {
             this.$store
                 .dispatch(CLINIC_LOGO_UPLOAD, {
-                    fd,
+                    fd
                 })
-                .then((response) => {
+                .then(response => {
                     console.log(response);
                     this.$store.dispatch(NOTIFY, {
                         settings: {
                             message: 'Image uploaded',
-                            type: 'success',
-                        },
+                            type: 'success'
+                        }
                     });
                 });
         },
         updateClinicSettings() {
-            this.$validator.validateAll().then((result) => {
+            this.$validator.validateAll().then(result => {
                 if (result) {
                     this.loading = true;
                     const clinic = {
@@ -518,69 +452,59 @@ export default {
                         teethSystem: this.teethSystem,
                         timezoneOffset: this.selectedTimezone,
                         currencyCode: this.selectedCurrency,
-                        description: this.description,
+                        description: this.description
                     };
                     this.$store
                         .dispatch(CLINIC_UPDATE, {
-                            clinic,
+                            clinic
                         })
-                        .then((response) => {
+                        .then(response => {
                             if (response) {
                                 this.loading = false;
                                 this.$store.dispatch(NOTIFY, {
                                     settings: {
                                         message: 'Settings updated',
-                                        type: 'success',
-                                    },
+                                        type: 'success'
+                                    }
                                 });
                             }
                         })
-                        .catch(
-                            (err) => {
-                                this.loading = false;
-                                throw new Error(err);
-                            },
-                        );
+                        .catch(err => {
+                            this.loading = false;
+                            throw new Error(err);
+                        });
                 }
             });
         },
         createArrayTimezones() {
             const Ntimezones = {};
-            this.timezones.forEach((element) => {
-                this.timeZoneForOptions.unshift(
-                    `${element.UTC} ${element.cities}`,
-                );
+            this.timezones.forEach(element => {
+                this.timeZoneForOptions.unshift(`${element.UTC} ${element.cities}`);
             });
 
             return Ntimezones;
         },
         createArrayCurrency() {
             const Ncurrency = {};
-            Object.values(this.currency).forEach((element) => {
-                this.currencyForOptions.unshift(
-                    `${element.symbol} ${element.name} ${element.code}`,
-                );
+            Object.values(this.currency).forEach(element => {
+                this.currencyForOptions.unshift(`${element.symbol} ${element.name} ${element.code}`);
             });
 
             return Ncurrency;
         },
         setLocalTimezone() {
             this.$nextTick(() => {
-                this.timezones.forEach((element) => {
+                this.timezones.forEach(element => {
                     if (element.offset === this.currentClinic.timezoneOffset) {
-                        this.selectedTimezone = `${element.UTC} ${
-                            element.cities
-                        }`;
+                        this.selectedTimezone = `${element.UTC} ${element.cities}`;
                     }
                 });
             });
         },
         setLocalCurrency() {
-            Object.values(this.currency).forEach((element) => {
+            Object.values(this.currency).forEach(element => {
                 if (element.code === this.currentClinic.currencyCode) {
-                    this.selectedCurrency = `${element.symbol} ${
-                        element.name
-                    } ${element.code}`;
+                    this.selectedCurrency = `${element.symbol} ${element.name} ${element.code}`;
                 }
             });
         },
@@ -599,14 +523,14 @@ export default {
             this.selectedTimezone = this.currentClinic.timezoneOffset;
             this.selectedCurrency = this.currentClinic.currencyCode;
             this.description = this.currentClinic.description;
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss">
- .md-highlight-text-match {
-        border-radius: 2px;
-        background-color: yellow !important;
-        padding: 0 !important;
-    }
+.md-highlight-text-match {
+    border-radius: 2px;
+    background-color: yellow !important;
+    padding: 0 !important;
+}
 </style>

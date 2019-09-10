@@ -1,6 +1,6 @@
 <template>
     <div>
-    <!-- <div class="header text-center">
+        <!-- <div class="header text-center">
       <h3 class="title">Sweet Alert 2</h3>
       <p class="category">A beautiful plugin, that replace the
         classic alert, Handcrafted by our friend
@@ -232,13 +232,14 @@
 //       },
 //     },
 //   };
-// </script>
+//
+</script>
 <style scoped>
 .text-center {
-  text-align: center;
+    text-align: center;
 }
 
 h5 {
-  margin-top: 0;
+    margin-top: 0;
 }
 </style>

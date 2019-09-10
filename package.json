@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "compile:print": "node-sass 'src/assets/scss/main/components/print/global.scss' 'public/css/print.css' -w",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
@@ -11,10 +12,7 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
-    "core-js": "^2.6.5",
-    "vue": "^2.6.10",
-    "vue-router": "^3.0.3",
-    "vuex": "^3.0.1",
+    "@chenfengyuan/vue-qrcode": "^1.0.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
     "@fortawesome/free-regular-svg-icons": "^5.10.1",
     "@fortawesome/free-solid-svg-icons": "^5.10.1",
@@ -32,6 +30,7 @@
     "ajv": "^6.10.0",
     "axios": "^0.19.0",
     "chartist": "0.11.0",
+    "core-js": "^2.6.5",
     "dropzone": "^5.5.1",
     "es6-promise": "4.2.5",
     "file-saver": "^2.0.1",
@@ -54,6 +53,7 @@
     "ui": "^0.2.4",
     "v-viewer": "^1.4.2",
     "vee-validate": "2.1.2",
+    "vue": "^2.6.10",
     "vue-axios": "^2.1.4",
     "vue-clickaway": "2.2.2",
     "vue-cool-select": "^2.10.2",
@@ -63,10 +63,12 @@
     "vue-material": "^1.0.0-beta-11",
     "vue-moment": "^4.0.0",
     "vue-ripple-directive": "^2.0.1",
+    "vue-router": "^3.0.3",
     "vue-rx": "^6.1.0",
     "vue-smooth-dnd": "^0.2.8",
     "vue-star-rating": "^1.6.1",
-    "vue2-transitions": "^0.3.0"
+    "vue2-transitions": "^0.3.0",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",

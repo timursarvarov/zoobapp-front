@@ -1,3 +1,3 @@
 export default {
-    getClinics: state => state.clinics,
+    getClinics: state => state.clinics
 };

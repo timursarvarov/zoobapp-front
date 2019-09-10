@@ -9,7 +9,7 @@ export default {
         userName: null,
         email: null,
         address: null,
-        lang: null,
+        lang: null
         // calendar: {
         //     hiddenDays: [],
         //     minTime: '00:00:00',
@@ -20,377 +20,394 @@ export default {
     },
     status: '',
     teethSystem: 'fdi',
-    diagnoseDescriptions: [{
+    diagnoseDescriptions: [
+        {
             title: 'description #1',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #3',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
         },
         {
             title: 'description #4',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #5',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
         },
         {
             title: 'description #6',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #7',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
         },
         {
             title: 'description #8',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #9',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
         },
         {
             title: 'description #10',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #11',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
-        },
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
+        }
     ],
-    procedureDescriptions: [{
+    procedureDescriptions: [
+        {
             title: 'description #1',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #3',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
         },
         {
             title: 'description #4',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #5',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
         },
         {
             title: 'description #6',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #7',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
         },
         {
             title: 'description #8',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #9',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
         },
         {
             title: 'description #10',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #11',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
-        },
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
+        }
     ],
-    anamnesDescriptions: [{
+    anamnesDescriptions: [
+        {
             title: 'description #1',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #3',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
         },
         {
             title: 'description #4',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #5',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
         },
         {
             title: 'description #6',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #7',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
         },
         {
             title: 'description #8',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #9',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
         },
         {
             title: 'description #10',
-            description: 'some cool and long description',
+            description: 'some cool and long description'
         },
         {
             title: 'description #11',
-            description: 'some very very very very very very very very very very very very very very very very very cool and long description',
-        },
+            description: 'some very very very very very very very very very very very very very very very very very cool and long description'
+        }
     ],
-    availablePatientsTableColumns: [{
+    availablePatientsTableColumns: [
+        {
             key: 'ID',
-            title: 'ID',
+            title: 'ID'
         },
         {
             key: 'address',
-            title: 'Address',
+            title: 'Address'
         },
         {
             key: 'allergy',
-            title: 'Allergy',
+            title: 'Allergy'
         },
         {
             key: 'birthday',
-            title: 'Birthday',
+            title: 'Birthday'
         },
         {
             key: 'created',
-            title: 'Created',
+            title: 'Created'
         },
         {
             key: 'createdBy',
-            title: 'Created By',
+            title: 'Created By'
         },
         {
             key: 'email',
-            title: 'Email',
+            title: 'Email'
         },
         {
             key: 'files',
-            title: 'Files',
+            title: 'Files'
         },
         {
             key: 'name',
-            title: 'Name',
+            title: 'Name'
+        },
+        {
+            key: 'firstName',
+            title: 'First Name'
+        },
+        {
+            key: 'lastName',
+            title: 'Last Name'
         },
         {
             key: 'phone',
-            title: 'Phone',
+            title: 'Phone'
         },
         {
             key: 'rating',
-            title: 'Rating',
+            title: 'Rating'
         },
         {
             key: 'source',
-            title: 'Source',
+            title: 'Source'
         },
         {
             key: 'updated',
-            title: 'Updated',
-        },
+            title: 'Updated'
+        }
     ],
-    availableAnamnesTableColumns: [{
+    availableAnamnesTableColumns: [
+        {
             key: 'code',
-            title: 'Code',
+            title: 'Code'
         },
         {
             key: 'title',
-            title: 'Title',
+            title: 'Title'
         },
         {
             key: 'ID',
-            title: 'ID',
+            title: 'ID'
         },
         {
             key: 'teeth',
-            title: 'Teeth',
+            title: 'Teeth'
         },
         {
             key: 'createdBy',
-            title: 'Created By',
+            title: 'Created By'
         },
         {
             key: 'created',
-            title: 'Created',
+            title: 'Created'
         },
         {
             key: 'updated',
-            title: 'Updated',
+            title: 'Updated'
         },
         {
             key: 'manipulations',
-            title: 'Manipulations',
+            title: 'Manipulations'
         },
         {
             key: 'price',
-            title: 'Price',
+            title: 'Price'
         },
         {
             key: 'state',
-            title: 'State',
-        },
+            title: 'State'
+        }
     ],
-    availableDiagnosisTableColumns: [{
+    availableDiagnosisTableColumns: [
+        {
             key: 'code',
-            title: 'Code',
+            title: 'Code'
         },
         {
             key: 'title',
-            title: 'Title',
+            title: 'Title'
         },
         {
             key: 'ID',
-            title: 'ID',
+            title: 'ID'
         },
         {
             key: 'teeth',
-            title: 'Teeth',
+            title: 'Teeth'
         },
         {
             key: 'createdBy',
-            title: 'Created By',
+            title: 'Created By'
         },
         {
             key: 'created',
-            title: 'Created',
+            title: 'Created'
         },
         {
             key: 'updated',
-            title: 'Updated',
+            title: 'Updated'
         },
         {
             key: 'manipulations',
-            title: 'Manipulations',
+            title: 'Manipulations'
         },
         {
             key: 'price',
-            title: 'Price',
+            title: 'Price'
         },
         {
             key: 'state',
-            title: 'State',
-        },
+            title: 'State'
+        }
     ],
-    availableProceduresTableColumns: [{
+    availableProceduresTableColumns: [
+        {
             key: 'code',
-            title: 'Code',
+            title: 'Code'
         },
         {
             key: 'title',
-            title: 'Title',
+            title: 'Title'
         },
         {
             key: 'ID',
-            title: 'ID',
+            title: 'ID'
         },
         {
             key: 'teeth',
-            title: 'Teeth',
+            title: 'Teeth'
         },
         {
             key: 'createdBy',
-            title: 'Created By',
+            title: 'Created By'
         },
         {
             key: 'created',
-            title: 'Created',
+            title: 'Created'
         },
         {
             key: 'updated',
-            title: 'Updated',
+            title: 'Updated'
         },
         {
             key: 'manipulations',
-            title: 'Manipulations',
+            title: 'Manipulations'
         },
         {
             key: 'price',
-            title: 'Price',
+            title: 'Price'
         },
         {
             key: 'state',
-            title: 'State',
-        },
+            title: 'State'
+        }
     ],
-    availableBillingTableColumns: [{
+    availableBillingTableColumns: [
+        {
             key: 'code',
-            title: 'Code',
+            title: 'Code'
         },
         {
             key: 'title',
-            title: 'Title',
+            title: 'Title'
         },
         {
             key: 'teeth',
-            title: 'Teeth',
+            title: 'Teeth'
         },
         {
             key: 'created',
-            title: 'Created',
+            title: 'Created'
         },
         {
             key: 'createdBy',
-            title: 'Created By',
+            title: 'Created By'
         },
         {
             key: 'manipulations',
-            title: 'Manipulations',
+            title: 'Manipulations'
         },
         {
             key: 'price',
-            title: 'Price',
+            title: 'Price'
         },
         {
             key: 'updated',
-            title: 'Updated',
+            title: 'Updated'
         },
         {
             key: 'planID',
-            title: 'Plan',
-        },
+            title: 'Plan'
+        }
     ],
-    availableInvoiceTableColumns: [{
+    availableInvoiceTableColumns: [
+        {
             key: 'discount',
-            title: 'Discount',
+            title: 'Discount'
         },
         {
             key: 'dueDate',
-            title: 'Due date',
+            title: 'Due date'
         },
         {
             key: 'ID',
-            title: 'ID',
+            title: 'ID'
         },
         {
             key: 'payments',
-            title: 'Payments',
+            title: 'Payments'
         },
         {
             key: 'procedures',
-            title: 'Procedures',
+            title: 'Procedures'
         },
         {
             key: 'createdBy',
-            title: 'Created By',
+            title: 'Created By'
         },
         {
             key: 'created',
-            title: 'Created',
+            title: 'Created'
         },
         {
             key: 'tax',
-            title: 'Tax',
+            title: 'Tax'
         },
         {
             key: 'total',
-            title: 'Total',
-        },
-    ],
+            title: 'Total'
+        }
+    ]
 };

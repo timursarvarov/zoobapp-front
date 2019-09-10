@@ -13,26 +13,22 @@
             <md-card-content>
                 <md-field
                     :class="[
-                        {'with-subline': true},
-                        {'md-valid': !errors.has('oldPassword') && touched.oldPassword},
-                        {'md-error': errors.has('oldPassword')}]"
+                        { 'with-subline': true },
+                        { 'md-valid': !errors.has('oldPassword') && touched.oldPassword },
+                        { 'md-error': errors.has('oldPassword') }
+                    ]"
                 >
                     <label>Old Password</label>
-                    <md-input
-                        v-model="oldPassword"
-                        v-validate="modelValidations.oldPassword"
-                        data-vv-name="oldPassword"
-                        type="password"
-                        required
-                    />
+                    <md-input v-model="oldPassword" v-validate="modelValidations.oldPassword" data-vv-name="oldPassword" type="password" required />
                     <span class="md-error">{{ errors.first('oldPassword') }}</span>
                 </md-field>
 
                 <md-field
                     :class="[
-                        {'with-subline': true},
-                        {'md-error': errors.has('newPassword')},
-                        {'md-valid': !errors.has('newPassword') && touched.newPassword}]"
+                        { 'with-subline': true },
+                        { 'md-error': errors.has('newPassword') },
+                        { 'md-valid': !errors.has('newPassword') && touched.newPassword }
+                    ]"
                 >
                     <label>New Password</label>
                     <md-input
@@ -47,9 +43,10 @@
                 </md-field>
                 <md-field
                     :class="[
-                        {'with-subline': true},
-                        {'md-error': errors.has('rNewPassword')},
-                        {'md-valid': !errors.has('rNewPassword') && touched.rNewPassword}]"
+                        { 'with-subline': true },
+                        { 'md-error': errors.has('rNewPassword') },
+                        { 'md-valid': !errors.has('rNewPassword') && touched.rNewPassword }
+                    ]"
                 >
                     <label>Repeat New Password</label>
                     <md-input
@@ -65,12 +62,7 @@
             </md-card-content>
 
             <md-card-actions>
-                <md-button
-                    :disabled="loading"
-                    native-type="submit"
-                    class="md-success"
-                    @click.native.prevent="validate"
-                >
+                <md-button :disabled="loading" native-type="submit" class="md-success" @click.native.prevent="validate">
                     <span v-if="loading">
                         Loading
                     </span>
@@ -96,23 +88,23 @@ export default {
             touched: {
                 oldPassword: false,
                 newPassword: false,
-                rNewPassword: false,
+                rNewPassword: false
             },
             modelValidations: {
                 oldPassword: {
                     required: true,
-                    min: 5,
+                    min: 5
                 },
                 newPassword: {
                     required: true,
-                    min: 5,
+                    min: 5
                 },
                 rNewPassword: {
                     required: true,
                     min: 5,
-                    confirmed: 'newPassword',
-                },
-            },
+                    confirmed: 'newPassword'
+                }
+            }
         };
     },
     watch: {
@@ -124,21 +116,21 @@ export default {
         },
         rNewPassword() {
             this.touched.rNewPassword = true;
-        },
+        }
     },
     methods: {
         updatePassword() {
-            this.$validator.validateAll().then((result) => {
+            this.$validator.validateAll().then(result => {
                 if (result) {
                     this.loading = true;
                     this.$store
                         .dispatch(USER_UPDATE, {
                             user: {
                                 password: this.oldPassword,
-                                password_new: this.newPassword,
-                            },
+                                password_new: this.newPassword
+                            }
                         })
-                        .then((response) => {
+                        .then(response => {
                             this.oldPassword = '';
                             this.newPassword = '';
                             this.rNewPassword = '';
@@ -146,19 +138,15 @@ export default {
                             if (response) {
                                 this.$store.dispatch(NOTIFY, {
                                     settings: {
-                                        message:
-                                                'Password updated successfully',
-                                        type: 'success',
-                                    },
+                                        message: 'Password updated successfully',
+                                        type: 'success'
+                                    }
                                 });
                             }
                         })
-                        .catch((err) => {
+                        .catch(err => {
                             if (err) {
-                                if (
-                                    err.response.data.message
-                                        === 'Wrong password'
-                                ) {
+                                if (err.response.data.message === 'Wrong password') {
                                     this.showErrorsValidate('oldPassword');
                                 }
                             }
@@ -172,26 +160,23 @@ export default {
         showErrorsValidate(errField = 'username') {
             const field = this.$validator.fields.find({
                 name: errField,
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             if (!field) return;
             this.$validator.errors.add({
                 id: errField,
                 field: errField,
-                msg:
-                        errField === 'username'
-                            ? 'Invalid login'
-                            : 'Wrong password',
-                scope: this.$options.scope,
+                msg: errField === 'username' ? 'Invalid login' : 'Wrong password',
+                scope: this.$options.scope
             });
             field.setFlags({
                 invalid: true,
                 valid: false,
-                validated: true,
+                validated: true
             });
         },
         validate() {
-            this.$validator.validateAll().then((isValid) => {
+            this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.registerForm, isValid);
             });
 
@@ -199,11 +184,11 @@ export default {
             this.touched.newPassword = true;
             this.touched.rNewPassword = true;
             this.updatePassword();
-        },
-    },
+        }
+    }
 };
 </script>
-<style lang="scss" >
+<style lang="scss">
 .password-form-wrapper {
     .md-card .md-card-actions {
         border: none;

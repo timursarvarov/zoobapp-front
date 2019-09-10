@@ -18,12 +18,12 @@ export default {
     name: 'UserProfile',
     components: {
         EditProfileForm,
-        UserCard,
-    },
+        UserCard
+    }
 };
 </script>
 <style lang="scss">
 .text-right {
-  display: flex;
+    display: flex;
 }
 </style>

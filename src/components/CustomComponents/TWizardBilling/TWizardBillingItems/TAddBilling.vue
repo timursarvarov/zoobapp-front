@@ -2,10 +2,7 @@
     <div class="wizard-tab-content add-billing">
         <md-toolbar class="toolbar-jaw  t-toolbar md-transparent">
             <t-toolbar-row :headers="headers" />
-            <div
-                v-if="unselectedProcedures.length > 0"
-                class="md-layout md-toolbar-row md-size-100 md-alignment-center-space-beetwen"
-            >
+            <div v-if="unselectedProcedures.length > 0" class="md-layout md-toolbar-row md-size-100 md-alignment-center-space-beetwen">
                 <div ref="autocomplete" class="manipulations-autocomplite md-layout-item">
                     <cool-select
                         ref="autocomplete"
@@ -26,48 +23,30 @@
                         <template v-if="item" slot="item" slot-scope="{ item }">
                             <div style="display: flex;">
                                 <md-button class="IZ-select-button md-layout-item">
-                                    <span v-if="item.title" class="text-left"
-                                        >{{ `${item.code} - ${item.title}` }}
-                                    </span>
+                                    <span v-if="item.title" class="text-left">{{ `${item.code} - ${item.title}` }} </span>
                                     <span v-if="item.teeth" class="teeth md-layout-item">
-                                        <span
-                                            v-for="(toothID, toothKey) in item.teeth"
-                                            :key="toothKey"
-                                            class="tooth procedures"
-                                        >
+                                        <span v-for="(toothID, toothKey) in item.teeth" :key="toothKey" class="tooth procedures">
                                             {{ toothKey | toCurrentTeethSystem }}
                                         </span>
                                     </span>
 
                                     <span class="text-right">
-                                        {{
-                                            `${getManipulationsByProcedureID(item.ID).reduce(
-                                                (a, b) => a + (b.totalPrice || 0),
-                                                0
-                                            )}`
-                                        }}
+                                        {{ `${getManipulationsByProcedureID(item.ID).reduce((a, b) => a + (b.totalPrice || 0), 0)}` }}
                                         {{ currencyCode }}
                                     </span>
                                 </md-button>
                             </div>
                         </template>
                         <template slot="no-data">
-                            <div
-                                class="md-layout"
-                                style="display: flex; white-space: pre-wrap;oveflow:hidden;"
-                            >
-                                <span
-                                    class="md-layout-item md-size-100"
-                                    style="white-space: pre-wrap;oveflow:hidden;"
+                            <div class="md-layout" style="display: flex; white-space: pre-wrap;oveflow:hidden;">
+                                <span class="md-layout-item md-size-100" style="white-space: pre-wrap;oveflow:hidden;"
                                     >No procedures were found.</span
                                 >
                             </div>
                         </template>
                     </cool-select>
                 </div>
-                <div
-                    class="manipulations-input__action md-alignment-center-right md-layout md-layout-item"
-                >
+                <div class="manipulations-input__action md-alignment-center-right md-layout md-layout-item">
                     <md-button
                         :disabled="!selectedProcedure"
                         :class="[{ 'md-primary': selectedProcedure }]"
@@ -96,11 +75,7 @@
                         <div class="md-layout md-layout-item md-size-100">
                             <b>{{ p.code }} - {{ p.title }}</b>
                             <span v-if="p.teeth" class="teeth md-layout-item">
-                                <span
-                                    v-for="(toothID, toothKey) in p.teeth"
-                                    :key="toothKey"
-                                    class="tooth procedures"
-                                >
+                                <span v-for="(toothID, toothKey) in p.teeth" :key="toothKey" class="tooth procedures">
                                     {{ toothKey | toCurrentTeethSystem }}
                                 </span>
                             </span>
@@ -117,32 +92,17 @@
                             </span>
                             <small>{{ p.created | moment('calendar') }}</small>
                         </div>
-                        <animated-number
-                            :to-fix="2"
-                            :value="
-                                getManipulationsByProcedureID(p.ID).reduce(
-                                    (a, b) => a + (b.totalPrice || 0),
-                                    0
-                                )
-                            "
-                        />
+                        <animated-number :to-fix="2" :value="getManipulationsByProcedureID(p.ID).reduce((a, b) => a + (b.totalPrice || 0), 0)" />
                         &nbsp;{{ currencyCode }}
                     </div>
                     <div class="procedure_header-actions">
-                        <md-button
-                            class="md-just-icon md-round md-simple"
-                            @click="setItemToDelete(p)"
-                        >
+                        <md-button class="md-just-icon md-round md-simple" @click="setItemToDelete(p)">
                             <md-icon>close</md-icon>
                         </md-button>
                     </div>
                 </div>
                 <div class="procedure_manipulations">
-                    <md-table
-                        :value="getManipulationsByProcedureID(p.ID)"
-                        class="no-header small"
-                        table-header-color="green"
-                    >
+                    <md-table :value="getManipulationsByProcedureID(p.ID)" class="no-header small" table-header-color="green">
                         <md-table-row slot="md-table-row" slot-scope="{ item }">
                             <md-table-cell md-label="Code">
                                 <small>{{ item.code }}</small>
@@ -158,11 +118,7 @@
                                 <small>{{ (item.price ? item.price : 0).toFixed(2) }}</small>
                             </md-table-cell>
                             <md-table-cell md-label="Total">
-                                <small
-                                    >{{ item.totalPrice.toFixed(2) }} &nbsp;{{
-                                        currencyCode
-                                    }}</small
-                                >
+                                <small>{{ item.totalPrice.toFixed(2) }} &nbsp;{{ currencyCode }}</small>
                             </md-table-cell>
                         </md-table-row>
                     </md-table>
@@ -257,22 +213,10 @@
                 </label>
                 <div class="md-layout-item md-size-30">
                     <md-field
-                        :class="[
-                            { 'with-subline': true },
-                            { 'md-valid': !errors.has('tax') && touched.tax },
-                            { 'md-error': errors.has('tax') }
-                        ]"
+                        :class="[{ 'with-subline': true }, { 'md-valid': !errors.has('tax') && touched.tax }, { 'md-error': errors.has('tax') }]"
                     >
                         <label>Tax %</label>
-                        <md-input
-                            ref="tax"
-                            v-model="invoice.tax"
-                            v-validate="'min_value:0'"
-                            min="0"
-                            max="100"
-                            type="number"
-                            data-vv-name="tax"
-                        />
+                        <md-input ref="tax" v-model="invoice.tax" v-validate="'min_value:0'" min="0" max="100" type="number" data-vv-name="tax" />
                         <span class="md-error">{{ errors.first('tax') }}</span>
                         <slide-y-down-transition>
                             <md-button
@@ -379,10 +323,7 @@
                 </div>
             </div>
             <hr class="md-layout-item md-size-100" />
-            <div
-                style="padding-bottom:22px;"
-                class="md-layout-item md-layout text-right  md-size-100"
-            >
+            <div style="padding-bottom:22px;" class="md-layout-item md-layout text-right  md-size-100">
                 <div class="md-layout-item ">
                     <p class="category">
                         <b>Total Sum</b>
@@ -398,31 +339,18 @@
             <label>Note</label>
             <md-textarea v-model="invoice.note" />
         </md-field>
-        <md-snackbar
-            :md-position="'center'"
-            :md-duration="10000"
-            :md-active.sync="showDeleteItemSnackbar"
-            md-persistent
-        >
+        <md-snackbar :md-position="'center'" :md-duration="10000" :md-active.sync="showDeleteItemSnackbar" md-persistent>
             <div class="snackbar-text-wrapper">
                 Delete
                 {{ itemToDelete.code }} - {{ itemToDelete.title }}?
             </div>
             <div>
-                <md-button
-                    class="md-simple"
-                    @click="(showDeleteItemSnackbar = false), (itemToDelete = {})"
-                >
+                <md-button class="md-simple" @click="(showDeleteItemSnackbar = false), (itemToDelete = {})">
                     cancel
                 </md-button>
                 <md-button :disabled="deleting" class="md-warning" @click="deleteItem()">
                     <div v-if="deleting">
-                        <md-progress-spinner
-                            class="t-white"
-                            :md-diameter="12"
-                            :md-stroke="2"
-                            md-mode="indeterminate"
-                        />
+                        <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
                         &nbsp;
                         <span>
                             Deleting...
@@ -552,11 +480,7 @@ export default {
                 },
                 {
                     title: 'Total sum',
-                    subTitlePrefix: parseInt(
-                        this.getManipulationsByProcedureIDs(this.selectedProcedures.map(p => p.ID))
-                            .length,
-                        10
-                    ),
+                    subTitlePrefix: parseInt(this.getManipulationsByProcedureIDs(this.selectedProcedures.map(p => p.ID)).length, 10),
                     subTitlePostfix: 'manipulations',
                     subTitleToFix: 0,
                     valuePrefix: parseInt(this.afterTax, 10),
@@ -570,9 +494,7 @@ export default {
             return this.clinic.currencyCode;
         },
         totalPrice() {
-            const sum = this.getManipulationsByProcedureIDs(
-                this.selectedProcedures.map(p => p.ID)
-            ).reduce((a, b) => a + b.totalPrice, 0);
+            const sum = this.getManipulationsByProcedureIDs(this.selectedProcedures.map(p => p.ID)).reduce((a, b) => a + b.totalPrice, 0);
             return sum || 0;
         },
         unselectedProcedures() {
@@ -682,9 +604,7 @@ export default {
             this.$emit('change', this.procedureToAdd);
             this.$store.dispatch(NOTIFY, {
                 settings: {
-                    message: `Procedure ${this.procedureToAdd.code} ${
-                        this.procedureToAdd.title
-                    } added to invoice list`,
+                    message: `Procedure ${this.procedureToAdd.code} ${this.procedureToAdd.title} added to invoice list`,
                     type: 'success'
                 }
             });

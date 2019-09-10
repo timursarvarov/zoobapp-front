@@ -11,22 +11,14 @@
                 :max-filesize="5"
                 @onSuccess="onSuccess"
             >
-                <md-empty-state
-                    slot="emptyState"
-                    md-icon="cloud_upload"
-                    md-label="Add new file"
-                    md-description="Click here or drope some files"
-                >
+                <md-empty-state slot="emptyState" md-icon="cloud_upload" md-label="Add new file" md-description="Click here or drope some files">
                     <div>
-                        <b>Total {{ files.length }} files ({{ totalFiles|formatBytes }})</b>
+                        <b>Total {{ files.length }} files ({{ totalFiles | formatBytes }})</b>
                     </div>
                 </md-empty-state>
             </t-files-add-form>
         </div>
-        <t-files-list
-            :access_token="access_token"
-            :files="patient.files"
-        />
+        <t-files-list :access_token="access_token" :files="patient.files" />
     </div>
 </template>
 
@@ -37,34 +29,32 @@ import { tObjProp } from '@/mixins';
 import {
     AUTH_REFRESH_TOKEN,
     PATIENT_ADD_SUB_PROP,
-    BASE_URL,
+    BASE_URL
     // eslint-disable-next-line import/no-unresolved
 } from '@/constants';
 
 export default {
     name: 'PatientFiles',
     components: {
-        ...components,
+        ...components
     },
     mixins: [tObjProp],
     data() {
         return {
             code: '',
             touched: {
-                code: false,
-            },
+                code: false
+            }
         };
     },
     computed: {
         ...mapGetters({
             access_token: 'fetchStateAccessToken',
             patient: 'getPatient',
-            tokenExpiresAt: 'expiresAt',
+            tokenExpiresAt: 'expiresAt'
         }),
         url() {
-            return `${BASE_URL}/patients/${
-                this.patient ? this.patient.ID : ''
-            }/files/`;
+            return `${BASE_URL}/patients/${this.patient ? this.patient.ID : ''}/files/`;
         },
         authRefreshToken() {
             return AUTH_REFRESH_TOKEN;
@@ -77,33 +67,32 @@ export default {
         },
         files() {
             return this.patient.files || [];
-        },
-
+        }
     },
     methods: {
         onSuccess(response) {
             this.$store.dispatch(PATIENT_ADD_SUB_PROP, {
                 params: {
                     propName: 'files',
-                    value: response[0],
-                },
+                    value: response[0]
+                }
             });
         },
         validate() {
-            return this.$validator.validateAll().then((res) => {
+            return this.$validator.validateAll().then(res => {
                 this.$emit('on-validated', res, 'step2');
                 this.$emit('validated-code', this.code);
                 return res;
             });
-        },
-    },
+        }
+    }
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .patients-files-wrapper {
-   .add-files{
-       padding: 15px;
-   }
+    .add-files {
+        padding: 15px;
+    }
 }
 </style>

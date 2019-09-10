@@ -1,12 +1,5 @@
 <template>
-    <md-card
-        class="md-card-tabs"
-        :class="[
-            {'flex-column': flexColumn},
-            {'nav-pills-icons': navPillsIcons},
-            {'md-card-plain': plain}
-        ]"
-    >
+    <md-card class="md-card-tabs" :class="[{ 'flex-column': flexColumn }, { 'nav-pills-icons': navPillsIcons }, { 'md-card-plain': plain }]">
         <md-card-header>
             <slot name="header-title" />
         </md-card-header>
@@ -15,9 +8,7 @@
                 <md-list-item
                     v-for="(item, index) in tabName"
                     :key="item"
-                    :class="[
-                        {active: isActivePanel(tabName[index])},
-                        {[getColorButton(colorButton)]: isActivePanel(tabName[index])}]"
+                    :class="[{ active: isActivePanel(tabName[index]) }, { [getColorButton(colorButton)]: isActivePanel(tabName[index]) }]"
                     @click="switchPanel(tabName[index]), $emit('onChangeTab', index)"
                 >
                     {{ tabName[index] }}
@@ -27,17 +18,11 @@
                 </md-list-item>
             </md-list>
 
-            <transition
-                name="fade"
-                mode="out-in"
-            >
+            <transition name="fade" mode="out-in">
                 <div class="tab-content">
                     <template v-for="(item, index) in tabName">
                         <template v-if="isActivePanel(tabName[index])">
-                            <div
-                                :key="item"
-                                :class="getTabContent(index + 1)"
-                            >
+                            <div :key="item" :class="getTabContent(index + 1)">
                                 <slot :name="getTabContent(index + 1)">
                                     This is the default text!
                                 </slot>
@@ -64,12 +49,12 @@ export default {
         tabIcon: Array,
         colorButton: {
             type: String,
-            default: '',
-        },
+            default: ''
+        }
     },
     data() {
         return {
-            activePanel: this.tabName[0],
+            activePanel: this.tabName[0]
         };
     },
     computed: {},
@@ -85,10 +70,9 @@ export default {
         },
         getTabContent(index) {
             return `tab-pane-${index}`;
-        },
-    },
+        }
+    }
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

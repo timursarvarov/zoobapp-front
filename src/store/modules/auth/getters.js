@@ -5,5 +5,5 @@ export default {
     fetchStateAccessToken: state => state.accessToken,
     fetchStateRefreshToken: state => state.refreshToken,
     hasRefreshTokenError: state => state.hasRefreshTokenError,
-    expiresAt: state => state.expiresAt,
+    expiresAt: state => state.expiresAt
 };

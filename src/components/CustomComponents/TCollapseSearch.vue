@@ -1,22 +1,13 @@
 /* eslint-disable vue/no-v-html */
 <template lang="html">
     <div class="t-collapse-search-wrapper noselect">
-        <div
-            v-show="loading"
-            class="no-plan-space"
-            :style="[
-                { 'max-height': customHeight - 70 + 'px' },
-                { 'min-height': customHeight - 70 + 'px' }
-            ]"
-        >
+        <div v-show="loading" class="no-plan-space" :style="[{ 'max-height': customHeight - 70 + 'px' }, { 'min-height': customHeight - 70 + 'px' }]">
             <md-empty-state>
                 <md-progress-spinner md-mode="indeterminate" />
             </md-empty-state>
         </div>
         <div v-show="!loading">
-            <md-toolbar
-                class=" md-transparent no-side-padding md-layout md-alignment-top-space-between collapse-toolbar__items"
-            >
+            <md-toolbar class=" md-transparent no-side-padding md-layout md-alignment-top-space-between collapse-toolbar__items">
                 <div class="collapse-actions md-small-size-100 md-size-50">
                     <slot name="title-start-1" />
                     <slot name="title-start-2" />
@@ -27,17 +18,10 @@
                             <label>Search {{ type }}</label>
                             <md-input v-model="search" />
                             <slide-y-down-transition>
-                                <md-button
-                                    v-show="search.length > 0"
-                                    class="md-simple md-icon-button md-dense md-input-action "
-                                    @click="search = ''"
-                                >
+                                <md-button v-show="search.length > 0" class="md-simple md-icon-button md-dense md-input-action " @click="search = ''">
                                     <md-icon
                                         :style="{
-                                            color:
-                                                getItems.length === 0
-                                                    ? '#9c27b0 !important'
-                                                    : ''
+                                            color: getItems.length === 0 ? '#9c27b0 !important' : ''
                                         }"
                                     >
                                         close
@@ -47,16 +31,11 @@
                         </md-field>
                     </div>
                     <div class="ml-auto collapse-toolbar__nogrow">
-                        <md-button
-                            class="md-mini md-just-icon md-simple md-round"
-                            @click="toggleAll = !toggleAll"
-                        >
+                        <md-button class="md-mini md-just-icon md-simple md-round" @click="toggleAll = !toggleAll">
                             <md-icon :class="[{ rotate: toggleAll }]">
                                 keyboard_arrow_down
                             </md-icon>
-                            <md-tooltip md-delay="500">
-                                Show all {{ type }}
-                            </md-tooltip>
+                            <md-tooltip md-delay="500"> Show all {{ type }} </md-tooltip>
                         </md-button>
                     </div>
                 </div>
@@ -65,10 +44,7 @@
             <div
                 v-show="!hideSlot && getItems.length > 0"
                 class="collapse-wrapper "
-                :style="[
-                    { 'max-height': customHeight - 70 + 'px' },
-                    { 'min-height': customHeight - 70 + 'px' }
-                ]"
+                :style="[{ 'max-height': customHeight - 70 + 'px' }, { 'min-height': customHeight - 70 + 'px' }]"
             >
                 <custom-collapse
                     v-show="!hideSlot"
@@ -78,10 +54,7 @@
                     icon="keyboard_arrow_down"
                     :toggle-all="getToggleAll"
                 >
-                    <template
-                        v-for="(itemGroup, key) in getItems"
-                        :slot="'md-collapse-pane-' + (parseInt(key) + 1)"
-                    >
+                    <template v-for="(itemGroup, key) in getItems" :slot="'md-collapse-pane-' + (parseInt(key) + 1)">
                         <div :key="key" class="list-wrapper">
                             <md-list class=" md-dense">
                                 <md-list-item
@@ -90,10 +63,7 @@
                                     v-ripple
                                     :class="[
                                         {
-                                            dental:
-                                                !lodash.isEmpty(
-                                                    item.locations
-                                                ) && selectedTeeth.length == 0
+                                            dental: !lodash.isEmpty(item.locations) && selectedTeeth.length == 0
                                         }
                                     ]"
                                     class="item"
@@ -105,29 +75,16 @@
 
                                     <div class="md-list-item-text">
                                         <span v-html="item.title" />
-                                        <small
-                                            v-if="
-                                                !lodash.isEmpty(
-                                                    item.locations
-                                                ) && selectedTeeth.length == 0
-                                            "
-                                            class="description text-warning"
-                                        >
+                                        <small v-if="!lodash.isEmpty(item.locations) && selectedTeeth.length == 0" class="description text-warning">
                                             Please firstly choose a tooth
                                         </small>
-                                        <small
-                                            v-else
-                                            class="description"
-                                            v-html="item.description"
-                                        />
+                                        <small v-else class="description" v-html="item.description" />
                                     </div>
 
                                     <md-button
                                         :class="[
                                             {
-                                                [`md-${classType}`]: isFavorite(
-                                                    item
-                                                )
+                                                [`md-${classType}`]: isFavorite(item)
                                             },
                                             'md-simple',
                                             'md-list-action',
@@ -150,10 +107,7 @@
             <div
                 v-show="getItems.length == 0 && !hideSlot"
                 class="no-plan-space"
-                :style="[
-                    { 'max-height': customHeight - 70 + 'px' },
-                    { 'min-height': customHeight - 70 + 'px' }
-                ]"
+                :style="[{ 'max-height': customHeight - 70 + 'px' }, { 'min-height': customHeight - 70 + 'px' }]"
             >
                 <md-empty-state
                     :class="getClassType"
@@ -165,10 +119,7 @@
             <div
                 v-show="hideSlot"
                 class="no-plan-space"
-                :style="[
-                    { 'max-height': customHeight - 70 + 'px' },
-                    { 'min-height': customHeight - 70 + 'px' }
-                ]"
+                :style="[{ 'max-height': customHeight - 70 + 'px' }, { 'min-height': customHeight - 70 + 'px' }]"
             >
                 <slot name="empty-space" />
             </div>
@@ -336,9 +287,7 @@ export default {
                     Object.values(this.items).forEach(group => {
                         let favoriteD = null;
                         if (group.codes && group.code !== '★') {
-                            favoriteD = group.codes.find(
-                                item => item.code === fitem
-                            );
+                            favoriteD = group.codes.find(item => item.code === fitem);
                         }
                         if (favoriteD) {
                             favoriteItems.codes.push(favoriteD);
@@ -347,27 +296,21 @@ export default {
                 });
             }
             if (favoriteItems.codes.length > 0) {
-                const favoriteIndex = this.items.findIndex(
-                    item => item.code === '★'
-                );
+                const favoriteIndex = this.items.findIndex(item => item.code === '★');
                 if (favoriteIndex === -1) {
                     this.items.unshift(favoriteItems);
                 } else {
                     this.items.splice(favoriteIndex, 1, favoriteItems);
                 }
             } else {
-                const favoriteIndex = this.items.findIndex(
-                    item => item.code === '★'
-                );
+                const favoriteIndex = this.items.findIndex(item => item.code === '★');
                 if (favoriteIndex > -1) {
                     this.items.splice(favoriteIndex, 1);
                 }
             }
         },
         namespace(object, path) {
-            return path
-                .split('.')
-                .reduce((value, index) => value[index], object);
+            return path.split('.').reduce((value, index) => value[index], object);
         },
         setValue(object, path, newValue) {
             const paths = path.split('.');
@@ -385,10 +328,7 @@ export default {
             }, object);
         },
         highlightText(sourceString, startIndex, endIndex) {
-            return `${sourceString.substring(
-                0,
-                startIndex
-            )}<span class="highlight">${sourceString.substring(
+            return `${sourceString.substring(0, startIndex)}<span class="highlight">${sourceString.substring(
                 startIndex,
                 endIndex + 1
             )}</span>${sourceString.substring(endIndex + 1)}`;
@@ -397,10 +337,7 @@ export default {
             this.searched = this.lodash.cloneDeep(this.itemOriginal).slice(0);
             const group = [];
             this.searched.forEach(itemsGroupe => {
-                const fuseResults = new Fuse(
-                    itemsGroupe.codes,
-                    fuseOptions
-                ).search(this.search);
+                const fuseResults = new Fuse(itemsGroupe.codes, fuseOptions).search(this.search);
                 const results = [];
                 if (fuseResults.length > 0) {
                     Object.values(fuseResults).forEach(result => {
@@ -410,11 +347,7 @@ export default {
                                 let offset = 0;
 
                                 match.indices.forEach(index => {
-                                    text = this.highlightText(
-                                        text,
-                                        index[0] + offset,
-                                        index[1] + offset
-                                    );
+                                    text = this.highlightText(text, index[0] + offset, index[1] + offset);
                                     offset += 31;
                                 });
                                 this.setValue(result.item, match.key, text);

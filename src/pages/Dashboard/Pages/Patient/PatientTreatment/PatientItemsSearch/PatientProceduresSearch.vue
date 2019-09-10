@@ -16,23 +16,11 @@
             @onSelected="selectItem"
         >
             <template slot="title-start-2">
-                <md-button
-                    key="addplan"
-                    class="md-success md-simple"
-                    @click="$emit('addPlan')"
-                >
-                    <md-icon>add</md-icon>add plan
-                </md-button>
+                <md-button key="addplan" class="md-success md-simple" @click="$emit('addPlan')"> <md-icon>add</md-icon>add plan </md-button>
             </template>
             <div slot="empty-space">
-                <md-empty-state
-                    md-label="No created plans"
-                    md-description="To implemet a procedure, you should firstly create a plan"
-                >
-                    <md-button
-                        class="md-success md-raised"
-                        @click="$emit('addPlan')"
-                    >
+                <md-empty-state md-label="No created plans" md-description="To implemet a procedure, you should firstly create a plan">
+                    <md-button class="md-success md-raised" @click="$emit('addPlan')">
                         Create New Plan
                     </md-button>
                 </md-empty-state>
@@ -43,58 +31,54 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import {
-    NOTIFY,
-    CLINIC_PROCEDURES_GET,
-    LOCAL_STORAGE,
-} from '@/constants';
+import { NOTIFY, CLINIC_PROCEDURES_GET, LOCAL_STORAGE } from '@/constants';
 import components from '@/components';
 import { tObjProp } from '@/mixins';
 
 export default {
     components: {
-        ...components,
+        ...components
     },
     mixins: [tObjProp],
     props: {
         customHeight: {
             type: Number,
-            default: 300,
+            default: 300
         },
         selectedTeeth: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         ageCategory: {
             type: String,
-            default: () => 'adultTeeth',
+            default: () => 'adultTeeth'
         },
         hideSlot: {
             type: Boolean,
-            default: () => false,
-        },
+            default: () => false
+        }
     },
     data() {
         return {
             recalculateItemsLocal: false,
             selecteditemLocal: {},
             loading: false,
-            lastAgeCategory: 0,
+            lastAgeCategory: 0
         };
     },
     computed: {
         ...mapGetters({
             favoriteProcedures: 'favoriteProcedures',
             currentProcedures: 'getCurrentClinicProcedures',
-            currentPlanID: 'getCurrentPlanID',
+            currentPlanID: 'getCurrentPlanID'
         }),
-        lang(){
-            return this.$i18n.locale
+        lang() {
+            return this.$i18n.locale;
         }
     },
-    watch:{
-        lang(val){
-            this.getItems(val)
+    watch: {
+        lang(val) {
+            this.getItems(val);
         }
     },
     created() {
@@ -105,13 +89,16 @@ export default {
         getItems(languageChanged) {
             if (this.currentProcedures.length === 0 || languageChanged) {
                 this.loading = true;
-                this.$store.dispatch(CLINIC_PROCEDURES_GET).then(() => {
-                    this.loading = false;
-                    this.recalculateItemsLocal = !this.recalculateItemsLocal;
-                }).catch((err) => {
-                    throw new Error(err);
-                    this.loading = false;
-                });
+                this.$store
+                    .dispatch(CLINIC_PROCEDURES_GET)
+                    .then(() => {
+                        this.loading = false;
+                        this.recalculateItemsLocal = !this.recalculateItemsLocal;
+                    })
+                    .catch(err => {
+                        this.loading = false;
+                        throw new Error(err);
+                    });
             } else {
                 this.recalculateItemsLocal = !this.recalculateItemsLocal;
             }
@@ -124,38 +111,35 @@ export default {
                 this.$store.dispatch(NOTIFY, {
                     settings: {
                         message: 'Procedue added to favorite procedures',
-                        type: 'success',
-                    },
+                        type: 'success'
+                    }
                 });
             } else {
                 fItems.splice(index, 1);
                 this.$store.dispatch(NOTIFY, {
                     settings: {
                         message: 'Procedue deleted from favorite procedures',
-                        type: 'success',
-                    },
+                        type: 'success'
+                    }
                 });
             }
             localStorage.setItem(LOCAL_STORAGE.favoriteItems.procedures, JSON.stringify(fItems));
         },
         selectItem(item) {
             if (item) {
-                if (
-                    !this.isEmpty(item.locations)
-                        && this.selectedTeeth.length === 0
-                ) {
+                if (!this.isEmpty(item.locations) && this.selectedTeeth.length === 0) {
                     this.$store.dispatch(NOTIFY, {
                         settings: {
                             message: 'Please first select teeth',
-                            type: 'warning',
-                        },
+                            type: 'warning'
+                        }
                     });
                 } else {
                     this.$emit('onSelectItem', item);
                 }
             }
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss">

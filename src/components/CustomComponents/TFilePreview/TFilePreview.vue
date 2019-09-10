@@ -2,48 +2,27 @@
     <div class="file-preview-wrapper">
         <!-- <div class="file-preview mx-auto" :style="[{width: width +'px'},{height:height+'px'}]"> -->
         <div class="file-preview">
-            <div
-                class="file-picture"
-                :style="[
-                    {'object-fit': 'cover'},
-                    {width: 100+'%'},
-                    {height: height + 'px'},
-                ]"
-            >
+            <div class="file-picture" :style="[{ 'object-fit': 'cover' }, { width: 100 + '%' }, { height: height + 'px' }]">
                 <transition name="fade">
                     <img
                         v-show="loaded && url"
-                        :class="{'img-to-preview': mimeTypeClass(mimeType).some(v=> v === 'file-image')}"
-                        :style="[
-                            {'object-fit': 'cover'},
-                            {width: 100+'%'},
-                            {height: height + 'px'},
-                        ]"
+                        :class="{ 'img-to-preview': mimeTypeClass(mimeType).some(v => v === 'file-image') }"
+                        :style="[{ 'object-fit': 'cover' }, { width: 100 + '%' }, { height: height + 'px' }]"
                         :src="url"
                         @click="$emit('show', '.img-to-preview')"
                         @load="onLoaded"
-                    >
+                    />
                 </transition>
                 <transition name="fade">
                     <!-- :style="[{width: width +'px'},{height:height+'px'}]" -->
                     <div
                         v-show="!loaded"
-                        :style="[
-                            {'object-fit': 'cover'},
-                            {width: 100+'%'},
-                            {height: height + 'px'},
-                        ]"
+                        :style="[{ 'object-fit': 'cover' }, { width: 100 + '%' }, { height: height + 'px' }]"
                         class="md-layout mx-auto mimetype-wrapper"
                     >
                         <div class="md-layout-item md-layout mx-auto mimetype">
-                            <md-icon
-                                class="md-layout-item"
-                                :style="{color: computedColor}"
-                            >
-                                <font-awesome-icon
-                                    :size="`${iconSize}x`"
-                                    :icon="mimeTypeClass(mimeType)"
-                                />
+                            <md-icon class="md-layout-item" :style="{ color: computedColor }">
+                                <font-awesome-icon :size="`${iconSize}x`" :icon="mimeTypeClass(mimeType)" />
                             </md-icon>
                         </div>
                     </div>
@@ -65,36 +44,36 @@ export default {
     props: {
         color: {
             type: String,
-            default: '',
+            default: ''
         },
         url: {
             type: String,
-            default: '',
+            default: ''
         },
         mimeType: {
             type: String,
-            default: '',
+            default: ''
         },
         iconSize: {
             type: Number,
-            default: 1,
+            default: 1
         },
         width: {
             type: Number,
-            default: 60,
+            default: 60
         },
         height: {
             type: Number,
-            default: 60,
+            default: 60
         },
         title: {
             type: String,
-            default: '',
-        },
+            default: ''
+        }
     },
     data() {
         return {
-            loaded: false,
+            loaded: false
         };
     },
     computed: {
@@ -103,10 +82,10 @@ export default {
                 return this.color;
             }
             const color = randomMC.getColor({
-                text: this.mimeType,
+                text: this.mimeType
             });
             return color;
-        },
+        }
     },
     methods: {
         mimeTypeClass(m) {
@@ -114,17 +93,16 @@ export default {
         },
         onLoaded() {
             this.loaded = true;
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss">
 .file-preview-wrapper {
     position: relative;
-        margin: 5px;
+    margin: 5px;
     .file-preview {
-        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
-            0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
         position: relative;
         text-align: center;
         overflow: hidden;
@@ -172,20 +150,20 @@ export default {
             }
         }
     }
-        .file-title{
-             overflow: hidden;
+    .file-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        small {
+            padding: 0 10px;
+            overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            small{
-                padding: 0 10px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                overflow-wrap: break-word;
-            }
+            overflow-wrap: break-word;
         }
+    }
 }
 </style>

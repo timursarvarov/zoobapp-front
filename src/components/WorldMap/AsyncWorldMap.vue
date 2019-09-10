@@ -1,5 +1,5 @@
 <template>
-  <world-map :data="data"></world-map>
+    <world-map :data="data"></world-map>
 </template>
 <script>
 /*  We lazy load (async) the VectorMaps component because
@@ -11,22 +11,21 @@ it contains 2 big libraries (jquery and jquery vector maps)
    */
 
 const WorldMap = () => ({
-  component: import('./WorldMap.vue'),
+    component: import('./WorldMap.vue'),
 
-  delay: 200,
+    delay: 200
 });
 export default {
-  name: 'async-world-map',
-  components: {
-    WorldMap,
-  },
-  props: {
-    data: {
-      type: Object,
-      default: () => ({}),
+    name: 'async-world-map',
+    components: {
+        WorldMap
     },
-  },
+    props: {
+        data: {
+            type: Object,
+            default: () => ({})
+        }
+    }
 };
 </script>
-<style>
-</style>
+<style></style>

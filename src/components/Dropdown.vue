@@ -1,21 +1,14 @@
 <template>
     <div
         v-click-outside="closeDropDown"
-        :class="[
-            {open:isOpen},
-            {'dropdown': direction === 'down'},
-            {'dropup': direction ==='up'}
-        ]"
+        :class="[{ open: isOpen }, { dropdown: direction === 'down' }, { dropup: direction === 'up' }]"
         @click="toggleDropDown"
     >
         <slot name="title">
-            <a
-                class="dropdown-toggle"
-                data-toggle="dropdown"
-                href="javascript:void(0)"
-            >
+            <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
                 <i :class="icon" />
-                <p class="notification">{{ title }}
+                <p class="notification">
+                    {{ title }}
                     <b class="caret" />
                 </p>
             </a>
@@ -29,18 +22,18 @@ export default {
     props: {
         direction: {
             type: String,
-            default: 'down',
+            default: 'down'
         },
         multiLevel: {
             type: Boolean,
-            default: false,
+            default: false
         },
         title: String,
-        icon: String,
+        icon: String
     },
     data() {
         return {
-            isOpen: false,
+            isOpen: false
         };
     },
     methods: {
@@ -53,7 +46,7 @@ export default {
         },
         closeDropDown() {
             this.isOpen = false;
-        },
-    },
+        }
+    }
 };
 </script>

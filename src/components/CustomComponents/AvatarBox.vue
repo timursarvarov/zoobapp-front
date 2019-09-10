@@ -6,15 +6,12 @@
                     :notification="notification"
                     :notificationClass="notificationClass"
                     :small="small"
-                    :text-to-color="`${secondLine}${id}${firstLine}`"
+                    :text-to-color="id"
                     :image-src="avatar"
                     :title="secondLine + ' ' + firstLine"
                 />
             </div>
-            <div
-                :class="[{ 'md-layout-item': !small }]"
-                class="md-xsmall-hide t-avatar-box_text"
-            >
+            <div :class="[{ 'md-layout-item': !small }]" class="md-xsmall-hide t-avatar-box_text">
                 <small v-if="small">
                     <span v-if="firstLine">{{ firstLine | capitilize }}</span>
                     <br v-if="firstLine" />

@@ -14,49 +14,30 @@
                                 multiple
                                 @md-selected="setSelectableTeeth(selectableTeethExtraChoose)"
                             >
-                                <md-option
-                                    v-for="(value, index) in teethToSearch"
-                                    :key="index"
-                                    :value="value"
-                                >
+                                <md-option v-for="(value, index) in teethToSearch" :key="index" :value="value">
                                     {{ value | toCurrentTeethSystem }} - {{ value | toCurrentTeethSystem(true) }}
                                 </md-option>
                             </md-select>
                         </md-field>
                     </div>
                     <div class="loc-error md-layout md-alignment-center-left">
-                        <slot
-                            class="md-layout-item"
-                            name="title"
-                        />
+                        <slot class="md-layout-item" name="title" />
                     </div>
                 </div>
                 <div class="md-alignment-center-right md-layout">
-                    <md-button
-                        class="md-primary md-round md-simple"
-                        @click="setLastLocationForAllTeeth()"
-                    >
+                    <md-button class="md-primary md-round md-simple" @click="setLastLocationForAllTeeth()">
                         <md-icon>done_all</md-icon>
                         set for all
-                        <md-tooltip
-                            v-if="'locations' in originalItem"
-                            md-delay="1000"
-                        >
+                        <md-tooltip v-if="'locations' in originalItem" md-delay="1000">
                             Toggle teeth
                         </md-tooltip>
-                        <md-tooltip
-                            v-else
-                            md-delay="1000"
-                        >
+                        <md-tooltip v-else md-delay="1000">
                             Set last created
-                            <br>change for all teeth
+                            <br />change for all teeth
                         </md-tooltip>
                     </md-button>
 
-                    <md-button
-                        class="md-primary md-round md-simple"
-                        @click="dropAllLocations()"
-                    >
+                    <md-button class="md-primary md-round md-simple" @click="dropAllLocations()">
                         <md-icon>clear_all</md-icon>
                         reset
                         <md-tooltip md-delay="1000">
@@ -64,38 +45,22 @@
                         </md-tooltip>
                     </md-button>
                     <drop-down direction="down">
-                        <md-button
-                            slot="title"
-                            class="md-button md-just-icon md-round md-simple md-block"
-                            data-toggle="dropdown"
-                        >
+                        <md-button slot="title" class="md-button md-just-icon md-round md-simple md-block" data-toggle="dropdown">
                             <md-icon>more_vert</md-icon>
                         </md-button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li>
-                                <md-switch
-                                    v-model="prefer"
-                                    value="anamnesis"
-                                    @change="preferChanged()"
-                                >
+                                <md-switch v-model="prefer" value="anamnesis" @change="preferChanged()">
                                     Anamnes
                                 </md-switch>
                             </li>
                             <li>
-                                <md-switch
-                                    v-model="prefer"
-                                    value="diagnosis"
-                                    @change="preferChanged()"
-                                >
+                                <md-switch v-model="prefer" value="diagnosis" @change="preferChanged()">
                                     Diagnose
                                 </md-switch>
                             </li>
                             <li>
-                                <md-switch
-                                    v-model="prefer"
-                                    value="procedures"
-                                    @change="preferChanged()"
-                                >
+                                <md-switch v-model="prefer" value="procedures" @change="preferChanged()">
                                     Procedure
                                 </md-switch>
                             </li>
@@ -104,28 +69,16 @@
                 </div>
             </md-toolbar>
         </div>
-        <div
-            :style="[{'max-width': `${jawListWidth}px`}]"
-            class="jaw-list-container"
-        >
-            <div
-                v-if="selectableTeeth.length > 0"
-                class="jaw md-layout-item"
-            >
-                <transition-group
-                    name="fade"
-                    class="jaw-list mx-auto noselect"
-                >
+        <div :style="[{ 'max-width': `${jawListWidth}px` }]" class="jaw-list-container">
+            <div v-if="selectableTeeth.length > 0" class="jaw md-layout-item">
+                <transition-group name="fade" class="jaw-list mx-auto noselect">
                     <template>
                         <div
-                            v-for="(toothId) in selectableTeeth"
+                            v-for="toothId in selectableTeeth"
                             :key="toothId"
                             :ref="toothId"
                             v-ripple
-                            :class="[
-                                {selected: isSelected(toothId)},
-                                {tooth: true}
-                            ]"
+                            :class="[{ selected: isSelected(toothId) }, { tooth: true }]"
                             @click="toothClick($event, toothId)"
                         >
                             <div class="tooth-number noselect">
@@ -135,9 +88,9 @@
                                 xmlns="http://www.w3.org/2000/svg"
                                 :viewBox="jawSVG[toothId].viewBox"
                                 :style="{
-                                    'width': getCustomWidth(toothId) + 'vh',
-                                //'width':  jawSVG[toothId].widthPerc * 1.56 + (windowWidth < 700 ? 'vmax' : 'vmin'),
-                                //minWidth: jawSVG[toothId].widthPerc * 1.66 + 'vh'
+                                    width: getCustomWidth(toothId) + 'vh'
+                                    //'width':  jawSVG[toothId].widthPerc * 1.56 + (windowWidth < 700 ? 'vmax' : 'vmin'),
+                                    //minWidth: jawSVG[toothId].widthPerc * 1.66 + 'vh'
                                 }"
                             >
                                 <g :class="`set-${currentType}`">
@@ -147,7 +100,8 @@
                                             :key="`${toothId}${location}`"
                                             :class="[
                                                 // получаем объект классов диагноза
-                                                jawComputed[toothId][location]]"
+                                                jawComputed[toothId][location]
+                                            ]"
                                             :d="jawSVG[toothId][location]"
                                             @click="chooseLocation(toothId, location), setLastAction(toothId, location)"
                                         />
@@ -158,19 +112,13 @@
                     </template>
                 </transition-group>
             </div>
-            <div
-                v-else
-                class="jaw md-layout-item"
-            >
+            <div v-else class="jaw md-layout-item">
                 <md-empty-state
                     md-icon="change_history"
                     :md-label="`No selected teeth for ${selectedItem.code} ${selectedItem.title}`"
                     :md-description="`The ${typeSingleName}  ${selectedItem.code} ${selectedItem.title} will be stored without indicating teeth`"
                 >
-                    <md-button
-                        class="md-primary md-raised"
-                        @click="focusOn('selecteeth')"
-                    >
+                    <md-button class="md-primary md-raised" @click="focusOn('selecteeth')">
                         Select Teeth
                     </md-button>
                 </md-empty-state>
@@ -181,40 +129,35 @@
 <script>
 import jawSVGjs from './jawSVG';
 import { tObjProp, jawFunctions } from '@/mixins';
-import {
-    TEETH_DEFAULT_LOCATIONS,
-    TEETH_ADDULT_ALL,
-    TEETH_BABY_ALL,
-    TEETH_SCHEMA,
-} from '@/constants';
+import { TEETH_DEFAULT_LOCATIONS, TEETH_ADDULT_ALL, TEETH_BABY_ALL, TEETH_SCHEMA } from '@/constants';
 
 export default {
     name: 'JawAddLocations',
     mixins: [tObjProp, jawFunctions],
     model: {
         prop: 'newItemParams',
-        event: 'updateItemParams',
+        event: 'updateItemParams'
     },
     props: {
         jaw: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         currentType: {
             type: String,
-            default: () => 'diagnosis',
+            default: () => 'diagnosis'
         },
         originalItem: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         // Пропс выбранношо диагноза
         selectedItem: {
             type: Object,
             default: () => ({
                 code: '',
-                title: '',
-            }),
+                title: ''
+            })
         },
         // selectedTeeth: {
         //     type: Array,
@@ -224,21 +167,21 @@ export default {
         // отображения/скрытия формы
         newItemParams: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         // Объект с ключами (toothID)  и шаблонами для отображения названия зубов в различных сиситемах
         teethSchema: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
 
         teethSystem: {
             type: Number,
-            default: () => 1,
+            default: () => 1
             // 1 = FDI World Dental Federation notation
             // 2 = Universal numbering system
             // 3 = Palmer notation method
-        },
+        }
     },
     data() {
         return {
@@ -251,7 +194,7 @@ export default {
             SvgTeeth: [],
             lastAction: {
                 location: null,
-                toothId: null,
+                toothId: null
             },
             teethSettngs: [],
             item: {
@@ -259,8 +202,8 @@ export default {
                 // code: '',
                 // title: '',
                 // description: '',
-                teeth: {},
-            },
+                teeth: {}
+            }
         };
     },
 
@@ -284,9 +227,7 @@ export default {
             const firstSelectedTeeth = this.selectableTeeth[0];
             let JawType = 'adult';
             if (firstSelectedTeeth) {
-                JawType = this.teethAdultAll.includes(this.selectableTeeth[0])
-                    ? 'adult'
-                    : 'baby';
+                JawType = this.teethAdultAll.includes(this.selectableTeeth[0]) ? 'adult' : 'baby';
             }
             return JawType;
         },
@@ -304,13 +245,13 @@ export default {
         },
         jawListWidth() {
             if (this.windowWidth < 600) {
-                return (this.windowWidth - 56);
+                return this.windowWidth - 56;
             }
             return Math.round((this.windowWidth / 100) * 80 - 70);
         },
         jawSVG() {
             return jawSVGjs;
-        },
+        }
     },
     destroyed() {
         window.removeEventListener('resize', this.handleResize);
@@ -326,17 +267,15 @@ export default {
         this.setInitiallyLocations('', 'created');
     },
     methods: {
-        getItemCatalogFieldName(){
-            if(this.currentType==='diagnosis'){
-                return 'catalogDiagnoseID'
-            }
-            else if(this.currentType==='procedures'){
-                return 'catalogProcedureID'
-            }
-            else if(this.currentType==='anamnesis'){
-                return 'catalogAnamnesID'
-            } else{
-                return null
+        getItemCatalogFieldName() {
+            if (this.currentType === 'diagnosis') {
+                return 'catalogDiagnoseID';
+            } else if (this.currentType === 'procedures') {
+                return 'catalogProcedureID';
+            } else if (this.currentType === 'anamnesis') {
+                return 'catalogAnamnesID';
+            } else {
+                return null;
             }
         },
         getCustomWidth(toothId) {
@@ -345,45 +284,45 @@ export default {
             if (this.jawType === 'baby') {
                 if (this.windowHeigth < 768) {
                     // console.log(1);
-                    return toothWidth * ((this.windowHeigth / (this.windowHeigth - 350)));
+                    return toothWidth * (this.windowHeigth / (this.windowHeigth - 350));
                 }
                 if (this.windowHeigth >= 768 && this.windowHeigth < 900) {
                     // console.log(2);
-                    return toothWidth * ((this.windowHeigth / (this.windowHeigth - 350)));
+                    return toothWidth * (this.windowHeigth / (this.windowHeigth - 350));
                 }
                 if (this.windowHeigth <= 1050 && this.windowHeigth > 900) {
                     // console.log(3);
-                    return toothWidth * ((this.windowHeigth / (this.windowHeigth - 440)));
+                    return toothWidth * (this.windowHeigth / (this.windowHeigth - 440));
                 }
                 if (this.windowHeigth < 1080 && this.windowHeigth > 1050) {
                     // console.log(4);
-                    return toothWidth * ((this.windowHeigth / (this.windowHeigth - 440)));
+                    return toothWidth * (this.windowHeigth / (this.windowHeigth - 440));
                 }
                 if (this.windowHeigth >= 1080) {
                     // console.log(5);
-                    return toothWidth * ((this.windowHeigth / (this.windowHeigth - 440)));
+                    return toothWidth * (this.windowHeigth / (this.windowHeigth - 440));
                 }
                 return toothWidth / 1.72;
             }
             if (this.windowHeigth < 768) {
                 // console.log(1);
-                return toothWidth * ((this.windowHeigth / (this.windowHeigth - 350)));
+                return toothWidth * (this.windowHeigth / (this.windowHeigth - 350));
             }
             if (this.windowHeigth >= 768 && this.windowHeigth < 900) {
                 // console.log(2);
-                return toothWidth * ((this.windowHeigth / (this.windowHeigth - 200)));
+                return toothWidth * (this.windowHeigth / (this.windowHeigth - 200));
             }
             if (this.windowHeigth <= 1050 && this.windowHeigth > 900) {
                 // console.log(3);
-                return toothWidth * ((this.windowHeigth / (this.windowHeigth - 320)));
+                return toothWidth * (this.windowHeigth / (this.windowHeigth - 320));
             }
             if (this.windowHeigth < 1080 && this.windowHeigth > 1050) {
                 // console.log(4);
-                return toothWidth * ((this.windowHeigth / (this.windowHeigth - 340)));
+                return toothWidth * (this.windowHeigth / (this.windowHeigth - 340));
             }
             if (this.windowHeigth >= 1080) {
                 // console.log(5);
-                return toothWidth * ((this.windowHeigth / (this.windowHeigth - 340)));
+                return toothWidth * (this.windowHeigth / (this.windowHeigth - 340));
             }
 
             return toothWidth / 2.2;
@@ -399,9 +338,8 @@ export default {
         },
         toothClick(event, toothId) {
             if (
-                (this.isEmpty(this.originalItem.locations)
-                    || this.originalItem.functionType === 'toggleAll')
-                    && !event.target.classList.contains('selectable-location')
+                (this.isEmpty(this.originalItem.locations) || this.originalItem.functionType === 'toggleAll') &&
+                !event.target.classList.contains('selectable-location')
             ) {
                 this.toggleTooth(toothId);
             }
@@ -411,11 +349,7 @@ export default {
                 delete this.item.teeth[`${toothId}`];
             } else {
                 this.item.teeth[`${toothId}`] = {};
-                const firstLocation = Object.keys(
-                    this.originalItem.locations,
-                ).find(
-                    location => this.originalItem.locations[location] !== undefined,
-                );
+                const firstLocation = Object.keys(this.originalItem.locations).find(location => this.originalItem.locations[location] !== undefined);
                 if (firstLocation) {
                     this.chooseLocation(toothId, firstLocation);
                 }
@@ -432,21 +366,11 @@ export default {
             const toothClasses = {
                 // класс 'selectable-location' применяется для не выбранных парадонтитов
                 /* selectable-location */
-                'selectable-location':
-                        this.getNestedProperty(
-                            this.originalItem,
-                            'locations',
-                            location,
-                        ) !== undefined,
+                'selectable-location': this.getNestedProperty(this.originalItem, 'locations', location) !== undefined,
 
                 // Название класса локации из высчитанной формуллы для отображеня в диагнозов анамнеза и лечения
                 /* anamnesis || procedures|| diagnosis */
-                [this.preferableJawClasses(
-                    toothId,
-                    location,
-                    this.jaw,
-                    this.prefer,
-                )]: true,
+                [this.preferableJawClasses(toothId, location, this.jaw, this.prefer)]: true,
 
                 // Название класса локации из svg для отображеня в норме
                 /* root || corona|| gum etc. */
@@ -454,20 +378,13 @@ export default {
 
                 // класс 'seleced' применяется для выбранной локации
                 /* selected */
-                selected:
-                        this.getNestedProperty(
-                            this.item,
-                            'teeth',
-                            toothId,
-                            location,
-                        ) !== undefined,
+                selected: this.getNestedProperty(this.item, 'teeth', toothId, location) !== undefined,
 
                 // СВОЙСТВО hide применяется если во view выбранного диагноза нет текущей локации
-                hide: this.checkForHidingLocation(toothId, location),
+                hide: this.checkForHidingLocation(toothId, location)
             };
             return toothClasses;
         },
-
 
         // Высчитывваем в какую очередь нужно прятать локацию в зависимости от выбронного приоретета показа(анамнез дигноз или лечение)
         checkForHidingLocation(toothId, location) {
@@ -479,7 +396,7 @@ export default {
                 this.prefer,
                 this.defaultLocations,
                 this.currentType,
-                this.originalItem,
+                this.originalItem
             );
             if (hide === true) {
                 return hide;
@@ -491,10 +408,10 @@ export default {
             // }
 
             if (
-            // если зубы из диагноза не удалены
-                this.selectedItem.teeth
-                    // и данный зуб есть в диагнозе
-                    && toothId in this.selectedItem.teeth
+                // если зубы из диагноза не удалены
+                this.selectedItem.teeth &&
+                // и данный зуб есть в диагнозе
+                toothId in this.selectedItem.teeth
             ) {
                 if (location in this.selectedItem.teeth[toothId]) {
                     return false;
@@ -503,11 +420,7 @@ export default {
             // если приорет локаций включен и нет локаций от предыдущиих диагнозов
             //  то показывай все локции согласно диагнозу
             if (location in this.originalItem.view) {
-                const value = this.getNestedProperty(
-                    this.originalItem,
-                    'view',
-                    location,
-                );
+                const value = this.getNestedProperty(this.originalItem, 'view', location);
                 return !value;
             }
             if (hide === undefined) {
@@ -529,40 +442,27 @@ export default {
         setLastLocationForAllTeeth() {
             if (!this.isEmpty(this.originalItem.locations)) {
                 if (this.lastAction.location) {
-                    const teethWithSameLocation = this.getTeethWithSameLocation(
-                        this.lastAction.location,
-                    );
-                    const teethWithOutL = this.selectableTeeth.filter(
-                        el => !teethWithSameLocation.includes(`${el}`),
-                    );
+                    const teethWithSameLocation = this.getTeethWithSameLocation(this.lastAction.location);
+                    const teethWithOutL = this.selectableTeeth.filter(el => !teethWithSameLocation.includes(`${el}`));
                     let teethToSet = [];
-                    if (
-                        teethWithSameLocation.length
-                            === this.selectableTeeth.length
-                            || teethWithSameLocation.length === 0
-                    ) {
+                    if (teethWithSameLocation.length === this.selectableTeeth.length || teethWithSameLocation.length === 0) {
                         teethToSet = this.selectableTeeth;
-                    } else if (
-                        teethWithOutL.includes(this.lastAction.toothId)
-                    ) {
+                    } else if (teethWithOutL.includes(this.lastAction.toothId)) {
                         teethToSet = teethWithSameLocation;
                     } else {
                         teethToSet = teethWithOutL;
                     }
-                    teethToSet.forEach((toothId) => {
+                    teethToSet.forEach(toothId => {
                         this.chooseLocation(toothId, this.lastAction.location);
                     });
                 }
             } else if (!this.lodash.isEmpty(this.selectedItem.teeth)) {
-                if (
-                    this.selectableTeeth.length
-                        === this.numProps(this.item.teeth)
-                ) {
-                    this.selectableTeeth.forEach((toothId) => {
+                if (this.selectableTeeth.length === this.numProps(this.item.teeth)) {
+                    this.selectableTeeth.forEach(toothId => {
                         this.dropTooth(toothId);
                     });
                 } else {
-                    this.selectableTeeth.forEach((toothId) => {
+                    this.selectableTeeth.forEach(toothId => {
                         this.setTooth(toothId);
                     });
                 }
@@ -570,9 +470,7 @@ export default {
             this.calculateJaw();
         },
         getTeethWithSameLocation(location) {
-            return Object.keys(this.item.teeth).filter(
-                toothId => location in this.item.teeth[toothId],
-            );
+            return Object.keys(this.item.teeth).filter(toothId => location in this.item.teeth[toothId]);
         },
         // выбираем область зуба и записываем ее в массив с зубами в дигнозе
 
@@ -591,12 +489,7 @@ export default {
 
                 // устанавливаем локацию диагноза в при помощи предустановленной функции
                 const { addLocation } = this.originalItem;
-                this.item = addLocation(
-                    location,
-                    this.item,
-                    this.originalItem,
-                    toothId,
-                );
+                this.item = addLocation(location, this.item, this.originalItem, toothId);
 
                 // удаляем зуб из диагноза если у него нет локациий
                 if (this.isEmpty(this.item.teeth[toothId])) {
@@ -629,52 +522,37 @@ export default {
             const { setOnLoad } = this.originalItem;
             // если нет локаций
             if (!this.isEmpty(setOnLoad)) {
-                Object.keys(setOnLoad).forEach((location) => {
-                    this.selectableTeeth.forEach((toothId) => {
+                Object.keys(setOnLoad).forEach(location => {
+                    this.selectableTeeth.forEach(toothId => {
                         if (this.hasProp(setOnLoad, location)) {
-                            this.setLocationOnLoad(
-                                location,
-                                toothId,
-                                setOnLoad[location],
-                            );
+                            this.setLocationOnLoad(location, toothId, setOnLoad[location]);
                         }
                     });
                 });
             }
         },
         setAllEditableTeethOnLoad() {
-            Object.keys(this.selectedItem.teeth).forEach((toothId) => {
+            Object.keys(this.selectedItem.teeth).forEach(toothId => {
                 const tooth = this.selectedItem.teeth[toothId];
                 // если нет локаций
                 if (!this.isEmpty(tooth)) {
-                    Object.keys(tooth).forEach((location) => {
-                        this.setLocationOnLoad(
-                            location,
-                            toothId,
-                            tooth[location],
-                        );
+                    Object.keys(tooth).forEach(location => {
+                        this.setLocationOnLoad(location, toothId, tooth[location]);
                     });
                 }
             });
         },
         setSelectableTeeth(selectableTeethExtraChoose) {
-            if (
-                selectableTeethExtraChoose.length < this.selectableTeeth.length
-            ) {
-                this.selectableTeeth.forEach((toothId) => {
-                    const index = selectableTeethExtraChoose.findIndex(
-                        t => t === toothId,
-                    );
+            if (selectableTeethExtraChoose.length < this.selectableTeeth.length) {
+                this.selectableTeeth.forEach(toothId => {
+                    const index = selectableTeethExtraChoose.findIndex(t => t === toothId);
                     if (index === -1) {
                         this.dropTooth(toothId);
                     }
                 });
             }
 
-            this.setInitiallyLocations(
-                selectableTeethExtraChoose,
-                'setSelectableTeeth',
-            );
+            this.setInitiallyLocations(selectableTeethExtraChoose, 'setSelectableTeeth');
         },
 
         setInitiallyLocations(selectableTeethExtraChoose) {
@@ -692,7 +570,7 @@ export default {
                     }
                     // добавляем зубы в оральный диагноз если они выбраны
                 } else {
-                    this.selectableTeeth.forEach((toothId) => {
+                    this.selectableTeeth.forEach(toothId => {
                         this.setToothOnLoad(toothId);
                     });
                 }
@@ -701,13 +579,10 @@ export default {
         },
         calculateJaw() {
             const jaw = {};
-            this.selectableTeeth.forEach((toothId) => {
+            this.selectableTeeth.forEach(toothId => {
                 jaw[toothId] = {};
-                Object.keys(this.defaultLocations).forEach((location) => {
-                    jaw[toothId][location] = this.getToothClasses(
-                        toothId,
-                        location,
-                    );
+                Object.keys(this.defaultLocations).forEach(location => {
+                    jaw[toothId][location] = this.getToothClasses(toothId, location);
                 });
             });
             this.getItem();
@@ -735,28 +610,30 @@ export default {
                 this.$refs[ref].$el.getElementsByTagName('input')[0].focus();
             }
             this.$refs[ref].$el.focus();
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss">
-.jaw-list-wrapper{
-   .fade-enter-active, .fade-leave-active {
-  transition: all .2s;
-}
-.fade-enter, .fade-leave-to{
-  opacity: 0;
-}
-.fade-enter-active {
-  transition-delay: .2s;
-}
-.loc-error{
-    position: absolute;
-    bottom: -40px;
-    left: 0;
-    .error{
-        color:red;
+.jaw-list-wrapper {
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: all 0.2s;
     }
-}
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+    }
+    .fade-enter-active {
+        transition-delay: 0.2s;
+    }
+    .loc-error {
+        position: absolute;
+        bottom: -40px;
+        left: 0;
+        .error {
+            color: red;
+        }
+    }
 }
 </style>

@@ -1,13 +1,9 @@
 /* eslint-disable vue/valid-v-bind */
 <template>
-    <md-card
-        class="md-card-product"
-        :data-count="hoverCount"
-        @mouseleave.native="onMouseLeave"
-    >
+    <md-card class="md-card-product" :data-count="hoverCount" @mouseleave.native="onMouseLeave">
         <md-card-header
             :data-header-animation="headerAnimation"
-            :class="[{hovered: imgHovered}, {hinge: headerDown}, {fadeInDown: fixedHeader}]"
+            :class="[{ hovered: imgHovered }, { hinge: headerDown }, { fadeInDown: fixedHeader }]"
             class="md-card-header-image animated"
             @mouseenter.native="onMouseOver"
         >
@@ -15,15 +11,8 @@
         </md-card-header>
 
         <md-card-content>
-            <div
-                v-if="headerAnimation === 'true'"
-                class="md-card-action-buttons text-center"
-            >
-                <md-button
-                    v-if="headerDown"
-                    class="md-danger md-simple fix-broken-card"
-                    @click="fixHeader"
-                >
+            <div v-if="headerAnimation === 'true'" class="md-card-action-buttons text-center">
+                <md-button v-if="headerDown" class="md-danger md-simple fix-broken-card" @click="fixHeader">
                     <slot name="fixed-button" /> Fix Header!
                 </md-button>
                 <md-button class="md-simple md-just-icon">
@@ -52,20 +41,20 @@ export default {
     props: {
         headerAnimation: {
             type: String,
-            default: 'true',
-        },
+            default: 'true'
+        }
     },
     data() {
         return {
             hoverCount: 0,
             imgHovered: false,
-            fixedHeader: false,
+            fixedHeader: false
         };
     },
     computed: {
         headerDown() {
             return this.hoverCount > 15;
-        },
+        }
     },
     methods: {
         headerBack() {
@@ -87,10 +76,9 @@ export default {
             if (this.headerAnimation === 'true') {
                 this.imgHovered = false;
             }
-        },
-    },
+        }
+    }
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

@@ -1,15 +1,9 @@
 <template>
     <div>
-        <md-dialog
-            class="plan-add-form"
-            :md-active.sync="showFormL"
-            @md-opened="focusOn('planName')"
-        >
+        <md-dialog class="plan-add-form" :md-active.sync="showFormL" @md-opened="focusOn('planName')">
             <div>
                 <md-card>
-                    <md-card-header
-                        class="md-card-header-icon "
-                    >
+                    <md-card-header class="md-card-header-icon ">
                         <div class="card-icon md-card-header-green">
                             <md-icon>{{ icon }}</md-icon>
                         </div>
@@ -34,20 +28,19 @@ export default {
     props: {
         icon: {
             type: String,
-            default: () => 'playlist_add',
+            default: () => 'playlist_add'
         },
         title: {
             type: String,
-            default: () => '',
+            default: () => ''
         },
         showForm: {
             type: Boolean,
-            default: () => false,
-        },
+            default: () => false
+        }
     },
     data() {
-        return {
-        };
+        return {};
     },
     computed: {
         showFormL: {
@@ -56,16 +49,14 @@ export default {
             },
             set(value) {
                 this.$emit('update:showForm', value);
-            },
-        },
+            }
+        }
     },
-    watch: {
-    },
-    methods: {
-    },
+    watch: {},
+    methods: {}
 };
 </script>
-<style lang="scss" >
+<style lang="scss">
 .md-dialog.plan-add-form {
     background-color: transparent !important;
     box-shadow: none !important;

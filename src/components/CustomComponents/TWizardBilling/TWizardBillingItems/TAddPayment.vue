@@ -57,9 +57,7 @@
                         Deposit
                     </md-checkbox>
                 </div>
-                <div
-                    class="manipulations-input__action md-alignment-center-right md-layout md-layout-item"
-                >
+                <div class="manipulations-input__action md-alignment-center-right md-layout md-layout-item">
                     <md-button
                         :disabled="!payment.ammount"
                         :class="[{ 'md-primary': payment.ammount }]"
@@ -90,11 +88,7 @@
                             <small>{{ (item.price ? item.price : 0).toFixed(2) }}</small>
                         </md-table-cell>
                         <md-table-cell md-label="Total">
-                            <small
-                                >{{ (item.price * item.num).toFixed(2) }} &nbsp;{{
-                                    currencyCode
-                                }}</small
-                            >
+                            <small>{{ (item.price * item.num).toFixed(2) }} &nbsp;{{ currencyCode }}</small>
                         </md-table-cell>
                     </md-table-row>
                 </md-table>
@@ -102,10 +96,7 @@
             <hr />
             <div class="md-layout">
                 <hr class="md-layout-item md-size-100" />
-                <div
-                    style="padding-bottom:22px;"
-                    class="md-layout-item md-layout text-right  md-size-100"
-                >
+                <div style="padding-bottom:22px;" class="md-layout-item md-layout text-right  md-size-100">
                     <div class="md-layout-item ">
                         <p class="category">
                             <b>Total Sum</b>
@@ -120,11 +111,7 @@
         </div>
         <div v-else>
             <div>
-                <md-empty-state
-                    md-icon="money_off"
-                    md-label="No payments found"
-                    md-description=""
-                />
+                <md-empty-state md-icon="money_off" md-label="No payments found" md-description="" />
             </div>
         </div>
     </div>

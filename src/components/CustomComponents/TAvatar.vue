@@ -1,46 +1,23 @@
 <template>
-    <div
-        class="avatar-wrapper"
-        :style="[
-            { 'margin-top': notification ? '6px' : '' },
-            { 'margin-right': notification ? '8px' : 0 }
-        ]"
-    >
-        <md-avatar
-            :class="[{ 'md-small': small }, { 'md-avatar-icon': !loaded }]"
-            class="t-avatar"
-        >
-            <div
-                class="wrapper"
-                :style="{ background: !loaded ? gradient : '' }"
-            >
+    <div class="avatar-wrapper" :style="[{ 'margin-top': notification ? '6px' : '' }, { 'margin-right': notification ? '8px' : 0 }]">
+        <md-avatar :class="[{ 'md-small': small }, { 'md-avatar-icon': !loaded }]" class="t-avatar">
+            <div class="wrapper" :style="{ background: !loaded ? gradient : '' }">
                 <transition name="fade">
-                    <img
-                        v-show="loaded && imageSrc"
-                        class="avatar-img"
-                        :src="imageSrc"
-                        :alt="title | acronim"
-                        @load="onLoaded"
-                    />
+                    <img v-show="loaded && imageSrc" class="avatar-img" :src="imageSrc" :alt="title | acronim" @load="onLoaded" />
                 </transition>
                 <transition name="fade">
                     <div
                         v-show="!loaded || !imageSrc"
                         :style="{ background: gradient }"
-                        :class="[
-                            { 'tripple-acr': title.split(' ').length > 2 }
-                        ]"
+                        :class="[{ 'tripple-acr': !small && acronim.length > 2 }, { 'tripple-acr-small': small && acronim.length > 2 }]"
                         class="md-layout md-alignment-center-center avatar-acronim-wrapper"
                     >
-                        {{ title | acronim }}
+                        {{ acronim }}
                     </div>
                 </transition>
             </div>
         </md-avatar>
-        <span
-            v-if="notification"
-            class="notification"
-            :class="`${notificationClass}`"
+        <span v-if="notification" class="notification" :class="`${notificationClass}`"
             >{{ notification }}
             <md-tooltip>Attention allergy!</md-tooltip>
         </span>
@@ -101,6 +78,34 @@ export default {
             colors += `,${colorStart},${colorEnd}`;
             colors += ')';
             return colors;
+        },
+        acronim() {
+            if (!this.title || this.title === 'null null') {
+                return '';
+            }
+            const words = this.title.split(' ');
+            const secondtLetter = x => {
+                if (x && x[1]) {
+                    return x[1].toLowerCase();
+                }
+                return '';
+            };
+            const firsttLetter = x => {
+                if (x && x[0]) {
+                    return x[0].toUpperCase();
+                }
+                return '';
+            };
+            if (words[0] && !words[1]) {
+                const acr = firsttLetter(words[0]) + secondtLetter(words[0]);
+                return acr;
+            }
+            let acr = '';
+            acr = this.title
+                .split(' ')
+                .map(firsttLetter)
+                .join('');
+            return acr.slice(0, 3);
         }
     },
     created() {
@@ -128,9 +133,7 @@ export default {
             let i;
             for (i = 0; i < 3; i += 1) {
                 c = parseInt(hexL.substr(i * 2, 2), 16);
-                c = Math.round(
-                    Math.min(Math.max(0, c + c * lumL), 255)
-                ).toString(16);
+                c = Math.round(Math.min(Math.max(0, c + c * lumL), 255)).toString(16);
                 rgb += `00${c}`.substr(c.length);
             }
 

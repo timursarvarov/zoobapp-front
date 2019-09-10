@@ -56,12 +56,14 @@
                             <md-button class="md-warning">
                                 <md-icon class="material-icons">
                                     warning
-                                </md-icon> Warning
+                                </md-icon>
+                                Warning
                             </md-button>
                             <md-button class="md-danger">
                                 <md-icon class="material-icons">
                                     close
-                                </md-icon> Danger
+                                </md-icon>
+                                Danger
                             </md-button>
                         </div>
                         <div class="md-layout-item md-size-50 md-small-size-100">
@@ -90,9 +92,7 @@
                             <md-button class="md-primary md-round">
                                 Round
                             </md-button>
-                            <md-button class="md-primary">
-                                <md-icon>favorite</md-icon> With Icon
-                            </md-button>
+                            <md-button class="md-primary"> <md-icon>favorite</md-icon> With Icon </md-button>
                             <md-button class="md-primary md-just-icon md-round">
                                 <md-icon>favorite</md-icon>
                             </md-button>
@@ -104,15 +104,8 @@
                             <h4 class="title">
                                 Pagination
                             </h4>
-                            <pagination
-                                v-model="defaultPagination"
-                                no-arrows
-                                :page-count="5"
-                            />
-                            <pagination
-                                v-model="infoPagination"
-                                :page-count="3"
-                            />
+                            <pagination v-model="defaultPagination" no-arrows :page-count="5" />
+                            <pagination v-model="infoPagination" :page-count="3" />
                         </div>
                         <div class="md-layout-item md-size-50 md-small-size-100">
                             <h4 class="title">
@@ -129,8 +122,8 @@
                                     Right
                                 </md-button>
                             </div>
-                            <br>
-                            <br>
+                            <br />
+                            <br />
                             <div class="md-group">
                                 <md-button class="md-round md-info">
                                     1
@@ -166,22 +159,16 @@
                         </div>
                     </div>
                     <div class="social-buttons">
-                        <div
-                            v-for="item in socialButtons"
-                            :key="item.button"
-                            class="md-layout"
-                        >
+                        <div v-for="item in socialButtons" :key="item.button" class="md-layout">
                             <div class="md-layout-item md-size-25 md-xsmall-size-100 md-medium-size-40">
                                 <p class="category">
                                     Default
                                 </p>
-                                <md-button :class="`${item.button}`">
-                                    <i :class="`${item.icon}`" /> {{ item.name }}
-                                </md-button>
+                                <md-button :class="`${item.button}`"> <i :class="`${item.icon}`" /> {{ item.name }} </md-button>
                             </div>
                             <div class="md-layout-item md-size-10 md-xsmall-size-100 md-medium-size-15">
                                 <p class="category">
-&nbsp;
+                                    &nbsp;
                                 </p>
                                 <md-button :class="`md-just-icon ${item.button}`">
                                     <i :class="`${item.icon}`" />
@@ -189,7 +176,7 @@
                             </div>
                             <div class="md-layout-item md-size-10 md-xsmall-size-100 md-medium-size-15">
                                 <p class="category">
-&nbsp;
+                                    &nbsp;
                                 </p>
                                 <md-button :class="`md-round md-just-icon ${item.button}`">
                                     <i :class="`${item.icon}`" />
@@ -205,11 +192,9 @@
                             </div>
                             <div class="md-layout-item md-size-25 md-xsmall-size-100">
                                 <p class="category">
-&nbsp;
+                                    &nbsp;
                                 </p>
-                                <md-button :class="`md-simple ${item.button}`">
-                                    <i :class="`${item.icon}`" /> {{ item.name }}
-                                </md-button>
+                                <md-button :class="`md-simple ${item.button}`"> <i :class="`${item.icon}`" /> {{ item.name }} </md-button>
                             </div>
                         </div>
                     </div>
@@ -224,7 +209,7 @@ import components from '@/components';
 export default {
     name: 'Buttons',
     components: {
-        ...components,
+        ...components
     },
     data() {
         return {
@@ -234,82 +219,82 @@ export default {
                 {
                     name: 'connect with twitter',
                     button: 'md-twitter',
-                    icon: 'fab fa-twitter',
+                    icon: 'fab fa-twitter'
                 },
                 {
                     name: 'share · 2.2k',
                     button: 'md-facebook',
-                    icon: 'fab fa-facebook',
+                    icon: 'fab fa-facebook'
                 },
                 {
                     name: 'share on google+',
                     button: 'md-google',
-                    icon: 'fab fa-google-plus-g',
+                    icon: 'fab fa-google-plus-g'
                 },
                 {
                     name: 'connect with linkedin',
                     button: 'md-linkedin',
-                    icon: 'fab fa-linkedin-in',
+                    icon: 'fab fa-linkedin-in'
                 },
                 {
                     name: 'pin it · 212',
                     button: 'md-pinterest',
-                    icon: 'fab fa-pinterest',
+                    icon: 'fab fa-pinterest'
                 },
                 {
                     name: 'view on youtube',
                     button: 'md-youtube',
-                    icon: 'fab fa-youtube',
+                    icon: 'fab fa-youtube'
                 },
                 {
                     name: 'repost',
                     button: 'md-tumblr',
-                    icon: 'fab fa-tumblr-square',
+                    icon: 'fab fa-tumblr-square'
                 },
                 {
                     name: 'connect with gitub',
                     button: 'md-github',
-                    icon: 'fab fa-github',
+                    icon: 'fab fa-github'
                 },
                 {
                     name: 'follow us',
                     button: 'md-behance',
-                    icon: 'fab fa-behance',
+                    icon: 'fab fa-behance'
                 },
                 {
                     name: 'find us on dribbble',
                     button: 'md-dribbble',
-                    icon: 'fab fa-dribbble',
+                    icon: 'fab fa-dribbble'
                 },
                 {
                     name: 'repost · 232',
                     button: 'md-reddit',
-                    icon: 'fab fa-reddit',
-                },
-            ],
+                    icon: 'fab fa-reddit'
+                }
+            ]
         };
-    },
+    }
 };
 </script>
 <style lang="scss" scoped>
 .social-buttons {
-  .md-layout:not(:first-child) .category {
-    display: none;
-  }
+    .md-layout:not(:first-child) .category {
+        display: none;
+    }
 }
 
 .button-container {
-  justify-content: flex-start;
+    justify-content: flex-start;
 }
 
 .title {
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
 }
 
 @media all and (max-width: 450px) {
-  .button-container {
-    flex-direction: column;
-  }
+    .button-container {
+        flex-direction: column;
+    }
 }
 </style>

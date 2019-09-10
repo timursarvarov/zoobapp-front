@@ -14,17 +14,11 @@
                 <md-card-content>
                     <md-field>
                         <label>Email Adress</label>
-                        <md-input
-                            v-model="emailadress"
-                            type="email"
-                        />
+                        <md-input v-model="emailadress" type="email" />
                     </md-field>
                     <md-field>
                         <label>Password</label>
-                        <md-input
-                            v-model="password"
-                            type="password"
-                        />
+                        <md-input v-model="password" type="password" />
                     </md-field>
                     <md-checkbox v-model="boolean">
                         Subscribe to newsletter
@@ -50,21 +44,14 @@
                 </md-card-header>
 
                 <md-card-content>
-                    <form
-                        class="form-horizontal"
-                        action=""
-                        method="post"
-                    >
+                    <form class="form-horizontal" action="" method="post">
                         <div class="md-layout">
                             <label class="md-layout-item md-size-25 md-form-label">
                                 Email Adress
                             </label>
                             <div class="md-layout-item">
                                 <md-field>
-                                    <md-input
-                                        v-model="emailadress1"
-                                        type="email"
-                                    />
+                                    <md-input v-model="emailadress1" type="email" />
                                 </md-field>
                             </div>
                         </div>
@@ -75,10 +62,7 @@
                             </label>
                             <div class="md-layout-item">
                                 <md-field>
-                                    <md-input
-                                        v-model="password1"
-                                        type="password"
-                                    />
+                                    <md-input v-model="password1" type="password" />
                                 </md-field>
                             </div>
                         </div>
@@ -119,12 +103,8 @@
                         </label>
                         <div class="md-layout-item">
                             <md-field>
-                                <md-input
-                                    v-model="helper"
-                                    type="text"
-                                />
-                                <span class="md-helper-text">A block of help
-                                    text that breaks onto a new line.</span>
+                                <md-input v-model="helper" type="text" />
+                                <span class="md-helper-text">A block of help text that breaks onto a new line.</span>
                             </md-field>
                         </div>
                     </div>
@@ -135,10 +115,7 @@
                         </label>
                         <div class="md-layout-item">
                             <md-field>
-                                <md-input
-                                    v-model="password2"
-                                    type="password"
-                                />
+                                <md-input v-model="password2" type="password" />
                             </md-field>
                         </div>
                     </div>
@@ -150,10 +127,7 @@
                         <div class="md-layout-item">
                             <md-field>
                                 <label>With label</label>
-                                <md-input
-                                    v-model="placeholder"
-                                    placeholder="placeholder"
-                                />
+                                <md-input v-model="placeholder" placeholder="placeholder" />
                             </md-field>
                         </div>
                     </div>
@@ -165,10 +139,7 @@
                         <div class="md-layout-item">
                             <md-field>
                                 <label>Disabled input here..</label>
-                                <md-input
-                                    v-model="disabled"
-                                    disabled
-                                />
+                                <md-input v-model="disabled" disabled />
                             </md-field>
                         </div>
                     </div>
@@ -195,16 +166,10 @@
                             <md-checkbox v-model="checkbox2">
                                 Second Checkbox
                             </md-checkbox>
-                            <md-radio
-                                v-model="radio"
-                                :value="false"
-                            >
+                            <md-radio v-model="radio" :value="false">
                                 First Radio
                             </md-radio>
-                            <md-radio
-                                v-model="radio"
-                                :value="true"
-                            >
+                            <md-radio v-model="radio" :value="true">
                                 Second Radio
                             </md-radio>
                         </div>
@@ -251,44 +216,24 @@
                             <md-checkbox v-model="checkbox7">
                                 Unchecked
                             </md-checkbox>
-                            <md-checkbox
-                                v-model="checkbox8"
-                                disabled
-                            >
+                            <md-checkbox v-model="checkbox8" disabled>
                                 Disabled Checked
                             </md-checkbox>
-                            <md-checkbox
-                                v-model="checkbox9"
-                                disabled
-                            >
+                            <md-checkbox v-model="checkbox9" disabled>
                                 Disabled Unchecked
                             </md-checkbox>
                         </div>
                         <div class="md-layout-item">
-                            <md-radio
-                                v-model="radio1"
-                                :value="true"
-                            >
+                            <md-radio v-model="radio1" :value="true">
                                 Radio is on
                             </md-radio>
-                            <md-radio
-                                v-model="radio1"
-                                :value="false"
-                            >
+                            <md-radio v-model="radio1" :value="false">
                                 Radio is off
                             </md-radio>
-                            <md-radio
-                                v-model="radio2"
-                                :value="true"
-                                disabled
-                            >
+                            <md-radio v-model="radio2" :value="true" disabled>
                                 Disabled Radio is on
                             </md-radio>
-                            <md-radio
-                                v-model="radio2"
-                                :value="false"
-                                disabled
-                            >
+                            <md-radio v-model="radio2" :value="false" disabled>
                                 Disabled Radio is off
                             </md-radio>
                         </div>
@@ -301,10 +246,7 @@
                         <div class="md-layout-item">
                             <md-field class="md-valid">
                                 <label>Success Input</label>
-                                <md-input
-                                    v-model="success"
-                                    type="text"
-                                />
+                                <md-input v-model="success" type="text" />
                                 <md-icon>done</md-icon>
                             </md-field>
                         </div>
@@ -317,10 +259,7 @@
                         <div class="md-layout-item">
                             <md-field class="md-error">
                                 <label>Error Input</label>
-                                <md-input
-                                    v-model="error"
-                                    type="text"
-                                />
+                                <md-input v-model="error" type="text" />
                                 <md-icon>clear</md-icon>
                             </md-field>
                         </div>
@@ -333,28 +272,19 @@
                         <div class="md-layout-item md-size-20">
                             <md-field>
                                 <label>.md-size-20</label>
-                                <md-input
-                                    v-model="layout1"
-                                    type="text"
-                                />
+                                <md-input v-model="layout1" type="text" />
                             </md-field>
                         </div>
                         <div class="md-layout-item md-size-25">
                             <md-field>
                                 <label>.md-size-25</label>
-                                <md-input
-                                    v-model="layout2"
-                                    type="text"
-                                />
+                                <md-input v-model="layout2" type="text" />
                             </md-field>
                         </div>
                         <div class="md-layout-item md-size-40">
                             <md-field>
                                 <label>.md-size-40</label>
-                                <md-input
-                                    v-model="layout3"
-                                    type="text"
-                                />
+                                <md-input v-model="layout3" type="text" />
                             </md-field>
                         </div>
                     </div>
@@ -394,48 +324,48 @@ export default {
             checkbox9: null,
             radio: true,
             radio1: true,
-            radio2: true,
+            radio2: true
         };
-    },
+    }
 };
 </script>
 <style lang="scss" scoped>
 .md-card .md-card-actions {
-  border: none;
+    border: none;
 }
 
 .md-inline-checkboxes {
-  display: inline-flex;
+    display: inline-flex;
 
-  .md-checkbox {
-    margin-top: 15px !important;
-  }
+    .md-checkbox {
+        margin-top: 15px !important;
+    }
 }
 
 .md-checkbox,
 .md-radio {
-  margin-top: 15px;
-  margin-bottom: 0.5rem;
+    margin-top: 15px;
+    margin-bottom: 0.5rem;
 }
 
 .md-checkbox,
 .md-radio {
-  display: flex;
+    display: flex;
 }
 
 .md-radio /deep/ .md-radio-container {
-  margin-left: 5px;
-  position: relative;
-  left: -3px;
+    margin-left: 5px;
+    position: relative;
+    left: -3px;
 }
 
 .md-form-label + .md-layout-item .md-checkbox:not(:first-child),
 .md-form-label + .md-layout-item + .md-layout-item .md-radio:not(:first-child),
 .md-form-label + .md-layout-item .md-radio {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .form-control-static {
-  margin-top: 6px;
+    margin-top: 6px;
 }
 </style>

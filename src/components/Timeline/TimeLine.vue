@@ -1,12 +1,6 @@
 <template>
-    <md-card
-        class="md-card-timeline"
-        :class="{'md-card-plain': plain}"
-    >
-        <ul
-            class="timeline"
-            :class="{'timeline-simple': type === 'simple'}"
-        >
+    <md-card class="md-card-timeline" :class="{ 'md-card-plain': plain }">
+        <ul class="timeline" :class="{ 'timeline-simple': type === 'simple' }">
             <slot />
         </ul>
     </md-card>
@@ -18,10 +12,9 @@ export default {
         plain: Boolean,
         type: {
             type: String,
-            default: '',
-        },
-    },
+            default: ''
+        }
+    }
 };
 </script>
-<style>
-</style>
+<style></style>

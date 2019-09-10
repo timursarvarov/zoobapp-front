@@ -1,15 +1,9 @@
 <template>
     <div>
-        <md-dialog
-            class="plan-add-form"
-            :md-active.sync="showFormL"
-            @md-opened="focusOn('planName')"
-        >
+        <md-dialog class="plan-add-form" :md-active.sync="showFormL" @md-opened="focusOn('planName')">
             <div>
                 <md-card>
-                    <md-card-header
-                        class="md-card-header-icon "
-                    >
+                    <md-card-header class="md-card-header-icon ">
                         <div class="card-icon md-card-header-green">
                             <md-icon>playlist_add</md-icon>
                         </div>
@@ -21,15 +15,16 @@
                         <div class="md-layout-item">
                             <md-field
                                 :class="[
-                                    {'with-subline': true},
-                                    {'md-valid': !errors.has('planName') && touched.planName},
-                                    {'md-error': errors.has('planName')}]"
+                                    { 'with-subline': true },
+                                    { 'md-valid': !errors.has('planName') && touched.planName },
+                                    { 'md-error': errors.has('planName') }
+                                ]"
                             >
                                 <label>Plane name</label>
                                 <md-input
                                     ref="planName"
                                     v-model="planName"
-                                    v-validate="{'verify_plan': names, required: true, min: 2}"
+                                    v-validate="{ verify_plan: names, required: true, min: 2 }"
                                     autofocus
                                     type="text"
                                     data-vv-name="planName"
@@ -41,7 +36,7 @@
                                         v-show="errors.has('planName')"
                                         tabindex="-1"
                                         class="md-button  md-icon-button md-dense md-input-action"
-                                        @click="user.planName='',focusOn('planName')"
+                                        @click="(user.planName = ''), focusOn('planName')"
                                     >
                                         <md-icon class="error">
                                             close
@@ -63,20 +58,10 @@
                         </div>
                     </md-card-content>
                     <md-card-actions md-alignment="right">
-                        <md-button
-                            :disabled="errors.has('planName') || loading"
-                            class="md-success"
-                            @click="addPlan()"
-                        >
+                        <md-button :disabled="errors.has('planName') || loading" class="md-success" @click="addPlan()">
                             <span v-if="loading">
-                                <md-progress-spinner
-                                    class="t-white"
-                                    :md-diameter="12"
-                                    :md-stroke="2"
-                                    md-mode="indeterminate"
-                                />
-                                &nbsp;
-                                Loading...
+                                <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
+                                &nbsp; Loading...
                             </span>
                             <span v-else>Create</span>
                         </md-button>
@@ -92,21 +77,21 @@ import { PATIENT_PLAN_SET, NOTIFY } from '@/constants';
 
 export default {
     components: {
-        SlideYDownTransition,
+        SlideYDownTransition
     },
     props: {
         patientId: {
             type: Number,
-            default: () => 0,
+            default: () => 0
         },
         showForm: {
             type: Boolean,
-            default: () => false,
+            default: () => false
         },
         plans: {
             type: Object,
-            default: () => {},
-        },
+            default: () => {}
+        }
     },
     data() {
         return {
@@ -114,8 +99,8 @@ export default {
             planName: null,
             names: null,
             touched: {
-                planName: false,
-            },
+                planName: false
+            }
         };
     },
     computed: {
@@ -125,8 +110,8 @@ export default {
             },
             set(value) {
                 this.$emit('update:showForm', value);
-            },
-        },
+            }
+        }
     },
     watch: {
         showFormL(value) {
@@ -140,7 +125,7 @@ export default {
         },
         planName() {
             this.touched.planName = true;
-        },
+        }
     },
     methods: {
         focusOn(ref) {
@@ -175,20 +160,21 @@ export default {
         },
         addPlan() {
             if (this.planName) {
-                this.$validator.validateAll().then((result) => {
+                this.$validator.validateAll().then(result => {
                     if (result) {
                         this.loading = true;
-                        this.$store.dispatch(PATIENT_PLAN_SET, {
-                            planName: this.planName,
-                        }).then(
-                            (resp) => {
+                        this.$store
+                            .dispatch(PATIENT_PLAN_SET, {
+                                planName: this.planName
+                            })
+                            .then(resp => {
                                 if (resp) {
                                     this.$emit('onPlanCreated', resp.ID);
                                     this.$store.dispatch(NOTIFY, {
                                         settings: {
                                             message: `${this.planName} plan added`,
-                                            type: 'success',
-                                        },
+                                            type: 'success'
+                                        }
                                     });
                                     this.$validator.reset();
                                     this.showFormL = false;
@@ -197,30 +183,31 @@ export default {
                                         params: {
                                             lang: this.$i18n.locale,
                                             patientID: this.patientId,
-                                            planID: resp.ID,
-                                        },
+                                            planID: resp.ID
+                                        }
                                     });
                                 }
-                            },
-                        ).catch((err) => {
-                            this.$store.dispatch(NOTIFY, {
-                                settings: {
-                                    message: err,
-                                    type: 'warning',
-                                },
+                            })
+                            .catch(err => {
+                                this.$store.dispatch(NOTIFY, {
+                                    settings: {
+                                        message: err,
+                                        type: 'warning'
+                                    }
+                                });
+                                console.log(err);
+                            })
+                            .then(() => {
+                                this.loading = false;
                             });
-                            console.log(err)
-                        }).then(() => {
-                            this.loading = false;
-                        });
                     }
                 });
             }
-        },
-    },
+        }
+    }
 };
 </script>
-<style lang="scss" >
+<style lang="scss">
 .md-dialog.plan-add-form {
     background-color: transparent !important;
     box-shadow: none !important;

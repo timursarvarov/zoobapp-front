@@ -6,7 +6,7 @@
         role="tabpanel"
         :aria-hidden="!active"
         :aria-labelledby="`step-${tabId}`"
-        :class="{'active show': active}"
+        :class="{ 'active show': active }"
     >
         <slot />
     </div>
@@ -17,7 +17,7 @@ export default {
     props: {
         label: String,
         id: String,
-        beforeChange: Function,
+        beforeChange: Function
     },
     inject: ['addTab', 'removeTab'],
     data() {
@@ -25,7 +25,7 @@ export default {
             active: false,
             checked: false,
             hasError: false,
-            tabId: '',
+            tabId: ''
         };
     },
     mounted() {
@@ -36,8 +36,7 @@ export default {
             this.$el.parentNode.removeChild(this.$el);
         }
         this.removeTab(this);
-    },
+    }
 };
 </script>
-<style>
-</style>
+<style></style>

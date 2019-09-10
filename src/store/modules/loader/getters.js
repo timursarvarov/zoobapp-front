@@ -1,4 +1,4 @@
 export default {
     loading: state => state.loading,
-    loaderState: state => state.loaderState,
+    loaderState: state => state.loaderState
 };

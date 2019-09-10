@@ -25,7 +25,7 @@ export default {
     getAvailableProceduresTableColumns: state => state.availableProceduresTableColumns,
     getAvailableBillingTableColumns: state => state.availableBillingTableColumns,
     getAvailableInvoiceTableColumns: state => state.availableInvoiceTableColumns,
-    getLang: (state) => {
+    getLang: state => {
         if (state.profile.ID) {
             return state.profile.lang;
         }
@@ -38,5 +38,5 @@ export default {
             return systemLang;
         }
         return DEFAULT_LANGUAGE;
-    },
+    }
 };

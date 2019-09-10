@@ -15,25 +15,14 @@
                     <template slot="label">
                         Email
                     </template>
-                    <get-email
-                        ref="step1"
-                        :error.sync="errorEmail"
-                        @on-validated="onStepValidated"
-                        @validated-email="setEmail"
-                    />
+                    <get-email ref="step1" :error.sync="errorEmail" @on-validated="onStepValidated" @validated-email="setEmail" />
                 </wizard-tab>
 
                 <wizard-tab :before-change="() => validateStep('step2')">
                     <template slot="label">
                         Verification
                     </template>
-                    <check-email
-                        ref="step2"
-                        :email="email"
-                        :error.sync="errorCode"
-                        @validated-code="setCode"
-                        @on-validated="onStepValidated"
-                    />
+                    <check-email ref="step2" :email="email" :error.sync="errorCode" @validated-code="setCode" @on-validated="onStepValidated" />
                 </wizard-tab>
 
                 <wizard-tab :before-change="() => validateStep('step3')">
@@ -67,25 +56,13 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import GetEmail from './Wizard/GetEmail.vue';
-import CheckEmail from './Wizard/CheckEmail.vue';
-import SetAccount from './Wizard/SetAccount.vue';
-import SetClinic from './Wizard/SetClinic.vue';
-// import swal from 'sweetalert2';
 import components from '@/components';
-import {
-    USER_REGISTER,
-    NOTIFY,
-    AUTH_REQUEST,
-    CLINIC_LOGO_UPLOAD,
-    CLINIC_UPDATE,
-    SERVER_ERRORS,
-} from '@/constants';
+import { USER_REGISTER, NOTIFY, AUTH_REQUEST, CLINIC_LOGO_UPLOAD, CLINIC_UPDATE, SERVER_ERRORS } from '@/constants';
 
 export default {
     name: 'RefistrationWizard',
     components: {
-        ...components,
+        ...components
     },
     data() {
         return {
@@ -93,52 +70,51 @@ export default {
             code: null,
             email: null,
             account: {},
-
             errorEmail: {
                 type: 'email',
                 message: '',
-                exceptions: [],
+                exceptions: []
             },
             errorCode: {
                 type: 'code',
                 message: '',
-                exceptions: [],
+                exceptions: []
             },
             errorAccount: {
                 type: 'username',
                 message: '',
-                exceptions: [],
+                exceptions: []
             },
             errorClinic: {
                 type: 'clinicName',
                 message: '',
-                exceptions: [],
+                exceptions: []
             },
             username: '',
             firstName: '',
             lastName: '',
             password: '',
-            clinicName: '',
+            clinicName: ''
         };
     },
     computed: {
         ...mapGetters({
-            currentClinic: 'getCurrentClinic',
-        }),
+            currentClinic: 'getCurrentClinic'
+        })
     },
     methods: {
         updateClinicLogo(fd) {
             this.$store
                 .dispatch(CLINIC_LOGO_UPLOAD, {
-                    fd,
+                    fd
                 })
-                .then((response) => {
+                .then(response => {
                     console.log(response);
                     this.$store.dispatch(NOTIFY, {
                         settings: {
                             message: 'Clinic logo uploaded',
-                            type: 'success',
-                        },
+                            type: 'success'
+                        }
                     });
                 });
         },
@@ -153,13 +129,9 @@ export default {
         },
         validateStep(ref) {
             if (ref === 'step1') {
-                return this.$refs[ref].validate().then((res) => {
+                return this.$refs[ref].validate().then(res => {
                     // проверка на повторное запрещенное значение
-                    if (
-                        this.errorEmail.exceptions.some(
-                            val => val === this.email,
-                        )
-                    ) {
+                    if (this.errorEmail.exceptions.some(val => val === this.email)) {
                         this.errorEmail.message = 'Wrong code';
                         return false;
 
@@ -173,10 +145,8 @@ export default {
                 });
             }
             if (ref === 'step2') {
-                return this.$refs[ref].validate().then((res) => {
-                    if (
-                        this.errorCode.exceptions.some(val => val === this.code)
-                    ) {
+                return this.$refs[ref].validate().then(res => {
+                    if (this.errorCode.exceptions.some(val => val === this.code)) {
                         this.errorCode.message = 'Wrong code that was checked before';
                         return false;
                     }
@@ -187,12 +157,8 @@ export default {
                 });
             }
             if (ref === 'step3') {
-                return this.$refs[ref].validate().then((res) => {
-                    if (
-                        this.errorAccount.exceptions.some(
-                            val => val === this.account,
-                        )
-                    ) {
+                return this.$refs[ref].validate().then(res => {
+                    if (this.errorAccount.exceptions.some(val => val === this.account)) {
                         this.errorAccount.message = 'Wrong code that was checked before';
                         return false;
                     }
@@ -203,7 +169,7 @@ export default {
                 });
             }
             if (ref === 'step4') {
-                return this.$refs[ref].validate().then((res) => {
+                return this.$refs[ref].validate().then(res => {
                     if (res) {
                         return Promise.resolve(this.setClinicName());
                     }
@@ -236,26 +202,24 @@ export default {
                             username: this.account.username,
                             password: this.account.password,
                             lastName: this.account.lastName,
-                            firstName: this.account.firstName,
-                        },
+                            firstName: this.account.firstName
+                        }
                     })
                     .then(
                         () => {
                             resolve(this.login());
                         },
-                        (error) => {
+                        error => {
                             if (error.code === SERVER_ERRORS.codes.ServerErrorCode) {
                                 this.errorAccount.message = error.message;
-                                this.errorAccount.exceptions.push(
-                                    this.account.username,
-                                );
+                                this.errorAccount.exceptions.push(this.account.username);
                                 this.$refs.step3.showErrorsValidate({
                                     message: error.message,
-                                    type: 'username',
+                                    type: 'username'
                                 });
                             }
                             reject();
-                        },
+                        }
                     );
             });
         },
@@ -264,18 +228,18 @@ export default {
                 this.$store
                     .dispatch(AUTH_REQUEST, {
                         username: this.account.username,
-                        password: this.account.password,
+                        password: this.account.password
                     })
                     .then(
                         // (response) => {
-                        (response) => {
+                        response => {
                             if (response) {
                                 resolve(true);
                             }
                         },
-                        (error) => {
+                        error => {
                             reject(new Error(error));
-                        },
+                        }
                     );
             });
         },
@@ -285,11 +249,11 @@ export default {
                     .dispatch(CLINIC_UPDATE, {
                         clinic: {
                             ID: this.currentClinic.ID,
-                            name: this.clinicName,
-                        },
+                            name: this.clinicName
+                        }
                     })
                     .then(
-                        (response) => {
+                        response => {
                             if (response) {
                                 this.$router.push('/');
                                 resolve(true);
@@ -297,7 +261,7 @@ export default {
                         },
                         () => {
                             reject(new Error(false));
-                        },
+                        }
                     );
             });
         },
@@ -316,8 +280,8 @@ export default {
             //     confirmButtonClass: 'md-button md-success',
             //     buttonsStyling: false,
             // });
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss">

@@ -1,10 +1,6 @@
 `<template>
     <div>
-        <md-dialog
-            class="patient-add-form"
-            :md-active.sync="showForm"
-            :md-click-outside-to-close="!loading"
-        >
+        <md-dialog class="patient-add-form" :md-active.sync="showForm" :md-click-outside-to-close="!loading">
             <div>
                 <md-card>
                     <md-card-header class="md-card-header-icon">
@@ -17,16 +13,12 @@
                     </md-card-header>
 
                     <md-card-content class="md-layout">
-                        <div
-                            class="md-layout-item md-size-50 md-small-size-100"
-                        >
+                        <div class="md-layout-item md-size-50 md-small-size-100">
                             <md-field
                                 class="with-subline"
                                 :class="[
                                     {
-                                        'md-valid':
-                                            !errors.has('firstName') &&
-                                            touched.firstName
+                                        'md-valid': !errors.has('firstName') && touched.firstName
                                     },
                                     { 'md-error': errors.has('firstName') }
                                 ]"
@@ -42,18 +34,13 @@
                                     required
                                     @focus="unsetAutofill('firstName')"
                                 />
-                                <span class="md-error">{{
-                                    errors.first('firstName')
-                                }}</span>
+                                <span class="md-error">{{ errors.first('firstName') }}</span>
                                 <slide-y-down-transition>
                                     <md-button
                                         v-show="errors.has('firstName')"
                                         tabindex="-1"
                                         class="md-button md-icon-button md-dense md-input-action"
-                                        @click="
-                                            (firstName = ''),
-                                                focusOn('firstName')
-                                        "
+                                        @click="(firstName = ''), focusOn('firstName')"
                                     >
                                         <md-icon class="error">
                                             close
@@ -62,10 +49,7 @@
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
                                     <md-button
-                                        v-show="
-                                            !errors.has('firstName') &&
-                                                touched.firstName
-                                        "
+                                        v-show="!errors.has('firstName') && touched.firstName"
                                         tabindex="-1"
                                         class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                                     >
@@ -76,16 +60,12 @@
                                 </slide-y-down-transition>
                             </md-field>
                         </div>
-                        <div
-                            class="md-layout-item md-size-50 md-small-size-100"
-                        >
+                        <div class="md-layout-item md-size-50 md-small-size-100">
                             <md-field
                                 class="with-subline"
                                 :class="[
                                     {
-                                        'md-valid':
-                                            !errors.has('lastName') &&
-                                            touched.lastName
+                                        'md-valid': !errors.has('lastName') && touched.lastName
                                     },
                                     { 'md-error': errors.has('lastName') }
                                 ]"
@@ -101,17 +81,13 @@
                                     required
                                     @focus="unsetAutofill('lastName')"
                                 />
-                                <span class="md-error">{{
-                                    errors.first('lastName')
-                                }}</span>
+                                <span class="md-error">{{ errors.first('lastName') }}</span>
                                 <slide-y-down-transition>
                                     <md-button
                                         v-show="errors.has('lastName')"
                                         tabindex="-1"
                                         class="md-button md-icon-button md-dense md-input-action"
-                                        @click="
-                                            (lastName = ''), focusOn('lastName')
-                                        "
+                                        @click="(lastName = ''), focusOn('lastName')"
                                     >
                                         <md-icon class="error">
                                             close
@@ -120,10 +96,7 @@
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
                                     <md-button
-                                        v-show="
-                                            !errors.has('lastName') &&
-                                                touched.lastName
-                                        "
+                                        v-show="!errors.has('lastName') && touched.lastName"
                                         tabindex="-1"
                                         class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                                     >
@@ -134,16 +107,12 @@
                                 </slide-y-down-transition>
                             </md-field>
                         </div>
-                        <div
-                            class="md-layout-item md-size-50 md-small-size-100"
-                        >
+                        <div class="md-layout-item md-size-50 md-small-size-100">
                             <md-field
                                 class="with-subline"
                                 :class="[
                                     {
-                                        'md-valid':
-                                            !errors.has('email') &&
-                                            touched.email
+                                        'md-valid': !errors.has('email') && touched.email
                                     },
                                     { 'md-error': errors.has('email') }
                                 ]"
@@ -158,9 +127,7 @@
                                     data-vv-name="email"
                                     @focus="unsetAutofill('email')"
                                 />
-                                <span class="md-error">{{
-                                    errors.first('email')
-                                }}</span>
+                                <span class="md-error">{{ errors.first('email') }}</span>
                                 <slide-y-down-transition>
                                     <md-button
                                         v-show="errors.has('email')"
@@ -175,10 +142,7 @@
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
                                     <md-button
-                                        v-show="
-                                            !errors.has('email') &&
-                                                touched.email
-                                        "
+                                        v-show="!errors.has('email') && touched.email"
                                         tabindex="-1"
                                         class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                                     >
@@ -189,16 +153,12 @@
                                 </slide-y-down-transition>
                             </md-field>
                         </div>
-                        <div
-                            class="md-layout-item md-size-50 md-small-size-100"
-                        >
+                        <div class="md-layout-item md-size-50 md-small-size-100">
                             <md-field
                                 class="with-subline"
                                 :class="[
                                     {
-                                        'md-valid':
-                                            !errors.has('phone') &&
-                                            touched.phone
+                                        'md-valid': !errors.has('phone') && touched.phone
                                     },
                                     { 'md-error': errors.has('phone') }
                                 ]"
@@ -215,9 +175,7 @@
                                     required
                                     @focus="unsetAutofill('phone')"
                                 />
-                                <span class="md-error">{{
-                                    errors.first('phone')
-                                }}</span>
+                                <span class="md-error">{{ errors.first('phone') }}</span>
                                 <slide-y-down-transition>
                                     <md-button
                                         v-show="errors.has('phone')"
@@ -232,10 +190,7 @@
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
                                     <md-button
-                                        v-show="
-                                            !errors.has('phone') &&
-                                                touched.phone
-                                        "
+                                        v-show="!errors.has('phone') && touched.phone"
                                         tabindex="-1"
                                         class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                                     >
@@ -249,13 +204,7 @@
                         <div class="md-layout-item">
                             <md-field class="with-subline">
                                 <label for="movies">Doctors</label>
-                                <md-select
-                                    id="movies"
-                                    v-model="selectedDoctors"
-                                    :disabled="loading"
-                                    name="movies"
-                                    multiple
-                                >
+                                <md-select id="movies" v-model="selectedDoctors" :disabled="loading" name="movies" multiple>
                                     <md-option value="fight-club">
                                         Fight Club
                                     </md-option>
@@ -284,9 +233,7 @@
                             <md-field
                                 :class="[
                                     {
-                                        'md-valid':
-                                            !errors.has('source') &&
-                                            touched.source
+                                        'md-valid': !errors.has('source') && touched.source
                                     },
                                     { 'md-error': errors.has('source') }
                                 ]"
@@ -303,17 +250,13 @@
                                     required
                                     @focus="unsetAutofill('source')"
                                 />
-                                <span class="md-error">{{
-                                    errors.first('source')
-                                }}</span>
+                                <span class="md-error">{{ errors.first('source') }}</span>
                                 <slide-y-down-transition>
                                     <md-button
                                         v-show="errors.has('source')"
                                         tabindex="-1"
                                         class="md-button md-icon-button md-dense md-input-action"
-                                        @click="
-                                            (source = ''), focusOn('source')
-                                        "
+                                        @click="(source = ''), focusOn('source')"
                                     >
                                         <md-icon class="error">
                                             close
@@ -322,10 +265,7 @@
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
                                     <md-button
-                                        v-show="
-                                            !errors.has('source') &&
-                                                touched.source
-                                        "
+                                        v-show="!errors.has('source') && touched.source"
                                         tabindex="-1"
                                         class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                                     >
@@ -337,30 +277,20 @@
                             </md-field>
                         </div>
 
-                        <div
-                            class="md-layout-item md-size-100 md-small-size-100"
-                        >
-                            <md-checkbox
-                                v-model="noAllergy"
-                                :disabled="loading"
-                                class="md-primary"
-                            >
+                        <div class="md-layout-item md-size-100 md-small-size-100">
+                            <md-checkbox v-model="noAllergy" :disabled="loading" class="md-primary">
                                 No Allergy
                             </md-checkbox>
                         </div>
 
-                        <div
-                            class="md-layout-item  wrapper-chips md-size-100 md-small-size-100"
-                        >
+                        <div class="md-layout-item  wrapper-chips md-size-100 md-small-size-100">
                             <md-chips
                                 ref="allergy"
                                 v-model="allergy"
                                 v-validate="{ required: !noAllergy }"
                                 :class="[
                                     {
-                                        'md-valid':
-                                            !errors.has('allergy') &&
-                                            touched.allergy
+                                        'md-valid': !errors.has('allergy') && touched.allergy
                                     },
                                     { 'md-error': errors.has('allergy') }
                                 ]"
@@ -374,9 +304,7 @@
                                         v-show="errors.has('allergy')"
                                         tabindex="-1"
                                         class="md-button md-icon-button md-dense md-round md-chips-input-action"
-                                        @click="
-                                            (allergy = []), focusOn('allergy')
-                                        "
+                                        @click="(allergy = []), focusOn('allergy')"
                                     >
                                         <md-icon class="error">
                                             close
@@ -385,10 +313,7 @@
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
                                     <md-button
-                                        v-show="
-                                            !errors.has('allergy') &&
-                                                touched.allergy
-                                        "
+                                        v-show="!errors.has('allergy') && touched.allergy"
                                         tabindex="-1"
                                         class="md-button md-icon-button md-dense  md-round md-chips-input-action noselect md-simple"
                                     >
@@ -398,42 +323,23 @@
                                     </md-button>
                                 </slide-y-down-transition>
                             </md-chips>
-                            <span class="md-error">{{
-                                errors.first('allergy')
-                            }}</span>
+                            <span class="md-error">{{ errors.first('allergy') }}</span>
                         </div>
                     </md-card-content>
                     <md-card-actions md-alignment="right">
                         <div>
-                            <md-checkbox
-                                v-model="closeAddForm"
-                                class="md-primary"
-                                @change="setCloseFormAfter()"
-                            >
+                            <md-checkbox v-model="closeAddForm" class="md-primary" @change="setCloseFormAfter()">
                                 Close form after
                             </md-checkbox>
                         </div>
                         <div>
-                            <md-checkbox
-                                v-model="openProfile"
-                                class="md-primary"
-                                @change="setOpenProfileAfterCreation()"
-                            >
+                            <md-checkbox v-model="openProfile" class="md-primary" @change="setOpenProfileAfterCreation()">
                                 Open patient profile
                             </md-checkbox>
                         </div>
-                        <md-button
-                            :disabled="loading"
-                            class="md-success"
-                            @click="addPatient()"
-                        >
+                        <md-button :disabled="loading" class="md-success" @click="addPatient()">
                             <span v-if="loading">
-                                <md-progress-spinner
-                                    class="t-white"
-                                    :md-diameter="12"
-                                    :md-stroke="2"
-                                    md-mode="indeterminate"
-                                />
+                                <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
                                 &nbsp; Loading...
                             </span>
                             <span v-else>Add patient</span>
@@ -507,39 +413,28 @@ export default {
                 return this.$patientAddForm.patientAddFormShown;
             },
             set() {
-                this.$patientAddForm.patientAddFormShown = !this.$patientAddForm
-                    .patientAddFormShown;
+                this.$patientAddForm.patientAddFormShown = !this.$patientAddForm.patientAddFormShown;
             }
         }
     },
     watch: {
         showForm() {
-            this.openProfile = localStorage.getItem(
-                'USER_SETTINGS_OPEN_PATIENT_PROFILE'
-            );
+            this.openProfile = localStorage.getItem('USER_SETTINGS_OPEN_PATIENT_PROFILE');
             if (this.openProfile === 'true') {
                 this.openProfile = true;
             } else if (this.openProfile === null) {
                 this.openProfile = true;
-                localStorage.setItem(
-                    'USER_SETTINGS_OPEN_PATIENT_PROFILE',
-                    true
-                );
+                localStorage.setItem('USER_SETTINGS_OPEN_PATIENT_PROFILE', true);
                 this.openProfile = true;
             } else {
                 this.openProfile = false;
             }
-            this.closeAddForm = localStorage.getItem(
-                'USER_SETTINGS_CLOSE_PATIENT_ADD_FORM'
-            );
+            this.closeAddForm = localStorage.getItem('USER_SETTINGS_CLOSE_PATIENT_ADD_FORM');
             if (this.closeAddForm === 'true') {
                 this.closeAddForm = true;
             } else if (this.closeAddForm === null) {
                 this.closeAddForm = true;
-                localStorage.setItem(
-                    'USER_SETTINGS_CLOSE_PATIENT_ADD_FORM',
-                    true
-                );
+                localStorage.setItem('USER_SETTINGS_CLOSE_PATIENT_ADD_FORM', true);
                 this.closeAddForm = true;
             } else {
                 this.closeAddForm = false;
@@ -583,16 +478,10 @@ export default {
             this.$refs[ref].$el.setAttribute('autocomplete', Math.random());
         },
         setOpenProfileAfterCreation() {
-            localStorage.setItem(
-                'USER_SETTINGS_OPEN_PATIENT_PROFILE',
-                this.openProfile
-            );
+            localStorage.setItem('USER_SETTINGS_OPEN_PATIENT_PROFILE', this.openProfile);
         },
         setCloseFormAfter() {
-            localStorage.setItem(
-                'USER_SETTINGS_CLOSE_PATIENT_ADD_FORM',
-                this.closeAddForm
-            );
+            localStorage.setItem('USER_SETTINGS_CLOSE_PATIENT_ADD_FORM', this.closeAddForm);
         },
         validate() {
             this.$validator.validateAll().then(isValid => {
@@ -636,12 +525,9 @@ export default {
                             .then(patient => {
                                 if (patient) {
                                     if (this.openProfile) {
-                                        this.$store.dispatch(
-                                            PATIENT_PARAMS_SET,
-                                            {
-                                                patient
-                                            }
-                                        );
+                                        this.$store.dispatch(PATIENT_PARAMS_SET, {
+                                            patient
+                                        });
                                         this.$router.push({
                                             name: 'Treatment',
                                             params: {
@@ -656,9 +542,7 @@ export default {
                                     this.clearForm();
                                     this.$store.dispatch(NOTIFY, {
                                         settings: {
-                                            message: `${patient.firstName} ${
-                                                patient.lastName
-                                            } added`,
+                                            message: `${patient.firstName} ${patient.lastName} added`,
                                             type: 'success'
                                         }
                                     });

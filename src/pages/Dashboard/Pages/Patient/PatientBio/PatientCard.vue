@@ -2,12 +2,8 @@
     <div class="patient-card-wrapper">
         <md-card-content class="md-layout">
             <div class="md-layout  md-small-size-100 md-size-50">
-                <div
-                    class="md-layout-item md-layout md-size-100 avatart-wrapper"
-                >
-                    <div
-                        class="md-layout-item  md-small-size-100 md-size-50  md-layout switch md-alignment-center-space-between"
-                    >
+                <div class="md-layout-item md-layout md-size-100 avatart-wrapper">
+                    <div class="md-layout-item  md-small-size-100 md-size-50  md-layout switch md-alignment-center-space-between">
                         <t-avatar-input
                             :disabled="loading"
                             :text-to-color="patient.ID"
@@ -18,22 +14,14 @@
                             @on-created="updatepatientAvatar"
                         />
                     </div>
-                    <div
-                        class="md-layout-item  md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between"
-                    >
+                    <div class="md-layout-item  md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between">
                         <div class="md-layout-item">
                             <md-switch v-model="showRating">
                                 Show Rating
                             </md-switch>
                         </div>
                         <div class="md-layout-item">
-                            <star-rating
-                                v-show="showRating"
-                                v-model="patient.rating"
-                                :glow="5"
-                                :show-rating="false"
-                                :star-size="18"
-                            />
+                            <star-rating v-show="showRating" v-model="patient.rating" :glow="5" :show-rating="false" :star-size="18" />
                         </div>
                     </div>
                 </div>
@@ -41,9 +29,7 @@
                     <md-field
                         :class="[
                             {
-                                'md-valid':
-                                    !errors.has('firstName') &&
-                                    touched.firstName
+                                'md-valid': !errors.has('firstName') && touched.firstName
                             },
                             { 'md-error': errors.has('firstName') }
                         ]"
@@ -57,25 +43,14 @@
                             data-vv-name="firstName"
                             required
                         />
-                        <span class="md-error">{{
-                            errors.first('firstName')
-                        }}</span>
+                        <span class="md-error">{{ errors.first('firstName') }}</span>
                         <slide-y-down-transition>
-                            <md-icon
-                                v-show="errors.has('firstName')"
-                                class="error"
-                            >
+                            <md-icon v-show="errors.has('firstName')" class="error">
                                 close
                             </md-icon>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon
-                                v-show="
-                                    !errors.has('firstName') &&
-                                        touched.firstName
-                                "
-                                class="success"
-                            >
+                            <md-icon v-show="!errors.has('firstName') && touched.firstName" class="success">
                                 done
                             </md-icon>
                         </slide-y-down-transition>
@@ -86,8 +61,7 @@
                     <md-field
                         :class="[
                             {
-                                'md-valid':
-                                    !errors.has('lastName') && touched.lastName
+                                'md-valid': !errors.has('lastName') && touched.lastName
                             },
                             { 'md-error': errors.has('lastName') }
                         ]"
@@ -101,24 +75,14 @@
                             data-vv-name="lastName"
                             required
                         />
-                        <span class="md-error">{{
-                            errors.first('lastName')
-                        }}</span>
+                        <span class="md-error">{{ errors.first('lastName') }}</span>
                         <slide-y-down-transition>
-                            <md-icon
-                                v-show="errors.has('lastName')"
-                                class="error"
-                            >
+                            <md-icon v-show="errors.has('lastName')" class="error">
                                 close
                             </md-icon>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon
-                                v-show="
-                                    !errors.has('lastName') && touched.lastName
-                                "
-                                class="success"
-                            >
+                            <md-icon v-show="!errors.has('lastName') && touched.lastName" class="success">
                                 done
                             </md-icon>
                         </slide-y-down-transition>
@@ -129,8 +93,7 @@
                     <md-field
                         :class="[
                             {
-                                'md-valid':
-                                    !errors.has('phone') && touched.phone
+                                'md-valid': !errors.has('phone') && touched.phone
                             },
                             { 'md-error': errors.has('phone') }
                         ]"
@@ -145,19 +108,14 @@
                             data-vv-name="phone"
                             required
                         />
-                        <span class="md-error">{{
-                            errors.first('phone')
-                        }}</span>
+                        <span class="md-error">{{ errors.first('phone') }}</span>
                         <slide-y-down-transition>
                             <md-icon v-show="errors.has('phone')" class="error">
                                 close
                             </md-icon>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon
-                                v-show="!errors.has('phone') && touched.phone"
-                                class="success"
-                            >
+                            <md-icon v-show="!errors.has('phone') && touched.phone" class="success">
                                 done
                             </md-icon>
                         </slide-y-down-transition>
@@ -169,29 +127,19 @@
                 <div class="md-layout-item md-size-100">
                     <md-field>
                         <label>Source</label>
-                        <md-input
-                            v-model="patient.source"
-                            :disabled="loading"
-                        />
+                        <md-input v-model="patient.source" :disabled="loading" />
                     </md-field>
                 </div>
 
                 <div class="md-layout-item md-size-100">
                     <md-field>
                         <label>Address</label>
-                        <md-input
-                            v-model="patient.address"
-                            :disabled="loading"
-                        />
+                        <md-input v-model="patient.address" :disabled="loading" />
                     </md-field>
                 </div>
 
                 <div class="md-layout-item md-size-100">
-                    <md-datepicker
-                        v-model="patient.birthday"
-                        md-immediately
-                        :disabled="loading"
-                    >
+                    <md-datepicker v-model="patient.birthday" md-immediately :disabled="loading">
                         <label>Birthday date</label>
                     </md-datepicker>
                 </div>
@@ -200,8 +148,7 @@
                     <md-field
                         :class="[
                             {
-                                'md-valid':
-                                    !errors.has('email') && touched.email
+                                'md-valid': !errors.has('email') && touched.email
                             },
                             { 'md-error': errors.has('email') }
                         ]"
@@ -215,50 +162,29 @@
                             data-vv-name="email"
                             required
                         />
-                        <span class="md-error">{{
-                            errors.first('email')
-                        }}</span>
+                        <span class="md-error">{{ errors.first('email') }}</span>
                         <slide-y-down-transition>
                             <md-icon v-show="errors.has('email')" class="error">
                                 close
                             </md-icon>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon
-                                v-show="!errors.has('email') && touched.email"
-                                class="success"
-                            >
+                            <md-icon v-show="!errors.has('email') && touched.email" class="success">
                                 done
                             </md-icon>
                         </slide-y-down-transition>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-size-100">
-                    <md-chips
-                        v-model="allergy"
-                        :disabled="loading"
-                        class="md-danger"
-                        md-placeholder="Add allergy..."
-                    />
-                    <span class="small helper"
-                        >Enter allergent name and click "Enter"</span
-                    >
+                    <md-chips v-model="allergy" :disabled="loading" class="md-danger" md-placeholder="Add allergy..." />
+                    <span class="small helper">Enter allergent name and click "Enter"</span>
                 </div>
             </div>
         </md-card-content>
         <md-card-actions>
-            <md-button
-                :disabled="loading"
-                class="md-raised md-success mt-4"
-                @click="updateProfile"
-            >
+            <md-button :disabled="loading" class="md-raised md-success mt-4" @click="updateProfile">
                 <div v-if="loading">
-                    <md-progress-spinner
-                        class="t-white"
-                        :md-diameter="12"
-                        :md-stroke="2"
-                        md-mode="indeterminate"
-                    />
+                    <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
                     &nbsp;
                     <span>
                         Saving...
@@ -396,33 +322,30 @@ export default {
         },
         updateProfile() {
             this.patient.color = this.patientColor;
-            this.$validator
-                .validateAll('firstName', 'email', 'phone', 'lastName')
-                .then(result => {
-                    if (result) {
-                        this.loading = true;
-                        this.$store
-                            .dispatch(PATIENT_UPDATE, {
-                                patient: this.patient
-                            })
-                            .then(response => {
-                                if (response) {
-                                    this.loading = false;
-                                    this.$store.dispatch(NOTIFY, {
-                                        settings: {
-                                            message:
-                                                'Settings updated successfully',
-                                            type: 'success'
-                                        }
-                                    });
-                                }
-                            })
-                            .catch(err => {
+            this.$validator.validateAll('firstName', 'email', 'phone', 'lastName').then(result => {
+                if (result) {
+                    this.loading = true;
+                    this.$store
+                        .dispatch(PATIENT_UPDATE, {
+                            patient: this.patient
+                        })
+                        .then(response => {
+                            if (response) {
                                 this.loading = false;
-                                throw new Error(err);
-                            });
-                    }
-                });
+                                this.$store.dispatch(NOTIFY, {
+                                    settings: {
+                                        message: 'Settings updated successfully',
+                                        type: 'success'
+                                    }
+                                });
+                            }
+                        })
+                        .catch(err => {
+                            this.loading = false;
+                            throw new Error(err);
+                        });
+                }
+            });
         },
 
         updatepatientAvatar(fd) {

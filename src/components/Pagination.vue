@@ -1,40 +1,15 @@
 <template>
-    <ul
-        class="pagination"
-        :class="paginationClass"
-    >
-        <li
-            class="page-item prev-page"
-            :class="{'disabled': value === 1, 'no-arrows': noArrows}"
-        >
-            <a
-                class="page-link"
-                aria-label="Previous"
-                @click="prevPage"
-            >
+    <ul class="pagination" :class="paginationClass">
+        <li class="page-item prev-page" :class="{ disabled: value === 1, 'no-arrows': noArrows }">
+            <a class="page-link" aria-label="Previous" @click="prevPage">
                 <i class="fas fa-angle-double-left" />
             </a>
         </li>
-        <li
-            v-for="item in range(minPage, maxPage)"
-            :key="item"
-            class="page-item"
-            :class="{active: value === item}"
-        >
-            <a
-                class="page-link"
-                @click="changePage(item)"
-            >{{ item }}</a>
+        <li v-for="item in range(minPage, maxPage)" :key="item" class="page-item" :class="{ active: value === item }">
+            <a class="page-link" @click="changePage(item)">{{ item }}</a>
         </li>
-        <li
-            class="page-item page-pre next-page"
-            :class="{ 'disabled': value === totalPages, 'no-arrows': noArrows}"
-        >
-            <a
-                class="page-link"
-                aria-label="Next"
-                @click="nextPage"
-            >
+        <li class="page-item page-pre next-page" :class="{ disabled: value === totalPages, 'no-arrows': noArrows }">
+            <a class="page-link" aria-label="Next" @click="nextPage">
                 <i class="fas fa-angle-double-right" />
             </a>
         </li>
@@ -47,37 +22,29 @@ export default {
         type: {
             type: String,
             default: 'primary',
-            validator: value => [
-                'default',
-                'primary',
-                'danger',
-                'success',
-                'warning',
-                'info',
-                'rose',
-            ].includes(value),
+            validator: value => ['default', 'primary', 'danger', 'success', 'warning', 'info', 'rose'].includes(value)
         },
         noArrows: Boolean,
         pageCount: {
             type: Number,
-            default: 0,
+            default: 0
         },
         perPage: {
             type: Number,
-            default: 10,
+            default: 10
         },
         total: {
             type: Number,
-            default: 0,
+            default: 0
         },
         value: {
             type: Number,
-            default: 1,
-        },
+            default: 1
+        }
     },
     data() {
         return {
-            defaultPagesToDisplay: 5,
+            defaultPagesToDisplay: 5
         };
     },
     computed: {
@@ -118,7 +85,7 @@ export default {
                 return this.totalPages;
             }
             return this.pagesToDisplay;
-        },
+        }
     },
     watch: {
         perPage() {
@@ -126,7 +93,7 @@ export default {
         },
         total() {
             this.$emit('input', 1);
-        },
+        }
     },
     methods: {
         range(min, max) {
@@ -148,7 +115,7 @@ export default {
             if (this.value > 1) {
                 this.$emit('input', this.value - 1);
             }
-        },
-    },
+        }
+    }
 };
 </script>

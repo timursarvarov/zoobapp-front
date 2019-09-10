@@ -3,29 +3,15 @@
         <md-tabs ref="mdTabs" md-sync-route class="t-md-tabs billng">
             <md-tab
                 id="tab-unbilled_procedures"
-                :to="
-                    `/${$i18n.locale}/patient/${
-                        patient.ID
-                    }/billing/unbilled_procedures`
-                "
+                :to="`/${$i18n.locale}/patient/${patient.ID}/billing/unbilled_procedures`"
                 md-label="Unbilled procedures"
             >
                 <router-view @onCreateInvoice="onCreateInvoice" />
             </md-tab>
-            <md-tab
-                id="tab-invoices"
-                class="diagnosis"
-                :to="`/${$i18n.locale}/patient/${patient.ID}/billing/invoices`"
-                md-label="Invoices"
-            >
+            <md-tab id="tab-invoices" class="diagnosis" :to="`/${$i18n.locale}/patient/${patient.ID}/billing/invoices`" md-label="Invoices">
                 <router-view />
             </md-tab>
-            <md-tab
-                id="tab-payments"
-                class="diagnosis"
-                :to="`/${$i18n.locale}/patient/${patient.ID}/billing/payments`"
-                md-label="payments"
-            >
+            <md-tab id="tab-payments" class="diagnosis" :to="`/${$i18n.locale}/patient/${patient.ID}/billing/payments`" md-label="payments">
                 <router-view />
             </md-tab>
         </md-tabs>

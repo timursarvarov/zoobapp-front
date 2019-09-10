@@ -1,15 +1,9 @@
 <template>
-    <component
-        :is="tag"
-        :style="[{'background-color':`${computedColor}`}]"
-        class="badge"
-        :class="`badge-${type}`"
-    >
+    <component :is="tag" :style="[{ 'background-color': `${computedColor}` }]" class="badge" :class="`badge-${type}`">
         <slot />
     </component>
 </template>
 <script>
-
 const randomMC = require('random-material-color');
 
 export default {
@@ -17,43 +11,35 @@ export default {
     props: {
         tag: {
             type: String,
-            default: 'span',
+            default: 'span'
         },
         textToColor: {
             type: [String, Number],
-            default: null,
+            default: null
         },
         type: {
             type: String,
             default: 'default',
-            validator: (value) => {
-                const acceptedValues = [
-                    'primary',
-                    'info',
-                    'success',
-                    'warning',
-                    'danger',
-                    'rose',
-                ];
+            validator: value => {
+                const acceptedValues = ['primary', 'info', 'success', 'warning', 'danger', 'rose'];
                 return acceptedValues.indexOf(value) !== -1;
-            },
-        },
+            }
+        }
     },
     data() {
         return {
-            randomMC: null,
+            randomMC: null
         };
     },
     computed: {
         computedColor() {
             const color = this.randomMC.getColor({ text: `${this.textToColor}` });
             return color;
-        },
+        }
     },
     created() {
         this.randomMC = randomMC;
-    },
+    }
 };
 </script>
-<style>
-</style>
+<style></style>

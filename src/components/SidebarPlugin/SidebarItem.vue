@@ -1,45 +1,26 @@
 <template>
-    <component
-        :is="baseComponent"
-        :to="link.path ? link.path : '/'"
-        :class="{active : isActive}"
-        tag="li"
-    >
-        <a
-            v-if="isMenu"
-            href="#"
-            class="nav-link sidebar-menu-item"
-            :aria-expanded="!collapsed"
-            data-toggle="collapse"
-            @click.prevent="collapseMenu"
-        >
+    <component :is="baseComponent" :to="link.path ? link.path : '/'" :class="{ active: isActive }" tag="li">
+        <a v-if="isMenu" href="#" class="nav-link sidebar-menu-item" :aria-expanded="!collapsed" data-toggle="collapse" @click.prevent="collapseMenu">
             <md-icon>{{ link.icon }}</md-icon>
             <p>
                 {{ link.name }}
                 <b class="caret" />
             </p>
-
         </a>
 
         <collapse-transition>
-            <div
-                v-if="$slots.default || isMenu"
-                v-show="!collapsed"
-            >
+            <div v-if="$slots.default || isMenu" v-show="!collapsed">
                 <ul class="nav">
                     <slot />
                 </ul>
             </div>
         </collapse-transition>
 
-        <slot
-            v-if="children.length === 0 && !$slots.default && link.path"
-            name="title"
-        >
+        <slot v-if="children.length === 0 && !$slots.default && link.path" name="title">
             <component
                 :is="elementType(link, false)"
                 :to="link.path"
-                :class="{active: link.active}"
+                :class="{ active: link.active }"
                 class="nav-link"
                 :target="link.target"
                 :href="link.path"
@@ -63,39 +44,39 @@ import { CollapseTransition } from 'vue2-transitions';
 export default {
     name: 'SidebarItem',
     components: {
-        CollapseTransition,
+        CollapseTransition
     },
     props: {
         menu: {
             type: Boolean,
-            default: false,
+            default: false
         },
         link: {
             type: Object,
             default: () => ({
                 name: '',
                 path: '',
-                children: [],
-            }),
-        },
+                children: []
+            })
+        }
     },
     provide() {
         return {
             addLink: this.addChild,
-            removeLink: this.removeChild,
+            removeLink: this.removeChild
         };
     },
     inject: {
         addLink: { default: null },
         removeLink: { default: null },
         autoClose: {
-            default: true,
-        },
+            default: true
+        }
     },
     data() {
         return {
             children: [],
-            collapsed: true,
+            collapsed: true
         };
     },
     computed: {
@@ -120,7 +101,7 @@ export default {
                 }
             }
             return false;
-        },
+        }
     },
     mounted() {
         if (this.addLink) {
@@ -162,11 +143,7 @@ export default {
             return matches.join('');
         },
         linkClick() {
-            if (
-                this.autoClose
-                    && this.$sidebar
-                    && this.$sidebar.showSidebar === true
-            ) {
+            if (this.autoClose && this.$sidebar && this.$sidebar.showSidebar === true) {
                 this.$sidebar.displaySidebar(false);
             }
         },
@@ -176,12 +153,12 @@ export default {
         collapseSubMenu(link) {
             const nlink = link;
             nlink.collapsed = !link.collapsed;
-        },
-    },
+        }
+    }
 };
 </script>
 <style>
 .sidebar-menu-item {
-  cursor: pointer;
+    cursor: pointer;
 }
 </style>

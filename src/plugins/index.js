@@ -8,3 +8,4 @@ import './print';
 import './vue-cool-select';
 import './lodash';
 import './vue-i18n';
+import './vue-qr';

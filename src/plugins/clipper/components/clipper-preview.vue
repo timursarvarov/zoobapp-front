@@ -1,35 +1,15 @@
 /* eslint-disable */
 <template>
     <div class="preview">
-        <div
-            class="wrap"
-            :style="wrapStyle"
-        >
-            <canvas
-                class="shim"
-                :width="outerWidth"
-                :height="outerHeight"
-            />
-            <div
-                class="img-pos"
-                :style="styleObj"
-            >
-                <div
-                    class="img-rotate"
-                    :style="rotateStyle"
-                >
-                    <img
-                        :src="src"
-                        class="img"
-                        @load="imgLoaded"
-                    >
+        <div class="wrap" :style="wrapStyle">
+            <canvas class="shim" :width="outerWidth" :height="outerHeight" />
+            <div class="img-pos" :style="styleObj">
+                <div class="img-rotate" :style="rotateStyle">
+                    <img :src="src" class="img" @load="imgLoaded" />
                 </div>
             </div>
         </div>
-        <div
-            class="placeholder"
-            :style="eptStyle"
-        >
+        <div class="placeholder" :style="eptStyle">
             <slot name="placeholder" />
         </div>
     </div>
@@ -44,8 +24,8 @@ export default {
     props: {
         name: {
             type: String,
-            required: true,
-        },
+            required: true
+        }
     },
     data: () => ({
         src: '',
@@ -56,7 +36,7 @@ export default {
         outerHeight: 1,
         bgColor: 'white',
         pos: {},
-        rotate: 0,
+        rotate: 0
     }),
     computed: {
         styleObj() {
@@ -64,24 +44,24 @@ export default {
             const top = this.pos.sy / this.imgHeight;
             const width = this.imgWidth / this.pos.swidth;
             return {
-                transform: `scale(${width}) translate(${left * -100}% ,${top * -100}%)`,
+                transform: `scale(${width}) translate(${left * -100}% ,${top * -100}%)`
             };
         },
         rotateStyle() {
             return {
-                transform: `rotate(${this.rotate}deg)`,
+                transform: `rotate(${this.rotate}deg)`
             };
         },
         wrapStyle() {
-            const display = (this.src) ? 'block' : 'none';
+            const display = this.src ? 'block' : 'none';
             return {
                 backgroundColor: this.bgColor,
-                display,
+                display
             };
         },
         eptStyle() {
-            return { display: (this.src) ? 'none' : 'block' };
-        },
+            return { display: this.src ? 'none' : 'block' };
+        }
     },
     mounted() {
         this.imgEl = this.$el.querySelector('.img');
@@ -114,43 +94,43 @@ export default {
             this.outerWidth = pos.swidth;
             this.outerHeight = pos.sheight;
             this.pos = pos;
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>
 .wrap {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
 }
 .shim {
-  display: block;
-  width: 100%;
-  position: relative;
-  top: 0;
-  left: 0;
+    display: block;
+    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
 }
 
 .img-pos {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  transform-origin: 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform-origin: 0 0;
 }
 .img-rotate {
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 100%;
-  transform-origin: 50% 50%;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform-origin: 50% 50%;
 }
 .img {
-  left: 0;
-  top: 0;
-  position: relative;
-  width: 100%;
-  display: block;
+    left: 0;
+    top: 0;
+    position: relative;
+    width: 100%;
+    display: block;
 }
 </style>

@@ -1,9 +1,5 @@
 <template>
-    <md-dialog
-        v-if="showForm"
-        class="tooth-diagnosis-form"
-        :md-active.sync="showFormLocal"
-    >
+    <md-dialog v-if="showForm" class="tooth-diagnosis-form" :md-active.sync="showFormLocal">
         <div>
             <md-card>
                 <md-card-header class="md-card-header-icon md-card-header-green">
@@ -15,22 +11,12 @@
                         {{ item.title }}
                     </h4>
                 </md-card-header>
-                <md-card-content>
-                    <div
-                        ref="contentWrapper"
-                        class="content-wrapper"
-                    >
+                <!-- <md-card-content>
+                    <div ref="contentWrapper" class="content-wrapper">
                         <div class="md-layout">
                             <div class="teeth-content md-layout-item mx-auto">
-                                <div
-                                    v-if="otherTeeth.length > 0 "
-                                    class="teeth-content__wrapper mx-auto"
-                                >
-                                    <div
-                                        v-for="(cJaw, key) in compJaw"
-                                        :key="key"
-                                        class="teeth md-alignment-center-center md-layout jaw mx-auto"
-                                    >
+                                <div v-if="otherTeeth.length > 0" class="teeth-content__wrapper mx-auto">
+                                    <div v-for="(cJaw, key) in compJaw" :key="key" class="teeth md-alignment-center-center md-layout jaw mx-auto">
                                         <tooth
                                             v-for="toothId in cJaw"
                                             :key="toothId"
@@ -47,7 +33,7 @@
                                 </div>
                             </div>
                             <div class="md-layout-item md-layout">
-                                <md-list>
+                                 <md-list>
                                     <md-list-item v-if="item.author">
                                         <md-avatar>
                                             <t-avatar
@@ -64,12 +50,10 @@
                                         </div>
                                     </md-list-item>
 
-                                    <md-list-item
-                                        v-if="item.date"
-                                    >
+                                    <md-list-item v-if="item.date">
                                         <div class="md-list-item-text">
-                                            <span>{{ item.date | moment("from") | capitilize }}</span>
-                                            <span>{{ item.date | moment("calendar") }}</span>
+                                            <span>{{ item.date | moment('from') | capitilize }}</span>
+                                            <span>{{ item.date | moment('calendar') }}</span>
                                         </div>
                                     </md-list-item>
                                 </md-list>
@@ -77,44 +61,27 @@
                         </div>
 
                         <div v-if="showEmptyState()">
-                            <div v-if="item.manipulations && item.manipulations.length>0">
+                             <div v-if="item.manipulations && item.manipulations.length > 0">
                                 <md-toolbar class="md-transparent">
                                     <span class="md-title">Manipulations </span>
                                 </md-toolbar>
                                 <div class="md-layout-item">
-                                    <md-table
-                                        v-model="item.manipulations"
-                                        table-header-color="green"
-                                    >
-                                        <md-table-row
-                                            slot="md-table-row"
-                                            slot-scope="{ item }"
-                                        >
-                                            <md-table-cell
-                                                md-label="Code"
-                                            >
+                                    <md-table v-model="item.manipulations" table-header-color="green">
+                                        <md-table-row slot="md-table-row" slot-scope="{ item }">
+                                            <md-table-cell md-label="Code">
                                                 {{ item.manipulation.code }}
                                             </md-table-cell>
-                                            <md-table-cell
-                                                md-label="Title"
-                                            >
+                                            <md-table-cell md-label="Title">
                                                 {{ item.manipulation.title }}
                                             </md-table-cell>
-                                            <md-table-cell
-                                                md-label="Qty"
-                                                class="manipulations-input"
-                                            >
+                                            <md-table-cell md-label="Qty" class="manipulations-input">
                                                 {{ item.num }}
                                             </md-table-cell>
                                             <md-table-cell>*</md-table-cell>
                                             <md-table-cell md-label="Price">
                                                 {{ item.price }}
                                             </md-table-cell>
-                                            <md-table-cell
-                                                md-label="Total"
-                                            >
-                                                {{ item.price * item.num }} {{ currencyCode }}
-                                            </md-table-cell>
+                                            <md-table-cell md-label="Total"> {{ item.price * item.num }} {{ currencyCode }} </md-table-cell>
                                         </md-table-row>
                                     </md-table>
                                     <div class="footer-table md-table">
@@ -122,20 +89,14 @@
                                             <tfoot>
                                                 <tr>
                                                     <th class="md-table-head">
-                                                        <div
-                                                            class="md-table-head-container md-ripple md-disabled"
-                                                        >
-                                                            <div
-                                                                class="md-table-head-label"
-                                                            >
+                                                        <div class="md-table-head-container md-ripple md-disabled">
+                                                            <div class="md-table-head-label">
                                                                 Total manipulations: {{ item.manipulations.length }}
                                                             </div>
                                                         </div>
                                                     </th>
                                                     <th class="md-table-head">
-                                                        <div
-                                                            class="md-table-head-container md-ripple md-disabled"
-                                                        >
+                                                        <div class="md-table-head-container md-ripple md-disabled">
                                                             <div class="md-table-head-label">
                                                                 Total price:
                                                                 {{ totalPrice }}
@@ -153,10 +114,7 @@
                                 <md-toolbar class="md-transparent">
                                     <span class="md-title">Description </span>
                                 </md-toolbar>
-                                <div
-                                    class="md-layout-item"
-                                    v-html="item.description"
-                                />
+                                <div class="md-layout-item" v-html="item.description" />
                             </div>
                             <div v-if="files.length > 0">
                                 <md-toolbar class="md-transparent">
@@ -195,28 +153,21 @@
                     </div>
                 </md-card-content>
                 <md-card-actions>
-                    <md-button @click="$emit('onPrint', item, type), showFormLocal=false">
+                    <md-button @click="$emit('onPrint', item, type), (showFormLocal = false)">
                         Print
                     </md-button>
-                    <md-button
-                        class="md-info"
-                        @click="$emit('editItem', item, type), showFormLocal=false"
-                    >
+                    <md-button class="md-info" @click="$emit('editItem', item, type), (showFormLocal = false)">
                         Edit
                     </md-button>
-                    <md-button
-                        class="md-success"
-                        @click="showFormLocal = !showFormLocal"
-                    >
+                    <md-button class="md-success" @click="showFormLocal = !showFormLocal">
                         OK
                     </md-button>
-                </md-card-actions>
+                </md-card-actions> -->
             </md-card>
         </div>
     </md-dialog>
 </template>
 <script>
-
 import {
     TEETH_ADDULT_ALL,
     TEETH_DEFAULT_LOCATIONS,
@@ -225,108 +176,112 @@ import {
     TEETH_BABY_BOTTOM,
     TEETH_BABY_TOP,
     TEETH_BABY_ALL,
-    TEETH_ALL,
+    TEETH_ALL
 } from '@/constants';
-import TFilesAddForm from '@/components/CustomComponents/TFilesAddForm';
+// import TFilesAddForm from '@/components/CustomComponents/TFilesAddForm';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'TToothItems',
     components: {
-        TFilesAddForm,
+        // TFilesAddForm
     },
     props: {
         files: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         currencyCode: {
             type: String,
-            default: () => '',
+            default: () => ''
         },
         accessToken: {
             type: String,
-            default: '',
+            default: ''
         },
         buttonColor: {
             type: String,
-            default: '',
+            default: ''
         },
         teethSystem: {
             type: Number,
-            default: () => 1,
+            default: () => 1
         },
         showForm: {
             type: Boolean,
-            default: false,
+            default: false
         },
         item: {
             type: Object,
             default: () => ({
                 description: '',
                 manipulations: [],
-                otherTeeth: [],
-            }),
+                otherTeeth: []
+            })
         },
         toothId: {
             type: String,
-            default: '0',
+            default: '0'
         },
         icon: {
             type: String,
-            default: 'list',
+            default: 'list'
         },
         patientItems: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         type: {
             type: String,
-            default: () => 'diagnosis',
+            default: () => 'diagnosis'
         },
         originalItems: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         jaw: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         title: {
             type: String,
-            default: () => 'Tooth Diagnosis',
-        },
+            default: () => 'Tooth Diagnosis'
+        }
     },
     data() {
         return {
             options: {
                 filter(image) {
                     return image.classList.contains('img-to-preview');
-                },
+                }
             },
             columns: [
                 {
                     key: 'filePreview',
                     title: 'Preview',
-                    sortable: false,
+                    sortable: false
                 },
                 {
                     key: 'name',
                     title: 'Name',
-                    sortable: true,
+                    sortable: true
                 },
                 {
                     key: 'filesize',
                     title: 'File Size',
-                    sortable: true,
-                },
-            ],
+                    sortable: true
+                }
+            ]
         };
     },
     computed: {
+        ...mapGetters({
+
+        }),
         totalPrice() {
             let sum = 0;
             if (this.item.manipulations && this.item.manipulations.length > 0) {
-                this.item.manipulations.forEach((manip) => {
+                this.item.manipulations.forEach(manip => {
                     sum += manip.price * manip.num;
                 });
             }
@@ -342,19 +297,14 @@ export default {
         diagnosisTitles() {
             const titles = [];
             this.diagnosisWithTooth.forEach((diagnose, index) => {
-                titles.push(
-                    `${index + 1} - ${diagnose.code} ${diagnose.title}`,
-                );
+                titles.push(`${index + 1} - ${diagnose.code} ${diagnose.title}`);
             });
             return titles;
         },
         diagnosisWithTooth() {
             const diagnosis = [];
-            this.patientItems.forEach((diagnose) => {
-                if (
-                    diagnose.teeth
-                        && Object.keys(diagnose.teeth).includes(this.toothId)
-                ) {
+            this.patientItems.forEach(diagnose => {
+                if (diagnose.teeth && Object.keys(diagnose.teeth).includes(this.toothId)) {
                     diagnosis.push(diagnose);
                 }
             });
@@ -368,7 +318,7 @@ export default {
             // сеттер:
             set(newValue) {
                 this.$emit('update:showForm', newValue);
-            },
+            }
         },
         teeth() {
             return TEETH_ALL;
@@ -410,7 +360,7 @@ export default {
             }
             const jaw = [this.topAdultTeeth, this.bottomAdultTeeth];
             return jaw;
-        },
+        }
     },
     methods: {
         show() {
@@ -422,16 +372,15 @@ export default {
         },
         showEmptyState() {
             if (
-                (this.item.description && this.item.description.length > 0)
-                    || (this.item.manipulations
-                    && this.item.manipulations.length > 0)
-                    || (this.files && this.files.length > 0)
+                (this.item.description && this.item.description.length > 0) ||
+                (this.item.manipulations && this.item.manipulations.length > 0) ||
+                (this.files && this.files.length > 0)
             ) {
                 return true;
             }
             return false;
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss">

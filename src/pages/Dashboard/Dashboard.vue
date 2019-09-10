@@ -16,9 +16,7 @@
                 </template>
 
                 <template slot="footer">
-                    <div class="stats">
-                        <md-icon>update</md-icon>Just Updated
-                    </div>
+                    <div class="stats"><md-icon>update</md-icon>Just Updated</div>
                 </template>
             </stats-card>
         </div>
@@ -38,9 +36,7 @@
                 </template>
 
                 <template slot="footer">
-                    <div class="stats">
-                        <md-icon>local_offer</md-icon>Tracked from Google Analytics
-                    </div>
+                    <div class="stats"><md-icon>local_offer</md-icon>Tracked from Google Analytics</div>
                 </template>
             </stats-card>
         </div>
@@ -61,10 +57,7 @@
                 </template>
 
                 <template slot="footer">
-                    <div class="stats">
-                        <md-icon>date_range</md-icon>Last
-                        <animated-number :value="24" />Hours
-                    </div>
+                    <div class="stats"><md-icon>date_range</md-icon>Last <animated-number :value="24" />Hours</div>
                 </template>
             </stats-card>
         </div>
@@ -105,19 +98,13 @@
                 <md-icon slot="fixed-button">
                     build
                 </md-icon>
-                <md-button
-                    slot="first-button"
-                    class="md-simple md-info md-just-icon"
-                >
+                <md-button slot="first-button" class="md-simple md-info md-just-icon">
                     <md-icon>refresh</md-icon>
                     <md-tooltip md-direction="bottom">
                         Refresh
                     </md-tooltip>
                 </md-button>
-                <md-button
-                    slot="second-button"
-                    class="md-simple md-just-icon"
-                >
+                <md-button slot="second-button" class="md-simple md-just-icon">
                     <md-icon>edit</md-icon>
                     <md-tooltip md-direction="bottom">
                         Change Date
@@ -134,10 +121,7 @@
                 </template>
 
                 <template slot="footer">
-                    <div class="stats">
-                        <md-icon>access_time</md-icon>updated
-                        <animated-number :value="10" />days ago
-                    </div>
+                    <div class="stats"><md-icon>access_time</md-icon>updated <animated-number :value="10" />days ago</div>
                 </template>
             </chart-card>
         </div>
@@ -149,19 +133,13 @@
                 chart-inside-header
                 background-color="green"
             >
-                <md-button
-                    slot="first-button"
-                    class="md-simple md-info md-just-icon"
-                >
+                <md-button slot="first-button" class="md-simple md-info md-just-icon">
                     <md-icon>refresh</md-icon>
                     <md-tooltip md-direction="bottom">
                         Refresh
                     </md-tooltip>
                 </md-button>
-                <md-button
-                    slot="second-button"
-                    class="md-simple md-just-icon"
-                >
+                <md-button slot="second-button" class="md-simple md-just-icon">
                     <md-icon>edit</md-icon>
                     <md-tooltip md-direction="bottom">
                         Change Date
@@ -176,15 +154,13 @@
                         <span class="text-success">
                             <i class="fas fa-long-arrow-alt-up" />
                             <animated-number :value="55" />%
-                        </span> increase in today sales.
+                        </span>
+                        increase in today sales.
                     </p>
                 </template>
 
                 <template slot="footer">
-                    <div class="stats">
-                        <md-icon>access_time</md-icon>updated
-                        <animated-number :value="4" />minutes ago
-                    </div>
+                    <div class="stats"><md-icon>access_time</md-icon>updated <animated-number :value="4" />minutes ago</div>
                 </template>
             </chart-card>
         </div>
@@ -196,19 +172,13 @@
                 chart-inside-header
                 background-color="blue"
             >
-                <md-button
-                    slot="first-button"
-                    class="md-simple md-info md-just-icon"
-                >
+                <md-button slot="first-button" class="md-simple md-info md-just-icon">
                     <md-icon>refresh</md-icon>
                     <md-tooltip md-direction="bottom">
                         Refresh
                     </md-tooltip>
                 </md-button>
-                <md-button
-                    slot="second-button"
-                    class="md-simple md-just-icon"
-                >
+                <md-button slot="second-button" class="md-simple md-just-icon">
                     <md-icon>edit</md-icon>
                     <md-tooltip md-direction="bottom">
                         Change Date
@@ -225,10 +195,7 @@
                 </template>
 
                 <template slot="footer">
-                    <div class="stats">
-                        <md-icon>access_time</md-icon>campaign sent
-                        <animated-number :value="26" />minutes ago
-                    </div>
+                    <div class="stats"><md-icon>access_time</md-icon>campaign sent <animated-number :value="26" />minutes ago</div>
                 </template>
             </chart-card>
         </div>
@@ -249,10 +216,7 @@
                             <global-sales-table />
                         </div>
                         <div class="md-layout-item md-size-50">
-                            <async-world-map
-                                class="map"
-                                :data="mapData"
-                            />
+                            <async-world-map class="map" :data="mapData" />
                         </div>
                     </div>
                 </template>
@@ -286,28 +250,19 @@
                         Remove
                     </md-tooltip>
                 </template>
-                <h4
-                    slot="title"
-                    class="title"
-                >
+                <h4 slot="title" class="title">
                     <a href="#pablo">Cozy 5 Stars Apartment</a>
                 </h4>
-                <div
-                    slot="description"
-                    class="card-description"
-                >
-                    The place is close to Barceloneta
-                    Beach and bus stop just 2 min by walk and near to "Naviglio"
-                    where you can enjoy the main night life in Barcelona.
+                <div slot="description" class="card-description">
+                    The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the main night
+                    life in Barcelona.
                 </div>
                 <template slot="footer">
                     <div class="price">
                         <h4>$899/night</h4>
                     </div>
                     <div class="stats">
-                        <p class="category">
-                            <md-icon>place</md-icon>Barcelona, Spain
-                        </p>
+                        <p class="category"><md-icon>place</md-icon>Barcelona, Spain</p>
                     </div>
                 </template>
             </product-card>
@@ -340,28 +295,19 @@
                         Remove
                     </md-tooltip>
                 </template>
-                <h4
-                    slot="title"
-                    class="title"
-                >
+                <h4 slot="title" class="title">
                     <a href="#pablo">Office Studio</a>
                 </h4>
-                <div
-                    slot="description"
-                    class="card-description"
-                >
-                    The place is close to Metro Station
-                    and bus stop just 2 min by walk and near to "Naviglio"
-                    where you can enjoy the night life in London, UK.
+                <div slot="description" class="card-description">
+                    The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the night life in
+                    London, UK.
                 </div>
                 <template slot="footer">
                     <div class="price">
                         <h4>$1.119/night</h4>
                     </div>
                     <div class="stats">
-                        <p class="category">
-                            <md-icon>place</md-icon>London, UK
-                        </p>
+                        <p class="category"><md-icon>place</md-icon>London, UK</p>
                     </div>
                 </template>
             </product-card>
@@ -394,29 +340,19 @@
                         Remove
                     </md-tooltip>
                 </template>
-                <h4
-                    slot="title"
-                    class="title"
-                >
+                <h4 slot="title" class="title">
                     <a href="#pablo">Beautiful Castle</a>
                 </h4>
-                <div
-                    slot="description"
-                    class="card-description"
-                >
-                    The place is close to Metro Station
-                    and bus stop just 2 min by walk and
-                    near to "Naviglio" where you can
-                    enjoy the main night life in Milan.
+                <div slot="description" class="card-description">
+                    The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the main night life
+                    in Milan.
                 </div>
                 <template slot="footer">
                     <div class="price">
                         <h4>$459/night</h4>
                     </div>
                     <div class="stats">
-                        <p class="category">
-                            <md-icon>place</md-icon>Milan, Italy
-                        </p>
+                        <p class="category"><md-icon>place</md-icon>Milan, Italy</p>
                     </div>
                 </template>
             </product-card>
@@ -430,7 +366,7 @@ import components from '@/components';
 export default {
     name: 'Dashboard',
     components: {
-        ...components,
+        ...components
     },
     data() {
         return {
@@ -449,16 +385,16 @@ export default {
                 IN: 200,
                 RO: 600,
                 RU: 300,
-                US: 2920,
+                US: 2920
             },
             dailySalesChart: {
                 data: {
                     labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-                    series: [[12, 17, 7, 17, 23, 18, 38]],
+                    series: [[12, 17, 7, 17, 23, 18, 38]]
                 },
                 options: {
                     lineSmooth: this.$Chartist.Interpolation.cardinal({
-                        tension: 0,
+                        tension: 0
                     }),
                     low: 0,
                     high: 50,
@@ -468,28 +404,19 @@ export default {
                         top: 0,
                         right: 0,
                         bottom: 0,
-                        left: 0,
-                    },
-                },
+                        left: 0
+                    }
+                }
             },
             dataCompletedTasksChart: {
                 data: {
-                    labels: [
-                        '12am',
-                        '3pm',
-                        '6pm',
-                        '9pm',
-                        '12pm',
-                        '3am',
-                        '6am',
-                        '9am',
-                    ],
-                    series: [[230, 750, 450, 300, 280, 240, 200, 190]],
+                    labels: ['12am', '3pm', '6pm', '9pm', '12pm', '3am', '6am', '9am'],
+                    series: [[230, 750, 450, 300, 280, 240, 200, 190]]
                 },
 
                 options: {
                     lineSmooth: this.$Chartist.Interpolation.cardinal({
-                        tension: 0,
+                        tension: 0
                     }),
                     low: 0,
                     high: 1000,
@@ -499,46 +426,18 @@ export default {
                         top: 0,
                         right: 0,
                         bottom: 0,
-                        left: 0,
-                    },
-                },
+                        left: 0
+                    }
+                }
             },
             emailsSubscriptionChart: {
                 data: {
-                    labels: [
-                        'Ja',
-                        'Fe',
-                        'Ma',
-                        'Ap',
-                        'Mai',
-                        'Ju',
-                        'Jul',
-                        'Au',
-                        'Se',
-                        'Oc',
-                        'No',
-                        'De',
-                    ],
-                    series: [
-                        [
-                            542,
-                            443,
-                            320,
-                            780,
-                            553,
-                            453,
-                            326,
-                            434,
-                            568,
-                            610,
-                            756,
-                            895,
-                        ],
-                    ],
+                    labels: ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De'],
+                    series: [[542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]]
                 },
                 options: {
                     axisX: {
-                        showGrid: false,
+                        showGrid: false
                     },
                     low: 0,
                     high: 1000,
@@ -546,8 +445,8 @@ export default {
                         top: 0,
                         right: 5,
                         bottom: 0,
-                        left: 0,
-                    },
+                        left: 0
+                    }
                 },
                 responsiveOptions: [
                     [
@@ -557,13 +456,13 @@ export default {
                             axisX: {
                                 labelInterpolationFnc(value) {
                                     return value[0];
-                                },
-                            },
-                        },
-                    ],
-                ],
-            },
+                                }
+                            }
+                        }
+                    ]
+                ]
+            }
         };
-    },
+    }
 };
 </script>

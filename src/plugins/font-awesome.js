@@ -1,11 +1,6 @@
 import Vue from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-    faFileCsv,
-    faFileInvoice,
-    faFileMedical,
-    faFilePrescription,
-} from '@fortawesome/free-solid-svg-icons';
+import { faFileCsv, faFileInvoice, faFileMedical, faFilePrescription } from '@fortawesome/free-solid-svg-icons';
 import {
     faFile,
     faFileAlt,
@@ -17,7 +12,7 @@ import {
     faFilePdf,
     faFilePowerpoint,
     faFileVideo,
-    faFileWord,
+    faFileWord
 } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -37,7 +32,7 @@ library.add(
     faFilePdf,
     faFilePowerpoint,
     faFileVideo,
-    faFileWord,
+    faFileWord
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

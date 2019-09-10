@@ -3,21 +3,10 @@
         <div
             v-for="(item, index) in collapse"
             :key="item"
-            :class="[
-                'md-collapse',
-                activeCollapse(index + 1),
-                {[getColorCollapse(colorCollapse)]: !toggleAll}]"
+            :class="['md-collapse', activeCollapse(index + 1), { [getColorCollapse(colorCollapse)]: !toggleAll }]"
         >
-            <div
-                v-ripple
-                :class="{'no-hover': toggleAll}"
-                class="md-collapse-label"
-                @click="toggle(index + 1)"
-            >
-                <h5
-                    class="md-collapse-title"
-                    :style="{ 'color':toggleAll ? '#3c4858 !important': '' }"
-                >
+            <div v-ripple :class="{ 'no-hover': toggleAll }" class="md-collapse-label" @click="toggle(index + 1)">
+                <h5 class="md-collapse-title" :style="{ color: toggleAll ? '#3c4858 !important' : '' }">
                     <span v-html="item" />
                     <md-icon v-show="!toggleAll">
                         {{ icon }}
@@ -26,10 +15,7 @@
             </div>
 
             <collapse-transition>
-                <div
-                    v-show="getActiveCollapse(index + 1)"
-                    class="md-collapse-content"
-                >
+                <div v-show="getActiveCollapse(index + 1)" class="md-collapse-content">
                     <slot :name="getCollapseContent(index + 1)" />
                 </div>
             </collapse-transition>
@@ -43,17 +29,17 @@ import { CollapseTransition } from 'vue2-transitions';
 export default {
     name: 'Collapse',
     components: {
-        CollapseTransition,
+        CollapseTransition
     },
     props: {
         collapse: Array,
         icon: String,
         colorCollapse: String,
-        toggleAll: Boolean,
+        toggleAll: Boolean
     },
     data() {
         return {
-            isActive: 1,
+            isActive: 1
         };
     },
     methods: {
@@ -65,7 +51,7 @@ export default {
         },
         activeCollapse(index) {
             return {
-                'is-active': this.isActive === index,
+                'is-active': this.isActive === index
             };
         },
         toggle(index) {
@@ -83,20 +69,20 @@ export default {
                 return `md-${colorCollapse}`;
             }
             return false;
-        },
-    },
+        }
+    }
 };
 </script>
 
 <style lang="scss" scoped>
 .text-center {
-  display: flex;
+    display: flex;
 }
 .no-hover {
-  cursor: default;
-  color: #3c4858 !important;
+    cursor: default;
+    color: #3c4858 !important;
 }
 .md-collapse-title {
-  margin-right: 12px;
+    margin-right: 12px;
 }
 </style>

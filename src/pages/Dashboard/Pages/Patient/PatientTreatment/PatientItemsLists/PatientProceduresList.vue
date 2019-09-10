@@ -14,30 +14,19 @@
                         </md-icon>
                         Change plan title
                     </md-button>
-                    <md-button
-                        class="md-simple"
-                        @click="showDeleteItemSnackbar = true"
-                    >
+                    <md-button class="md-simple" @click="showDeleteItemSnackbar = true">
                         <md-icon>
                             delete
                         </md-icon>
                         Delete plan
                     </md-button>
-                    <md-button
-                        v-if="currentPlan.state === 1"
-                        class="md-simple"
-                        @click="unApprovePlan(currentPlanID)"
-                    >
+                    <md-button v-if="currentPlan.state === 1" class="md-simple" @click="unApprovePlan(currentPlanID)">
                         <md-icon>
                             cancel
                         </md-icon>
                         not approve
                     </md-button>
-                    <md-button
-                        v-else
-                        class="md-primary"
-                        @click="approvePlan(currentPlanID)"
-                    >
+                    <md-button v-else class="md-primary" @click="approvePlan(currentPlanID)">
                         <md-icon>
                             check
                         </md-icon>
@@ -55,14 +44,8 @@
             @onSelected="onSelected"
         >
             <template slot="emptyState">
-                <md-table-empty-state
-                    :md-label="`No procedures found`"
-                    md-description="Scroll top, and create a new one"
-                >
-                    <md-button
-                        class="md-primary md-raised"
-                        @click="scrollToTop()"
-                    >
+                <md-table-empty-state :md-label="`No procedures found`" md-description="Scroll top, and create a new one">
+                    <md-button class="md-primary md-raised" @click="scrollToTop()">
                         Scroll Top
                     </md-button>
                 </md-table-empty-state>
@@ -75,9 +58,7 @@
             :md-active.sync="showDeleteItemSnackbar"
             md-persistent
         >
-            <div
-                class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100"
-            >
+            <div class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100">
                 <div class="snackbar-text-wrapper ">
                     Selected:
                     <animated-number :value="selectedItems.length" />
@@ -85,30 +66,14 @@
                     <animated-number :value="selectedItemsPrice" />
                     {{ currentClinic.currencyCode }}
                 </div>
-                <div
-                    class="snackbar-action-wrapper  ml-auto md-alignment-center-right "
-                >
-                    <md-button
-                        v-if="
-                            selectedItems.length ===
-                                currentPlanProcedures.length
-                        "
-                        class="md-simple"
-                        @click="unselectAll()"
-                    >
+                <div class="snackbar-action-wrapper  ml-auto md-alignment-center-right ">
+                    <md-button v-if="selectedItems.length === currentPlanProcedures.length" class="md-simple" @click="unselectAll()">
                         Unselect
                     </md-button>
-                    <md-button
-                        v-else
-                        class="md-simple"
-                        @click="selectedItems = currentPlanProcedures"
-                    >
+                    <md-button v-else class="md-simple" @click="selectedItems = currentPlanProcedures">
                         Select all
                     </md-button>
-                    <md-button
-                        class="md-simple"
-                        @click="showDeleteItemSnackbar = false"
-                    >
+                    <md-button class="md-simple" @click="showDeleteItemSnackbar = false">
                         Complete
                     </md-button>
                     <md-button class="md-success" @click="showCreateInvoice()">
@@ -155,15 +120,10 @@ export default {
             currentPlanID: 'getCurrentPlanID'
         }),
         getPlanTotalPrice() {
-            return this.manipulationsByPlanID(this.currentPlan.ID).reduce(
-                (a, b) => a + (b.totalPrice || 0),
-                0
-            );
+            return this.manipulationsByPlanID(this.currentPlan.ID).reduce((a, b) => a + (b.totalPrice || 0), 0);
         },
         selectedItemsPrice() {
-            let sum = this.getManipulationsByProcedureIDs(
-                this.selectedItems.map(p => p.ID)
-            ).reduce((a, b) => a + b.totalPrice, 0);
+            let sum = this.getManipulationsByProcedureIDs(this.selectedItems.map(p => p.ID)).reduce((a, b) => a + b.totalPrice, 0);
             return sum || 0;
         },
         headers() {
@@ -171,9 +131,7 @@ export default {
                 {
                     title: 'Plan Name',
                     subTitlePrefix: 'created',
-                    subTitlePostfix: moment(this.currentPlan.created).format(
-                        'MMM Do YYYY'
-                    ),
+                    subTitlePostfix: moment(this.currentPlan.created).format('MMM Do YYYY'),
                     valuePrefix: this.currentPlan.name,
                     valuePostfix: null
                 },
@@ -182,10 +140,7 @@ export default {
                     subTitlePrefix: this.unbilledProceduresPrice,
                     subTitlePostfix: this.currentClinic.currencyCode,
                     subTitleToFix: 2,
-                    valuePrefix: parseInt(
-                        this.currentPlanProcedures.length,
-                        10
-                    ),
+                    valuePrefix: parseInt(this.currentPlanProcedures.length, 10),
                     valueToFix: 0,
                     valuePostfix: null
                 },
@@ -194,10 +149,7 @@ export default {
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     subTitleToFix: 0,
-                    valuePrefix: parseInt(
-                        this.currentPlanProcedures.length,
-                        10
-                    ),
+                    valuePrefix: parseInt(this.currentPlanProcedures.length, 10),
                     valueToFix: 0,
                     valuePostfix: null
                 },
@@ -206,10 +158,7 @@ export default {
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     subTitleToFix: 0,
-                    valuePrefix: parseInt(
-                        this.manipulationsByPlanID(this.currentPlan.ID).length,
-                        10
-                    ),
+                    valuePrefix: parseInt(this.manipulationsByPlanID(this.currentPlan.ID).length, 10),
                     valueToFix: 0,
                     valuePostfix: null
                 },
@@ -234,10 +183,7 @@ export default {
     },
     methods: {
         totalPrice(IDs) {
-            const sum = this.getManipulationsByProcedureIDs(IDs).reduce(
-                (a, b) => a + b.totalPrice,
-                0
-            );
+            const sum = this.getManipulationsByProcedureIDs(IDs).reduce((a, b) => a + b.totalPrice, 0);
             return sum || 0;
         },
         unApprovePlan(planID) {
@@ -285,7 +231,7 @@ export default {
                     planID: this.currentPlan.ID
                 })
                 .then()
-                .catch(err => {
+                .catch(() => {
                     this.showDeleteItemSnackbar = false;
                     if (this.lodash.isEmpty(this.patient.plans)) {
                         this.redirectToPlan();

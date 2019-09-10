@@ -1,8 +1,6 @@
 <template lang="html">
     <div class="md-layout md-gutter set-diagnose-form">
-        <div
-            class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50"
-        >
+        <div class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
             <div class="mx-auto" style="flex-grow:1;">
                 <jaw
                     :selected-teeth="selectedTeeth"
@@ -13,40 +11,21 @@
                         procedures: currentPlanProcedures,
                         anamnesis: patient.anamnesis
                     }"
-                    :teeth-system="currentClinic.teethSystem"
                     :type="currentType"
                     @onSelectedTeeth="onSelectedTeeth"
                     @showToothInfo="showToothInfo"
                     @onSizeChanged="matchHeight"
                 >
                     <template v-if="patient.ID" slot="title-start">
-                        <md-tabs
-                            md-sync-route
-                            class="t-md-tabs"
-                            :class="currentType"
-                        >
-                            <md-tab
-                                id="tab-home"
-                                :to="
-                                    `/${$i18n.locale}/patient/${patient.ID}/treatment/plan`
-                                "
-                                md-label="Procedures"
-                            />
+                        <md-tabs md-sync-route class="t-md-tabs" :class="currentType">
+                            <md-tab id="tab-home" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan`" md-label="Procedures" />
                             <md-tab
                                 id="tab-pages"
                                 class="diagnosis"
-                                :to="
-                                    `/${$i18n.locale}/patient/${patient.ID}/treatment/diagnosis`
-                                "
+                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/diagnosis`"
                                 md-label="Diagnoses"
                             />
-                            <md-tab
-                                id="tab-posts"
-                                :to="
-                                    `/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`
-                                "
-                                md-label="Anamnes"
-                            />
+                            <md-tab id="tab-posts" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`" md-label="Anamnes" />
                         </md-tabs>
                     </template>
                 </jaw>
@@ -65,13 +44,7 @@
         </keep-alive>
         <div style="margin-top:30px;" class="md-layout-item  md-size-100">
             <keep-alive>
-                <router-view
-                    ref="items-lists"
-                    name="list"
-                    :current-type="currentType"
-                    :plans="patient.plans"
-                    @showItemInfo="selectItem"
-                />
+                <router-view ref="items-lists" name="list" :current-type="currentType" :plans="patient.plans" @showItemInfo="selectItem" />
             </keep-alive>
         </div>
 
@@ -92,12 +65,7 @@
                 @editItem="editItem"
                 @onPrint="onShowPrint"
             />
-            <plan-add-form
-                :show-form.sync="showAddPlan"
-                :plans="patient.plans"
-                :patient-id="patient.ID"
-                @onPlanCreated="redirectToProcdures"
-            />
+            <plan-add-form :show-form.sync="showAddPlan" :plans="patient.plans" :patient-id="patient.ID" @onPlanCreated="redirectToProcdures" />
             <t-print-form :patient="patient" :show-form.sync="showPrint" />
         </div>
     </div>
@@ -124,7 +92,6 @@ export default {
         next(vm => {
             if (from.name) {
                 if (to.params.planID) {
-                    vm.currentPlanID = to.params.planID;
                     vm.$router.push({
                         name: 'procedures',
                         params: {
@@ -152,8 +119,6 @@ export default {
     },
     data() {
         return {
-            // currentType: 'procedures',
-            // currentPlanID: null,
             showToothDiagnosis: false,
             showAddItemWizard: false,
             jawHeight: 0,
@@ -170,7 +135,6 @@ export default {
     computed: {
         ...mapGetters({
             jaw: 'jaw',
-            jawEthalon: 'jawEthalon',
             patient: 'getPatient',
             teethSchema: 'teethSchema',
             currentClinic: 'getCurrentClinic',
@@ -205,13 +169,7 @@ export default {
             if (this.currentType === 'diagnosis') {
                 return ['locations', 'files', 'description'];
             }
-            return [
-                'locations',
-                'manipulations',
-                'files',
-                'description',
-                'appointments'
-            ];
+            return ['locations', 'manipulations', 'files', 'description', 'appointments'];
         },
         singleItemName() {
             if (this.currentType === 'anamnesis') {
@@ -225,15 +183,11 @@ export default {
         itemToShow() {
             let itemToShow = {};
             if (this.showParams.type === 'procedures') {
-                itemToShow = this.patient.currentPlanProcedures.find(
-                    item => item.id === this.showParams.itemId
-                );
+                itemToShow = this.patient.currentPlanProcedures.find(item => item.id === this.showParams.itemId);
                 return itemToShow;
             }
             if (this.patient[this.showParams.type]) {
-                itemToShow = this.patient[this.showParams.type].find(
-                    item => item.id === this.showParams.itemId
-                );
+                itemToShow = this.patient[this.showParams.type].find(item => item.id === this.showParams.itemId);
             }
             return itemToShow;
         }
@@ -257,11 +211,7 @@ export default {
         }
     },
     mounted() {
-        if (
-            this.$route.params &&
-            this.$route.params.planID &&
-            this.currentPlanID !== this.$route.params.planID
-        ) {
+        if (this.$route.params && this.$route.params.planID && this.currentPlanID !== this.$route.params.planID) {
             this.redirectToProcdures(this.currentPlanID);
         }
     },
@@ -367,48 +317,6 @@ export default {
                 diagnose: d
             });
         },
-        // saveItem(d) {
-        //     if (d.id) {
-        //         if (this.currentType === 'diagnosis') {
-        //             this.saveEditedDiagnose(d);
-        //         }
-        //         if (this.currentType === 'anamnesis') {
-        //             this.saveEditedAnamnes(d);
-        //         }
-        //         if (this.currentType === 'procedures') {
-        //             this.saveEditedProcedure(d);
-        //         }
-        //     } else {
-        //         const itemL = this.lodash.cloneDeep(d);
-        //         itemL.date = new Date();
-        //         itemL.author = {
-        //             ID: this.user.ID,
-        //             avatar: this.user.avatar,
-        //             firstName: this.user.firstName,
-        //             lastName: this.user.lastName,
-        //         };
-        //         itemL.showInJaw = true;
-        //         itemL.state = 'planned';
-        //         itemL.id = Math.random();
-        //         if (this.currentType === 'diagnosis') {
-        //             this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
-        //                 diagnose: itemL,
-        //             });
-        //         }
-        //         if (this.currentType === 'anamnesis') {
-        //             this.$store.dispatch(PATIENT_ANAMNES_SET, {
-        //                 anamnes: itemL,
-        //             });
-        //         }
-        //         if (this.currentType === 'procedures') {
-        //             this.$store.dispatch(PATIENT_PROCEDURE_SET, {
-        //                 planID: this.currentPlanID,
-        //                 procedure: itemL,
-        //             });
-        //         }
-        //     }
-
-        // },
         saveProcedure(p) {
             if (p.id) {
                 this.saveEditedProcedure(p);
@@ -432,7 +340,7 @@ export default {
         },
         selectItem(item) {
             if (item) {
-                const catalogName = this.getItemCatalogFieldName();
+                // const catalogName = this.getItemCatalogFieldName();
                 this.selecteditemLocal = {
                     ID: null,
                     [this.getItemCatalogFieldName()]: item.ID,

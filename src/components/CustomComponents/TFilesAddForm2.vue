@@ -1,29 +1,24 @@
 <template>
     <div>
         <div class="file-header-block">
-            <md-toolbar
-                class="toolbar-jaw md-alignment-center-space-between md-layout md-transparent"
-            >
+            <md-toolbar class="toolbar-jaw md-alignment-center-space-between md-layout md-transparent">
                 <div class="md-layout-item">
                     <md-field
                         :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('files') && touched.files},
-                            {'md-error': errors.has('files')}]"
+                            { 'with-subline': true },
+                            { 'md-valid': !errors.has('files') && touched.files },
+                            { 'md-error': errors.has('files') }
+                        ]"
                     >
                         <label>Select files</label>
-                        <md-file
-                            v-model="multiple"
-                            multiple
-                            @md-change="addedFiles"
-                        />
+                        <md-file v-model="multiple" multiple @md-change="addedFiles" />
                         <span class="md-error">{{ errors.first('files') }}</span>
                         <slide-y-down-transition>
                             <md-button
                                 v-show="errors.has('files')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="user.files='',focusOn('files')"
+                                @click="(user.files = ''), focusOn('files')"
                             >
                                 <md-icon class="error">
                                     close
@@ -44,16 +39,13 @@
                     </md-field>
                 </div>
                 <div>
-                    <div
-                        style="max-height:41px;"
-                        class="manipulations-input__action md-layout-item md-alignment-center-right md-layout"
-                    >
+                    <div style="max-height:41px;" class="manipulations-input__action md-layout-item md-alignment-center-right md-layout">
                         <md-button
                             id="addButton"
                             ref="addButton"
                             key="addButton"
                             tabindex="1"
-                            :class="[{'md-primary': multiple}]"
+                            :class="[{ 'md-primary': multiple }]"
                             class="md-button md-just-icon md-round"
                             @keydown.enter="downloadFile()"
                             @click="downloadFile()"
@@ -68,9 +60,7 @@
 </template>
 
 <script>
-
-
-import { UPLOAD_FILE_SETTINGS } from '@/constants';
+// import { UPLOAD_FILE_SETTINGS } from '@/constants';
 
 const MAX_SIZE = 100000;
 const MAX_WIDTH = 500;
@@ -82,32 +72,32 @@ export default {
     props: {
         url: {
             type: String,
-            default: '',
+            default: ''
         },
         accessToken: {
             type: String,
-            default: '',
+            default: ''
         },
         files: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         maxFilesize: {
             type: Number,
-            default: () => 5,
+            default: () => 5
         },
         tokenExpiresAt: {
             type: String,
-            default: () => '',
+            default: () => ''
         },
         authRefreshToken: {
             type: String,
-            default: () => '',
+            default: () => ''
         },
         patientAddSubProp: {
             type: String,
-            default: () => '',
-        },
+            default: () => ''
+        }
     },
     data() {
         return {
@@ -115,14 +105,14 @@ export default {
             image: {
                 size: '',
                 height: '',
-                width: '',
+                width: ''
             },
             imageError: '',
             modelValidations: {
                 files: {
-                    required: true,
-                },
-            },
+                    required: true
+                }
+            }
         };
     },
     computed: {
@@ -137,11 +127,11 @@ export default {
                 autoProcessQueue: false,
                 headers: {
                     'Cache-Control': null,
-                    'X-Requested-With': null,
-                },
+                    'X-Requested-With': null
+                }
             };
             return options;
-        },
+        }
     },
     methods: {
         onSuccess(file, response) {
@@ -169,7 +159,7 @@ export default {
             const reader = new FileReader();
 
             reader.readAsDataURL(file);
-            reader.onload = (evt) => {
+            reader.onload = evt => {
                 const img = new Image();
                 img.onload = () => {
                     this.image.width = img.width;
@@ -187,11 +177,11 @@ export default {
                 img.src = evt.target.result;
             };
 
-            reader.onerror = (evt) => {
+            reader.onerror = evt => {
                 console.error(evt);
             };
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -1,8 +1,5 @@
 <template>
-    <div
-        v-if="!isEmpty(files)"
-        class="files-list"
-    >
+    <div v-if="!isEmpty(files)" class="files-list">
         <div class="">
             <md-table
                 v-viewer="options"
@@ -12,58 +9,32 @@
                 :md-sort-fn="customSort"
                 class="paginated-table table-striped images table-hover"
             >
-                <md-table-toolbar
-                    v-if="paginated"
-                >
+                <md-table-toolbar v-if="paginated">
                     <md-field>
                         <label for="pages">Per page {{ total }}</label>
-                        <md-select
-                            v-model="pagination.perPage"
-                            name="pages"
-                        >
-                            <md-option
-                                v-for="(item, index) in pagination.perPageOptions"
-                                :key="index"
-                                :label="item"
-                                :value="item"
-                            >
+                        <md-select v-model="pagination.perPage" name="pages">
+                            <md-option v-for="(item, index) in pagination.perPageOptions" :key="index" :label="item" :value="item">
                                 {{ item }}
                             </md-option>
                         </md-select>
                     </md-field>
 
                     <md-field>
-                        <md-input
-                            v-model="searchQuery"
-                            type="search"
-                            class="mb-3"
-                            clearable
-                            style="width: 200px"
-                            placeholder="Search records"
-                        />
+                        <md-input v-model="searchQuery" type="search" class="mb-3" clearable style="width: 200px" placeholder="Search records" />
                     </md-field>
                 </md-table-toolbar>
 
-                <md-table-empty-state
-                    :md-label="`Nothing to show`"
-                    :md-description="` Scroll top, and add new file .`"
-                >
-                    <md-button
-                        class="md-primary md-raised"
-                        @click="scrollToTop()"
-                    >
+                <md-table-empty-state :md-label="`Nothing to show`" :md-description="` Scroll top, and add new file .`">
+                    <md-button class="md-primary md-raised" @click="scrollToTop()">
                         Scroll Top
                     </md-button>
                 </md-table-empty-state>
 
-                <md-table-row
-                    slot="md-table-row"
-                    slot-scope="{ item }"
-                >
+                <md-table-row slot="md-table-row" slot-scope="{ item }">
                     <md-table-cell
                         v-for="(field, index) in columns"
                         :key="index"
-                        :class="[{'md-xsmall-hide': !!(field.key != 'filePreview' )} ]"
+                        :class="[{ 'md-xsmall-hide': !!(field.key != 'filePreview') }]"
                         :md-label="field.title"
                     >
                         <div v-if="field.key === 'filePreview'">
@@ -80,45 +51,23 @@
                                 />
                             </div>
                         </div>
-                        <div
-                            v-else-if="field.key === 'name'"
-                            :md-label="field.title"
-                            :md-sort-by="field.sortable? field.key: ''"
-                        >
+                        <div v-else-if="field.key === 'name'" :md-label="field.title" :md-sort-by="field.sortable ? field.key : ''">
                             {{ item[field.key] }}
                         </div>
-                        <div
-                            v-else-if="field.key === 'created'"
-                            :md-label="field.title"
-                            :md-sort-by="field.sortable? field.key: ''"
-                        >
-                            <span>{{ item.created | moment("from") }}</span>
-                            <br>
-                            <small>{{ item.created | moment("calendar") }}</small>
+                        <div v-else-if="field.key === 'created'" :md-label="field.title" :md-sort-by="field.sortable ? field.key : ''">
+                            <span>{{ item.created | moment('from') }}</span>
+                            <br />
+                            <small>{{ item.created | moment('calendar') }}</small>
                         </div>
-                        <div
-                            v-else-if="field.key === 'fileType'"
-                            :md-sort-by="field.sortable? field.key: ''"
-                            :md-label="field.title"
-                        >
+                        <div v-else-if="field.key === 'fileType'" :md-sort-by="field.sortable ? field.key : ''" :md-label="field.title">
                             {{ item.mimeType }}
                         </div>
-                        <div
-                            v-else-if="field.key === 'filesize'"
-                            :md-label="field.title"
-                            :md-sort-by="field.sortable? field.key: ''"
-                        >
+                        <div v-else-if="field.key === 'filesize'" :md-label="field.title" :md-sort-by="field.sortable ? field.key : ''">
                             {{ item.size | formatBytes }}
                         </div>
-                        <div
-                            v-else-if="field.key === 'author'"
-                            :md-sort-by="field.sortable? field.key: ''"
-                        >
+                        <div v-else-if="field.key === 'author' && item.author" :md-sort-by="field.sortable ? field.key : ''">
                             <div class="md-layout md-alignment-left-center">
-                                <div
-                                    class="md-layout-item md-layout"
-                                    style="max-width:35px;"
-                                >
+                                <div class="md-layout-item md-layout" style="max-width:35px;">
                                     <t-avatar
                                         small
                                         :text-to-color="item.author.ID"
@@ -130,29 +79,20 @@
 
                                 <span class="md-layout-item">
                                     <small>{{ item.author.lastName | capitilize }}</small>
-                                    <br>
+                                    <br />
                                     <small>{{ item.author.firstName | capitilize }}</small>
                                 </span>
                             </div>
                         </div>
                     </md-table-cell>
                     <md-table-cell md-label="Actions">
-                        <md-button
-                            class="md-just-icon md-simple"
-                            @click="downoladFile(item.url)"
-                        >
+                        <md-button class="md-just-icon md-simple" @click="downoladFile(item.url)">
                             <md-icon>cloud_download</md-icon>
                         </md-button>
-                        <md-button
-                            class="md-just-icon md-simple"
-                            @click.native="printFile(item.url)"
-                        >
+                        <md-button class="md-just-icon md-simple" @click.native="printFile(item.url)">
                             <md-icon>print</md-icon>
                         </md-button>
-                        <md-button
-                            class="md-just-icon md-danger md-simple"
-                            @click.native="handleDelete(item)"
-                        >
+                        <md-button class="md-just-icon md-danger md-simple" @click.native="handleDelete(item)">
                             <md-icon>close</md-icon>
                         </md-button>
                     </md-table-cell>
@@ -163,11 +103,7 @@
                     <table>
                         <tfoot>
                             <tr>
-                                <th
-                                    v-for="(item, index) in columns"
-                                    :key="index"
-                                    class="md-table-head"
-                                >
+                                <th v-for="(item, index) in columns" :key="index" class="md-table-head">
                                     <div class="md-table-head-container md-ripple md-disabled">
                                         <div class="md-table-head-label">
                                             {{ item.title }}
@@ -185,21 +121,12 @@
                         </tfoot>
                     </table>
                 </div>
-                <div
-                    v-if="paginated"
-                    class="md-layout"
-                    md-alignment="space-between"
-                >
+                <div v-if="paginated" class="md-layout" md-alignment="space-between">
                     <div class="md-layout-item">
-                        <p class="card-category">
-                            Showing {{ from + 1 }} to {{ to }} of {{ total }} entries
-                        </p>
+                        <p class="card-category">Showing {{ from + 1 }} to {{ to }} of {{ total }} entries</p>
                     </div>
-                    <div
-                        v-if="files"
-                        class="md-layout-item"
-                    >
-                        <p>Total {{ files.length }} files ({{ totalFiles|formatBytes }})</p>
+                    <div v-if="files" class="md-layout-item">
+                        <p>Total {{ files.length }} files ({{ totalFiles | formatBytes }})</p>
                     </div>
                     <pagination
                         v-model="pagination.currentPage"
@@ -224,25 +151,25 @@ import components from '@/components';
 export default {
     name: 'TFilesList',
     components: {
-        ...components,
+        ...components
     },
     mixins: [tObjProp],
     props: {
         paginated: {
             type: Boolean,
-            default: () => true,
+            default: () => true
         },
         accessToken: {
             type: String,
-            default: '',
+            default: ''
         },
         fixedheader: {
             type: String,
-            default: '',
+            default: ''
         },
         files: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         columns: {
             type: Array,
@@ -250,42 +177,42 @@ export default {
                 {
                     key: 'filePreview',
                     title: 'Preview',
-                    sortable: false,
+                    sortable: false
                 },
                 {
                     key: 'name',
                     title: 'Name',
-                    sortable: true,
+                    sortable: true
                 },
                 {
                     key: 'created',
                     title: 'Created',
-                    sortable: true,
+                    sortable: true
                 },
                 {
                     key: 'fileType',
                     title: 'File Type',
-                    sortable: true,
+                    sortable: true
                 },
                 {
                     key: 'filesize',
                     title: 'File Size',
-                    sortable: true,
+                    sortable: true
                 },
                 {
                     key: 'author',
                     title: 'Author',
-                    sortable: true,
-                },
-            ],
-        },
+                    sortable: true
+                }
+            ]
+        }
     },
     data() {
         return {
             options: {
                 filter(image) {
                     return image.classList.contains('img-to-preview');
-                },
+                }
             },
             currentSort: 'name',
             currentSortOrder: 'asc',
@@ -293,7 +220,7 @@ export default {
                 perPage: 25,
                 currentPage: 1,
                 perPageOptions: [10, 25, 50],
-                total: 0,
+                total: 0
             },
             footerTable: ['Name', 'Email', 'Age', 'Salary', 'Actions'],
             searchQuery: '',
@@ -305,8 +232,8 @@ export default {
                 show: false,
                 name: '',
                 type: '',
-                content: '',
-            },
+                content: ''
+            }
         };
     },
     computed: {
@@ -315,12 +242,12 @@ export default {
         },
         headers() {
             return {
-                Authorization: this.access_token,
+                Authorization: this.access_token
             };
         },
         data() {
             return {
-                'Access-Control-Allow-Credentials': true,
+                'Access-Control-Allow-Credentials': true
             };
         },
         queriedData() {
@@ -344,31 +271,29 @@ export default {
             return this.pagination.perPage * (this.pagination.currentPage - 1);
         },
         total() {
-            return this.searchedData.length > 0
-                ? this.searchedData.length
-                : this.files.length;
-        },
+            return this.searchedData.length > 0 ? this.searchedData.length : this.files.length;
+        }
     },
     watch: {
-    /**
-             * Searches through the table data by a given query.
-             * NOTE: If you have a lot of data, it's recommended to do
-             * the search on the Server Side and only display the results here.
-             * @param value of the query
-             */
+        /**
+         * Searches through the table data by a given query.
+         * NOTE: If you have a lot of data, it's recommended to do
+         * the search on the Server Side and only display the results here.
+         * @param value of the query
+         */
         searchQuery(value) {
             let result = this.files;
             if (value !== '') {
                 result = this.fuseSearch.search(this.searchQuery);
             }
             this.searchedData = result;
-        },
+        }
     },
     mounted() {
-    // Fuse search initialization.
+        // Fuse search initialization.
         this.fuseSearch = new Fuse(this.files, {
             keys: ['name', 'email'],
-            threshold: 0.3,
+            threshold: 0.3
         });
     },
     methods: {
@@ -387,13 +312,9 @@ export default {
                 return value.sort((a, b) => {
                     const sortBy = this.currentSort;
                     if (this.currentSortOrder === 'desc') {
-                        return a[sortBy].firstName.localeCompare(
-                            b[sortBy].firstName,
-                        );
+                        return a[sortBy].firstName.localeCompare(b[sortBy].firstName);
                     }
-                    return b[sortBy].firstName.localeCompare(
-                        a[sortBy].firstName,
-                    );
+                    return b[sortBy].firstName.localeCompare(a[sortBy].firstName);
                 });
             }
             return value.sort((a, b) => {
@@ -404,53 +325,22 @@ export default {
                 return b[sortBy].localeCompare(a[sortBy]);
             });
         },
-        handleEdit(item) {
-            // swal({
-            //     title: `You want to edit ${item.name}`,
-            //     buttonsStyling: false,
-            //     confirmButtonClass: 'md-button md-info',
-            // });
-        },
+
         handleDelete(item) {
-            // swal({
-            //     title: 'Are you sure?',
-            //     text: "You won't be able to revert this!",
-            //     type: 'warning',
-            //     showCancelButton: true,
-            //     confirmButtonClass: 'md-button md-success btn-fill',
-            //     cancelButtonClass: 'md-button md-danger btn-fill',
-            //     confirmButtonText: 'Yes, delete it!',
-            //     buttonsStyling: false,
-            // }).then((result) => {
-            //     if (result.value) {
-            //         this.deleteRow(item);
-            //         swal({
-            //             title: 'Deleted!',
-            //             text: `You deleted ${item.name}`,
-            //             type: 'success',
-            //             confirmButtonClass: 'md-button md-success btn-fill',
-            //             buttonsStyling: false,
-            //         });
-            //     }
-            // });
+            console.log(item);
         },
         deleteRow(item) {
-            const indexToDelete = this.files.findIndex(
-                tableRow => tableRow.id === item.id,
-            );
+            const indexToDelete = this.files.findIndex(tableRow => tableRow.id === item.id);
             if (indexToDelete >= 0) {
                 this.files.splice(indexToDelete, 1);
             }
-        },
-    },
+        }
+    }
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .files-list {
-    table thead {
-    // display: none !important;
-}
     .md-table-cell {
         .md-table-cell-container {
             overflow: hidden;

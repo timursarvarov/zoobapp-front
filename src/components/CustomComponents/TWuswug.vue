@@ -1,36 +1,21 @@
 <template>
     <div class="editor">
-        <editor-menu-bar
-            v-slot="{ commands, isActive }"
-            :editor="editor"
-        >
+        <editor-menu-bar v-slot="{ commands, isActive }" :editor="editor">
             <div class="wuswug-header">
                 <md-toolbar class="md-transparent md-layout">
                     <div class="md-layout-item">
                         <slot name="start" />
                     </div>
                     <div class="md-layout-item">
-                        <md-button
-                            class="md-simple md-just-icon md-round"
-                            :class="{ 'md-primary': isActive.bold() }"
-                            @click="commands.bold"
-                        >
+                        <md-button class="md-simple md-just-icon md-round" :class="{ 'md-primary': isActive.bold() }" @click="commands.bold">
                             <md-icon>format_bold</md-icon>
                         </md-button>
 
-                        <md-button
-                            class="md-simple md-just-icon md-round"
-                            :class="{ 'md-primary': isActive.italic() }"
-                            @click="commands.italic"
-                        >
+                        <md-button class="md-simple md-just-icon md-round" :class="{ 'md-primary': isActive.italic() }" @click="commands.italic">
                             <md-icon>format_italic</md-icon>
                         </md-button>
 
-                        <md-button
-                            class="md-simple md-just-icon md-round"
-                            :class="{ 'md-primary': isActive.strike() }"
-                            @click="commands.strike"
-                        >
+                        <md-button class="md-simple md-just-icon md-round" :class="{ 'md-primary': isActive.strike() }" @click="commands.strike">
                             <md-icon>format_strikethrough</md-icon>
                         </md-button>
 
@@ -98,36 +83,22 @@
                             <md-icon>format_quote</md-icon>
                         </md-button>
 
-                        <md-button
-                            class="md-simple md-just-icon md-round"
-                            @click="commands.horizontal_rule"
-                        >
+                        <md-button class="md-simple md-just-icon md-round" @click="commands.horizontal_rule">
                             <md-icon>border_horizontal</md-icon>
                         </md-button>
 
-                        <md-button
-                            class="md-simple md-just-icon md-round"
-                            @click="commands.undo"
-                        >
+                        <md-button class="md-simple md-just-icon md-round" @click="commands.undo">
                             <md-icon>undo</md-icon>
                         </md-button>
 
-                        <md-button
-                            class="md-simple md-just-icon md-round"
-                            @click="commands.redo"
-                        >
+                        <md-button class="md-simple md-just-icon md-round" @click="commands.redo">
                             <md-icon>redo</md-icon>
                         </md-button>
                     </div>
                 </md-toolbar>
             </div>
         </editor-menu-bar>
-        <editor-content
-            class="md-layout-item"
-            :autofocus="true"
-            :editor="editor"
-            placeholder="Write something …"
-        />
+        <editor-content class="md-layout-item" :autofocus="true" :editor="editor" placeholder="Write something …" />
     </div>
 </template>
 
@@ -149,24 +120,24 @@ import {
     Strike,
     Underline,
     History,
-    Placeholder,
+    Placeholder
 } from 'tiptap-extensions';
 
 export default {
     name: 'TWuswug',
     components: {
         EditorContent,
-        EditorMenuBar,
+        EditorMenuBar
     },
     props: {
         content: {
             type: String,
-            default: () => '',
+            default: () => ''
         },
         contentDescription: {
             type: String,
-            default: () => '',
-        },
+            default: () => ''
+        }
     },
     data() {
         return {
@@ -190,14 +161,14 @@ export default {
                     new Placeholder({
                         emptyNodeClass: 'is-empty',
                         emptyNodeText: 'Write something …',
-                        showOnlyWhenEditable: true,
-                    }),
+                        showOnlyWhenEditable: true
+                    })
                 ],
                 content: this.content,
                 onUpdate: ({ getHTML }) => {
                     this.$emit('input', getHTML());
-                },
-            }),
+                }
+            })
         };
     },
     watch: {
@@ -212,14 +183,14 @@ export default {
             if (val !== this.editor.getHTML()) {
                 this.editor.setContent(val);
             }
-        },
+        }
     },
     mounted() {
         this.editor.setContent(this.content);
     },
     beforeDestroy() {
         this.editor.destroy();
-    },
+    }
 };
 </script>
 <style lang="scss">

@@ -1,10 +1,7 @@
 import { Trans } from '@/plugins/translation';
 
 function load(path) {
-    return () =>
-        import(
-            /* webpackChunkName: "[request]" */ `@/pages/Dashboard/${path}.vue`
-        );
+    return () => import(/* webpackChunkName: "[request]" */ `@/pages/Dashboard/${path}.vue`);
 }
 
 const componentsMenu = {
@@ -294,18 +291,26 @@ const patientPages = {
                     }
                 },
                 {
+                    path: 'print',
+                    name: 'Print',
+                    meta: {
+                        requiresAuth: true,
+                        disableScroll: true
+                    },
+                    components: {
+                        Files: load('Pages/Patient/PatientPrint/PatientPrintForm')
+                    }
+                },
+                {
                     path: 'billing',
                     name: 'Billing',
                     meta: {
                         requiresAuth: true,
                         disableScroll: true
                     },
-                    redirect:
-                        '/:lang/patient/:patientID/billing/unbilled_procedures',
+                    redirect: '/:lang/patient/:patientID/billing/unbilled_procedures',
                     components: {
-                        Billing: load(
-                            'Pages/Patient/PatientBilling/PatientBilling'
-                        )
+                        Billing: load('Pages/Patient/PatientBilling/PatientBilling')
                     },
                     children: [
                         {
@@ -315,9 +320,7 @@ const patientPages = {
                                 requiresAuth: true,
                                 disableScroll: true
                             },
-                            component: load(
-                                'Pages/Patient/PatientBilling/PatientBillingUnbiledProcedures'
-                            )
+                            component: load('Pages/Patient/PatientBilling/PatientBillingUnbiledProcedures')
                         },
                         {
                             path: 'invoices',
@@ -326,9 +329,7 @@ const patientPages = {
                                 requiresAuth: true,
                                 disableScroll: true
                             },
-                            component: load(
-                                'Pages/Patient/PatientBilling/PatientBillingInvoices'
-                            )
+                            component: load('Pages/Patient/PatientBilling/PatientBillingInvoices')
                         },
                         {
                             path: 'payments',
@@ -337,9 +338,7 @@ const patientPages = {
                                 requiresAuth: true,
                                 disableScroll: true
                             },
-                            component: load(
-                                'Pages/Patient/PatientBilling/PatientBillingPayments'
-                            )
+                            component: load('Pages/Patient/PatientBilling/PatientBillingPayments')
                         }
                     ]
                 },
@@ -351,12 +350,8 @@ const patientPages = {
                         disableScroll: true
                     },
                     components: {
-                        treatmentchild: load(
-                            'Pages/Patient/PatientTreatment/PatientTreatment'
-                        ),
-                        search: load(
-                            'Pages/Patient/PatientTreatment/PatientItemsSearch/PatientProceduresSearch'
-                        )
+                        treatmentchild: load('Pages/Patient/PatientTreatment/PatientTreatment'),
+                        search: load('Pages/Patient/PatientTreatment/PatientItemsSearch/PatientProceduresSearch')
                     },
                     redirect: '/:lang/patient/:patientID/treatment/plan',
                     children: [
@@ -369,12 +364,8 @@ const patientPages = {
                                 disableScroll: true
                             },
                             components: {
-                                search: load(
-                                    'Pages/Patient/PatientTreatment/PatientItemsSearch/PatientDiagnosisSearch'
-                                ),
-                                list: load(
-                                    'Pages/Patient/PatientTreatment/PatientItemsLists/PatientDiagnosisList'
-                                )
+                                search: load('Pages/Patient/PatientTreatment/PatientItemsSearch/PatientDiagnosisSearch'),
+                                list: load('Pages/Patient/PatientTreatment/PatientItemsLists/PatientDiagnosisList')
                             }
                         },
                         {
@@ -386,12 +377,8 @@ const patientPages = {
                                 disableScroll: true
                             },
                             components: {
-                                search: load(
-                                    'Pages/Patient/PatientTreatment/PatientItemsSearch/PatientAnamnesisSearch'
-                                ),
-                                list: load(
-                                    'Pages/Patient/PatientTreatment/PatientItemsLists/PatientAnamnesisList'
-                                )
+                                search: load('Pages/Patient/PatientTreatment/PatientItemsSearch/PatientAnamnesisSearch'),
+                                list: load('Pages/Patient/PatientTreatment/PatientItemsLists/PatientAnamnesisList')
                             }
                         },
                         {
@@ -403,15 +390,9 @@ const patientPages = {
                                 disableScroll: false
                             },
                             components: {
-                                search: load(
-                                    'Pages/Patient/PatientTreatment/PatientItemsSearch/PatientProceduresSearch'
-                                ),
-                                list: load(
-                                    'Pages/Patient/PatientTreatment/PatientItemsLists/PatientPlansList'
-                                ),
-                                itemsList: load(
-                                    'Pages/Patient/PatientTreatment/PatientItemsLists/PatientPlansList'
-                                )
+                                search: load('Pages/Patient/PatientTreatment/PatientItemsSearch/PatientProceduresSearch'),
+                                list: load('Pages/Patient/PatientTreatment/PatientItemsLists/PatientPlansList'),
+                                itemsList: load('Pages/Patient/PatientTreatment/PatientItemsLists/PatientPlansList')
                             },
                             children: [
                                 {
@@ -422,9 +403,7 @@ const patientPages = {
                                         requiresAuth: true,
                                         disableScroll: true
                                     },
-                                    component: load(
-                                        'Pages/Patient/PatientTreatment/PatientItemsLists/PatientProceduresList'
-                                    )
+                                    component: load('Pages/Patient/PatientTreatment/PatientItemsLists/PatientProceduresList')
                                 }
                             ]
                         }

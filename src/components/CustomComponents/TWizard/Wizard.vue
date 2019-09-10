@@ -4,10 +4,7 @@
         <form @submit.prevent>
             <!--        You can switch " data-color="primary" "
             with one of the next bright colors: "green", "orange", "red", "blue"-->
-            <md-card
-                class="md-card-wizard active"
-                :data-color="tabColor"
-            >
+            <md-card class="md-card-wizard active" :data-color="tabColor">
                 <md-card-header>
                     <slot name="header">
                         <h3 class="card-title">
@@ -19,10 +16,7 @@
                     </slot>
                 </md-card-header>
                 <div class="wizard-navigation">
-                    <ul
-                        class="nav nav-pills"
-                        role="tablist"
-                    >
+                    <ul class="nav nav-pills" role="tablist">
                         <li
                             v-for="(tab, index) in tabs"
                             :id="`step-${tab.tabId}`"
@@ -38,8 +32,11 @@
                         >
                             <a
                                 class="nav-link"
-                                :class="[{'disabled-wizard-link': !validateMode || tab.checked },
-                                         {active: tab.active}, {checked: validateMode || tab.checked}]"
+                                :class="[
+                                    { 'disabled-wizard-link': !validateMode || tab.checked },
+                                    { active: tab.active },
+                                    { checked: validateMode || tab.checked }
+                                ]"
                                 data-toggle="tab"
                                 @click="navigateToTab(index)"
                             >
@@ -50,60 +47,35 @@
                     <div
                         v-if="activeTab"
                         class="moving-tab"
-                        :class="{'error-link': activeTab.hasError}"
+                        :class="{ 'error-link': activeTab.hasError }"
                         style="transition: transform 0.5s cubic-bezier(0.29, 1.42, 0.79, 1); width: 100%;"
                         :style="movingTabStyles"
                     >
-                        <tab-item-content
-                            :tab="activeTab"
-                            :moving-tab="true"
-                        />
+                        <tab-item-content :tab="activeTab" :moving-tab="true" />
                     </div>
                 </div>
 
                 <md-card-content>
-                    <div
-                        v-if="isLoading"
-                        class="md-layout mx-auto table-wrapper-preloader"
-                    >
+                    <div v-if="isLoading" class="md-layout mx-auto table-wrapper-preloader">
                         <div style="height:60px;margin: auto;">
-                            <md-progress-spinner
-                                class="md-success"
-                                md-mode="indeterminate"
-                            />
+                            <md-progress-spinner class="md-success" md-mode="indeterminate" />
                         </div>
                     </div>
                     <div class="tab-content">
-                        <slot
-                            :activeIndex="activeTabIndex"
-                            :activeTab="activeTab"
-                        />
+                        <slot :activeIndex="activeTabIndex" :activeTab="activeTab" />
                     </div>
                 </md-card-content>
 
                 <md-card-actions md-alignment="space-between">
-                    <slot
-                        name="footer"
-                        :next-tab="nextTab"
-                        :prev-tab="prevTab"
-                    >
+                    <slot name="footer" :next-tab="nextTab" :prev-tab="prevTab">
                         <div>
-                            <md-button
-                                v-if="activeTabIndex > 0"
-                                class="btn-previous"
-                                @click.native="prevTab"
-                            >
+                            <md-button v-if="activeTabIndex > 0" class="btn-previous" @click.native="prevTab">
                                 {{ prevButtonText }}
                             </md-button>
                         </div>
 
                         <div>
-                            <md-button
-                                v-if="activeTabIndex < tabCount -1"
-                                :disabled="isLoading"
-                                class="btn-next md-success"
-                                @click.native="nextTab"
-                            >
+                            <md-button v-if="activeTabIndex < tabCount - 1" :disabled="isLoading" class="btn-next md-success" @click.native="nextTab">
                                 <span v-if="!isLoading">
                                     {{ nextButtonText }}
                                 </span>
@@ -111,11 +83,7 @@
                                     Loading...
                                 </span>
                             </md-button>
-                            <md-button
-                                v-else
-                                class="md-success"
-                                @click.native="nextTab"
-                            >
+                            <md-button v-else class="md-success" @click.native="nextTab">
                                 {{ finishButtonText }}
                             </md-button>
                         </div>

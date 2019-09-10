@@ -1,17 +1,10 @@
 <template>
     <div>
-        <md-dialog
-            class="patient-add-form"
-            :md-active.sync="showForm"
-            :md-click-outside-to-close="!isLoadingRegistration"
-        >
+        <md-dialog class="patient-add-form" :md-active.sync="showForm" :md-click-outside-to-close="!isLoadingRegistration">
             <div>
                 <md-card>
                     <md-card-header class="md-card-header-icon">
-                        <div
-                            class="card-icon"
-                            :style="{'background-color': patientColor}"
-                        >
+                        <div class="card-icon" :style="{ 'background-color': patientColor }">
                             <md-icon>person_add</md-icon>
                         </div>
                         <h4 class="title">
@@ -22,108 +15,59 @@
                     <md-card-content class="md-layout">
                         <div class="md-layout-item md-size-50 md-small-size-100">
                             <md-field
-                                :class="[
-                                    {'md-valid': !errors.has('firstName') && touched.firstName},
-                                    {'md-error': errors.has('firstName')}]"
+                                :class="[{ 'md-valid': !errors.has('firstName') && touched.firstName }, { 'md-error': errors.has('firstName') }]"
                             >
                                 <label>First Name</label>
-                                <md-input
-                                    v-model="firstName"
-                                    v-validate="modelValidations.firstName"
-                                    type="text"
-                                    data-vv-name="firstName"
-                                    required
-                                />
+                                <md-input v-model="firstName" v-validate="modelValidations.firstName" type="text" data-vv-name="firstName" required />
                                 <span class="md-error">{{ errors.first('firstName') }}</span>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="errors.has('firstName')"
-                                        class="error"
-                                    >
+                                    <md-icon v-show="errors.has('firstName')" class="error">
                                         close
                                     </md-icon>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="!errors.has('firstName') && touched.firstName"
-                                        class="success"
-                                    >
+                                    <md-icon v-show="!errors.has('firstName') && touched.firstName" class="success">
                                         done
                                     </md-icon>
                                 </slide-y-down-transition>
                             </md-field>
                         </div>
                         <div class="md-layout-item md-size-50 md-small-size-100">
-                            <md-field
-                                :class="[
-                                    {'md-valid': !errors.has('lastName') && touched.lastName},
-                                    {'md-error': errors.has('lastName')}]"
-                            >
+                            <md-field :class="[{ 'md-valid': !errors.has('lastName') && touched.lastName }, { 'md-error': errors.has('lastName') }]">
                                 <label>Last Name</label>
-                                <md-input
-                                    v-model="lastName"
-                                    v-validate="modelValidations.lastName"
-                                    type="text"
-                                    data-vv-name="lastName"
-                                    required
-                                />
+                                <md-input v-model="lastName" v-validate="modelValidations.lastName" type="text" data-vv-name="lastName" required />
                                 <span class="md-error">{{ errors.first('lastName') }}</span>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="errors.has('lastName')"
-                                        class="error"
-                                    >
+                                    <md-icon v-show="errors.has('lastName')" class="error">
                                         close
                                     </md-icon>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="!errors.has('lastName') && touched.lastName"
-                                        class="success"
-                                    >
+                                    <md-icon v-show="!errors.has('lastName') && touched.lastName" class="success">
                                         done
                                     </md-icon>
                                 </slide-y-down-transition>
                             </md-field>
                         </div>
                         <div class="md-layout-item md-size-50 md-small-size-100">
-                            <md-field
-                                :class="[
-                                    {'md-valid': !errors.has('email') && touched.email},
-                                    {'md-error': errors.has('email')}]"
-                            >
+                            <md-field :class="[{ 'md-valid': !errors.has('email') && touched.email }, { 'md-error': errors.has('email') }]">
                                 <label>Email</label>
-                                <md-input
-                                    v-model="email"
-                                    v-validate="modelValidations.email"
-                                    type="email"
-                                    data-vv-name="email"
-                                />
+                                <md-input v-model="email" v-validate="modelValidations.email" type="email" data-vv-name="email" />
                                 <span class="md-error">{{ errors.first('email') }}</span>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="errors.has('email')"
-                                        class="error"
-                                    >
+                                    <md-icon v-show="errors.has('email')" class="error">
                                         close
                                     </md-icon>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="!errors.has('email') && touched.email"
-                                        class="success"
-                                    >
+                                    <md-icon v-show="!errors.has('email') && touched.email" class="success">
                                         done
                                     </md-icon>
                                 </slide-y-down-transition>
                             </md-field>
                         </div>
                         <div class="md-layout-item md-size-50 md-small-size-100">
-                            <md-field
-                                :class="[
-                                    {'md-valid': !errors.has('phone') && touched.phone},
-                                    {'md-error': errors.has('phone')}]"
-                            >
+                            <md-field :class="[{ 'md-valid': !errors.has('phone') && touched.phone }, { 'md-error': errors.has('phone') }]">
                                 <label>Phone</label>
                                 <span class="md-prefix">+</span>
                                 <md-input
@@ -136,18 +80,12 @@
                                 />
                                 <span class="md-error">{{ errors.first('phone') }}</span>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="errors.has('phone')"
-                                        class="error"
-                                    >
+                                    <md-icon v-show="errors.has('phone')" class="error">
                                         close
                                     </md-icon>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="!errors.has('phone') && touched.phone"
-                                        class="success"
-                                    >
+                                    <md-icon v-show="!errors.has('phone') && touched.phone" class="success">
                                         done
                                     </md-icon>
                                 </slide-y-down-transition>
@@ -163,10 +101,8 @@
                         <div class="md-layout-item wrapper-chips md-size-100 md-small-size-100">
                             <md-chips
                                 v-model="allergy"
-                                v-validate="{ required: !noAllergy}"
-                                :class="[
-                                    {'md-valid': !errors.has('allergy') && touched.allergy},
-                                    {'md-error': errors.has('allergy')}]"
+                                v-validate="{ required: !noAllergy }"
+                                :class="[{ 'md-valid': !errors.has('allergy') && touched.allergy }, { 'md-error': errors.has('allergy') }]"
                                 class="md-danger"
                                 data-vv-name="allergy"
                                 md-placeholder="Add allergy and press 'ENTER'"
@@ -176,12 +112,7 @@
                         <div class="md-layout-item">
                             <md-field>
                                 <label for="movies">Doctors</label>
-                                <md-select
-                                    id="movies"
-                                    v-model="selectedDoctors"
-                                    name="movies"
-                                    multiple
-                                >
+                                <md-select id="movies" v-model="selectedDoctors" name="movies" multiple>
                                     <md-option value="fight-club">
                                         Fight Club
                                     </md-option>
@@ -207,33 +138,17 @@
                             </md-field>
                         </div>
                         <div class="md-layout-item">
-                            <md-field
-                                :class="[
-                                    {'md-valid': !errors.has('source') && touched.source},
-                                    {'md-error': errors.has('source')}]"
-                            >
+                            <md-field :class="[{ 'md-valid': !errors.has('source') && touched.source }, { 'md-error': errors.has('source') }]">
                                 <label>Source</label>
-                                <md-input
-                                    v-model="source"
-                                    v-validate="modelValidations.source"
-                                    type="text"
-                                    data-vv-name="source"
-                                    required
-                                />
+                                <md-input v-model="source" v-validate="modelValidations.source" type="text" data-vv-name="source" required />
                                 <span class="md-error">{{ errors.first('source') }}</span>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="errors.has('source')"
-                                        class="error"
-                                    >
+                                    <md-icon v-show="errors.has('source')" class="error">
                                         close
                                     </md-icon>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="!errors.has('source') && touched.source"
-                                        class="success"
-                                    >
+                                    <md-icon v-show="!errors.has('source') && touched.source" class="success">
                                         done
                                     </md-icon>
                                 </slide-y-down-transition>
@@ -242,25 +157,16 @@
                     </md-card-content>
                     <md-card-actions md-alignment="right">
                         <div>
-                            <md-checkbox
-                                v-model="closeAddForm"
-                                @change="setCloseFormAfter()"
-                            >
+                            <md-checkbox v-model="closeAddForm" @change="setCloseFormAfter()">
                                 Close form after
                             </md-checkbox>
                         </div>
                         <div>
-                            <md-checkbox
-                                v-model="openProfile"
-                                @change="setOpenProfileAfterCreation()"
-                            >
+                            <md-checkbox v-model="openProfile" @change="setOpenProfileAfterCreation()">
                                 Open patient profile
                             </md-checkbox>
                         </div>
-                        <md-button
-                            class=" md-success"
-                            @click="addPatient()"
-                        >
+                        <md-button class=" md-success" @click="addPatient()">
                             Create
                         </md-button>
                     </md-card-actions>
@@ -271,19 +177,14 @@
 </template>
 <script>
 import { SlideYDownTransition } from 'vue2-transitions';
-import {
-    PATIENT_CREATE,
-    NOTIFY,
-    PATIENT_PARAMS_SET,
-} from '@/constants';
+import { PATIENT_CREATE, NOTIFY, PATIENT_PARAMS_SET } from '@/constants';
 
 const randomMC = require('random-material-color');
-
 
 export default {
     name: 'ClinicAddForm',
     components: {
-        SlideYDownTransition,
+        SlideYDownTransition
     },
     data() {
         return {
@@ -305,33 +206,33 @@ export default {
                 source: false,
                 email: false,
                 phone: false,
-                allergy: false,
+                allergy: false
             },
             modelValidations: {
                 firstName: {
                     required: true,
-                    min: 2,
+                    min: 2
                 },
                 lastName: {
                     required: true,
-                    min: 1,
+                    min: 1
                 },
                 source: {
                     required: true,
-                    min: 3,
+                    min: 3
                 },
                 email: {
-                    email: true,
+                    email: true
                 },
                 phone: {
                     required: true,
                     min: 12,
-                    max: 20,
+                    max: 20
                 },
                 allergy: {
-                    required: true,
-                },
-            },
+                    required: true
+                }
+            }
         };
     },
     computed: {
@@ -344,16 +245,13 @@ export default {
                 return this.$clinicAddForm.patientAddFormShown;
             },
             set() {
-                this.$clinicAddForm.patientAddFormShown = !this.$clinicAddForm
-                    .patientAddFormShown;
-            },
-        },
+                this.$clinicAddForm.patientAddFormShown = !this.$clinicAddForm.patientAddFormShown;
+            }
+        }
     },
     watch: {
         showForm() {
-            this.openProfile = localStorage.getItem(
-                'USER_SETTINGS_OPEN_PATIENT_PROFILE',
-            );
+            this.openProfile = localStorage.getItem('USER_SETTINGS_OPEN_PATIENT_PROFILE');
             if (this.openProfile === 'true') {
                 this.openProfile = true;
             } else if (this.openProfile === null) {
@@ -363,9 +261,7 @@ export default {
             } else {
                 this.openProfile = false;
             }
-            this.closeAddForm = localStorage.getItem(
-                'USER_SETTINGS_CLOSE_PATIENT_ADD_FORM',
-            );
+            this.closeAddForm = localStorage.getItem('USER_SETTINGS_CLOSE_PATIENT_ADD_FORM');
             console.log(this.closeAddForm);
             if (this.closeAddForm === 'true') {
                 this.closeAddForm = true;
@@ -402,26 +298,20 @@ export default {
             if (this.allergy.length > 0 && this.noAllergy) {
                 this.allergy = [];
             }
-        },
+        }
     },
     created() {
         this.randomMC = randomMC;
     },
     methods: {
         setOpenProfileAfterCreation() {
-            localStorage.setItem(
-                'USER_SETTINGS_OPEN_PATIENT_PROFILE',
-                this.openProfile,
-            );
+            localStorage.setItem('USER_SETTINGS_OPEN_PATIENT_PROFILE', this.openProfile);
         },
         setCloseFormAfter() {
-            localStorage.setItem(
-                'USER_SETTINGS_CLOSE_PATIENT_ADD_FORM',
-                this.closeAddForm,
-            );
+            localStorage.setItem('USER_SETTINGS_CLOSE_PATIENT_ADD_FORM', this.closeAddForm);
         },
         validate() {
-            this.$validator.validateAll().then((isValid) => {
+            this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.registerForm, isValid);
             });
             this.touched.firstName = true;
@@ -442,7 +332,7 @@ export default {
             this.$nextTick(() => this.$validator.reset());
         },
         addPatient() {
-            this.$validator.validateAll().then((result) => {
+            this.$validator.validateAll().then(result => {
                 if (result) {
                     this.$store
                         .dispatch(PATIENT_CREATE, {
@@ -453,18 +343,18 @@ export default {
                                 phone: parseInt(this.phone, 10),
                                 email: this.email,
                                 allergy: this.allergy,
-                                color: this.patientColor,
-                            },
+                                color: this.patientColor
+                            }
                         })
-                        .then((response) => {
+                        .then(response => {
                             if (response) {
                                 if (this.openProfile) {
                                     this.$store.dispatch(PATIENT_PARAMS_SET, {
-                                        patient: response.data,
+                                        patient: response.data
                                     });
                                     this.$router.push({
                                         name: 'PatientProcedure',
-                                        params: { patientID: response.data.ID },
+                                        params: { patientID: response.data.ID }
                                     });
                                 }
                                 if (this.closeAddForm) {
@@ -474,18 +364,17 @@ export default {
                                 this.$store.dispatch(NOTIFY, {
                                     settings: {
                                         message: 'Settings updated successfully',
-                                        type: 'primary',
-                                    },
+                                        type: 'primary'
+                                    }
                                 });
                             }
                         });
                 }
             });
-        },
-    },
+        }
+    }
 };
 
 // The first param is called 'min', and the second is called 'max'.
 </script>
-<style lang="scss" >
-</style>
+<style lang="scss"></style>

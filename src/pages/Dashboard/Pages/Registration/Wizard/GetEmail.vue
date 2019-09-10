@@ -6,10 +6,7 @@
         <div class="md-layout md-gutter">
             <div class="md-layout-item md-size-100">
                 <md-field
-                    :class="[
-                        {'md-valid': !errors.has('email') && touched.email},
-                        {'md-form-group': true},
-                        {'md-error': errors.has('email')}]"
+                    :class="[{ 'md-valid': !errors.has('email') && touched.email }, { 'md-form-group': true }, { 'md-error': errors.has('email') }]"
                 >
                     <md-icon>email</md-icon>
                     <label>Email</label>
@@ -27,7 +24,7 @@
                         <md-button
                             v-show="errors.has('email')"
                             class="md-just-icon md-round md-input-action clear-button md-simple"
-                            @click="email='',focusOn('email')"
+                            @click="(email = ''), focusOn('email')"
                         >
                             <md-icon class="error">
                                 close
@@ -55,29 +52,29 @@ import { SlideYDownTransition } from 'vue2-transitions';
 export default {
     name: 'GetEmail',
     components: {
-        SlideYDownTransition,
+        SlideYDownTransition
     },
     props: {
         error: {
             type: Object,
             default: () => ({
                 message: 'Wrong email',
-                type: 'email',
-            }),
-        },
+                type: 'email'
+            })
+        }
     },
     data() {
         return {
             email: '',
             touched: {
-                email: false,
+                email: false
             },
             modelValidations: {
                 email: {
                     required: true,
-                    email: true,
-                },
-            },
+                    email: true
+                }
+            }
         };
     },
     watch: {
@@ -88,11 +85,11 @@ export default {
                     this.error.message = '';
                 }
             },
-            deep: true,
+            deep: true
         },
         email() {
             this.touched.email = true;
-        },
+        }
     },
     methods: {
         focusOn(ref) {
@@ -107,30 +104,29 @@ export default {
             }
             const field = this.$validator.fields.find({
                 name: error.type,
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             if (!field) return;
             this.$validator.errors.add({
                 id: error.type,
                 field: error.type,
                 msg: error.message,
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             field.setFlags({
                 invalid: true,
                 valid: false,
-                validated: true,
+                validated: true
             });
         },
         validate() {
-            return this.$validator.validateAll().then((res) => {
+            return this.$validator.validateAll().then(res => {
                 this.$emit('on-validated', res, 'step1');
                 this.$emit('validated-email', this.email);
                 return res;
             });
-        },
-    },
+        }
+    }
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

@@ -41,6 +41,9 @@
         @include md-theme-property(background-color, $indicator, $brand-primary);
     }
 }
+.md-tabs-content{
+    height: auto!important;
+}
 
 .t-md-tabs.md-tabs {
     overflow: visible !important;

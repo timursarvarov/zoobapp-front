@@ -1,9 +1,5 @@
 import Vue from 'vue';
-import {
-    PATIENTS_PATIENT_UPDATE,
-    PATIENTS_PATIENT_ADD,
-    PATIENTS_SET_PROP,
-} from '@/constants';
+import { PATIENTS_PATIENT_UPDATE, PATIENTS_PATIENT_ADD, PATIENTS_SET_PROP } from '@/constants';
 
 export default {
     [PATIENTS_SET_PROP]: (state, { propName, propValue }) => {
@@ -14,5 +10,5 @@ export default {
     },
     [PATIENTS_PATIENT_ADD]: (state, paitent) => {
         state.patients.unshift(paitent);
-    },
+    }
 };

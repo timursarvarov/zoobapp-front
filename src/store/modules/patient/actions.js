@@ -67,10 +67,7 @@ export default {
     [PATIENT_ITEM_JUST_ADDED_TOGGLE]: ({ commit }, { params }) => {
         delay(3000).then(() => commit(PATIENT_SUB_PARAMS_SET, { ...params }));
     },
-    [PATIENT_PROCEDURES_ASSOCIATE_WITH_INVOICE]: (
-        { commit },
-        { invoiceID, proceduresIDs }
-    ) => {
+    [PATIENT_PROCEDURES_ASSOCIATE_WITH_INVOICE]: ({ commit }, { invoiceID, proceduresIDs }) => {
         proceduresIDs.forEach(pID => {
             commit(PATIENT_SUB_PARAMS_SET, {
                 paramName: 'procedures',
@@ -227,19 +224,13 @@ export default {
         let itemIndex = -1;
         let planIndex = -1;
         if (planID && type === 'procedures') {
-            planIndex = state.patient.plans.findIndex(
-                plan => plan.ID === planID
-            );
+            planIndex = state.patient.plans.findIndex(plan => plan.ID === planID);
 
             if (planIndex > -1) {
-                itemIndex = state.patient.plans[planIndex].procedures.findIndex(
-                    item => item.id === itemId
-                );
+                itemIndex = state.patient.plans[planIndex].procedures.findIndex(item => item.id === itemId);
             }
         } else {
-            itemIndex = state.patient[type].findIndex(
-                item => item.id === itemId
-            );
+            itemIndex = state.patient[type].findIndex(item => item.id === itemId);
         }
         commit(PATIENT_ITEM_VISIBILITY_TOGGLE, {
             params: {
@@ -404,10 +395,7 @@ export default {
                     reject(err);
                 });
         }),
-    [PATIENT_PROCEDURE_SET]: (
-        { commit, state, getters, dispatch },
-        { procedure }
-    ) =>
+    [PATIENT_PROCEDURE_SET]: ({ commit, state, getters, dispatch }, { procedure }) =>
         new Promise((resolve, reject) => {
             commit(PATIENT_PARAM_SET, {
                 paramName: 'status',
@@ -440,19 +428,14 @@ export default {
                         paramName: 'status',
                         paramValue: 'success'
                     });
-                    const {
-                        procedure: procedureN,
-                        manipulations
-                    } = resp.data.result;
+                    const { procedure: procedureN, manipulations } = resp.data.result;
                     procedureN.justAdded = true;
                     // записали ID процедуру в план
                     commit(PATIENT_SUB_PARAM_PUSH, {
                         paramName: 'plans',
                         paramIndex: procedureN.planID,
                         subParamName: 'procedures',
-                        subParamIndex: state.plans[procedureN.planID].procedures
-                            ? state.plans[procedureN.planID].procedures.length
-                            : 0,
+                        subParamIndex: state.plans[procedureN.planID].procedures ? state.plans[procedureN.planID].procedures.length : 0,
                         subParamKey: procedureN.ID,
                         subParamValue: procedureN
                     });
@@ -537,11 +520,7 @@ export default {
                                 param: 'procedures',
                                 paramIndex: procedure.ID,
                                 subParam: 'manipulations',
-                                subParamIndex: state.procedures[
-                                    procedure.ID
-                                ].manipulations.findIndex(
-                                    mID => mID === manipulationID
-                                ),
+                                subParamIndex: state.procedures[procedure.ID].manipulations.findIndex(mID => mID === manipulationID),
                                 subParamID: manipulationID
                             });
                         });
@@ -550,9 +529,7 @@ export default {
                         param: 'plans',
                         paramIndex: procedure.planID,
                         subParam: 'procedures',
-                        subParamIndex: state.plans[
-                            procedure.planID
-                        ].procedures.findIndex(pID => pID === procedure.ID),
+                        subParamIndex: state.plans[procedure.planID].procedures.findIndex(pID => pID === procedure.ID),
                         subParamID: procedure.ID
                     });
                     dispatch(PATIENT_JAW_UPDATE);
@@ -566,10 +543,7 @@ export default {
                     reject(err);
                 });
         }),
-    [PATIENT_MANIPULATION_DELETE]: (
-        { commit, state },
-        { manipulationID, procedureID }
-    ) =>
+    [PATIENT_MANIPULATION_DELETE]: ({ commit, state }, { manipulationID, procedureID }) =>
         new Promise((resolve, reject) => {
             axios
                 .post(
@@ -597,11 +571,7 @@ export default {
                         param: 'procedures',
                         paramIndex: procedureID,
                         subParam: 'manipulations',
-                        subParamIndex: state.procedures[
-                            procedureID
-                        ].manipulations.findIndex(
-                            mID => mID === manipulationID
-                        ),
+                        subParamIndex: state.procedures[procedureID].manipulations.findIndex(mID => mID === manipulationID),
                         subParamID: manipulationID
                     });
                     commit(PATIENT_PARAM_SET, {
@@ -619,10 +589,7 @@ export default {
                     reject(err);
                 });
         }),
-    [PATIENT_MANIPULATION_SET]: (
-        { commit, state, dispatch },
-        { manipulationParams }
-    ) =>
+    [PATIENT_MANIPULATION_SET]: ({ commit, state, dispatch }, { manipulationParams }) =>
         new Promise((resolve, reject) => {
             axios
                 .post(
@@ -655,20 +622,15 @@ export default {
                         paramValue: manipulationParamsN,
                         paramKey: `${manipulationParamsN.ID}`
                     });
-                    let manipulationsIDs =
-                        state.procedures[manipulationParams.procedureID]
-                            .manipulations || [];
+                    let manipulationsIDs = state.procedures[manipulationParams.procedureID].manipulations || [];
                     manipulationsIDs.push(manipulationParamsN.ID);
                     // записали ID манипуляции в процедуру
                     commit(PATIENT_SUB_PARAM_PUSH, {
                         paramName: 'procedures',
                         paramIndex: manipulationParamsN.procedureID,
                         subParamName: 'manipulations',
-                        subParamIndex: state.procedures[
-                            manipulationParamsN.procedureID
-                        ].manipulations
-                            ? state.procedures[manipulationParamsN.procedureID]
-                                  .manipulations.length
+                        subParamIndex: state.procedures[manipulationParamsN.procedureID].manipulations
+                            ? state.procedures[manipulationParamsN.procedureID].manipulations.length
                             : 0,
                         subParamKey: manipulationParamsN.ID,
                         subParamValue: manipulationParamsN
@@ -691,10 +653,7 @@ export default {
                     reject(err);
                 });
         }),
-    [PATIENT_MANIPULATION_EDIT]: (
-        { commit, state, dispatch },
-        { manipulationParams }
-    ) =>
+    [PATIENT_MANIPULATION_EDIT]: ({ commit, state, dispatch }, { manipulationParams }) =>
         new Promise((resolve, reject) => {
             axios
                 .post(
@@ -793,10 +752,7 @@ export default {
     [PATIENT_DIAGNOSE_SET]: ({ commit, state, dispatch }, { diagnose }) => {
         commit(PATIENT_PARAM_PUSH, {
             paramName: 'diagnosis',
-            paramKey:
-                state.diagnosis && state.diagnosis.length
-                    ? state.diagnosis.length
-                    : 0,
+            paramKey: state.diagnosis && state.diagnosis.length ? state.diagnosis.length : 0,
             paramValue: diagnose
         });
         dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
@@ -812,10 +768,7 @@ export default {
     [PATIENT_ANAMNES_SET]: ({ commit, state, dispatch }, { anamnes }) => {
         commit(PATIENT_PARAM_PUSH, {
             paramName: 'anamnesis',
-            paramKey:
-                state.anamnesis && state.anamnesis.length
-                    ? state.anamnesis.length
-                    : 0,
+            paramKey: state.anamnesis && state.anamnesis.length ? state.anamnesis.length : 0,
             paramValue: anamnes
         });
         dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
@@ -867,10 +820,7 @@ export default {
             throwError(err);
         }),
 
-    [PATIENT_PLAN_SWITCH_CURRENT]: (
-        { commit, state, dispatch },
-        { planID }
-    ) => {
+    [PATIENT_PLAN_SWITCH_CURRENT]: ({ commit, state, dispatch }, { planID }) => {
         if (planID) {
             Object.keys(state.plans).forEach(pID => {
                 commit(PATIENT_SUB_PARAMS_SET, {
@@ -913,9 +863,7 @@ export default {
     // },
 
     [PATIENT_DIAGNOSE_UPDATE]: ({ commit, state }, { diagnose }) => {
-        const dIndex = state.patient.diagnosis.findIndex(
-            pDiagnose => pDiagnose.id === diagnose.id
-        );
+        const dIndex = state.patient.diagnosis.findIndex(pDiagnose => pDiagnose.id === diagnose.id);
         if (dIndex !== -1) {
             commit(PATIENT_PARAM_REWRITE, {
                 paramName: 'anamnesis',
@@ -925,9 +873,7 @@ export default {
         }
     },
     [PATIENT_ANAMNES_UPDATE]: ({ commit, state }, { anamnes }) => {
-        const aIndex = state.patient.anamnesis.findIndex(
-            pAnamnes => pAnamnes.id === anamnes.id
-        );
+        const aIndex = state.patient.anamnesis.findIndex(pAnamnes => pAnamnes.id === anamnes.id);
         if (aIndex !== -1) {
             commit(PATIENT_PARAM_REWRITE, {
                 paramName: 'anamnesis',

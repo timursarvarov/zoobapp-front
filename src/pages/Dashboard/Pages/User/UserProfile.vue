@@ -25,9 +25,9 @@ export default {
     name: 'UserProfile',
     components: {
         UserCard,
-        PasswordForm,
-    // CalendarForm,
-    },
+        PasswordForm
+        // CalendarForm,
+    }
 };
 </script>
 <style lang="scss">

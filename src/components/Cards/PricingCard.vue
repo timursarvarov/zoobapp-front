@@ -1,14 +1,8 @@
 <template>
-    <md-card
-        class="md-card-pricing"
-        :class="cardClass"
-    >
+    <md-card class="md-card-pricing" :class="cardClass">
         <slot name="category" />
         <md-card-content>
-            <div
-                class="md-card-icon"
-                :class="iconColor"
-            >
+            <div class="md-card-icon" :class="iconColor">
                 <slot name="icon" />
             </div>
             <slot name="title" />
@@ -25,14 +19,13 @@ export default {
     props: {
         cardClass: {
             type: String,
-            default: '',
+            default: ''
         },
         iconColor: {
             type: String,
-            default: '',
-        },
-    },
+            default: ''
+        }
+    }
 };
 </script>
-<style>
-</style>
+<style></style>

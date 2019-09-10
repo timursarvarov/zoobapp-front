@@ -6,7 +6,6 @@
     </div>
 </template>
 
-
 <script>
 import { mapGetters } from 'vuex';
 import { AUTH_INIT, AVAILABLE_LANGUAGES } from '@/constants';
@@ -18,29 +17,29 @@ export default {
             getNotify: 'getNotify',
             refreshTokenExist: 'fetchStateRefreshToken',
             isProfileLoaded: 'isProfileLoaded',
-            lang: 'getLang',
+            lang: 'getLang'
         }),
         languages() {
             return AVAILABLE_LANGUAGES;
-        },
+        }
     },
     watch: {
         getNotify: {
             handler() {
                 const newNotify = {};
                 const el = this;
-                Object.keys(el.getNotify).forEach((key) => {
+                Object.keys(el.getNotify).forEach(key => {
                     newNotify[key] = el.getNotify[key];
                 });
                 this.$notify(newNotify);
             },
-            deep: true,
+            deep: true
         },
         isProfileLoaded(value) {
             if (!value) {
                 // this.$router.push('login');
             }
-        },
+        }
     },
     mounted() {
         if (this.refreshTokenExist) {
@@ -48,21 +47,21 @@ export default {
         } else {
             this.$router.push({ name: 'Login', params: { lang: this.lang } });
         }
-    },
+    }
 };
 </script>
 <style lang="scss" src="./assets/scss/main/main.scss">
 .md-menu-content {
-        z-index: 15!important;
-        min-width: 300px;
-    }
+    z-index: 15 !important;
+    min-width: 300px;
+}
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
 

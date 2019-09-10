@@ -2,9 +2,7 @@
     <div class="md-layout patients-list-wrapper">
         <div class="md-layout-item">
             <md-card>
-                <md-card-header
-                    class="md-card-header-icon md-layout md-gutter md-card-header-green"
-                >
+                <md-card-header class="md-card-header-icon md-layout md-gutter md-card-header-green">
                     <div class="card-icon">
                         <md-icon>assignment</md-icon>
                     </div>
@@ -20,75 +18,64 @@
                             </h4>
                         </div>
                         <div class="md-toolbar-section-end md-layout ml-auto">
-                            <md-button
-                                class="md-just-icon md-simple"
-                                @click="showForm = !showForm"
-                            >
+                            <md-switch @change="switchFIlterMode" v-model="filterMode"> Filter mode </md-switch>
+                            <md-button class="md-just-icon md-simple" @click="showForm = !showForm">
                                 <md-icon>settings</md-icon>
                             </md-button>
                         </div>
                     </md-toolbar>
+                    <transition-expand>
+                        <md-toolbar v-if="filterMode" class="md-transparent">
+                            <div class="md-toolbar-section-start md-layout">
+                                <h4 class="title md-layout-item">
+                                    Total Patients:
+                                    <animated-number :value="patientsNum" />
+                                </h4>
+                            </div>
+                            <div class="md-toolbar-section-end md-layout ml-auto">
+                                <md-button class="md-just-icon md-simple" @click="showForm = !showForm">
+                                    <md-icon>settings</md-icon>
+                                </md-button>
+                            </div>
+                        </md-toolbar>
+                    </transition-expand>
                     <md-toolbar class="md-transparent">
                         <div class="md-toolbar-section-start md-layout">
                             <div class="md-size-50 md-small-size-100">
                                 <md-field>
                                     <label for="pages">Per page</label>
-                                    <md-select
-                                        v-model="queryParams.pagination.perPage"
-                                        name="pages"
-                                    >
-                                        <md-option
-                                            v-for="item in perPageOptions"
-                                            :key="item"
-                                            :label="item"
-                                            :value="item"
-                                            >{{ item }}</md-option
-                                        >
+                                    <md-select v-model="queryParams.pagination.perPage" name="pages">
+                                        <md-option v-for="item in perPageOptions" :key="item" :label="item" :value="item">{{ item }}</md-option>
                                     </md-select>
                                 </md-field>
                             </div>
                         </div>
                         <div class="md-toolbar-section-end ml-auto">
                             <div style="width: 300px">
-                                <md-field
-                                    :class="{ 'no-after-no-before': searching }"
-                                >
+                                <md-field :class="{ 'no-after-no-before': searching }">
                                     <label>Search for patient</label>
-                                    <md-input
-                                        v-model="queryParams.searchQuery"
-                                        type="search"
-                                        class="mb-3"
-                                    />
+                                    <md-input v-model="queryParams.searchQuery" type="search" class="mb-3" />
                                 </md-field>
-                                <md-progress-bar
-                                    v-if="searching"
-                                    class="underline-progress"
-                                    :md-stroke="1"
-                                    md-mode="indeterminate"
-                                />
+                                <md-progress-bar v-if="searching" class="underline-progress" :md-stroke="1" md-mode="indeterminate" />
                             </div>
                         </div>
                     </md-toolbar>
                     <div class="table-wrapper">
-                        <div
-                            v-if="searching"
-                            class="md-layout mx-auto table-wrapper-preloader"
-                        >
+                        <div v-if="searching" class="md-layout mx-auto table-wrapper-preloader">
                             <div style="height:60px;margin: auto;">
                                 <md-progress-spinner md-mode="indeterminate" />
                             </div>
                         </div>
                         <md-table
+                            :key="filterMode"
                             v-model="tableData"
+                            @md-selected="onSelect"
                             :md-selected-value.sync="selectedPatients"
                             :md-sort.sync="queryParams.currentSort"
                             :md-sort-order.sync="queryParams.currentSortOrder"
                             :md-sort-fn="customSort"
-                            class="table-striped paginated-table table-hover"
                         >
-                            <div
-                                style="height: 250px; position: inherit; overflow:hidden;"
-                            >
+                            <div style="height: 250px; position: inherit; overflow:hidden;">
                                 <slide-x-left-transition>
                                     <md-table-empty-state
                                         v-show="status === 'success'"
@@ -99,13 +86,7 @@
                                     Try a different search term or create a new user.`
                                         "
                                     >
-                                        <md-button
-                                            class="md-primary md-raised"
-                                            @click="
-                                                $patientAddForm.showPatientAddForm(
-                                                    true
-                                                )
-                                            "
+                                        <md-button class="md-primary md-raised" @click="$patientAddForm.showPatientAddForm(true)"
                                             >Create New User</md-button
                                         >
                                     </md-table-empty-state>
@@ -115,9 +96,7 @@
                                         v-show="status === 'loading'"
                                         sltyle="min-height: 250px;"
                                         md-label="Loading..."
-                                        :md-description="
-                                            `Please be patient, just a few seconds...`
-                                        "
+                                        :md-description="`Please be patient, just a few seconds...`"
                                     />
                                 </slide-x-left-transition>
                                 <slide-x-left-transition>
@@ -125,15 +104,9 @@
                                         v-show="status === 'error'"
                                         sltyle="min-height: 250px;"
                                         md-label="Ooopps"
-                                        :md-description="
-                                            `Something wrong with connection`
-                                        "
+                                        :md-description="`Something wrong with connection`"
                                     >
-                                        <md-button
-                                            class="md-primary md-raised"
-                                            @click="search"
-                                            >retry</md-button
-                                        >
+                                        <md-button class="md-primary md-raised" @click="search">retry</md-button>
                                     </md-table-empty-state>
                                 </slide-x-left-transition>
                             </div>
@@ -142,226 +115,101 @@
                                 slot="md-table-row"
                                 slot-scope="{ item }"
                                 :class="[{ 'just-added': item.justAdded }]"
-                                class="transitionable-row"
-                                md-selectable="multiple"
+                                :md-selectable="filterMode ? 'multiple' : 'single'"
+                                md-auto-select
                             >
                                 <md-table-cell
                                     v-for="field in patientsTableColumns"
                                     :key="field.key"
                                     :md-sort-by="field.key"
-                                    :md-label="
-                                        getFieldName(field.key).toString()
-                                    "
+                                    :md-label="getFieldName(field.key).toString()"
                                 >
-                                    <div
-                                        class="pointer"
-                                        @click="goToPatient(item)"
-                                    >
+                                    <div class="pointer">
                                         <avatar-box
                                             v-if="field.key === 'name'"
                                             :avatar="item.avatar"
                                             :id="item.ID"
                                             :firstLine="item.lastName"
                                             :secondLine="item.firstName"
-                                            :notificationClass="
-                                                item.allergy ? 'warning' : ''
-                                            "
-                                            :notification="
-                                                !lodash.isEmpty(item.allergy)
-                                                    ? 'A'
-                                                    : ''
-                                            "
+                                            :notificationClass="item.allergy ? 'warning' : ''"
+                                            :notification="!lodash.isEmpty(item.allergy) ? 'A' : ''"
                                         />
                                         <avatar-box
-                                            v-else-if="
-                                                field.key === 'createdBy' &&
-                                                    item.createdBy
-                                            "
+                                            v-else-if="field.key === 'createdBy' && item.createdBy"
                                             small
                                             :avatar="item.createdBy.avatar"
                                             :id="item.createdBy.ID"
-                                            :firstLine="
-                                                item.createdBy.firstName
-                                            "
-                                            :secondLine="
-                                                item.createdBy.lastName
-                                            "
+                                            :firstLine="item.createdBy.firstName"
+                                            :secondLine="item.createdBy.lastName"
                                         />
-                                        <div
-                                            v-else-if="field.key === 'allergy'"
-                                        >
-                                            {{ item[field.key].join(', ') }}
+                                        <div v-else-if="field.key === 'allergy'" class="allergy_wrapper">
+                                            <span v-for="(a, i) in item.allergy" :key="i" class="allergy">
+                                                <span>
+                                                    {{ a }}
+                                                    <md-tooltip>Attention allergy on {{ a }}!</md-tooltip>
+                                                </span>
+                                            </span>
                                         </div>
 
-                                        <div
-                                            v-else-if="item[field.key] === null"
-                                        >
-                                            1
-                                        </div>
-                                        <div
-                                            v-else-if="
-                                                field.key === 'files' &&
-                                                    item[field.key]
-                                            "
-                                            class="md-layout md-alignment-left-center"
-                                        >
+                                        <div v-else-if="field.key === 'files' && item[field.key]" class="md-layout md-alignment-left-center">
                                             <span class="md-layout-item">
                                                 {{ item[field.key].length }}
                                             </span>
                                         </div>
+                                        <div v-else-if="field.key === 'lastName' && item[field.key]" class="md-layout md-alignment-left-center">
+                                            <span class="md-layout-item">
+                                                {{ item.lastName | capitilize }}
+                                            </span>
+                                        </div>
+                                        <div v-else-if="field.key === 'firstName' && item[field.key]" class="md-layout md-alignment-left-center">
+                                            <span class="md-layout-item">
+                                                {{ item.firstName | capitilize }}
+                                            </span>
+                                        </div>
 
-                                        <span
-                                            v-else-if="
-                                                $moment(
-                                                    item[field.key],
-                                                    $moment.ISO_8601,
-                                                    true
-                                                ).isValid()
-                                            "
-                                        >
-                                            <small
-                                                v-if="field.key === 'birthday'"
-                                            >
-                                                {{
-                                                    $moment().diff(
-                                                        item[field.key],
-                                                        'years'
-                                                    )
-                                                }}
+                                        <span v-else-if="$moment(item[field.key], $moment.ISO_8601, true).isValid()">
+                                            <small v-if="field.key === 'birthday'">
+                                                {{ $moment().diff(item[field.key], 'years') }}
                                                 years
                                                 <br />
                                                 <small>
-                                                    {{
-                                                        item[field.key]
-                                                            | moment('calendar')
-                                                    }}
+                                                    {{ item[field.key] | moment('calendar') }}
                                                 </small>
                                             </small>
 
                                             <div v-else>
                                                 <small>
-                                                    {{
-                                                        item[field.key]
-                                                            | moment('from')
-                                                    }}
+                                                    {{ item[field.key] | moment('from') }}
                                                 </small>
                                                 <br />
                                                 <small>
-                                                    {{
-                                                        item[field.key]
-                                                            | moment('calendar')
-                                                    }}
+                                                    {{ item[field.key] | moment('calendar') }}
                                                 </small>
                                             </div>
                                         </span>
-                                        <span
-                                            v-else-if="
-                                                field.key === 'firstName' ||
-                                                    field.key === 'lastName'
-                                            "
-                                        >
+                                        <span v-else-if="field.key === 'firstName' || field.key === 'lastName'">
                                             {{ item[field.key] | capitilize }}
                                         </span>
 
                                         <span v-else-if="field.key === 'phone'">
-                                            <span>
-                                                +{{ item[field.key] }}
-                                            </span>
+                                            <span> +{{ item[field.key] }} </span>
                                         </span>
                                         <div v-else-if="field.key === 'rating'">
-                                            <star-rating
-                                                v-model="item.rating"
-                                                read-only
-                                                :glow="5"
-                                                :show-rating="false"
-                                                :star-size="12"
-                                            />
+                                            <star-rating v-model="item.rating" read-only :glow="5" :show-rating="false" :star-size="12" />
+                                        </div>
+                                        <div v-else-if="field.key === 'ID'">
+                                            <span class="md-layout-item">
+                                                <b>{{ item[field.key] }}</b>
+                                            </span>
                                         </div>
                                         <div v-else>{{ item[field.key] }}</div>
                                     </div>
                                 </md-table-cell>
-
-                                <md-table-cell
-                                    md-label="Actions"
-                                    class="text-right"
-                                >
-                                    <md-button
-                                        v-show="
-                                            item.allergy &&
-                                                item.allergy.length > 0
-                                        "
-                                        class="md-just-icon md-danger md-simple"
-                                        @click.native="handleShowAllergy(item)"
-                                    >
-                                        <md-icon>report_problem</md-icon>
-                                    </md-button>
-                                    <md-button
-                                        class="md-just-icon md-info md-simple"
-                                        :to="{
-                                            name: 'Treatment',
-                                            params: {
-                                                lang: $i18n.locale,
-                                                patientID: item.ID
-                                            }
-                                        }"
-                                    >
-                                        <md-icon>open_in_new</md-icon>
-                                    </md-button>
-                                    <md-button
-                                        class="md-just-icon md-warning md-simple"
-                                    >
-                                        <md-icon>more_vert</md-icon>
-                                    </md-button>
-                                </md-table-cell>
                             </md-table-row>
                         </md-table>
-                        <div class="footer-table md-table">
-                            <table>
-                                <tfoot>
-                                    <tr>
-                                        <th class="md-table-head">
-                                            <div
-                                                class="md-table-head-container md-ripple md-disabled"
-                                            >
-                                                <div
-                                                    class="md-table-head-label"
-                                                >
-                                                    Select
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th
-                                            v-for="item in patientsTableColumns"
-                                            :key="item.key"
-                                            class="md-table-head"
-                                        >
-                                            <div
-                                                class="md-table-head-container md-ripple md-disabled"
-                                            >
-                                                <div
-                                                    class="md-table-head-label"
-                                                >
-                                                    {{ item.title }}
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th class="md-table-head">
-                                            <div
-                                                class="md-table-head-container md-ripple md-disabled"
-                                            >
-                                                <div
-                                                    class="md-table-head-label"
-                                                >
-                                                    Actions
-                                                </div>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
                     </div>
                     <t-table-editor
+                        v-if="showForm"
                         icon="settings"
                         color="success"
                         title="Set patients columns order"
@@ -373,10 +221,7 @@
                 </md-card-content>
                 <md-card-actions md-alignment="space-between">
                     <div class>
-                        <p class="card-category">
-                            Showing {{ from + 1 }} to {{ to }} of
-                            {{ total }} entries
-                        </p>
+                        <p class="card-category">Showing {{ from + 1 }} to {{ to }} of {{ total }} entries</p>
                     </div>
                     <pagination
                         v-model="queryParams.pagination.currentPage"
@@ -387,17 +232,9 @@
                 </md-card-actions>
             </md-card>
         </div>
-        <md-snackbar
-            v-if="selectedPatients"
-            :md-position="'center'"
-            :md-duration="true ? Infinity : 4000"
-            :md-active.sync="showSnackbar"
-            md-persistent
-        >
+        <md-snackbar :md-position="'center'" :md-duration="true ? Infinity : 4000" :md-active.sync="showSnackbar" md-persistent>
             <span>{{ selectedPatients.length }} Patients selected</span>
-            <md-button class="md-primary" @click="showSnackbar = false"
-                >Retry</md-button
-            >
+            <md-button class="md-primary" @click="showSnackbar = false">Retry</md-button>
         </md-snackbar>
     </div>
 </template>
@@ -408,10 +245,7 @@ import StarRating from 'vue-star-rating';
 import { mapGetters } from 'vuex';
 import { setTimeout } from 'timers';
 import components from '@/components';
-import {
-    PATIENTS_REQUEST,
-    USER_PATIENTS_COLUMNS
-} from '@/constants';
+import { PATIENTS_REQUEST, USER_PATIENTS_COLUMNS } from '@/constants';
 import { tObjProp } from '@/mixins';
 
 export default {
@@ -423,6 +257,7 @@ export default {
     },
     mixins: [tObjProp],
     data: () => ({
+        filterMode: false,
         searching: false,
         showForm: false,
         showSnackbar: false,
@@ -458,10 +293,7 @@ export default {
             return highBound;
         },
         from() {
-            return (
-                this.queryParams.pagination.perPage *
-                (this.queryParams.pagination.currentPage - 1)
-            );
+            return this.queryParams.pagination.perPage * (this.queryParams.pagination.currentPage - 1);
         },
         totalPages() {
             return Math.ceil(this.total / this.queryParams.pagination.perPage);
@@ -474,8 +306,13 @@ export default {
             },
             deep: true
         },
-        selectedPatients() {
-            this.showSnackbar = true;
+        selectedPatients(value) {
+            if (!this.lodash.isEmpty(value) && this.filterMode) {
+                console.log('selectedPatients', value);
+                this.showSnackbar = true;
+            } else {
+                this.showSnackbar = false;
+            }
         }
     },
     created() {
@@ -484,47 +321,21 @@ export default {
             this.search();
         } else {
             this.tableData = this.patients;
-            this.total = Math.ceil(
-                this.patientsNum / this.queryParams.pagination.perPage
-            );
+            this.total = Math.ceil(this.patientsNum / this.queryParams.pagination.perPage);
         }
     },
     methods: {
+        switchFIlterMode() {
+            this.selectedPatients = [];
+        },
+        onSelect(i) {
+            if (i.ID) {
+                this.goToPatient(i);
+            }
+        },
         setPatientsTableColumns() {
-            const columns1 = [
-                {
-                    key: 'ID',
-                    title: 'ID'
-                },
-                {
-                    key: 'name',
-                    title: 'Name'
-                },
-                {
-                    key: 'address',
-                    title: 'Address'
-                },
-                {
-                    key: 'allergy',
-                    title: 'Allergy'
-                },
-                {
-                    key: 'birthday',
-                    title: 'Birthday'
-                },
-                {
-                    key: 'created',
-                    title: 'Created'
-                },
-                {
-                    key: 'createdBy',
-                    title: 'Created By'
-                }
-            ];
-            const columns2 = JSON.parse(
-                localStorage.getItem(USER_PATIENTS_COLUMNS)
-            );
-            this.patientsTableColumns = columns2 || columns1;
+            const columns2 = JSON.parse(localStorage.getItem(USER_PATIENTS_COLUMNS));
+            this.patientsTableColumns = columns2 || this.availablePatientsTableColumns;
         },
         goToPatient(patient) {
             const lang = this.$i18n.locale;
@@ -542,9 +353,7 @@ export default {
             return value;
         },
         getFieldName(key) {
-            const field = this.availablePatientsTableColumns.find(
-                f => f.key === key
-            );
+            const field = this.availablePatientsTableColumns.find(f => f.key === key);
             if (field) {
                 return field.title;
             }
@@ -555,26 +364,8 @@ export default {
             localStorage.setItem(USER_PATIENTS_COLUMNS, JSON.stringify(e));
             this.setPatientsTableColumns();
         },
-        handleLike(item) {
-           console.log(item);
-        },
         handleShowAllergy(item) {
             console.log(item);
-
-        },
-        handleEdit(item) {
-            console.log(item);
-        },
-        handleDelete(item) {
-            console.log(item);
-        },
-        deleteRow(item) {
-            const indexToDelete = this.tableData.findIndex(
-                tableRow => tableRow.id === item.id
-            );
-            if (indexToDelete >= 0) {
-                this.tableData.splice(indexToDelete, 1);
-            }
         },
         search() {
             const vm = this;
@@ -598,17 +389,13 @@ export default {
                     .then(result => {
                         vm.tableData = result.patients || [];
                         vm.searching = false;
-                        vm.total = Math.ceil(
-                            result.patientsNum /
-                                vm.queryParams.pagination.perPage
-                        );
+                        vm.total = Math.ceil(result.patientsNum / vm.queryParams.pagination.perPage);
                         vm.removeClass();
                         return result;
                     })
                     .catch(() => {
                         vm.searching = false;
                         return [];
-
                     });
             }, DELAY);
         },
@@ -643,44 +430,6 @@ export default {
         width: inherit;
         margin: 0;
     }
-    // .table-wrapper {
-    //     position: inherit;
-    //     .patient-name {
-    //         // max-width: 90%;
-    //         text-overflow: ellipsis;
-    //         overflow: hidden;
-    //     }
-    //     .patient-name {
-    //         text-overflow: ellipsis;
-    //         width: fit-content;
-    //     }
-    //     .md-tabs-content .with-header table thead {
-    //         display: contents;
-    //     }
-    //     .paginated-table table > tbody > tr > td {
-    //         width: fit-content;
-    //     }
-    //     table > thead > tr > th.md-table-head.md-table-cell-selection {
-    //         .md-table-head-label {
-    //             width: 30px;
-    //             margin-left: 23px;
-    //         }
-    //     }
-    //     .table-settings {
-    //         position: absolute;
-    //         margin-top: 15px;
-    //     }
-    //     .table-wrapper-preloader {
-    //         position: absolute;
-    //         z-index: 30;
-    //         top: 0;
-    //         left: 0;
-    //         right: 0;
-    //         bottom: 0;
-    //         background-color: white;
-    //         opacity: 0.8;
-    //     }
-    // }
     .md-card .md-card-actions {
         border: 0;
         margin-left: 20px;

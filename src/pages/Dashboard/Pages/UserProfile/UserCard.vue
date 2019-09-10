@@ -1,10 +1,7 @@
 <template>
     <md-card class="md-card-profile">
         <div class="md-card-avatar">
-            <img
-                class="img"
-                :src="cardUserImage"
-            >
+            <img class="img" :src="cardUserImage" />
         </div>
 
         <md-card-content>
@@ -15,14 +12,10 @@
                 Alec Thompson
             </h4>
             <p class="card-description">
-                Don't be scared of the truth because we need to restart the human
-                foundation in truth And I love you like Kanye loves Kanye I love Rick
-                Owens’ bed design but the back is...
+                Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love
+                Rick Owens’ bed design but the back is...
             </p>
-            <md-button
-                class="md-round"
-                :class="getColorButton(buttonColor)"
-            >
+            <md-button class="md-round" :class="getColorButton(buttonColor)">
                 Follow
             </md-button>
         </md-card-content>
@@ -34,12 +27,12 @@ export default {
     props: {
         cardUserImage: {
             type: String,
-            default: './img/faces/marc.jpg',
+            default: './img/faces/marc.jpg'
         },
         buttonColor: {
             type: String,
-            default: '',
-        },
+            default: ''
+        }
     },
     data() {
         return {};
@@ -47,8 +40,8 @@ export default {
     methods: {
         getColorButton(buttonColor) {
             return `md-${buttonColor}`;
-        },
-    },
+        }
+    }
 };
 </script>
 <style></style>

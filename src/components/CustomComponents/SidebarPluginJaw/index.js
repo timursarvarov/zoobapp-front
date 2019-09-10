@@ -20,7 +20,7 @@ const SidebarStore = {
             clearInterval(simulateWindowResize);
         }, 1000);
         this.isMinimized = !this.isMinimized;
-    },
+    }
 };
 
 const SidebarPlugin = {
@@ -31,19 +31,19 @@ const SidebarPlugin = {
         Vue.mixin({
             data() {
                 return {
-                    sidebarStore: SidebarStore,
+                    sidebarStore: SidebarStore
                 };
-            },
+            }
         });
 
         Object.defineProperty(Vue.prototype, '$sidebar', {
             get() {
                 return this.$root.sidebarStore;
-            },
+            }
         });
         Vue.component('side-bar-jaw', Sidebar);
         Vue.component('sidebar-item', SidebarItem);
-    },
+    }
 };
 
 export default SidebarPlugin;

@@ -3,37 +3,19 @@
         <div class="md-layout-item md-size-50 md-small-size-100">
             <form>
                 <lock-card>
-                    <div
-                        slot="imageProfile"
-                        class="avatar-container"
-                    >
+                    <div slot="imageProfile" class="avatar-container">
                         <div class="avatarC">
-                            <div
-                                v-if="!user.avatar"
-                                class="md-layout md-alignment-center-center wrapper-acronim"
-                            >
+                            <div v-if="!user.avatar" class="md-layout md-alignment-center-center wrapper-acronim">
                                 <div class="md-layout-item acronim">
                                     <span>{{ (user.firstName + ' ' + user.lastName) | acronim }}</span>
                                 </div>
                             </div>
-                            <div
-                                v-else
-                                class="avatar"
-                                :style="{'background-image': 'url(' + user.avatar + ')'}"
-                            />
+                            <div v-else class="avatar" :style="{ 'background-image': 'url(' + user.avatar + ')' }" />
                         </div>
                     </div>
-                    <h4
-                        slot="title"
-                        class="title"
-                    >
-                        {{ user.firstName | capitilize }} {{ user.lastName | capitilize }}
-                    </h4>
+                    <h4 slot="title" class="title">{{ user.firstName | capitilize }} {{ user.lastName | capitilize }}</h4>
                     <div slot="content">
-                        <md-field
-                            :class="[{'md-error': errors.has('password')},
-                                     {'md-valid': !errors.has('password') && touched.password}]"
-                        >
+                        <md-field :class="[{ 'md-error': errors.has('password') }, { 'md-valid': !errors.has('password') && touched.password }]">
                             <md-icon>lock_outline</md-icon>
                             <label>Enter Password</label>
                             <md-input
@@ -49,34 +31,21 @@
                             <span class="md-error">{{ errors.first('password') }}</span>
                             <span class="md-error">{{ errors.first('username') }}</span>
                             <slide-y-down-transition>
-                                <md-icon
-                                    v-show="errors.has('password')"
-                                    class="error"
-                                >
+                                <md-icon v-show="errors.has('password')" class="error">
                                     close
                                 </md-icon>
                             </slide-y-down-transition>
                             <slide-y-down-transition>
-                                <md-icon
-                                    v-show="!errors.has('password') && touched.password"
-                                    class="success"
-                                >
+                                <md-icon v-show="!errors.has('password') && touched.password" class="success">
                                     done
                                 </md-icon>
                             </slide-y-down-transition>
                         </md-field>
                         <div class="md-layout">
-                            <small
-                                class="md-simple ml-auto"
-                                @click="showForgot = !showForgot"
-                            >Forgot password?</small>
+                            <small class="md-simple ml-auto" @click="showForgot = !showForgot">Forgot password?</small>
                         </div>
                     </div>
-                    <md-button
-                        slot="footer"
-                        class="md-success md-round"
-                        @click="login()"
-                    >
+                    <md-button slot="footer" class="md-success md-round" @click="login()">
                         Unlock
                     </md-button>
                 </lock-card>
@@ -102,7 +71,7 @@ export default {
     components: {
         ...components,
         ForgotPassword,
-        SlideYDownTransition,
+        SlideYDownTransition
     },
     data() {
         return {
@@ -110,27 +79,27 @@ export default {
             password: null,
             image: './img/faces/avatar.jpg',
             touched: {
-                password: false,
+                password: false
             },
             modelValidations: {
                 password: {
                     required: true,
-                    min: 5,
-                },
-            },
+                    min: 5
+                }
+            }
         };
     },
     computed: {
         ...mapGetters({
-            user: 'getProfile',
-        }),
+            user: 'getProfile'
+        })
     },
     mounted() {
         this.$refs.password.$el.focus();
     },
     methods: {
         validate() {
-            this.$validator.validateAll().then((isValid) => {
+            this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.registerForm, isValid);
             });
             this.touched.password = true;
@@ -138,64 +107,59 @@ export default {
         login() {
             if (this.errors.has('password') || !this.password) {
                 this.$store.dispatch(NOTIFY, {
-                    settings: { message: 'Please, enter valid password' },
+                    settings: { message: 'Please, enter valid password' }
                 });
                 this.showErrorsValidate('password');
                 return;
             }
             const { user, password } = this;
-            this.$store
-                .dispatch(AUTH_REQUEST, { username: user.userName, password })
-                .then(
-                    (response) => {
-                        const lastRoutePathBeforeLock = localStorage.getItem('lastRoutePathBeforeLock');
-                        if (lastRoutePathBeforeLock) {
-                            this.$router.push(lastRoutePathBeforeLock);
-                        } else {
-                            this.$router.push('/');
+            this.$store.dispatch(AUTH_REQUEST, { username: user.userName, password }).then(
+                () => {
+                    const lastRoutePathBeforeLock = localStorage.getItem('lastRoutePathBeforeLock');
+                    if (lastRoutePathBeforeLock) {
+                        this.$router.push(lastRoutePathBeforeLock);
+                    } else {
+                        this.$router.push('/');
+                    }
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: `Welcome ${user.firstName}  ${user.lastName}`,
+                            type: 'info'
                         }
-                        this.$store.dispatch(NOTIFY, {
-                            settings: {
-                                message: `Welcome ${user.firstName}  ${user.lastName}`,
-                                type: 'info',
-                            },
-                        });
-                    },
-                    (error) => {
-                        if (error.response.data.message === 'Wrong password') {
-                            this.showErrorsValidate('password');
-                        }
-                        if (error.response.data.message === 'Invalid login') {
-                            this.showErrorsValidate('username');
-                        }
-                    },
-                );
+                    });
+                },
+                error => {
+                    if (error.response.data.message === 'Wrong password') {
+                        this.showErrorsValidate('password');
+                    }
+                    if (error.response.data.message === 'Invalid login') {
+                        this.showErrorsValidate('username');
+                    }
+                }
+            );
         },
         showErrorsValidate(errField = 'username') {
             const field = this.$validator.fields.find({
                 name: errField,
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             if (!field) return;
             this.$validator.errors.add({
                 id: errField,
                 field: errField,
-                msg:
-                        errField === 'username'
-                            ? 'Invalid login'
-                            : 'Wrong password',
-                scope: this.$options.scope,
+                msg: errField === 'username' ? 'Invalid login' : 'Wrong password',
+                scope: this.$options.scope
             });
             field.setFlags({
                 invalid: true,
                 valid: false,
-                validated: true,
+                validated: true
             });
-        },
-    },
+        }
+    }
 };
 </script>
-<style lang="scss" >
+<style lang="scss">
 .lock-wrapper {
     small.md-simple {
         color: #3c4858;

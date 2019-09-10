@@ -5,22 +5,15 @@
                 World Map
             </h3>
             <p class="category">
-                Looks great on any resolution.
-                Made by our friends from
-                <a
-                    href="https://jvectormap.com/"
-                    target="_blank"
-                >jVector Map</a>.
+                Looks great on any resolution. Made by our friends from
+                <a href="https://jvectormap.com/" target="_blank">jVector Map</a>.
             </p>
         </div>
         <div class="md-layout">
             <div class="md-layout-item md-size-100">
                 <md-card class="md-card-plain">
                     <md-card-content>
-                        <async-world-map
-                            class="map map-big"
-                            :data="mapData"
-                        />
+                        <async-world-map class="map map-big" :data="mapData" />
                     </md-card-content>
                 </md-card>
             </div>
@@ -33,7 +26,7 @@ import components from '@/components';
 export default {
     name: 'VectorMaps',
     components: {
-        ...components,
+        ...components
     },
     data() {
         return {
@@ -48,17 +41,17 @@ export default {
                 IN: 200,
                 RO: 600,
                 RU: 300,
-                US: 2920,
-            },
+                US: 2920
+            }
         };
-    },
+    }
 };
 </script>
 <style scoped>
 .text-center {
-  text-align: center;
+    text-align: center;
 }
 #worldMap {
-  width: 100%;
+    width: 100%;
 }
 </style>

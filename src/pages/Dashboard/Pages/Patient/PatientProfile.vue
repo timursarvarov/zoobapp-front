@@ -1,113 +1,63 @@
 <template>
-    <div
-        class="patient-profile-wrapper"
-    >
+    <div class="patient-profile-wrapper">
         <nav-tabs-card v-if="patient.ID">
             <template slot="content">
                 <!-- <span class="md-nav-tabs-title">Set new:</span> -->
-                <md-tabs
-                    md-sync-route
-                    class="md-success"
-                    md-alignment="left"
-                >
-                    <md-tab
-                        id="tab-bio"
-                        :to="`/${$i18n.locale}/patient/${patient.ID}/bio`"
-                        md-icon="account_box"
-                        md-label="BIO"
-                    >
+                <md-tabs md-sync-route class="md-success" md-alignment="left">
+                    <md-tab id="tab-bio" :to="`/${$i18n.locale}/patient/${patient.ID}/bio`" md-icon="account_box" md-label="BIO">
                         <div class="md-layout">
                             <router-view name="Bio" />
                         </div>
                     </md-tab>
-                    <md-tab
-                        id="tab-treatment"
-                        :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`"
-                        md-icon="local_hospital"
-                        md-label="Treatment"
-                    >
+                    <md-tab id="tab-treatment" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`" md-icon="local_hospital" md-label="Treatment">
                         <div class="md-layout">
                             <router-view name="treatmentchild" />
                         </div>
                     </md-tab>
-                    <md-tab
-                        id="tab-billing"
-                        :to="`/${$i18n.locale}/patient/${patient.ID}/billing`"
-                        md-icon="account_balance"
-                        md-label="Billing"
-                    >
+                    <md-tab id="tab-billing" :to="`/${$i18n.locale}/patient/${patient.ID}/billing`" md-icon="account_balance" md-label="Billing">
                         <div class="md-layout">
                             <router-view name="Billing" />
                         </div>
                     </md-tab>
-                    <md-tab
-                        id="tab-notes"
-                        :to="`/${$i18n.locale}/patient/${patient.ID}/notes`"
-                        md-icon="question_answer"
-                        md-label="Notes"
-                    >
+                    <md-tab id="tab-notes" :to="`/${$i18n.locale}/patient/${patient.ID}/notes`" md-icon="question_answer" md-label="Notes">
                         <router-view name="Notes" />
                     </md-tab>
-                    <md-tab
-                        id="tab-files"
-                        :to="`/${$i18n.locale}/patient/${patient.ID}/files`"
-                        md-icon="folder_shared"
-                        md-label="Files"
-                    >
+                    <md-tab id="tab-files" :to="`/${$i18n.locale}/patient/${patient.ID}/files`" md-icon="folder_shared" md-label="Files">
                         <router-view name="Files" />
+                    </md-tab>
+                    <md-tab id="tab-files" :to="`/${$i18n.locale}/patient/${patient.ID}/print`" md-icon="print" md-label="Print">
+                        <router-view name="Print" />
                     </md-tab>
                 </md-tabs>
                 <patient-items-wizard />
             </template>
         </nav-tabs-card>
-        <div
-            v-show="!patient.ID && patientStatus ==='loading'"
-            class="jaw md-layout-item"
-        >
-            <div
-                v-if="true"
-                style="margin:auto; height:100%"
-                class="md-layout mx-auto patient-wrapper-preloader"
-            >
+        <div v-show="!patient.ID && patientStatus === 'loading'" class="jaw md-layout-item">
+            <div v-if="true" style="margin:auto; height:100%" class="md-layout mx-auto patient-wrapper-preloader">
                 <div style="height:60px;margin: auto;">
                     <md-progress-spinner md-mode="indeterminate" />
                 </div>
             </div>
         </div>
-        <div
-            v-show="!patient.ID && patientStatus ==='error'"
-            class="jaw md-layout-item"
-        >
-            <md-empty-state
-                md-icon="error"
-                md-label="No connection"
-                md-description="No server connection"
-            >
-                <md-button
-                    class="md-primary md-raised"
-                    @click="getPatient"
-                >
+        <div v-show="!patient.ID && patientStatus === 'error'" class="jaw md-layout-item">
+            <md-empty-state md-icon="error" md-label="No connection" md-description="No server connection">
+                <md-button class="md-primary md-raised" @click="getPatient">
                     RETRY
                 </md-button>
             </md-empty-state>
         </div>
-        <div
-            v-show="!patient.ID && patientStatus ==='notExist'"
-            class="jaw md-layout-item"
-        >
+        <div v-show="!patient.ID && patientStatus === 'notExist'" class="jaw md-layout-item">
             <md-empty-state
                 md-icon="person_outline"
                 md-label="No patient found"
                 md-description="you don't allowed to see this patient or patient do not exist"
             >
-                <md-button
-                    class="md-primary md-raised"
-                    @click="$patientAddForm.showPatientAddForm(true)"
-                >
+                <md-button class="md-primary md-raised" @click="$patientAddForm.showPatientAddForm(true)">
                     Create new patient
                 </md-button>
             </md-empty-state>
         </div>
+        <t-print-form :showForm="showPrintForm" />
     </div>
 </template>
 
@@ -115,25 +65,28 @@
 import { mapGetters } from 'vuex';
 import components from '@/components';
 import { PATIENT_GET } from '@/constants';
-import store from '@/store'
-import PatientItemsWizard from './PatientTreatment/PatientItemsWizard'
+import store from '@/store';
+import PatientItemsWizard from './PatientTreatment/PatientItemsWizard';
 
 export default {
     beforeRouteEnter(to, from, next) {
-        if (!store.getters.getPatient.ID || (`${store.getters.getPatient.ID}` !== `${to.params.patientID}`)) {
-            store.dispatch(PATIENT_GET, {
-                patientID: to.params.patientID,
-            }).then((patient) => {
-                if (patient) {
-                    next((vm) => {
-                        vm.setWindowTitle();
-                    });
-                }
-            }).catch((err => {
-                next(to);
-                throw err;
-            }))
-        }else {
+        if (!store.getters.getPatient.ID || `${store.getters.getPatient.ID}` !== `${to.params.patientID}`) {
+            store
+                .dispatch(PATIENT_GET, {
+                    patientID: to.params.patientID
+                })
+                .then(patient => {
+                    if (patient) {
+                        next(vm => {
+                            vm.setWindowTitle();
+                        });
+                    }
+                })
+                .catch(err => {
+                    next(to);
+                    throw err;
+                });
+        } else {
             next();
         }
     },
@@ -144,69 +97,63 @@ export default {
     name: 'PatientProfile',
     components: {
         ...components,
-        PatientItemsWizard,
+        PatientItemsWizard
     },
     data() {
         return {
+            showPrintForm: false,
             showDialog: false,
             actionSize: {},
             selectedTeeth: [],
-            selectedDiagnose: [],
+            selectedDiagnose: []
         };
     },
     computed: {
         ...mapGetters({
             jaw: 'jaw',
             patient: 'getPatient',
-            patientStatus: 'getPatientStatus',
+            patientStatus: 'getPatientStatus'
         }),
-        routePatientID(){
-            return this.$route.params.patientID
+        routePatientID() {
+            return this.$route.params.patientID;
         }
     },
-    watch:{
-        routePatientID(val){
-            if(`${this.patient.ID}` !== `${val}`){
-                this. getPatient();
+    watch: {
+        routePatientID(val) {
+            if (`${this.patient.ID}` !== `${val}`) {
+                this.getPatient();
             }
         }
     },
     methods: {
-        setWindowTitle(){
+        setWindowTitle() {
             if (this.patient.ID) {
                 let firstName = '';
                 let lastName = '';
                 if (typeof this.patient.firstName === 'string') {
-                    firstName = this.patient.firstName.charAt(0).toUpperCase()
-                        + this.patient.firstName.slice(1);
+                    firstName = this.patient.firstName.charAt(0).toUpperCase() + this.patient.firstName.slice(1);
                 }
                 if (typeof this.patient.lastName === 'string') {
-                    lastName = this.patient.lastName.charAt(0).toUpperCase()
-                        + this.patient.lastName.slice(1);
+                    lastName = this.patient.lastName.charAt(0).toUpperCase() + this.patient.lastName.slice(1);
                 }
                 document.title = `${firstName} ${lastName} - ZoobApp`;
             }
         },
         getPatient() {
-            if (
-                this.$route.params.patientID
-                    && (this.patient.ID === null
-                    || this.patient.ID
-                        !== parseInt(this.$route.params.patientID, 10))
-            ) {
+            if (this.$route.params.patientID && (this.patient.ID === null || this.patient.ID !== parseInt(this.$route.params.patientID, 10))) {
                 this.$store
                     .dispatch(PATIENT_GET, {
-                        patientID: this.$route.params.patientID,
+                        patientID: this.$route.params.patientID
                     })
-                    .then((patient) => {
+                    .then(() => {
                         this.setWindowTitle();
                     });
             }
-        },
-    },
+        }
+    }
 };
 </script>
-<style lang="scss" >
+<style lang="scss">
 .patient-profile-wrapper {
     .patient-wrapper-preloader {
         position: absolute;

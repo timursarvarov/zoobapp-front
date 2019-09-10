@@ -9,5 +9,5 @@ export default {
         Vue.filter('acronim', acronim);
         Vue.filter('toCurrentTeethSystem', toCurrentTeethSystem);
         Vue.filter('capitilize', capitilize);
-    },
+    }
 };

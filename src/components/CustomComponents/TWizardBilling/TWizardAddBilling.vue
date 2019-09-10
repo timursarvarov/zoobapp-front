@@ -1,16 +1,10 @@
 <template>
-    <md-dialog
-        :md-active.sync="isDialogVisibleL"
-        :md-click-outside-to-close="true"
-        class="jaw-dialog-wrapper"
-    >
+    <md-dialog :md-active.sync="isDialogVisibleL" :md-click-outside-to-close="true" class="jaw-dialog-wrapper">
         <div class="wizard-add-diagnose-form">
             <div>
                 <simple-wizard :finish-button-text="`Save`">
                     <template slot="header">
-                        <div
-                            class="title md-alignment-center-space-between md-layout md-transparent"
-                        >
+                        <div class="title md-alignment-center-space-between md-layout md-transparent">
                             <div v-if="invoiceToCreate.ID" class="md-layout-item">
                                 Invoice №
                                 {{ invoiceToCreate.ID }}
@@ -66,10 +60,7 @@ import TAddPayment from './TWizardBillingItems/TAddPayment';
 import SimpleWizard from '../TWizard/Wizard';
 import WizardTab from '../TWizard/WizardTab';
 
-import {
-    NOTIFY,
-    PATIENT_INVOICE_SET,
-} from '@/constants';
+import { NOTIFY, PATIENT_INVOICE_SET } from '@/constants';
 
 export default {
     name: 'AddBillingWizard',
@@ -143,9 +134,7 @@ export default {
         },
         newProceduresToAssociate() {
             if (!this.invoice.procedures) return [];
-            return this.invoice.procedures.filter(pID =>
-                this.getUnbilledAndAproovedPlansProcedures.find(uP => uP.ID === pID)
-            );
+            return this.invoice.procedures.filter(pID => this.getUnbilledAndAproovedPlansProcedures.find(uP => uP.ID === pID));
         }
     },
     created() {
@@ -158,16 +147,14 @@ export default {
             }, 3000);
         },
         deleteStyle(p) {
-            const index = this.selectedProceduresToCreate.findIndex(
-                procedure => procedure.ID === p.ID
-            );
+            const index = this.selectedProceduresToCreate.findIndex(procedure => procedure.ID === p.ID);
             if (index > -1) {
                 this.selectedProceduresToCreate[index].justAdded = false;
             }
         },
         setInvoice(i) {
             this.invoiceToCreate = {
-                ...i,
+                ...i
             };
         },
         saveInvoice() {

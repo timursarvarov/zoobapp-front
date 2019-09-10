@@ -1,15 +1,8 @@
 /* eslint-disable func-names */
 
 <template>
-    <div
-        :id="id"
-        ref="dropzoneElement"
-        :class="{ ' dropzone': includeStyling }"
-    >
-        <div
-            v-if="useCustomSlot"
-            class="dz-message"
-        >
+    <div :id="id" ref="dropzoneElement" :class="{ ' dropzone': includeStyling }">
+        <div v-if="useCustomSlot" class="dz-message">
             <slot>Drop files here to upload</slot>
         </div>
     </div>
@@ -24,64 +17,61 @@ export default {
         id: {
             type: String,
             required: true,
-            default: 'dropzone',
+            default: 'dropzone'
         },
         options: {
             type: Object,
-            required: true,
+            required: true
         },
         includeStyling: {
             type: Boolean,
             default: true,
-            required: false,
+            required: false
         },
         destroyDropzone: {
             type: Boolean,
             default: true,
-            required: false,
+            required: false
         },
         duplicateCheck: {
             type: Boolean,
             default: false,
-            required: false,
+            required: false
         },
         useCustomSlot: {
             type: Boolean,
             default: false,
-            required: false,
-        },
+            required: false
+        }
     },
     data() {
         return {
-            wasQueueAutoProcess: true,
+            wasQueueAutoProcess: true
         };
     },
     computed: {
         dropzoneSettings() {
             const defaultValues = {
                 thumbnailWidth: 200,
-                thumbnailHeight: 200,
+                thumbnailHeight: 200
             };
-            Object.keys(this.options).forEach(function (key) {
+            Object.keys(this.options).forEach(function(key) {
                 defaultValues[key] = this.options[key];
             }, this);
             return defaultValues;
-        },
+        }
     },
     mounted() {
         if (this.$isServer && this.hasBeenMounted) {
             return;
         }
         this.hasBeenMounted = true;
-        this.dropzone = new Dropzone(
-            this.$refs.dropzoneElement,
-            this.dropzoneSettings,
-        );
+        this.dropzone = new Dropzone(this.$refs.dropzoneElement, this.dropzoneSettings);
         const vm = this;
         this.dropzone.on('thumbnail', (file, dataUrl) => {
             vm.$emit('vdropzone-thumbnail', file, dataUrl);
         });
-        this.dropzone.on('addedfile', (file) => {
+        this.dropzone.on('addedfile', file => {
             // let isDuplicate = false;
             if (vm.duplicateCheck) {
                 if (this.files.length) {
@@ -93,10 +83,9 @@ export default {
                         i += 1 // -1 to exclude current file
                     ) {
                         if (
-                            this.files[i].name === file.name
-                                && this.files[i].size === file.size
-                                && this.files[i].lastModifiedDate.toString()
-                                    === file.lastModifiedDate.toString()
+                            this.files[i].name === file.name &&
+                            this.files[i].size === file.size &&
+                            this.files[i].lastModifiedDate.toString() === file.lastModifiedDate.toString()
                         ) {
                             this.removeFile(file);
                             // isDuplicate = true;
@@ -107,10 +96,10 @@ export default {
             }
             vm.$emit('vdropzone-file-added', file);
         });
-        this.dropzone.on('addedfiles', (files) => {
+        this.dropzone.on('addedfiles', files => {
             vm.$emit('vdropzone-files-added', files);
         });
-        this.dropzone.on('removedfile', (file) => {
+        this.dropzone.on('removedfile', file => {
             vm.$emit('vdropzone-removed-file', file);
             if (file.manuallyAdded) vm.dropzone.options.maxFiles++;
         });
@@ -132,66 +121,58 @@ export default {
         this.dropzone.on('sendingmultiple', (file, xhr, formData) => {
             vm.$emit('vdropzone-sending-multiple', file, xhr, formData);
         });
-        this.dropzone.on('complete', (file) => {
+        this.dropzone.on('complete', file => {
             vm.$emit('vdropzone-complete', file);
         });
-        this.dropzone.on('completemultiple', (files) => {
+        this.dropzone.on('completemultiple', files => {
             vm.$emit('vdropzone-complete-multiple', files);
         });
-        this.dropzone.on('canceled', (file) => {
+        this.dropzone.on('canceled', file => {
             vm.$emit('vdropzone-canceled', file);
         });
-        this.dropzone.on('canceledmultiple', (files) => {
+        this.dropzone.on('canceledmultiple', files => {
             vm.$emit('vdropzone-canceled-multiple', files);
         });
-        this.dropzone.on('maxfilesreached', (files) => {
+        this.dropzone.on('maxfilesreached', files => {
             vm.$emit('vdropzone-max-files-reached', files);
         });
-        this.dropzone.on('maxfilesexceeded', (file) => {
+        this.dropzone.on('maxfilesexceeded', file => {
             vm.$emit('vdropzone-max-files-exceeded', file);
         });
-        this.dropzone.on('processing', (file) => {
+        this.dropzone.on('processing', file => {
             vm.$emit('vdropzone-processing', file);
         });
-        this.dropzone.on('processingmultiple', (files) => {
+        this.dropzone.on('processingmultiple', files => {
             vm.$emit('vdropzone-processing-multiple', files);
         });
         this.dropzone.on('uploadprogress', (file, progress, bytesSent) => {
             vm.$emit('vdropzone-upload-progress', file, progress, bytesSent);
         });
-        this.dropzone.on(
-            'totaluploadprogress',
-            (totaluploadprogress, totalBytes, totalBytesSent) => {
-                vm.$emit(
-                    'vdropzone-total-upload-progress',
-                    totaluploadprogress,
-                    totalBytes,
-                    totalBytesSent,
-                );
-            },
-        );
+        this.dropzone.on('totaluploadprogress', (totaluploadprogress, totalBytes, totalBytesSent) => {
+            vm.$emit('vdropzone-total-upload-progress', totaluploadprogress, totalBytes, totalBytesSent);
+        });
         this.dropzone.on('reset', () => {
             vm.$emit('vdropzone-reset');
         });
         this.dropzone.on('queuecomplete', () => {
             vm.$emit('vdropzone-queue-complete');
         });
-        this.dropzone.on('drop', (event) => {
+        this.dropzone.on('drop', event => {
             vm.$emit('vdropzone-drop', event);
         });
-        this.dropzone.on('dragstart', (event) => {
+        this.dropzone.on('dragstart', event => {
             vm.$emit('vdropzone-drag-start', event);
         });
-        this.dropzone.on('dragend', (event) => {
+        this.dropzone.on('dragend', event => {
             vm.$emit('vdropzone-drag-end', event);
         });
-        this.dropzone.on('dragenter', (event) => {
+        this.dropzone.on('dragenter', event => {
             vm.$emit('vdropzone-drag-enter', event);
         });
-        this.dropzone.on('dragover', (event) => {
+        this.dropzone.on('dragover', event => {
             vm.$emit('vdropzone-drag-over', event);
         });
-        this.dropzone.on('dragleave', (event) => {
+        this.dropzone.on('dragleave', event => {
             vm.$emit('vdropzone-drag-leave', event);
         });
         vm.$emit('vdropzone-mounted');
@@ -204,33 +185,26 @@ export default {
             file.manuallyAdded = true;
             this.dropzone.emit('addedfile', file);
             let containsImageFileType = false;
+            if (fileUrl.indexOf('.png') > -1 || fileUrl.indexOf('.jpg') > -1 || fileUrl.indexOf('.jpeg') > -1) {
+                containsImageFileType = true;
+            }
             if (
-                fileUrl.indexOf('.png') > -1
-                    || fileUrl.indexOf('.jpg') > -1
-                    || fileUrl.indexOf('.jpeg') > -1
-            ) { containsImageFileType = true; }
-            if (
-                this.dropzone.options.createImageThumbnails
-                    && containsImageFileType
-                    && file.size
-                        <= this.dropzone.options.maxThumbnailFilesize * 1024 * 1024
+                this.dropzone.options.createImageThumbnails &&
+                containsImageFileType &&
+                file.size <= this.dropzone.options.maxThumbnailFilesize * 1024 * 1024
             ) {
                 fileUrl && this.dropzone.emit('thumbnail', file, fileUrl);
-                const thumbnails = file.previewElement.querySelectorAll(
-                    '[data-dz-thumbnail]',
-                );
+                const thumbnails = file.previewElement.querySelectorAll('[data-dz-thumbnail]');
                 for (let i = 0; i < thumbnails.length; i += 1) {
-                    thumbnails[i].style.width = `${
-                        this.dropzoneSettings.thumbnailWidth
-                    }px`;
-                    thumbnails[i].style.height = `${
-                        this.dropzoneSettings.thumbnailHeight
-                    }px`;
+                    thumbnails[i].style.width = `${this.dropzoneSettings.thumbnailWidth}px`;
+                    thumbnails[i].style.height = `${this.dropzoneSettings.thumbnailHeight}px`;
                     thumbnails[i].style['object-fit'] = 'contain';
                 }
             }
             this.dropzone.emit('complete', file);
-            if (this.dropzone.options.maxFiles) { this.dropzone.options.maxFiles--; }
+            if (this.dropzone.options.maxFiles) {
+                this.dropzone.options.maxFiles--;
+            }
             this.dropzone.files.push(file);
             this.$emit('vdropzone-file-added-manually', file);
         },
@@ -309,14 +283,12 @@ export default {
         },
         getActiveFiles() {
             return this.dropzone.getActiveFiles();
-        },
-    },
+        }
+    }
 };
 </script>
 
 <style lang="scss">
-
-
 .dropzone,
 .dropzone * {
     box-sizing: border-box;
@@ -374,7 +346,7 @@ export default {
 
 .vue-dropzone {
     border: 2px solid #e5e5e5;
-    font-family: "Arial", sans-serif;
+    font-family: 'Arial', sans-serif;
     letter-spacing: 0.2px;
     color: #777;
     transition: background-color 0.2s linear;
@@ -762,8 +734,7 @@ export default {
             .dz-success-mark {
                 @include prefix(
                     (
-                        animation: passing-through 3s
-                            cubic-bezier(0.77, 0, 0.175, 1)
+                        animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1)
                     )
                 );
             }
@@ -906,7 +877,7 @@ export default {
 
             // The triangle pointing up
             &:after {
-                content: "";
+                content: '';
                 position: absolute;
                 top: -6px;
                 left: $width / 2 - 6px;

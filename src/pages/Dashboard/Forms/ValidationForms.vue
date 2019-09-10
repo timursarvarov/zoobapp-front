@@ -26,14 +26,14 @@ export default {
         LoginForm,
         RegisterForm,
         TypeValidationForm,
-        RangeValidationForm,
+        RangeValidationForm
     },
     data() {
         return {
             loginModel: {},
             registerModel: {},
             typeValidationModel: {},
-            rangeValidationModel: {},
+            rangeValidationModel: {}
         };
     },
     methods: {
@@ -48,9 +48,8 @@ export default {
         },
         onRangeValidationSubmit(model) {
             this.rangeValidationModel = model;
-        },
-    },
+        }
+    }
 };
 </script>
-<style>
-</style>
+<style></style>

@@ -23,12 +23,12 @@ const router = new Router({
             position.y = savedPosition.y;
         }
 
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             setTimeout(() => {
-                resolve(position)
-            }, 400)
-        })
-    },
+                resolve(position);
+            }, 400);
+        });
+    }
 });
 
 router.beforeEach((to, from, next) => {
@@ -39,14 +39,13 @@ router.beforeEach((to, from, next) => {
             next({
                 path: '/login',
                 query: { redirect: to.fullPath }
-            })
+            });
         } else {
-            next()
+            next();
         }
     } else {
-        next() // make sure to always call next()!
+        next(); // make sure to always call next()!
     }
-})
-
+});
 
 export default router;

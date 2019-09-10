@@ -1,18 +1,8 @@
 <template>
-    <div
-        class="full-page"
-        :class="{ 'nav-open': $sidebar.showSidebar }"
-    >
-        <md-toolbar
-            md-elevation="0"
-            class="md-transparent md-toolbar-absolute"
-        >
+    <div class="full-page" :class="{ 'nav-open': $sidebar.showSidebar }">
+        <md-toolbar md-elevation="0" class="md-transparent md-toolbar-absolute">
             <div class="wrapper-progress-bar">
-                <md-progress-bar
-                    v-if="loading"
-                    class="md-white"
-                    md-mode="indeterminate"
-                />
+                <md-progress-bar v-if="loading" class="md-white" md-mode="indeterminate" />
             </div>
             <div class="md-toolbar-row md-offset">
                 <div class="md-toolbar-section-start">
@@ -31,41 +21,24 @@
                         <span class="icon-bar" />
                     </md-button>
 
-                    <div
-                        class="md-collapse"
-                        :class="{ 'off-canvas-sidebar': responsive }"
-                    >
+                    <div class="md-collapse" :class="{ 'off-canvas-sidebar': responsive }">
                         <md-list>
-                            <md-list-item
-                                v-if="isStateAuthenticated"
-                                to="dashboard"
-                            >
+                            <md-list-item v-if="isStateAuthenticated" to="dashboard">
                                 <!-- <router-link to="dashboard" > -->
                                 <md-icon>dashboard</md-icon>Dashboard
                                 <!-- </router-link> -->
                             </md-list-item>
                             <md-list-item @click="linkClick">
-                                <router-link to="pricing">
-                                    <md-icon>attach_money</md-icon>Pricing
-                                </router-link>
+                                <router-link to="pricing"> <md-icon>attach_money</md-icon>Pricing </router-link>
                             </md-list-item>
                             <md-list-item @click="linkClick">
-                                <router-link to="register">
-                                    <md-icon>person_add</md-icon>Register
-                                </router-link>
+                                <router-link to="register"> <md-icon>person_add</md-icon>Register </router-link>
                             </md-list-item>
                             <md-list-item @click="linkClick">
-                                <router-link to="login">
-                                    <md-icon>fingerprint</md-icon>login
-                                </router-link>
+                                <router-link to="login"> <md-icon>fingerprint</md-icon>login </router-link>
                             </md-list-item>
-                            <md-list-item
-                                v-if="isProfileLoaded"
-                                @click="linkClick"
-                            >
-                                <router-link to="lock">
-                                    <md-icon>lock_open</md-icon>lock
-                                </router-link>
+                            <md-list-item v-if="isProfileLoaded" @click="linkClick">
+                                <router-link to="lock"> <md-icon>lock_open</md-icon>lock </router-link>
                             </md-list-item>
                             <t-language-switcher />
                             <!-- <li class="md-list-item">
@@ -116,21 +89,10 @@
                 </div>
             </div>
         </md-toolbar>
-        <div
-            class="wrapper wrapper-full-page"
-            @click="toggleSidebarPage"
-        >
-            <div
-                class="page-header header-filter"
-                :class="setPageClass"
-                filter-color="black"
-                :style="setBgImage"
-            >
+        <div class="wrapper wrapper-full-page" @click="toggleSidebarPage">
+            <div class="page-header header-filter" :class="setPageClass" filter-color="black" :style="setBgImage">
                 <div class="container md-offset">
-                    <zoom-center-transition
-                        :duration="pageTransitionDuration"
-                        mode="out-in"
-                    >
+                    <zoom-center-transition :duration="pageTransitionDuration" mode="out-in">
                         <router-view />
                     </zoom-center-transition>
                 </div>
@@ -156,11 +118,8 @@
                         </nav>
                         <div class="copyright text-center">
                             &copy; {{ new Date().getFullYear() }}
-                            <a
-                                href="https://www.creative-tim.com/?ref=mdf-vuejs"
-                                target="_blank"
-                            >Creative Tim</a>, made with <i class="fa fa-heart heart" /> for a
-                            better web
+                            <a href="https://www.creative-tim.com/?ref=mdf-vuejs" target="_blank">Creative Tim</a>, made with
+                            <i class="fa fa-heart heart" /> for a better web
                         </div>
                     </div>
                 </footer>
@@ -169,18 +128,13 @@
     </div>
 </template>
 <script>
-import { ZoomCenterTransition } from "vue2-transitions";
-import { mapGetters } from "vuex";
-import components from "@/components";
-import {
-    LOGIN_BACKGROUND_URL,
-    AVAILABLE_LANGUAGES,
-    LOCAL_STORAGE,
-    USER_UPDATE
-} from "@/constants";
+import { ZoomCenterTransition } from 'vue2-transitions';
+import { mapGetters } from 'vuex';
+import components from '@/components';
+import { LOGIN_BACKGROUND_URL, AVAILABLE_LANGUAGES, LOCAL_STORAGE, USER_UPDATE } from '@/constants';
 
 export default {
-    name: "AuthLayout",
+    name: 'AuthLayout',
     components: {
         ZoomCenterTransition,
         ...components
@@ -188,7 +142,7 @@ export default {
     props: {
         backgroundColor: {
             type: String,
-            default: "black"
+            default: 'black'
         }
     },
     inject: {
@@ -207,9 +161,9 @@ export default {
     },
     computed: {
         ...mapGetters({
-            isProfileLoaded: "isProfileLoaded",
-            isStateAuthenticated: "isStateAuthenticated",
-            loading: "loading"
+            isProfileLoaded: 'isProfileLoaded',
+            isStateAuthenticated: 'isStateAuthenticated',
+            loading: 'loading'
         }),
         setBgImage() {
             // const images = {
@@ -233,11 +187,11 @@ export default {
     },
     mounted() {
         this.onResponsiveInverted();
-        window.addEventListener("resize", this.onResponsiveInverted);
+        window.addEventListener('resize', this.onResponsiveInverted);
     },
     beforeDestroy() {
         this.closeMenu();
-        window.removeEventListener("resize", this.onResponsiveInverted);
+        window.removeEventListener('resize', this.onResponsiveInverted);
     },
     methods: {
         changeLanguage(lang) {
@@ -261,11 +215,7 @@ export default {
             }
         },
         linkClick() {
-            if (
-                this.autoClose &&
-                this.$sidebar &&
-                this.$sidebar.showSidebar === true
-            ) {
+            if (this.autoClose && this.$sidebar && this.$sidebar.showSidebar === true) {
                 this.$sidebar.displaySidebar(false);
             }
         },
@@ -273,11 +223,11 @@ export default {
             this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
         },
         toggleNavbar() {
-            document.body.classList.toggle("nav-open");
+            document.body.classList.toggle('nav-open');
             this.showMenu = !this.showMenu;
         },
         closeMenu() {
-            document.body.classList.remove("nav-open");
+            document.body.classList.remove('nav-open');
             this.showMenu = false;
         },
         onResponsiveInverted() {
@@ -301,7 +251,7 @@ export default {
     }
 };
 </script>
-<style lang="scss" >
+<style lang="scss">
 $scaleSize: 0.1;
 $zoomOutStart: 0.7;
 $zoomOutEnd: 0.46;
@@ -330,19 +280,12 @@ $zoomOutEnd: 0.46;
             .md-progress-bar.md-theme-default.md-query {
                 background-color: rgba(250, 248, 250, 0.38) !important;
             }
-            .md-progress-bar.md-theme-default.md-indeterminate
-                .md-progress-bar-track:after,
-            .md-progress-bar.md-theme-default.md-indeterminate
-                .md-progress-bar-fill:after,
-            .md-progress-bar.md-theme-default.md-query
-                .md-progress-bar-track:after,
-            .md-progress-bar.md-theme-default.md-query
-                .md-progress-bar-fill:after {
+            .md-progress-bar.md-theme-default.md-indeterminate .md-progress-bar-track:after,
+            .md-progress-bar.md-theme-default.md-indeterminate .md-progress-bar-fill:after,
+            .md-progress-bar.md-theme-default.md-query .md-progress-bar-track:after,
+            .md-progress-bar.md-theme-default.md-query .md-progress-bar-fill:after {
                 background-color: white !important;
-                background-color: var(
-                    --md-theme-default-primary,
-                    white!important
-                );
+                background-color: var(--md-theme-default-primary, white!important);
             }
         }
     }

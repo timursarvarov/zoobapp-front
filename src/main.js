@@ -25,9 +25,8 @@ Vue.use(require('vue-moment'));
 Object.defineProperty(Vue.prototype, '$Chartist', {
     get() {
         return this.$root.Chartist;
-    },
+    }
 });
-
 
 /* eslint-disable no-new */
 new Vue({
@@ -36,7 +35,7 @@ new Vue({
     i18n,
     store,
     data: {
-        Chartist,
+        Chartist
     },
-    render: h => h(App),
+    render: h => h(App)
 });

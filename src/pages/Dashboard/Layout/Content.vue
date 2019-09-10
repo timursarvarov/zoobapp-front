@@ -1,9 +1,6 @@
 <template>
     <div class="content">
-        <FadeTransition
-            :duration="200"
-            mode="out-in"
-        >
+        <FadeTransition :duration="200" mode="out-in">
             <!-- your content here -->
             <router-view />
         </FadeTransition>
@@ -15,9 +12,8 @@ import { FadeTransition } from 'vue2-transitions';
 export default {
     name: 'Content',
     components: {
-        FadeTransition,
-    },
+        FadeTransition
+    }
 };
 </script>
-<style>
-</style>
+<style></style>

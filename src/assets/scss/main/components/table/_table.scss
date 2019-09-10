@@ -40,7 +40,7 @@
     
     @keyframes text_color_change {
         from {
-            color: $white-color;
+            color: rgba(0, 0, 0, 0.87);
         }
         to {
             color: rgba(0, 0, 0, 0.87);
@@ -134,6 +134,10 @@
     .md-table {
         .md-table-cell {
             .md-table-cell-container {
+                .cell-actions{
+                    display: flex;
+                    justify-content: flex-end;
+                }
                 .teeth {
                     display: flex;
                     flex-wrap: wrap;
@@ -164,6 +168,31 @@
                     }
                     .tooth.md-warning {
                         background: $brand-warning;
+                    }
+                }
+                .allergy_wrapper {
+                    display: flex;
+                    flex-wrap: wrap;
+                    .allergy {
+                        width: fit-content;
+                        border: 1px solid #fff;
+                        font-size: 12px;
+                        color: #ffffff;
+                        min-width: 20px;
+                        padding: 0px 6px;
+                        height: 20px;
+                        border-radius: 10px;
+                        text-align: center;
+                        line-height: 18px;
+                        background: #f44336;
+                    }
+                }
+                .price{
+                    &_title, &_sub-title {
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        justify-content: space-between;
                     }
                 }
                 .manipulations,

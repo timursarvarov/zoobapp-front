@@ -21,7 +21,6 @@ import { PatientAddForm } from './pages/Dashboard/Modals';
 // import ClinicAddForm from './pages/Dashboard/Modals';
 // Tabs plugin. Used on Panels page.
 
-
 // asset imports
 import 'vue-material/dist/vue-material.min.css';
 import './assets/scss/material-dashboard/material-dashboard.scss';
@@ -39,5 +38,5 @@ export default {
         Vue.use(SideBarJaw);
         Vue.use(PatientAddForm);
         Vue.use(Notifications);
-    },
+    }
 };

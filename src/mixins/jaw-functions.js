@@ -37,25 +37,13 @@ const jawFunctions = {
 
             // получаем значенин локации в типах челюсти
             if (toothId in jaw.anamnesis && location in jaw.anamnesis[toothId]) {
-                anamnes = this.getNestedProperty(
-                    jaw.anamnesis,
-                    toothId,
-                    location,
-                );
+                anamnes = this.getNestedProperty(jaw.anamnesis, toothId, location);
             }
             if (toothId in jaw.procedures && location in jaw.procedures[toothId]) {
-                procedure = this.getNestedProperty(
-                    jaw.procedures,
-                    toothId,
-                    location,
-                );
+                procedure = this.getNestedProperty(jaw.procedures, toothId, location);
             }
             if (toothId in jaw.diagnosis && location in jaw.diagnosis[toothId]) {
-                diagnose = this.getNestedProperty(
-                    jaw.diagnosis,
-                    toothId,
-                    location,
-                );
+                diagnose = this.getNestedProperty(jaw.diagnosis, toothId, location);
             }
             /* определяем необходимость скрывать локацию(если ее нет
             	ни в одном поле вычесленной челюсти (процедуры, анамнез, или лечение))
@@ -87,17 +75,13 @@ const jawFunctions = {
             // если не установлен прдедпочитаемы вид (prefer) то возвращаем значение по умолчанию
             if (prefer.length === 0) {
                 if (location in originalItem.view) {
-                    const hide = !this.getNestedProperty(
-                        originalItem,
-                        'view',
-                        location,
-                    );
+                    const hide = !this.getNestedProperty(originalItem, 'view', location);
                     return hide;
                 }
                 return !defaultLocations[location];
             }
             // полчаем дефолтное значение локации
-            const originalItemLocation = !originalItem.view[location];
+            // const originalItemLocation = !originalItem.view[location];
             let anamnes;
             let procedure;
             let diagnose;
@@ -105,25 +89,13 @@ const jawFunctions = {
 
             // получаем значенин локации в типах челюсти
             if (toothId in jaw.anamnesis && location in jaw.anamnesis[toothId]) {
-                anamnes = this.getNestedProperty(
-                    jaw.anamnesis,
-                    toothId,
-                    location,
-                );
+                anamnes = this.getNestedProperty(jaw.anamnesis, toothId, location);
             }
             if (toothId in jaw.procedures && location in jaw.procedures[toothId]) {
-                procedure = this.getNestedProperty(
-                    jaw.procedures,
-                    toothId,
-                    location,
-                );
+                procedure = this.getNestedProperty(jaw.procedures, toothId, location);
             }
             if (toothId in jaw.diagnosis && location in jaw.diagnosis[toothId]) {
-                diagnose = this.getNestedProperty(
-                    jaw.diagnosis,
-                    toothId,
-                    location,
-                );
+                diagnose = this.getNestedProperty(jaw.diagnosis, toothId, location);
             }
             /* определяем необходимость скрывать локацию(если ее нет
             	ни в одном поле вычесленной челюсти (процедуры, анамнез, или лечение))
@@ -137,11 +109,7 @@ const jawFunctions = {
                 }
             } else if (locationType === 'anamnesis') {
                 if (location in originalItem.view) {
-                    hide = !this.getNestedProperty(
-                        originalItem,
-                        'view',
-                        location,
-                    );
+                    hide = !this.getNestedProperty(originalItem, 'view', location);
                 }
             }
             if (prefer.includes('diagnosis')) {
@@ -150,11 +118,7 @@ const jawFunctions = {
                 }
             } else if (locationType === 'diagnosis') {
                 if (location in originalItem.view) {
-                    const value = this.getNestedProperty(
-                        originalItem,
-                        'view',
-                        location,
-                    );
+                    const value = this.getNestedProperty(originalItem, 'view', location);
                     hide = !value;
                 }
             }
@@ -164,15 +128,10 @@ const jawFunctions = {
                 }
             } else if (locationType === 'procedures') {
                 if (location in originalItem.view) {
-                    const value = this.getNestedProperty(
-                        originalItem,
-                        'view',
-                        location,
-                    );
+                    const value = this.getNestedProperty(originalItem, 'view', location);
                     hide = !value;
                 }
             }
-
 
             return hide;
         },
@@ -201,7 +160,7 @@ const jawFunctions = {
                 return undefined;
             }
             return undefined;
-        },
-    },
+        }
+    }
 };
 export default jawFunctions;

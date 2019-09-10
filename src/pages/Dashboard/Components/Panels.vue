@@ -1,82 +1,52 @@
 <template>
     <div class="md-layout">
         <div class="md-layout-item md-size-50 md-medium-size-100">
-            <tabs
-                :tab-name="['Profile', 'Settings', 'Options']"
-                color-button="warning"
-            >
-                <h4
-                    slot="header-title"
-                    class="title"
-                >
-                    Navigation Pills - <small class="description">Horizontal Tabs</small>
-                </h4>
+            <tabs :tab-name="['Profile', 'Settings', 'Options']" color-button="warning">
+                <h4 slot="header-title" class="title">Navigation Pills - <small class="description">Horizontal Tabs</small></h4>
 
                 <!-- here you can add your content for tab-content -->
                 <template slot="tab-pane-1">
-                    Collaboratively administrate empowered
-                    markets via plug-and-play
-                    networks. Dynamically procrastinate B2C users after installed base benefits.
-                    <br><br>
-                    Dramatically visualize customer directed convergence without revolutionary ROI.
-                    Collaboratively administrate empowered markets via
+                    Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed
+                    base benefits.
+                    <br /><br />
+                    Dramatically visualize customer directed convergence without revolutionary ROI. Collaboratively administrate empowered markets via
                     plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits.
                 </template>
                 <template slot="tab-pane-2">
-                    Efficiently unleash cross-media
-                    information without cross-media value.
-                    Quickly maximize timely deliverables for real-time schemas.
-                    <br><br>
+                    Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
+                    <br /><br />
                     Dramatically maintain clicks-and-mortar solutions without functional solutions.
                 </template>
                 <template slot="tab-pane-3">
-                    Completely synergize resource taxing relationships via premier
-                    niche markets. Professionally cultivate one-to-one
-                    customer service with robust ideas.
-                    <br><br>
-                    Dynamically innovate resource-leveling
-                    customer service for state of the art customer service.
+                    Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service
+                    with robust ideas.
+                    <br /><br />
+                    Dynamically innovate resource-leveling customer service for state of the art customer service.
                 </template>
             </tabs>
         </div>
         <div class="md-layout-item md-size-50 md-medium-size-100">
-            <tabs
-                :tab-name="['Profile', 'Settings', 'Options']"
-                flex-column
-                color-button="success"
-            >
-                <h4
-                    slot="header-title"
-                    class="title"
-                >
-                    Navigation Pills - <small class="description">Vertical Tabs</small>
-                </h4>
+            <tabs :tab-name="['Profile', 'Settings', 'Options']" flex-column color-button="success">
+                <h4 slot="header-title" class="title">Navigation Pills - <small class="description">Vertical Tabs</small></h4>
 
                 <!-- here you can add your content for tab-content -->
                 <template slot="tab-pane-1">
-                    Collaboratively administrate empowered markets via plug-and-play networks.
-                    Dynamically procrastinate B2C
-                    users after installed base benefits.
-                    <br><br>
-                    Dramatically visualize customer directed convergence without revolutionary ROI.
-                    Collaboratively administrate empowered
-                    markets via plug-and-play networks. Dynamically
-                    procrastinate B2C users after installed base benefits.
+                    Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed
+                    base benefits.
+                    <br /><br />
+                    Dramatically visualize customer directed convergence without revolutionary ROI. Collaboratively administrate empowered markets via
+                    plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits.
                 </template>
                 <template slot="tab-pane-2">
-                    Efficiently unleash cross-media information without cross-media value.
-                    Quickly maximize timely
-                    deliverables for real-time schemas.
-                    <br><br>
+                    Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
+                    <br /><br />
                     Dramatically maintain clicks-and-mortar solutions without functional solutions.
                 </template>
                 <template slot="tab-pane-3">
-                    Completely synergize resource taxing relationships via premier
-                    niche markets. Professionally cultivate one-to-one
-                    customer service with robust ideas.
-                    <br><br>
-                    Dynamically innovate resource-leveling
-                    customer service for state of the art customer service.
+                    Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service
+                    with robust ideas.
+                    <br /><br />
+                    Dynamically innovate resource-leveling customer service for state of the art customer service.
                 </template>
             </tabs>
         </div>
@@ -90,53 +60,38 @@
                 </md-card-header>
                 <md-card-content>
                     <collapse
-                        :collapse="[
-                            'Collapsible Group Item #1',
-                            'Collapsible Group Item #2',
-                            'Collapsible Group Item #3']"
+                        :collapse="['Collapsible Group Item #1', 'Collapsible Group Item #2', 'Collapsible Group Item #3']"
                         icon="keyboard_arrow_down"
                         color-collapse="success"
                     >
                         <template slot="md-collapse-pane-1">
                             <p>
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                richardson ad squid. 3 wolf moon officia aute, non cupidatat
-                                skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                                Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                Ad vegan excepteur butcher vice lomo.
-                                Leggings occaecat craft beer farm-to-table,
-                                raw denim aesthetic synth
-                                nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+                                aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                labore sustainable VHS.
                             </p>
                         </template>
                         <template slot="md-collapse-pane-2">
                             <p>
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                richardson ad squid. 3 wolf moon officia aute, non cupidatat
-                                skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                                Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                Ad vegan excepteur butcher vice lomo.
-                                Leggings occaecat craft beer farm-to-table,
-                                raw denim aesthetic synth
-                                nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+                                aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                labore sustainable VHS.
                             </p>
                         </template>
                         <template slot="md-collapse-pane-3">
                             <p>
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                richardson ad squid. 3 wolf moon officia aute, non cupidatat
-                                skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                                Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                Ad vegan excepteur butcher vice lomo.
-                                Leggings occaecat craft beer farm-to-table,
-                                raw denim aesthetic synth
-                                nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+                                aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                labore sustainable VHS.
                             </p>
                         </template>
                     </collapse>
@@ -145,33 +100,20 @@
         </div>
 
         <div class="md-layout-item md-size-50 md-medium-size-100">
-            <tabs
-                :tab-name="['Home', 'Settings']"
-                :tab-icon="['dashboard', 'schedule']"
-                flex-column
-                nav-pills-icons
-                color-button="success"
-            >
-                <h4
-                    slot="header-title"
-                    class="title"
-                >
-                    Navigation Pills Icons - <small class="description">Vertical Tabs</small>
-                </h4>
+            <tabs :tab-name="['Home', 'Settings']" :tab-icon="['dashboard', 'schedule']" flex-column nav-pills-icons color-button="success">
+                <h4 slot="header-title" class="title">Navigation Pills Icons - <small class="description">Vertical Tabs</small></h4>
 
                 <!-- here you can add your content for tab-content -->
                 <template slot="tab-pane-1">
-                    Collaboratively administrate empowered markets via plug-and-play networks.
-                    Dynamically procrastinate B2C users after installed base benefits.
-                    <br><br>
-                    Dramatically visualize customer directed convergence without revolutionary ROI.
-                    Collaboratively administrate empowered markets via plug-and-play networks.
-                    Dynamically procrastinate B2C users after installed base benefits.
+                    Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed
+                    base benefits.
+                    <br /><br />
+                    Dramatically visualize customer directed convergence without revolutionary ROI. Collaboratively administrate empowered markets via
+                    plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits.
                 </template>
                 <template slot="tab-pane-2">
-                    Efficiently unleash cross-media information without cross-media value.
-                    Quickly maximize timely deliverables for real-time schemas.
-                    <br><br>
+                    Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
+                    <br /><br />
                     Dramatically maintain clicks-and-mortar solutions without functional solutions.
                 </template>
             </tabs>
@@ -186,10 +128,7 @@
                 plain
                 color-button="warning"
             >
-                <h3
-                    slot="header-title"
-                    class="title text-center"
-                >
+                <h3 slot="header-title" class="title text-center">
                     Page Subcategories
                 </h3>
 
@@ -206,10 +145,8 @@
                         </md-card-header>
 
                         <md-card-content>
-                            Collaboratively administrate empowered markets via plug-and-play networks.
-                            Dynamically procrastinate B2C users after installed base benefits.
-
-                            Dramatically visualize customer directed convergence without revolutionary ROI.
+                            Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after
+                            installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.
                         </md-card-content>
                     </md-card>
                 </template>
@@ -225,10 +162,8 @@
                         </md-card-header>
 
                         <md-card-content>
-                            Efficiently unleash cross-media information without cross-media value. d\
-                            Quickly maximize timely deliverables for real-time schemas.
-
-                            Dramatically maintain clicks-and-mortar solutions without functional solutions.
+                            Efficiently unleash cross-media information without cross-media value. d\ Quickly maximize timely deliverables for
+                            real-time schemas. Dramatically maintain clicks-and-mortar solutions without functional solutions.
                         </md-card-content>
                     </md-card>
                 </template>
@@ -244,12 +179,8 @@
                         </md-card-header>
 
                         <md-card-content>
-                            Completely synergize resource taxing relationships via premier
-                            niche markets. Professionally cultivate one-to-one
-                            customer service with robust ideas.
-
-                            Dynamically innovate resource-leveling
-                            customer service for state of the art customer service.
+                            Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer
+                            service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.
                         </md-card-content>
                     </md-card>
                 </template>
@@ -265,12 +196,8 @@
                         </md-card-header>
 
                         <md-card-content>
-                            Completely synergize resource taxing relationships via premier
-                            niche markets. Professionally cultivate one-to-one
-                            customer service with robust ideas.
-
-                            Dynamically innovate resource-leveling
-                            customer service for state of the art customer service.
+                            Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer
+                            service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.
                         </md-card-content>
                     </md-card>
                 </template>
@@ -284,7 +211,7 @@ import components from '@/components';
 export default {
     name: 'Panels',
     components: {
-        ...components,
-    },
+        ...components
+    }
 };
 </script>

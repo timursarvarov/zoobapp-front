@@ -21,7 +21,6 @@ export default {
     created: null,
     updated: null,
     rating: null,
-    color: null,
     files: null,
     ageCategory: null,
     jaw: null

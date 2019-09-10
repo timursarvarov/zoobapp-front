@@ -1,9 +1,6 @@
 <template>
     <md-card class="md-card-global-sales">
-        <md-card-header
-            class="md-card-header-icon"
-            :class="getClass(headerColor)"
-        >
+        <md-card-header class="md-card-header-icon" :class="getClass(headerColor)">
             <slot name="header" />
         </md-card-header>
 
@@ -19,16 +16,15 @@ export default {
     props: {
         headerColor: {
             type: String,
-            default: '',
-        },
+            default: ''
+        }
     },
     methods: {
         getClass(headerColor) {
             return `md-card-header-${headerColor}`;
-        },
-    },
+        }
+    }
 };
 </script>
 
-<style lang="css">
-</style>
+<style lang="css"></style>

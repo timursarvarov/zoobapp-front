@@ -16,17 +16,8 @@
                     <div class="md-layout-item md-size-33">
                         <md-field>
                             <label for="pages">Per page</label>
-                            <md-select
-                                v-model="pagination.perPage"
-                                name="pages"
-                            >
-                                <md-option
-                                    v-for="item in pagination.perPageOptions"
-                                    :key="item"
-                                    :label="item"
-                                    :value="item"
-                                    >{{ item }}</md-option
-                                >
+                            <md-select v-model="pagination.perPage" name="pages">
+                                <md-option v-for="item in pagination.perPageOptions" :key="item" :label="item" :value="item">{{ item }}</md-option>
                             </md-select>
                         </md-field>
                     </div>
@@ -47,10 +38,7 @@
                             </md-field>
                         </div>
                         <div class="md-layout-item md-size-20 ml-auto">
-                            <md-button
-                                class="md-just-icon md-simple"
-                                @click="showTableEditor = !showTableEditor"
-                            >
+                            <md-button class="md-just-icon md-simple" @click="showTableEditor = !showTableEditor">
                                 <md-icon>settings</md-icon>
                             </md-button>
                         </div>
@@ -60,9 +48,7 @@
                 <md-table-empty-state
                     v-if="!hasSlot('emptyState')"
                     :md-label="`No ${currentType} found`"
-                    :md-description="
-                        `No ${currentType}  found. Scroll top, and create new ${currentType} .`
-                    "
+                    :md-description="`No ${currentType}  found. Scroll top, and create new ${currentType} .`"
                 />
                 <slot name="emptyState" v-else />
 
@@ -70,17 +56,8 @@
                     slot="md-table-row"
                     :key="item.ID"
                     slot-scope="{ item }"
-                    class="transitionable-row"
-                    :class="[
-                        { 'just-added': item.justAdded },
-                        { 'to-delete': item.ID === itemToDelete.ID }
-                    ]"
-                    :md-selectable="
-                        currentType === 'procedures' ||
-                        currentType === 'billing'
-                            ? 'multiple'
-                            : 'single'
-                    "
+                    :class="[{ 'just-added': item.justAdded }, { 'to-delete': item.ID === itemToDelete.ID }]"
+                    :md-selectable="currentType === 'procedures' || currentType === 'billing' ? 'multiple' : 'single'"
                 >
                     <md-table-cell
                         v-for="field in itemsTableColumns"
@@ -89,184 +66,110 @@
                         :md-label="field.title.toString()"
                         :md-sort-by="field.key"
                     >
-                        <div
-                            v-if="field.key === 'code' && item.code"
-                            :class="field.key"
-                        >
-                            {{ item.code }}
-                        </div>
+                        <div v-if="field.key === 'code' && item.code" :class="field.key">{{ item.code }}</div>
 
-                        <div
-                            v-else-if="field.key === 'title' && item.title"
-                            :class="field.key"
-                        >
+                        <div v-else-if="field.key === 'title' && item.title" :class="field.key">
                             {{ item.title }}
                             <br />
                             <small>{{ item.description }}</small>
                         </div>
-                        <div
-                            v-else-if="field.key === 'teeth' && item.teeth"
-                            :class="field.key"
-                        >
-                            <span
-                                v-for="toothId in Object.keys(item.teeth)"
-                                :key="toothId"
-                                md-disabled
-                                class="tooth"
-                                :class="currentType"
-                            >
-                                <small>{{
-                                    toothId | toCurrentTeethSystem
-                                }}</small>
+                        <div v-else-if="field.key === 'teeth' && item.teeth" :class="field.key">
+                            <span v-for="toothId in Object.keys(item.teeth)" :key="toothId" class="tooth" :class="currentType">
+                                <small>
+                                    {{ toothId | toCurrentTeethSystem }}
+                                </small>
                             </span>
                         </div>
                         <avatar-box
-                            v-else-if="
-                                field.key === 'createdBy' && item.createdBy
-                            "
+                            v-else-if="field.key === 'createdBy' && item.createdBy"
                             small
                             :avatar="item.createdBy.avatar"
                             :id="item.createdBy.ID"
                             :firstLine="item.createdBy.firstName"
                             :secondLine="item.createdBy.lastName"
                         />
-                        <manipulations-box
-                            v-if="
-                                field.key === 'manipulations' &&
-                                    item.manipulations
-                            "
-                            :procedureId="item.ID"
-                        />
+                        <manipulations-box v-if="field.key === 'manipulations' && item.manipulations" :procedureId="item.ID" />
 
                         <div v-else-if="field.key === 'state'">
                             <div>{{ item.state }}</div>
                         </div>
 
                         <div v-else-if="field.key === 'ID'">
-                            <div>{{ item.ID }}</div>
+                            <div class="md-title">{{ item.ID }}</div>
                         </div>
 
-                        <div
-                            v-else-if="field.key === 'created' && item.created"
-                        >
-                            <span class="md-medium-hide">
-                                {{ item.created | moment('from') }}
+                        <div v-else-if="field.key === 'created' && item.created">
+                            <span class="">
+                                <b>{{ item.created | moment('from') }}</b>
                                 <br />
                             </span>
-                            <small>
-                                {{ item.created | moment('calendar') }}
-                            </small>
+                            <small>{{ item.created | moment('calendar') }}</small>
                         </div>
 
-                        <div
-                            v-else-if="field.key === 'updated' && item.updated"
-                        >
-                            <span class="md-medium-hide">
-                                {{ item.updated | moment('from') }}
+                        <div v-else-if="field.key === 'updated' && item.updated">
+                            <span class="">
+                                <b>{{ item.updated | moment('from') }}</b>
                                 <br />
                             </span>
-                            <small>
-                                {{ item.updated | moment('calendar') }}
-                            </small>
+                            <small>{{ item.updated | moment('calendar') }}</small>
                         </div>
 
-                        <div
-                            v-else-if="
-                                field.key === 'price' && item.manipulations
-                            "
-                        >
-                            <span>
-                                {{
-                                    getManipulationsByProcedureID(
-                                        item.ID
-                                    ).reduce((a, b) => a + b.totalPrice, 0)
-                                }}
-                                <small>{{ currentClinic.currencyCode }}</small>
+                        <div v-else-if="field.key === 'price' && item.manipulations" class="price">
+                            <span class="md-title price_title">
+                                {{ getManipulationsByProcedureID(item.ID).reduce((a, b) => a + b.totalPrice, 0) }}
                             </span>
-                            <span class="md-small-hide">
+                            <small>{{ currentClinic.currencyCode }}</small>
+                            <span class="md-small-hide price_sub-title">
                                 <br />
-                                <small>
-                                    {{
-                                        getManipulationsByProcedureID(item.ID)
-                                            .length
-                                    }}
+                                <small class="text-left">
+                                    {{ getManipulationsByProcedureID(item.ID).length }}
                                     manipulations
                                 </small>
                             </span>
                         </div>
-                        <avatar-box
-                            v-else-if="field.key === 'planID'"
-                            small
-                            :avatar="item.createdBy.avatar"
-                            :id="item.planID"
-                            :firstLine="patient.plans[item.planID].name"
-                        />
+                        <avatar-box v-else-if="field.key === 'planID'" small :id="item.planID" :firstLine="patient.plans[item.planID].name" />
                         <div v-else-if="field.key === 'discount'">
-                            {{ item.discout || 0 }}%
+                            <span class="md-title"> {{ item.discout || 0 }}% </span>
                         </div>
-                        <div
-                            v-else-if="field.key === 'dueDate' && item.dueDate"
-                        >
+                        <div v-else-if="field.key === 'dueDate' && item.dueDate">
                             <div v-if="!item.dueDate">No date</div>
                             <div v-else>
-                                <span class="md-medium-hide">
+                                <span class="">
                                     {{ item.dueDate | moment('from') }}
                                     <br />
                                 </span>
-                                <small>
-                                    {{ item.dueDate | moment('calendar') }}
-                                </small>
+                                <small>{{ item.dueDate | moment('calendar') }}</small>
                             </div>
                         </div>
                         <div v-else-if="field.key === 'payments'">
-                            <span v-if="item.payments">{{
-                                item.payments.length
-                            }}</span>
+                            <span v-if="item.payments">
+                                {{ item.payments.length }}
+                            </span>
                             <span v-else>No payments</span>
                         </div>
-                        <procedures-box
-                            v-else-if="
-                                field.key === 'procedures' && item.procedures
-                            "
-                            :proceduresIds="item.procedures"
-                        />
-                        <div v-else-if="field.key === 'tax'">
-                            {{ item.tax || 0 }}%
-                        </div>
+                        <procedures-box v-else-if="field.key === 'procedures' && item.procedures" :proceduresIds="item.procedures" />
+                        <div v-else-if="field.key === 'tax'" class="md-title">{{ item.tax || 0 }}%</div>
                         <div class="md-title" v-else-if="field.key === 'total'">
                             {{ item.total || 0 }}
                             <small>{{ currentClinic.currencyCode }}</small>
                         </div>
                     </md-table-cell>
 
-                    <md-table-cell
-                        v-if="currentType !== 'invoices'"
-                        md-label="Actions"
-                    >
+                    <md-table-cell v-if="currentType !== 'invoices'" md-label="Actions">
                         <div>
                             <md-button
                                 v-if="currentType !== 'billing'"
                                 v-show="ifDiagnoseHasLocations(item.teeth)"
                                 class="md-just-icon md-simple"
-                                @click.native="
-                                    toggleItemVisibility(item, currentType)
-                                "
+                                @click.native="toggleItemVisibility(item, currentType)"
                             >
-                                <md-icon v-if="item.showInJaw"
-                                    >visibility</md-icon
-                                >
+                                <md-icon v-if="item.showInJaw">visibility</md-icon>
                                 <md-icon v-else>visibility_off</md-icon>
                             </md-button>
-                            <md-button
-                                class="md-just-icon md-info md-simple"
-                                @click.native="handleEdit(item)"
-                            >
+                            <md-button class="md-just-icon md-info md-simple" @click.native="handleEdit(item)">
                                 <md-icon>edit</md-icon>
                             </md-button>
-                            <md-button
-                                class="md-just-icon md-danger md-simple"
-                                @click.native="handleDelete(item)"
-                            >
+                            <md-button class="md-just-icon md-danger md-simple" @click.native="handleDelete(item)">
                                 <md-icon>close</md-icon>
                             </md-button>
                         </div>
@@ -275,10 +178,7 @@
             </md-table>
             <md-card-actions md-alignment="space-between">
                 <div>
-                    <p class="card-category">
-                        Showing {{ from + 1 }} to {{ to }} of
-                        {{ total }} entries
-                    </p>
+                    <p class="card-category">Showing {{ from + 1 }} to {{ to }} of {{ total }} entries</p>
                 </div>
                 <pagination
                     v-model="pagination.currentPage"
@@ -297,42 +197,14 @@
             :show-form.sync="showTableEditor"
             @selected="setColumns"
         />
-        <md-snackbar
-            :md-position="'center'"
-            :md-duration="10000"
-            :md-active.sync="showDeleteItemSnackbar"
-            md-persistent
-        >
-            <div
-                class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100"
-            >
-                <div class="snackbar-text-wrapper">
-                    Delete {{ singleItemName() }} {{ itemToDelete.code }} -
-                    {{ itemToDelete.title }}?
-                </div>
-                <div
-                    class="snackbar-action-wrapper ml-auto md-alignment-center-right"
-                >
-                    <md-button
-                        class="md-simple"
-                        @click="
-                            (showDeleteItemSnackbar = false),
-                                (itemToDelete = {})
-                        "
-                        >cancel</md-button
-                    >
-                    <md-button
-                        :disabled="deleting"
-                        class="md-warning"
-                        @click="deleteItem(item)"
-                    >
+        <md-snackbar :md-position="'center'" :md-duration="10000" :md-active.sync="showDeleteItemSnackbar" md-persistent>
+            <div class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100">
+                <div class="snackbar-text-wrapper">Delete {{ singleItemName() }} {{ itemToDelete.code }} - {{ itemToDelete.title }}?</div>
+                <div class="snackbar-action-wrapper ml-auto md-alignment-center-right">
+                    <md-button class="md-simple" @click="(showDeleteItemSnackbar = false), (itemToDelete = {})">cancel</md-button>
+                    <md-button :disabled="deleting" class="md-warning" @click="deleteItem(item)">
                         <div v-if="deleting">
-                            <md-progress-spinner
-                                class="t-white"
-                                :md-diameter="12"
-                                :md-stroke="2"
-                                md-mode="indeterminate"
-                            />&nbsp;
+                            <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />&nbsp;
                             <span>Deleting...</span>
                         </div>
                         <span v-else> <md-icon>delete</md-icon>delete </span>
@@ -419,10 +291,8 @@ export default {
             currentClinic: 'getCurrentClinic',
             patient: 'getPatient',
             getAvailableAnamnesTableColumns: 'getAvailableAnamnesTableColumns',
-            getAvailableDiagnosisTableColumns:
-                'getAvailableDiagnosisTableColumns',
-            getAvailableProceduresTableColumns:
-                'getAvailableProceduresTableColumns',
+            getAvailableDiagnosisTableColumns: 'getAvailableDiagnosisTableColumns',
+            getAvailableProceduresTableColumns: 'getAvailableProceduresTableColumns',
             getAvailableBillingTableColumns: 'getAvailableBillingTableColumns',
             getManipulationsByProcedureID: 'getManipulationsByProcedureID',
             getAvailableInvoiceTableColumns: 'getAvailableInvoiceTableColumns'
@@ -456,9 +326,7 @@ export default {
             return this.pagination.perPage * (this.pagination.currentPage - 1);
         },
         total() {
-            return this.searchedData.length > 0
-                ? this.searchedData.length
-                : this.tableData.length;
+            return this.searchedData.length > 0 ? this.searchedData.length : this.tableData.length;
         },
         tableData() {
             return this.items;
@@ -550,9 +418,7 @@ export default {
         //     return '';
         // },
         setItemsTableColumns() {
-            const localStorageColumns = JSON.parse(
-                localStorage.getItem(this.currentTypeToLocalStorage)
-            );
+            const localStorageColumns = JSON.parse(localStorage.getItem(this.currentTypeToLocalStorage));
             if (localStorageColumns) {
                 this.itemsTableColumns = localStorageColumns;
             } else {
@@ -561,10 +427,7 @@ export default {
         },
         setColumns(e) {
             //! поменять после того как добавять соответствующие поля в беке
-            localStorage.setItem(
-                this.currentTypeToLocalStorage,
-                JSON.stringify(e)
-            );
+            localStorage.setItem(this.currentTypeToLocalStorage, JSON.stringify(e));
             this.setItemsTableColumns();
             this.setComputedAvailableItemsTableColumns();
         },
@@ -585,17 +448,10 @@ export default {
             const val = value.sort((a, b) => {
                 const sortBy = vm.currentSort;
                 if (Array.isArray(a[vm.currentSort])) {
-                    const aArrayLength = a[vm.currentSort]
-                        ? Object.keys(a[vm.currentSort]).length
-                        : 0;
-                    const bArrayLength = b[vm.currentSort]
-                        ? Object.keys(b[vm.currentSort]).length
-                        : 0;
+                    const aArrayLength = a[vm.currentSort] ? Object.keys(a[vm.currentSort]).length : 0;
+                    const bArrayLength = b[vm.currentSort] ? Object.keys(b[vm.currentSort]).length : 0;
                     const orderLocal = vm.currentSortOrder;
-                    const dflt =
-                        orderLocal === 'asc'
-                            ? Number.MAX_VALUE
-                            : -Number.MAX_VALUE;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
                     const aVal = aArrayLength === null ? dflt : aArrayLength;
                     const bVal = bArrayLength === null ? dflt : bArrayLength;
                     return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
@@ -606,19 +462,13 @@ export default {
                     return b[sortBy].localeCompare(a[sortBy]);
                 } else if (typeof a[vm.currentSort] === 'number') {
                     const orderLocal = vm.currentSortOrder;
-                    const dflt =
-                        orderLocal === 'asc'
-                            ? Number.MAX_VALUE
-                            : -Number.MAX_VALUE;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
                     const aVal = a[sortBy] === null ? dflt : a[sortBy];
                     const bVal = b[sortBy] === null ? dflt : b[sortBy];
                     return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
                 } else if (typeof a[vm.currentSort] === 'object') {
                     const orderLocal = vm.currentSortOrder;
-                    const dflt =
-                        orderLocal === 'asc'
-                            ? Number.MAX_VALUE
-                            : -Number.MAX_VALUE;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
                     const aVal = a[sortBy] === null ? dflt : a[sortBy];
                     const bVal = b[sortBy] === null ? dflt : b[sortBy];
                     return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
@@ -630,17 +480,10 @@ export default {
             const vm = this;
             if (vm.currentSort === 'teeth') {
                 const val = value.sort((a, b) => {
-                    const aTeethLength = a.teeth
-                        ? Object.keys(a.teeth).length
-                        : 0;
-                    const bTeethLength = b.teeth
-                        ? Object.keys(b.teeth).length
-                        : 0;
+                    const aTeethLength = a.teeth ? Object.keys(a.teeth).length : 0;
+                    const bTeethLength = b.teeth ? Object.keys(b.teeth).length : 0;
                     const orderLocal = vm.currentSortOrder;
-                    const dflt =
-                        orderLocal === 'asc'
-                            ? Number.MAX_VALUE
-                            : -Number.MAX_VALUE;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
                     const aVal = aTeethLength === null ? dflt : aTeethLength;
                     const bVal = bTeethLength === null ? dflt : bTeethLength;
                     return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
@@ -649,21 +492,10 @@ export default {
             }
             if (vm.currentSort === 'price') {
                 const val = value.sort((a, b) => {
-                    const aTeethPrice =
-                        this.getManipulationsByProcedureID(a.ID).reduce(
-                            (a, b) => a + b.totalPrice,
-                            0
-                        ) || 0;
-                    const bTeethPrice =
-                        this.getManipulationsByProcedureID(b.ID).reduce(
-                            (a, b) => a + b.totalPrice,
-                            0
-                        ) || 0;
+                    const aTeethPrice = this.getManipulationsByProcedureID(a.ID).reduce((a, b) => a + b.totalPrice, 0) || 0;
+                    const bTeethPrice = this.getManipulationsByProcedureID(b.ID).reduce((a, b) => a + b.totalPrice, 0) || 0;
                     const orderLocal = vm.currentSortOrder;
-                    const dflt =
-                        orderLocal === 'asc'
-                            ? Number.MAX_VALUE
-                            : -Number.MAX_VALUE;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
                     const aVal = aTeethPrice === null ? dflt : aTeethPrice;
                     const bVal = bTeethPrice === null ? dflt : bTeethPrice;
                     return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
@@ -677,10 +509,7 @@ export default {
             if (item) {
                 const params = {
                     item,
-                    type:
-                        this.currentType === 'billing'
-                            ? 'procedures'
-                            : this.currentType
+                    type: this.currentType === 'billing' ? 'procedures' : this.currentType
                 };
                 EventBus.$emit(EB_SHOW_ITEM_WIZARD, params);
             }
@@ -744,55 +573,48 @@ export default {
 };
 </script>
 
-<style lang="scss">
-// .items-list-wrapper {
-//     .md-table-cell-container {
-//         overflow: hidden;
-//         .teeth {
-//             max-width: 150px;
-//             width: 14vw;
-//             min-width: 50px;
-//             text-overflow: ellipsis;
-//             // word-wrap: break-word;
-//             overflow: hidden;
-//         }
-//         .code {
-//             width: 20px;
-//         }
-//         .items-manipulations_wrapper {
-//             text-overflow: ellipsis;
-//             overflow: hidden;
-//             align-items: stretch;
-//             display: flex;
-//             .text-left {
-//                 overflow: hidden;
-//                 text-overflow: ellipsis;
-//                 white-space: nowrap;
-//                 text-align: left;
-//                 // max-width: 70%;
-//             }
-//             .text-right {
-//                 // flex-grow: 1;
-//                 // // max-width: 30%;
-//                 // text-overflow: ellipsis;
-//                 // white-space: nowrap;
-//                 text-align: right;
-//             }
-//         }
-//     }
-//     // .md-card .md-card-actions {
-//     //     border: 0;
-//     //     margin-left: 20px;
-//     //     margin-right: 20px;
-//     // }
-// .paginated-table table > tbody > tr > td {
-//     width: fit-content;
-// }
-// .footer-table table > tfoot > tr > th:first-child {
-//     width: 20px;
-// }
-// .footer-table table > tfoot > tr > th:nth-last-child(-n + 2) {
-//     width: 40px;
-// }
-// }
+<style lang="scss" scoped>
+.text-right /deep/ .md-table-cell-container {
+    display: flex;
+    justify-content: flex-end;
+}
+.md-table /deep/ .md-table-head:last-child {
+    text-align: right;
+}
+
+.table-stats {
+    display: flex;
+    align-items: center;
+    text-align: right;
+    flex-flow: row wrap;
+
+    .td-price .td-total {
+        display: inline-flex;
+        font-weight: 500;
+        font-size: 1.0625rem;
+        margin-right: 50px;
+    }
+
+    &.table-striped .td-price {
+        border-bottom: 0;
+    }
+
+    .td-price {
+        font-size: 26px;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .td-price,
+    > div {
+        flex: 0 0 100%;
+        padding: 12px 8px;
+    }
+}
+
+.table-shopping /deep/ .md-table-head:nth-child(5),
+.table-shopping /deep/ .md-table-head:nth-child(7),
+.table-shopping /deep/ .md-table-head:nth-child(6) {
+    text-align: right;
+}
 </style>

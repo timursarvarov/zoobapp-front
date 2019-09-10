@@ -3,62 +3,24 @@
         md-elevation="0"
         class="md-transparent top-navbar-wrapper"
         :class="{
-            'md-toolbar-absolute md-white md-fixed-top':
-                $route.meta.navbarAbsolute
+            'md-toolbar-absolute md-white md-fixed-top': $route.meta.navbarAbsolute
         }"
     >
         <div class="the-main-progress-bar">
-            <md-progress-bar
-                v-show="loading"
-                :md-stroke="2"
-                md-mode="indeterminate"
-            />
+            <md-progress-bar v-show="loading" :md-stroke="2" md-mode="indeterminate" />
         </div>
         <div class="md-toolbar-row">
             <div class="md-toolbar-section-start">
                 <h3 class="md-title">
-                    <template
-                        v-if="
-                            $route.params.patientID &&
-                                (patient.firstName || patient.lastName)
-                        "
-                        class="md-layout md-alignment-left-center"
-                    >
+                    <template v-if="$route.params.patientID && (patient.firstName || patient.lastName)" class="md-layout md-alignment-left-center">
                         <avatar-box
-                            v-if="
-                                $route.params.patientID &&
-                                    (patient.firstName || patient.lastName)
-                            "
+                            v-if="$route.params.patientID && (patient.firstName || patient.lastName)"
                             :avatar="patient.avatar"
                             :id="patient.ID"
-                            :firstLine="
-                                `${patient.firstName} ${patient.lastName}`
-                            "
-                            :notificationClass="
-                                patient.allergy ? 'warning' : ''
-                            "
-                            :notification="
-                                !lodash.isEmpty(patient.allergy) ? 'A' : ''
-                            "
+                            :firstLine="`${patient.firstName} ${patient.lastName}`"
+                            :notificationClass="patient.allergy ? 'warning' : ''"
+                            :notification="!lodash.isEmpty(patient.allergy) ? 'A' : ''"
                         />
-                        <!-- <t-avatar
-                            class="patient-header-avatar"
-                            :text-to-color="patient.ID"
-                            :image-src="patient.avatar"
-                            :title="patient.firstName + ' ' + patient.lastName"
-                        />
-                        <span class="patient_header_title md-layout-item">
-                            {{ `${patient.firstName}` | capitilize }}
-                            {{ `${patient.lastName}` | capitilize }}
-                        </span>
-                        <md-button
-                            v-if="patient.allergy && patient.allergy.length > 0"
-                            class="md-icon-button md-simple md-danger md-round md-just-icon"
-                            @click="handleAllergy(patient.allergy)"
-                        >
-                            <md-icon>report_problem</md-icon>
-                            <md-tooltip>Attention allergy!</md-tooltip>
-                        </md-button> -->
                     </template>
                     <span v-else>{{ $route.name }}</span>
                 </h3>
@@ -77,10 +39,7 @@
                     <t-cool-select-patient-search />
                     <md-list>
                         <li class="md-list-item">
-                            <a
-                                class="md-list-item-router md-list-item-container md-button-clean"
-                                @click="goTo('/')"
-                            >
+                            <a class="md-list-item-router md-list-item-container md-button-clean" @click="goTo('/')">
                                 <div v-ripple class="md-list-item-content">
                                     <i class="material-icons">dashboard</i>
                                     <p class="hidden-lg hidden-md">Dashboard</p>
@@ -88,10 +47,7 @@
                             </a>
                         </li>
                         <li class="md-list-item">
-                            <a
-                                class="md-list-item-router md-list-item-container md-button-clean"
-                                @click="showPatientAddForm()"
-                            >
+                            <a class="md-list-item-router md-list-item-container md-button-clean" @click="showPatientAddForm()">
                                 <div v-ripple class="md-list-item-content">
                                     <i class="material-icons">person_add</i>
                                     <p class="hidden-lg hidden-md">
@@ -101,46 +57,28 @@
                             </a>
                         </li>
                         <li class="md-list-item">
-                            <a
-                                class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                            >
+                            <a class="md-list-item-router md-list-item-container md-button-clean dropdown">
                                 <div class="md-list-item-content">
                                     <drop-down direction="down">
-                                        <md-button
-                                            slot="title"
-                                            class="md-button md-just-icon md-simple"
-                                            data-toggle="dropdown"
-                                        >
+                                        <md-button slot="title" class="md-button md-just-icon md-simple" data-toggle="dropdown">
                                             <md-icon>notifications</md-icon>
                                             <span class="notification">5</span>
                                             <p class="hidden-lg hidden-md">
                                                 Notifications
                                             </p>
                                         </md-button>
-                                        <ul
-                                            class="dropdown-menu dropdown-menu-right"
-                                        >
+                                        <ul class="dropdown-menu dropdown-menu-right">
                                             <li>
-                                                <a href="#"
-                                                    >Mike John responded to your
-                                                    email</a
-                                                >
+                                                <a href="#">Mike John responded to your email</a>
                                             </li>
                                             <li>
-                                                <a href="#"
-                                                    >You have 5 new tasks</a
-                                                >
+                                                <a href="#">You have 5 new tasks</a>
                                             </li>
                                             <li>
-                                                <a href="#"
-                                                    >You're now friend with
-                                                    Andrew</a
-                                                >
+                                                <a href="#">You're now friend with Andrew</a>
                                             </li>
                                             <li>
-                                                <a href="#"
-                                                    >Another Notification</a
-                                                >
+                                                <a href="#">Another Notification</a>
                                             </li>
                                             <li>
                                                 <a href="#">Another One</a>
@@ -152,78 +90,43 @@
                         </li>
                         <t-language-switcher />
                         <li class="md-list-item">
-                            <a
-                                class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                            >
+                            <a class="md-list-item-router md-list-item-container md-button-clean dropdown">
                                 <div class="md-list-item-content">
                                     <drop-down multi-level direction="down">
-                                        <md-button
-                                            slot="title"
-                                            class="md-button md-round md-just-icon md-simple"
-                                            data-toggle="dropdown"
-                                        >
+                                        <md-button slot="title" class="md-button md-round md-just-icon md-simple" data-toggle="dropdown">
                                             <md-icon>more_vert</md-icon>
                                             <p class="hidden-lg hidden-md">
                                                 More
                                             </p>
                                         </md-button>
-                                        <ul
-                                            class="dropdown-menu dropdown-menu-right"
-                                        >
+                                        <ul class="dropdown-menu dropdown-menu-right">
                                             <li class="md-layout">
-                                                <router-link
-                                                    tag="a"
-                                                    to="/pages/user"
-                                                    class="md-layout-item"
-                                                >
+                                                <router-link tag="a" to="/pages/user" class="md-layout-item">
                                                     <t-avatar
                                                         small
                                                         :text-to-color="user.ID"
                                                         :no-img-tag="true"
                                                         :image-src="user.avatar"
-                                                        :title="
-                                                            user.firstName +
-                                                                ' ' +
-                                                                user.lastName
-                                                        "
+                                                        :title="user.firstName + ' ' + user.lastName"
                                                     />
                                                     My Profile
                                                 </router-link>
                                             </li>
-                                            <li
-                                                class="md-layout"
-                                                @click="showPatientAddForm()"
-                                            >
-                                                <a
-                                                    href="#"
-                                                    class="md-layout-item"
-                                                >
-                                                    <md-icon
-                                                        >person_add</md-icon
-                                                    >
+                                            <li class="md-layout" @click="showPatientAddForm()">
+                                                <a href="#" class="md-layout-item">
+                                                    <md-icon>person_add</md-icon>
                                                     Add Patient
                                                 </a>
                                             </li>
-                                            <li
-                                                class="md-layout"
-                                                @click="lock()"
-                                            >
-                                                <a
-                                                    href="#"
-                                                    class="md-layout-item"
-                                                >
+                                            <li class="md-layout" @click="lock()">
+                                                <a href="#" class="md-layout-item">
                                                     <md-icon>lock</md-icon>
                                                     Lock
                                                 </a>
                                             </li>
-                                            <li
-                                                class="md-layout"
-                                                @click="logout()"
-                                            >
+                                            <li class="md-layout" @click="logout()">
                                                 <a href="#">
-                                                    <md-icon
-                                                        >arrow_back</md-icon
-                                                    >
+                                                    <md-icon>arrow_back</md-icon>
                                                     Logout
                                                 </a>
                                             </li>
@@ -232,68 +135,40 @@
                                                     :class="[
                                                         { open: multiLevel },
                                                         {
-                                                            'dropdown-toggle':
-                                                                clinics &&
-                                                                clinics.length >
-                                                                    1
+                                                            'dropdown-toggle': clinics && clinics.length > 1
                                                         }
                                                     ]"
                                                     @click="toggleMultiLevel"
                                                 >
                                                     <img
                                                         style="margin-right:10px; height:24px; width:24px; border-radius:50%"
-                                                        :src="
-                                                            currnentClinic.logo
-                                                        "
+                                                        :src="currnentClinic.logo"
                                                     />
                                                     {{ currnentClinic.name }}
                                                     {{ currnentClinic.id }}
                                                 </a>
-                                                <ul
-                                                    v-if="
-                                                        clinics &&
-                                                            clinics.length > 1
-                                                    "
-                                                    class="dropdown-menu"
-                                                >
+                                                <ul v-if="clinics && clinics.length > 1" class="dropdown-menu">
                                                     <li
-                                                        v-for="(clinic,
-                                                        index) in clinics"
+                                                        v-for="(clinic, index) in clinics"
                                                         :key="index"
                                                         :class="[
                                                             {
-                                                                'selected-menu-top-navbar':
-                                                                    clinic.ID ===
-                                                                    currnentClinic.ID
+                                                                'selected-menu-top-navbar': clinic.ID === currnentClinic.ID
                                                             }
                                                         ]"
-                                                        @click="
-                                                            setClinic(
-                                                                clinic.ID
-                                                            ),
-                                                                toggleMultiLevel()
-                                                        "
+                                                        @click="setClinic(clinic.ID), toggleMultiLevel()"
                                                     >
                                                         <a
                                                             :style="{
-                                                                color:
-                                                                    clinic.ID ===
-                                                                    currnentClinic.ID
-                                                                        ? '#fff!important'
-                                                                        : ''
+                                                                color: clinic.ID === currnentClinic.ID ? '#fff!important' : ''
                                                             }"
                                                             href="#"
                                                         >
                                                             <img
                                                                 style="margin-right:10px; height:24px; width:24px; border-radius:50%"
-                                                                :src="
-                                                                    clinic.logo
-                                                                "
+                                                                :src="clinic.logo"
                                                             />
-                                                            {{
-                                                                clinic.name
-                                                                    | capitilize
-                                                            }}{{ clinic.ID }}
+                                                            {{ clinic.name | capitilize }}{{ clinic.ID }}
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -313,13 +188,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import components from '@/components';
-import {
-    CLINIC_AUTH_REQUEST,
-    AUTH_LOGOUT,
-    AUTH_LOCK,
-    NOTIFY,
-    AVAILABLE_LANGUAGES
-} from '@/constants';
+import { CLINIC_AUTH_REQUEST, AUTH_LOGOUT, AUTH_LOCK, NOTIFY, AVAILABLE_LANGUAGES } from '@/constants';
 
 export default {
     components: {
@@ -381,14 +250,10 @@ export default {
                     },
                     error => {
                         if (error && error.response) {
-                            if (
-                                error.response.data.message === 'Wrong password'
-                            ) {
+                            if (error.response.data.message === 'Wrong password') {
                                 this.showErrorsValidate('password');
                             }
-                            if (
-                                error.response.data.message === 'Invalid login'
-                            ) {
+                            if (error.response.data.message === 'Invalid login') {
                                 this.showErrorsValidate('username');
                             }
                         }

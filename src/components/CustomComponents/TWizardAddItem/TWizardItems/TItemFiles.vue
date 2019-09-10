@@ -1,9 +1,5 @@
 <template>
-    <div
-        class="wizard-tab-content"
-        :style="[{'min-width': `${size.width}px`},
-                 {'min-height': `${size.height}px`} ]"
-    >
+    <div class="wizard-tab-content" :style="[{ 'min-width': `${size.width}px` }, { 'min-height': `${size.height}px` }]">
         <div class="absolute-header-block">
             <t-files-add-form
                 class="md-layout-item"
@@ -17,10 +13,7 @@
             >
                 <div slot="emptyState">
                     <div>
-                        <div
-                            style="color: #AAAAAA"
-                            class="md-title"
-                        >
+                        <div style="color: #AAAAAA" class="md-title">
                             Add new file
                         </div>
                         <span style="color: #AAAAAA">Click here or drope some files</span>
@@ -29,12 +22,7 @@
             </t-files-add-form>
         </div>
         <div class="files-list">
-            <t-files-list
-                :columns="columns"
-                :paginated="false"
-                :access_token="access_token"
-                :files="patient.files"
-            />
+            <t-files-list :columns="columns" :paginated="false" :access_token="access_token" :files="patient.files" />
         </div>
     </div>
 </template>
@@ -43,11 +31,7 @@
 import { mapGetters } from 'vuex';
 
 import { tObjProp } from '@/mixins';
-import {
-    AUTH_REFRESH_TOKEN,
-    PATIENT_ADD_SUB_PROP,
-    BASE_URL,
-} from '@/constants';
+import { AUTH_REFRESH_TOKEN, PATIENT_ADD_SUB_PROP, BASE_URL } from '@/constants';
 
 import TFilesAddForm from '@/components/CustomComponents/TFilesAddForm';
 import TFilesList from '@/components/CustomComponents/TFilesList';
@@ -56,14 +40,14 @@ export default {
     name: 'PatientFiles',
     components: {
         TFilesAddForm,
-        TFilesList,
+        TFilesList
     },
     mixins: [tObjProp],
     props: {
         size: {
             type: Object,
-            default: () => {},
-        },
+            default: () => {}
+        }
     },
     data() {
         return {
@@ -71,54 +55,52 @@ export default {
                 {
                     key: 'filePreview',
                     title: 'Preview',
-                    sortable: false,
+                    sortable: false
                 },
                 {
                     key: 'name',
                     title: 'Name',
-                    sortable: true,
+                    sortable: true
                 },
                 {
                     key: 'filesize',
                     title: 'File Size',
-                    sortable: true,
-                },
-            ],
+                    sortable: true
+                }
+            ]
         };
     },
     computed: {
         ...mapGetters({
             access_token: 'fetchStateAccessToken',
             patient: 'getPatient',
-            tokenExpiresAt: 'expiresAt',
+            tokenExpiresAt: 'expiresAt'
         }),
         url() {
-            return `${BASE_URL}/patients/${
-                this.patient ? this.patient.ID : ''
-            }/files/`;
+            return `${BASE_URL}/patients/${this.patient ? this.patient.ID : ''}/files/`;
         },
         authRefreshToken() {
             return AUTH_REFRESH_TOKEN;
         },
         patientAddSubProp() {
             return PATIENT_ADD_SUB_PROP;
-        },
+        }
     },
     methods: {
         onSuccess(response) {
             this.$store.dispatch(PATIENT_ADD_SUB_PROP, {
                 params: {
                     propName: 'files',
-                    value: response[0],
-                },
+                    value: response[0]
+                }
             });
         },
         validate() {
-            return this.$validator.validateAll().then((res) => {
+            return this.$validator.validateAll().then(res => {
                 this.$emit('on-validated', res, 'step3');
                 return res;
             });
-        },
-    },
+        }
+    }
 };
 </script>

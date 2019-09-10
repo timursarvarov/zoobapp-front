@@ -1,8 +1,5 @@
 <template>
-    <md-card
-        class="md-card-profile"
-        :class="{'md-card-hidden': cardHidden}"
-    >
+    <md-card class="md-card-profile" :class="{ 'md-card-hidden': cardHidden }">
         <md-card-header>
             <div class="md-card-avatar">
                 <slot name="imageProfile" />
@@ -26,12 +23,12 @@ export default {
     props: {
         imageProfile: {
             type: String,
-            default: '',
-        },
+            default: ''
+        }
     },
     data() {
         return {
-            cardHidden: true,
+            cardHidden: true
         };
     },
     beforeMount() {
@@ -40,13 +37,12 @@ export default {
     methods: {
         showCard() {
             this.cardHidden = false;
-        },
-    },
+        }
+    }
 };
 </script>
 
-<style lang="css">
-</style>
+<style lang="css"></style>
 
 <!-- <div class="card card-profile text-center card-hidden">
   <div class="card-header ">

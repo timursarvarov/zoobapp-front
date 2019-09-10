@@ -12,20 +12,18 @@ const NotificationStore = {
     addNotification(notification) {
         const Nnotificationv = notification;
         Nnotificationv.timestamp = new Date();
-        Nnotificationv.timestamp.setMilliseconds(
-            Nnotificationv.timestamp.getMilliseconds() + this.state.length,
-        );
+        Nnotificationv.timestamp.setMilliseconds(Nnotificationv.timestamp.getMilliseconds() + this.state.length);
         this.state.push(Nnotificationv);
     },
     notify(notification) {
         if (Array.isArray(notification)) {
-            notification.forEach((notificationInstance) => {
+            notification.forEach(notificationInstance => {
                 this.addNotification(notificationInstance);
             });
         } else {
             this.addNotification(notification);
         }
-    },
+    }
 };
 
 const NotificationsPlugin = {
@@ -33,27 +31,27 @@ const NotificationsPlugin = {
         Vue.mixin({
             data() {
                 return {
-                    notificationStore: NotificationStore,
+                    notificationStore: NotificationStore
                 };
             },
             methods: {
                 notify(notification) {
                     this.notificationStore.notify(notification);
-                },
-            },
+                }
+            }
         });
         Object.defineProperty(Vue.prototype, '$notify', {
             get() {
                 return this.$root.notify;
-            },
+            }
         });
         Object.defineProperty(Vue.prototype, '$notifications', {
             get() {
                 return this.$root ? this.$root.notificationStore : '';
-            },
+            }
         });
         Vue.component('Notifications', Notifications);
-    },
+    }
 };
 
 export default NotificationsPlugin;

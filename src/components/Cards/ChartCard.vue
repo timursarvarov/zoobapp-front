@@ -1,44 +1,26 @@
 <template>
-    <md-card
-        :data-count="hoverCount"
-        class="md-card-chart"
-        @mouseleave.native="onMouseLeave"
-    >
+    <md-card :data-count="hoverCount" class="md-card-chart" @mouseleave.native="onMouseLeave">
         <md-card-header
             :data-header-animation="headerAnimation"
             :class="[
-                {hovered: imgHovered},
-                {hinge: headerDown},
-                {fadeInDown: fixedHeader},
-                {animated: true},
-                {[getClass(backgroundColor)]: true},
-                {'md-card-header-text': headerText},
-                {'md-card-header-icon': headerIcon}]"
+                { hovered: imgHovered },
+                { hinge: headerDown },
+                { fadeInDown: fixedHeader },
+                { animated: true },
+                { [getClass(backgroundColor)]: true },
+                { 'md-card-header-text': headerText },
+                { 'md-card-header-icon': headerIcon }
+            ]"
             @mouseenter.native="onMouseOver"
         >
-            <div
-                v-if="chartInsideHeader"
-                :id="chartId"
-                class="ct-chart"
-            />
+            <div v-if="chartInsideHeader" :id="chartId" class="ct-chart" />
             <slot name="chartInsideHeader" />
         </md-card-header>
 
         <md-card-content>
-            <div
-                v-if="chartInsideContent"
-                :id="chartId"
-                class="ct-chart"
-            />
-            <div
-                v-if="headerAnimation === 'true'"
-                class="md-card-action-buttons text-center"
-            >
-                <md-button
-                    v-if="headerDown"
-                    class="md-danger md-simple fix-broken-card"
-                    @click="fixHeader"
-                >
+            <div v-if="chartInsideContent" :id="chartId" class="ct-chart" />
+            <div v-if="headerAnimation === 'true'" class="md-card-action-buttons text-center">
+                <md-button v-if="headerDown" class="md-danger md-simple fix-broken-card" @click="fixHeader">
                     <slot name="fixed-button" /> Fix Header!
                 </md-button>
                 <slot name="first-button" />
@@ -48,10 +30,7 @@
             <slot name="content" />
         </md-card-content>
 
-        <md-card-actions
-            v-if="!noFooter"
-            md-alignment="left"
-        >
+        <md-card-actions v-if="!noFooter" md-alignment="left">
             <slot name="footer" />
         </md-card-actions>
     </md-card>
@@ -67,48 +46,48 @@ export default {
         chartInsideHeader: Boolean,
         chartType: {
             type: String,
-            default: 'Line', // Line | Pie | Bar
+            default: 'Line' // Line | Pie | Bar
         },
         headerAnimation: {
             type: String,
-            default: 'true',
+            default: 'true'
         },
         chartOptions: {
             type: Object,
-            default: () => ({}),
+            default: () => ({})
         },
         chartResponsiveOptions: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         chartAnimation: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         chartData: {
             type: Object,
             default: () => ({
                 labels: [],
-                series: [],
-            }),
+                series: []
+            })
         },
         backgroundColor: {
             type: String,
-            default: '',
-        },
+            default: ''
+        }
     },
     data() {
         return {
             hoverCount: 0,
             imgHovered: false,
             fixedHeader: false,
-            chartId: 'no-id',
+            chartId: 'no-id'
         };
     },
     computed: {
         headerDown() {
             return this.hoverCount > 15;
-        },
+        }
     },
     mounted() {
         this.updateChartId();
@@ -140,21 +119,16 @@ export default {
             return `md-card-header-${backgroundColor}`;
         },
         /** *
-             * Initializes the chart by merging the chart
-             *  options sent via props and the default chart options
-             */
+         * Initializes the chart by merging the chart
+         *  options sent via props and the default chart options
+         */
         initChart() {
             const chartIdQuery = `#${this.chartId}`;
-            this.$Chartist[this.chartType](
-                chartIdQuery,
-                this.chartData,
-                this.chartOptions,
-                this.chartAnimation,
-            );
+            this.$Chartist[this.chartType](chartIdQuery, this.chartData, this.chartOptions, this.chartAnimation);
         },
         /** *
-             * Assigns a random id to the chart
-             */
+         * Assigns a random id to the chart
+         */
         updateChartId() {
             const currentTime = new Date().getTime().toString();
             const randomInt = this.getRandomInt(0, currentTime);
@@ -162,7 +136,7 @@ export default {
         },
         getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
-        },
-    },
+        }
+    }
 };
 </script>

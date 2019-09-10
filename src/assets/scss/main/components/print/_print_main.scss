@@ -1,0 +1,106 @@
+.print-form {
+    .A4 {
+        position: relative;
+        .print_page-header,
+        .print_page-header-space {
+            height: 100px;
+        }
+
+        .print_page-footer,
+        .print_page-footer-space {
+            height: 50px;
+        }
+    }
+
+    .print_page-footer {
+        // position: fixed;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        border-top: 1px solid black; /* for demo */
+        background: yellow; /* for demo */
+    }
+
+    .print_page-header {
+        // position: fixed;
+        position: absolute;
+        top: 0mm;
+        width: 100%;
+        border-bottom: 1px solid black; /* for demo */
+        display: flex;
+        .print_clinic {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 15px;
+            &_title {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &__image {
+                    img {
+                        border-radius: 50%;
+                        height: 40px;
+                        width: 40px;
+                    }
+                }
+                &__text {
+                    padding-left: 20px;
+                    .title {
+                        font-size: 16px;
+                    }
+                    .sub_title {
+                        font-size: 12px;
+                        line-height: 1.2em;
+                    }
+                }
+            }
+            &_info {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding-left: 10px;
+            }
+        }
+    }
+
+    .print_page {
+        line-height: 1.2em;
+        page-break-after: always;
+        .title {
+            font-size: 16px;
+        }
+        .text {
+            padding-left: 10px;
+        }
+        .hd-wrapper {
+
+        }
+    }
+
+    .print {
+        /* //-- header, body, footer -- */
+        /* //-- footer -- */
+        /* //-- core typography and style -- */
+        /* //-- section styles -- */
+        /* --// override to force 1/8th width grids -- */
+    }
+    .inner {
+        padding: 10px 30px;
+        // background: #f5f5f5;
+        // border: solid #666;
+        // border-width: 8px 0 2px 0;
+    }
+    .inner .hd {
+        // margin: 0.5em 0 0.5em 0;
+        padding-bottom: 1.5em;
+        padding-top: 1.5em;
+        border-bottom: 1px solid #ccc;
+    }
+    .inner .hd .hd-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+}

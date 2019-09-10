@@ -1,55 +1,30 @@
 /* eslint-disable */
 <template>
     <div class="clipper-fixed">
-        <div
-            class="wrap"
-            :style="wrapStyle"
-        >
-            <canvas
-                class="stem-outer"
-                :width="stemArea.width"
-                :height="stemArea.height"
-            />
+        <div class="wrap" :style="wrapStyle">
+            <canvas class="stem-outer" :width="stemArea.width" :height="stemArea.height" />
             <div class="img-center">
                 <canvas class="stem-bg" />
-                <div
-                    class="img-scale"
-                    :style="scaleStyle"
-                >
-                    <div
-                        class="img-translate"
-                        :style="translateStyle"
-                    >
+                <div class="img-scale" :style="scaleStyle">
+                    <div class="img-translate" :style="translateStyle">
                         <img
                             :src="src"
                             class="img"
                             :style="bgStyle"
-                            @load="imgLoaded(); emit('load',$event)"
-                            @error="emit('error',$event)"
-                        >
+                            @load="
+                                imgLoaded();
+                                emit('load', $event);
+                            "
+                            @error="emit('error', $event)"
+                        />
                     </div>
                 </div>
             </div>
             <div class="cover">
-                <div
-                    class="area"
-                    :style="areaStyle"
-                >
-                    <canvas
-                        class="stem-area"
-                        :width="stemArea.width"
-                        :height="stemArea.height"
-                        :style="stemStyle"
-                    />
-                    <div
-                        v-if="grid"
-                        class="grid"
-                    >
-                        <div
-                            v-for="index in 4"
-                            :key="'gridItem'+index"
-                            class="grid-item"
-                        />
+                <div class="area" :style="areaStyle">
+                    <canvas class="stem-area" :width="stemArea.width" :height="stemArea.height" :style="stemStyle" />
+                    <div v-if="grid" class="grid">
+                        <div v-for="index in 4" :key="'gridItem' + index" class="grid-item" />
                     </div>
                 </div>
             </div>

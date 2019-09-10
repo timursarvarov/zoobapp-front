@@ -17,6 +17,6 @@
 </template>
 <script>
 export default {
-    name: 'TestimonialCard',
+    name: 'TestimonialCard'
 };
 </script>

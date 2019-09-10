@@ -1,12 +1,5 @@
 <template>
-    <md-card
-        class="md-card-tabs"
-        :class="[
-            {'flex-column': flexColumn},
-            {'nav-pills-iconsd': navPillsIcons},
-            {'md-card-plain': plain}
-        ]"
-    >
+    <md-card class="md-card-tabs" :class="[{ 'flex-column': flexColumn }, { 'nav-pills-iconsd': navPillsIcons }, { 'md-card-plain': plain }]">
         <md-card-header>
             <slot name="header-title" />
         </md-card-header>
@@ -15,39 +8,27 @@
                 <md-list-item
                     v-for="(item, index) of tabName"
                     :key="item.ID"
-                    :class="[
-                        {active: isActivePanel(tabName[index])},
-                        {[getColorButton(colorButton)]: isActivePanel(tabName[index])}]"
+                    :class="[{ active: isActivePanel(tabName[index]) }, { [getColorButton(colorButton)]: isActivePanel(tabName[index]) }]"
                     @click="switchPanel(tabName[index]), $emit('onChangeTab', item)"
                 >
                     <div class="md-button-content">
                         {{ tabName[index].name | capitilize }}
-                        <small
-                            v-if="tabName[index].price"
-                        >{{ tabName[index].price }}</small>
+                        <small v-if="tabName[index].price">{{ tabName[index].price }}</small>
                         <md-icon v-if="navPillsIcons">
                             {{ tabName[index].icon }}
                         </md-icon>
-                        <span
-                            v-if="tabName[index].state"
-                            :style="{background: tabName[index].background}"
-                            class="notification"
-                        >{{ tabName[index].state }}</span>
+                        <span v-if="tabName[index].state" :style="{ background: tabName[index].background }" class="notification">{{
+                            tabName[index].state
+                        }}</span>
                     </div>
                 </md-list-item>
             </md-list>
 
-            <transition
-                name="fade"
-                mode="out-in"
-            >
+            <transition name="fade" mode="out-in">
                 <div class="tab-content">
                     <template v-for="(item, index) in tabName">
                         <template v-if="isActivePanel(tabName[index])">
-                            <div
-                                :key="item.ID"
-                                :class="getTabContent(index + 1)"
-                            >
+                            <div :key="item.ID" :class="getTabContent(index + 1)">
                                 <slot :name="getTabContent(index + 1)">
                                     This is the default text!
                                 </slot>
@@ -73,20 +54,20 @@ export default {
         tabIcon: Array,
         tabName: {
             type: Array,
-            default: () => {},
+            default: () => {}
         },
         tabStatus: {
             type: Array,
-            default: () => {},
+            default: () => {}
         },
         colorButton: {
             type: String,
-            default: '',
-        },
+            default: ''
+        }
     },
     data() {
         return {
-            activePanel: this.tabName[this.selectedPanelIndex()],
+            activePanel: this.tabName[this.selectedPanelIndex()]
         };
     },
     computed: {},
@@ -106,12 +87,12 @@ export default {
         },
         selectedPanelIndex() {
             return 0;
-        },
-    },
+        }
+    }
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .md-card-tabs {
     .nav-tabs {
         overflow-x: scroll !important;

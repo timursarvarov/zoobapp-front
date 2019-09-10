@@ -2,30 +2,23 @@
     <div
         class="tooth-wrapper"
         :style="{
-            'width': jawSVG[toothId].widthPerc * scaleSize + 'px',
+            width: jawSVG[toothId].widthPerc * scaleSize + 'px',
             'padding-top': 2 * scaleSize + 'px'
         }"
     >
         <div
             v-if="showNumber"
-            :style="{'font-size': toothNumWidth+'em'}"
-            :class="{unselected: !selectedItem.teeth[toothId],}"
+            :style="{ 'font-size': toothNumWidth + 'em' }"
+            :class="{ unselected: !selectedItem.teeth[toothId] }"
             class="single-tooth-number"
         >
             {{ toothId | toCurrentTeethSystem }}
         </div>
-        <div
-            :ref="toothId"
-            :class="[
-                'tooth',
-                classTypeComputed
-            ]"
-            :style="{ 'width': jawSVG[toothId].widthPerc * scaleSize + 'px' }"
-        >
+        <div :ref="toothId" :class="['tooth', classTypeComputed]" :style="{ width: jawSVG[toothId].widthPerc * scaleSize + 'px' }">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 :viewBox="jawSVG[toothId].viewBox"
-                :style="{ 'width': jawSVG[toothId].widthPerc * scaleSize + 'px'}"
+                :style="{ width: jawSVG[toothId].widthPerc * scaleSize + 'px' }"
             >
                 <g :class="`set-${type}`">
                     <template v-for="(locationValue, location) in defaultLocations">
@@ -40,15 +33,14 @@
                                 toothComputed[location].class,
 
                                 // Название класса локации из svg для отображеня в норме
-                                {[location]:true},
+                                { [location]: true }
 
-                            // путь для SVG атрибута patth
+                                // путь для SVG атрибута patth
                             ]"
                             :d="jawSVG[toothId][location]"
                         />
                     </template>
                 </g>
-
             </svg>
         </div>
     </div>
@@ -56,61 +48,55 @@
 <script>
 import jawSVGjs from './jawSVG';
 import { tObjProp } from '@/mixins';
-import {
-    TEETH_DEFAULT_LOCATIONS,
-    TEETH_ADDULT_ALL,
-    TEETH_BABY_ALL,
-    TEETH_SCHEMA,
-} from '@/constants';
+import { TEETH_DEFAULT_LOCATIONS, TEETH_ADDULT_ALL, TEETH_BABY_ALL, TEETH_SCHEMA } from '@/constants';
 
 export default {
-    name: 'Tooth',
     name: 'tooth',
     mixins: [tObjProp],
     props: {
         prefer: {
             type: String,
-            default: () => 'diagnose',
+            default: () => 'diagnose'
         },
         type: {
             type: String,
-            default: () => '',
+            default: () => ''
         },
         showNumber: {
             type: Boolean,
-            default: () => true,
+            default: () => true
         },
         selectedItem: {
             type: Object,
             default: () => ({
                 code: '',
-                title: '',
-            }),
+                title: ''
+            })
         },
         toothId: {
             type: String,
-            default: () => '0',
+            default: () => '0'
         },
         scaleSize: {
             type: Number,
-            default: () => 8,
+            default: () => 8
         },
         originalItems: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         jaw: {
             type: Object,
-            default: () => { },
+            default: () => {}
         },
 
         teethSystem: {
             type: Number,
-            default: () => 1,
+            default: () => 1
             // 1 = FDI World Dental Federation notation
             // 2 = Universal numbering system
             // 3 = Palmer notation method
-        },
+        }
     },
     data() {
         return {
@@ -125,8 +111,8 @@ export default {
                 code: '',
                 title: '',
                 description: '',
-                teeth: {},
-            },
+                teeth: {}
+            }
         };
     },
 
@@ -203,8 +189,8 @@ export default {
             // сеттер:
             set(newValue) {
                 this.classTypeComputed = newValue;
-            },
-        },
+            }
+        }
     },
     created() {
         this.setInitiallyLocations('', 'created');
@@ -214,8 +200,8 @@ export default {
             const toothClasses = {
                 // класс 'seleced' применяется для выбранной локации
                 [this.classTypeComputed]: this.selectedItem.teeth[toothId] ? location in this.selectedItem.teeth[toothId] : false,
-                selected: this.selectedItem.teeth[toothId] ? (location in this.selectedItem.teeth[toothId]) : false,
-                unselected: !this.selectedItem.teeth[toothId],
+                selected: this.selectedItem.teeth[toothId] ? location in this.selectedItem.teeth[toothId] : false,
+                unselected: !this.selectedItem.teeth[toothId]
             };
             return toothClasses;
         },
@@ -275,8 +261,8 @@ export default {
             const { setOnLoad } = this.originalItem;
             // если нет локаций
             if (!this.isEmpty(setOnLoad)) {
-                Object.keys(setOnLoad).forEach((location) => {
-                    this.selectableTeeth.forEach((toothId) => {
+                Object.keys(setOnLoad).forEach(location => {
+                    this.selectableTeeth.forEach(toothId => {
                         if (this.hasProp(setOnLoad, location)) {
                             this.setLocationOnLoad(location, toothId, setOnLoad[location]);
                         }
@@ -285,11 +271,11 @@ export default {
             }
         },
         setAllEditableTeethOnLoad() {
-            Object.keys(this.selectedItem.teeth).forEach((toothId) => {
+            Object.keys(this.selectedItem.teeth).forEach(toothId => {
                 const tooth = this.selectedItem.teeth[toothId];
                 // если нет локаций
                 if (!this.isEmpty(tooth)) {
-                    Object.keys(tooth).forEach((location) => {
+                    Object.keys(tooth).forEach(location => {
                         this.setLocationOnLoad(location, toothId, tooth[location]);
                     });
                 }
@@ -297,7 +283,7 @@ export default {
         },
         setSelectableTeeth(selectableTeethExtraChoose) {
             if (selectableTeethExtraChoose.length < this.selectableTeeth.length) {
-                this.selectableTeeth.forEach((toothId) => {
+                this.selectableTeeth.forEach(toothId => {
                     const index = selectableTeethExtraChoose.findIndex(t => t === toothId);
                     if (index === -1) {
                         this.dropTooth(toothId);
@@ -323,7 +309,7 @@ export default {
                     }
                     // добавляем зубы в оральный диагноз если они выбраны
                 } else {
-                    this.selectableTeeth.forEach((toothId) => {
+                    this.selectableTeeth.forEach(toothId => {
                         this.setToothOnLoad(toothId);
                     });
                 }
@@ -332,28 +318,28 @@ export default {
         },
         calculateTooth() {
             const tooth = {};
-            Object.keys(this.defaultLocations).forEach((location) => {
+            Object.keys(this.defaultLocations).forEach(location => {
                 tooth[location] = {
-                    class: this.jaw[this.type][this.toothId][location] ? this.classTypeComputed : '',
+                    class: this.jaw[this.type][this.toothId][location] ? this.classTypeComputed : ''
                     // this.preferableJawClasses(this.toothId, location),
                 };
             });
 
             this.toothComputed = tooth;
-        },
-    },
+        }
+    }
 };
 </script>
 
-<style lang="scss"  >
-.tooth-wrapper{
-    .single-tooth-number{
+<style lang="scss">
+.tooth-wrapper {
+    .single-tooth-number {
         display: block;
         position: relative;
         text-align: center;
-    font-size: calc(7px + .5vw);
+        font-size: calc(7px + 0.5vw);
     }
-    .unselected{
+    .unselected {
         opacity: 0.3;
     }
 }

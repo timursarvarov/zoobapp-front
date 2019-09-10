@@ -1,9 +1,6 @@
 <template>
     <div>
-        <md-dialog
-            class="patient-add-form"
-            :md-active.sync="showFormL"
-        >
+        <md-dialog class="patient-add-form" :md-active.sync="showFormL">
             <div>
                 <md-card>
                     <md-card-header class="md-card-header-icon md-card-header-green">
@@ -17,25 +14,15 @@
 
                     <md-card-content class="md-layout">
                         <div class="md-layout-item md-size-100">
-                            <md-field
-                                :class="[
-                                    {'md-valid': !errors.has('email') && touched.email},
-                                    {'md-error': errors.has('email')}]"
-                            >
+                            <md-field :class="[{ 'md-valid': !errors.has('email') && touched.email }, { 'md-error': errors.has('email') }]">
                                 <label>Email</label>
-                                <md-input
-                                    ref="email"
-                                    v-model="email"
-                                    v-validate="modelValidations.email"
-                                    type="email"
-                                    data-vv-name="email"
-                                />
+                                <md-input ref="email" v-model="email" v-validate="modelValidations.email" type="email" data-vv-name="email" />
                                 <span class="md-error">{{ errors.first('email') }}</span>
                                 <slide-y-down-transition>
                                     <md-button
                                         v-show="errors.has('email')"
                                         class="md-just-icon md-round md-input-action clear-button md-simple"
-                                        @click="email='',focusOn('email')"
+                                        @click="(email = ''), focusOn('email')"
                                     >
                                         <md-icon class="error">
                                             close
@@ -43,10 +30,7 @@
                                     </md-button>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="!errors.has('email') && touched.email"
-                                        class="success"
-                                    >
+                                    <md-icon v-show="!errors.has('email') && touched.email" class="success">
                                         done
                                     </md-icon>
                                 </slide-y-down-transition>
@@ -54,10 +38,7 @@
                         </div>
                     </md-card-content>
                     <div class="actions md-layout md-gutter">
-                        <md-button
-                            class="ml-auto md-success"
-                            @click="sendPassword()"
-                        >
+                        <md-button class="ml-auto md-success" @click="sendPassword()">
                             Send
                         </md-button>
                     </div>
@@ -73,25 +54,25 @@ import { NOTIFY } from '@/constants';
 export default {
     name: 'ForgotPassword',
     components: {
-        SlideYDownTransition,
+        SlideYDownTransition
     },
     props: {
         showForm: {
             type: Boolean,
-            default: false,
-        },
+            default: false
+        }
     },
     data() {
         return {
             email: null,
             touched: {
-                email: false,
+                email: false
             },
             modelValidations: {
                 email: {
-                    email: true,
-                },
-            },
+                    email: true
+                }
+            }
         };
     },
     computed: {
@@ -101,13 +82,13 @@ export default {
             },
             set(newValue) {
                 this.$emit('update:showForm', newValue);
-            },
-        },
+            }
+        }
     },
     watch: {
         email() {
             this.touched.email = true;
-        },
+        }
     },
     methods: {
         focusOn(ref) {
@@ -115,10 +96,10 @@ export default {
                 return;
             }
             this.$refs[ref].$el.focus();
-        },
+        }
     },
     validate() {
-        this.$validator.validateAll().then((isValid) => {
+        this.$validator.validateAll().then(isValid => {
             this.$emit('on-submit', this.registerForm, isValid);
         });
         this.touched.email = true;
@@ -127,13 +108,13 @@ export default {
         this.email = null;
     },
     sendPassword() {
-        this.$validator.validateAll().then((result) => {
+        this.$validator.validateAll().then(result => {
             if (result) {
                 this.$store.dispatch(NOTIFY, {
                     settings: {
                         message: 'Here we send an email',
-                        type: 'primary',
-                    },
+                        type: 'primary'
+                    }
                 });
                 // this.$store
                 //   .dispatch(PATIENT_CREATE, {
@@ -154,10 +135,9 @@ export default {
                 // });
             }
         });
-    },
+    }
 };
 
 // The first param is called 'min', and the second is called 'max'.
 </script>
-<style lang="scss" >
-</style>
+<style lang="scss"></style>

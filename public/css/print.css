@@ -1,0 +1,813 @@
+.print-form .A4 {
+  position: relative; }
+  .print-form .A4 .print_page-header,
+  .print-form .A4 .print_page-header-space {
+    height: 100px; }
+  .print-form .A4 .print_page-footer,
+  .print-form .A4 .print_page-footer-space {
+    height: 50px; }
+
+.print-form .print_page-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid black;
+  /* for demo */
+  background: yellow;
+  /* for demo */ }
+
+.print-form .print_page-header {
+  position: absolute;
+  top: 0mm;
+  width: 100%;
+  border-bottom: 1px solid black;
+  /* for demo */
+  display: flex; }
+  .print-form .print_page-header .print_clinic {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 15px; }
+    .print-form .print_page-header .print_clinic_title {
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+      .print-form .print_page-header .print_clinic_title__image img {
+        border-radius: 50%;
+        height: 40px;
+        width: 40px; }
+      .print-form .print_page-header .print_clinic_title__text {
+        padding-left: 20px; }
+        .print-form .print_page-header .print_clinic_title__text .title {
+          font-size: 16px; }
+        .print-form .print_page-header .print_clinic_title__text .sub_title {
+          font-size: 12px;
+          line-height: 1.2em; }
+    .print-form .print_page-header .print_clinic_info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-left: 10px; }
+
+.print-form .print_page {
+  line-height: 1.2em;
+  page-break-after: always; }
+  .print-form .print_page .title {
+    font-size: 16px; }
+  .print-form .print_page .text {
+    padding-left: 10px; }
+
+.print-form .print {
+  /* //-- header, body, footer -- */
+  /* //-- footer -- */
+  /* //-- core typography and style -- */
+  /* //-- section styles -- */
+  /* --// override to force 1/8th width grids -- */ }
+
+.print-form .inner {
+  padding: 10px 30px; }
+
+.print-form .inner .hd {
+  padding-bottom: 1.5em;
+  padding-top: 1.5em;
+  border-bottom: 1px solid #ccc; }
+
+.print-form .inner .hd .hd-wrapper {
+  display: flex;
+  justify-content: space-between; }
+
+.print-form .A4 .print_patient_bio {
+  display: flex;
+  align-items: top;
+  justify-content: center; }
+  .print-form .A4 .print_patient_bio__image {
+    height: 100px;
+    width: 100px; }
+  .print-form .A4 .print_patient_bio__text {
+    padding-top: 10px;
+    padding-left: 20px; }
+    .print-form .A4 .print_patient_bio__text .allergy_wrapper {
+      display: flex;
+      flex-wrap: wrap; }
+      .print-form .A4 .print_patient_bio__text .allergy_wrapper .allergy {
+        width: fit-content;
+        border: 1px solid #fff;
+        font-size: 12px;
+        color: #ffffff;
+        min-width: 20px;
+        padding: 0px 6px;
+        height: 20px;
+        border-radius: 10px;
+        text-align: center;
+        line-height: 18px;
+        background: #f44336;
+        font-weight: 400; }
+
+.print-form .A4 .print_patient_jaw {
+  width: 100%;
+  display: flex;
+  align-items: top;
+  justify-content: center; }
+  .print-form .A4 .print_patient_jaw .jaw-wrapperprint {
+    user-select: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    min-height: 30vh; }
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth {
+      height: 100%;
+      overflow: hiden;
+      position: relative;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper {
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0.3vh); }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .bottom-tooth-menu__wrapper {
+        left: 50%;
+        transform: translate(-50%, -0.3vh);
+        bottom: 0;
+        position: absolute;
+        border: none; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper {
+        position: absolute;
+        border: none;
+        border-radius: 50%; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper button,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper button,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper button {
+          border: none !important;
+          border-radius: 50% !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .dropdown-menu-center,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .dropdown-menu-center,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .dropdown-menu-center {
+          transform: translate(-50%, 0) !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .tooth-selected,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .tooth-selected,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .tooth-selected {
+          cursor: pointer; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .t-tooth-button.tooth-selected,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .t-tooth-button.tooth-selected,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .t-tooth-button.tooth-selected {
+          color: white !important;
+          border: none !important;
+          border-radius: 50% !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .tooth-selected .t-tooth-button,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .tooth-selected .t-tooth-button,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .tooth-selected .t-tooth-button {
+          border: none !important;
+          border-radius: 50% !important;
+          color: white !important;
+          background-color: none !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .has-items,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .has-items,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .has-items {
+          box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2), 0 2px 5px 1px rgba(0, 0, 0, 0.14), 0 3px 7px 2px rgba(0, 0, 0, 0.12) !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .anamnesis .anamnesis:active,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .anamnesis .anamnesis:active,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .anamnesis .anamnesis:active {
+          background-color: #00bcd4 !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .diagnosis,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .diagnosis,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .diagnosis {
+          background-color: #9c27b0 !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .diagnosis:active,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .diagnosis:active,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .diagnosis:active {
+          background-color: #9c27b0 !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .procedures .procedures:active,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .procedures .procedures:active,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .procedures .procedures:active {
+          background-color: #4caf50 !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .tooth-selected.t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures),
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .tooth-selected.t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures),
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .tooth-selected.t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures) {
+          background-color: transparent !important;
+          color: white !important;
+          box-shadow: none;
+          font-weight: 800; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures):not(.tooth-selected),
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures):not(.tooth-selected),
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures):not(.tooth-selected) {
+          box-shadow: none;
+          border: none;
+          border-radius: 50%;
+          background-color: white !important;
+          color: grey !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .t-tooth-button:hover,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .t-tooth-button:hover,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .t-tooth-button:hover {
+          box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 1px 8px 0 rgba(0, 0, 0, 0.12) !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .t-tooth-button.circle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .t-tooth-button.circle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .t-tooth-button.circle {
+          box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 1px 8px 0 rgba(0, 0, 0, 0.12) !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .t-tooth-button.has-other-items:not(.anamnesis):not(.diagnosis):not(.procedures),
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .t-tooth-button.has-other-items:not(.anamnesis):not(.diagnosis):not(.procedures),
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .t-tooth-button.has-other-items:not(.anamnesis):not(.diagnosis):not(.procedures) {
+          background-color: white !important;
+          color: grey !important;
+          box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2), 0 2px 5px 1px rgba(0, 0, 0, 0.14), 0 3px 7px 2px rgba(0, 0, 0, 0.12); }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .t-tooth-button,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .t-tooth-button,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .t-tooth-button {
+          box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 1px 8px 0 rgba(0, 0, 0, 0.12);
+          position: relative; }
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .t-tooth-button .md-ripple,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .t-tooth-button .md-ripple,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .t-tooth-button .md-ripple {
+            min-height: 0;
+            min-width: 0;
+            max-height: inherit;
+            max-width: inherit;
+            padding: 0 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative; }
+            .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .t-tooth-button .md-ripple .md-button-content,
+            .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .t-tooth-button .md-ripple .md-button-content,
+            .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .t-tooth-button .md-ripple .md-button-content {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              align-self: center !important;
+              margin: auto; }
+              .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .t-tooth-button .md-ripple .md-button-content span,
+              .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .t-tooth-button .md-ripple .md-button-content span,
+              .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .t-tooth-button .md-ripple .md-button-content span {
+                align-self: center; }
+            .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .top-tooth-menu__wrapper .t-tooth-button .md-ripple:after,
+            .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .down-tooth-menu__wrapper .t-tooth-button .md-ripple:after,
+            .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu__wrapper .t-tooth-button .md-ripple:after {
+              display: none !important; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-diagnosis-content .md-list-item-button:hover {
+        color: white !important;
+        background-color: #4caf50 !important;
+        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12); }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-anamnesis-content .md-list-item-button:hover {
+        color: white !important;
+        background-color: #808080 !important;
+        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12); }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-procedures-content .md-list-item-button:hover {
+        color: white !important;
+        background-color: #9c27b0 !important;
+        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12); }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .item-categoty {
+        min-height: 20px !important;
+        padding: 5px 5px;
+        margin: 0 0.3125rem !important;
+        align-items: center;
+        position: relative; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .item-categoty .md-list-item-container .md-list-item-content.md-ripple {
+          min-height: 15px !important;
+          padding: 5px !important; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .no-locations {
+        padding-right: 35px; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) {
+        margin: 0 0.3125rem !important;
+        align-items: center;
+        position: relative; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) .md-list-item-button {
+          overflow: visible; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) .md-list-item-container .md-list-item-content.md-ripple {
+          padding: 5px !important;
+          border-radius: 3px; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) .md-list-item-container .md-list-item-content {
+          display: flex;
+          font-size: 12px;
+          min-height: 12px !important;
+          margin-right: 30px;
+          cursor: pointer; }
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) .md-list-item-container .md-list-item-content span {
+            padding: 0 0 0 5px !important; }
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) .md-list-item-container .md-list-item-content .tooth-diagnosis-content__item {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden; }
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) .md-list-item-container .md-list-item-content .tooth-items-code {
+            padding-right: 5px; }
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) .md-list-item-container .md-list-item-content .md-list-item-text {
+            position: relative;
+            overflow: hidden;
+            text-overflow: ellipsis; }
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) .md-list-item-container .md-list-item-content .tooth-diagnosis-text {
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis; }
+            .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) .md-list-item-container .md-list-item-content .tooth-diagnosis-text .tooth-diagnosis-text-item {
+              padding: 0 !important; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) .md-list-item-container .tooth-diagnosis-actions {
+          position: absolute;
+          right: -30px; }
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) .md-list-item-container .tooth-diagnosis-actions .md-button {
+            max-height: 17px;
+            min-width: 24px;
+            max-width: 24px;
+            padding: 0; }
+            .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-wrapper-teeth .tooth-menu-item:not(.item-categoty) .md-list-item-container .tooth-diagnosis-actions .md-button .md-ripple {
+              min-height: inherit;
+              min-width: inherit;
+              padding: 0 !important; }
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .dropdown-menu li {
+      padding: 0px 0px 0px 16px; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .dropdown-menu li .md-radio {
+        margin: 8px 0 8px 0; }
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-scroll {
+      border-radius: 5px;
+      max-width: calc(100vw - 40px); }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-scroll::-webkit-scrollbar {
+        height: 7px; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-scroll::-webkit-scrollbar-thumb {
+        background-color: grey;
+        border-radius: 7px; }
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth-content {
+      padding-top: calc(1vh + 5px); }
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth-content:not(.selected) {
+      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-property: all;
+      transition-duration: 0.9s;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0s; }
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .selected {
+      background-color: #9e9e9e;
+      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-property: all;
+      transition-duration: 0.9s;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0s; }
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth-number {
+      bottom: 0; }
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth-content {
+      padding-bottom: calc(1vh + 5px); }
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth-content:not(.selected) {
+      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-property: all;
+      transition-duration: 0.9s;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0s; }
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .selected {
+      background-color: #9e9e9e;
+      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-property: all;
+      transition-duration: 0.9s;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0s; }
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth-number {
+      top: 0; }
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top,
+    .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .anamnesis,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .anamnesis {
+        opacity: 0.4; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.tooth-number,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.tooth-number {
+        color: #5bc0de; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLingualIncisalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLingualIncisalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLingualIncisionMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLingualMiddleDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLingualMiddleMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLingualMiddleMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLingualCervicalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLingualCervicalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLingualCervicalMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLabialIncisalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLabialIncisalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLabialIncisionMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLabialMiddleDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLabialMiddleMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLabialMiddleMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLabialCervicalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLabialCervicalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLabialCervicalMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaTopBuccal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaTopMedial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaTopLingual, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaTopDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaTopOclusial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.implant, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.silant, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.crown, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.braces, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.root, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.bridge, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.veneer, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.silant,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLingualIncisalDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLingualIncisalMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLingualIncisionMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLingualMiddleDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLingualMiddleMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLingualMiddleMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLingualCervicalDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLingualCervicalMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLingualCervicalMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLabialIncisalDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLabialIncisalMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLabialIncisionMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLabialMiddleDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLabialMiddleMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLabialMiddleMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLabialCervicalDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLabialCervicalMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLabialCervicalMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaTopBuccal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaTopMedial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaTopLingual,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaTopDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaTopOclusial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.implant,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.silant,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.crown,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.braces,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.root,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.bridge,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.veneer,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.silant {
+        fill: #5bc0de !important;
+        stroke: #020202; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.periodontit,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.periodontit {
+        stroke-width: 2px; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLingual, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaTop, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.coronaLabial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLingual,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaTop,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.coronaLabial {
+        stroke: #5bc0de;
+        stroke-width: 2px; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.rootCanal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.rootCanal {
+        stroke-width: 2px; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.periodontit, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.rootCanal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.bone,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.periodontit,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.rootCanal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.bone {
+        fill: white !important;
+        stroke-width: 0;
+        opacity: 0.6; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.gum, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.paradontit1, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.paradontit2, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.paradontit3, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .anamnesis.paradontit4,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.gum,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.paradontit1,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.paradontit2,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.paradontit3,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .anamnesis.paradontit4 {
+        opacity: 1;
+        stroke: #5bc0de;
+        stroke-linejoin: round;
+        stroke-width: 4px;
+        fill: none !important; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-diagnosis .diagnosis,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-diagnosis .diagnosis {
+        opacity: 0.6; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.tooth-number,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.tooth-number {
+        color: #9c27b0; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLingualIncisalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLingualIncisalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLingualIncisionMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLingualMiddleDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLingualMiddleMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLingualMiddleMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLingualCervicalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLingualCervicalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLingualCervicalMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLabialIncisalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLabialIncisalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLabialIncisionMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLabialMiddleDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLabialMiddleMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLabialMiddleMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLabialCervicalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLabialCervicalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaLabialCervicalMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaTopBuccal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaTopMedial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaTopLingual, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaTopDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.coronaTopOclusial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.rootCanal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.periodontit, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.implant, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.root, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.veneer, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.silant,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLingualIncisalDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLingualIncisalMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLingualIncisionMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLingualMiddleDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLingualMiddleMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLingualMiddleMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLingualCervicalDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLingualCervicalMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLingualCervicalMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLabialIncisalDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLabialIncisalMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLabialIncisionMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLabialMiddleDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLabialMiddleMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLabialMiddleMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLabialCervicalDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLabialCervicalMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaLabialCervicalMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaTopBuccal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaTopMedial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaTopLingual,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaTopDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.coronaTopOclusial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.rootCanal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.periodontit,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.implant,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.root,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.veneer,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.silant {
+        fill: #9c27b0 !important;
+        stroke: #9c27b0; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.periodontit, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.rootCanal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.periodontit,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.rootCanal {
+        stroke-width: 2px; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.bone,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.bone {
+        fill: #9c27b0 !important;
+        stroke-width: 0;
+        opacity: 0.6; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.gum, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.paradontit1, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.paradontit2, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.paradontit3, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .diagnosis.paradontit4,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.gum,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.paradontit1,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.paradontit2,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.paradontit3,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .diagnosis.paradontit4 {
+        opacity: 1;
+        stroke: #f73403;
+        stroke-linejoin: round;
+        stroke-width: 4px;
+        fill: none !important; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-procedures .procedures,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-procedures .procedures {
+        opacity: 0.4; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.tooth-number,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.tooth-number {
+        color: #5cb85c; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLingualIncisalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLingualIncisalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLingualIncisionMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLingualMiddleDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLingualMiddleMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLingualMiddleMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLingualCervicalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLingualCervicalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLingualCervicalMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLabialIncisalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLabialIncisalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLabialIncisionMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLabialMiddleDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLabialMiddleMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLabialMiddleMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLabialCervicalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLabialCervicalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLabialCervicalMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaTopBuccal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaTopMedial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaTopLingual, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaTopDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaTopOclusial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.implant, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.silant, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.crown, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.braces, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.bridge, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.veneer, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.silant,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLingualIncisalDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLingualIncisalMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLingualIncisionMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLingualMiddleDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLingualMiddleMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLingualMiddleMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLingualCervicalDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLingualCervicalMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLingualCervicalMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLabialIncisalDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLabialIncisalMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLabialIncisionMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLabialMiddleDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLabialMiddleMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLabialMiddleMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLabialCervicalDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLabialCervicalMiddle,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLabialCervicalMesial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaTopBuccal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaTopMedial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaTopLingual,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaTopDistal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaTopOclusial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.implant,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.silant,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.crown,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.braces,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.bridge,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.veneer,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.silant {
+        fill: #5cb85c !important;
+        stroke: #020202;
+        stroke-width: 0.25px; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.periodontit,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.periodontit {
+        stroke-width: 2px; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLingual, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaTop, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.coronaLabial,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLingual,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaTop,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.coronaLabial {
+        stroke: #5cb85c;
+        stroke-width: 2px; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.rootCanal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.rootCanal {
+        stroke-width: 2px; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.periodontit, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.rootCanal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.bone,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.periodontit,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.rootCanal,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.bone {
+        fill: #5cb85c !important;
+        stroke-width: 0;
+        opacity: 0.6; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.gum, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.paradontit1, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.paradontit2, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.paradontit3, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .procedures.paradontit4,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.gum,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.paradontit1,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.paradontit2,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.paradontit3,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .procedures.paradontit4 {
+        opacity: 1;
+        stroke: #5cb85c;
+        stroke-linejoin: round;
+        stroke-width: 4px;
+        fill: none !important; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected {
+        opacity: 1; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.tooth-number,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.tooth-number {
+          color: #5bc0de; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualIncisalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualIncisalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualIncisionMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualMiddleDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualMiddleMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualMiddleMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualCervicalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualCervicalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualCervicalMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialIncisalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialIncisalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialIncisionMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialMiddleDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialMiddleMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialMiddleMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialCervicalDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialCervicalMiddle, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialCervicalMesial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaTopBuccal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaTopMedial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaTopLingual, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaTopDistal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaTopOclusial, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.rootCanal, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.periodontit, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.implant, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.veneer, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.silant, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.crown, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.bridge, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.root, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingual, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaTop, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualIncisalDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualIncisalMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualIncisionMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualMiddleDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualMiddleMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualMiddleMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualCervicalDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualCervicalMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualCervicalMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialIncisalDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialIncisalMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialIncisionMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialMiddleDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialMiddleMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialMiddleMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialCervicalDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialCervicalMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialCervicalMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaTopBuccal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaTopMedial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaTopLingual,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaTopDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaTopOclusial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.rootCanal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.periodontit,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.implant,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.veneer,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.silant,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.crown,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.bridge,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.root,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingual,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaTop,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabial {
+          fill: #5bc0de !important;
+          stroke: #5bc0de; }
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualIncisalDistal:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualIncisalMiddle:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualIncisionMesial:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualMiddleDistal:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualMiddleMiddle:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualMiddleMesial:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualCervicalDistal:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualCervicalMiddle:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingualCervicalMesial:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialIncisalDistal:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialIncisalMiddle:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialIncisionMesial:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialMiddleDistal:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialMiddleMiddle:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialMiddleMesial:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialCervicalDistal:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialCervicalMiddle:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabialCervicalMesial:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaTopBuccal:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaTopMedial:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaTopLingual:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaTopDistal:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaTopOclusial:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.rootCanal:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.periodontit:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.implant:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.veneer:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.silant:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.crown:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.bridge:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.root:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLingual:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaTop:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.coronaLabial:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualIncisalDistal:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualIncisalMiddle:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualIncisionMesial:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualMiddleDistal:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualMiddleMiddle:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualMiddleMesial:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualCervicalDistal:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualCervicalMiddle:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingualCervicalMesial:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialIncisalDistal:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialIncisalMiddle:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialIncisionMesial:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialMiddleDistal:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialMiddleMiddle:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialMiddleMesial:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialCervicalDistal:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialCervicalMiddle:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabialCervicalMesial:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaTopBuccal:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaTopMedial:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaTopLingual:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaTopDistal:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaTopOclusial:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.rootCanal:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.periodontit:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.implant:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.veneer:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.silant:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.crown:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.bridge:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.root:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLingual:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaTop:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.coronaLabial:hover {
+            stroke: #02d7f3;
+            stroke-width: 2px;
+            transition: all 0.2s ease-in-out; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.bone,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.bone {
+          fill: #02d7f3 !important;
+          stroke-width: 0; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.veneer, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.braces, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.silant,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.veneer,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.braces,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.silant {
+          fill: #02d7f3 !important;
+          stroke: #000;
+          stroke-width: 0.25px; }
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.veneer:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.braces:hover, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.silant:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.veneer:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.braces:hover,
+          .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.silant:hover {
+            stroke: #02d7f3;
+            stroke-width: 1px;
+            transition: all 0.2s ease-in-out; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.gum, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.paradontit1, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.paradontit2, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.paradontit3, .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .set-anamnesis .selected.paradontit4,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.gum,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.paradontit1,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.paradontit2,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.paradontit3,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .set-anamnesis .selected.paradontit4 {
+          opacity: 1;
+          stroke: #f73403;
+          stroke-linejoin: round;
+          stroke-width: 4px;
+          fill: none !important; }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth {
+        display: flex;
+        transition: 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        transition-property: all;
+        transition-duration: 0.9s;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-delay: 0s;
+        position: relative; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .tooth-content,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .tooth-content {
+          transition: 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+          transition-property: all;
+          transition-duration: 0.9s;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          transition-delay: 0s; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top .tooth .isToothShownDiagnose,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom .tooth .isToothShownDiagnose {
+          transition: 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+          transition-property: all;
+          transition-duration: 0.9s;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          transition-delay: 0s;
+          background-color: rgba(161, 161, 161, 0.33); }
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg,
+      .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg {
+        -webkit-perspective: 2000;
+        -webkit-backface-visibility: hidden;
+        flex-grow: 1;
+        flex-basis: 100%;
+        height: 100%; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .bridge,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .bridge {
+          fill: #3535ed; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .root:not(.diagnose):not(.selected):not(.anamnes):not(.procedure),
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .root:not(.diagnose):not(.selected):not(.anamnes):not(.procedure) {
+          fill: #ffffb7;
+          stroke: #000;
+          stroke-width: 0.45px; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLingualIncisalDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLingualIncisalMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLingualIncisionMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLingualMiddleDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLingualMiddleMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLingualMiddleMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLingualCervicalDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLingualCervicalMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLingualCervicalMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLabialIncisalDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLabialIncisalMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLabialIncisionMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLabialMiddleDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLabialMiddleMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLabialMiddleMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLabialCervicalDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLabialCervicalMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLabialCervicalMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaTopBuccal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaTopMedial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaTopLingual,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaTopDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaTopOclusial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .root,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .bone,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .bridge,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .crown,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .braces,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .implant,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .bridge,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLingual,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaTop,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLabial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLingual,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaTop,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .coronaLabial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLingualIncisalDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLingualIncisalMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLingualIncisionMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLingualMiddleDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLingualMiddleMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLingualMiddleMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLingualCervicalDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLingualCervicalMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLingualCervicalMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLabialIncisalDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLabialIncisalMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLabialIncisionMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLabialMiddleDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLabialMiddleMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLabialMiddleMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLabialCervicalDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLabialCervicalMiddle,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLabialCervicalMesial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaTopBuccal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaTopMedial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaTopLingual,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaTopDistal,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaTopOclusial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .root,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .bone,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .bridge,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .crown,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .braces,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .implant,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .bridge,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLingual,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaTop,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLabial,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLingual,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaTop,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .coronaLabial {
+          fill: #fff;
+          stroke: #000;
+          stroke-width: 0.45px; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .gum,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .gum {
+          stroke: #ffb900;
+          stroke-linejoin: round;
+          stroke-width: 4px;
+          fill: none; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .hide,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .hide {
+          display: none; }
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .paradontit1,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .paradontit2,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .paradontit3,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-top svg .paradontit4,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .paradontit1,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .paradontit2,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .paradontit3,
+        .print-form .A4 .print_patient_jaw .jaw-wrapperprint .jaw-bottom svg .paradontit4 {
+          opacity: 1;
+          stroke: #f73403;
+          stroke-linejoin: round;
+          stroke-width: 4px;
+          fill: none !important; }

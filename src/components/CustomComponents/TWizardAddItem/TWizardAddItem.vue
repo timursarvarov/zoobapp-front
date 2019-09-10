@@ -1,9 +1,5 @@
 <template>
-    <md-dialog
-        :md-click-outside-to-close="!isLoading"
-        :md-active.sync="isDialogVisibleL"
-        class="jaw-dialog-wrapper"
-    >
+    <md-dialog :md-click-outside-to-close="!isLoading" :md-active.sync="isDialogVisibleL" class="jaw-dialog-wrapper">
         <div class="wizard-add-diagnose-form">
             <div>
                 <simple-wizard
@@ -21,53 +17,28 @@
                             &nbsp;
                             <b>{{ selectedItem.code }}</b>
                             {{ selectedItem.title }}
-                            <span v-if="currentPlan.name" class="category"
-                                >– {{ currentPlan.name | capitilize }}</span
-                            >
+                            <span v-if="currentPlan.name" class="category">– {{ currentPlan.name | capitilize }}</span>
                         </h5>
                         <span>
-                            <span
-                                v-if="hasLocationKeyOrSelectedTeeth()"
-                                class="category"
-                            >
-                                <span v-if="isEmpty(itemToCreate.teeth)"
-                                    >Please selesct tooth</span
-                                >
+                            <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
+                                <span v-if="isEmpty(itemToCreate.teeth)">Please selesct tooth</span>
                                 <span v-else>
                                     <slide-y-down-transition>
-                                        <span
-                                            v-show="
-                                                !isEmpty(originalItem.locations)
-                                            "
-                                            >For:</span
-                                        >
+                                        <span v-show="!isEmpty(originalItem.locations)">For:</span>
                                     </slide-y-down-transition>
                                     <slide-y-down-transition>
-                                        <span
-                                            v-show="
-                                                isEmpty(originalItem.locations)
-                                            "
-                                            >Teeth with disease area:</span
-                                        >
+                                        <span v-show="isEmpty(originalItem.locations)">Teeth with disease area:</span>
                                     </slide-y-down-transition>
                                 </span>
                                 <transition-group name="list">
-                                    <span
-                                        v-for="(item,
-                                        key) in itemToCreate.teeth"
-                                        :key="key + 0"
-                                        class="list-item"
-                                        >{{ key | toCurrentTeethSystem }}</span
-                                    >
+                                    <span v-for="(item, key) in itemToCreate.teeth" :key="key + 0" class="list-item">{{
+                                        key | toCurrentTeethSystem
+                                    }}</span>
                                 </transition-group>
                             </span>
                         </span>
                     </template>
-                    <wizard-tab
-                        v-if="showTab('locations')"
-                        name="locations"
-                        :before-change="() => validateStep('step1')"
-                    >
+                    <wizard-tab v-if="showTab('locations')" name="locations" :before-change="() => validateStep('step1')">
                         <template slot="label">
                             Locations
                         </template>
@@ -86,11 +57,7 @@
                         />
                     </wizard-tab>
 
-                    <wizard-tab
-                        v-if="showTab('manipulations')"
-                        name="manipulations"
-                        :before-change="() => validateStep('step2')"
-                    >
+                    <wizard-tab v-if="showTab('manipulations')" name="manipulations" :before-change="() => validateStep('step2')">
                         <template slot="label">
                             Manipulations
                         </template>
@@ -104,25 +71,13 @@
                             @addManipulations="manipulationsCreated"
                         />
                     </wizard-tab>
-                    <wizard-tab
-                        v-if="showTab('files')"
-                        name="files"
-                        :before-change="() => validateStep('step3')"
-                    >
+                    <wizard-tab v-if="showTab('files')" name="files" :before-change="() => validateStep('step3')">
                         <template slot="label">
                             Files
                         </template>
-                        <t-item-files
-                            ref="step3"
-                            :size="jawListSize"
-                            :descriptions="procedureDescriptions"
-                        />
+                        <t-item-files ref="step3" :size="jawListSize" :descriptions="procedureDescriptions" />
                     </wizard-tab>
-                    <wizard-tab
-                        v-if="showTab('description')"
-                        name="description"
-                        :before-change="() => validateStep('step4')"
-                    >
+                    <wizard-tab v-if="showTab('description')" name="description" :before-change="() => validateStep('step4')">
                         <template slot="label">
                             Description
                         </template>
@@ -134,19 +89,11 @@
                             @updateDescription="updateDescription"
                         />
                     </wizard-tab>
-                    <wizard-tab
-                        v-if="showTab('appointment')"
-                        name="appointment"
-                        :before-change="() => validateStep('step5')"
-                    >
+                    <wizard-tab v-if="showTab('appointment')" name="appointment" :before-change="() => validateStep('step5')">
                         <template slot="label">
                             Appointment
                         </template>
-                        <t-item-appointment
-                            ref="step5"
-                            :show-appointment="showAppointment"
-                            :size="jawListSize"
-                        />
+                        <t-item-appointment ref="step5" :show-appointment="showAppointment" :size="jawListSize" />
                     </wizard-tab>
                 </simple-wizard>
             </div>
@@ -165,11 +112,7 @@ import SimpleWizard from '../TWizard/Wizard';
 import WizardTab from '../TWizard/WizardTab';
 
 import { tObjProp } from '@/mixins';
-import {
-    NOTIFY,
-    PATIENT_PROCEDURE_SET
-    // PATIENT_MANIPULATION_SET,
-} from '@/constants';
+import { NOTIFY, PATIENT_PROCEDURE_SET, PATIENT_DIAGNOSE_SET, PATIENT_ANAMNES_SET } from '@/constants';
 
 export default {
     name: 'TWizardAddItem',
@@ -280,10 +223,7 @@ export default {
 
         originalItem() {
             const catalogID = this.selectedItem[this.getItemCatalogFieldName()];
-            return this.getCurrentClinicOriginalItem(
-                this.currentType,
-                catalogID
-            );
+            return this.getCurrentClinicOriginalItem(this.currentType, catalogID);
         },
         selectedItemLocal: {
             get() {
@@ -291,9 +231,7 @@ export default {
             },
             set(newValue) {
                 Object.keys(newValue).forEach(() => {
-                    this.itemToCreate.teeth = this.lodash.cloneDeep(
-                        newValue.teeth
-                    );
+                    this.itemToCreate.teeth = this.lodash.cloneDeep(newValue.teeth);
                 });
             }
         },
@@ -316,10 +254,7 @@ export default {
             return !this.itemToCreate.ID;
         },
         needToSaveEdited() {
-            return !this.lodash.isEqual(
-                this.itemToCreate.teeth,
-                this.itemToCompare.teeth
-            );
+            return !this.lodash.isEqual(this.itemToCreate.teeth, this.itemToCompare.teeth);
             // if (!this.currentTab || this.currentTab === 'locations') {
             // }
             // return false;
@@ -352,9 +287,7 @@ export default {
                         response => {
                             this.itemToCreate.ID = response.ID;
                             this.itemToCreate.teeth = response.teeth;
-                            this.itemToCompare = this.lodash.cloneDeep(
-                                response
-                            );
+                            this.itemToCompare = this.lodash.cloneDeep(response);
                             this.isLoading = false;
                             resolve(true);
                         },
@@ -378,22 +311,24 @@ export default {
         saveItem() {
             if (this.currentType === 'diagnosis') {
                 this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
-                    diagnose: itemL
+                    // diagnose
+                    diagnose: 'diagnose'
                 });
             }
             if (this.currentType === 'anamnesis') {
                 this.$store.dispatch(PATIENT_ANAMNES_SET, {
-                    anamnes: itemL
+                    // anamnesis
+                    anamnes: 'anamnesis'
                 });
             }
             if (this.currentType === 'procedures') {
                 if (this.needToSaveItem()) {
+                    console.log('save created');
                     return Promise.resolve(this.setProcedure());
                 }
                 if (this.needToSaveEdited()) {
-                    this.itemToCreate.teeth = this.lodash.cloneDeep(
-                        this.itemToCompare.teeth
-                    );
+                    this.itemToCreate.teeth = this.lodash.cloneDeep(this.itemToCompare.teeth);
+                    console.log('save edited');
                     return true;
                 }
                 return true;
@@ -412,9 +347,7 @@ export default {
         initiateLocalItem() {
             this.itemToCreate = this.lodash.cloneDeep(this.selectedItem);
             this.itemToCompare = this.lodash.cloneDeep(this.selectedItem);
-            this.selectedTeethL = this.lodash.cloneDeep(
-                this.selectedItem.teeth
-            );
+            this.selectedTeethL = this.lodash.cloneDeep(this.selectedItem.teeth);
         },
         manipulationsCreated(manipulations) {
             this.itemToCreate.manipulations = manipulations;
@@ -439,10 +372,7 @@ export default {
                 if (!this.hasLoctionsKey()) {
                     return false;
                 }
-                return (
-                    this.selectedItem.teeth &&
-                    this.selectedItem.teeth.length > 0
-                );
+                return this.selectedItem.teeth && this.selectedItem.teeth.length > 0;
             }
             return true;
         },
@@ -542,9 +472,7 @@ export default {
                 // return this.hasLocationKeyOrSelectedTeeth();
             }
             if (tab === 'manipulations') {
-                return (
-                    this.hasManipulations() || this.currentType === 'procedures'
-                );
+                return this.hasManipulations() || this.currentType === 'procedures';
             }
             if (tab === 'files') {
                 return true;

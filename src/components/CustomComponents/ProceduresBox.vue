@@ -1,17 +1,9 @@
 <template>
     <div class="procedures">
-        <small
-            v-for="(p, i) in procedures"
-            :key="p.ID"
-            class="items-manipulations_wrapper"
-        >
-            <span class="text-left">
-                {{ i + 1 }}. {{ p.title }} -
-                ({{getManipulationsByProcedureID(p.ID).length}}manipulations)
-
-            </span>
+        <small v-for="(p, i) in procedures" :key="p.ID" class="items-manipulations_wrapper">
+            <span class="text-left"> {{ i + 1 }}. {{ p.title }} - ({{ getManipulationsByProcedureID(p.ID).length }}manipulations) </span>
             <div class="text-right">
-                {{ procedureTotalPrice(p.ID) }}
+                {{ procedureTotalPrice(p.ID) }}&nbsp;
                 <small>{{ currentClinic.currencyCode }}</small>
             </div>
             <br />
@@ -45,10 +37,7 @@ export default {
     },
     methods: {
         procedureTotalPrice(ID) {
-            const sum = this.getManipulationsByProcedureID(ID).reduce(
-                (a, b) => a + b.totalPrice,
-                0
-            );
+            const sum = this.getManipulationsByProcedureID(ID).reduce((a, b) => a + b.totalPrice, 0);
             return sum || 0;
         }
     }

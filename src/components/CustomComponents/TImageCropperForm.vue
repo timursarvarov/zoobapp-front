@@ -1,8 +1,5 @@
 <template>
-    <md-dialog
-        class="cropper-form"
-        :md-active.sync="showFormLocal"
-    >
+    <md-dialog class="cropper-form" :md-active.sync="showFormLocal">
         <div>
             <md-card>
                 <md-card-header class="md-card-header-icon md-card-header-green">
@@ -15,11 +12,7 @@
                 </md-card-header>
 
                 <md-card-content>
-                    <div
-                        class="md-layout-item md-size-100"
-                        @mouseup="mouseActions =!mouseActions"
-                        @mousewheel="mouseActions =!mouseActions"
-                    >
+                    <div class="md-layout-item md-size-100" @mouseup="mouseActions = !mouseActions" @mousewheel="mouseActions = !mouseActions">
                         <clipper-fixed
                             ref="clipper"
                             class="clipper-setter"
@@ -40,35 +33,23 @@
                     <div>
                         <div
                             v-if="message !== 'Calculating...'"
-                            :class="[{'error': !correctSize(),
-                                      'success':correctSize()}]"
+                            :class="[{ error: !correctSize(), success: correctSize() }]"
                             class="md-size-100 md-layout-item"
                         >
                             {{ message }}:
-                            <animated-number
-                                :value="size.num"
-                                :to-fix="2"
-                                :duration="300"
-                            />
+                            <animated-number :value="size.num" :to-fix="2" :duration="300" />
                             {{ size.type }}
-                            <br>
+                            <br />
                         </div>
 
-                        <div
-                            v-if="message === 'Calculating...'"
-                            class="md-layout-item md-size-100"
-                        >
+                        <div v-if="message === 'Calculating...'" class="md-layout-item md-size-100">
                             {{ message }}
-                            <br>
+                            <br />
                         </div>
                     </div>
                 </md-card-content>
                 <md-card-actions md-alignment="right">
-                    <md-button
-                        :disabled="!correctSize()"
-                        class="md-success"
-                        @click="creatClipingImage()"
-                    >
+                    <md-button :disabled="!correctSize()" class="md-success" @click="creatClipingImage()">
                         Create
                     </md-button>
                 </md-card-actions>
@@ -77,55 +58,54 @@
     </md-dialog>
 </template>
 <script>
-
 import { NOTIFY } from '@/constants';
-import AnimatedNumber from'@/components/AnimatedNumber';
+import AnimatedNumber from '@/components/AnimatedNumber';
 
 export default {
     name: 'TImageCropperForm',
     prop: 'fd',
     components: {
-        AnimatedNumber,
+        AnimatedNumber
     },
     props: {
         maxFileSize: {
             type: Number,
-            default: 2097152,
+            default: 2097152
         },
         buttonColor: {
             type: String,
-            default: '',
+            default: ''
         },
         icon: {
             type: String,
-            default: 'add_a_photo',
+            default: 'add_a_photo'
         },
         imageToCorp: {
             type: String,
-            default: () => '',
+            default: () => ''
         },
         imageName: {
             type: String,
-            default: () => 'imageName',
+            default: () => 'imageName'
         },
         fd: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         title: {
             type: String,
-            default: () => 'Cropp an image',
+            default: () => 'Cropp an image'
         },
         showForm: {
             type: Boolean,
-            default: () => false,
-        },
+            default: () => false
+        }
     },
     data() {
         return {
             size: {
                 num: 0,
-                type: '',
+                type: ''
             },
             mouseActions: false,
             size2: 2,
@@ -134,7 +114,7 @@ export default {
             resultURL: null,
             message: 'Calculating...',
             isLoadingRegistration: true,
-            callbackLauncher: null,
+            callbackLauncher: null
         };
     },
     computed: {
@@ -146,8 +126,8 @@ export default {
             // сеттер:
             set(newValue) {
                 this.$emit('update:showForm', newValue);
-            },
-        },
+            }
+        }
     },
     watch: {
         mouseActions() {
@@ -158,7 +138,7 @@ export default {
         },
         imageToCorp() {
             this.calculateSize();
-        },
+        }
     },
     mounted() {
         this.calculateSizeAfterTimeout();
@@ -181,7 +161,7 @@ export default {
             const size = {
                 // eslint-disable-next-line
         num: parseFloat((a / Math.pow(c, f)).toFixed(d)),
-                type: e[f],
+                type: e[f]
             };
             // return `${parseFloat((a / Math.pow(c, f)).toFixed(d))} ${e[f]}`;
             return size;
@@ -202,11 +182,9 @@ export default {
                 const size = this.formatBytes(this.maxFileSize, 0);
                 this.$store.dispatch(NOTIFY, {
                     settings: {
-                        message: `Too large file, must be less then ${size.nuum} ${
-                            size.type
-                        }`,
-                        type: 'warning',
-                    },
+                        message: `Too large file, must be less then ${size.nuum} ${size.type}`,
+                        type: 'warning'
+                    }
                 });
             }
         },
@@ -259,31 +237,31 @@ export default {
         },
         correctSize() {
             return this.blobLength < this.maxFileSize;
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>
 .md-dialog.cropper-form {
-  .size-text {
-    transition: visibility 0s linear 0.33s, opacity 0.33s linear;
-  }
-  .error {
-    color: red;
-  }
-  .success {
-    color: green;
-  }
-  background-color: transparent !important;
-  box-shadow: none !important;
-  .clipper-setter {
-    overflow: hidden;
-    max-width: 70vh;
-    max-height: 70vh;
-    width: 300px;
-    height: 300px;
-    min-width: 100px;
-    min-height: 100px;
-  }
+    .size-text {
+        transition: visibility 0s linear 0.33s, opacity 0.33s linear;
+    }
+    .error {
+        color: red;
+    }
+    .success {
+        color: green;
+    }
+    background-color: transparent !important;
+    box-shadow: none !important;
+    .clipper-setter {
+        overflow: hidden;
+        max-width: 70vh;
+        max-height: 70vh;
+        width: 300px;
+        height: 300px;
+        min-width: 100px;
+        min-height: 100px;
+    }
 }
 </style>

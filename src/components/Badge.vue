@@ -1,10 +1,5 @@
 <template>
-    <component
-        :is="tag"
-        :style="[{'background-color':`${color}`}]"
-        class="badge"
-        :class="`badge-${type}`"
-    >
+    <component :is="tag" :style="[{ 'background-color': `${color}` }]" class="badge" :class="`badge-${type}`">
         <slot />
     </component>
 </template>
@@ -14,29 +9,21 @@ export default {
     props: {
         tag: {
             type: String,
-            default: 'span',
+            default: 'span'
         },
         color: {
             type: String,
-            default: '',
+            default: ''
         },
         type: {
             type: String,
             default: 'default',
-            validator: (value) => {
-                const acceptedValues = [
-                    'primary',
-                    'info',
-                    'success',
-                    'warning',
-                    'danger',
-                    'rose',
-                ];
+            validator: value => {
+                const acceptedValues = ['primary', 'info', 'success', 'warning', 'danger', 'rose'];
                 return acceptedValues.indexOf(value) !== -1;
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
-<style>
-</style>
+<style></style>

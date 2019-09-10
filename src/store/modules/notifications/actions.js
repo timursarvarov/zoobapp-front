@@ -1,13 +1,7 @@
-import {
-    NOTIFY,
-} from '@/constants';
+import { NOTIFY } from '@/constants';
 
 export default {
-    [NOTIFY]: ({
-        commit
-    }, {
-        settings
-    }) => {
+    [NOTIFY]: ({ commit }, { settings }) => {
         let set = settings;
         if (set.message) {
             if (Array.isArray(set.message)) {
@@ -20,11 +14,11 @@ export default {
                         horizontalAlign: set.horizontalAlign || 'left',
                         verticalAlign: set.verticalAlign || 'bottom',
                         type: set.type || '.alert-warning',
-                        status: set.status || '',
+                        status: set.status || ''
                     };
                     commit(NOTIFY, vSettings);
-                })
-                return
+                });
+                return;
             }
             const nvalue = set.message.toString();
             set.message = nvalue.charAt(0).toUpperCase() + nvalue.slice(1);
@@ -37,7 +31,7 @@ export default {
                 horizontalAlign: set.horizontalAlign || 'left',
                 verticalAlign: set.verticalAlign || 'bottom',
                 type: set.type || '.alert-warning',
-                status: set.status || '',
+                status: set.status || ''
             };
         } else {
             vSettings = {
@@ -46,9 +40,9 @@ export default {
                 horizontalAlign: 'left',
                 verticalAlign: 'bottom',
                 type: 'warning',
-                status: '',
+                status: ''
             };
         }
         commit(NOTIFY, vSettings);
-    },
+    }
 };

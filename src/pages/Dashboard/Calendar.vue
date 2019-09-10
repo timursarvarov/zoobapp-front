@@ -6,14 +6,8 @@
             </h3>
             <p class="category">
                 Handcrafted by our friends from
-                <a
-                    target="_blank"
-                    href="https://fullcalendar.io/"
-                >FullCalendar.io</a>. Please checkout the
-                <a
-                    href="https://fullcalendar.io/docs"
-                    target="_blank"
-                >full documentation</a>.
+                <a target="_blank" href="https://fullcalendar.io/">FullCalendar.io</a>. Please checkout the
+                <a href="https://fullcalendar.io/docs" target="_blank">full documentation</a>.
             </p>
         </div>
 
@@ -34,21 +28,17 @@ import components from '@/components';
 export default {
     name: 'Calendar',
     components: {
-        ...components,
+        ...components
     },
     data() {
-        return {
-        };
+        return {};
     },
-    computed: {
-    },
-    mounted() {
-    },
-    methods: {
-    },
+    computed: {},
+    mounted() {},
+    methods: {}
 };
 </script>
-<style lang="scss" >
+<style lang="scss">
 .text-center {
     text-align: center;
 }

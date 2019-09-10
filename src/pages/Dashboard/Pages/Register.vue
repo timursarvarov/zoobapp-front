@@ -2,21 +2,11 @@
     <div class="md-layout">
         <div class="md-layout-item">
             <signup-card>
-                <h2
-                    slot="title"
-                    class="title text-center"
-                >
+                <h2 slot="title" class="title text-center">
                     Register
                 </h2>
-                <div
-                    slot="content-left"
-                    class="md-layout-item md-size-50 md-medium-size-50 md-small-size-100 ml-auto"
-                >
-                    <div
-                        v-for="item in contentLeft"
-                        :key="item.title"
-                        class="info info-horizontal"
-                    >
+                <div slot="content-left" class="md-layout-item md-size-50 md-medium-size-50 md-small-size-100 ml-auto">
+                    <div v-for="item in contentLeft" :key="item.title" class="info info-horizontal">
                         <div :class="`icon ${item.colorIcon}`">
                             <md-icon>{{ item.icon }}</md-icon>
                         </div>
@@ -30,18 +20,13 @@
                         </div>
                     </div>
                 </div>
-                <div
-                    slot="content-right"
-                    class="md-layout-item md-size-50 md-medium-size-50 md-small-size-100 mr-auto"
-                >
+                <div slot="content-right" class="md-layout-item md-size-50 md-medium-size-50 md-small-size-100 mr-auto">
                     <slide-x-left-transition>
                         <div v-if="boolean2">
                             <md-field
                                 slot="inputs"
                                 class="md-form-group"
-                                :class="[
-                                    {'md-valid': !errors.has('username') && touched.username},
-                                    {'md-error': errors.has('username')}]"
+                                :class="[{ 'md-valid': !errors.has('username') && touched.username }, { 'md-error': errors.has('username') }]"
                             >
                                 <md-icon>face</md-icon>
                                 <label>User Name</label>
@@ -57,18 +42,12 @@
                                 />
                                 <span class="md-error">{{ errors.first('username') }}</span>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="errors.has('username')"
-                                        class="error"
-                                    >
+                                    <md-icon v-show="errors.has('username')" class="error">
                                         close
                                     </md-icon>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="!errors.has('username') && touched.username"
-                                        class="success"
-                                    >
+                                    <md-icon v-show="!errors.has('username') && touched.username" class="success">
                                         done
                                     </md-icon>
                                 </slide-y-down-transition>
@@ -76,9 +55,7 @@
                             <md-field
                                 slot="inputs"
                                 class="md-form-group"
-                                :class="[
-                                    {'md-valid': !errors.has('firstName') && touched.firstName},
-                                    {'md-error': errors.has('firstName')}]"
+                                :class="[{ 'md-valid': !errors.has('firstName') && touched.firstName }, { 'md-error': errors.has('firstName') }]"
                             >
                                 <md-icon>looks_one</md-icon>
                                 <label>First Name</label>
@@ -94,18 +71,12 @@
                                 />
                                 <span class="md-error">{{ errors.first('firstName') }}</span>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="errors.has('firstName')"
-                                        class="error"
-                                    >
+                                    <md-icon v-show="errors.has('firstName')" class="error">
                                         close
                                     </md-icon>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="!errors.has('firstName') && touched.firstName"
-                                        class="success"
-                                    >
+                                    <md-icon v-show="!errors.has('firstName') && touched.firstName" class="success">
                                         done
                                     </md-icon>
                                 </slide-y-down-transition>
@@ -113,9 +84,7 @@
                             <md-field
                                 slot="inputs"
                                 class="md-form-group"
-                                :class="[
-                                    {'md-valid': !errors.has('lastName') && touched.lastName},
-                                    {'md-error': errors.has('lastName')}]"
+                                :class="[{ 'md-valid': !errors.has('lastName') && touched.lastName }, { 'md-error': errors.has('lastName') }]"
                             >
                                 <md-icon>looks_two</md-icon>
                                 <label>Last Name</label>
@@ -131,18 +100,12 @@
                                 />
                                 <span class="md-error">{{ errors.first('lastName') }}</span>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="errors.has('lastName')"
-                                        class="error"
-                                    >
+                                    <md-icon v-show="errors.has('lastName')" class="error">
                                         close
                                     </md-icon>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="!errors.has('lastName') && touched.lastName"
-                                        class="success"
-                                    >
+                                    <md-icon v-show="!errors.has('lastName') && touched.lastName" class="success">
                                         done
                                     </md-icon>
                                 </slide-y-down-transition>
@@ -150,8 +113,7 @@
                             <md-field
                                 slot="inputs"
                                 class="md-form-group"
-                                :class="[{'md-error': errors.has('password')},
-                                         {'md-valid': !errors.has('password') && touched.password}]"
+                                :class="[{ 'md-error': errors.has('password') }, { 'md-valid': !errors.has('password') && touched.password }]"
                             >
                                 <md-icon>lock_outline</md-icon>
                                 <label>Password</label>
@@ -167,18 +129,12 @@
                                 />
                                 <span class="md-error">{{ errors.first('password') }}</span>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="errors.has('password')"
-                                        class="error"
-                                    >
+                                    <md-icon v-show="errors.has('password')" class="error">
                                         close
                                     </md-icon>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="!errors.has('password') && touched.password"
-                                        class="success"
-                                    >
+                                    <md-icon v-show="!errors.has('password') && touched.password" class="success">
                                         done
                                     </md-icon>
                                 </slide-y-down-transition>
@@ -186,8 +142,7 @@
                             <md-field
                                 slot="inputs"
                                 class="md-form-group"
-                                :class="[{'md-error': errors.has('password')},
-                                         {'md-valid': !errors.has('password') && touched.password}]"
+                                :class="[{ 'md-error': errors.has('password') }, { 'md-valid': !errors.has('password') && touched.password }]"
                             >
                                 <md-icon>lock_outline</md-icon>
                                 <label>Repeate Password</label>
@@ -203,18 +158,12 @@
                                 />
                                 <span class="md-error">{{ errors.first('rPassword') }}</span>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="errors.has('rPassword')"
-                                        class="error"
-                                    >
+                                    <md-icon v-show="errors.has('rPassword')" class="error">
                                         close
                                     </md-icon>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
-                                    <md-icon
-                                        v-show="!errors.has('rPassword') && touched.rPassword"
-                                        class="success"
-                                    >
+                                    <md-icon v-show="!errors.has('rPassword') && touched.rPassword" class="success">
                                         done
                                     </md-icon>
                                 </slide-y-down-transition>
@@ -229,12 +178,7 @@
                         <md-checkbox v-model="boolean2">
                             I agree to the terms and conditions.
                         </md-checkbox>
-                        <md-button
-                            slot="footer"
-                            :disabled="!boolean"
-                            class="md-success md-round mt-4"
-                            @click="registrate()"
-                        >
+                        <md-button slot="footer" :disabled="!boolean" class="md-success md-round mt-4" @click="registrate()">
                             Get Started
                         </md-button>
                     </div>
@@ -253,7 +197,7 @@ export default {
     components: {
         ...components,
         SlideYDownTransition,
-        SlideXLeftTransition,
+        SlideXLeftTransition
     },
     data() {
         return {
@@ -270,56 +214,53 @@ export default {
                 firstName: false,
                 username: false,
                 password: false,
-                rPassword: false,
+                rPassword: false
             },
             modelValidations: {
                 username: {
                     required: true,
-                    min: 5,
+                    min: 5
                 },
                 password: {
                     required: true,
-                    min: 5,
+                    min: 5
                 },
                 lastName: {
                     required: true,
-                    min: 2,
+                    min: 2
                 },
                 firstName: {
                     required: true,
-                    min: 2,
+                    min: 2
                 },
                 rPassword: {
                     required: true,
                     min: 2,
-                    confirmed: 'password',
-                },
+                    confirmed: 'password'
+                }
             },
             contentLeft: [
                 {
                     colorIcon: 'icon-success',
                     icon: 'timeline',
                     title: 'Marketing',
-                    description:
-                            "We've created the marketing campaign of the website. It was a very interesting collaboration.",
+                    description: "We've created the marketing campaign of the website. It was a very interesting collaboration."
                 },
 
                 {
                     colorIcon: 'icon-danger',
                     icon: 'code',
                     title: 'Fully Coded in HTML5',
-                    description:
-                            "We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub.",
+                    description: "We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub."
                 },
 
                 {
                     colorIcon: 'icon-info',
                     icon: 'group',
                     title: 'Built Audience',
-                    description:
-                            'There is also a Fully Customizable CMS Admin Dashboard for this product.',
-                },
-            ],
+                    description: 'There is also a Fully Customizable CMS Admin Dashboard for this product.'
+                }
+            ]
         };
     },
     watch: {
@@ -334,14 +275,14 @@ export default {
         },
         lastName() {
             this.touched.lastName = true;
-        },
+        }
     },
     methods: {
         passwordFocus() {
             this.$refs.password.$el.focus();
         },
         validate() {
-            this.$validator.validateAll().then((isValid) => {
+            this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.registerForm, isValid);
             });
             this.touched.username = true;
@@ -356,8 +297,8 @@ export default {
                 this.$store.dispatch(NOTIFY, {
                     settings: {
                         message: this.errors.first('username'),
-                        type: 'warning',
-                    },
+                        type: 'warning'
+                    }
                 });
                 return;
             }
@@ -366,8 +307,8 @@ export default {
                 this.$store.dispatch(NOTIFY, {
                     settings: {
                         message: this.errors.first('lastName'),
-                        type: 'warning',
-                    },
+                        type: 'warning'
+                    }
                 });
                 return;
             }
@@ -376,8 +317,8 @@ export default {
                 this.$store.dispatch(NOTIFY, {
                     settings: {
                         message: this.errors.first('firstName'),
-                        type: 'warning',
-                    },
+                        type: 'warning'
+                    }
                 });
                 return;
             }
@@ -386,8 +327,8 @@ export default {
                 this.$store.dispatch(NOTIFY, {
                     settings: {
                         message: this.errors.first('password'),
-                        type: 'warning',
-                    },
+                        type: 'warning'
+                    }
                 });
                 return;
             }
@@ -396,57 +337,59 @@ export default {
                 this.$store.dispatch(NOTIFY, {
                     settings: {
                         message: this.errors.first('rPassword'),
-                        type: 'warning',
-                    },
+                        type: 'warning'
+                    }
                 });
                 return;
             }
-            this.$store.dispatch(USER_REGISTER, {
-                params: {
-                    username: this.username,
-                    password: this.password,
-                    lastName: this.lastName,
-                    firstName: this.firstName,
-                },
-            }).then(
-                (response) => {
-                    if (response) {
-                        this.$router.push('/');
+            this.$store
+                .dispatch(USER_REGISTER, {
+                    params: {
+                        username: this.username,
+                        password: this.password,
+                        lastName: this.lastName,
+                        firstName: this.firstName
                     }
-                },
-                (error) => {
-                    if (error.response.data.message === 'Wrong password') {
-                        this.showErrorsValidate('password');
+                })
+                .then(
+                    response => {
+                        if (response) {
+                            this.$router.push('/');
+                        }
+                    },
+                    error => {
+                        if (error.response.data.message === 'Wrong password') {
+                            this.showErrorsValidate('password');
+                        }
+                        if (error.response.data.message === 'Invalid login') {
+                            this.showErrorsValidate('username');
+                        }
                     }
-                    if (error.response.data.message === 'Invalid login') {
-                        this.showErrorsValidate('username');
-                    }
-                },
-            );
+                );
         },
         showErrorsValidate(errField = 'username') {
             const field = this.$validator.fields.find({
                 name: errField,
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             if (!field) return;
             this.$validator.errors.add({
                 id: errField,
                 field: errField,
                 msg: errField === 'username' ? 'Invalid login' : 'Wrong password',
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             field.setFlags({
                 invalid: true,
                 valid: false,
-                validated: true,
+                validated: true
             });
-        },
-    },
+        }
+    }
 };
 </script>
-<style lang="scss" scoped >
+<style lang="scss" scoped>
 div :not(.md-toolbar) > .md-field:not(.md-chips) .md-error {
-  margin-left: 36px;
+    margin-left: 36px;
 }
 </style>

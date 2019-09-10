@@ -3,7 +3,7 @@
 const requireModule = require.context('.', true, /\.js$/);
 const modules = {};
 
-requireModule.keys().forEach((fileName) => {
+requireModule.keys().forEach(fileName => {
     if (fileName === './index.js') return;
 
     // Replace ./ and .js

@@ -6,9 +6,7 @@
                     <div class="card-icon">
                         <md-icon>today</md-icon>
                     </div>
-                    <h4 class="title">
-                        Datepicker - <small>labeled</small>
-                    </h4>
+                    <h4 class="title">Datepicker - <small>labeled</small></h4>
                 </md-card-header>
 
                 <md-card-content>
@@ -24,9 +22,7 @@
                     <div class="card-icon">
                         <md-icon>today</md-icon>
                     </div>
-                    <h4 class="title">
-                        Datepicker - <small>date selected</small>
-                    </h4>
+                    <h4 class="title">Datepicker - <small>date selected</small></h4>
                 </md-card-header>
 
                 <md-card-content>
@@ -40,16 +36,11 @@
                     <div class="card-icon">
                         <md-icon>today</md-icon>
                     </div>
-                    <h4 class="title">
-                        Datepicker - <small>close on select</small>
-                    </h4>
+                    <h4 class="title">Datepicker - <small>close on select</small></h4>
                 </md-card-header>
 
                 <md-card-content>
-                    <md-datepicker
-                        v-model="selectedClose"
-                        md-immediately
-                    />
+                    <md-datepicker v-model="selectedClose" md-immediately />
                 </md-card-content>
             </md-card>
         </div>
@@ -76,11 +67,7 @@
                                 <div class="md-layout-item">
                                     <md-field>
                                         <label for="movie">Movie</label>
-                                        <md-select
-                                            id="movie"
-                                            v-model="movie"
-                                            name="movie"
-                                        >
+                                        <md-select id="movie" v-model="movie" name="movie">
                                             <md-option value="fight-club">
                                                 Fight Club
                                             </md-option>
@@ -108,12 +95,7 @@
                                 <div class="md-layout-item">
                                     <md-field>
                                         <label for="movies">Movies</label>
-                                        <md-select
-                                            id="movies"
-                                            v-model="selectedMovies"
-                                            name="movies"
-                                            multiple
-                                        >
+                                        <md-select id="movies" v-model="selectedMovies" name="movies" multiple>
                                             <md-option value="fight-club">
                                                 Fight Club
                                             </md-option>
@@ -149,11 +131,7 @@
                             <h4 class="card-title">
                                 Tags
                             </h4>
-                            <md-chips
-                                v-model="fruits"
-                                class="md-primary"
-                                md-placeholder="Add city..."
-                            />
+                            <md-chips v-model="fruits" class="md-primary" md-placeholder="Add city..." />
                         </div>
                         <div class="md-layout-item md-size-50 md-small-size-100">
                             <h4 class="card-title">
@@ -161,56 +139,32 @@
                             </h4>
                             <div class="md-layout">
                                 <div class="md-layout-item md-size-50 md-xsmall-size-100">
-                                    <drop-down
-                                        direction="down"
-                                        multi-level
-                                    >
-                                        <md-button
-                                            slot="title"
-                                            class="md-button md-success md-round md-block dropdown-toggle"
-                                            data-toggle="dropdown"
-                                        >
+                                    <drop-down direction="down" multi-level>
+                                        <md-button slot="title" class="md-button md-success md-round md-block dropdown-toggle" data-toggle="dropdown">
                                             Multilevel Dropdown
                                         </md-button>
-                                        <ul
-                                            class="dropdown-menu"
-                                            :class="{'dropdown-menu-right': responsive}"
-                                        >
+                                        <ul class="dropdown-menu" :class="{ 'dropdown-menu-right': responsive }">
                                             <li><a href="#">Action</a></li>
                                             <li><a href="#">Another Action</a></li>
                                             <li>
-                                                <a
-                                                    class="dropdown-toggle"
-                                                    :class="{'open': multiLevel}"
-                                                    @click="toggleMultiLevel"
-                                                >Submenu</a>
+                                                <a class="dropdown-toggle" :class="{ open: multiLevel }" @click="toggleMultiLevel">Submenu</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="#">Submenu action</a></li>
                                                     <li><a href="#">Submenu action</a></li>
                                                     <li>
-                                                        <a
-                                                            class="dropdown-toggle"
-                                                            :class="{'open': multiLevel2}"
-                                                            @click="toggleMultiLevel2()"
-                                                        >Subsubmenu</a>
-                                                        <ul
-                                                            class="dropdown-menu"
-                                                            :class="{'dropdown-menu-right': responsive}"
+                                                        <a class="dropdown-toggle" :class="{ open: multiLevel2 }" @click="toggleMultiLevel2()"
+                                                            >Subsubmenu</a
                                                         >
+                                                        <ul class="dropdown-menu" :class="{ 'dropdown-menu-right': responsive }">
                                                             <li><a href="#">Subsubmenu action 1</a></li>
                                                             <li><a href="#">Subsubmenu action 2</a></li>
                                                         </ul>
                                                     </li>
                                                     <li>
-                                                        <a
-                                                            class="dropdown-toggle"
-                                                            :class="{'open': multiLevel3}"
-                                                            @click="toggleMultiLevel3"
-                                                        >Second Subsubmenu</a>
-                                                        <ul
-                                                            class="dropdown-menu"
-                                                            :class="{'dropdown-menu-right': responsive}"
+                                                        <a class="dropdown-toggle" :class="{ open: multiLevel3 }" @click="toggleMultiLevel3"
+                                                            >Second Subsubmenu</a
                                                         >
+                                                        <ul class="dropdown-menu" :class="{ 'dropdown-menu-right': responsive }">
                                                             <li><a href="#">Subsubmenu action 1</a></li>
                                                             <li><a href="#">Subsubmenu action 2</a></li>
                                                         </ul>
@@ -222,11 +176,7 @@
                                 </div>
                                 <div class="md-layout-item md-size-50 md-xsmall-size-100">
                                     <drop-down direction="down">
-                                        <md-button
-                                            slot="title"
-                                            class="md-button md-success md-round md-block dropdown-toggle"
-                                            data-toggle="dropdown"
-                                        >
+                                        <md-button slot="title" class="md-button md-success md-round md-block dropdown-toggle" data-toggle="dropdown">
                                             Dropdown
                                         </md-button>
                                         <ul class="dropdown-menu dropdown-menu-right">
@@ -240,11 +190,7 @@
                                 </div>
                                 <div class="md-layout-item md-size-50 mx-auto md-xsmall-size-100">
                                     <drop-down direction="up">
-                                        <md-button
-                                            slot="title"
-                                            class="md-button md-success md-round md-block dropdown-toggle"
-                                            data-toggle="dropdown"
-                                        >
+                                        <md-button slot="title" class="md-button md-success md-round md-block dropdown-toggle" data-toggle="dropdown">
                                             Dropup
                                         </md-button>
                                         <ul class="dropdown-menu dropdown-menu-right">
@@ -262,32 +208,17 @@
                             <h4 class="card-title">
                                 Progress Bar
                             </h4>
-                            <md-progress-bar
-                                class="md-primary"
-                                :md-value="amount"
-                            />
-                            <md-progress-bar
-                                class="md-info"
-                                :md-value="amount2"
-                            />
-                            <md-progress-bar
-                                class="md-warning"
-                                md-mode="buffer"
-                                :md-value="buffer"
-                                :md-buffer="buffer"
-                            />
+                            <md-progress-bar class="md-primary" :md-value="amount" />
+                            <md-progress-bar class="md-info" :md-value="amount2" />
+                            <md-progress-bar class="md-warning" md-mode="buffer" :md-value="buffer" :md-buffer="buffer" />
                         </div>
                         <div class="md-layout-item md-size-50 md-small-size-100">
                             <h4 class="card-title">
                                 Sliders
                             </h4>
                             <slider v-model="sliders.simple" />
-                            <br>
-                            <slider
-                                v-model="sliders.rangeSlider"
-                                type="info"
-                                :connect="true"
-                            />
+                            <br />
+                            <slider v-model="sliders.rangeSlider" type="info" :connect="true" />
                         </div>
                         <div class="md-layout-item md-size-30 md-xsmall-size-100">
                             <h4 class="card-title">
@@ -296,24 +227,14 @@
                             <div class="file-input">
                                 <div v-if="!imageRegular">
                                     <div class="image-container">
-                                        <img
-                                            :src="regularImg"
-                                            title=""
-                                        >
+                                        <img :src="regularImg" title="" />
                                     </div>
                                 </div>
-                                <div
-                                    v-else
-                                    class="image-container"
-                                >
-                                    <img :src="imageRegular">
+                                <div v-else class="image-container">
+                                    <img :src="imageRegular" />
                                 </div>
                                 <div class="button-container">
-                                    <md-button
-                                        v-if="imageRegular"
-                                        class="md-danger md-round"
-                                        @click="removeImage"
-                                    >
+                                    <md-button v-if="imageRegular" class="md-danger md-round" @click="removeImage">
                                         <i class="fa fa-times" />Remove
                                     </md-button>
                                     <md-button class="md-success md-round md-fileinput">
@@ -323,10 +244,7 @@
                                         <template v-else>
                                             Change
                                         </template>
-                                        <input
-                                            type="file"
-                                            @change="onFileChange"
-                                        >
+                                        <input type="file" @change="onFileChange" />
                                     </md-button>
                                 </div>
                             </div>
@@ -338,24 +256,14 @@
                             <div class="file-input img-circle">
                                 <template v-if="!imageCircle">
                                     <div class="image-container">
-                                        <img
-                                            :src="avatarImg"
-                                            title=""
-                                        >
+                                        <img :src="avatarImg" title="" />
                                     </div>
                                 </template>
-                                <div
-                                    v-else
-                                    class="image-container"
-                                >
-                                    <img :src="imageCircle">
+                                <div v-else class="image-container">
+                                    <img :src="imageCircle" />
                                 </div>
                                 <div class="button-container">
-                                    <md-button
-                                        v-if="imageCircle"
-                                        class="md-danger md-round"
-                                        @click="removeImage('circle')"
-                                    >
+                                    <md-button v-if="imageCircle" class="md-danger md-round" @click="removeImage('circle')">
                                         <i class="fa fa-times" />Remove
                                     </md-button>
                                     <md-button class="md-success md-round md-fileinput">
@@ -365,11 +273,7 @@
                                         <template v-else>
                                             Change
                                         </template>
-                                        <input
-                                            type="file"
-                                            name="circle"
-                                            @change="onFileChange"
-                                        >
+                                        <input type="file" name="circle" @change="onFileChange" />
                                     </md-button>
                                 </div>
                             </div>
@@ -387,17 +291,17 @@ import components from '@/components';
 export default {
     name: 'ExtendedForms',
     components: {
-        ...components,
+        ...components
     },
     props: {
         regularImg: {
             type: String,
-            default: './img/image_placeholder.jpg',
+            default: './img/image_placeholder.jpg'
         },
         avatarImg: {
             type: String,
-            default: './img/placeholder.jpg',
-        },
+            default: './img/placeholder.jpg'
+        }
     },
     data() {
         return {
@@ -420,8 +324,8 @@ export default {
             fruits: ['Amsterdam', 'Washington', 'Sydney', 'Beijing'],
             sliders: {
                 simple: 40,
-                rangeSlider: [20, 60],
-            },
+                rangeSlider: [20, 60]
+            }
         };
     },
     mounted() {
@@ -456,7 +360,7 @@ export default {
             const reader = new FileReader();
             const vm = this;
 
-            reader.onload = (e) => {
+            reader.onload = e => {
                 if (type === 'circle') {
                     vm.imageCircle = e.target.result;
                 } else {
@@ -478,10 +382,9 @@ export default {
             } else {
                 this.responsive = false;
             }
-        },
-    },
+        }
+    }
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

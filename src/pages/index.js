@@ -20,5 +20,5 @@ export {
     ClinicSettings,
     // PatientBilling,
     EditProfileForm,
-    UserCard,
+    UserCard
 };

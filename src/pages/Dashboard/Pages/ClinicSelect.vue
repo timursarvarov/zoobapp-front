@@ -1,9 +1,7 @@
 /* eslint-disable no-unused-vars */
 <template>
     <div class="md-layout login-wrapper text-center">
-        <div
-            class="md-layout-item md-size-33 md-medium-size-50 md-small-size-70 md-xsmall-size-100"
-        >
+        <div class="md-layout-item md-size-33 md-medium-size-50 md-small-size-70 md-xsmall-size-100">
             <md-card>
                 <md-card-header class="md-card-header-icon md-card-header-green">
                     <div class="card-icon">
@@ -17,14 +15,8 @@
                 <md-card-content>
                     <div class="md-layout-item md-size-100">
                         <md-list>
-                            <md-list-item
-                                v-for="(clinic, index) in clinics"
-                                :key="index"
-                            >
-                                <md-radio
-                                    v-model="checkedClinicId"
-                                    :value="clinic.ID"
-                                >
+                            <md-list-item v-for="(clinic, index) in clinics" :key="index">
+                                <md-radio v-model="checkedClinicId" :value="clinic.ID">
                                     {{ clinic.name | capitilize }}
                                 </md-radio>
                             </md-list-item>
@@ -32,11 +24,7 @@
                     </div>
                 </md-card-content>
                 <md-card-actions>
-                    <md-button
-                        :disabled="!checkedClinicId"
-                        class="md-success"
-                        @click="setClinic()"
-                    >
+                    <md-button :disabled="!checkedClinicId" class="md-success" @click="setClinic()">
                         Choose
                     </md-button>
                 </md-card-actions>
@@ -52,15 +40,15 @@ export default {
     name: 'ClinicSelect',
     data() {
         return {
-            checkedClinicId: null,
+            checkedClinicId: null
         };
     },
     computed: {
         ...mapGetters({
             clinics: 'getClinics',
             accessToken: 'fetchStateAccessToken',
-            expiresAt: 'expiresAt',
-        }),
+            expiresAt: 'expiresAt'
+        })
     },
     methods: {
         setClinic() {
@@ -71,15 +59,15 @@ export default {
                 this.$store
                     .dispatch(CLINIC_AUTH_REQUEST, {
                         clinicId: this.checkedClinicId,
-                        accessToken: this.accessToken,
+                        accessToken: this.accessToken
                     })
                     .then(
-                        (response) => {
+                        response => {
                             if (response) {
                                 this.$router.push({ name: 'dashboard', params: { lang: this.$i18n.locale } });
                             }
                         },
-                        (error) => {
+                        error => {
                             if (error && error.response) {
                                 if (error.response.data.message === 'Wrong password') {
                                     this.showErrorsValidate('password');
@@ -88,11 +76,11 @@ export default {
                                     this.showErrorsValidate('username');
                                 }
                             }
-                        },
+                        }
                     );
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

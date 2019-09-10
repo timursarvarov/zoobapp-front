@@ -7,7 +7,7 @@ export default {
         const jaw = {
             anamnesis: {},
             procedures: {},
-            diagnosis: {},
+            diagnosis: {}
         };
         // настраиваем челюсть
         const patientJawProps = {};
@@ -21,11 +21,11 @@ export default {
         if (patient.diagnosis) {
             patientJawProps.diagnosis = patient.diagnosis;
             // генерируем челюсь для отображения всех диагнозов и процедур
-            Object.keys(patientJawProps).forEach((jawType) => {
+            Object.keys(patientJawProps).forEach(jawType => {
                 const { teeth } = patientJawProps[jawType];
                 if (teeth) {
-                    Object.keys(teeth).forEach((toothId) => {
-                        Object.keys(teeth[toothId]).forEach((location) => {
+                    Object.keys(teeth).forEach(toothId => {
+                        Object.keys(teeth[toothId]).forEach(location => {
                             if (!(toothId in jaw[jawType])) {
                                 jaw[jawType][toothId] = {};
                             }
@@ -43,13 +43,13 @@ export default {
         const jaw = {
             anamnesis: {},
             procedures: {},
-            diagnosis: {},
+            diagnosis: {}
         };
         // настраиваем челюсть
-        Object.keys(jaw).forEach((jawType) => {
-            state.teethAll.forEach((toothId) => {
+        Object.keys(jaw).forEach(jawType => {
+            state.teethAll.forEach(toothId => {
                 jaw[jawType][toothId] = {};
-                Object.keys(state.toothLocations).forEach((location) => {
+                Object.keys(state.toothLocations).forEach(location => {
                     jaw[jawType][toothId][location] = state.toothLocations[location];
                 });
             });
@@ -61,5 +61,5 @@ export default {
             if (jaw.hasOwnProperty(attr)) jawEthalon[attr] = jaw[attr];
         }
         commit(TEETH_INITIATION_ETHALON, jawEthalon);
-    },
+    }
 };

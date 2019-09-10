@@ -15,30 +15,21 @@
                     <template slot="label">
                         About
                     </template>
-                    <first-step
-                        ref="step1"
-                        @on-validated="onStepValidated"
-                    />
+                    <first-step ref="step1" @on-validated="onStepValidated" />
                 </wizard-tab>
 
                 <wizard-tab :before-change="() => validateStep('step2')">
                     <template slot="label">
                         Account
                     </template>
-                    <second-step
-                        ref="step2"
-                        @on-validated="onStepValidated"
-                    />
+                    <second-step ref="step2" @on-validated="onStepValidated" />
                 </wizard-tab>
 
                 <wizard-tab :before-change="() => validateStep('step3')">
                     <template slot="label">
                         Address
                     </template>
-                    <third-step
-                        ref="step3"
-                        @on-validated="wizardComplete"
-                    />
+                    <third-step ref="step3" @on-validated="wizardComplete" />
                 </wizard-tab>
             </simple-wizard>
         </div>
@@ -57,11 +48,11 @@ export default {
         FirstStep,
         SecondStep,
         ThirdStep,
-        ...components,
+        ...components
     },
     data() {
         return {
-            wizardModel: {},
+            wizardModel: {}
         };
     },
     methods: {
@@ -79,7 +70,7 @@ export default {
             //   confirmButtonClass: 'md-button md-success',
             //   buttonsStyling: false,
             // });
-        },
-    },
+        }
+    }
 };
 </script>

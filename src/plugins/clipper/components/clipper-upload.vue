@@ -2,13 +2,7 @@
 <template>
     <div @click="triggerInput">
         <slot />
-        <input
-            type="file"
-            class="upload"
-            style="display:none"
-            @input="upload($event)"
-            @click="clear($event)"
-        >
+        <input type="file" class="upload" style="display:none" @input="upload($event)" @click="clear($event)" />
     </div>
 </template>
 
@@ -18,16 +12,16 @@ export default {
     props: {
         value: {
             type: String,
-            default: '',
+            default: ''
         },
         check: {
             type: Boolean,
-            default: true,
-        },
+            default: true
+        }
     },
     data: () => ({
         uploadEl: null,
-        DomString: '',
+        DomString: ''
     }),
     mounted() {
         this.uploadEl = this.$el.querySelector('.upload');
@@ -46,10 +40,9 @@ export default {
         },
         triggerInput() {
             if (this.uploadEl) this.uploadEl.click();
-        },
-    },
+        }
+    }
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

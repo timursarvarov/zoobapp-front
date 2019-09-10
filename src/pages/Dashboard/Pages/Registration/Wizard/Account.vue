@@ -8,9 +8,7 @@
                 <md-field
                     slot="inputs"
                     class="md-form-group"
-                    :class="[
-                        {'md-valid': !errors.has('username') && touched.username},
-                        {'md-error': errors.has('username')}]"
+                    :class="[{ 'md-valid': !errors.has('username') && touched.username }, { 'md-error': errors.has('username') }]"
                 >
                     <md-icon>face</md-icon>
                     <label>User Name</label>
@@ -26,18 +24,12 @@
                     />
                     <span class="md-error">{{ errors.first('username') }}</span>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="errors.has('username')"
-                            class="error"
-                        >
+                        <md-icon v-show="errors.has('username')" class="error">
                             close
                         </md-icon>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('username') && touched.username"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('username') && touched.username" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
@@ -45,9 +37,7 @@
                 <md-field
                     slot="inputs"
                     class="md-form-group"
-                    :class="[
-                        {'md-valid': !errors.has('firstName') && touched.firstName},
-                        {'md-error': errors.has('firstName')}]"
+                    :class="[{ 'md-valid': !errors.has('firstName') && touched.firstName }, { 'md-error': errors.has('firstName') }]"
                 >
                     <md-icon>looks_one</md-icon>
                     <label>First Name</label>
@@ -63,18 +53,12 @@
                     />
                     <span class="md-error">{{ errors.first('firstName') }}</span>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="errors.has('firstName')"
-                            class="error"
-                        >
+                        <md-icon v-show="errors.has('firstName')" class="error">
                             close
                         </md-icon>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('firstName') && touched.firstName"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('firstName') && touched.firstName" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
@@ -82,9 +66,7 @@
                 <md-field
                     slot="inputs"
                     class="md-form-group"
-                    :class="[
-                        {'md-valid': !errors.has('lastName') && touched.lastName},
-                        {'md-error': errors.has('lastName')}]"
+                    :class="[{ 'md-valid': !errors.has('lastName') && touched.lastName }, { 'md-error': errors.has('lastName') }]"
                 >
                     <md-icon>looks_two</md-icon>
                     <label>Last Name</label>
@@ -100,18 +82,12 @@
                     />
                     <span class="md-error">{{ errors.first('lastName') }}</span>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="errors.has('lastName')"
-                            class="error"
-                        >
+                        <md-icon v-show="errors.has('lastName')" class="error">
                             close
                         </md-icon>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('lastName') && touched.lastName"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('lastName') && touched.lastName" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
@@ -119,10 +95,7 @@
             </div>
             <div class="md-layout-item md-size-50 md-small-size-100">
                 <md-field
-                    :class="[
-                        {'md-valid': !errors.has('email') && touched.email},
-                        {'md-form-group': true},
-                        {'md-error': errors.has('email')}]"
+                    :class="[{ 'md-valid': !errors.has('email') && touched.email }, { 'md-form-group': true }, { 'md-error': errors.has('email') }]"
                 >
                     <md-icon>email</md-icon>
                     <label>Email</label>
@@ -137,18 +110,12 @@
                         @keyup.enter="focusOn('password')"
                     />
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="errors.has('email')"
-                            class="error"
-                        >
+                        <md-icon v-show="errors.has('email')" class="error">
                             close
                         </md-icon>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('email') && touched.email"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('email') && touched.email" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
@@ -157,8 +124,7 @@
                 <md-field
                     slot="inputs"
                     class="md-form-group"
-                    :class="[{'md-error': errors.has('password')},
-                             {'md-valid': !errors.has('password') && touched.password}]"
+                    :class="[{ 'md-error': errors.has('password') }, { 'md-valid': !errors.has('password') && touched.password }]"
                 >
                     <md-icon>lock_outline</md-icon>
                     <label>Password</label>
@@ -174,18 +140,12 @@
                     />
                     <span class="md-error">{{ errors.first('password') }}</span>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="errors.has('password')"
-                            class="error"
-                        >
+                        <md-icon v-show="errors.has('password')" class="error">
                             close
                         </md-icon>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('password') && touched.password"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('password') && touched.password" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
@@ -193,8 +153,7 @@
                 <md-field
                     slot="inputs"
                     class="md-form-group"
-                    :class="[{'md-error': errors.has('password')},
-                             {'md-valid': !errors.has('password') && touched.password}]"
+                    :class="[{ 'md-error': errors.has('password') }, { 'md-valid': !errors.has('password') && touched.password }]"
                 >
                     <md-icon>lock_outline</md-icon>
                     <label>Repeate Password</label>
@@ -209,18 +168,12 @@
                     />
                     <span class="md-error">{{ errors.first('rPassword') }}</span>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="errors.has('rPassword')"
-                            class="error"
-                        >
+                        <md-icon v-show="errors.has('rPassword')" class="error">
                             close
                         </md-icon>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('rPassword') && touched.rPassword"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('rPassword') && touched.rPassword" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
@@ -235,13 +188,13 @@ import { SlideYDownTransition } from 'vue2-transitions';
 export default {
     name: 'Account',
     components: {
-        SlideYDownTransition,
+        SlideYDownTransition
     },
     props: {
         avatar: {
             type: String,
-            default: './img/default-avatar.png',
-        },
+            default: './img/default-avatar.png'
+        }
     },
     data() {
         return {
@@ -258,33 +211,33 @@ export default {
                 lastName: false,
                 username: false,
                 password: false,
-                rPassword: false,
+                rPassword: false
             },
             modelValidations: {
                 firstName: {
                     required: true,
-                    min: 2,
+                    min: 2
                 },
                 lastName: {
                     required: true,
-                    min: 2,
+                    min: 2
                 },
                 email: {
                     required: true,
-                    email: true,
+                    email: true
                 },
                 password: {
-                    required: true,
+                    required: true
                 },
                 rPassword: {
                     required: true,
-                    confirmed: 'password',
+                    confirmed: 'password'
                 },
                 username: {
                     required: true,
-                    min: 5,
-                },
-            },
+                    min: 5
+                }
+            }
         };
     },
     watch: {
@@ -305,7 +258,7 @@ export default {
         },
         rPassword() {
             this.touched.rPassword = true;
-        },
+        }
     },
     methods: {
         focusOn(ref) {
@@ -319,13 +272,12 @@ export default {
             return this.errors.first(fieldName);
         },
         validate() {
-            return this.$validator.validateAll().then((res) => {
+            return this.$validator.validateAll().then(res => {
                 this.$emit('on-validated', res);
                 return res;
             });
-        },
-    },
+        }
+    }
 };
 </script>
-<style>
-</style>
+<style></style>

@@ -8,26 +8,26 @@ export default {
     name: 'AnimatedNumber',
     props: {
         value: {
-            default: 0,
+            default: 0
         },
         duration: {
             type: Number,
-            default: 800,
+            default: 800
         },
         toFix: {
             type: Number,
-            default: 0,
-        },
+            default: 0
+        }
     },
     data() {
         return {
-            animatedNumber: 0,
+            animatedNumber: 0
         };
     },
     watch: {
         value(newValue, oldValue) {
             this.initAnimation(newValue, oldValue);
-        },
+        }
     },
     mounted() {
         this.initAnimation(this.value, 0);
@@ -45,16 +45,15 @@ export default {
             new TWEEN.Tween({ tweeningNumber: oldValue })
                 .easing(TWEEN.Easing.Quadratic.Out)
                 .to({ tweeningNumber: newValue }, this.duration)
-                .onUpdate((object) => {
+                .onUpdate(object => {
                     vm.animatedNumber = object.tweeningNumber.toFixed(this.toFix);
                     // vm.animatedNumber = Number(object.tweeningNumber).toFixed(this.toFix);
                 })
                 .start();
 
             animate();
-        },
-    },
+        }
+    }
 };
 </script>
-<style>
-</style>
+<style></style>

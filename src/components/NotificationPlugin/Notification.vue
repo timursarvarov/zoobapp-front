@@ -8,24 +8,11 @@
         data-notify-position="top-center"
         @click="close()"
     >
-        <button
-            type="button"
-            aria-hidden="true"
-            class="close"
-            data-notify="dismiss"
-            @click="close"
-        >
+        <button type="button" aria-hidden="true" class="close" data-notify="dismiss" @click="close">
             ×
         </button>
-        <i
-            v-if="icon"
-            data-notify="icon"
-            class="material-icons"
-        >{{ icon }}</i>
-        <span
-            data-notify="message"
-            v-html="message"
-        />
+        <i v-if="icon" data-notify="icon" class="material-icons">{{ icon }}</i>
+        <span data-notify="message" v-html="message" />
     </div>
 </template>
 <script>
@@ -36,28 +23,28 @@ export default {
         icon: String,
         verticalAlign: {
             type: String,
-            default: 'top',
+            default: 'top'
         },
         horizontalAlign: {
             type: String,
-            default: 'center',
+            default: 'center'
         },
         type: {
             type: String,
-            default: 'info',
+            default: 'info'
         },
         timeout: {
             type: Number,
-            default: 3500,
+            default: 3500
         },
         timestamp: {
             type: Date,
-            default: () => new Date(),
-        },
+            default: () => new Date()
+        }
     },
     data() {
         return {
-            elmHeight: 0,
+            elmHeight: 0
         };
     },
     computed: {
@@ -70,11 +57,10 @@ export default {
         customPosition() {
             const initialMargin = 20;
             const alertHeight = this.elmHeight + 10;
-            const sameAlertsCount = this.$notifications.state.filter(alert => (
-                alert.horizontalAlign === this.horizontalAlign
-                    && alert.verticalAlign === this.verticalAlign
-                    && alert.timestamp <= this.timestamp
-            )).length;
+            const sameAlertsCount = this.$notifications.state.filter(
+                alert =>
+                    alert.horizontalAlign === this.horizontalAlign && alert.verticalAlign === this.verticalAlign && alert.timestamp <= this.timestamp
+            ).length;
             const pixels = (sameAlertsCount - 1) * alertHeight + initialMargin;
             const styles = {};
             if (this.verticalAlign === 'top') {
@@ -83,7 +69,7 @@ export default {
                 styles.bottom = `${pixels}px`;
             }
             return styles;
-        },
+        }
     },
     mounted() {
         this.elmHeight = this.$el.clientHeight;
@@ -94,53 +80,53 @@ export default {
     methods: {
         close() {
             this.$emit('on-close', this.timestamp);
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>
 @media screen and (max-width: 991px) {
-  .alert {
-    width: auto !important;
-    margin: 0 10px;
+    .alert {
+        width: auto !important;
+        margin: 0 10px;
 
-    &.left {
-      left: 0 !important;
+        &.left {
+            left: 0 !important;
+        }
+        &.right {
+            right: 0 !important;
+        }
+        &.center {
+            margin: 0 10px !important;
+        }
     }
-    &.right {
-      right: 0 !important;
-    }
-    &.center {
-      margin: 0 10px !important;
-    }
-  }
 }
 
 .alert {
-  z-index: 100;
-  cursor: pointer;
-  position: fixed;
-  width: 41%;
+    z-index: 100;
+    cursor: pointer;
+    position: fixed;
+    width: 41%;
 
-  &.center {
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    margin: 0 auto;
-  }
+    &.center {
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        margin: 0 auto;
+    }
 
-  &.left,
-  &.right,
-  &.center {
-    margin-top: 10px;
-  }
+    &.left,
+    &.right,
+    &.center {
+        margin-top: 10px;
+    }
 
-  &.left {
-    left: 20px;
-  }
-  &.right {
-    right: 20px;
-  }
+    &.left {
+        left: 20px;
+    }
+    &.right {
+        right: 20px;
+    }
 }
 </style>

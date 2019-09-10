@@ -38,7 +38,7 @@ const objProp = {
                 return undefined;
             }
             return undefined;
-        },
-    },
+        }
+    }
 };
 export default objProp;

@@ -8,19 +8,12 @@
                 <div class="picture-container">
                     <div class="picture">
                         <div v-if="!image">
-                            <img
-                                :src="avatar"
-                                class="picture-src"
-                                title=""
-                            >
+                            <img :src="avatar" class="picture-src" title="" />
                         </div>
                         <div v-else>
-                            <img :src="image">
+                            <img :src="image" />
                         </div>
-                        <input
-                            type="file"
-                            @change="onFileChange"
-                        >
+                        <input type="file" @change="onFileChange" />
                     </div>
                     <h6 class="description">
                         Choose Picture
@@ -30,9 +23,10 @@
             <div class="md-layout-item md-size-60 mt-4 md-small-size-100">
                 <md-field
                     :class="[
-                        {'md-valid': !errors.has('firstName') && touched.firstName},
-                        {'md-form-group': true},
-                        {'md-error': errors.has('firstName')}]"
+                        { 'md-valid': !errors.has('firstName') && touched.firstName },
+                        { 'md-form-group': true },
+                        { 'md-error': errors.has('firstName') }
+                    ]"
                 >
                     <md-icon>face</md-icon>
                     <label>First Name</label>
@@ -45,18 +39,12 @@
                         required
                     />
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="errors.has('firstName')"
-                            class="error"
-                        >
+                        <md-icon v-show="errors.has('firstName')" class="error">
                             close
                         </md-icon>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('firstName') && touched.firstName"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('firstName') && touched.firstName" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
@@ -64,9 +52,10 @@
 
                 <md-field
                     :class="[
-                        {'md-valid': !errors.has('lastName') && touched.lastName},
-                        {'md-form-group': true},
-                        {'md-error': errors.has('lastName')}]"
+                        { 'md-valid': !errors.has('lastName') && touched.lastName },
+                        { 'md-form-group': true },
+                        { 'md-error': errors.has('lastName') }
+                    ]"
                 >
                     <md-icon>record_voice_over</md-icon>
                     <label>Last Name</label>
@@ -79,18 +68,12 @@
                         required
                     />
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="errors.has('lastName')"
-                            class="error"
-                        >
+                        <md-icon v-show="errors.has('lastName')" class="error">
                             close
                         </md-icon>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('lastName') && touched.lastName"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('lastName') && touched.lastName" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
@@ -99,34 +82,18 @@
 
             <div class="md-layout-item md-size-95 ml-auto mt-4 md-small-size-100">
                 <md-field
-                    :class="[
-                        {'md-valid': !errors.has('email') && touched.email},
-                        {'md-form-group': true},
-                        {'md-error': errors.has('email')}]"
+                    :class="[{ 'md-valid': !errors.has('email') && touched.email }, { 'md-form-group': true }, { 'md-error': errors.has('email') }]"
                 >
                     <md-icon>email</md-icon>
                     <label>Email</label>
-                    <md-input
-                        v-model="email"
-                        v-validate="modelValidations.email"
-                        data-vv-name="email"
-                        type="text"
-                        name="email"
-                        required
-                    />
+                    <md-input v-model="email" v-validate="modelValidations.email" data-vv-name="email" type="text" name="email" required />
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="errors.has('email')"
-                            class="error"
-                        >
+                        <md-icon v-show="errors.has('email')" class="error">
                             close
                         </md-icon>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('email') && touched.email"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('email') && touched.email" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
@@ -141,13 +108,13 @@ import { SlideYDownTransition } from 'vue2-transitions';
 export default {
     name: 'FirstStep',
     components: {
-        SlideYDownTransition,
+        SlideYDownTransition
     },
     props: {
         avatar: {
             type: String,
-            default: './img/default-avatar.png',
-        },
+            default: './img/default-avatar.png'
+        }
     },
     data() {
         return {
@@ -158,22 +125,22 @@ export default {
             email: '',
             touched: {
                 firstName: false,
-                lastName: false,
+                lastName: false
             },
             modelValidations: {
                 firstName: {
                     required: true,
-                    min: 5,
+                    min: 5
                 },
                 lastName: {
                     required: true,
-                    min: 5,
+                    min: 5
                 },
                 email: {
                     required: true,
-                    email: true,
-                },
-            },
+                    email: true
+                }
+            }
         };
     },
     watch: {
@@ -185,7 +152,7 @@ export default {
         },
         email() {
             this.touched.email = true;
-        },
+        }
     },
     methods: {
         handlePreview(file) {
@@ -195,7 +162,7 @@ export default {
             return this.errors.first(fieldName);
         },
         validate() {
-            return this.$validator.validateAll().then((res) => {
+            return this.$validator.validateAll().then(res => {
                 this.$emit('on-validated', res);
                 return res;
             });
@@ -209,13 +176,12 @@ export default {
             const reader = new FileReader();
             const vm = this;
 
-            reader.onload = (e) => {
+            reader.onload = e => {
                 vm.image = e.target.result;
             };
             reader.readAsDataURL(file);
-        },
-    },
+        }
+    }
 };
 </script>
-<style>
-</style>
+<style></style>

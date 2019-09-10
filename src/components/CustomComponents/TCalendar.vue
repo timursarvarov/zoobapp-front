@@ -38,79 +38,73 @@ const d = today.getDate();
 export default {
     name: 'TCallendar',
     components: {
-        FullCalendar,
+        FullCalendar
     },
     data() {
         return {
             calendarApi: null,
-            calendarPlugins: [
-                dayGridPlugin,
-                timeGrid,
-                interaction,
-                timeline,
-                list,
-            ],
+            calendarPlugins: [dayGridPlugin, timeGrid, interaction, timeline, list],
             events: [
                 {
                     title: 'All Day Event',
                     start: new Date(y, m, 1),
-                    className: 'event-default',
+                    className: 'event-default'
                 },
                 {
                     id: 999,
                     title: 'Repeating Event',
                     start: new Date(y, m, d - 4, 6, 0),
                     allDay: false,
-                    className: 'event-rose',
+                    className: 'event-rose'
                 },
                 {
                     id: 999,
                     title: 'Repeating Event',
                     start: new Date(y, m, d + 3, 6, 0),
                     allDay: false,
-                    className: 'event-rose',
+                    className: 'event-rose'
                 },
                 {
                     title: 'Meeting',
                     start: new Date(y, m, d - 1, 10, 30),
                     allDay: false,
-                    className: 'event-green',
+                    className: 'event-green'
                 },
                 {
                     title: 'Lunch',
                     start: new Date(y, m, d + 7, 12, 0),
                     end: new Date(y, m, d + 7, 14, 0),
                     allDay: false,
-                    className: 'event-red',
+                    className: 'event-red'
                 },
                 {
                     title: 'Md-pro Launch',
                     start: new Date(y, m, d - 2, 12, 0),
                     allDay: true,
-                    className: 'event-azure',
+                    className: 'event-azure'
                 },
                 {
                     title: 'Birthday Party',
                     start: new Date(y, m, d + 1, 19, 0),
                     end: new Date(y, m, d + 1, 22, 30),
                     allDay: false,
-                    className: 'event-azure',
+                    className: 'event-azure'
                 },
                 {
                     title: 'Click for Creative Tim',
                     start: new Date(y, m, 21),
                     end: new Date(y, m, 22),
                     url: 'http://www.creative-tim.com/',
-                    className: 'event-orange',
+                    className: 'event-orange'
                 },
                 {
                     title: 'Click for Google',
                     start: new Date(y, m, 21),
                     end: new Date(y, m, 22),
                     url: 'http://www.creative-tim.com/',
-                    className: 'event-orange',
-                },
-            ],
+                    className: 'event-orange'
+                }
+            ]
         };
     },
     methods: {
@@ -120,7 +114,7 @@ export default {
                     // add new event data
                     title: 'New Event',
                     start: arg.date,
-                    allDay: arg.allDay,
+                    allDay: arg.allDay
                 });
             }
         },
@@ -130,7 +124,7 @@ export default {
                     // add new event data
                     title: 'New Event',
                     start: arg.date,
-                    allDay: arg.allDay,
+                    allDay: arg.allDay
                 });
             }
         },
@@ -138,13 +132,15 @@ export default {
             this.calendarApi = this.$refs.fullCalendar.getApi();
             // this.calendarApi.setOption('locale', this.lang);
             // this.calendarApi.setOption('timeZoneParam', 'UTC');
-        },
+        }
     },
     computed: {
         ...mapGetters({
-            user: 'getProfile',
+            user: 'getProfile'
         }),
-        getNamedTimeZone() {},
+        getNamedTimeZone() {
+            return null;
+        },
         lang() {
             if (this.user.lang === 1) {
                 return 'en';
@@ -159,22 +155,20 @@ export default {
         },
         timezones() {
             return TIMEZONES;
-        },
+        }
     },
     mounted() {
         this.initiateCalendar();
-    },
+    }
 };
 </script>
-<style lang="scss" >
-@import "~@fullcalendar/core/main.css";
-@import "~@fullcalendar/daygrid/main.css";
-@import "~@fullcalendar/timegrid/main.css";
-@import "~@fullcalendar/timeline/main.css";
-@import "~@fullcalendar/list/main.css";
+<style lang="scss">
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/timegrid/main.css';
+@import '~@fullcalendar/timeline/main.css';
+@import '~@fullcalendar/list/main.css';
 .t-f-calendar {
-
-
     .fc-button-primary:not(:disabled):active:focus,
     .fc-button-primary:not(:disabled).fc-button-active:focus {
         box-shadow: none;
@@ -188,6 +182,5 @@ export default {
             padding: 0 !important;
         }
     }
-
 }
 </style>

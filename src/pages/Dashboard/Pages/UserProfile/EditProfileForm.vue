@@ -1,16 +1,11 @@
 <template>
     <form>
         <md-card>
-            <md-card-header
-                class="md-card-header-icon"
-                :class="getClass(headerColor)"
-            >
+            <md-card-header class="md-card-header-icon" :class="getClass(headerColor)">
                 <div class="card-icon">
                     <md-icon>perm_identity</md-icon>
                 </div>
-                <h4 class="title">
-                    Edit Profile - <small>Complete your profile</small>
-                </h4>
+                <h4 class="title">Edit Profile - <small>Complete your profile</small></h4>
             </md-card-header>
 
             <md-card-content>
@@ -18,82 +13,55 @@
                     <div class="md-layout-item md-small-size-100 md-size-33">
                         <md-field>
                             <label>Company (disabled)</label>
-                            <md-input
-                                v-model="disabled"
-                                disabled
-                            />
+                            <md-input v-model="disabled" disabled />
                         </md-field>
                     </div>
                     <div class="md-layout-item md-small-size-100 md-size-33">
                         <md-field>
                             <label>User Name</label>
-                            <md-input
-                                v-model="username"
-                                type="text"
-                            />
+                            <md-input v-model="username" type="text" />
                         </md-field>
                     </div>
                     <div class="md-layout-item md-small-size-100 md-size-33">
                         <md-field>
                             <label>Email Address</label>
-                            <md-input
-                                v-model="emailadress"
-                                type="email"
-                            />
+                            <md-input v-model="emailadress" type="email" />
                         </md-field>
                     </div>
                     <div class="md-layout-item md-small-size-100 md-size-50">
                         <md-field>
                             <label>First Name</label>
-                            <md-input
-                                v-model="firstname"
-                                type="text"
-                            />
+                            <md-input v-model="firstname" type="text" />
                         </md-field>
                     </div>
                     <div class="md-layout-item md-small-size-100 md-size-50">
                         <md-field>
                             <label>Last Name</label>
-                            <md-input
-                                v-model="lastname"
-                                type="text"
-                            />
+                            <md-input v-model="lastname" type="text" />
                         </md-field>
                     </div>
                     <div class="md-layout-item md-small-size-100 md-size-100">
                         <md-field>
                             <label>Adress</label>
-                            <md-input
-                                v-model="address"
-                                type="text"
-                            />
+                            <md-input v-model="address" type="text" />
                         </md-field>
                     </div>
                     <div class="md-layout-item md-small-size-100 md-size-33">
                         <md-field>
                             <label>City</label>
-                            <md-input
-                                v-model="city"
-                                type="text"
-                            />
+                            <md-input v-model="city" type="text" />
                         </md-field>
                     </div>
                     <div class="md-layout-item md-small-size-100 md-size-33">
                         <md-field>
                             <label>Country</label>
-                            <md-input
-                                v-model="country"
-                                type="text"
-                            />
+                            <md-input v-model="country" type="text" />
                         </md-field>
                     </div>
                     <div class="md-layout-item md-small-size-100 md-size-33">
                         <md-field>
                             <label>Postal Code</label>
-                            <md-input
-                                v-model="code"
-                                type="number"
-                            />
+                            <md-input v-model="code" type="number" />
                         </md-field>
                     </div>
                     <div class="md-layout-item md-size-100">
@@ -103,9 +71,7 @@
                         </md-field>
                     </div>
                     <div class="md-layout-item md-size-100 text-right">
-                        <md-button
-                            class="md-raised md-success mt-4"
-                        >
+                        <md-button class="md-raised md-success mt-4">
                             Update Profile
                         </md-button>
                     </div>
@@ -120,8 +86,8 @@ export default {
     props: {
         headerColor: {
             type: String,
-            default: '',
-        },
+            default: ''
+        }
     },
     data() {
         return {
@@ -134,15 +100,14 @@ export default {
             city: null,
             country: null,
             code: null,
-            aboutme:
-                    "Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.",
+            aboutme: "Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
         };
     },
     methods: {
         getClass(headerColor) {
             return `md-card-header-${headerColor}`;
-        },
-    },
+        }
+    }
 };
 </script>
 <style></style>

@@ -1,8 +1,5 @@
 <template>
-    <div
-        ref="parent"
-        class="tooth-locations-wrapper wizard-tab-content"
-    >
+    <div ref="parent" class="tooth-locations-wrapper wizard-tab-content">
         <jaw-add-locations
             v-model="newProcedureParamsLocal"
             :jaw="jaw"
@@ -19,41 +16,27 @@
                 <slide-y-down-transition>
                     <span
                         v-show="errors.has('locations')"
-                        :class="[{'error': errors.has('locations')},
-                                 {'md-valid': !errors.has('locations') && touched.locations}]"
-                    >{{ errors.first('locations') }}</span>
+                        :class="[{ error: errors.has('locations') }, { 'md-valid': !errors.has('locations') && touched.locations }]"
+                        >{{ errors.first('locations') }}</span
+                    >
                 </slide-y-down-transition>
             </div>
         </jaw-add-locations>
         <div v-show="false">
-            <md-field
-                slot="inputs"
-                class="md-form-group"
-            >
+            <md-field slot="inputs" class="md-form-group">
                 <md-icon>lock_outline</md-icon>
                 <label>code</label>
-                <md-input
-                    v-model="locations"
-                    v-validate="modelValidations.locations"
-                    data-vv-name="locations"
-                    type="locations"
-                />
+                <md-input v-model="locations" v-validate="modelValidations.locations" data-vv-name="locations" type="locations" />
                 <span class="md-error">{{ errors.first('locations') }}</span>
                 <slide-y-down-transition>
-                    <md-button
-                        v-show="errors.has('locations')"
-                        class="md-just-icon md-round md-input-action clear-button md-simple"
-                    >
+                    <md-button v-show="errors.has('locations')" class="md-just-icon md-round md-input-action clear-button md-simple">
                         <md-icon class="error">
                             close
                         </md-icon>
                     </md-button>
                 </slide-y-down-transition>
                 <slide-y-down-transition>
-                    <md-icon
-                        v-show="!errors.has('locations') && touched.locations"
-                        class="success"
-                    >
+                    <md-icon v-show="!errors.has('locations') && touched.locations" class="success">
                         done
                     </md-icon>
                 </slide-y-down-transition>
@@ -71,12 +54,12 @@ export default {
     name: 'TLocationsWizardItems',
     components: {
         SlideYDownTransition,
-        JawAddLocations,
+        JawAddLocations
     },
     mixins: [tObjProp],
     model: {
         prop: 'newItemParams',
-        event: 'updateItemParams',
+        event: 'updateItemParams'
     },
     props: {
         error: {
@@ -84,70 +67,70 @@ export default {
             default: () => ({
                 message: 'Choose tooth or procedure location',
                 type: 'locations',
-                show: 'false',
-            }),
+                show: 'false'
+            })
         },
         jaw: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         defaultLocations: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         // локации оригинального диагноза для проверки валидации
         originalLocations: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         selectedItem: {
             type: Object,
             default: () => ({
                 title: '',
-                code: '',
-            }),
+                code: ''
+            })
         },
         selectedTeeth: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         newItemParams: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         currentType: {
             type: String,
-            default: () => 'diagnosis',
+            default: () => 'diagnosis'
         },
         teethSchema: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         originalItem: {
             type: Object,
-            default: () => {},
+            default: () => {}
         },
         teethSystem: {
             type: Number,
-            default: () => 1,
+            default: () => 1
             // 1 = FDI World Dental Federation notation
             // 2 = Universal numbering system
             // 3 = Palmer notation method
-        },
+        }
     },
     data() {
         return {
             procedureLocal: {},
             modelValidations: {
                 locations: {
-                    required: true,
-                },
+                    required: true
+                }
             },
             dialogWidth: '',
             locations: '',
             touched: {
-                locations: false,
-            },
+                locations: false
+            }
         };
     },
     computed: {
@@ -160,13 +143,13 @@ export default {
                 this.procedureLocal = {};
                 this.procedureLocal = newValue;
                 this.locations = this.isValidLoctions() ? 1 : '';
-            },
-        },
+            }
+        }
     },
     watch: {
         locations() {
             this.touched.locations = true;
-        },
+        }
     },
     created() {
         this.locations = this.isValidLoctions() ? 1 : '';
@@ -185,13 +168,13 @@ export default {
                 this.dialogWidth = this.$refs.parent.clientWidth;
                 const size = {
                     width: this.$refs.parent.clientWidth,
-                    height: this.$refs.parent.clientHeight,
+                    height: this.$refs.parent.clientHeight
                 };
                 this.$emit('mounted-size', size);
             }
         },
         validate() {
-            return this.$validator.validateAll().then((res) => {
+            return this.$validator.validateAll().then(res => {
                 this.$emit('on-validated', res);
                 this.matchWidth();
                 return res;
@@ -205,7 +188,7 @@ export default {
                 return true;
             }
             return !this.isEmpty(this.procedureLocal.teeth);
-        },
-    },
+        }
+    }
 };
 </script>

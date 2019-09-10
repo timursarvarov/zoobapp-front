@@ -1,47 +1,28 @@
 /* eslint-disable no-unused-vars */
 <template>
     <div class="md-layout login-wrapper text-center">
-        <div
-            class="md-layout-item md-size-33 md-medium-size-50 md-small-size-70 md-xsmall-size-100"
-        >
+        <div class="md-layout-item md-size-33 md-medium-size-50 md-small-size-70 md-xsmall-size-100">
             <!-- <form> -->
             <login-card header-color="green">
-                <h4
-                    slot="title"
-                    class="title"
-                >
+                <h4 slot="title" class="title">
                     Log in
                 </h4>
-                <md-button
-                    slot="buttons"
-                    class="md-just-icon md-simple md-white"
-                >
+                <md-button slot="buttons" class="md-just-icon md-simple md-white">
                     <i class="fab fa-facebook-square" />
                 </md-button>
-                <md-button
-                    slot="buttons"
-                    class="md-just-icon md-simple md-white"
-                >
+                <md-button slot="buttons" class="md-just-icon md-simple md-white">
                     <i class="fab fa-twitter" />
                 </md-button>
-                <md-button
-                    slot="buttons"
-                    class="md-just-icon md-simple md-white"
-                >
+                <md-button slot="buttons" class="md-just-icon md-simple md-white">
                     <i class="fab fa-google-plus-g" />
                 </md-button>
-                <p
-                    slot="description"
-                    class="description"
-                >
+                <p slot="description" class="description">
                     Or Be Classical
                 </p>
                 <div slot="inputs">
                     <md-field
                         class="md-form-group with-subline"
-                        :class="[
-                            {'md-valid': !errors.has('username') && touched.username},
-                            {'md-error': errors.has('username')}]"
+                        :class="[{ 'md-valid': !errors.has('username') && touched.username }, { 'md-error': errors.has('username') }]"
                     >
                         <md-icon>face</md-icon>
                         <label>User Name</label>
@@ -60,7 +41,7 @@
                             <md-button
                                 v-show="errors.has('username')"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="username='',focusOn('login')"
+                                @click="(username = ''), focusOn('login')"
                             >
                                 <md-icon class="error">
                                     close
@@ -83,8 +64,7 @@
                     <md-field
                         slot="inputs"
                         class="md-form-group with-subline"
-                        :class="[{'md-error': errors.has('password')},
-                                 {'md-valid': !errors.has('password') && touched.password}]"
+                        :class="[{ 'md-error': errors.has('password') }, { 'md-valid': !errors.has('password') && touched.password }]"
                     >
                         <md-icon>lock_outline</md-icon>
                         <label>Password</label>
@@ -100,17 +80,10 @@
                         />
                     </md-field>
                     <div class="md-layout">
-                        <small
-                            class="md-simple ml-auto"
-                            @click="showForgot = !showForgot"
-                        >Forgot password?</small>
+                        <small class="md-simple ml-auto" @click="showForgot = !showForgot">Forgot password?</small>
                     </div>
                 </div>
-                <md-button
-                    slot="footer"
-                    class="md-simple md-success md-lg"
-                    @click="login"
-                >
+                <md-button slot="footer" class="md-simple md-success md-lg" @click="login">
                     Lets Go
                 </md-button>
             </login-card>
@@ -123,9 +96,7 @@
 import { SlideYDownTransition } from 'vue2-transitions';
 import { setTimeout } from 'timers';
 import components from '@/components';
-import {
-    AUTH_REQUEST, NOTIFY, CLINIC_AUTH_REQUEST, SERVER_ERRORS,
-} from '@/constants';
+import { AUTH_REQUEST, NOTIFY, CLINIC_AUTH_REQUEST, SERVER_ERRORS } from '@/constants';
 import ForgotPassword from './ForgotPassword.vue';
 
 export default {
@@ -133,7 +104,7 @@ export default {
     components: {
         ...components,
         SlideYDownTransition,
-        ForgotPassword,
+        ForgotPassword
     },
     data() {
         return {
@@ -142,18 +113,18 @@ export default {
             password: null,
             touched: {
                 username: false,
-                password: false,
+                password: false
             },
             modelValidations: {
                 username: {
                     required: true,
-                    min: 5,
+                    min: 5
                 },
                 password: {
                     required: true,
-                    min: 5,
-                },
-            },
+                    min: 5
+                }
+            }
         };
     },
     watch: {
@@ -162,7 +133,7 @@ export default {
         },
         password() {
             this.touched.password = true;
-        },
+        }
     },
     mounted() {
         this.$nextTick(() => {
@@ -182,7 +153,7 @@ export default {
             this.$refs[ref].$el.focus();
         },
         validate() {
-            this.$validator.validateAll().then((isValid) => {
+            this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.registerForm, isValid);
             });
             this.touched.username = true;
@@ -195,26 +166,26 @@ export default {
             if (this.errors.has('username') || !this.username) {
                 this.showErrorsValidate('username');
                 this.$store.dispatch(NOTIFY, {
-                    settings: { message: 'Введите валидный логин' },
+                    settings: { message: 'Введите валидный логин' }
                 });
                 return;
             }
             if (this.errors.has('password') || !this.password) {
                 this.showErrorsValidate('password');
                 this.$store.dispatch(NOTIFY, {
-                    settings: { message: 'Введите валидный пароль' },
+                    settings: { message: 'Введите валидный пароль' }
                 });
                 return;
             }
             this.$store.dispatch(AUTH_REQUEST, { username, password }).then(
-                (result) => {
+                result => {
                     if (result.organizations.length === 1) {
                         this.setClinic(result);
                     } else {
                         this.$router.push('choose_clinic');
                     }
                 },
-                (error) => {
+                error => {
                     if (error.code === SERVER_ERRORS.codes.LoginErrorCode) {
                         if (error.message === SERVER_ERRORS.messages.InvalidLoginErrorMessage) {
                             this.showErrorsValidate('username');
@@ -223,51 +194,46 @@ export default {
                             this.showErrorsValidate('password');
                         }
                     }
-                },
+                }
             );
         },
         setClinic(data) {
             this.$store
                 .dispatch(CLINIC_AUTH_REQUEST, {
                     clinicId: data.organizations[0].ID,
-                    accessToken: data.accessToken,
+                    accessToken: data.accessToken
                 })
-                .then(
-                    (result) => {
-                        if (result.accessToken) {
-                            this.$router.push({ name: 'Dashboard', params: { lang: this.$i18n.locale } });
-                            this.$store.dispatch(NOTIFY, {
-                                settings: {
-                                    type: 'success',
-                                    message: `Loging in ${data.organizations[0].name}`,
-                                },
-                            });
-                        }
-                    },
-                );
+                .then(result => {
+                    if (result.accessToken) {
+                        this.$router.push({ name: 'Dashboard', params: { lang: this.$i18n.locale } });
+                        this.$store.dispatch(NOTIFY, {
+                            settings: {
+                                type: 'success',
+                                message: `Loging in ${data.organizations[0].name}`
+                            }
+                        });
+                    }
+                });
         },
         showErrorsValidate(errField = 'username') {
             const field = this.$validator.fields.find({
                 name: errField,
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             if (!field) return;
             this.$validator.errors.add({
                 id: errField,
                 field: errField,
-                msg:
-                        errField === 'username'
-                            ? 'Invalid login'
-                            : 'Wrong password',
-                scope: this.$options.scope,
+                msg: errField === 'username' ? 'Invalid login' : 'Wrong password',
+                scope: this.$options.scope
             });
             field.setFlags({
                 invalid: true,
                 valid: false,
-                validated: true,
+                validated: true
             });
-        },
-    },
+        }
+    }
 };
 </script>
 

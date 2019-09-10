@@ -12,10 +12,7 @@
                 </md-card-header>
                 <md-card-content>
                     <md-table v-model="tableData">
-                        <md-table-row
-                            slot="md-table-row"
-                            slot-scope="{ item }"
-                        >
+                        <md-table-row slot="md-table-row" slot-scope="{ item }">
                             <md-table-cell md-label="#">
                                 {{ item.id }}
                             </md-table-cell>
@@ -31,26 +28,14 @@
                             <md-table-cell md-label="Salary">
                                 {{ item.salary }}
                             </md-table-cell>
-                            <md-table-cell
-                                md-label="Actions"
-                                :class="getAlignClasses(item)"
-                            >
-                                <md-button
-                                    class="md-just-icon"
-                                    :class="getClass(item.icon1, item.id)"
-                                >
+                            <md-table-cell md-label="Actions" :class="getAlignClasses(item)">
+                                <md-button class="md-just-icon" :class="getClass(item.icon1, item.id)">
                                     <md-icon>{{ item.icon1 }}</md-icon>
                                 </md-button>
-                                <md-button
-                                    class="md-just-icon"
-                                    :class="getClass(item.icon2, item.id)"
-                                >
+                                <md-button class="md-just-icon" :class="getClass(item.icon2, item.id)">
                                     <md-icon>{{ item.icon2 }}</md-icon>
                                 </md-button>
-                                <md-button
-                                    class="md-just-icon"
-                                    :class="getClass(item.icon3, item.id)"
-                                >
+                                <md-button class="md-just-icon" :class="getClass(item.icon3, item.id)">
                                     <md-icon>{{ item.icon3 }}</md-icon>
                                 </md-button>
                             </md-table-cell>
@@ -70,15 +55,8 @@
                     </h4>
                 </md-card-header>
                 <md-card-content>
-                    <md-table
-                        v-model="tableDataStriped"
-                        class="table-striped"
-                    >
-                        <md-table-row
-                            slot="md-table-row"
-                            slot-scope="{ item }"
-                            md-selectable="multiple"
-                        >
+                    <md-table v-model="tableDataStriped" class="table-striped">
+                        <md-table-row slot="md-table-row" slot-scope="{ item }" md-selectable="multiple">
                             <md-table-cell md-label="#">
                                 {{ item.id }}
                             </md-table-cell>
@@ -94,10 +72,7 @@
                             <md-table-cell md-label="Price">
                                 {{ item.price }}
                             </md-table-cell>
-                            <md-table-cell
-                                md-label="Amount"
-                                :class="getAlignClasses(item)"
-                            >
+                            <md-table-cell md-label="Amount" :class="getAlignClasses(item)">
                                 {{ item.amount }}
                             </md-table-cell>
                         </md-table-row>
@@ -127,28 +102,16 @@
                     </h4>
                 </md-card-header>
                 <md-card-content>
-                    <md-table
-                        v-model="shoppingCartTable"
-                        class="table-shopping"
-                    >
-                        <md-table-row
-                            slot="md-table-row"
-                            slot-scope="{ item }"
-                        >
+                    <md-table v-model="shoppingCartTable" class="table-shopping">
+                        <md-table-row slot="md-table-row" slot-scope="{ item }">
                             <md-table-cell md-label="">
                                 <div class="img-container">
-                                    <img
-                                        :src="item.image"
-                                        alt="products"
-                                    >
+                                    <img :src="item.image" alt="products" />
                                 </div>
                             </md-table-cell>
-                            <md-table-cell
-                                md-label="Product"
-                                class="td-name"
-                            >
+                            <md-table-cell md-label="Product" class="td-name">
                                 <a href="#jacket">{{ item.product }}</a>
-                                <br>
+                                <br />
                                 <small>{{ item.category }}</small>
                             </md-table-cell>
                             <md-table-cell md-label="Color">
@@ -157,37 +120,22 @@
                             <md-table-cell md-label="Size">
                                 {{ item.size }}
                             </md-table-cell>
-                            <md-table-cell
-                                md-label="Price"
-                                class="td-number"
-                            >
+                            <md-table-cell md-label="Price" class="td-number">
                                 <small>€</small>
                                 {{ item.price }}
                             </md-table-cell>
-                            <md-table-cell
-                                md-label="Qty"
-                                class="td-number"
-                            >
+                            <md-table-cell md-label="Qty" class="td-number">
                                 {{ item.qty }}
                                 <div class="md-group">
-                                    <md-button
-                                        class="md-round md-info md-just-icon"
-                                        @click.native="increaseQuantity(item)"
-                                    >
+                                    <md-button class="md-round md-info md-just-icon" @click.native="increaseQuantity(item)">
                                         <md-icon>add</md-icon>
                                     </md-button>
-                                    <md-button
-                                        class="md-round md-info md-just-icon"
-                                        @click.native="decreaseQuantity(item)"
-                                    >
+                                    <md-button class="md-round md-info md-just-icon" @click.native="decreaseQuantity(item)">
                                         <md-icon>remove</md-icon>
                                     </md-button>
                                 </div>
                             </md-table-cell>
-                            <md-table-cell
-                                md-label="Amount"
-                                class="td-number"
-                            >
+                            <md-table-cell md-label="Amount" class="td-number">
                                 <small>€</small>
                                 {{ item.amount }}
                             </md-table-cell>
@@ -222,6 +170,7 @@
 </template>
 <script>
 export default {
+    /* eslint-disable indent */ /* eslint-disable prettier/prettier */
     name: 'ExtendedTables',
     data() {
         return {
@@ -234,7 +183,7 @@ export default {
                     city: 'Oud-Turnhout',
                     icon1: 'person',
                     icon2: 'edit',
-                    icon3: 'close',
+                    icon3: 'close'
                 },
                 {
                     id: 2,
@@ -244,7 +193,7 @@ export default {
                     city: 'Sinaai-Waas',
                     icon1: 'person',
                     icon2: 'edit',
-                    icon3: 'close',
+                    icon3: 'close'
                 },
                 {
                     id: 3,
@@ -254,7 +203,7 @@ export default {
                     city: 'Baileux',
                     icon1: 'person',
                     icon2: 'edit',
-                    icon3: 'close',
+                    icon3: 'close'
                 },
                 {
                     id: 4,
@@ -264,7 +213,7 @@ export default {
                     city: 'Overland Park',
                     icon1: 'person',
                     icon2: 'edit',
-                    icon3: 'close',
+                    icon3: 'close'
                 },
                 {
                     id: 5,
@@ -274,8 +223,8 @@ export default {
                     city: 'Feldkirchen in Kärnten',
                     icon1: 'person',
                     icon2: 'edit',
-                    icon3: 'close',
-                },
+                    icon3: 'close'
+                }
             ],
             tableDataStriped: [
                 {
@@ -284,7 +233,7 @@ export default {
                     type: 'Office',
                     qty: '25',
                     price: '€ 49',
-                    amount: '€ 1,225',
+                    amount: '€ 1,225'
                 },
                 {
                     id: 2,
@@ -292,7 +241,7 @@ export default {
                     type: 'Office',
                     qty: '30',
                     price: '€ 10',
-                    amount: '€ 300',
+                    amount: '€ 300'
                 },
                 {
                     id: 3,
@@ -300,7 +249,7 @@ export default {
                     type: 'Office',
                     qty: '50',
                     price: '€ 10.99',
-                    amount: '€ 109',
+                    amount: '€ 109'
                 },
                 {
                     id: 4,
@@ -308,7 +257,7 @@ export default {
                     type: 'Meeting',
                     qty: '10',
                     price: '€ 499.00',
-                    amount: '€ 4,990',
+                    amount: '€ 4,990'
                 },
                 {
                     id: 5,
@@ -316,8 +265,8 @@ export default {
                     type: 'Communication',
                     qty: '10',
                     price: '€ 599.00',
-                    amount: '€ 5,990',
-                },
+                    amount: '€ 5,990'
+                }
             ],
             shoppingCartTable: [
                 {
@@ -328,7 +277,7 @@ export default {
                     size: 'M',
                     price: 549,
                     qty: 1,
-                    amount: 549,
+                    amount: 549
                 },
                 {
                     image: './img/product2.jpg',
@@ -338,7 +287,7 @@ export default {
                     size: 'M',
                     price: 499,
                     qty: 2,
-                    amount: 998,
+                    amount: 998
                 },
                 {
                     image: './img/product3.jpg',
@@ -348,59 +297,56 @@ export default {
                     size: 'M',
                     price: 799,
                     qty: 1,
-                    amount: 799,
-                },
-            ],
+                    amount: 799
+                }
+            ]
         };
     },
     computed: {
         shoppingTotal() {
-            return this.shoppingCartTable.reduce(
-                (accumulator, current) => accumulator + current.amount,
-                0,
-            );
-        },
+            return this.shoppingCartTable.reduce((accumulator, current) => accumulator + current.amount, 0);
+        }
     },
     methods: {
         getClass(item, id) {
             let classes = '';
             switch (item) {
-            case 'person': {
-                classes = 'md-info';
-                break;
-            }
-            case 'edit': {
-                classes = 'md-success';
-                break;
-            }
-            case 'close': {
-                classes = 'md-danger';
-                break;
-            }
-            default:
+                case 'person': {
+                    classes = 'md-info';
+                    break;
+                }
+                case 'edit': {
+                    classes = 'md-success';
+                    break;
+                }
+                case 'close': {
+                    classes = 'md-danger';
+                    break;
+                }
+                default:
                 // do nothing
             }
             switch (id) {
-            case 1:
-            case 5: {
-                break;
-            }
-            case 2:
-            case 4: {
-                classes = `${classes} md-round`;
-                break;
-            }
-            case 3: {
-                classes = `${classes} md-simple`;
-                break;
-            }
-            default:
+                case 1:
+                case 5: {
+                    break;
+                }
+                case 2:
+                case 4: {
+                    classes = `${classes} md-round`;
+                    break;
+                }
+                case 3: {
+                    classes = `${classes} md-simple`;
+                    break;
+                }
+                default:
                 // do nothing
             }
             return classes;
         },
         getAlignClasses: ({ id }) => ({
-            'text-right': id,
+            'text-right': id
         }),
         increaseQuantity(item) {
             const nitem = item;
@@ -417,52 +363,52 @@ export default {
         computeAmount(item) {
             const nitem = item;
             nitem.amount = nitem.qty * nitem.price;
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>
 .text-right /deep/ .md-table-cell-container {
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
 }
 .md-table /deep/ .md-table-head:last-child {
-  text-align: right;
+    text-align: right;
 }
 
 .table-stats {
-  display: flex;
-  align-items: center;
-  text-align: right;
-  flex-flow: row wrap;
+    display: flex;
+    align-items: center;
+    text-align: right;
+    flex-flow: row wrap;
 
-  .td-price .td-total {
-    display: inline-flex;
-    font-weight: 500;
-    font-size: 1.0625rem;
-    margin-right: 50px;
-  }
+    .td-price .td-total {
+        display: inline-flex;
+        font-weight: 500;
+        font-size: 1.0625rem;
+        margin-right: 50px;
+    }
 
-  &.table-striped .td-price {
-    border-bottom: 0;
-  }
+    &.table-striped .td-price {
+        border-bottom: 0;
+    }
 
-  .td-price {
-    font-size: 26px;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-  }
+    .td-price {
+        font-size: 26px;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
 
-  .td-price,
-  > div {
-    flex: 0 0 100%;
-    padding: 12px 8px;
-  }
+    .td-price,
+    > div {
+        flex: 0 0 100%;
+        padding: 12px 8px;
+    }
 }
 
 .table-shopping /deep/ .md-table-head:nth-child(5),
 .table-shopping /deep/ .md-table-head:nth-child(7),
 .table-shopping /deep/ .md-table-head:nth-child(6) {
-  text-align: right;
+    text-align: right;
 }
 </style>

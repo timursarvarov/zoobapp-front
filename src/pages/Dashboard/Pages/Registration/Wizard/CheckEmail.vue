@@ -2,28 +2,20 @@
     <div>
         <h5 class="info-text">
             Please check your email for code we sent
-            <br>if your email is empty, please check spam too
+            <br />if your email is empty, please check spam too
         </h5>
         <div class="md-layout md-gutter">
             <div class="md-layout-item md-size-100">
                 <md-field>
                     <md-icon>email</md-icon>
                     <label>Email</label>
-                    <md-input
-                        v-model="email"
-                        v-validate="modelValidations.email"
-                        disabled
-                        data-vv-name="email"
-                        type="text"
-                        name="email"
-                    />
+                    <md-input v-model="email" v-validate="modelValidations.email" disabled data-vv-name="email" type="text" name="email" />
                 </md-field>
 
                 <md-field
                     slot="inputs"
                     class="md-form-group"
-                    :class="[{'md-error': errors.has('code')},
-                             {'md-valid': !errors.has('code') && touched.code}]"
+                    :class="[{ 'md-error': errors.has('code') }, { 'md-valid': !errors.has('code') && touched.code }]"
                 >
                     <md-icon>lock_outline</md-icon>
                     <label>code</label>
@@ -42,7 +34,7 @@
                         <md-button
                             v-show="errors.has('code')"
                             class="md-just-icon md-round md-input-action clear-button md-simple"
-                            @click="code='',focusOn('code')"
+                            @click="(code = ''), focusOn('code')"
                         >
                             <md-icon class="error">
                                 close
@@ -50,10 +42,7 @@
                         </md-button>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-button
-                            v-show="!errors.has('code') && touched.code"
-                            class="md-just-icon md-round md-input-action clear-button md-simple"
-                        >
+                        <md-button v-show="!errors.has('code') && touched.code" class="md-just-icon md-round md-input-action clear-button md-simple">
                             <md-icon class="success">
                                 done
                             </md-icon>
@@ -70,33 +59,33 @@ import { SlideYDownTransition } from 'vue2-transitions';
 export default {
     name: 'CheckEmail',
     components: {
-        SlideYDownTransition,
+        SlideYDownTransition
     },
     props: {
         email: {
             type: String,
-            default: '',
+            default: ''
         },
         error: {
             type: Object,
             default: () => ({
                 message: 'Wrong code',
-                type: 'code',
-            }),
-        },
+                type: 'code'
+            })
+        }
     },
     data() {
         return {
             code: '',
             touched: {
-                code: false,
+                code: false
             },
             modelValidations: {
                 code: {
                     required: true,
-                    min: 5,
-                },
-            },
+                    min: 5
+                }
+            }
         };
     },
     watch: {
@@ -107,12 +96,12 @@ export default {
                     this.error.message = '';
                 }
             },
-            deep: true,
+            deep: true
         },
         code() {
             this.touched.code = true;
             this.$emit('on-validated', this.code);
-        },
+        }
     },
     mounted() {
         this.$refs.code.$el.focus();
@@ -130,30 +119,29 @@ export default {
             }
             const field = this.$validator.fields.find({
                 name: error.type,
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             if (!field) return;
             this.$validator.errors.add({
                 id: error.type,
                 field: error.type,
                 msg: error.message,
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             field.setFlags({
                 invalid: true,
                 valid: false,
-                validated: true,
+                validated: true
             });
         },
         validate() {
-            return this.$validator.validateAll().then((res) => {
+            return this.$validator.validateAll().then(res => {
                 this.$emit('on-validated', res, 'step2');
                 this.$emit('validated-code', this.code);
                 return res;
             });
-        },
-    },
+        }
+    }
 };
 </script>
-<style>
-</style>
+<style></style>

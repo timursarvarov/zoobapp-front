@@ -17,14 +17,9 @@
                             /> -->
                         </div>
                         <div v-else>
-                            <img :src="currentClinic.logo">
+                            <img :src="currentClinic.logo" />
                         </div>
-                        <input
-                            ref="imageInserter"
-                            type="file"
-                            accept="image/*"
-                            @change="onFileChange"
-                        >
+                        <input ref="imageInserter" type="file" accept="image/*" @change="onFileChange" />
                     </div>
                     <h6 class="description">
                         Choose Clinic Logo
@@ -34,9 +29,10 @@
             <div class="md-layout-item md-size-100 md-small-size-100">
                 <md-field
                     :class="[
-                        {'md-valid': !errors.has('clinicName') && touched.clinicName},
-                        {'md-form-group': true},
-                        {'md-error': errors.has('clinicName')}]"
+                        { 'md-valid': !errors.has('clinicName') && touched.clinicName },
+                        { 'md-form-group': true },
+                        { 'md-error': errors.has('clinicName') }
+                    ]"
                 >
                     <md-icon>business</md-icon>
                     <label>Clinic Name</label>
@@ -54,7 +50,7 @@
                         <md-button
                             v-show="errors.has('clinicName')"
                             class="md-just-icon md-round md-input-action clear-button md-simple"
-                            @click="clinicName='',focusOn('clinicName')"
+                            @click="(clinicName = ''), focusOn('clinicName')"
                         >
                             <md-icon class="error">
                                 close
@@ -62,10 +58,7 @@
                         </md-button>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('clinicName') && touched.clinicName"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('clinicName') && touched.clinicName" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
@@ -77,7 +70,7 @@
                 button-color="green"
                 title="Add clinic logo"
                 :icon="'add_a_photo'"
-                :image-name="currentClinic.ID != null ? currentClinic.ID.toString() + '_' + Date.now(): ''"
+                :image-name="currentClinic.ID != null ? currentClinic.ID.toString() + '_' + Date.now() : ''"
                 :image-to-corp="image"
                 :show-form.sync="showForm"
             />
@@ -94,7 +87,7 @@ export default {
     name: 'SetClinic',
     components: {
         SlideYDownTransition,
-        ImageCropperForm,
+        ImageCropperForm
     },
     props: {
         error: {
@@ -102,10 +95,10 @@ export default {
             default() {
                 return {
                     message: 'Wrong clinic name',
-                    type: 'clinicName',
+                    type: 'clinicName'
                 };
-            },
-        },
+            }
+        }
     },
     data() {
         return {
@@ -114,20 +107,20 @@ export default {
             image: '',
             clinicName: '',
             touched: {
-                clinicName: false,
+                clinicName: false
             },
             modelValidations: {
                 clinicName: {
                     required: true,
-                    min: 5,
-                },
-            },
+                    min: 5
+                }
+            }
         };
     },
     computed: {
         ...mapGetters({
-            currentClinic: 'getCurrentClinic',
-        }),
+            currentClinic: 'getCurrentClinic'
+        })
     },
     watch: {
         error: {
@@ -137,14 +130,14 @@ export default {
                     this.error.message = '';
                 }
             },
-            deep: true,
+            deep: true
         },
         clinicName() {
             this.touched.clinicName = true;
         },
         fd() {
             this.$emit('addedLogo', this.fd);
-        },
+        }
     },
     methods: {
         focusOn(ref) {
@@ -165,7 +158,7 @@ export default {
             return this.errors.first(fieldName);
         },
         validate() {
-            return this.$validator.validateAll().then((res) => {
+            return this.$validator.validateAll().then(res => {
                 this.$emit('on-validated', res, 'step4');
                 this.$emit('validated-clinicName', this.clinicName);
                 return res;
@@ -181,8 +174,8 @@ export default {
                 this.$store.dispatch(NOTIFY, {
                     settings: {
                         message: 'No files selected!',
-                        type: 'warning',
-                    },
+                        type: 'warning'
+                    }
                 });
             }
         },
@@ -190,7 +183,7 @@ export default {
             const reader = new FileReader();
             const vm = this;
 
-            reader.onload = (e) => {
+            reader.onload = e => {
                 vm.image = e.target.result;
             };
             reader.readAsDataURL(file);
@@ -201,22 +194,22 @@ export default {
             }
             const field = this.$validator.fields.find({
                 name: error.type,
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             if (!field) return;
             this.$validator.errors.add({
                 id: error.type,
                 field: error.type,
                 msg: error.message,
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             field.setFlags({
                 invalid: true,
                 valid: false,
-                validated: true,
+                validated: true
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>

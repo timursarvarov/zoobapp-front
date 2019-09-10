@@ -43,9 +43,7 @@ export default {
         }
         Vue.set(state[paramName], paramIndex, paramValue);
     },
-    [PATIENT_SUB_PARAM_PUSH]: (
-        state, { paramName, paramIndex, subParamName, subParamIndex, subParamKey, subParamValue }
-    ) => {
+    [PATIENT_SUB_PARAM_PUSH]: (state, { paramName, paramIndex, subParamName, subParamIndex, subParamKey, subParamValue }) => {
         if (!state[paramName][paramIndex]) {
             Vue.set(state[paramName], paramIndex, []);
         }
@@ -58,9 +56,7 @@ export default {
         }
         Vue.set(state[subParamName], subParamKey, subParamValue);
     },
-    [PATIENT_SUB_PARAM_DELETE]: (
-        state, { param, paramIndex, subParam, subParamIndex, subParamID }
-    ) => {
+    [PATIENT_SUB_PARAM_DELETE]: (state, { param, paramIndex, subParam, subParamIndex, subParamID }) => {
         Vue.delete(state[param][paramIndex][subParam], subParamIndex);
         Vue.delete(state[subParam], subParamID);
     },

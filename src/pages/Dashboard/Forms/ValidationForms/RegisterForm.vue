@@ -11,41 +11,21 @@
             </md-card-header>
 
             <md-card-content>
-                <md-field
-                    :class="[
-                        {'md-valid': !errors.has('email') && touched.email},
-                        {'md-error': errors.has('email')}]"
-                >
+                <md-field :class="[{ 'md-valid': !errors.has('email') && touched.email }, { 'md-error': errors.has('email') }]">
                     <label>Email Adress</label>
-                    <md-input
-                        v-model="email"
-                        v-validate="modelValidations.email"
-                        data-vv-name="email"
-                        type="email"
-                        required
-                    />
+                    <md-input v-model="email" v-validate="modelValidations.email" data-vv-name="email" type="email" required />
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="errors.has('email') && touched.email"
-                            class="error"
-                        >
+                        <md-icon v-show="errors.has('email') && touched.email" class="error">
                             close
                         </md-icon>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('email') && touched.email"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('email') && touched.email" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
                 </md-field>
-                <md-field
-                    :class="[
-                        {'md-valid': !errors.has('password') && touched.password},
-                        {'md-error': errors.has('password')}]"
-                >
+                <md-field :class="[{ 'md-valid': !errors.has('password') && touched.password }, { 'md-error': errors.has('password') }]">
                     <label>Password</label>
                     <md-input
                         ref="password"
@@ -56,26 +36,18 @@
                         required
                     />
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="errors.has('password') && touched.password"
-                            class="error"
-                        >
+                        <md-icon v-show="errors.has('password') && touched.password" class="error">
                             close
                         </md-icon>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('password') && touched.password"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('password') && touched.password" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
                 </md-field>
                 <md-field
-                    :class="[
-                        {'md-valid': !errors.has('confirmPassword') && touched.confirmPass},
-                        {'md-error': errors.has('confirmPassword')}]"
+                    :class="[{ 'md-valid': !errors.has('confirmPassword') && touched.confirmPass }, { 'md-error': errors.has('confirmPassword') }]"
                 >
                     <label>Confirm Password</label>
                     <md-input
@@ -87,18 +59,12 @@
                         required
                     />
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="errors.has('confirmPassword') && touched.confirmPassword"
-                            class="error"
-                        >
+                        <md-icon v-show="errors.has('confirmPassword') && touched.confirmPassword" class="error">
                             close
                         </md-icon>
                     </slide-y-down-transition>
                     <slide-y-down-transition>
-                        <md-icon
-                            v-show="!errors.has('confirmPassword') && touched.confirmPassword"
-                            class="success"
-                        >
+                        <md-icon v-show="!errors.has('confirmPassword') && touched.confirmPassword" class="success">
                             done
                         </md-icon>
                     </slide-y-down-transition>
@@ -112,11 +78,7 @@
                 <md-checkbox v-model="boolean">
                     Subscribe to newsletter
                 </md-checkbox>
-                <md-button
-                    native-type="submit"
-                    class="md-success"
-                    @click.native.prevent="validate"
-                >
+                <md-button native-type="submit" class="md-success" @click.native.prevent="validate">
                     Register
                 </md-button>
             </md-card-actions>
@@ -129,7 +91,7 @@ import { SlideYDownTransition } from 'vue2-transitions';
 export default {
     name: 'RegisterForms',
     components: {
-        SlideYDownTransition,
+        SlideYDownTransition
     },
     data() {
         return {
@@ -140,22 +102,22 @@ export default {
             touched: {
                 email: false,
                 password: false,
-                confirmPass: false,
+                confirmPass: false
             },
             modelValidations: {
                 email: {
                     required: true,
-                    email: true,
+                    email: true
                 },
                 password: {
                     required: true,
-                    min: 5,
+                    min: 5
                 },
                 confirmPassword: {
                     required: true,
-                    confirmed: 'password',
-                },
-            },
+                    confirmed: 'password'
+                }
+            }
         };
     },
     watch: {
@@ -167,19 +129,19 @@ export default {
         },
         confirmPassword() {
             this.touched.confirmPass = true;
-        },
+        }
     },
     methods: {
         validate() {
-            this.$validator.validateAll().then((isValid) => {
+            this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.registerForm, isValid);
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>
 .md-card .md-card-actions {
-  border: none;
+    border: none;
 }
 </style>

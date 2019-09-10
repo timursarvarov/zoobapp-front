@@ -9,5 +9,5 @@ export default {
     teethAdultBottom: state => state.teethAdultBottom,
     teethSchema: state => state.teethSchema,
     jaw: state => state.jaw || {},
-    jawEthalon: state => state.jawEthalon,
+    jawEthalon: state => state.jawEthalon
 };

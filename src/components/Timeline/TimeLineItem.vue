@@ -1,18 +1,12 @@
 <template>
-    <li :class="[{'timeline-inverted': inverted}, {'timeline-simple': !inverted}]">
+    <li :class="[{ 'timeline-inverted': inverted }, { 'timeline-simple': !inverted }]">
         <slot name="badge">
             <div
                 class="timeline-badge"
-                :class="badgeAvatar.color == null? '' : badgeType"
-                :style="[{'background-color':
-                    badgeAvatar.img == null ||
-                    badgeAvatar.acronim == null ? '': `${badgeAvatar.color}`}]"
+                :class="badgeAvatar.color == null ? '' : badgeType"
+                :style="[{ 'background-color': badgeAvatar.img == null || badgeAvatar.acronim == null ? '' : `${badgeAvatar.color}` }]"
             >
-                <img
-                    v-if="badgeAvatar.img"
-                    :src="badgeAvatar.img"
-                    alt="avatar"
-                >
+                <img v-if="badgeAvatar.img" :src="badgeAvatar.img" alt="avatar" />
                 <span v-if="badgeAvatar.acronim">
                     {{ badgeAvatar.acronim }}
                 </span>
@@ -25,10 +19,7 @@
             <div class="timeline-heading">
                 <slot name="header" />
             </div>
-            <div
-                v-if="$slots.content"
-                class="timeline-body"
-            >
+            <div v-if="$slots.content" class="timeline-body">
                 <slot name="content" />
             </div>
             <h6 v-if="$slots.footer">
@@ -44,30 +35,30 @@ export default {
         inverted: Boolean,
         badgeType: {
             type: String,
-            default: 'success',
+            default: 'success'
         },
         badgeColor: {
             type: String,
-            default: '',
+            default: ''
         },
         badgeIcon: {
             type: String,
-            default: '',
+            default: ''
         },
         badgeAvatar: {
             type: Object,
-            default: () => ({ img: null, acronim: null, color: 'null' }),
-        },
-    },
+            default: () => ({ img: null, acronim: null, color: 'null' })
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>
-.timeline-badge{
-  img{
-    margin-top:-3px;
-  }
-  overflow: hidden;
-    -webkit-box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)!important;
+.timeline-badge {
+    img {
+        margin-top: -3px;
+    }
+    overflow: hidden;
+    -webkit-box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2) !important;
     box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2) !important;
 }
 </style>

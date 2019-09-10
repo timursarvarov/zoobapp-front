@@ -1,9 +1,4 @@
-import {
-    COMPANY_NAME,
-    COMPANY_LOGO_URL,
-    COMPANY_COLOR,
-    COMPANY_LINK,
-} from '@/constants';
+import { COMPANY_NAME, COMPANY_LOGO_URL, COMPANY_COLOR, COMPANY_LINK } from '@/constants';
 
 export default {
     getCurrentManipulations: state => {
@@ -12,15 +7,15 @@ export default {
             manipulations.push({
                 ...m,
                 text: `${m.code} - ${m.title}`
-            })
-        })
+            });
+        });
         return manipulations;
     },
     getUngroupedProcedures: state => state.procedures || [],
     getUngroupedDiagnosis: state => state.diagnosis || [],
-    getCurrentClinic: (state) => {
+    getCurrentClinic: state => {
         const clinic = {};
-        Object.keys(state).forEach((key) => {
+        Object.keys(state).forEach(key => {
             if (key === 'name' && !state[key]) {
                 clinic[key] = COMPANY_NAME;
             } else if (key === 'logo' && !state[key]) {
@@ -38,11 +33,11 @@ export default {
     getCurrentClinicDiagnosis: (state, getters) => {
         const diagnosis = [];
         if (state.diagnosis) {
-            state.diagnosis.forEach((group) => {
+            state.diagnosis.forEach(group => {
                 diagnosis.push({
                     title: group.title,
                     code: group.code,
-                    codes: group.codes.filter(item => item.ageCategory.includes(getters.getPatientAgeCategory)),
+                    codes: group.codes.filter(item => item.ageCategory.includes(getters.getPatientAgeCategory))
                 });
             });
         }
@@ -51,11 +46,11 @@ export default {
     getCurrentClinicProcedures: (state, getters) => {
         const procedures = [];
         if (state.procedures) {
-            state.procedures.forEach((group) => {
+            state.procedures.forEach(group => {
                 procedures.push({
                     title: group.title,
                     code: group.code,
-                    codes: group.codes.filter(item => item.ageCategory.includes(getters.getPatientAgeCategory)),
+                    codes: group.codes.filter(item => item.ageCategory.includes(getters.getPatientAgeCategory))
                 });
             });
         }
@@ -64,21 +59,21 @@ export default {
     getCurrentClinicAnamnesis: (state, getters) => {
         const anamnesis = [];
         if (state.anamnesis) {
-            state.anamnesis.forEach((group) => {
+            state.anamnesis.forEach(group => {
                 anamnesis.push({
                     title: group.title,
                     code: group.code,
-                    codes: group.codes.filter(item => item.ageCategory.includes(getters.getPatientAgeCategory)),
+                    codes: group.codes.filter(item => item.ageCategory.includes(getters.getPatientAgeCategory))
                 });
             });
         }
         return anamnesis;
     },
-    getCurrentClinicOriginalItem: (state, getters) => (type, catalogID) => {
+    getCurrentClinicOriginalItem: state => (type, catalogID) => {
         let item = {};
         if (state[`ungrouped${type}`]) {
-            item = state[`ungrouped${type}`][catalogID]
+            item = state[`ungrouped${type}`][catalogID];
         }
         return item || {};
-    },
+    }
 };

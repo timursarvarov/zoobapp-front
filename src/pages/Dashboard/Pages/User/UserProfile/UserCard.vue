@@ -4,7 +4,7 @@
             :text-to-color="user.ID"
             :max-filesize="2000"
             :image-src="user.avatar"
-            :title="user.firstName+ ' ' + user.lastName"
+            :title="user.firstName + ' ' + user.lastName"
             :form-title="'Add your photo'"
             :button-color="'green'"
             @on-created="updateUserAvatar"
@@ -15,9 +15,10 @@
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field
                         :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('firstName') && touched.firstName},
-                            {'md-error': errors.has('firstName')}]"
+                            { 'with-subline': true },
+                            { 'md-valid': !errors.has('firstName') && touched.firstName },
+                            { 'md-error': errors.has('firstName') }
+                        ]"
                     >
                         <label>First Name</label>
                         <md-input
@@ -34,7 +35,7 @@
                                 v-show="errors.has('firstName')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="user.firstName='',focusOn('firstName')"
+                                @click="(user.firstName = ''), focusOn('firstName')"
                             >
                                 <md-icon class="error">
                                     close
@@ -58,9 +59,10 @@
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field
                         :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('lastName') && touched.lastName},
-                            {'md-error': errors.has('lastName')}]"
+                            { 'with-subline': true },
+                            { 'md-valid': !errors.has('lastName') && touched.lastName },
+                            { 'md-error': errors.has('lastName') }
+                        ]"
                     >
                         <label>Last Name</label>
                         <md-input
@@ -77,7 +79,7 @@
                                 v-show="errors.has('lastName')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="user.lastName='',focusOn('lastName')"
+                                @click="(user.lastName = ''), focusOn('lastName')"
                             >
                                 <md-icon class="error">
                                     close
@@ -101,37 +103,27 @@
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field class="with-subline">
                         <label>User Name</label>
-                        <md-input
-                            v-model="user.userName"
-                            disabled
-                            type="text"
-                        />
+                        <md-input v-model="user.userName" disabled type="text" />
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field
                         :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('phone') && touched.phone},
-                            {'md-error': errors.has('phone')}]"
+                            { 'with-subline': true },
+                            { 'md-valid': !errors.has('phone') && touched.phone },
+                            { 'md-error': errors.has('phone') }
+                        ]"
                     >
                         <label>Phone</label>
                         <span class="md-prefix">+</span>
-                        <md-input
-                            ref="phone"
-                            v-model="user.phone"
-                            v-validate="modelValidations.phone"
-                            type="number"
-                            data-vv-name="phone"
-                            required
-                        />
+                        <md-input ref="phone" v-model="user.phone" v-validate="modelValidations.phone" type="number" data-vv-name="phone" required />
                         <span class="md-error">{{ errors.first('phone') }}</span>
                         <slide-y-down-transition>
                             <md-button
                                 v-show="errors.has('phone')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="user.phone='',focusOn('phone')"
+                                @click="(user.phone = ''), focusOn('phone')"
                             >
                                 <md-icon class="error">
                                     close
@@ -154,26 +146,20 @@
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field
                         :class="[
-                            {'with-subline': true},
-                            {'md-valid': !errors.has('email') && touched.email},
-                            {'md-error': errors.has('email')}]"
+                            { 'with-subline': true },
+                            { 'md-valid': !errors.has('email') && touched.email },
+                            { 'md-error': errors.has('email') }
+                        ]"
                     >
                         <label>Email</label>
-                        <md-input
-                            ref="email"
-                            v-model="user.email"
-                            v-validate="modelValidations.email"
-                            type="text"
-                            data-vv-name="email"
-                            required
-                        />
+                        <md-input ref="email" v-model="user.email" v-validate="modelValidations.email" type="text" data-vv-name="email" required />
                         <span class="md-error">{{ errors.first('email') }}</span>
                         <slide-y-down-transition>
                             <md-button
                                 v-show="errors.has('email')"
                                 tabindex="-1"
                                 class="md-button md-icon-button md-dense md-input-action"
-                                @click="user.email='',focusOn('email')"
+                                @click="(user.email = ''), focusOn('email')"
                             >
                                 <md-icon class="error">
                                     close
@@ -197,20 +183,13 @@
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field class="with-subline">
                         <label>Address</label>
-                        <md-input
-                            v-model="user.address"
-                            type="text"
-                        />
+                        <md-input v-model="user.address" type="text" />
                     </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field>
                         <label for="language">Language</label>
-                        <md-select
-                            id="language"
-                            v-model="user.lang"
-                            name="language"
-                        >
+                        <md-select id="language" v-model="user.lang" name="language">
                             <md-option :value="1">
                                 English
                             </md-option>
@@ -230,11 +209,7 @@
                     </md-field>
                 </div>
                 <div class="md-layout-item md-size-100 text-right">
-                    <md-button
-                        :disabled="lodash.isEmpty(changedFields) || loading"
-                        class="md-raised md-success mt-4"
-                        @click="updateProfile"
-                    >
+                    <md-button :disabled="lodash.isEmpty(changedFields) || loading" class="md-raised md-success mt-4" @click="updateProfile">
                         <span v-if="loading">Loading</span>
                         <span v-else>Update Profile</span>
                     </md-button>
@@ -246,29 +221,24 @@
 <script>
 import { mapGetters } from 'vuex';
 import { SlideYDownTransition } from 'vue2-transitions';
-import {
-    USER_AVATAR_UPLOAD,
-    USER_UPDATE,
-    NOTIFY,
-    SERVER_ERRORS,
-} from '@/constants';
+import { USER_AVATAR_UPLOAD, USER_UPDATE, NOTIFY, SERVER_ERRORS } from '@/constants';
 import components from '@/components';
 
 export default {
     name: 'UserCard',
     components: {
         SlideYDownTransition,
-        ...components,
+        ...components
     },
     props: {
         cardUserImage: {
             type: String,
-            default: './img/faces/marc.jpg',
+            default: './img/faces/marc.jpg'
         },
         buttonColor: {
             type: String,
-            default: '',
-        },
+            default: ''
+        }
     },
     data() {
         return {
@@ -280,30 +250,30 @@ export default {
                 firstName: false,
                 lastName: false,
                 email: false,
-                phone: false,
+                phone: false
             },
             modelValidations: {
                 lastName: {
-                    required: true,
+                    required: true
                 },
                 firstName: {
                     required: true,
-                    min: 2,
+                    min: 2
                 },
                 email: {
-                    email: true,
+                    email: true
                 },
                 phone: {
                     required: true,
                     min: 12,
-                    max: 20,
-                },
-            },
+                    max: 20
+                }
+            }
         };
     },
     computed: {
         ...mapGetters({
-            user: 'getProfile',
+            user: 'getProfile'
         }),
         email() {
             return this.user.email;
@@ -319,15 +289,13 @@ export default {
         },
         changedFields() {
             const fields = {};
-            Object.keys(this.user).forEach((key) => {
-                if (
-                    !this.lodash.isEqual(this.user[key], this.copiedUser[key])
-                ) {
+            Object.keys(this.user).forEach(key => {
+                if (!this.lodash.isEqual(this.user[key], this.copiedUser[key])) {
                     fields[key] = this.user[key];
                 }
             });
             return fields;
-        },
+        }
     },
     watch: {
         email() {
@@ -342,7 +310,7 @@ export default {
         phone() {
             console.log(12);
             this.touched.phone = true;
-        },
+        }
     },
     created() {
         this.copiedUser = this.lodash.clone(this.user);
@@ -355,7 +323,7 @@ export default {
             this.$refs[ref].$el.focus();
         },
         validate() {
-            this.$validator.validateAll().then((isValid) => {
+            this.$validator.validateAll().then(isValid => {
                 this.$emit('on-submit', this.registerForm, isValid);
             });
             this.touched.lastName = true;
@@ -364,33 +332,30 @@ export default {
             this.touched.phone = true;
         },
         updateProfile() {
-            this.$validator.validateAll().then((result) => {
+            this.$validator.validateAll().then(result => {
                 if (result) {
                     this.loading = true;
                     this.$store
                         .dispatch(USER_UPDATE, {
-                            user: this.changedFields,
+                            user: this.changedFields
                         })
-                        .then((response) => {
+                        .then(response => {
                             if (response) {
                                 this.copiedUser = this.lodash.clone(response);
                                 this.$store.dispatch(NOTIFY, {
                                     settings: {
                                         message: 'Updated',
-                                        type: 'success',
-                                    },
+                                        type: 'success'
+                                    }
                                 });
                             }
                         })
-                        .catch((error) => {
-                            if (
-                                error.code
-                                    === SERVER_ERRORS.codes.ServerErrorCode
-                            ) {
+                        .catch(error => {
+                            if (error.code === SERVER_ERRORS.codes.ServerErrorCode) {
                                 if (error.message === 'email exist') {
                                     this.showErrorsValidate({
                                         type: 'email',
-                                        message: error.message,
+                                        message: error.message
                                     });
                                 }
                             }
@@ -407,40 +372,39 @@ export default {
             }
             const field = this.$validator.fields.find({
                 name: error.type,
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             if (!field) return;
             this.$validator.errors.add({
                 id: error.type,
                 field: error.type,
                 msg: error.message,
-                scope: this.$options.scope,
+                scope: this.$options.scope
             });
             field.setFlags({
                 invalid: true,
                 valid: false,
-                validated: true,
+                validated: true
             });
         },
         updateUserAvatar(fd) {
             this.$store
                 .dispatch(USER_AVATAR_UPLOAD, {
-                    fd,
+                    fd
                 })
-                .then((response) => {
+                .then(response => {
                     console.log(response);
                     if (response) {
                         this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'Profile image updated',
-                                type: 'primary',
-                            },
+                                type: 'primary'
+                            }
                         });
                     }
                 });
-        },
-    },
+        }
+    }
 };
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

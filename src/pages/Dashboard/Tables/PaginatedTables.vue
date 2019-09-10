@@ -21,16 +21,8 @@
                         <md-table-toolbar>
                             <md-field>
                                 <label for="pages">Per page</label>
-                                <md-select
-                                    v-model="pagination.perPage"
-                                    name="pages"
-                                >
-                                    <md-option
-                                        v-for="item in pagination.perPageOptions"
-                                        :key="item"
-                                        :label="item"
-                                        :value="item"
-                                    >
+                                <md-select v-model="pagination.perPage" name="pages">
+                                    <md-option v-for="item in pagination.perPageOptions" :key="item" :label="item" :value="item">
                                         {{ item }}
                                     </md-option>
                                 </md-select>
@@ -48,20 +40,11 @@
                             </md-field>
                         </md-table-toolbar>
 
-                        <md-table-row
-                            slot="md-table-row"
-                            slot-scope="{ item }"
-                        >
-                            <md-table-cell
-                                md-label="Name"
-                                md-sort-by="name"
-                            >
+                        <md-table-row slot="md-table-row" slot-scope="{ item }">
+                            <md-table-cell md-label="Name" md-sort-by="name">
                                 {{ item.name }}
                             </md-table-cell>
-                            <md-table-cell
-                                md-label="Email"
-                                md-sort-by="email"
-                            >
+                            <md-table-cell md-label="Email" md-sort-by="email">
                                 {{ item.email }}
                             </md-table-cell>
                             <md-table-cell md-label="Age">
@@ -71,22 +54,13 @@
                                 {{ item.salary }}
                             </md-table-cell>
                             <md-table-cell md-label="Actions">
-                                <md-button
-                                    class="md-just-icon md-info md-simple"
-                                    @click.native="handleLike(item)"
-                                >
+                                <md-button class="md-just-icon md-info md-simple" @click.native="handleLike(item)">
                                     <md-icon>favorite</md-icon>
                                 </md-button>
-                                <md-button
-                                    class="md-just-icon md-warning md-simple"
-                                    @click.native="handleEdit(item)"
-                                >
+                                <md-button class="md-just-icon md-warning md-simple" @click.native="handleEdit(item)">
                                     <md-icon>dvr</md-icon>
                                 </md-button>
-                                <md-button
-                                    class="md-just-icon md-danger md-simple"
-                                    @click.native="handleDelete(item)"
-                                >
+                                <md-button class="md-just-icon md-danger md-simple" @click.native="handleDelete(item)">
                                     <md-icon>close</md-icon>
                                 </md-button>
                             </md-table-cell>
@@ -96,11 +70,7 @@
                         <table>
                             <tfoot>
                                 <tr>
-                                    <th
-                                        v-for="item in footerTable"
-                                        :key="item.name"
-                                        class="md-table-head"
-                                    >
+                                    <th v-for="item in footerTable" :key="item.name" class="md-table-head">
                                         <div class="md-table-head-container md-ripple md-disabled">
                                             <div class="md-table-head-label">
                                                 {{ item }}
@@ -114,9 +84,7 @@
                 </md-card-content>
                 <md-card-actions md-alignment="space-between">
                     <div class>
-                        <p class="card-category">
-                            Showing {{ from + 1 }} to {{ to }} of {{ total }} entries
-                        </p>
+                        <p class="card-category">Showing {{ from + 1 }} to {{ to }} of {{ total }} entries</p>
                     </div>
                     <pagination
                         v-model="pagination.currentPage"
@@ -138,7 +106,7 @@ import users from './users';
 export default {
     name: 'PaginatedTables',
     components: {
-        ...components,
+        ...components
     },
     data() {
         return {
@@ -148,21 +116,21 @@ export default {
                 perPage: 5,
                 currentPage: 1,
                 perPageOptions: [5, 10, 25, 50],
-                total: 0,
+                total: 0
             },
             footerTable: ['Name', 'Email', 'Age', 'Salary', 'Actions'],
             searchQuery: '',
             propsToSearch: ['name', 'email', 'age'],
             tableData: users,
             searchedData: [],
-            fuseSearch: null,
+            fuseSearch: null
         };
     },
     computed: {
-    /** *
-             * Returns a page from the searched data or the whole data.
-             * Search is performed in the watch section below
-             */
+        /** *
+         * Returns a page from the searched data or the whole data.
+         * Search is performed in the watch section below
+         */
         queriedData() {
             let result = this.tableData;
             if (this.searchedData.length > 0) {
@@ -181,31 +149,29 @@ export default {
             return this.pagination.perPage * (this.pagination.currentPage - 1);
         },
         total() {
-            return this.searchedData.length > 0
-                ? this.searchedData.length
-                : this.tableData.length;
-        },
+            return this.searchedData.length > 0 ? this.searchedData.length : this.tableData.length;
+        }
     },
     watch: {
-    /**
-             * Searches through the table data by a given query.
-             * NOTE: If you have a lot of data, it's recommended to do
-             * the search on the Server Side and only display the results here.
-             * @param value of the query
-             */
+        /**
+         * Searches through the table data by a given query.
+         * NOTE: If you have a lot of data, it's recommended to do
+         * the search on the Server Side and only display the results here.
+         * @param value of the query
+         */
         searchQuery(value) {
             let result = this.tableData;
             if (value !== '') {
                 result = this.fuseSearch.search(this.searchQuery);
             }
             this.searchedData = result;
-        },
+        }
     },
     mounted() {
-    // Fuse search initialization.
+        // Fuse search initialization.
         this.fuseSearch = new Fuse(this.tableData, {
             keys: ['name', 'email'],
-            threshold: 0.3,
+            threshold: 0.3
         });
     },
     methods: {
@@ -220,52 +186,21 @@ export default {
             });
         },
         handleLike(item) {
-            // swal({
-            //     title: `You liked ${item.name}`,
-            //     buttonsStyling: false,
-            //     type: 'success',
-            //     confirmButtonClass: 'md-button md-success',
-            // });
+            console.log(item);
         },
         handleEdit(item) {
-            // swal({
-            //     title: `You want to edit ${item.name}`,
-            //     buttonsStyling: false,
-            //     confirmButtonClass: 'md-button md-info',
-            // });
+            console.log(item);
         },
         handleDelete(item) {
-            // swal({
-            //     title: 'Are you sure?',
-            //     text: "You won't be able to revert this!",
-            //     type: 'warning',
-            //     showCancelButton: true,
-            //     confirmButtonClass: 'md-button md-success btn-fill',
-            //     cancelButtonClass: 'md-button md-danger btn-fill',
-            //     confirmButtonText: 'Yes, delete it!',
-            //     buttonsStyling: false,
-            // }).then((result) => {
-            //     if (result.value) {
-            //         this.deleteRow(item);
-            //         swal({
-            //             title: 'Deleted!',
-            //             text: `You deleted ${item.name}`,
-            //             type: 'success',
-            //             confirmButtonClass: 'md-button md-success btn-fill',
-            //             buttonsStyling: false,
-            //         });
-            //     }
-            // });
+            console.log(item);
         },
         deleteRow(item) {
-            const indexToDelete = this.tableData.findIndex(
-                tableRow => tableRow.id === item.id,
-            );
+            const indexToDelete = this.tableData.findIndex(tableRow => tableRow.id === item.id);
             if (indexToDelete >= 0) {
                 this.tableData.splice(indexToDelete, 1);
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

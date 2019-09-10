@@ -4,5 +4,5 @@ export default {
     hasLoadedOnce: false,
     hasRefreshTokenError: false,
     expiresAt: localStorage.getItem('expiresAt') || '',
-    refreshToken: localStorage.getItem('refreshToken') || '',
+    refreshToken: localStorage.getItem('refreshToken') || ''
 };
