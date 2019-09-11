@@ -1,81 +1,33 @@
-.print-form .A4 {
+.A4page {
+  background: white;
+  display: block;
+  margin: 0 auto; }
+
+.A4page[size="A4"] {
+  width: 21cm;
+  height: 29.7cm;
+  width: 21cm; }
+
+.print-form {
   position: relative; }
-  .print-form .A4 .print_page-header,
-  .print-form .A4 .print_page-header-space {
-    height: 100px; }
-  .print-form .A4 .print_page-footer,
-  .print-form .A4 .print_page-footer-space {
-    height: 50px; }
-
-.print-form .print_page-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  border-top: 1px solid black;
-  /* for demo */
-  background: yellow;
-  /* for demo */ }
-
-.print-form .print_page-header {
-  position: absolute;
-  top: 0mm;
-  width: 100%;
-  border-bottom: 1px solid black;
-  /* for demo */
-  display: flex; }
-  .print-form .print_page-header .print_clinic {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  .print-form__page-footer {
+    position: absolute;
+    bottom: 0;
     width: 100%;
-    padding: 0 15px; }
-    .print-form .print_page-header .print_clinic_title {
-      display: flex;
-      align-items: center;
-      justify-content: center; }
-      .print-form .print_page-header .print_clinic_title__image img {
-        border-radius: 50%;
-        height: 40px;
-        width: 40px; }
-      .print-form .print_page-header .print_clinic_title__text {
-        padding-left: 20px; }
-        .print-form .print_page-header .print_clinic_title__text .title {
-          font-size: 16px; }
-        .print-form .print_page-header .print_clinic_title__text .sub_title {
-          font-size: 12px;
-          line-height: 1.2em; }
-    .print-form .print_page-header .print_clinic_info {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-left: 10px; }
-
-.print-form .print_page {
-  line-height: 1.2em;
-  page-break-after: always; }
-  .print-form .print_page .title {
-    font-size: 16px; }
-  .print-form .print_page .text {
-    padding-left: 10px; }
-
-.print-form .print {
-  /* //-- header, body, footer -- */
-  /* //-- footer -- */
-  /* //-- core typography and style -- */
-  /* //-- section styles -- */
-  /* --// override to force 1/8th width grids -- */ }
-
-.print-form .inner {
-  padding: 10px 30px; }
-
-.print-form .inner .hd {
-  padding-bottom: 1.5em;
-  padding-top: 1.5em;
-  border-bottom: 1px solid #ccc; }
-
-.print-form .inner .hd .hd-wrapper {
-  display: flex;
-  justify-content: space-between; }
+    border-top: 1px solid black;
+    /* for demo */
+    background: yellow;
+    /* for demo */ }
+  .print-form__page-header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    border-bottom: 1px solid black;
+    /* for demo */
+    background: yellow;
+    /* for demo */ }
+  .print-form__page {
+    page-break-after: always; }
 
 .print-form .A4 .print_patient_bio {
   display: flex;
@@ -811,3 +763,30 @@
           stroke-linejoin: round;
           stroke-width: 4px;
           fill: none !important; }
+
+.print-form .print-form__page-header .print_clinic_min {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 15px; }
+  .print-form .print-form__page-header .print_clinic_min_title {
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    .print-form .print-form__page-header .print_clinic_min_title__image img {
+      border-radius: 50%;
+      height: 40px;
+      width: 40px; }
+    .print-form .print-form__page-header .print_clinic_min_title__text {
+      padding-left: 20px; }
+      .print-form .print-form__page-header .print_clinic_min_title__text .title {
+        font-size: 16px; }
+      .print-form .print-form__page-header .print_clinic_min_title__text .sub_title {
+        font-size: 12px;
+        line-height: 1.2em; }
+  .print-form .print-form__page-header .print_clinic_min_info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10px; }
