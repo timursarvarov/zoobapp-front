@@ -1,0 +1,147 @@
+.print-form {
+    .print_patient_plan__procedure .print-patient-procedure,
+    .print-patient-procedure {
+        border-bottom: 2px solid rgba(128, 128, 128, 0.171);
+        padding-top: 5px;
+        &_header {
+            margin-left: 5px;
+            margin-right: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            line-height: 18px;
+            padding-bottom: 3px;
+            
+            &__num {
+                margin: inherit;
+            }
+            &__title {
+                margin: inherit;
+                display: flex;
+                flex-grow: 1;
+                .print-patient-procedure_header_created {
+                    margin: inherit;
+                }
+                .title-text {
+                    // display: flex;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+                .title-date {
+                    // display: flex;
+                    // font-size: 10px;
+                    // line-height: 1.15em;
+                }
+                .teeth {
+                    display: flex;
+                    flex-wrap: wrap;
+                    margin: inherit;
+                    align-items: center;
+                    .tooth {
+                        width: fit-content;
+                        border: 1px solid rgb(0, 0, 0);
+                        font-size: 12px;
+                        color: #333333;
+                        min-width: 20px;
+                        padding: 1px 6px;
+                        height: 20px;
+                        border-radius: 10px;
+                        text-align: center;
+                        line-height: 18px;
+                        margin-left: 5px;
+                    }
+                }
+            }
+            &__price {
+                margin: inherit;
+                display: flex;
+                .price-sum {
+                    margin: inherit;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+            }
+        }
+        .teeth-block {
+            margin-left: 10mm;
+            margin-right: 5px;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid rgba(128, 128, 128, 0.171);
+            justify-content: space-between;
+            &__title{
+                margin-left: 5px;
+                margin-right: 5px;
+                display: flex;
+
+            }
+            &__teeth{
+                margin-right: 5px;
+                margin-left: 5px;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                .tooth{
+                    line-height: 1;
+                    border: 1px solid rgb(0, 0, 0);
+                    font-size: 12px;
+                    color: #333333;
+                    width: 20px;
+                    height: 20px;
+                    // padding: 1px 6px;
+                    border-radius: 50%;
+                    // text-align: center;
+                    // line-height: 18px;
+                    margin: 4px 1px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    justify-content: center;
+
+                }
+            }
+        }
+        &_manipulations {
+            margin-left: 5px;
+            margin-right: 5px;
+            &__row {
+                font-size: 12px;
+                line-height: 16px;
+                padding-top: 1mm;
+                padding-bottom: 1mm;
+                margin: inherit;
+                display: flex;
+                justify-content: space-between;
+                border-top: 1px solid rgba(128, 128, 128, 0.171);
+                margin-left: 10mm;
+                .manipulation {
+                    margin-left: 5px;
+                    margin-right: 5px;
+                    display: flex;
+                    align-items: center;
+                    &_num {
+                        // width: 2%;
+                    }
+                    &_code {
+                        width: 3%;
+                    }
+                    &_title {
+                        width: 45%;
+                    }
+                    &_qty {
+                        width: 5%;
+                    }
+                    &_ac {
+                        width: 2%;
+                    }
+                    &_price {
+                        max-width: 14%;
+                    }
+                    &_total {
+                        max-width: 14%;
+                    }
+                }
+            }
+        }
+    }
+}

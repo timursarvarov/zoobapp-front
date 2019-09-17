@@ -291,17 +291,6 @@ const patientPages = {
                     }
                 },
                 {
-                    path: 'print',
-                    name: 'Print',
-                    meta: {
-                        requiresAuth: true,
-                        disableScroll: true
-                    },
-                    components: {
-                        Files: load('Pages/Patient/PatientPrint/PatientPrintForm')
-                    }
-                },
-                {
                     path: 'billing',
                     name: 'Billing',
                     meta: {

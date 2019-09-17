@@ -31,13 +31,13 @@ export default function() {
     }
 
     axios.interceptors.request.use(config => {
-        store.dispatch(LOADER_START);
+        // store.dispatch(LOADER_START);
         return config;
     });
 
     axios.interceptors.response.use(
         response => {
-            store.dispatch(LOADER_STOP);
+            // store.dispatch(LOADER_STOP);
             if (response.data.error) {
                 store.dispatch(NOTIFY, {
                     settings: {
@@ -53,7 +53,7 @@ export default function() {
             return response;
         },
         error => {
-            store.dispatch(LOADER_STOP);
+            // store.dispatch(LOADER_STOP);
             const {
                 config,
                 response: { status }

@@ -3,30 +3,23 @@
 }
 
 .print-form thead {
-      display: table-header-group;
-  }
-  .print-form tfoot {
-      display: table-footer-group;
-  }
+  display: table-header-group;
+}
+.print-form tfoot {
+  display: table-footer-group;
+}
 
-  .print-form button {
-      display: none;
-  }
+.print-form button {
+  display: none;
+}
 
-  body {
-      margin: 0;
-  }
-  .print-form__page-header, .print-form__page-header-space {
-    height: 100px;
-  }
-  
-  .print-form__page-footer, .print-form__page-footer-space {
-    height: 50px;
-  
-  }
+body {
+  margin: 0;
+}
 
 .print-form__page-footer,
 .print-form__page-header {
-  position: fixed;
+position: fixed;
 }
+
 

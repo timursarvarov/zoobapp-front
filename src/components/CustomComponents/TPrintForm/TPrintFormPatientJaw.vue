@@ -1,6 +1,12 @@
 <template>
-    <div class="print_patient_jaw">
+    <div class="print_patient_jaw" :class="[{ 'hide-on-print': !showJaw }]">
+        <md-subheader class="hide-on-print-actions">
+            Print: &nbsp;
+            <md-checkbox v-model="showJaw">Jaw</md-checkbox>
+        </md-subheader>
+
         <jaw
+            v-if="showJaw"
             printmode
             :age-category="!!patientProps.ageCategory"
             :jaw="patientProps.jaw || {}"
@@ -25,6 +31,7 @@ export default {
     },
     data() {
         return {
+            showJaw: true,
             editor: null
         };
     }

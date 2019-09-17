@@ -25,11 +25,10 @@
                     <md-tab id="tab-files" :to="`/${$i18n.locale}/patient/${patient.ID}/files`" md-icon="folder_shared" md-label="Files">
                         <router-view name="Files" />
                     </md-tab>
-                    <md-tab id="tab-files" :to="`/${$i18n.locale}/patient/${patient.ID}/print`" md-icon="print" md-label="Print">
-                        <router-view name="Print" />
-                    </md-tab>
+                    <md-tab id="tab-print" md-icon="print" md-label="Print" @click="showPrint()"/>
                 </md-tabs>
                 <patient-items-wizard />
+                <patient-print-form />
             </template>
         </nav-tabs-card>
         <div v-show="!patient.ID && patientStatus === 'loading'" class="jaw md-layout-item">
@@ -57,16 +56,17 @@
                 </md-button>
             </md-empty-state>
         </div>
-        <t-print-form :showForm="showPrintForm" />
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import components from '@/components';
-import { PATIENT_GET } from '@/constants';
+import { PATIENT_GET, EB_SHOW_PATIENT_PRINT_FORM } from '@/constants';
 import store from '@/store';
 import PatientItemsWizard from './PatientTreatment/PatientItemsWizard';
+import PatientPrintForm from './PatientPrintForm';
+import EventBus from '@/plugins/event-bus';
 
 export default {
     beforeRouteEnter(to, from, next) {
@@ -97,7 +97,8 @@ export default {
     name: 'PatientProfile',
     components: {
         ...components,
-        PatientItemsWizard
+        PatientItemsWizard,
+        PatientPrintForm
     },
     data() {
         return {
@@ -126,6 +127,13 @@ export default {
         }
     },
     methods: {
+        showPrint(){
+            const params = {
+                type: 'patient',
+                item: this.patient.ID
+            };
+            EventBus.$emit(EB_SHOW_PATIENT_PRINT_FORM, params);
+        },
         setWindowTitle() {
             if (this.patient.ID) {
                 let firstName = '';

@@ -1,0 +1,17 @@
+.print-form {
+    .print_patient_plan__procedure:last-child {
+        .print-patient-procedure {
+            // border-bottom: none;
+        }
+    }
+    .print_patient_plan {
+        &__header {
+            border-bottom: 2px solid rgba(128, 128, 128, 0.171);
+            &_text {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+    }
+}

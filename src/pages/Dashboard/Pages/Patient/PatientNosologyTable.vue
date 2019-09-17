@@ -2,6 +2,31 @@
     <div class="items-list-wrapper">
         <div>
             <slot name="toolbar" />
+            <md-toolbar class="md-transparent">
+                <div class="md-layout-item md-size-33">
+                    <md-field>
+                        <label for="pages">Per page</label>
+                        <md-select v-model="pagination.perPage" name="pages">
+                            <md-option v-for="item in pagination.perPageOptions" :key="item" :label="item" :value="item">{{ item }}</md-option>
+                        </md-select>
+                    </md-field>
+                </div>
+                <div class="md-layout md-layout-item md-size-33">
+                    <slot name="header" />
+                </div>
+                <div class="md-layout md-layout-item md-size-33 ml-auto">
+                    <div class="md-layout-item md-size-80">
+                        <md-field>
+                            <md-input v-model="searchQuery" type="search" class="mb-3" clearable style="width: 200px" placeholder="Search records" />
+                        </md-field>
+                    </div>
+                    <div class="md-layout-item md-size-20 ml-auto">
+                        <md-button class="md-just-icon md-simple" @click="showTableEditor = !showTableEditor">
+                            <md-icon>settings</md-icon>
+                        </md-button>
+                    </div>
+                </div>
+            </md-toolbar>
             <md-table
                 md-fixed-headere
                 :md-selected-value.sync="selectedItemsL"
@@ -12,38 +37,6 @@
                 class="table-striped table-with-header table-hover"
                 :class="extraClass"
             >
-                <md-table-toolbar>
-                    <div class="md-layout-item md-size-33">
-                        <md-field>
-                            <label for="pages">Per page</label>
-                            <md-select v-model="pagination.perPage" name="pages">
-                                <md-option v-for="item in pagination.perPageOptions" :key="item" :label="item" :value="item">{{ item }}</md-option>
-                            </md-select>
-                        </md-field>
-                    </div>
-                    <div class="md-layout md-layout-item md-size-33">
-                        <slot name="header" />
-                    </div>
-                    <div class="md-layout md-layout-item md-size-33 ml-auto">
-                        <div class="md-layout-item md-size-80">
-                            <md-field>
-                                <md-input
-                                    v-model="searchQuery"
-                                    type="search"
-                                    class="mb-3"
-                                    clearable
-                                    style="width: 200px"
-                                    placeholder="Search records"
-                                />
-                            </md-field>
-                        </div>
-                        <div class="md-layout-item md-size-20 ml-auto">
-                            <md-button class="md-just-icon md-simple" @click="showTableEditor = !showTableEditor">
-                                <md-icon>settings</md-icon>
-                            </md-button>
-                        </div>
-                    </div>
-                </md-table-toolbar>
                 <div />
                 <md-table-empty-state
                     v-if="!hasSlot('emptyState')"
@@ -75,9 +68,7 @@
                         </div>
                         <div v-else-if="field.key === 'teeth' && item.teeth" :class="field.key">
                             <span v-for="toothId in Object.keys(item.teeth)" :key="toothId" class="tooth" :class="currentType">
-                                <small>
-                                    {{ toothId | toCurrentTeethSystem }}
-                                </small>
+                                <small>{{ toothId | toCurrentTeethSystem }}</small>
                             </span>
                         </div>
                         <avatar-box
@@ -99,7 +90,7 @@
                         </div>
 
                         <div v-else-if="field.key === 'created' && item.created">
-                            <span class="">
+                            <span class>
                                 <b>{{ item.created | moment('from') }}</b>
                                 <br />
                             </span>
@@ -107,7 +98,7 @@
                         </div>
 
                         <div v-else-if="field.key === 'updated' && item.updated">
-                            <span class="">
+                            <span class>
                                 <b>{{ item.updated | moment('from') }}</b>
                                 <br />
                             </span>
@@ -115,9 +106,9 @@
                         </div>
 
                         <div v-else-if="field.key === 'price' && item.manipulations" class="price">
-                            <span class="md-title price_title">
-                                {{ getManipulationsByProcedureID(item.ID).reduce((a, b) => a + b.totalPrice, 0) }}
-                            </span>
+                            <span class="md-title price_title">{{
+                                getManipulationsByProcedureID(item.ID).reduce((a, b) => a + b.totalPrice, 0)
+                            }}</span>
                             <small>{{ currentClinic.currencyCode }}</small>
                             <span class="md-small-hide price_sub-title">
                                 <br />
@@ -129,12 +120,12 @@
                         </div>
                         <avatar-box v-else-if="field.key === 'planID'" small :id="item.planID" :firstLine="patient.plans[item.planID].name" />
                         <div v-else-if="field.key === 'discount'">
-                            <span class="md-title"> {{ item.discout || 0 }}% </span>
+                            <span class="md-title">{{ item.discout || 0 }}%</span>
                         </div>
                         <div v-else-if="field.key === 'dueDate' && item.dueDate">
                             <div v-if="!item.dueDate">No date</div>
                             <div v-else>
-                                <span class="">
+                                <span class>
                                     {{ item.dueDate | moment('from') }}
                                     <br />
                                 </span>
@@ -142,9 +133,7 @@
                             </div>
                         </div>
                         <div v-else-if="field.key === 'payments'">
-                            <span v-if="item.payments">
-                                {{ item.payments.length }}
-                            </span>
+                            <span v-if="item.payments">{{ item.payments.length }}</span>
                             <span v-else>No payments</span>
                         </div>
                         <procedures-box v-else-if="field.key === 'procedures' && item.procedures" :proceduresIds="item.procedures" />

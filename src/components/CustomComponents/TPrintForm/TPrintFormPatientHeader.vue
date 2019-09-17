@@ -41,6 +41,9 @@ export default {
             default: () => {}
         }
     },
+    mounted() {
+        this.$emit('onMounted');
+    },
     data() {
         return {
             editor: null

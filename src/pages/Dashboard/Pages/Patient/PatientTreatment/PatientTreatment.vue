@@ -49,24 +49,7 @@
         </div>
 
         <div class="md-layout-item md-layout md-size-100">
-            <!-- <t-tooth-items
-                :show-form.sync="showToothDiagnosis"
-                :tooth-id="showParams.toothId"
-                :item="itemToShow"
-                :patient-items="patient[showParams.type]"
-                :original-items="originalItems[showParams.type]"
-                :teeth-schema="teethSchema"
-                :teeth-system="currentClinic.teethSystem"
-                :access_token="access_token"
-                :files="files"
-                :jaw="jaw"
-                :type="currentType"
-                :currency-code="currentClinic.currencyCode"
-                @editItem="editItem"
-                @onPrint="onShowPrint"
-            /> -->
             <plan-add-form :show-form.sync="showAddPlan" :plans="patient.plans" :patient-id="patient.ID" @onPlanCreated="redirectToProcdures" />
-            <t-print-form :patient="patient" :show-form.sync="showPrint" />
         </div>
     </div>
 </template>

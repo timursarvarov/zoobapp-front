@@ -161,7 +161,7 @@
         </div>
 
         <div class="content-wrapper">
-            <md-table :value="currentManipulations" table-header-color="green">
+            <md-table :value="currentManipulations" table-header-color="green" class="table-striped table-with-header table-hover">
                 <md-table-empty-state md-label="No manipulations found" md-description="please select manipilation" />
                 <md-table-row
                     slot="md-table-row"
@@ -175,7 +175,11 @@
                 >
                     <md-table-cell md-label="#">{{ index + 1 }}</md-table-cell>
                     <md-table-cell md-label="Code">{{ item.catalogManipulationID }}</md-table-cell>
-                    <md-table-cell md-label="Title">{{ item.title }}</md-table-cell>
+                    <md-table-cell class="manip_title"  md-label="Title">
+                        <div class="md-layout">
+                            <small>{{ item.title }}</small>
+                        </div>
+                        </md-table-cell>
                     <md-table-cell md-label="Qty" class="manipulations-input">{{ item.qty }}</md-table-cell>
                     <md-table-cell>*</md-table-cell>
 

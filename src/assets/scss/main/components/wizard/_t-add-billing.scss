@@ -31,7 +31,7 @@
     }
     @keyframes text_color_change {
         from {
-            color: $white-color;
+            color:  rgba(0, 0, 0, 0.87);
         }
         to {
             color: rgba(0, 0, 0, 0.87);

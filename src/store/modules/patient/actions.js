@@ -61,11 +61,16 @@ export default {
             diagnosis: rootGetters.getPatientDiagnosis,
             ananmnesis: rootGetters.getPatientAnamnesis
         };
+
+        // const startTime = performance.now();
+
         const jaw = recalculateJaw(rootGetters.jawEthalon, patientItems);
+        // const duration = performance.now() - startTime;
+        // console.log(`someMethodIThinkMightBeSlow took ${duration}ms`);
         commit(PATIENT_PARAM_SET, { paramName: 'jaw', paramValue: jaw });
     },
     [PATIENT_ITEM_JUST_ADDED_TOGGLE]: ({ commit }, { params }) => {
-        delay(3000).then(() => commit(PATIENT_SUB_PARAMS_SET, { ...params }));
+        delay(6000).then(() => commit(PATIENT_SUB_PARAMS_SET, { ...params }));
     },
     [PATIENT_PROCEDURES_ASSOCIATE_WITH_INVOICE]: ({ commit }, { invoiceID, proceduresIDs }) => {
         proceduresIDs.forEach(pID => {

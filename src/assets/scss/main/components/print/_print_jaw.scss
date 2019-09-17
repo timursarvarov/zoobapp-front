@@ -1,335 +1,552 @@
 .print-form {
-    .A4 {
-        .print_patient_jaw {
+
+    .print_patient_jaw {
+        width: 100%;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid rgba(128, 128, 128, 0.171);
+        .jaw-wrapperprint {
+            user-select: none;
             width: 100%;
             display: flex;
-            align-items: top;
-            justify-content: center;
-            .jaw-wrapperprint {
-                user-select: none;
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                // background: rgba(white, 0.4);
-                border-radius: 5px;
-                min-height: 30vh;
-                .jaw-wrapper-teeth {
-                    height: 100%;
-                    overflow: hiden;
-                    position: relative;
+            flex-direction: column;
+            // background: rgba(white, 0.4);
+            border-radius: 5px;
+            min-height: 30vh;
+            .jaw-wrapper-teeth {
+                height: 100%;
+                overflow: hiden;
+                position: relative;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                .top-tooth-menu__wrapper {
                     top: 0;
-                    left: 0;
-                    right: 0;
+                    left: 50%;
+                    transform: translate(-50%, 0.3vh);
+                }
+                .bottom-tooth-menu__wrapper {
+                    left: 50%;
+                    transform: translate(-50%, -0.3vh);
                     bottom: 0;
-                    .top-tooth-menu__wrapper {
-                        top: 0;
-                        left: 50%;
-                        transform: translate(-50%, 0.3vh);
+                    position: absolute;
+                    border: none;
+                }
+                .top-tooth-menu__wrapper,
+                .down-tooth-menu__wrapper,
+                .tooth-menu__wrapper {
+                    position: absolute;
+                    border: none;
+                    border-radius: 50%;
+                    button{
+                            border: none !important;
+                        border-radius: 50% !important;
                     }
-                    .bottom-tooth-menu__wrapper {
-                        left: 50%;
-                        transform: translate(-50%, -0.3vh);
-                        bottom: 0;
-                        position: absolute;
-                        border: none;
+                    .dropdown-menu-center {
+                        transform: translate(-50%, 0) !important;
                     }
-                    .top-tooth-menu__wrapper,
-                    .down-tooth-menu__wrapper,
-                    .tooth-menu__wrapper {
-                        position: absolute;
-                        border: none;
-                        border-radius: 50%;
-                        button{
-                               border: none !important;
-                            border-radius: 50% !important;
-                        }
-                        .dropdown-menu-center {
-                            transform: translate(-50%, 0) !important;
-                        }
-                        .tooth-selected {
-                            cursor: pointer;
-                        }
-                        .t-tooth-button.tooth-selected {
-                            color: white !important;
+                    .tooth-selected {
+                        cursor: pointer;
+                    }
+                    .t-tooth-button.tooth-selected {
+                        color: white !important;
+                        border: none !important;
+                        border-radius: 50% !important;
+                        // background-color: white!important;
+                    }
+                    .tooth-selected {
+                        .t-tooth-button {
                             border: none !important;
                             border-radius: 50% !important;
-                            // background-color: white!important;
-                        }
-                        .tooth-selected {
-                            .t-tooth-button {
-                                border: none !important;
-                                border-radius: 50% !important;
-                                color: white !important;
-                                background-color: none !important;
-                            }
-                            // color: grey!important;
-                        }
-                        .has-items {
-                            box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2), 0 2px 5px 1px rgba(0, 0, 0, 0.14),
-                                0 3px 7px 2px rgba(0, 0, 0, 0.12) !important;
-                        }
-                        .anamnesis .anamnesis:active {
-                            background-color: #00bcd4 !important;
-                        }
-                        .diagnosis {
-                            background-color: #9c27b0 !important;
-                        }
-                        .diagnosis:active {
-                            background-color: #9c27b0 !important;
-                        }
-                        .procedures .procedures:active {
-                            background-color: #4caf50 !important;
-                        }
-                        .tooth-selected.t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures) {
-                            // box-shadow:none;
-                            background-color: transparent !important;
                             color: white !important;
-                            box-shadow: none;
-                            font-weight: 800;
+                            background-color: none !important;
                         }
-                        .t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures):not(.tooth-selected) {
-                            box-shadow: none;
-                            border: none;
-                            border-radius: 50%;
-                            background-color: white !important;
-                            color: grey !important;
-                        }
-                        .t-tooth-button:hover {
-                            box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14),
-                                0 1px 8px 0 rgba(0, 0, 0, 0.12) !important;
-                        }
-                        .t-tooth-button.circle {
-                            box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14),
-                                0 1px 8px 0 rgba(0, 0, 0, 0.12) !important;
-                        }
-                        .t-tooth-button.has-other-items:not(.anamnesis):not(.diagnosis):not(.procedures) {
-                            background-color: white !important;
-                            color: grey !important;
-                            box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2), 0 2px 5px 1px rgba(0, 0, 0, 0.14),
-                                0 3px 7px 2px rgba(0, 0, 0, 0.12);
-                        }
-                        .t-tooth-button {
-                            // background-color: white!important;
-                            box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14),
-                                0 1px 8px 0 rgba(0, 0, 0, 0.12);
+                        // color: grey!important;
+                    }
+                    .has-items {
+                        box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2), 0 2px 5px 1px rgba(0, 0, 0, 0.14),
+                            0 3px 7px 2px rgba(0, 0, 0, 0.12) !important;
+                    }
+                    .anamnesis .anamnesis:active {
+                        background-color: #00bcd4 !important;
+                    }
+                    .diagnosis {
+                        background-color: #9c27b0 !important;
+                    }
+                    .diagnosis:active {
+                        background-color: #9c27b0 !important;
+                    }
+                    .procedures .procedures:active {
+                        background-color: #4caf50 !important;
+                    }
+                    .tooth-selected.t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures) {
+                        // box-shadow:none;
+                        background-color: transparent !important;
+                        color: white !important;
+                        box-shadow: none;
+                        font-weight: 800;
+                    }
+                    .t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures):not(.tooth-selected) {
+                        box-shadow: none;
+                        border: none;
+                        border-radius: 50%;
+                        background-color: white !important;
+                        color: grey !important;
+                    }
+                    .t-tooth-button:hover {
+                        box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14),
+                            0 1px 8px 0 rgba(0, 0, 0, 0.12) !important;
+                    }
+                    .t-tooth-button.circle {
+                        box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14),
+                            0 1px 8px 0 rgba(0, 0, 0, 0.12) !important;
+                    }
+                    .t-tooth-button.has-other-items:not(.anamnesis):not(.diagnosis):not(.procedures) {
+                        background-color: white !important;
+                        color: grey !important;
+                        box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2), 0 2px 5px 1px rgba(0, 0, 0, 0.14),
+                            0 3px 7px 2px rgba(0, 0, 0, 0.12);
+                    }
+                    .t-tooth-button {
+                        // background-color: white!important;
+                        box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14),
+                            0 1px 8px 0 rgba(0, 0, 0, 0.12);
+                        position: relative;
+                        .md-ripple {
+                            min-height: 0;
+                            min-width: 0;
+                            max-height: inherit;
+                            max-width: inherit;
+                            padding: 0 !important;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
                             position: relative;
-                            .md-ripple {
-                                min-height: 0;
-                                min-width: 0;
-                                max-height: inherit;
-                                max-width: inherit;
-                                padding: 0 !important;
+                            .md-button-content {
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
-                                position: relative;
-                                .md-button-content {
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    align-self: center !important;
-                                    margin: auto;
-                                    span {
-                                        align-self: center;
-                                    }
-                                }
-                                &:after {
-                                    display: none !important;
-                                    // display: inline-block;
-                                    // width: 0;
-                                    // height: 0;
-                                    // margin: 0!important;
-                                }
-                            }
-                        }
-                    }
-                    .tooth-diagnosis-content {
-                        .md-list-item-button:hover {
-                            color: white !important;
-                            background-color: #4caf50 !important;
-                            box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2),
-                                0 1px 5px 0 rgba(76, 175, 80, 0.12);
-                        }
-                    }
-                    .tooth-anamnesis-content {
-                        .md-list-item-button:hover {
-                            color: white !important;
-                            background-color: #808080 !important;
-                            box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2),
-                                0 1px 5px 0 rgba(76, 175, 80, 0.12);
-                        }
-                    }
-                    .tooth-procedures-content {
-                        .md-list-item-button:hover {
-                            color: white !important;
-                            background-color: #9c27b0 !important;
-                            box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2),
-                                0 1px 5px 0 rgba(76, 175, 80, 0.12);
-                        }
-                    }
-                    .item-categoty {
-                        min-height: 20px !important;
-                        padding: 5px 5px;
-                        margin: 0 0.3125rem !important;
-                        align-items: center;
-                        position: relative;
-                        .md-list-item-container {
-                            .md-list-item-content.md-ripple {
-                                min-height: 15px !important;
-                                padding: 5px !important;
-                                // border-radius: 3px;
-                            }
-                        }
-                    }
-                    .no-locations {
-                        padding-right: 35px;
-                    }
-                    .tooth-menu-item:not(.item-categoty) {
-                        margin: 0 0.3125rem !important;
-                        align-items: center;
-                        position: relative;
-                        .md-list-item-button {
-                            overflow: visible;
-                        }
-
-                        .md-list-item-container {
-                            .md-list-item-content.md-ripple {
-                                padding: 5px !important;
-                                border-radius: 3px;
-                            }
-                            .md-list-item-content {
-                                display: flex;
-                                font-size: 12px;
-                                min-height: 12px !important;
-                                margin-right: 30px;
+                                align-self: center !important;
+                                margin: auto;
                                 span {
-                                    padding: 0 0 0 5px !important;
-                                }
-                                cursor: pointer;
-                                .tooth-diagnosis-content__item {
-                                    display: flex;
-                                    flex-grow: 1;
-                                    overflow: hidden;
-                                    // margin-right: 30px;
-                                }
-                                .tooth-items-code {
-                                    padding-right: 5px;
-                                }
-                                .md-list-item-text {
-                                    position: relative;
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                }
-                                .tooth-diagnosis-text {
-                                    flex-grow: 1;
-                                    overflow: hidden;
-                                    text-overflow: ellipsis;
-                                    // padding:0 30px 0 0 !important;
-                                    .tooth-diagnosis-text-item {
-                                        padding: 0 !important;
-                                    }
+                                    align-self: center;
                                 }
                             }
-                            .tooth-diagnosis-actions {
-                                position: absolute;
-                                right: -30px;
-                                .md-button {
-                                    max-height: 17px;
-                                    min-width: 24px;
-                                    max-width: 24px;
-                                    padding: 0;
-                                    .md-ripple {
-                                        min-height: inherit;
-                                        min-width: inherit;
-                                        padding: 0 !important;
-                                    }
-                                }
+                            &:after {
+                                display: none !important;
+                                // display: inline-block;
+                                // width: 0;
+                                // height: 0;
+                                // margin: 0!important;
                             }
                         }
                     }
                 }
-                .dropdown-menu li {
-                    padding: 0px 0px 0px 16px;
-                    .md-radio {
-                        margin: 8px 0 8px 0;
+                .tooth-diagnosis-content {
+                    .md-list-item-button:hover {
+                        color: white !important;
+                        background-color: #4caf50 !important;
+                        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2),
+                            0 1px 5px 0 rgba(76, 175, 80, 0.12);
                     }
                 }
-                .jaw-scroll {
-                    border-radius: 5px;
-                    max-width: calc(100vw - 40px);
-                    // overflow-x: auto;
-                    // overflow-y: auto;
-                    &::-webkit-scrollbar {
-                        height: 7px;
-                        // background-color: transparent;
-                    }
-                    &::-webkit-scrollbar-thumb {
-                        background-color: grey;
-                        border-radius: 7px;
+                .tooth-anamnesis-content {
+                    .md-list-item-button:hover {
+                        color: white !important;
+                        background-color: #808080 !important;
+                        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2),
+                            0 1px 5px 0 rgba(76, 175, 80, 0.12);
                     }
                 }
-                .jaw-top {
-                    .tooth {
-                    }
-                    .tooth-content {
-                        padding-top: calc(1vh + 5px);
-                    }
-                    .tooth-content:not(.selected) {
-                        // background-color: #ffffff;
-                        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                        transition-property: all;
-                        transition-duration: 0.9s;
-                        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                        transition-delay: 0s;
-                    }
-                    .selected {
-                        background-color: #9e9e9e;
-                        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                        transition-property: all;
-                        transition-duration: 0.9s;
-                        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                        transition-delay: 0s;
-                    }
-                    .tooth-number {
-                        bottom: 0;
+                .tooth-procedures-content {
+                    .md-list-item-button:hover {
+                        color: white !important;
+                        background-color: #9c27b0 !important;
+                        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2),
+                            0 1px 5px 0 rgba(76, 175, 80, 0.12);
                     }
                 }
-                .jaw-bottom {
-                    .tooth-content {
-                        padding-bottom: calc(1vh + 5px);
-                    }
-                    .tooth-content:not(.selected) {
-                        // background-color: #ffffff;
-                        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                        transition-property: all;
-                        transition-duration: 0.9s;
-                        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                        transition-delay: 0s;
-                    }
-                    .selected {
-                        background-color: #9e9e9e;
-                        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                        transition-property: all;
-                        transition-duration: 0.9s;
-                        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                        transition-delay: 0s;
-                    }
-                    .tooth-number {
-                        top: 0;
-                    }
-                }
-                .jaw-top,
-                .jaw-bottom {
-                    display: flex;
+                .item-categoty {
+                    min-height: 20px !important;
+                    padding: 5px 5px;
+                    margin: 0 0.3125rem !important;
                     align-items: center;
-                    justify-content: center;
-                    .tooth {
-                        .set-anamnesis {
-                            .anamnesis {
-                                opacity: 0.4;
+                    position: relative;
+                    .md-list-item-container {
+                        .md-list-item-content.md-ripple {
+                            min-height: 15px !important;
+                            padding: 5px !important;
+                            // border-radius: 3px;
+                        }
+                    }
+                }
+                .no-locations {
+                    padding-right: 35px;
+                }
+                .tooth-menu-item:not(.item-categoty) {
+                    margin: 0 0.3125rem !important;
+                    align-items: center;
+                    position: relative;
+                    .md-list-item-button {
+                        overflow: visible;
+                    }
+
+                    .md-list-item-container {
+                        .md-list-item-content.md-ripple {
+                            padding: 5px !important;
+                            border-radius: 3px;
+                        }
+                        .md-list-item-content {
+                            display: flex;
+                            font-size: 12px;
+                            min-height: 12px !important;
+                            margin-right: 30px;
+                            span {
+                                padding: 0 0 0 5px !important;
+                            }
+                            cursor: pointer;
+                            .tooth-diagnosis-content__item {
+                                display: flex;
+                                flex-grow: 1;
+                                overflow: hidden;
+                                // margin-right: 30px;
+                            }
+                            .tooth-items-code {
+                                padding-right: 5px;
+                            }
+                            .md-list-item-text {
+                                position: relative;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                            .tooth-diagnosis-text {
+                                flex-grow: 1;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                // padding:0 30px 0 0 !important;
+                                .tooth-diagnosis-text-item {
+                                    padding: 0 !important;
+                                }
                             }
                         }
+                        .tooth-diagnosis-actions {
+                            position: absolute;
+                            right: -30px;
+                            .md-button {
+                                max-height: 17px;
+                                min-width: 24px;
+                                max-width: 24px;
+                                padding: 0;
+                                .md-ripple {
+                                    min-height: inherit;
+                                    min-width: inherit;
+                                    padding: 0 !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .dropdown-menu li {
+                padding: 0px 0px 0px 16px;
+                .md-radio {
+                    margin: 8px 0 8px 0;
+                }
+            }
+            .jaw-scroll {
+                border-radius: 5px;
+                max-width: calc(100vw - 40px);
+                // overflow-x: auto;
+                // overflow-y: auto;
+                &::-webkit-scrollbar {
+                    height: 7px;
+                    // background-color: transparent;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background-color: grey;
+                    border-radius: 7px;
+                }
+            }
+            .jaw-top {
+                .tooth {
+                }
+                .tooth-content {
+                    padding-top: calc(1vh + 5px);
+                }
+                .tooth-content:not(.selected) {
+                    // background-color: #ffffff;
+                    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition-property: all;
+                    transition-duration: 0.9s;
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    transition-delay: 0s;
+                }
+                .selected {
+                    background-color: #9e9e9e;
+                    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition-property: all;
+                    transition-duration: 0.9s;
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    transition-delay: 0s;
+                }
+                .tooth-number {
+                    bottom: 0;
+                }
+            }
+            .jaw-bottom {
+                .tooth-content {
+                    padding-bottom: calc(1vh + 5px);
+                }
+                .tooth-content:not(.selected) {
+                    // background-color: #ffffff;
+                    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition-property: all;
+                    transition-duration: 0.9s;
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    transition-delay: 0s;
+                }
+                .selected {
+                    background-color: #9e9e9e;
+                    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition-property: all;
+                    transition-duration: 0.9s;
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    transition-delay: 0s;
+                }
+                .tooth-number {
+                    top: 0;
+                }
+            }
+            .jaw-top,
+            .jaw-bottom {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .tooth {
+                    .set-anamnesis {
                         .anamnesis {
+                            opacity: 0.4;
+                        }
+                    }
+                    .anamnesis {
+                        &.tooth-number {
+                            color: #5bc0de;
+                        }
+                        &.coronaLingualIncisalDistal,
+                        &.coronaLingualIncisalMiddle,
+                        &.coronaLingualIncisionMesial,
+                        &.coronaLingualMiddleDistal,
+                        &.coronaLingualMiddleMiddle,
+                        &.coronaLingualMiddleMesial,
+                        &.coronaLingualCervicalDistal,
+                        &.coronaLingualCervicalMiddle,
+                        &.coronaLingualCervicalMesial,
+                        &.coronaLabialIncisalDistal,
+                        &.coronaLabialIncisalMiddle,
+                        &.coronaLabialIncisionMesial,
+                        &.coronaLabialMiddleDistal,
+                        &.coronaLabialMiddleMiddle,
+                        &.coronaLabialMiddleMesial,
+                        &.coronaLabialCervicalDistal,
+                        &.coronaLabialCervicalMiddle,
+                        &.coronaLabialCervicalMesial,
+                        &.coronaTopBuccal,
+                        &.coronaTopMedial,
+                        &.coronaTopLingual,
+                        &.coronaTopDistal,
+                        &.coronaTopOclusial,
+                        &.implant,
+                        &.silant,
+                        &.crown,
+                        &.braces,
+                        &.root,
+                        &.bridge,
+                        &.veneer,
+                        &.silant {
+                            fill: #5bc0de !important;
+                            stroke: #020202;
+                        }
+                        &.periodontit {
+                            stroke-width: 2px;
+                        }
+                        &.coronaLingual,
+                        &.coronaTop,
+                        &.coronaLabial {
+                            stroke: #5bc0de;
+                            stroke-width: 2px;
+                        }
+                        &.rootCanal {
+                            stroke-width: 2px;
+                        }
+                        &.periodontit,
+                        &.rootCanal,
+                        &.bone {
+                            fill: lighten(#5bc0de, 83.5%) !important;
+                            stroke-width: 0;
+                            opacity: 0.6;
+                        }
+                        &.gum,
+                        &.paradontit1,
+                        &.paradontit2,
+                        &.paradontit3,
+                        &.paradontit4 {
+                            opacity: 1;
+                            stroke: #5bc0de;
+                            stroke-linejoin: round;
+                            stroke-width: 4px;
+                            fill: none !important;
+                        }
+                    }
+                }
+                // tooth diagnose
+                .tooth {
+                    .set-diagnosis {
+                        .diagnosis {
+                            opacity: 0.6;
+                        }
+                    }
+                    .diagnosis {
+                        &.tooth-number {
+                            color: #9c27b0;
+                        }
+                        &.coronaLingualIncisalDistal,
+                        &.coronaLingualIncisalMiddle,
+                        &.coronaLingualIncisionMesial,
+                        &.coronaLingualMiddleDistal,
+                        &.coronaLingualMiddleMiddle,
+                        &.coronaLingualMiddleMesial,
+                        &.coronaLingualCervicalDistal,
+                        &.coronaLingualCervicalMiddle,
+                        &.coronaLingualCervicalMesial,
+                        &.coronaLabialIncisalDistal,
+                        &.coronaLabialIncisalMiddle,
+                        &.coronaLabialIncisionMesial,
+                        &.coronaLabialMiddleDistal,
+                        &.coronaLabialMiddleMiddle,
+                        &.coronaLabialMiddleMesial,
+                        &.coronaLabialCervicalDistal,
+                        &.coronaLabialCervicalMiddle,
+                        &.coronaLabialCervicalMesial,
+                        
+                        &.coronaTopBuccal,
+                        &.coronaTopMedial,
+                        &.coronaTopLingual,
+                        &.coronaTopDistal,
+                        &.coronaTopOclusial,
+                        &.rootCanal,
+                        &.periodontit,
+                        &.implant,
+                        &.root,
+                        &.veneer,
+                        &.silant {
+                            fill: #9c27b0 !important;
+                            stroke: #9c27b0;
+                        }
+                        &.periodontit,
+                        &.rootCanal {
+                            stroke-width: 2px;
+                        }
+                        &.bone {
+                            fill: #9c27b0 !important;
+                            stroke-width: 0;
+                            opacity: 0.6;
+                        }
+                        &.gum,
+                        &.paradontit1,
+                        &.paradontit2,
+                        &.paradontit3,
+                        &.paradontit4 {
+                            opacity: 1;
+                            stroke: #f73403;
+                            stroke-linejoin: round;
+                            stroke-width: 4px;
+                            fill: none !important;
+                        }
+                    }
+                }
+                // tooth procedures
+                .tooth {
+                    .set-procedures {
+                        .procedures {
+                            opacity: 0.4;
+                        }
+                    }
+                    .procedures {
+                        &.tooth-number {
+                            color: #5cb85c;
+                        }
+                        &.coronaLingualIncisalDistal,
+                        &.coronaLingualIncisalMiddle,
+                        &.coronaLingualIncisionMesial,
+                        &.coronaLingualMiddleDistal,
+                        &.coronaLingualMiddleMiddle,
+                        &.coronaLingualMiddleMesial,
+                        &.coronaLingualCervicalDistal,
+                        &.coronaLingualCervicalMiddle,
+                        &.coronaLingualCervicalMesial,
+                        &.coronaLabialIncisalDistal,
+                        &.coronaLabialIncisalMiddle,
+                        &.coronaLabialIncisionMesial,
+                        &.coronaLabialMiddleDistal,
+                        &.coronaLabialMiddleMiddle,
+                        &.coronaLabialMiddleMesial,
+                        &.coronaLabialCervicalDistal,
+                        &.coronaLabialCervicalMiddle,
+                        &.coronaLabialCervicalMesial,
+                        &.coronaTopBuccal,
+                        &.coronaTopMedial,
+                        &.coronaTopLingual,
+                        &.coronaTopDistal,
+                        &.coronaTopOclusial,
+                        &.implant,
+                        &.silant,
+                        &.crown,
+                        &.braces,
+                        &.bridge,
+                        &.veneer,
+                        &.silant {
+                            fill: #5cb85c !important;
+                            stroke: #020202;
+                            stroke-width: 0.25px;
+                        }
+                        &.periodontit {
+                            stroke-width: 2px;
+                        }
+                        &.coronaLingual,
+                        &.coronaTop,
+                        &.coronaLabial {
+                            stroke: #5cb85c;
+                            stroke-width: 2px;
+                        }
+                        &.rootCanal {
+                            stroke-width: 2px;
+                        }
+                        &.periodontit,
+                        &.rootCanal,
+                        &.bone {
+                            fill: #5cb85c !important;
+                            stroke-width: 0;
+                            opacity: 0.6;
+                        }
+                        &.gum,
+                        &.paradontit1,
+                        &.paradontit2,
+                        &.paradontit3,
+                        &.paradontit4 {
+                            opacity: 1;
+                            stroke: #5cb85c;
+                            stroke-linejoin: round;
+                            stroke-width: 4px;
+                            fill: none !important;
+                        }
+                    }
+                }
+                // tooth selected
+                .tooth {
+                    .set-anamnesis {
+                        .selected {
+                            opacity: 1;
                             &.tooth-number {
                                 color: #5bc0de;
                             }
@@ -356,101 +573,40 @@
                             &.coronaTopLingual,
                             &.coronaTopDistal,
                             &.coronaTopOclusial,
+                            &.rootCanal,
+                            &.periodontit,
                             &.implant,
+                            &.veneer,
                             &.silant,
                             &.crown,
-                            &.braces,
-                            &.root,
                             &.bridge,
-                            &.veneer,
-                            &.silant {
-                                fill: #5bc0de !important;
-                                stroke: #020202;
-                            }
-                            &.periodontit {
-                                stroke-width: 2px;
-                            }
+                            &.root,
                             &.coronaLingual,
                             &.coronaTop,
                             &.coronaLabial {
+                                fill: #5bc0de !important;
                                 stroke: #5bc0de;
-                                stroke-width: 2px;
+                                &:hover {
+                                    stroke: #02d7f3;
+                                    stroke-width: 2px;
+                                    transition: all 0.2s ease-in-out;
+                                }
                             }
-                            &.rootCanal {
-                                stroke-width: 2px;
-                            }
-                            &.periodontit,
-                            &.rootCanal,
                             &.bone {
-                                fill: lighten(#5bc0de, 83.5%) !important;
+                                fill: #02d7f3 !important;
                                 stroke-width: 0;
-                                opacity: 0.6;
                             }
-                            &.gum,
-                            &.paradontit1,
-                            &.paradontit2,
-                            &.paradontit3,
-                            &.paradontit4 {
-                                opacity: 1;
-                                stroke: #5bc0de;
-                                stroke-linejoin: round;
-                                stroke-width: 4px;
-                                fill: none !important;
-                            }
-                        }
-                    }
-                    // tooth diagnose
-                    .tooth {
-                        .set-diagnosis {
-                            .diagnosis {
-                                opacity: 0.6;
-                            }
-                        }
-                        .diagnosis {
-                            &.tooth-number {
-                                color: #9c27b0;
-                            }
-                            &.coronaLingualIncisalDistal,
-                            &.coronaLingualIncisalMiddle,
-                            &.coronaLingualIncisionMesial,
-                            &.coronaLingualMiddleDistal,
-                            &.coronaLingualMiddleMiddle,
-                            &.coronaLingualMiddleMesial,
-                            &.coronaLingualCervicalDistal,
-                            &.coronaLingualCervicalMiddle,
-                            &.coronaLingualCervicalMesial,
-                            &.coronaLabialIncisalDistal,
-                            &.coronaLabialIncisalMiddle,
-                            &.coronaLabialIncisionMesial,
-                            &.coronaLabialMiddleDistal,
-                            &.coronaLabialMiddleMiddle,
-                            &.coronaLabialMiddleMesial,
-                            &.coronaLabialCervicalDistal,
-                            &.coronaLabialCervicalMiddle,
-                            &.coronaLabialCervicalMesial,
-                            
-                            &.coronaTopBuccal,
-                            &.coronaTopMedial,
-                            &.coronaTopLingual,
-                            &.coronaTopDistal,
-                            &.coronaTopOclusial,
-                            &.rootCanal,
-                            &.periodontit,
-                            &.implant,
-                            &.root,
                             &.veneer,
+                            &.braces,
                             &.silant {
-                                fill: #9c27b0 !important;
-                                stroke: #9c27b0;
-                            }
-                            &.periodontit,
-                            &.rootCanal {
-                                stroke-width: 2px;
-                            }
-                            &.bone {
-                                fill: #9c27b0 !important;
-                                stroke-width: 0;
-                                opacity: 0.6;
+                                fill: #02d7f3 !important;
+                                stroke: #000;
+                                stroke-width: 0.25px;
+                                &:hover {
+                                    stroke: #02d7f3;
+                                    stroke-width: 1px;
+                                    transition: all 0.2s ease-in-out;
+                                }
                             }
                             &.gum,
                             &.paradontit1,
@@ -465,267 +621,111 @@
                             }
                         }
                     }
-                    // tooth procedures
-                    .tooth {
-                        .set-procedures {
-                            .procedures {
-                                opacity: 0.4;
-                            }
-                        }
-                        .procedures {
-                            &.tooth-number {
-                                color: #5cb85c;
-                            }
-                            &.coronaLingualIncisalDistal,
-                            &.coronaLingualIncisalMiddle,
-                            &.coronaLingualIncisionMesial,
-                            &.coronaLingualMiddleDistal,
-                            &.coronaLingualMiddleMiddle,
-                            &.coronaLingualMiddleMesial,
-                            &.coronaLingualCervicalDistal,
-                            &.coronaLingualCervicalMiddle,
-                            &.coronaLingualCervicalMesial,
-                            &.coronaLabialIncisalDistal,
-                            &.coronaLabialIncisalMiddle,
-                            &.coronaLabialIncisionMesial,
-                            &.coronaLabialMiddleDistal,
-                            &.coronaLabialMiddleMiddle,
-                            &.coronaLabialMiddleMesial,
-                            &.coronaLabialCervicalDistal,
-                            &.coronaLabialCervicalMiddle,
-                            &.coronaLabialCervicalMesial,
-                            &.coronaTopBuccal,
-                            &.coronaTopMedial,
-                            &.coronaTopLingual,
-                            &.coronaTopDistal,
-                            &.coronaTopOclusial,
-                            &.implant,
-                            &.silant,
-                            &.crown,
-                            &.braces,
-                            &.bridge,
-                            &.veneer,
-                            &.silant {
-                                fill: #5cb85c !important;
-                                stroke: #020202;
-                                stroke-width: 0.25px;
-                            }
-                            &.periodontit {
-                                stroke-width: 2px;
-                            }
-                            &.coronaLingual,
-                            &.coronaTop,
-                            &.coronaLabial {
-                                stroke: #5cb85c;
-                                stroke-width: 2px;
-                            }
-                            &.rootCanal {
-                                stroke-width: 2px;
-                            }
-                            &.periodontit,
-                            &.rootCanal,
-                            &.bone {
-                                fill: #5cb85c !important;
-                                stroke-width: 0;
-                                opacity: 0.6;
-                            }
-                            &.gum,
-                            &.paradontit1,
-                            &.paradontit2,
-                            &.paradontit3,
-                            &.paradontit4 {
-                                opacity: 1;
-                                stroke: #5cb85c;
-                                stroke-linejoin: round;
-                                stroke-width: 4px;
-                                fill: none !important;
-                            }
-                        }
-                    }
-                    // tooth selected
-                    .tooth {
-                        .set-anamnesis {
-                            .selected {
-                                opacity: 1;
-                                &.tooth-number {
-                                    color: #5bc0de;
-                                }
-                                &.coronaLingualIncisalDistal,
-                                &.coronaLingualIncisalMiddle,
-                                &.coronaLingualIncisionMesial,
-                                &.coronaLingualMiddleDistal,
-                                &.coronaLingualMiddleMiddle,
-                                &.coronaLingualMiddleMesial,
-                                &.coronaLingualCervicalDistal,
-                                &.coronaLingualCervicalMiddle,
-                                &.coronaLingualCervicalMesial,
-                                &.coronaLabialIncisalDistal,
-                                &.coronaLabialIncisalMiddle,
-                                &.coronaLabialIncisionMesial,
-                                &.coronaLabialMiddleDistal,
-                                &.coronaLabialMiddleMiddle,
-                                &.coronaLabialMiddleMesial,
-                                &.coronaLabialCervicalDistal,
-                                &.coronaLabialCervicalMiddle,
-                                &.coronaLabialCervicalMesial,
-                                &.coronaTopBuccal,
-                                &.coronaTopMedial,
-                                &.coronaTopLingual,
-                                &.coronaTopDistal,
-                                &.coronaTopOclusial,
-                                &.rootCanal,
-                                &.periodontit,
-                                &.implant,
-                                &.veneer,
-                                &.silant,
-                                &.crown,
-                                &.bridge,
-                                &.root,
-                                &.coronaLingual,
-                                &.coronaTop,
-                                &.coronaLabial {
-                                    fill: #5bc0de !important;
-                                    stroke: #5bc0de;
-                                    &:hover {
-                                        stroke: #02d7f3;
-                                        stroke-width: 2px;
-                                        transition: all 0.2s ease-in-out;
-                                    }
-                                }
-                                &.bone {
-                                    fill: #02d7f3 !important;
-                                    stroke-width: 0;
-                                }
-                                &.veneer,
-                                &.braces,
-                                &.silant {
-                                    fill: #02d7f3 !important;
-                                    stroke: #000;
-                                    stroke-width: 0.25px;
-                                    &:hover {
-                                        stroke: #02d7f3;
-                                        stroke-width: 1px;
-                                        transition: all 0.2s ease-in-out;
-                                    }
-                                }
-                                &.gum,
-                                &.paradontit1,
-                                &.paradontit2,
-                                &.paradontit3,
-                                &.paradontit4 {
-                                    opacity: 1;
-                                    stroke: #f73403;
-                                    stroke-linejoin: round;
-                                    stroke-width: 4px;
-                                    fill: none !important;
-                                }
-                            }
-                        }
-                    }
-                    // tooth main styles
-                    .tooth {
-                        display: flex;
+                }
+                // tooth main styles
+                .tooth {
+                    display: flex;
+                    transition: 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition-property: all;
+                    transition-duration: 0.9s;
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    transition-delay: 0s;
+                    position: relative;
+                    .tooth-content {
                         transition: 0.9s cubic-bezier(0.4, 0, 0.2, 1);
                         transition-property: all;
                         transition-duration: 0.9s;
                         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
                         transition-delay: 0s;
-                        position: relative;
-                        .tooth-content {
-                            transition: 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-                            transition-property: all;
-                            transition-duration: 0.9s;
-                            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                            transition-delay: 0s;
-                        }
-                        .isToothShownDiagnose {
-                            transition: 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-                            transition-property: all;
-                            transition-duration: 0.9s;
-                            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                            transition-delay: 0s;
-                            background-color: rgba(161, 161, 161, 0.33);
-                        }
                     }
-                            svg {
-                                -webkit-perspective: 2000;
-                                -webkit-backface-visibility: hidden;
-                                // transition: none;
-                                // position: relative;
-                                // z-index: 5;
-                                flex-grow: 1;
-                                flex-basis: 100%;
-                                height: 100%;
-                                .bridge {
-                                    fill: #3535ed;
-                                }
-                                .root:not(.diagnose):not(.selected):not(.anamnes):not(.procedure) {
-                                    fill: rgb(255, 255, 183);
-                                    stroke: #000;
-                                    stroke-width: 0.45px;
-                                }
-                                .coronaLingualIncisalDistal,
-                                .coronaLingualIncisalMiddle,
-                                .coronaLingualIncisionMesial,
-                                .coronaLingualMiddleDistal,
-                                .coronaLingualMiddleMiddle,
-                                .coronaLingualMiddleMesial,
-                                .coronaLingualCervicalDistal,
-                                .coronaLingualCervicalMiddle,
-                                .coronaLingualCervicalMesial,
-                                .coronaLabialIncisalDistal,
-                                .coronaLabialIncisalMiddle,
-                                .coronaLabialIncisionMesial,
-                                .coronaLabialMiddleDistal,
-                                .coronaLabialMiddleMiddle,
-                                .coronaLabialMiddleMesial,
-                                .coronaLabialCervicalDistal,
-                                .coronaLabialCervicalMiddle,
-                                .coronaLabialCervicalMesial,
-                                .coronaTopBuccal,
-                                .coronaTopMedial,
-                                .coronaTopLingual,
-                                .coronaTopDistal,
-                                .coronaTopOclusial,
-                                .root,
-                                .bone,
-                                .bridge,
-                                .crown,
-                                .braces,
-                                .implant,
-                                .bridge,
-                                .coronaLingual,
-                                .coronaTop,
-                                .coronaLabial,
-                                .coronaLingual,
-                                .coronaTop,
-                                .coronaLabial {
-                                    fill: #fff;
-                                    stroke: #000;
-                                    stroke-width: 0.45px;
-                                }
-                                .gum {
-                                    stroke: #ffb900;
-                                    stroke-linejoin: round;
-                                    stroke-width: 4px;
-                                    fill: none;
-                                }
-                                .hide {
-                                    display: none;
-                                }
-                                .paradontit1,
-                                .paradontit2,
-                                .paradontit3,
-                                .paradontit4 {
-                                    opacity: 1;
-                                    stroke: #f73403;
-                                    stroke-linejoin: round;
-                                    stroke-width: 4px;
-                                    fill: none !important;
-                                }
-                            }
+                    .isToothShownDiagnose {
+                        transition: 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+                        transition-property: all;
+                        transition-duration: 0.9s;
+                        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                        transition-delay: 0s;
+                        background-color: rgba(161, 161, 161, 0.33);
+                    }
                 }
+                        svg {
+                            -webkit-perspective: 2000;
+                            -webkit-backface-visibility: hidden;
+                            // transition: none;
+                            // position: relative;
+                            // z-index: 5;
+                            flex-grow: 1;
+                            flex-basis: 100%;
+                            height: 100%;
+                            .bridge {
+                                fill: #3535ed;
+                            }
+                            .root:not(.diagnose):not(.selected):not(.anamnes):not(.procedure) {
+                                fill: rgb(255, 255, 183);
+                                stroke: #000;
+                                stroke-width: 0.45px;
+                            }
+                            .coronaLingualIncisalDistal,
+                            .coronaLingualIncisalMiddle,
+                            .coronaLingualIncisionMesial,
+                            .coronaLingualMiddleDistal,
+                            .coronaLingualMiddleMiddle,
+                            .coronaLingualMiddleMesial,
+                            .coronaLingualCervicalDistal,
+                            .coronaLingualCervicalMiddle,
+                            .coronaLingualCervicalMesial,
+                            .coronaLabialIncisalDistal,
+                            .coronaLabialIncisalMiddle,
+                            .coronaLabialIncisionMesial,
+                            .coronaLabialMiddleDistal,
+                            .coronaLabialMiddleMiddle,
+                            .coronaLabialMiddleMesial,
+                            .coronaLabialCervicalDistal,
+                            .coronaLabialCervicalMiddle,
+                            .coronaLabialCervicalMesial,
+                            .coronaTopBuccal,
+                            .coronaTopMedial,
+                            .coronaTopLingual,
+                            .coronaTopDistal,
+                            .coronaTopOclusial,
+                            .root,
+                            .bone,
+                            .bridge,
+                            .crown,
+                            .braces,
+                            .implant,
+                            .bridge,
+                            .coronaLingual,
+                            .coronaTop,
+                            .coronaLabial,
+                            .coronaLingual,
+                            .coronaTop,
+                            .coronaLabial {
+                                fill: #fff;
+                                stroke: #000;
+                                stroke-width: 0.45px;
+                            }
+                            .gum {
+                                stroke: #ffb900;
+                                stroke-linejoin: round;
+                                stroke-width: 4px;
+                                fill: none;
+                            }
+                            .hide {
+                                display: none;
+                            }
+                            .paradontit1,
+                            .paradontit2,
+                            .paradontit3,
+                            .paradontit4 {
+                                opacity: 1;
+                                stroke: #f73403;
+                                stroke-linejoin: round;
+                                stroke-width: 4px;
+                                fill: none !important;
+                            }
+                        }
             }
         }
     }
+
 }

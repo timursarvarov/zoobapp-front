@@ -208,4 +208,5 @@ export const DEFAULT_LANGUAGE = 'en';
 export const FALLBACK_LANGUAGE = 'en';
 
 // EventBus Events
-export const EB_SHOW_ITEM_WIZARD = 'EB_SHOW_ITEM_WIZARD'
+export const EB_SHOW_ITEM_WIZARD = 'EB_SHOW_ITEM_WIZARD';
+export const EB_SHOW_PATIENT_PRINT_FORM = 'EB_SHOW_PATIENT_PRINT_FORM';

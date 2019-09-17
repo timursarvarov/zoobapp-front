@@ -1,45 +1,79 @@
-.A4page {
-    background: white;
-    display: block;
-    margin: 0 auto;
-}
-.A4page[size="A4"] {
-    width: 21cm;
-    // height: auto;
-    height: 29.7cm;
-    width: 21cm;
-    // max-height: calc(100vh - 300px);
-    // overflow: hidden;
-    // overflow-x: scroll;
-    // overflow-y: scroll;
-    // margin-left: 10mm;
-    // margin-right: 10mm;
+
+.print-form__wrapper {
+    max-height: 60vh;
+    overflow: hidden;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    background: rgba(238, 238, 238, 0.436);
 }
 .print-form {
     position: relative;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 300;
+    // margin: 10mm;
+    .hidable__header{
+        opacity: 0.2;
+    }
 
     &__page-footer {
-        // display: none;
-        position: absolute;
         bottom: 0;
         width: 100%;
         border-top: 1px solid black; /* for demo */
-        background: yellow; /* for demo */
-        // display:flex;
+        display: flex;
+        position: absolute;
     }
 
     &__page-header {
-        // display: none;
-        position: absolute;
         top: 0;
         width: 100%;
         border-bottom: 1px solid black; /* for demo */
-        background: yellow; /* for demo */
-        // display:flex;
+        display: flex;
+        position: absolute;
     }
 
     &__page {
+        min-width: 20cm;
+        padding-top: 5px;
         page-break-after: always;
-    }
+        &__block:not(:first-child){
+            // margin-top: 5px;
+            // padding-top: 5px;
+            // border-top: 1px solid rgba(128, 128, 128, 0.514);
+        }
+        &__block{
 
+        }
+    }
 }
+// .print-form {
+    @media print {
+        @page {
+            margin: 10mm;
+        };
+        .hide-on-print{
+            display: none;
+        }
+        .hide-on-print-actions{
+            display: none;
+        }
+        .print-form thead {
+            display: table-header-group;
+        }
+        .print-form tfoot {
+            display: table-footer-group;
+        }
+
+        .print-form button {
+            display: none;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .print-form__page-footer,
+        .print-form__page-header {
+            position: fixed;
+        }
+    }
+// }

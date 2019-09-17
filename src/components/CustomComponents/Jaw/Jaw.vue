@@ -1,5 +1,6 @@
 <template>
     <div ref="wrjaw" class="wrjaw">
+        {{isCalculatingJaw}}
         <div v-if="isCalculatingJaw" class="loader-wrapper md-layout">
             <div style="margin:auto; height:100%" class="md-layout mx-auto patient-wrapper-preloader">
                 <div style="height:60px;margin: auto;">
@@ -24,6 +25,9 @@
                     </md-button>
 
                     <md-menu-content>
+                        <md-menu-item>
+                            <md-button @click="isCalculatingJaw = !isCalculatingJaw">sdf</md-button>
+                        </md-menu-item>
                         <md-menu-item>
                             <md-switch v-model="ageCategoryBaby">
                                 Baby teeth
@@ -90,7 +94,7 @@
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         :viewBox="jawSVG[toothId].viewBox"
-                                        :style="{ width: getCustomWidth(toothId) + (printmode ? 'px' : 'vw' ) }"
+                                        :style="{ width: getCustomWidth(toothId) + (printmode ? 'px' : 'vw') }"
                                     >
                                         <g v-if="jawComputed[toothId]">
                                             <template v-for="(value, location) in defaultLocations">
@@ -134,7 +138,7 @@
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         :viewBox="jawSVG[toothId].viewBox"
-                                        :style="{ width: getCustomWidth(toothId) + (printmode ? 'px' : 'vw' ) }"
+                                        :style="{ width: getCustomWidth(toothId) + (printmode ? 'px' : 'vw') }"
                                     >
                                         <g v-if="jawComputed[toothId]">
                                             <template v-for="(value, location) in defaultLocations">
@@ -181,7 +185,7 @@
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         :viewBox="jawSVG[toothId].viewBox"
-                                        :style="{ width: getCustomWidth(toothId) + (printmode ? 'px' : 'vw' ) }"
+                                        :style="{ width: getCustomWidth(toothId) + (printmode ? 'px' : 'vw') }"
                                     >
                                         <g v-if="jawComputed[toothId]">
                                             <template v-for="(value, location) in defaultLocations">
@@ -226,7 +230,7 @@
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         :viewBox="jawSVG[toothId].viewBox"
-                                        :style="{ width: getCustomWidth(toothId) + (printmode ? 'px' : 'vw' ) }"
+                                        :style="{ width: getCustomWidth(toothId) + (printmode ? 'px' : 'vw') }"
                                     >
                                         <g v-if="jawComputed[toothId]">
                                             <template v-for="(value, location) in defaultLocations">
@@ -300,7 +304,9 @@ import {
     TEETH_BABY_TOP,
     TEETH_BABY_ALL,
     TEETH_ALL,
-    PATIENT_EDIT
+    PATIENT_EDIT,
+    LOADER_START,
+    LOADER_STOP
 } from '@/constants';
 import JawMenu from './JawMenu';
 import AnimatedNumber from '@/components/AnimatedNumber';
@@ -313,6 +319,14 @@ export default {
         AnimatedNumber
     },
     mixins: [tObjProp, jawFunctions],
+    updated: function() {
+        console.log('updated1');
+        this.$nextTick(function() {
+            // Код, который будет запущен только после
+            // обновления всех представлений
+            console.log('updated2');
+        });
+    },
     props: {
         printmode: {
             type: Boolean,
@@ -348,7 +362,7 @@ export default {
             mouseOverToothId: '',
             separatedProcedures: {},
             windowWidth: 0,
-            isCalculatingJaw: true,
+            isCalculatingJaw: false,
             toggleAll: false,
             toggleAdultTop: false,
             toggleAdultBottom: false,
@@ -499,14 +513,12 @@ export default {
             },
             deep: true
         },
+        isCalculatingJaw(val){
+            console.log(val)
+        },
         jaw: {
             handler() {
-                // console.log(newValue);
-                // const startTime = performance.now();
-
-                this.calculateJaw('watcher');
-                // const duration = performance.now() - startTime;
-                // console.log(`someMethodIThinkMightBeSlow took ${duration}ms`);
+                this.calculateJaw();
             },
             deep: true
         },
@@ -669,26 +681,47 @@ export default {
             this.$emit('onSelectedTeeth', this.selectedTeethLocal);
         },
         calculateJaw() {
+            this.$store.dispatch(LOADER_START);
             this.isCalculatingJaw = true;
-            return Promise.resolve(this.calculatePromise()).then(() => {
-                this.isCalculatingJaw = false;
+            const startTime = performance.now();
+            this.calculatePromise().then(jaw => {
+                this.jawComputed = jaw;
+                this.handleResize();
+                const duration = performance.now() - startTime;
+                console.log(`JAW someMethodIThinkMightBeSlow took ${duration}ms`);
+                this.delay(3000).then(()=>{
+                    this.change()
+                })
+                // this.$store.dispatch(LOADER_STOP);
             });
         },
-        calculatePromise() {
-            const jaw = {};
-            this.teeth.forEach(toothId => {
-                jaw[toothId] = {};
-                Object.keys(this.defaultLocations).forEach(location => {
-                    if (!(location in jaw[toothId])) {
-                        jaw[toothId][location] = {};
-                    }
-                    jaw[toothId][location].classes = this.getToothClasses(toothId, location);
-                    // СВОЙСТВО hide применяется если во view выбранного диагноза нет текущей локации
-                    jaw[toothId][location].hide = this.isHidingLocation(toothId, location, this.jaw, this.prefer, this.defaultLocations);
-                });
+        delay(ms) {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve();
+                }, ms);
             });
-            this.jawComputed = jaw;
-            this.handleResize();
+        },
+        change(){
+            this.isCalculatingJaw = false;
+            this.$store.dispatch(LOADER_STOP);
+        },
+        calculatePromise() {
+            return new Promise(resolve => {
+                const jaw = {};
+                this.teeth.forEach(toothId => {
+                    jaw[toothId] = {};
+                    Object.keys(this.defaultLocations).forEach(location => {
+                        if (!(location in jaw[toothId])) {
+                            jaw[toothId][location] = {};
+                        }
+                        jaw[toothId][location].classes = this.getToothClasses(toothId, location);
+                        // СВОЙСТВО hide применяется если во view выбранного диагноза нет текущей локации
+                        jaw[toothId][location].hide = this.isHidingLocation(toothId, location, this.jaw, this.prefer, this.defaultLocations);
+                    });
+                });
+                resolve(jaw);
+            })
         },
 
         setTeeth() {
