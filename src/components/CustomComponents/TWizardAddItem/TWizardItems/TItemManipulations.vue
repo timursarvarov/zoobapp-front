@@ -170,22 +170,27 @@
                         { 'just-added': item.justAdded },
                         {
                             'editable-mode': item.editing && manipulationToEdit.ID
+                        },
+                        {
+                            'to-delete': item.ID === manipulationToDelete.ID
                         }
                     ]"
                 >
-                    <md-table-cell md-label="#">{{ index + 1 }}</md-table-cell>
-                    <md-table-cell md-label="Code">{{ item.catalogManipulationID }}</md-table-cell>
-                    <md-table-cell class="manip_title"  md-label="Title">
+                    <md-table-cell md-numeric md-label="#">{{ index + 1 }}</md-table-cell>
+                    <md-table-cell class="manip_title" md-label="Title">
                         <div class="md-layout">
-                            <small>{{ item.title }}</small>
+                            <small>
+                                <span v-if="item.code"> {{ item.code }} - </span>
+                                {{ item.title }}</small
+                            >
                         </div>
-                        </md-table-cell>
-                    <md-table-cell md-label="Qty" class="manipulations-input">{{ item.qty }}</md-table-cell>
-                    <md-table-cell>*</md-table-cell>
-
-                    <md-table-cell md-label="Price">{{ item.price }}</md-table-cell>
-                    <md-table-cell md-label="Total">{{ item.totalPrice }}</md-table-cell>
-                    <md-table-cell class="actions">
+                    </md-table-cell>
+                    <md-table-cell md-label="Total" class="cell-manipulations-total">
+                        <small> {{ item.qty }} * {{ item.price }} = &nbsp; </small>
+                        <b>{{ item.totalPrice }} </b> &nbsp;
+                        <small>{{ currencyCode }}</small>
+                    </md-table-cell>
+                    <md-table-cell class="cell-actions">
                         <md-button class="md-just-icon md-round md-info md-simple" @click.native="setEditedManipulation(item), (item.editing = true)">
                             <md-icon>edit</md-icon>
                         </md-button>
@@ -230,8 +235,15 @@
                 {{ manipulationToDelete.title }}
             </div>
             <div>
-                <md-button class="md-simple" @click="(manipulationToDelete = {}), (showSnackbar = false)">cancel</md-button>
-                <md-button class="md-warning" @click="(showSnackbar = false), deleteManipulation()">Delete</md-button>
+                <md-button class="md-simple" @click="manipulationToDelete = {}">cancel</md-button>
+                <!-- <md-button class="md-warning" @click="(showSnackbar = false), deleteManipulation()">Delete</md-button> -->
+                <md-button :disabled="deleting" class="md-warning" @click="deleteManipulation()">
+                    <div v-if="deleting">
+                        <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />&nbsp;
+                        <span>Deleting...</span>
+                    </div>
+                    <span v-else> <md-icon>delete</md-icon>delete </span>
+                </md-button>
             </div>
         </md-snackbar>
     </div>
@@ -307,11 +319,15 @@ export default {
             manipulationToDelete: {},
             showSnackbar: false,
             isLoading: false,
+            deleting: false,
             touched: {
                 selectedManipID: false
             },
             modelValidations: {
                 selectedManipID: {
+                    max: 0
+                },
+                qty: {
                     max: 0
                 }
             }
@@ -364,6 +380,13 @@ export default {
         },
         selectedManipulationID() {
             this.touched.selectedManipID = true;
+        },
+        manipulationToDelete(value) {
+            if (this.lodash.isEmpty(value)) {
+                this.showSnackbar = false;
+            } else {
+                this.showSnackbar = true;
+            }
         }
     },
     mounted() {
@@ -371,8 +394,13 @@ export default {
     },
     methods: {
         startDeleteManipulations(manipulation) {
+            this.selectedManipulationID = '';
+            this.manipulationPrice = 0;
+            this.manipulationsNum = 0;
+            this.selectedManipulationID = '';
+            this.manipulationToEdit = {};
             this.manipulationToDelete = manipulation;
-            this.showSnackbar = true;
+            // this.showSnackbar = true;
         },
         unsetSelectedManipulations() {
             if (this.manipulationToEdit.ID) {
@@ -385,7 +413,7 @@ export default {
             if (!this.itemID) {
                 return;
             }
-            this.isLoading = true;
+            this.deleting = true;
             this.$store
                 .dispatch(PATIENT_MANIPULATION_DELETE, {
                     procedureID: this.itemID,
@@ -393,7 +421,7 @@ export default {
                 })
                 .then(
                     () => {
-                        this.isLoading = false;
+                        this.deleting = false;
                         this.manipulationToDelete = {};
                     },
                     error => {
@@ -404,11 +432,11 @@ export default {
                             }
                         });
                         console.log(error);
-                        this.isLoading = false;
+                        this.deleting = false;
                     }
                 )
                 .catch(err => {
-                    this.isLoading = false;
+                    this.deleting = false;
                     throw new Error(err);
                 });
         },
@@ -421,7 +449,7 @@ export default {
                 .dispatch(PATIENT_MANIPULATION_SET, {
                     manipulationParams: {
                         procedureID: this.itemID,
-                        price: parseInt(this.manipulationPrice, 10),
+                        price: parseFloat(this.manipulationPrice),
                         qty: parseInt(this.manipulationsNum, 10),
                         totalPrice: parseInt(this.manipulationsNum, 10) * parseInt(this.manipulationPrice, 10),
                         catalogManipulationID: this.manipulationToAdd.ID
@@ -549,6 +577,7 @@ export default {
             });
         },
         setEditedManipulation(manipulation) {
+            this.manipulationToDelete = {};
             this.setEditingClass(manipulation);
             this.manipulationToEdit = manipulation;
             this.selectedManipulationID = manipulation.catalogManipulationID;

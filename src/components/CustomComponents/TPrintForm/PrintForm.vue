@@ -1,6 +1,6 @@
 <template>
     <div>
-        <md-dialog class="patient-add-form" :md-active.sync="showFormL" >
+        <md-dialog class="patient-add-form" :md-active.sync="showFormL">
             <div>
                 <md-card>
                     <md-card-header class="md-card-header-icon">
@@ -15,70 +15,95 @@
                     <md-card-content class="md-layout">
                         <div class="md-layout-item">
                             <div class="print-form__wrapper">
-                                    <div ref="print" id="myelement">
-                                        <div class="print-form">
-                                            <!-- <t-print-form-patient-jaw :patient-props="patientProps" /> -->
-                                            <!-- <t-print-form-patient-bio v-if="printmodel.jaw" :patient="patient" /> -->
-                                            <div ref="header" class="print-form__page-header">
-                                                <t-print-form-patient-header :currentClinic="currentClinic" @onMounted="onHeaderMounted" />
-                                            </div>
-
-                                            <div ref="footer" class="print-form__page-footer">I'm The Footer</div>
-
-                                            <table>
-                                                <thead>
-                                                    <tr>
-                                                        <td>
-                                                            <!--place holder for the fixed-position header-->
-                                                            <div :style="{ minHeight: `${height.header}px` }" class="print-form__page-header-space"></div>
-                                                        </td>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <!--*** CONTENT GOES HERE ***-->
-                                                            <div class="print-form__page">
-                                                                <div class="print-form__page__block">
-                                                                    <t-print-form-patient-bio :patient="patient" />
-                                                                </div>
-
-                                                                <div class="print-form__page__block">
-                                                                    <t-print-form-patient-jaw :patient-props="patientProps" />
-                                                                </div>
-                                                                <!-- <div class="print-form__page__block">
-                                                                    <t-print-form-patient-procedure :procedure-id="3" />
-                                                                </div>-->
-                                                                <!-- <div v-for="(planID, i) in selectedPlans" :key="i" > -->
-                                                                <t-print-form-patient-plan v-for="(planID, i) in selectedPlans" :planID="planID" :num="i" :key="i">
-                                                                    <template slot="procedures" slot-scope="{ procedureId, index, showManipulations }">
-                                                                        <t-print-form-patient-procedure
-                                                                            :showManipulations="showManipulationsGlobal && showManipulations"
-                                                                            :num="index + 1"
-                                                                            :procedure-id="procedureId"
-                                                                        />
-                                                                    </template>
-                                                                </t-print-form-patient-plan>
-                                                                <!-- </div> -->
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-
-                                                <tfoot>
-                                                    <tr>
-                                                        <td>
-                                                            <!--place holder for the fixed-position footer-->
-                                                            <div :style="{ minHeight: `${height.footer}px` }" class="print-form__page-footer-space"></div>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
+                                <div ref="print" id="myelement">
+                                    <div class="print-form">
+                                        <!-- <t-print-form-patient-jaw :patient-props="patientProps" /> -->
+                                        <!-- <t-print-form-patient-bio v-if="printmodel.jaw" :patient="patient" /> -->
+                                        <div ref="header" class="print-form__page-header">
+                                            <t-print-form-patient-header :currentClinic="currentClinic" @onMounted="onHeaderMounted" />
                                         </div>
+
+                                        <div ref="footer" class="print-form__page-footer">I'm The Footer</div>
+
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <td>
+                                                        <!--place holder for the fixed-position header-->
+                                                        <div :style="{ minHeight: `${height.header}px` }" class="print-form__page-header-space"></div>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <!--*** CONTENT GOES HERE ***-->
+                                                        <div class="print-form__page">
+                                                            <!-- <div class="print-form__page__block">
+                                                            </div> -->
+                                                            <t-print-form-patient-bio :patient="patient" />
+                                                            <print-form-patient v-if="type === 'patient'" />
+                                                            <t-print-form-patient-jaw v-else-if="type === 'jaw'" :patient-props="patientProps" />
+                                                            <t-print-form-patient-procedure
+                                                                v-else-if="type === 'procedures'"
+                                                                :num="1"
+                                                                :procedure-id="selectedItem.ID"
+                                                            />
+                                                            <t-print-form-patient-plan
+                                                                v-else-if="type === 'plan'"
+                                                                :planID="`${selectedItem.ID}`"
+                                                                :num="0"
+                                                                s
+                                                            >
+                                                                <template slot="procedures" slot-scope="{ procedureId, index, showManipulations }">
+                                                                    <t-print-form-patient-procedure
+                                                                        :showManipulations="showManipulationsGlobal && showManipulations"
+                                                                        :num="index + 1"
+                                                                        :procedure-id="procedureId"
+                                                                    />
+                                                                </template>
+                                                            </t-print-form-patient-plan>
+
+                                                            <!-- <div class="print-form__page__block">
+                                                                <t-print-form-patient-jaw :patient-props="patientProps" />
+                                                            </div>
+                                                            <div class="print-form__page__block">
+                                                                    <t-print-form-patient-procedure :procedure-id="3" />
+                                                                </div>
+                                                            <div v-for="(planID, i) in selectedPlans" :key="i" >
+                                                            <t-print-form-patient-plan
+                                                                v-for="(planID, i) in selectedPlans"
+                                                                :planID="planID"
+                                                                :num="i"
+                                                                :key="i"
+                                                            >
+                                                                <template slot="procedures" slot-scope="{ procedureId, index, showManipulations }">
+                                                                    <t-print-form-patient-procedure
+                                                                        :showManipulations="showManipulationsGlobal && showManipulations"
+                                                                        :num="index + 1"
+                                                                        :procedure-id="procedureId"
+                                                                    />
+                                                                </template>
+                                                            </t-print-form-patient-plan> -->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+
+                                            <tfoot>
+                                                <tr>
+                                                    <td>
+                                                        <!--place holder for the fixed-position footer-->
+                                                        <div :style="{ minHeight: `${height.footer}px` }" class="print-form__page-footer-space"></div>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </md-card-content>
 
                     <md-card-actions md-alignment="right">
@@ -102,15 +127,23 @@ import { Printd } from 'printd';
 import { PATIENT_ADD_SUB_PROP } from '@/constants';
 
 export default {
-    name: 'PatientPrintForm',
+    name: 'PrintForm',
     components: {
         ...components
     },
-    props:{
+    props: {
         showForm: {
             type: Boolean,
             default: () => false
         },
+        type: {
+            type: String,
+            default: () => ''
+        },
+        selectedItem: {
+            type: Object,
+            default: () => {}
+        }
     },
     data() {
         return {
@@ -154,8 +187,10 @@ export default {
         this.matchHeight();
     },
     created() {
-        this.selectedPlans = this.lodash.clone(Object.keys(this.patient.plans));
-        // this.selectedPlans = this.getAproovedPlansIDs;
+        if (this.patient.plans) {
+            this.selectedPlans = this.lodash.clone(Object.keys(this.patient.plans));
+            // this.selectedPlans = this.getAproovedPlansIDs;
+        }
     },
     methods: {
         matchHeight() {

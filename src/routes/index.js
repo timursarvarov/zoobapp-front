@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import routes from './routes';
 import store from '@/store';
-import { LOADER_STOP, LOADER_START } from '@/constants';
 
 Vue.use(Router);
 
@@ -33,8 +32,8 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    store.dispatch(LOADER_START);
-    console.log('start')
+    // store.dispatch(LOADER_START);
+    // console.log('start')
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
@@ -50,9 +49,9 @@ router.beforeEach((to, from, next) => {
         next(); // make sure to always call next()!
     }
 });
-router.afterEach((to, from) => {
-    console.log('stop')
-    store.dispatch(LOADER_STOP);
-});
+// router.afterEach((to, from) => {
+//     console.log('stop')
+//     store.dispatch(LOADER_STOP);
+// });
 
 export default router;

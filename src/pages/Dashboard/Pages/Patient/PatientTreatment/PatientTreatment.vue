@@ -2,33 +2,35 @@
     <div class="md-layout md-gutter set-diagnose-form">
         <div class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
             <div class="mx-auto" style="flex-grow:1;">
-                <jaw
-                    :selected-teeth="selectedTeeth"
-                    :age-category="!!patient.ageCategory"
-                    :jaw="patient.jaw || {}"
-                    :patient-items="{
-                        diagnosis: patient.diagnosis,
-                        procedures: currentPlanProcedures,
-                        anamnesis: patient.anamnesis
-                    }"
-                    :type="currentType"
-                    @onSelectedTeeth="onSelectedTeeth"
-                    @showToothInfo="showToothInfo"
-                    @onSizeChanged="matchHeight"
-                >
-                    <template v-if="patient.ID" slot="title-start">
-                        <md-tabs md-sync-route class="t-md-tabs" :class="currentType">
-                            <md-tab id="tab-home" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan`" md-label="Procedures" />
-                            <md-tab
-                                id="tab-pages"
-                                class="diagnosis"
-                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/diagnosis`"
-                                md-label="Diagnoses"
-                            />
-                            <md-tab id="tab-posts" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`" md-label="Anamnes" />
-                        </md-tabs>
-                    </template>
-                </jaw>
+                <keep-alive>
+                    <jaw
+                        :selected-teeth="selectedTeeth"
+                        :age-category="!!patient.ageCategory"
+                        :jaw="patient.jaw || {}"
+                        :patient-items="{
+                            diagnosis: patient.diagnosis,
+                            procedures: currentPlanProcedures,
+                            anamnesis: patient.anamnesis
+                        }"
+                        :type="currentType"
+                        @onSelectedTeeth="onSelectedTeeth"
+                        @showToothInfo="showToothInfo"
+                        @onSizeChanged="matchHeight"
+                    >
+                        <template v-if="patient.ID" slot="title-start">
+                            <md-tabs md-sync-route class="t-md-tabs" :class="currentType">
+                                <md-tab id="tab-home" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan`" md-label="Procedures" />
+                                <md-tab
+                                    id="tab-pages"
+                                    class="diagnosis"
+                                    :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/diagnosis`"
+                                    md-label="Diagnoses"
+                                />
+                                <md-tab id="tab-posts" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`" md-label="Anamnes" />
+                            </md-tabs>
+                        </template>
+                    </jaw>
+                </keep-alive>
             </div>
         </div>
         <keep-alive>
@@ -73,8 +75,8 @@ import EventBus from '@/plugins/event-bus';
 export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            if (from.name) {
-                if (to.params.planID) {
+            if (to.name !== 'procedures') {
+                if (to.params.planID !== undefined) {
                     vm.$router.push({
                         name: 'procedures',
                         params: {

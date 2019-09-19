@@ -1,24 +1,36 @@
 <template lang="html">
-    <div class="md-layout-item  md-size-100">
-        <md-toolbar class="md-transparent">
-            <t-toolbar-row :headers="headers" />
+    <div class="">
+        <t-toolbar-row :headers="headers" />
+        <md-toolbar class="md-transparent md-elevation-0" >
             <div class="md-toolbar-row">
                 <div class="md-toolbar-section-start">
                     {{ currentPlan.state }}
                 </div>
 
                 <div class="md-toolbar-section-end">
-                    <md-button class="md-simple">
+                    <md-button class="md-just-icon md-simple" @click="handlePrint(currentPlan)">
+                        <md-icon>
+                            print
+                        </md-icon>
+                        <md-tooltip>
+                            Print plan
+                        </md-tooltip>
+                    </md-button>
+                    <md-button class="md-just-icon md-simple">
                         <md-icon>
                             edit
                         </md-icon>
-                        Change plan title
+                        <md-tooltip>
+                            Change plan title
+                        </md-tooltip>
                     </md-button>
-                    <md-button class="md-simple" @click="showDeleteItemSnackbar = true">
+                    <md-button class="md-just-icon md-simple" @click="showDeleteItemSnackbar = true">
                         <md-icon>
                             delete
                         </md-icon>
-                        Delete plan
+                        <md-tooltip>
+                            Delete plan
+                        </md-tooltip>
                     </md-button>
                     <md-button v-if="currentPlan.state === 1" class="md-simple" @click="unApprovePlan(currentPlanID)">
                         <md-icon>
@@ -88,9 +100,10 @@
 <script>
 import moment from 'moment';
 import { mapGetters } from 'vuex';
-import { NOTIFY, PATIENT_PLAN_EDIT, PATIENT_PLAN_DELETE } from '@/constants';
+import { NOTIFY, PATIENT_PLAN_EDIT, PATIENT_PLAN_DELETE, EB_SHOW_PATIENT_PRINT_FORM } from '@/constants';
 import components from '@/components';
 import PatientNosologyTable from '@/pages/Dashboard/Pages/Patient/PatientNosologyTable';
+import EventBus from '@/plugins/event-bus';
 
 export default {
     components: {
@@ -182,6 +195,15 @@ export default {
         }
     },
     methods: {
+        handlePrint(item) {
+            if (item) {
+                const params = {
+                    item,
+                    type: 'plan'
+                };
+                EventBus.$emit(EB_SHOW_PATIENT_PRINT_FORM, params);
+            }
+        },
         totalPrice(IDs) {
             const sum = this.getManipulationsByProcedureIDs(IDs).reduce((a, b) => a + b.totalPrice, 0);
             return sum || 0;

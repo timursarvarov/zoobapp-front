@@ -31,7 +31,7 @@
     
     @keyframes color_change {
         from {
-            background-color: ighten($brand-primary, 43.5%);
+            background-color:$brand-success, 13.5%;
         }
         to {
             background-color: none;
@@ -130,32 +130,58 @@
     .table-no-actions .paginated-table .md-table-head:nth-child(6) {
         text-align: left !important;
     }
-    
     .md-table {
+        .cell-actions{
+            .md-table-cell-container{
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+        .cell-manipulations-total{
+            .md-table-cell-container{
+                display: flex;
+                justify-content: flex-end;
+                white-space: nowrap;
+                align-items: baseline;
+            }
+        }
         .md-table-cell {
+            padding: 0;
             .md-table-cell-container {
-                .cell-actions{
+                padding: 0 6px;
+                .manip_title{
+                    width: max-content;
+                }
+                .md-numeric{
                     display: flex;
-                    justify-content: flex-end;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .manipulations-total{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
                 }
                 .teeth {
+                    margin-right: 5px;
+                    margin-left: 5px;
                     display: flex;
                     flex-wrap: wrap;
-                    .tooth {
-                        width: fit-content;
-                        border: 1px solid #fff;
+                    align-items: center;
+                    .tooth{
+                        line-height: 1;
+                        border: 1px solid #ffffff;
                         font-size: 12px;
                         color: #ffffff;
-                        min-width: 20px;
-                        padding: 0px 6px;
+                        width: 20px;
                         height: 20px;
-                        border-radius: 10px;
-                        text-align: center;
-                        line-height: 18px;
+                        border-radius: 50%;
+                        margin: 4px 1px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        justify-content: center;
                     }
-                    // .tooth:not(.md-primary):not(.md-success):not(.md-info):not(.md-warning) {
-                    //     background: #f44336;
-                    // }
                     .tooth.billing,
                     .tooth.procedures {
                         background: $brand-success;

@@ -12,7 +12,9 @@
                     <template slot="header">
                         <h5 class="title">
                             {{ singleItemName | capitilize }}
-                            <span v-if="itemToCreate.ID">edit:</span>
+                            <span v-if="itemToCreate.ID"
+                                >edit: <small>ID {{ itemToCreate.ID }}</small></span
+                            >
                             <span v-else>adding:</span>
                             &nbsp;
                             <b>{{ selectedItem.code }}</b>
@@ -75,19 +77,13 @@
                         <template slot="label">
                             Files
                         </template>
-                        <t-item-files ref="step3" :size="jawListSize" :descriptions="procedureDescriptions" />
+                        <t-item-files ref="step3" :size="jawListSize" />
                     </wizard-tab>
                     <wizard-tab v-if="showTab('description')" name="description" :before-change="() => validateStep('step4')">
                         <template slot="label">
                             Description
                         </template>
-                        <t-item-description
-                            ref="step4"
-                            v-model="description"
-                            :size="jawListSize"
-                            :descriptions="originalDescriptions"
-                            @updateDescription="updateDescription"
-                        />
+                        <t-item-description ref="step4" v-model="descriptionLocal" :size="jawListSize" :descriptions="originalDescriptions" />
                     </wizard-tab>
                     <wizard-tab v-if="showTab('appointment')" name="appointment" :before-change="() => validateStep('step5')">
                         <template slot="label">
@@ -112,7 +108,7 @@ import SimpleWizard from '../TWizard/Wizard';
 import WizardTab from '../TWizard/WizardTab';
 
 import { tObjProp } from '@/mixins';
-import { NOTIFY, PATIENT_PROCEDURE_SET, PATIENT_DIAGNOSE_SET, PATIENT_ANAMNES_SET } from '@/constants';
+import { NOTIFY, PATIENT_PROCEDURE_SET, PATIENT_DIAGNOSE_SET, PATIENT_ANAMNES_SET, PATIENT_PROCEDURE_UPDATE } from '@/constants';
 
 export default {
     name: 'TWizardAddItem',
@@ -165,7 +161,7 @@ export default {
             isLoading: false,
             currentTab: '',
             jawListSize: {},
-            description: '',
+            // description: '',
             // needToSaveEdited: false,
             selectedTeethL: [],
             // selectedTeethLocalJaw: [],
@@ -230,9 +226,15 @@ export default {
                 return this.selectedItem;
             },
             set(newValue) {
-                Object.keys(newValue).forEach(() => {
-                    this.itemToCreate.teeth = this.lodash.cloneDeep(newValue.teeth);
-                });
+                this.$set(this.itemToCreate, 'teeth', newValue.teeth);
+            }
+        },
+        descriptionLocal: {
+            get() {
+                return this.selectedItem.description;
+            },
+            set(newValue) {
+                this.$set(this.itemToCreate, 'description', newValue);
             }
         },
         isDialogVisibleL: {
@@ -247,7 +249,7 @@ export default {
     created() {
         this.hasLoctionsKey(this.selectedItem.code);
         this.initiateLocalItem();
-        this.description = this.selectedItem.description;
+        // this.description = this.selectedItem.description;
     },
     methods: {
         needToSaveItem() {
@@ -258,6 +260,9 @@ export default {
             // if (!this.currentTab || this.currentTab === 'locations') {
             // }
             // return false;
+        },
+        needToSaveDescription() {
+            return !this.lodash.isEqual(this.itemToCreate.description, this.itemToCompare.description);
         },
 
         getItemCatalogFieldName() {
@@ -308,6 +313,43 @@ export default {
                     });
             });
         },
+        saveProcedureTeeth() {
+            const params = {
+                procedureID: this.itemToCreate.ID,
+                teeth: this.itemToCreate.teeth,
+                description: `${this.itemToCreate.description}`
+            };
+            this.isLoading = true;
+            return new Promise((resolve, reject) => {
+                this.$store
+                    .dispatch(PATIENT_PROCEDURE_UPDATE, {
+                        params
+                    })
+                    .then(
+                        response => {
+                            this.itemToCreate.teeth = response.teeth;
+                            this.itemToCreate.description = response.description;
+                            this.itemToCompare = this.lodash.cloneDeep(response);
+                            this.isLoading = false;
+                            resolve(true);
+                        },
+                        error => {
+                            this.$store.dispatch(NOTIFY, {
+                                settings: {
+                                    message: 'error.response.data.error',
+                                    type: 'warning'
+                                }
+                            });
+                            this.isLoading = false;
+                            reject(error);
+                        }
+                    )
+                    .catch(err => {
+                        this.isLoading = false;
+                        throw new Error(err);
+                    });
+            });
+        },
         saveItem() {
             if (this.currentType === 'diagnosis') {
                 this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
@@ -323,13 +365,32 @@ export default {
             }
             if (this.currentType === 'procedures') {
                 if (this.needToSaveItem()) {
-                    console.log('save created');
                     return Promise.resolve(this.setProcedure());
                 }
                 if (this.needToSaveEdited()) {
-                    this.itemToCreate.teeth = this.lodash.cloneDeep(this.itemToCompare.teeth);
-                    console.log('save edited');
-                    return true;
+                    return Promise.resolve(this.saveProcedureTeeth());
+                }
+                return true;
+            }
+            return false;
+        },
+        saveDescription() {
+            if (this.currentType === 'diagnosis') {
+                this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
+                    // diagnose
+                    diagnose: 'diagnose'
+                });
+            }
+            if (this.currentType === 'anamnesis') {
+                this.$store.dispatch(PATIENT_ANAMNES_SET, {
+                    // anamnesis
+                    anamnes: 'anamnesis'
+                });
+            }
+            if (this.currentType === 'procedures') {
+                console.log('save edited description', this.needToSaveDescription());
+                if (this.needToSaveDescription()) {
+                    return Promise.resolve(this.saveProcedureTeeth());
                 }
                 return true;
             }
@@ -351,9 +412,6 @@ export default {
         },
         manipulationsCreated(manipulations) {
             this.itemToCreate.manipulations = manipulations;
-        },
-        updateDescription(description) {
-            this.itemToCreate.description = description || '';
         },
         hasLoctionsKey() {
             if (this.originalItem) {
@@ -418,7 +476,7 @@ export default {
                     if (!res) {
                         this.$store.dispatch(NOTIFY, {
                             settings: {
-                                message: 'Please add dignose description',
+                                message: 'File issue',
                                 type: 'warning'
                             }
                         });
@@ -433,14 +491,17 @@ export default {
                     if (!res) {
                         this.$store.dispatch(NOTIFY, {
                             settings: {
-                                message: 'Please add dignose description',
+                                message: 'Please add a description',
                                 type: 'warning'
                             }
                         });
                         return false;
                     }
+                    if (res) {
+                        return Promise.resolve(this.saveDescription());
+                    }
+                    // ! работает не правильно надо переделать
                     if (this.currentType !== 'procedures') {
-                        this.itemCreated();
                         this.isDialogVisibleL = false;
                     }
                     return res;
@@ -458,7 +519,6 @@ export default {
                         });
                         return false;
                     }
-                    this.itemCreated();
                     this.isDialogVisibleL = false;
 
                     return res;

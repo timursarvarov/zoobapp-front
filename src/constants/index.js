@@ -92,6 +92,8 @@ export const LOADER_STOP = 'LOADER_STOP';
 export const LOADER_START = 'LOADER_START';
 export const LOADER_SWITCH_OFF = 'LOADER_SWITCH_OFF';
 export const LOADER_SWITCH_ON = 'LOADER_SWITCH_ON';
+export const JAW_LOADER_START = 'JAW_LOADER_START';
+export const JAW_LOADER_STOP = 'JAW_LOADER_STOP';
 export const LOADER_SET_PROP = 'LOADER_SET_PROP';
 
 // Patients

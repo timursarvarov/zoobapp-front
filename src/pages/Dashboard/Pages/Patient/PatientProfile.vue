@@ -11,7 +11,9 @@
                     </md-tab>
                     <md-tab id="tab-treatment" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`" md-icon="local_hospital" md-label="Treatment">
                         <div class="md-layout">
-                            <router-view name="treatmentchild" />
+                            <keep-alive>
+                                <router-view name="treatmentchild" />
+                            </keep-alive>
                         </div>
                     </md-tab>
                     <md-tab id="tab-billing" :to="`/${$i18n.locale}/patient/${patient.ID}/billing`" md-icon="account_balance" md-label="Billing">
@@ -25,7 +27,7 @@
                     <md-tab id="tab-files" :to="`/${$i18n.locale}/patient/${patient.ID}/files`" md-icon="folder_shared" md-label="Files">
                         <router-view name="Files" />
                     </md-tab>
-                    <md-tab id="tab-print" md-icon="print" md-label="Print" @click="showPrint()"/>
+                    <md-tab id="tab-print" md-icon="print" md-label="Print" @click="showPrint()" />
                 </md-tabs>
                 <patient-items-wizard />
                 <patient-print-form />
@@ -127,10 +129,10 @@ export default {
         }
     },
     methods: {
-        showPrint(){
+        showPrint() {
             const params = {
                 type: 'patient',
-                item: this.patient.ID
+                item: this.patient
             };
             EventBus.$emit(EB_SHOW_PATIENT_PRINT_FORM, params);
         },

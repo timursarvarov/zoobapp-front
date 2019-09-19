@@ -1,8 +1,7 @@
 <template>
     <div v-if="plan" :class="[{ 'hide-on-print': !showPlan }]" class="print_patient_plan">
         <div class="print_patient_plan__header">
-            <h4 :class="[{ 'hidable__header': !showPlan }]"
-                class="print_patient_plan__header_text">
+            <h4 :class="[{ hidable__header: !showPlan }]" class="print_patient_plan__header_text">
                 <div>
                     <b>
                         {{ num + 1 }}&nbsp;
@@ -49,6 +48,12 @@ export default {
             showProcedures: true,
             showPlan: true
         };
+    },
+    created() {
+        if (!this.plan.procedures || this.plan.procedures.length < 1) {
+            this.showProcedures = false;
+            this.showPlan = false;
+        }
     },
     computed: {
         ...mapGetters({

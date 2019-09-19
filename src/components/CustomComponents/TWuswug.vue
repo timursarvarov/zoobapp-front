@@ -3,7 +3,7 @@
         <editor-menu-bar v-slot="{ commands, isActive }" :editor="editor">
             <div class="wuswug-header">
                 <md-toolbar class="md-transparent md-layout">
-                    <div class="md-layout-item">
+                    <div class="md-layout-item md-size-50 md-small-size-100 md-large-size-30">
                         <slot name="start" />
                     </div>
                     <div class="md-layout-item">

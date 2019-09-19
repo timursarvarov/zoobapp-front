@@ -1,5 +1,6 @@
 .print-form__wrapper {
-  max-height: 60vh;
+  max-height: 58vh;
+  min-height: 200px;
   overflow: hidden;
   overflow-x: scroll;
   overflow-y: scroll;
@@ -827,7 +828,8 @@
 .print-form .print_patient_plan__procedure .print-patient-procedure,
 .print-form .print-patient-procedure {
   border-bottom: 2px solid rgba(128, 128, 128, 0.171);
-  padding-top: 5px; }
+  padding-top: 5px;
+  page-break-inside: avoid; }
   .print-form .print_patient_plan__procedure .print-patient-procedure_header,
   .print-form .print-patient-procedure_header {
     margin-left: 5px;

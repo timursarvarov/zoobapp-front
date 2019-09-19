@@ -255,7 +255,7 @@ const patientPages = {
                 requiresAuth: true,
                 disableScroll: true
             },
-            // redirect: `/:lang/patient/:patientID/treatment`,
+            redirect: `/:lang/patient/:patientID/treatment`,
             children: [
                 {
                     path: 'notes',

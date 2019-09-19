@@ -1,9 +1,9 @@
 <template>
     <div class="patient-card-wrapper">
         <md-card-content class="md-layout">
-            <div class="md-layout  md-small-size-100 md-size-50">
+            <div class="md-layout md-small-size-100 md-size-50">
                 <div class="md-layout-item md-layout md-size-100 avatart-wrapper">
-                    <div class="md-layout-item  md-small-size-100 md-size-50  md-layout switch md-alignment-center-space-between">
+                    <div class="md-layout-item md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between">
                         <t-avatar-input
                             :disabled="loading"
                             :text-to-color="patient.ID"
@@ -14,11 +14,9 @@
                             @on-created="updatepatientAvatar"
                         />
                     </div>
-                    <div class="md-layout-item  md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between">
+                    <div class="md-layout-item md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between">
                         <div class="md-layout-item">
-                            <md-switch v-model="showRating">
-                                Show Rating
-                            </md-switch>
+                            <md-switch v-model="showRating">Show Rating</md-switch>
                         </div>
                         <div class="md-layout-item">
                             <star-rating v-show="showRating" v-model="patient.rating" :glow="5" :show-rating="false" :star-size="18" />
@@ -45,14 +43,10 @@
                         />
                         <span class="md-error">{{ errors.first('firstName') }}</span>
                         <slide-y-down-transition>
-                            <md-icon v-show="errors.has('firstName')" class="error">
-                                close
-                            </md-icon>
+                            <md-icon v-show="errors.has('firstName')" class="error">close</md-icon>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon v-show="!errors.has('firstName') && touched.firstName" class="success">
-                                done
-                            </md-icon>
+                            <md-icon v-show="!errors.has('firstName') && touched.firstName" class="success">done</md-icon>
                         </slide-y-down-transition>
                     </md-field>
                 </div>
@@ -77,14 +71,10 @@
                         />
                         <span class="md-error">{{ errors.first('lastName') }}</span>
                         <slide-y-down-transition>
-                            <md-icon v-show="errors.has('lastName')" class="error">
-                                close
-                            </md-icon>
+                            <md-icon v-show="errors.has('lastName')" class="error">close</md-icon>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon v-show="!errors.has('lastName') && touched.lastName" class="success">
-                                done
-                            </md-icon>
+                            <md-icon v-show="!errors.has('lastName') && touched.lastName" class="success">done</md-icon>
                         </slide-y-down-transition>
                     </md-field>
                 </div>
@@ -110,20 +100,16 @@
                         />
                         <span class="md-error">{{ errors.first('phone') }}</span>
                         <slide-y-down-transition>
-                            <md-icon v-show="errors.has('phone')" class="error">
-                                close
-                            </md-icon>
+                            <md-icon v-show="errors.has('phone')" class="error">close</md-icon>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon v-show="!errors.has('phone') && touched.phone" class="success">
-                                done
-                            </md-icon>
+                            <md-icon v-show="!errors.has('phone') && touched.phone" class="success">done</md-icon>
                         </slide-y-down-transition>
                     </md-field>
                 </div>
             </div>
 
-            <div class="md-layout  md-small-size-100 md-size-50">
+            <div class="md-layout md-small-size-100 md-size-50">
                 <div class="md-layout-item md-size-100">
                     <md-field>
                         <label>Source</label>
@@ -139,7 +125,7 @@
                 </div>
 
                 <div class="md-layout-item md-size-100">
-                    <md-datepicker v-model="patient.birthday" md-immediately :disabled="loading">
+                    <md-datepicker v-model="preparedBirthDate" md-immediately :md-model-type="String" disabled="loading">
                         <label>Birthday date</label>
                     </md-datepicker>
                 </div>
@@ -164,14 +150,10 @@
                         />
                         <span class="md-error">{{ errors.first('email') }}</span>
                         <slide-y-down-transition>
-                            <md-icon v-show="errors.has('email')" class="error">
-                                close
-                            </md-icon>
+                            <md-icon v-show="errors.has('email')" class="error">close</md-icon>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon v-show="!errors.has('email') && touched.email" class="success">
-                                done
-                            </md-icon>
+                            <md-icon v-show="!errors.has('email') && touched.email" class="success">done</md-icon>
                         </slide-y-down-transition>
                     </md-field>
                 </div>
@@ -184,15 +166,10 @@
         <md-card-actions>
             <md-button :disabled="loading" class="md-raised md-success mt-4" @click="updateProfile">
                 <div v-if="loading">
-                    <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
-                    &nbsp;
-                    <span>
-                        Saving...
-                    </span>
+                    <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />&nbsp;
+                    <span>Saving...</span>
                 </div>
-                <span v-else>
-                    Update Profile
-                </span>
+                <span v-else>Update Profile</span>
             </md-button>
         </md-card-actions>
         <!-- <generator/> -->
@@ -202,10 +179,9 @@
 import { mapGetters } from 'vuex';
 import { SlideYDownTransition } from 'vue2-transitions';
 import StarRating from 'vue-star-rating';
-import { PATIENT_AVATAR_UPLOAD, PATIENT_UPDATE, NOTIFY } from '@/constants';
+import { PATIENT_AVATAR_UPLOAD, NOTIFY, PATIENT_EDIT } from '@/constants';
 import components from '@/components';
-
-const randomMC = require('random-material-color');
+import moment from 'moment';
 
 export default {
     name: 'PatientCard',
@@ -229,10 +205,16 @@ export default {
             default: './img/default-avatar.png'
         }
     },
+    created() {
+        if (this.patient.birthday) {
+            this.preparedBirthDate = moment(this.patient.birthday).format('YYYY-MM-D');
+        }
+    },
     data() {
         return {
             showRating: false,
             loading: false,
+            preparedBirthDate: moment().format('YYYY-MM-D'),
             showForm: false,
             image: '',
             address: null,
@@ -264,12 +246,6 @@ export default {
         ...mapGetters({
             patient: 'getPatient'
         }),
-        patientColor() {
-            const color = randomMC.getColor({
-                text: this.firstName + this.lastName + this.phone + this.email
-            });
-            return color;
-        },
         allergy: {
             // getter
             get() {
@@ -291,6 +267,9 @@ export default {
         },
         phone() {
             return this.patient.phone;
+        },
+        birthDate() {
+            return this.patient.birthDate;
         }
     },
     watch: {
@@ -305,6 +284,11 @@ export default {
         },
         phone() {
             this.touched.phone = true;
+        },
+        birthDate(value) {
+            if (value) {
+                this.preparedBirthDate = moment(value).format('YYYY-MM-D');
+            }
         }
     },
     methods: {
@@ -321,13 +305,23 @@ export default {
             this.touched.phone = true;
         },
         updateProfile() {
-            this.patient.color = this.patientColor;
             this.$validator.validateAll('firstName', 'email', 'phone', 'lastName').then(result => {
                 if (result) {
                     this.loading = true;
                     this.$store
-                        .dispatch(PATIENT_UPDATE, {
-                            patient: this.patient
+                        .dispatch(PATIENT_EDIT, {
+                            params: {
+                                firstName: this.patient.firstName,
+                                lastName: this.patient.lastName,
+                                email: this.patient.email,
+                                phone: parseInt(this.patient.phone, 10),
+                                address: this.patient.address,
+                                allergy: this.patient.allergy,
+                                source: this.patient.source,
+                                color: this.patient.color,
+                                birthday: moment(this.preparedBirthDate).format(),
+                                rating: parseFloat(this.patient.rating)
+                            }
                         })
                         .then(response => {
                             if (response) {

@@ -1,5 +1,5 @@
 <template>
-    <print-form :showForm.sync="showPrintForm" />
+    <print-form :showForm.sync="showPrintForm" :type="type" :selected-item="selectedItem" />
 </template>
 <script>
 import { mapGetters } from 'vuex';

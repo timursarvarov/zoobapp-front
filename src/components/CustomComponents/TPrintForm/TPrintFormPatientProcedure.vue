@@ -27,7 +27,7 @@
             <div class="teeth-block__title">
                 Teeth:&nbsp;
                 <span>
-                   <b> {{ Object.keys(procedure.teeth).length }} </b>
+                    <b> {{ Object.keys(procedure.teeth).length }} </b>
                 </span>
             </div>
             <div class="teeth-block__teeth">
@@ -59,9 +59,7 @@
                 </div>
             </div>
         </div>
-        <div class="print-patient-procedure_description">
-            {{ procedure.description }}
-        </div>
+        <div v-html="procedure.description" class="print-patient-procedure_description" />
     </div>
 </template>
 <script>

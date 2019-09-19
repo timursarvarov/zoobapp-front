@@ -1,4 +1,5 @@
 export default {
     loading: false,
-    loaderState: true
+    loaderState: true,
+    isCalculatingJaw: false
 };

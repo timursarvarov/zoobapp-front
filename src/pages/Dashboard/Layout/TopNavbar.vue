@@ -9,7 +9,6 @@
         <div class="the-main-progress-bar">
             <md-progress-bar v-show="loading" :md-stroke="2" md-mode="indeterminate" />
         </div>
-        {{loading}}
         <div class="md-toolbar-row">
             <div class="md-toolbar-section-start">
                 <h3 class="md-title">

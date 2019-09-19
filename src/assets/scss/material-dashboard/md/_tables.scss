@@ -204,8 +204,8 @@
 
   .md-table-head.md-sortable .md-table-sortable-icon,
   .md-table-head.md-table-cell-selection+.md-sortable .md-table-sortable-icon{
-    // left: auto;
-    // right: 0;
+    left: auto;
+    right: 0;
   }
 
   .md-table-cell:last-child .md-table-cell-container,

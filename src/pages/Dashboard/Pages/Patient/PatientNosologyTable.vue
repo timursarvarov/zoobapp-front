@@ -63,8 +63,9 @@
 
                         <div v-else-if="field.key === 'title' && item.title" :class="field.key">
                             {{ item.title }}
-                            <br />
-                            <small>{{ item.description }}</small>
+                        </div>
+                        <div v-else-if="field.key === 'description' && item.description" :class="field.key" >
+                            <small v-html="item.description" />
                         </div>
                         <div v-else-if="field.key === 'teeth' && item.teeth" :class="field.key">
                             <span v-for="toothId in Object.keys(item.teeth)" :key="toothId" class="tooth" :class="currentType">
@@ -158,6 +159,9 @@
                             <md-button class="md-just-icon md-info md-simple" @click.native="handleEdit(item)">
                                 <md-icon>edit</md-icon>
                             </md-button>
+                            <md-button class="md-just-icon md-info md-simple" @click.native="handlePrint(item)">
+                                <md-icon>print</md-icon>
+                            </md-button>
                             <md-button class="md-just-icon md-danger md-simple" @click.native="handleDelete(item)">
                                 <md-icon>close</md-icon>
                             </md-button>
@@ -216,6 +220,7 @@ import {
     PATIENT_ITEM_VISIBILITY_TOGGLE,
     PATIENT_PROCEDURE_DELETE,
     EB_SHOW_ITEM_WIZARD,
+    EB_SHOW_PATIENT_PRINT_FORM,
     NOTIFY
 } from '@/constants';
 import EventBus from '@/plugins/event-bus';
@@ -501,6 +506,15 @@ export default {
                     type: this.currentType === 'billing' ? 'procedures' : this.currentType
                 };
                 EventBus.$emit(EB_SHOW_ITEM_WIZARD, params);
+            }
+        },
+        handlePrint(item) {
+            if (item) {
+                const params = {
+                    item,
+                    type: this.currentType === 'billing' ? 'procedures' : this.currentType
+                };
+                EventBus.$emit(EB_SHOW_PATIENT_PRINT_FORM, params);
             }
         },
         handleDelete(item) {

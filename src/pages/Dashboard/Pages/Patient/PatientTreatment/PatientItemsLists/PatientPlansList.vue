@@ -1,5 +1,5 @@
 <template lang="html">
-    <div v-if="currentPlanID" class="md-layout-item patient-palns-list  md-size-100">
+    <div v-if="currentPlanID" class=" patient-palns-list ">
         <md-tabs ref="mdTabs" md-sync-route class="t-md-tabs procedures" @md-changed="setCurrentPlan" @click="setCurrentPlan">
             <template slot="md-tab" slot-scope="{ tab }">
                 {{ tab.label }}
@@ -18,6 +18,12 @@
                 }"
             >
                 <router-view v-if="$route && $route.params && $route.params.planID in patient.plans" :id="key" :current-plan="plan" />
+                <md-empty-state
+                    v-else-if="patient.plans && Object.keys(patient.plans).length > 0"
+                    md-label="No selected plans"
+                    :md-description="`No plan selected, please choose one`"
+                >
+                </md-empty-state>
                 <md-empty-state
                     v-else-if="$route && $route.params"
                     :md-label="`No plan with ID ${$route.params.planID}`"
@@ -40,7 +46,9 @@ import components from '@/components';
 export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            if (to.params.planID && to.params.planID !== from.params.planID) {
+            // console.log(to.params.planID)
+            // console.log(vm.currentPlanID)
+            if (to.params.planID !== from.params.planID) {
                 vm.setCurrentPlan(to.params.planID);
                 vm.deleteTabStyle();
             }

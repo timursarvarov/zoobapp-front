@@ -9,7 +9,6 @@ import {
     PATIENT_PARAMS_SET,
     PATIENT_SUB_PARAM_DELETE,
     PATIENT_AVATAR_UPLOAD,
-    PATIENT_UPDATE,
     PATIENT_UNSET,
     PATIENT_NOTE_CREATE,
     PATIENT_ADD_SUB_PROP,
@@ -22,7 +21,7 @@ import {
     PATIENT_PARAM_PUSH,
     PATIENT_DIAGNOSE_SET,
     PATIENT_DIAGNOSE_UPDATE,
-    // PATIENT_PROCEDURE_UPDATE,
+    PATIENT_PROCEDURE_UPDATE,
     PATIENT_PROCEDURE_SET,
     PATIENT_PROCEDURE_DELETE,
     PATIENT_ITEM_VISIBILITY_TOGGLE,
@@ -41,6 +40,7 @@ import {
     PATIENTS_PATIENT_UPDATE,
     PATIENTS_PATIENT_ADD,
     TEETH_INITIATION,
+    JAW_LOADER_START,
     PATIENT_PROCEDURES_ASSOCIATE_WITH_INVOICE
 } from '@/constants';
 import recalculateJaw from '@/plugins/recalculateJaw';
@@ -55,7 +55,8 @@ function delay(ms) {
 }
 
 export default {
-    [PATIENT_JAW_UPDATE]: ({ commit, rootGetters }) => {
+    [PATIENT_JAW_UPDATE]: ({ commit, rootGetters, dispatch }) => {
+        dispatch(JAW_LOADER_START);
         const patientItems = {
             procedures: rootGetters.getPatientCurrentAndAproovedPlanProcedures,
             diagnosis: rootGetters.getPatientDiagnosis,
@@ -106,45 +107,6 @@ export default {
                         paramValue: resp.data.url
                     });
                     dispatch(PATIENT_PARAMS_SET, { patient: state });
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit(PATIENT_PARAM_SET, {
-                        paramName: 'status',
-                        paramValue: 'error'
-                    });
-                    reject(err);
-                });
-        }),
-    [PATIENT_UPDATE]: ({ commit, dispatch }, { patient }) =>
-        new Promise((resolve, reject) => {
-            commit(PATIENT_PARAM_SET, {
-                paramName: 'status',
-                paramValue: 'loading'
-            });
-            axios
-                .put(
-                    `/patients/${patient.ID}/`,
-                    JSON.stringify({
-                        firstName: patient.firstName,
-                        lastName: patient.lastName,
-                        email: patient.email,
-                        phone: parseInt(patient.phone, 10),
-                        address: patient.address,
-                        allergy: patient.allergy,
-                        source: patient.source,
-                        color: patient.color,
-                        rating: parseInt(patient.rating, 10)
-                    })
-                )
-                .then(resp => {
-                    commit(PATIENT_PARAM_SET, {
-                        paramName: 'status',
-                        paramValue: 'success'
-                    });
-                    dispatch(PATIENT_PARAMS_SET, {
-                        patient: resp.data
-                    });
                     resolve(resp);
                 })
                 .catch(err => {
@@ -487,6 +449,64 @@ export default {
                     reject(err);
                 });
         }),
+    [PATIENT_PROCEDURE_UPDATE]: ({ commit, state, dispatch }, { params }) =>
+        new Promise((resolve, reject) => {
+            commit(PATIENT_PARAM_SET, {
+                paramName: 'status',
+                paramValue: 'loading'
+            });
+            axios
+                .post(
+                    '/',
+                    JSON.stringify({
+                        jsonrpc: '2.0',
+                        method: 'Patients.EditProcedure',
+                        params: {
+                            patientID: state.ID,
+                            ...params
+                        },
+                        id: 1
+                    })
+                )
+                .then(resp => {
+                    if (resp.data.error) {
+                        commit(PATIENT_PARAM_SET, {
+                            paramName: 'status',
+                            paramValue: 'error'
+                        });
+                        reject(resp.data.error);
+                    }
+                    commit(PATIENT_PARAM_SET, {
+                        paramName: 'status',
+                        paramValue: 'success'
+                    });
+                    const { procedure: procedureN } = resp.data.result;
+                    procedureN.justAdded = true;
+                    // добавляем процедуру в массиы процедур
+                    commit(PATIENT_PARAM_PUSH, {
+                        paramName: 'procedures',
+                        paramValue: procedureN,
+                        paramKey: `${procedureN.ID}`
+                    });
+                    dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+                        params: {
+                            paramName: 'procedures',
+                            paramIndex: procedureN.ID,
+                            subParamName: 'justAdded',
+                            subParamValue: false
+                        }
+                    });
+                    dispatch(PATIENT_JAW_UPDATE);
+                    resolve(procedureN);
+                })
+                .catch(err => {
+                    commit(PATIENT_PARAM_SET, {
+                        paramName: 'status',
+                        paramValue: 'error'
+                    });
+                    reject(err);
+                });
+        }),
     [PATIENT_PROCEDURE_DELETE]: ({ commit, state, dispatch }, { procedure }) =>
         new Promise((resolve, reject) => {
             commit(PATIENT_PARAM_SET, {
@@ -634,7 +654,7 @@ export default {
                         paramName: 'procedures',
                         paramIndex: manipulationParamsN.procedureID,
                         subParamName: 'manipulations',
-                        subParamIndex: state.procedures[manipulationParamsN.procedureID].manipulations
+                        subParamIndex:state.procedures[manipulationParamsN.procedureID].manipulations
                             ? state.procedures[manipulationParamsN.procedureID].manipulations.length
                             : 0,
                         subParamKey: manipulationParamsN.ID,

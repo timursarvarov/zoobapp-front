@@ -1,6 +1,5 @@
 <template>
     <div ref="wrjaw" class="wrjaw">
-        {{isCalculatingJaw}}
         <div v-if="isCalculatingJaw" class="loader-wrapper md-layout">
             <div style="margin:auto; height:100%" class="md-layout mx-auto patient-wrapper-preloader">
                 <div style="height:60px;margin: auto;">
@@ -9,7 +8,7 @@
             </div>
         </div>
         <div :class="!printmode ? 'jaw-wrapper' : 'jaw-wrapperprint'">
-            <md-toolbar v-if="!printmode" class="md-transparent md-layout jaw-toolbar md-dense md-alignment-center-space-between">
+            <md-toolbar class="hide-on-print md-transparent md-layout jaw-toolbar md-dense md-alignment-center-space-between">
                 <div class="md-layout-item">
                     <slot name="title-start" />
                     <slot name="title-end" />
@@ -24,10 +23,7 @@
                         <span v-if="shouldShowNotification" class="notification md-success">{{ ageCategoryBaby ? 'A' : 'B' }}</span>
                     </md-button>
 
-                    <md-menu-content>
-                        <md-menu-item>
-                            <md-button @click="isCalculatingJaw = !isCalculatingJaw">sdf</md-button>
-                        </md-menu-item>
+                    <md-menu-content style="z-index:100;">
                         <md-menu-item>
                             <md-switch v-model="ageCategoryBaby">
                                 Baby teeth
@@ -35,38 +31,32 @@
                             </md-switch>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-switch v-model="prefer" value="anamnesis" @change="calculateJaw('Anamnes')">
-                                Anamnes
-                            </md-switch>
+                            <md-switch v-model="prefer" value="anamnesis" @change="calculateJaw('Anamnes')">Anamnes</md-switch>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-switch v-model="prefer" value="diagnosis" @change="calculateJaw('Diagnoe')">
-                                Diagnose
-                            </md-switch>
+                            <md-switch v-model="prefer" value="diagnosis" @change="calculateJaw('Diagnoe')">Diagnose</md-switch>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-switch v-model="prefer" value="procedures" @change="calculateJaw('Procedure')">
-                                Procedure
-                            </md-switch>
+                            <md-switch v-model="prefer" value="procedures" @change="calculateJaw('Procedure')">Procedure</md-switch>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-switch v-model="toggleAll" @change="ageCategoryBaby ? toggleTeeth(babyTeeth) : toggleTeeth(adultTeeth)">
-                                Toggle all
-                            </md-switch>
+                            <md-switch v-model="toggleAll" @change="ageCategoryBaby ? toggleTeeth(babyTeeth) : toggleTeeth(adultTeeth)"
+                                >Toggle all</md-switch
+                            >
                         </md-menu-item>
                         <md-menu-item>
-                            <md-switch v-model="toggleAdultTop" @change="ageCategoryBaby ? toggleTeeth(topBabyTeeth) : toggleTeeth(topAdultTeeth)">
-                                Toggle Top
-                            </md-switch>
+                            <md-switch v-model="toggleAdultTop" @change="ageCategoryBaby ? toggleTeeth(topBabyTeeth) : toggleTeeth(topAdultTeeth)"
+                                >Toggle Top</md-switch
+                            >
                         </md-menu-item>
                         <md-menu-item>
                             <md-switch
                                 v-model="toggleAdultBottom"
                                 @change="ageCategoryBaby ? toggleTeeth(bottomBabyTeeth) : toggleTeeth(bottomAdultTeeth)"
+                                >Toggle Bottom</md-switch
                             >
-                                Toggle Bottom
-                            </md-switch>
                         </md-menu-item>
+                        <md-menu-item v-if="!printmode" @click="showPrint()"> <md-icon>print</md-icon>print </md-menu-item>
                     </md-menu-content>
                 </md-menu>
             </md-toolbar>
@@ -76,7 +66,7 @@
 
             <div class="jaw-wrapper-teeth">
                 <transition mode="out-in" appear enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
-                    <div v-if="ageCategoryBaby" key="babyTeeth" class="jaw-scroll ">
+                    <div v-if="ageCategoryBaby" key="babyTeeth" class="jaw-scroll">
                         <div class="jaw-top md-alignment-top-center md-size-100">
                             <div v-for="(toothId, topJawToothIndex) in topBabyTeeth" :key="toothId" v-ripple class="tooth">
                                 <div
@@ -170,8 +160,8 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="!ageCategoryBaby" key="adultTeeth" class="jaw-scroll ">
-                        <div class="jaw-top md-alignment-top-center  md-size-100">
+                    <div v-if="!ageCategoryBaby" key="adultTeeth" class="jaw-scroll">
+                        <div class="jaw-top md-alignment-top-center md-size-100">
                             <div v-for="(toothId, topJawToothIndex) in topAdultTeeth" :key="toothId" v-ripple class="tooth">
                                 <div
                                     :ref="toothId"
@@ -305,12 +295,14 @@ import {
     TEETH_BABY_ALL,
     TEETH_ALL,
     PATIENT_EDIT,
-    LOADER_START,
-    LOADER_STOP
+    JAW_LOADER_STOP,
+    JAW_LOADER_START,
+    EB_SHOW_PATIENT_PRINT_FORM
 } from '@/constants';
 import JawMenu from './JawMenu';
 import AnimatedNumber from '@/components/AnimatedNumber';
 import { mapGetters } from 'vuex';
+import EventBus from '@/plugins/event-bus';
 
 export default {
     name: 'Jaw',
@@ -319,14 +311,6 @@ export default {
         AnimatedNumber
     },
     mixins: [tObjProp, jawFunctions],
-    updated: function() {
-        console.log('updated1');
-        this.$nextTick(function() {
-            // Код, который будет запущен только после
-            // обновления всех представлений
-            console.log('updated2');
-        });
-    },
     props: {
         printmode: {
             type: Boolean,
@@ -362,7 +346,6 @@ export default {
             mouseOverToothId: '',
             separatedProcedures: {},
             windowWidth: 0,
-            isCalculatingJaw: false,
             toggleAll: false,
             toggleAdultTop: false,
             toggleAdultBottom: false,
@@ -377,7 +360,8 @@ export default {
 
     computed: {
         ...mapGetters({
-            currentClinic: 'getCurrentClinic'
+            currentClinic: 'getCurrentClinic',
+            isCalculatingJaw: 'isCalculatingJaw'
         }),
         teethSystem() {
             return this.currentClinic.teethSystem;
@@ -513,9 +497,6 @@ export default {
             },
             deep: true
         },
-        isCalculatingJaw(val){
-            console.log(val)
-        },
         jaw: {
             handler() {
                 this.calculateJaw();
@@ -530,6 +511,7 @@ export default {
     created() {
         this.calculateJaw('created');
         window.addEventListener('resize', this.handleResize);
+        this.handleResize();
     },
     destroyed() {
         window.removeEventListener('resize', this.handleResize);
@@ -541,8 +523,14 @@ export default {
     },
 
     methods: {
+        showPrint() {
+            const params = {
+                type: 'jaw'
+            };
+            EventBus.$emit(EB_SHOW_PATIENT_PRINT_FORM, params);
+        },
         changeAgeCategory(category) {
-            this.isCalculatingJaw = true;
+            this.$store.dispatch(JAW_LOADER_START);
             this.$store
                 .dispatch(PATIENT_EDIT, {
                     params: {
@@ -551,13 +539,12 @@ export default {
                 })
                 .then(() => {
                     this.selectedTeethLocal = [];
+                    this.$store.dispatch(JAW_LOADER_STOP);
                     setTimeout(this.handleResize(), 2500);
                 })
                 .catch(err => {
+                    this.$store.dispatch(JAW_LOADER_STOP);
                     throw new Error(err);
-                })
-                .then(() => {
-                    this.isCalculatingJaw = false;
                 });
         },
         showToothInfo(params) {
@@ -681,30 +668,14 @@ export default {
             this.$emit('onSelectedTeeth', this.selectedTeethLocal);
         },
         calculateJaw() {
-            this.$store.dispatch(LOADER_START);
-            this.isCalculatingJaw = true;
             const startTime = performance.now();
             this.calculatePromise().then(jaw => {
                 this.jawComputed = jaw;
                 this.handleResize();
                 const duration = performance.now() - startTime;
-                console.log(`JAW someMethodIThinkMightBeSlow took ${duration}ms`);
-                this.delay(3000).then(()=>{
-                    this.change()
-                })
-                // this.$store.dispatch(LOADER_STOP);
+                console.log(`Jaw calculating took ${duration}ms`);
+                this.$store.dispatch(JAW_LOADER_STOP);
             });
-        },
-        delay(ms) {
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    resolve();
-                }, ms);
-            });
-        },
-        change(){
-            this.isCalculatingJaw = false;
-            this.$store.dispatch(LOADER_STOP);
         },
         calculatePromise() {
             return new Promise(resolve => {
@@ -721,7 +692,7 @@ export default {
                     });
                 });
                 resolve(jaw);
-            })
+            });
         },
 
         setTeeth() {

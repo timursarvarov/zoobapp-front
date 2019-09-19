@@ -218,6 +218,10 @@ export default {
             title: 'Title'
         },
         {
+            key: 'description',
+            title: 'Description'
+        },
+        {
             key: 'ID',
             title: 'ID'
         },
@@ -258,6 +262,10 @@ export default {
         {
             key: 'title',
             title: 'Title'
+        },
+        {
+            key: 'description',
+            title: 'Description'
         },
         {
             key: 'ID',
@@ -302,6 +310,10 @@ export default {
             title: 'Title'
         },
         {
+            key: 'description',
+            title: 'Description'
+        },
+        {
             key: 'ID',
             title: 'ID'
         },
@@ -340,6 +352,10 @@ export default {
             title: 'Code'
         },
         {
+            key: 'description',
+            title: 'Description'
+        },
+        {
             key: 'title',
             title: 'Title'
         },
@@ -376,6 +392,10 @@ export default {
         {
             key: 'discount',
             title: 'Discount'
+        },
+        {
+            key: 'description',
+            title: 'Description'
         },
         {
             key: 'dueDate',

@@ -1,7 +1,7 @@
 /* eslint-disable operator-linebreak */
 import axios from 'axios';
 import store from '@/store';
-import { AUTH_REFRESH_TOKEN, LOADER_STOP, LOADER_START, NOTIFY, SERVER_ERRORS, USER_LOGOUT } from '@/constants';
+import { AUTH_REFRESH_TOKEN, LOADER_STOP, NOTIFY, SERVER_ERRORS, USER_LOGOUT } from '@/constants';
 
 // for multiple requests
 export default function() {

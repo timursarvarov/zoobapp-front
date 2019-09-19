@@ -12,7 +12,7 @@
         }
     }
     .to-delete {
-        background-color: lighten($brand-warning, 43.5%) !important;
+        background-color: lighten($brand-warning, 13.5%) !important;
         -webkit-transition: background-color 1000ms linear;
         -ms-transition: background-color 1000ms linear;
         transition: background-color 1000ms linear;
@@ -23,7 +23,7 @@
     }
     @keyframes color_change {
         from {
-            background-color: lighten($brand-primary, 43.5%);
+            background-color: lighten($brand-success, 23.5%);
         }
         to {
             background-color: none;

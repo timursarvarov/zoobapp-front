@@ -3,34 +3,43 @@
         <div class="md-layout-item">
             <t-wuswug :contentDescription="contentDescription" v-model="descriptionL">
                 <div slot="start" ref="autocomplete">
-                    <t-auto-complite
-                        class="no-margin"
-                        :mdFuzzySearch="true"
-                        v-model="selectedDescription"
-                        @md-selected="setDescription"
-                        :md-options="descriptionHeaders"
-                        :chooseContent="true"
-                    >
-                        <label>Search for Templates</label>
-
-                        <template slot="md-autocomplete-item" slot-scope="{ item, term }">
-                            <md-highlight-text :md-term="term">{{ item }}</md-highlight-text>
-                        </template>
-
-                        <template slot="md-autocomplete-empty" slot-scope="{ term }">
-                            <div class="md-layout" style="white-space: pre-wrap;oveflow:hidden;">
-                                <span class="md-layout-item md-size-100" style="white-space: pre-wrap;oveflow:hidden;"
-                                    >No templates "{{ term }}" were found.</span
-                                >
-                                <md-button
-                                    style="min-width:40px;max-width:140px"
-                                    class="md-primary md-layout-item mx-auto md-sm"
-                                    @click="showPatientAddForm()"
-                                    >CREATE TEMPLATE</md-button
-                                >
-                            </div>
-                        </template>
-                    </t-auto-complite>
+                    <div ref="autocomplete" class="manipulations-autocomplite">
+                        <cool-select
+                            ref="autocomplete"
+                            v-model="selectedDescription"
+                            class="with-action md-field"
+                            :class="[{ 'md-focused': coolSelectFocus }]"
+                            tabindex="1"
+                            :items="descriptionHeaders"
+                            :arrows-disable-instant-selection="true"
+                            :disable-first-item-select-on-enter="true"
+                            item-text="text"
+                            item-value="title"
+                            :placeholder="selectedDescription ? '' : 'Select description'"
+                            @focus="coolSelectFocus = true"
+                            @blur="coolSelectFocus = false"
+                            @select="setDescription"
+                        >
+                            <template v-if="item" slot="item" slot-scope="{ item }">
+                                <div style="display: flex;">
+                                    <md-button class="IZ-select-button md-layout-item">
+                                        <span v-if="item && item.title" class="text-left">
+                                            {{ item.title | capitilize }}
+                                            <br />
+                                            <span v-if="item && item.description" class="text-left">{{ `${item.description}` }}</span>
+                                        </span>
+                                    </md-button>
+                                </div>
+                            </template>
+                            <template slot="no-data">
+                                <div class="md-layout" style="display: flex; white-space: pre-wrap;oveflow:hidden;">
+                                    <span class="md-layout-item md-size-100" style="white-space: pre-wrap;oveflow:hidden;"
+                                        >No procedures were found.</span
+                                    >
+                                </div>
+                            </template>
+                        </cool-select>
+                    </div>
                 </div>
             </t-wuswug>
         </div>
@@ -38,12 +47,13 @@
 </template>
 <script>
 import TWuswug from '@/components/CustomComponents/TWuswug';
+import { CoolSelect } from 'vue-cool-select';
 
 export default {
     name: 't-item-description',
     components: {
         TWuswug,
-        't-auto-complite': () => import('@/components/CustomComponents/TAutoComplite')
+        CoolSelect
     },
     model: {
         prop: 'description',
@@ -68,6 +78,7 @@ export default {
             contentDescription: '',
             selectedDescription: '',
             code: '',
+            coolSelectFocus: false,
             touched: {
                 code: false
             },
@@ -114,18 +125,21 @@ export default {
                 return res;
             });
         },
-        setDescription(key) {
-            const desc = Object.values(this.descriptions).find(d => d.title === key);
-            if (desc) {
-                this.descriptionL = desc.description;
-                this.contentDescription = desc.description;
-            }
+        setDescription(item) {
+            this.descriptionL = item.description;
+            this.contentDescription = item.description;
         }
     },
     computed: {
         descriptionHeaders: {
             get() {
-                const descriptionTitles = Object.values(this.descriptions).map(d => d.title);
+                const descriptionTitles = [];
+                Object.values(this.descriptions).forEach(d => {
+                    descriptionTitles.push({
+                        ...d,
+                        text: d.title + d.description
+                    });
+                });
                 return descriptionTitles || [];
             },
             set() {}
@@ -147,3 +161,8 @@ export default {
     }
 };
 </script>
+<style lang="scss">
+.ProseMirror {
+    min-height: 200px;
+}
+</style>
