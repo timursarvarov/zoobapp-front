@@ -3,6 +3,7 @@
     border-radius: 10px;
     flex-grow: 1;
     align-items: stretch;
+    margin: 20px 5px;
     &__section:not(:first-child) {
         text-align: right;
         justify-content: space-between;
@@ -23,6 +24,7 @@
         // min-width: 200px;
     }
     &__section-text:not(:first-child) {
+        white-space: nowrap;
         &:first-child {
             flex-grow: 1;
             display: flex;

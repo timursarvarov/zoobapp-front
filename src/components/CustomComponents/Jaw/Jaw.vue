@@ -65,7 +65,7 @@
             </div>
 
             <div class="jaw-wrapper-teeth">
-                <transition mode="out-in" appear enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
+                <transition mode="out-in" appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
                     <div v-if="ageCategoryBaby" key="babyTeeth" class="jaw-scroll">
                         <div class="jaw-top md-alignment-top-center md-size-100">
                             <div v-for="(toothId, topJawToothIndex) in topBabyTeeth" :key="toothId" v-ripple class="tooth">
@@ -490,6 +490,9 @@ export default {
             }
         }
     },
+    updated() {
+        this.handleResize();
+    },
     watch: {
         selectedTeeth: {
             handler(val) {
@@ -510,16 +513,9 @@ export default {
 
     created() {
         this.calculateJaw('created');
-        window.addEventListener('resize', this.handleResize);
-        this.handleResize();
     },
     destroyed() {
         window.removeEventListener('resize', this.handleResize);
-    },
-    mounted() {
-        this.$nextTick(() => {
-            this.handleResize();
-        });
     },
 
     methods: {
@@ -540,7 +536,6 @@ export default {
                 .then(() => {
                     this.selectedTeethLocal = [];
                     this.$store.dispatch(JAW_LOADER_STOP);
-                    setTimeout(this.handleResize(), 2500);
                 })
                 .catch(err => {
                     this.$store.dispatch(JAW_LOADER_STOP);
@@ -668,13 +663,17 @@ export default {
             this.$emit('onSelectedTeeth', this.selectedTeethLocal);
         },
         calculateJaw() {
-            const startTime = performance.now();
             this.calculatePromise().then(jaw => {
+                // if (process.env.NODE_ENV === 'development') {
+                // const startTime = performance.now();
+                //     this.jawComputed = jaw;
+                //     this.$store.dispatch(JAW_LOADER_STOP);
+                //     const duration = performance.now() - startTime;
+                //     console.log(`Jaw calculating took ${duration}ms`);
+                // } else {
                 this.jawComputed = jaw;
-                this.handleResize();
-                const duration = performance.now() - startTime;
-                console.log(`Jaw calculating took ${duration}ms`);
                 this.$store.dispatch(JAW_LOADER_STOP);
+                // }
             });
         },
         calculatePromise() {
@@ -810,17 +809,17 @@ export default {
 
 <style lang="scss" scoped>
 .jaw-wrapper {
-    .jaw-wrapper-teeth {
-        .fade-enter-active,
-        .fade-leave-active {
-            transition: opacity 0.55s ease-out;
-        }
+    // .jaw-wrapper-teeth {
+    //     .fade-enter-active,
+    //     .fade-leave-active {
+    //         transition: opacity 0.55s ease-out;
+    //     }
 
-        .fade-enter,
-        .fade-leave-to {
-            opacity: 0;
-        }
-    }
+    //     .fade-enter,
+    //     .fade-leave-to {
+    //         opacity: 0;
+    //     }
+    // }
     .jaw-toolbar {
         padding-right: 0px;
         padding-left: 0px;

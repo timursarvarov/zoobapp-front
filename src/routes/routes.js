@@ -432,7 +432,7 @@ const clinicPages = {
             path: 'manipulations',
             name: 'Manipulations',
             meta: { requiresAuth: true },
-            component: load('Pages/Clinic/ClinicSettings')
+            component: load('Pages/Clinic/ClinicManipulataions')
         }
     ]
 };

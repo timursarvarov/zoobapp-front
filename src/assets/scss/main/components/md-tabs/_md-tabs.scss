@@ -1,7 +1,7 @@
 @mixin md-tabs-spec($brand-primary, $indicator, $mdb-text-color-primary) {
     .md-tabs-navigation {
-        overflow: hidden !important;
-        overflow-y: scroll !important;
+        // overflow: hidden !important;
+        // overflow-y: scroll !important;
         display:block;
         @include md-theme-property(background-color, $brand-primary, background);
         .md-button {
@@ -135,7 +135,7 @@
             }
             .md-ripple {
                 overflow: visible !important;
-                padding: 0.40625rem 1.85rem !important;
+                padding: 0.40625rem 1.5rem !important;
                 // padding: 0.40625rem 1.25rem !important;
                 font-size: $mdb-btn-font-size-sm;
                 .md-button-content {

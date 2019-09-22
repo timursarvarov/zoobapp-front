@@ -58,7 +58,7 @@ export default {
     [PATIENT_JAW_UPDATE]: ({ commit, rootGetters, dispatch }) => {
         dispatch(JAW_LOADER_START);
         const patientItems = {
-            procedures: rootGetters.getPatientCurrentAndAproovedPlanProcedures,
+            procedures: rootGetters.getPatientCurrentAndApprovedPlanProcedures,
             diagnosis: rootGetters.getPatientDiagnosis,
             ananmnesis: rootGetters.getPatientAnamnesis
         };

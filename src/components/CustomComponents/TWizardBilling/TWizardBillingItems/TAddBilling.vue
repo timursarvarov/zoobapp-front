@@ -446,7 +446,7 @@ export default {
             patient: 'getPatient',
             getManipulationsByProcedureID: 'getManipulationsByProcedureID',
             getManipulationsByProcedureIDs: 'getManipulationsByProcedureIDs',
-            getUnbilledAndAproovedPlansProcedures: 'getUnbilledAndAproovedPlansProcedures',
+            getUnbilledAndApprovedPlansProcedures: 'getUnbilledAndApprovedPlansProcedures',
             clinic: 'getCurrentClinic'
         }),
         headers() {
@@ -498,7 +498,7 @@ export default {
             return sum || 0;
         },
         unselectedProcedures() {
-            const procedures = this.getUnbilledAndAproovedPlansProcedures.filter(
+            const procedures = this.getUnbilledAndApprovedPlansProcedures.filter(
                 p => !this.selectedProcedures.find(searchedP => searchedP.ID === p.ID)
             );
             procedures.forEach((p, i) => {

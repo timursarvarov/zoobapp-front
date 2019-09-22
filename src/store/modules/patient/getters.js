@@ -34,7 +34,7 @@ export default {
         }
         return {};
     },
-    getAproovedPlansIDs: state => {
+    getApprovedPlansIDs: state => {
         const plansIDs = [];
         if (state.plans) {
             Object.keys(state.plans).forEach(pID => {
@@ -59,7 +59,7 @@ export default {
         procedures.sort((a, b) => new Date(b.created) - new Date(a.created));
         return procedures;
     },
-    getPatientCurrentAndAproovedPlanProcedures: (state, rootGetters) => {
+    getPatientCurrentAndApprovedPlanProcedures: (state, rootGetters) => {
         if (!state.plans) return [];
         const currentPlanID = rootGetters.getCurrentPlanID;
         let allPlanIDs = Object.keys(state.plans).filter(
@@ -151,7 +151,7 @@ export default {
         }
         return manipulations;
     },
-    getUnbilledAndAproovedPlansProcedures: (state, rootGetters) => {
+    getUnbilledAndApprovedPlansProcedures: (state, rootGetters) => {
         let procedures = [];
         if(!state.plans)return procedures;
         Object.values(state.plans).forEach(p => {

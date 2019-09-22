@@ -4,11 +4,6 @@ export default {
         name: 'English',
         dir: 'ltr',
     },
-    he: {
-        code: 'he',
-        name: 'עִברִית',
-        dir: 'rtl',
-    },
     uz: {
         code: 'uz',
         name: 'Uzbek',

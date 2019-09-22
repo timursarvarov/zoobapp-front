@@ -65,25 +65,14 @@
                         <div v-else-if="field.key === 'filesize'" :md-label="field.title" :md-sort-by="field.sortable ? field.key : ''">
                             {{ item.size | formatBytes }}
                         </div>
-                        <div v-else-if="field.key === 'author' && item.author" :md-sort-by="field.sortable ? field.key : ''">
-                            <div class="md-layout md-alignment-left-center">
-                                <div class="md-layout-item md-layout" style="max-width:35px;">
-                                    <t-avatar
-                                        small
-                                        :text-to-color="item.author.ID"
-                                        :no-img-tag="true"
-                                        :image-src="item.author.avatar"
-                                        :title="item.author.firstName + ' ' + item.author.lastName"
-                                    />
-                                </div>
-
-                                <span class="md-layout-item">
-                                    <small>{{ item.author.lastName | capitilize }}</small>
-                                    <br />
-                                    <small>{{ item.author.firstName | capitilize }}</small>
-                                </span>
-                            </div>
-                        </div>
+                        <avatar-box
+                            v-else-if="field.key === 'author' && item.author"
+                            small
+                            :avatar="item.author.avatar"
+                            :id="item.author.ID"
+                            :firstLine="item.author.firstName"
+                            :secondLine="item.author.lastName"
+                        />
                     </md-table-cell>
                     <md-table-cell md-label="Actions">
                         <md-button class="md-just-icon md-simple" @click="downoladFile(item.url)">
@@ -146,12 +135,15 @@ import Fuse from 'fuse.js';
 // import swal from 'sweetalert2';
 import 'viewerjs/dist/viewer.css';
 import { tObjProp } from '@/mixins';
-import components from '@/components';
+// import components from '@/components';
 
 export default {
     name: 'TFilesList',
     components: {
-        ...components
+        // ...components
+        't-file-preview': () => import('./TFilePreview/TFilePreview'),
+        'avatar-box': () => import('./AvatarBox'),
+        pagination: () => import('@/components/Pagination')
     },
     mixins: [tObjProp],
     props: {

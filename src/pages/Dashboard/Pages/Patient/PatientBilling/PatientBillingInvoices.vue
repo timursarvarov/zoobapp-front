@@ -10,7 +10,7 @@
             <template slot="emptyState">
                 <md-table-empty-state
                     :md-label="`No invoices found`"
-                    md-description="To create invoice, firstly please aproove plan, and select unbilled procedures here"
+                    md-description="To create invoice, firstly please approve plan, and select unbilled procedures here"
                 >
                     <md-button class="md-primary">Create invoice</md-button>
                 </md-table-empty-state>

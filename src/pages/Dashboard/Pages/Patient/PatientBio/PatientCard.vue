@@ -126,7 +126,14 @@
 
                 <div class="md-layout-item md-size-100">
                     <md-datepicker v-model="preparedBirthDate" md-immediately :md-model-type="String" disabled="loading">
-                        <label>Birthday date</label>
+                        <label
+                            >Birthday date
+                            <span v-if="preparedBirthDate">
+                                (
+                                {{ $moment().diff(preparedBirthDate, 'years') }}
+                                years old )
+                            </span>
+                        </label>
                     </md-datepicker>
                 </div>
 
@@ -139,7 +146,7 @@
                             { 'md-error': errors.has('email') }
                         ]"
                     >
-                        <label>Email Address</label>
+                        <label>Email Address </label>
                         <md-input
                             v-model="patient.email"
                             v-validate="modelValidations.email"
@@ -214,7 +221,7 @@ export default {
         return {
             showRating: false,
             loading: false,
-            preparedBirthDate: moment().format('YYYY-MM-D'),
+            preparedBirthDate: null,
             showForm: false,
             image: '',
             address: null,

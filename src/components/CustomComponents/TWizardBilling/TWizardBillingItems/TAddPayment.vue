@@ -159,7 +159,7 @@ export default {
             patient: 'getPatient',
             getManipulationsByProcedureID: 'getManipulationsByProcedureID',
             getManipulationsByProcedureIDs: 'getManipulationsByProcedureIDs',
-            getUnbilledAndAproovedPlansProcedures: 'getUnbilledAndAproovedPlansProcedures',
+            getUnbilledAndApprovedPlansProcedures: 'getUnbilledAndApprovedPlansProcedures',
             clinic: 'getCurrentClinic'
         }),
         currencyCode() {

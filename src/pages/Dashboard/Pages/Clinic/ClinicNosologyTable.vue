@@ -2,6 +2,19 @@
     <div class="items-list-wrapper">
         <div>
             <slot name="toolbar" />
+            <md-toolbar class="md-transparent" style="z-index: 10;">
+                <div class="md-toolbar-row">
+                    <div class="md-toolbar-section-start">
+                        <slot name="firsToolbarStart" />
+                    </div>
+                    <div class="md-toolbar-section-end">
+                    <slot name="firsToolbarEnd" />
+                        <md-button class="md-just-icon md-simple" @click="showTableEditor = !showTableEditor">
+                            <md-icon>settings</md-icon>
+                        </md-button>
+                    </div>
+                </div>
+            </md-toolbar>
             <md-toolbar class="md-transparent">
                 <div class="md-layout-item md-size-33">
                     <md-field>
@@ -15,16 +28,9 @@
                     <slot name="header" />
                 </div>
                 <div class="md-layout md-layout-item md-size-33 ml-auto">
-                    <div class="md-layout-item md-size-80">
-                        <md-field>
-                            <md-input v-model="searchQuery" type="search" class="mb-3" clearable style="width: 200px" placeholder="Search records" />
-                        </md-field>
-                    </div>
-                    <div class="md-layout-item md-size-20 ml-auto">
-                        <md-button class="md-just-icon md-simple" @click="showTableEditor = !showTableEditor">
-                            <md-icon>settings</md-icon>
-                        </md-button>
-                    </div>
+                    <md-field>
+                        <md-input v-model="searchQuery" type="search" class="mb-3" clearable style="width: 200px" placeholder="Search records" />
+                    </md-field>
                 </div>
             </md-toolbar>
             <md-table
@@ -35,7 +41,6 @@
                 :md-sort-order.sync="currentSortOrder"
                 :md-sort-fn="customSort"
                 class="table-striped table-with-header table-hover"
-                :class="extraClass"
             >
                 <div />
                 <md-table-empty-state
@@ -50,7 +55,7 @@
                     :key="item.ID"
                     slot-scope="{ item }"
                     :class="[{ 'just-added': item.justAdded }, { 'to-delete': item.ID === itemToDelete.ID }]"
-                    :md-selectable="currentType === 'procedures' || currentType === 'billing' ? 'multiple' : 'single'"
+                    md-selectable="multiple"
                 >
                     <md-table-cell
                         v-for="field in itemsTableColumns"
@@ -61,31 +66,13 @@
                     >
                         <div v-if="field.key === 'code' && item.code" :class="field.key">{{ item.code }}</div>
 
-                        <div v-else-if="field.key === 'title' && item.title" class="item-text">{{ item.title }}</div>
-                        <div v-else-if="field.key === 'description' && item.description" class="item-text">
+                        <div v-else-if="field.key === 'title' && item.title" :class="field.key" class="item-text">{{ item.title }}</div>
+                        <div v-else-if="field.key === 'description'" class="item-text">
                             <small v-html="item.description" />
-                        </div>
-                        <div v-else-if="field.key === 'teeth' && item.teeth" :class="field.key">
-                            <span v-for="toothId in Object.keys(item.teeth)" :key="toothId" class="tooth" :class="currentType">
-                                <small>{{ toothId | toCurrentTeethSystem }}</small>
-                            </span>
-                        </div>
-                        <avatar-box
-                            v-else-if="field.key === 'createdBy' && item.createdBy"
-                            small
-                            :avatar="item.createdBy.avatar"
-                            :id="item.createdBy.ID"
-                            :firstLine="item.createdBy.firstName"
-                            :secondLine="item.createdBy.lastName"
-                        />
-                        <manipulations-box v-if="field.key === 'manipulations' && item.manipulations" :procedureId="item.ID" />
-
-                        <div v-else-if="field.key === 'state'">
-                            <div>{{ item.state }}</div>
                         </div>
 
                         <div v-else-if="field.key === 'ID'">
-                            <div class="md-title">{{ item.ID }}</div>
+                            <div>{{ item.ID }}</div>
                         </div>
 
                         <div v-else-if="field.key === 'created' && item.created">
@@ -104,62 +91,26 @@
                             <small>{{ item.updated | moment('calendar') }}</small>
                         </div>
 
-                        <div v-else-if="field.key === 'price' && item.manipulations" class="price">
-                            <span class="price_title">
-                                <span class="md-title">{{ getManipulationsByProcedureID(item.ID).reduce((a, b) => a + b.totalPrice, 0) }}</span>
-                                &nbsp;
-                                <small>{{ currentClinic.currencyCode }}</small>
-                            </span>
-                            <span class="md-small-hide price_sub-title">
-                                <br />
-                                <small class="text-left">
-                                    {{ getManipulationsByProcedureID(item.ID).length }}
-                                    manipulations
-                                </small>
-                            </span>
-                        </div>
-                        <avatar-box v-else-if="field.key === 'planID'" small :id="item.planID" :firstLine="patient.plans[item.planID].name" />
-                        <div v-else-if="field.key === 'discount'">
-                            <span class="md-title">{{ item.discout || 0 }}%</span>
-                        </div>
-                        <div v-else-if="field.key === 'dueDate' && item.dueDate">
-                            <div v-if="!item.dueDate">No date</div>
-                            <div v-else>
-                                <span class>
-                                    {{ item.dueDate | moment('from') }}
-                                    <br />
-                                </span>
-                                <small>{{ item.dueDate | moment('calendar') }}</small>
-                            </div>
-                        </div>
-                        <div v-else-if="field.key === 'payments'">
-                            <span v-if="item.payments">{{ item.payments.length }}</span>
-                            <span v-else>No payments</span>
-                        </div>
-                        <procedures-box v-else-if="field.key === 'procedures' && item.procedures" :proceduresIds="item.procedures" />
-                        <div v-else-if="field.key === 'tax'" class="md-title">{{ item.tax || 0 }}%</div>
-                        <div class="md-title" v-else-if="field.key === 'total'">
-                            {{ item.total || 0 }}
+                        <div v-else-if="field.key === 'price'" class="price">
+                            <span class="md-title price_title">{{ item.price }}</span>
+                            &nbsp;
                             <small>{{ currentClinic.currencyCode }}</small>
+                        </div>
+                        <div v-else-if="field.key === 'categoryCode'" class="categoryCode">
+                            <span>{{ item.categoryCode }}</span>
+                        </div>
+                        <div v-else-if="field.key === 'categoryTitle'" class="item-text">
+                            <small>{{ item.categoryTitle }}</small>
+                        </div>
+                        <div v-else-if="field.key === 'state'" class="state">
+                            <span>{{ item.state }}</span>
                         </div>
                     </md-table-cell>
 
                     <md-table-cell v-if="currentType !== 'invoices'" md-label="Actions">
                         <div class="cell_actions">
-                            <md-button
-                                v-if="currentType !== 'billing'"
-                                v-show="ifDiagnoseHasLocations(item.teeth)"
-                                class="md-just-icon md-simple"
-                                @click.native="toggleItemVisibility(item, currentType)"
-                            >
-                                <md-icon v-if="item.showInJaw">visibility</md-icon>
-                                <md-icon v-else>visibility_off</md-icon>
-                            </md-button>
                             <md-button class="md-just-icon md-info md-simple" @click.native="handleEdit(item)">
                                 <md-icon>edit</md-icon>
-                            </md-button>
-                            <md-button class="md-just-icon md-simple" @click.native="handlePrint(item)">
-                                <md-icon>print</md-icon>
                             </md-button>
                             <md-button class="md-just-icon md-simple" @click.native="handleDelete(item)">
                                 <md-icon>delete</md-icon>
@@ -211,12 +162,9 @@ import { mapGetters } from 'vuex';
 import Fuse from 'fuse.js';
 import components from '@/components';
 import {
-    USER_DIAGNOSIS_COLUMNS,
-    USER_ANAMNESIS_COLUMNS,
-    USER_BILLING_COLUMNS,
-    USER_PROCEDURES_COLUMNS,
-    USER_INVOICE_COLUMNS,
-    PATIENT_ITEM_VISIBILITY_TOGGLE,
+    CLINIC_MANIPULATIONS_COLUMNS,
+    CLINIC_PROCEDURES_COLUMNS,
+    CLINIC_DIAGNOSIS_COLUMNS,
     PATIENT_PROCEDURE_DELETE,
     EB_SHOW_ITEM_WIZARD,
     EB_SHOW_PATIENT_PRINT_FORM,
@@ -225,7 +173,7 @@ import {
 import EventBus from '@/plugins/event-bus';
 
 export default {
-    name: 'PatientNosoologyTable',
+    name: 'ClinicNosoologyTable',
     components: {
         ...components
     },
@@ -244,9 +192,13 @@ export default {
         },
         currentType: {
             type: String,
-            default: () => 'diagnosis'
+            default: () => 'manipulations'
         },
         selectedItems: {
+            type: Array,
+            default: () => []
+        },
+        filteredData: {
             type: Array,
             default: () => []
         },
@@ -283,12 +235,7 @@ export default {
         ...mapGetters({
             currentClinic: 'getCurrentClinic',
             patient: 'getPatient',
-            getAvailableAnamnesTableColumns: 'getAvailableAnamnesTableColumns',
-            getAvailableDiagnosisTableColumns: 'getAvailableDiagnosisTableColumns',
-            getAvailableProceduresTableColumns: 'getAvailableProceduresTableColumns',
-            getAvailableBillingTableColumns: 'getAvailableBillingTableColumns',
-            getManipulationsByProcedureID: 'getManipulationsByProcedureID',
-            getAvailableInvoiceTableColumns: 'getAvailableInvoiceTableColumns'
+            getAvailableManipulationsTableColumns: 'getAvailableManipulationsTableColumns'
         }),
         slotsPassed() {
             return this.$slots;
@@ -322,11 +269,12 @@ export default {
             return this.searchedData.length > 0 ? this.searchedData.length : this.tableData.length;
         },
         tableData() {
-            return this.items;
+            const items = this.customSort(this.items, this.currentSort, this.currentSortOrder);
+            return items;
         },
         currentTypeToLocalStorage() {
-            if (this.currentType === 'diagnosis') {
-                return USER_DIAGNOSIS_COLUMNS;
+            if (this.currentType === 'manipulations') {
+                return CLINIC_MANIPULATIONS_COLUMNS;
             }
             if (this.currentType === 'anamnesis') {
                 return USER_ANAMNESIS_COLUMNS;
@@ -340,29 +288,24 @@ export default {
             if (this.currentType === 'invoices') {
                 return USER_INVOICE_COLUMNS;
             }
-            return USER_DIAGNOSIS_COLUMNS;
+            return CLINIC_MANIPULATIONS_COLUMNS;
         },
         defaultFields() {
             if (this.currentType === 'diagnosis') {
                 return this.getAvailableDiagnosisTableColumns;
-            } else if (this.currentType === 'anamnesis') {
-                return this.getAvailableAnamnesTableColumns;
-            } else if (this.currentType === 'billing') {
-                return this.getAvailableBillingTableColumns;
-            } else if (this.currentType === 'procedures') {
-                return this.getAvailableProceduresTableColumns;
-            } else if (this.currentType === 'invoices') {
-                return this.getAvailableInvoiceTableColumns;
+            } else if (this.currentType === 'manipulations') {
+                return this.getAvailableManipulationsTableColumns;
             } else return this.getAvailableBillingTableColumns;
         }
     },
     watch: {
         searchQuery(value) {
-            let result = this.tableData;
+            let result = this.lodash.clone(this.tableData);
             if (value !== '') {
                 result = this.fuseSearch.search(this.searchQuery);
             }
-            this.searchedData = result;
+            console.log(value, this.searchedData, this.fuseSearch);
+            this.searchedData = this.lodash.clone(result);
         },
         selectedItems() {
             this.showSnackbar = this.selectedItems.length > 0;
@@ -371,14 +314,18 @@ export default {
             if (!val) {
                 this.itemToDelete = '';
             }
+        },
+        tableData: {
+            deep: true,
+            handler(value) {
+                this.initiateFuseSearch();
+                this.searchQuery = '';
+                this.searchedData = this.lodash.clone(value);
+            }
         }
     },
     mounted() {
-        // Fuse search initialization.
-        this.fuseSearch = new Fuse(this.tableData, {
-            keys: Object.values(this.itemsTableColumns).map(val => val.key),
-            threshold: 0.3
-        });
+        this.initiateFuseSearch();
     },
     created() {
         this.setItemsTableColumns();
@@ -386,30 +333,18 @@ export default {
     },
 
     methods: {
+        initiateFuseSearch() {
+            this.fuseSearch = new Fuse(this.tableData, {
+                keys: Object.values(this.itemsTableColumns).map(val => val.key),
+                threshold: 0.3
+            });
+        },
         hasSlot(slotName) {
             return this.slotsPassed && this.slotsPassed[slotName];
-        },
-        toggleItemVisibility(itemId, itemType) {
-            if (itemId) {
-                this.$store.dispatch(PATIENT_ITEM_VISIBILITY_TOGGLE, {
-                    params: {
-                        itemId,
-                        type: itemType
-                    }
-                });
-            }
-            this.recalculateJaw(itemType);
         },
         setComputedAvailableItemsTableColumns() {
             this.computedAvailableItemsTableColumns = this.defaultFields;
         },
-        // getFieldName(key) {
-        //     const field = this.defaultFields.find(f => f.key === key);
-        //     if (field) {
-        //         return field.title;
-        //     }
-        //     return '';
-        // },
         setItemsTableColumns() {
             const localStorageColumns = JSON.parse(localStorage.getItem(this.currentTypeToLocalStorage));
             if (localStorageColumns) {
@@ -436,9 +371,44 @@ export default {
             show = show !== -1;
             return show;
         },
-        customSort() {
-            this.$emit('customSort', this.currentSort, this.currentSortOrder);
-            return;
+        sortBytypes(value, currentSort, currentSortOrder) {
+            const val = value.sort((a, b) => {
+                const sortBy = currentSort;
+                if (Array.isArray(a[currentSort])) {
+                    const aArrayLength = a[currentSort] ? Object.keys(a[currentSort]).length : 0;
+                    const bArrayLength = b[currentSort] ? Object.keys(b[currentSort]).length : 0;
+                    const orderLocal = currentSortOrder;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+                    const aVal = aArrayLength === null ? dflt : aArrayLength;
+                    const bVal = bArrayLength === null ? dflt : bArrayLength;
+                    return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
+                } else if (typeof a[currentSort] === 'string') {
+                    if (currentSortOrder === 'desc') {
+                        return a[sortBy].localeCompare(b[sortBy]);
+                    }
+                    return b[sortBy].localeCompare(a[sortBy]);
+                } else if (typeof a[currentSort] === 'number') {
+                    const orderLocal = currentSortOrder;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+                    const aVal = a[sortBy] === null ? dflt : a[sortBy];
+                    const bVal = b[sortBy] === null ? dflt : b[sortBy];
+                    return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
+                } else if (typeof a[currentSort] === 'object') {
+                    const orderLocal = currentSortOrder;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+                    const aVal = a[sortBy] === null ? dflt : a[sortBy];
+                    const bVal = b[sortBy] === null ? dflt : b[sortBy];
+                    return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
+                }
+            });
+            return val;
+        },
+        customSort(value, currentSort, currentSortOrder) {
+            //  this.$emit('customSort', this.currentSort, this.currentSortOrder )
+            const val = this.sortBytypes(value, currentSort, currentSortOrder);
+            return val;
+            // const val = this.sortBytypes(value);
+            // return val;
         },
         handleEdit(item) {
             if (item) {
@@ -516,3 +486,5 @@ export default {
     }
 };
 </script>
+
+<style lang="scss" scoped></style>

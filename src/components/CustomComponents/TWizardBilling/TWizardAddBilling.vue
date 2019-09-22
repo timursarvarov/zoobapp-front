@@ -134,7 +134,7 @@ export default {
         },
         newProceduresToAssociate() {
             if (!this.invoice.procedures) return [];
-            return this.invoice.procedures.filter(pID => this.getUnbilledAndAproovedPlansProcedures.find(uP => uP.ID === pID));
+            return this.invoice.procedures.filter(pID => this.getUnbilledAndApprovedPlansProcedures.find(uP => uP.ID === pID));
         }
     },
     created() {

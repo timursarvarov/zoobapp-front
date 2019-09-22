@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="">
+    <div>
         <t-toolbar-row :headers="headers" />
         <md-toolbar class="md-transparent md-elevation-0" >
             <div class="md-toolbar-row">
@@ -38,7 +38,7 @@
                         </md-icon>
                         not approve
                     </md-button>
-                    <md-button v-else class="md-primary" @click="approvePlan(currentPlanID)">
+                    <md-button v-else class="md-info" @click="approvePlan(currentPlanID)">
                         <md-icon>
                             check
                         </md-icon>
@@ -51,9 +51,10 @@
         <patient-nosology-table
             current-type="procedures"
             extraClass="no"
-            :items="currentPlanProcedures"
+            :items="sortedData"
             :selected-items="selectedItems"
             @onSelected="onSelected"
+            @customSort="customSort"
         >
             <template slot="emptyState">
                 <md-table-empty-state :md-label="`No procedures found`" md-description="Scroll top, and create a new one">
@@ -120,7 +121,8 @@ export default {
         return {
             showDeleteItemSnackbar: false,
             deleting: false,
-            selectedItems: []
+            selectedItems: [],
+            sortedData: []
         };
     },
     computed: {
@@ -130,7 +132,8 @@ export default {
             currentPlanProcedures: 'getPatientCurrentPlanProcedures',
             manipulationsByPlanID: 'getManipulationsByPlanID',
             getManipulationsByProcedureIDs: 'getManipulationsByProcedureIDs',
-            currentPlanID: 'getCurrentPlanID'
+            currentPlanID: 'getCurrentPlanID',
+            getManipulationsByProcedureID: 'getManipulationsByProcedureID',
         }),
         getPlanTotalPrice() {
             return this.manipulationsByPlanID(this.currentPlan.ID).reduce((a, b) => a + (b.totalPrice || 0), 0);
@@ -195,6 +198,65 @@ export default {
         }
     },
     methods: {
+        sortBytypes(currentSort, currentSortOrder) {
+            const vm = this;
+            const val = vm.currentPlanProcedures.sort((a, b) => {
+                const sortBy = currentSort;
+                if (Array.isArray(a[currentSort])) {
+                    const aArrayLength = a[currentSort] ? Object.keys(a[currentSort]).length : 0;
+                    const bArrayLength = b[currentSort] ? Object.keys(b[currentSort]).length : 0;
+                    const orderLocal = currentSortOrder;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+                    const aVal = aArrayLength === null ? dflt : aArrayLength;
+                    const bVal = bArrayLength === null ? dflt : bArrayLength;
+                    return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
+                } else if (typeof a[currentSort] === 'string') {
+                    if (currentSortOrder === 'desc') {
+                        return a[sortBy].localeCompare(b[sortBy]);
+                    }
+                    return b[sortBy].localeCompare(a[sortBy]);
+                } else if (typeof a[currentSort] === 'number') {
+                    const orderLocal = currentSortOrder;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+                    const aVal = a[sortBy] === null ? dflt : a[sortBy];
+                    const bVal = b[sortBy] === null ? dflt : b[sortBy];
+                    return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
+                } else if (typeof a[currentSort] === 'object') {
+                    const orderLocal = currentSortOrder;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+                    const aVal = a[sortBy] === null ? dflt : a[sortBy];
+                    const bVal = b[sortBy] === null ? dflt : b[sortBy];
+                    return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
+                }
+            });
+            return val;
+        },
+        customSort(currentSort, currentSortOrder) {
+            const vm = this;
+            if (currentSort === 'teeth') {
+                vm.sortedData = vm.currentPlanProcedures.sort((a, b) => {
+                    const aTeethLength = a.teeth ? Object.keys(a.teeth).length : 0;
+                    const bTeethLength = b.teeth ? Object.keys(b.teeth).length : 0;
+                    const orderLocal = currentSortOrder;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+                    const aVal = aTeethLength === null ? dflt : aTeethLength;
+                    const bVal = bTeethLength === null ? dflt : bTeethLength;
+                    return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
+                });
+            }
+            if (currentSort === 'price') {
+                vm.sortedData = vm.currentPlanProcedures.sort((a, b) => {
+                    const aTeethPrice = this.getManipulationsByProcedureID(a.ID).reduce((a, b) => a + b.totalPrice, 0) || 0;
+                    const bTeethPrice = this.getManipulationsByProcedureID(b.ID).reduce((a, b) => a + b.totalPrice, 0) || 0;
+                    const orderLocal = currentSortOrder;
+                    const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
+                    const aVal = aTeethPrice === null ? dflt : aTeethPrice;
+                    const bVal = bTeethPrice === null ? dflt : bTeethPrice;
+                    return orderLocal === 'asc' ? aVal - bVal : bVal - aVal;
+                });
+            }
+            this.sortedData = this.sortBytypes(currentSort, currentSortOrder);
+        },
         handlePrint(item) {
             if (item) {
                 const params = {

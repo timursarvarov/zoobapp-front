@@ -429,5 +429,44 @@ export default {
             key: 'total',
             title: 'Total'
         }
+    ],
+    availableManipulationsTableColumns: [
+        {
+            key: 'title',
+            title: 'Title'
+        },
+        {
+            key: 'categoryCode',
+            title: 'Category Code'
+        },
+        {
+            key: 'categoryTitle',
+            title: 'Category Title'
+        },
+        {
+            key: 'description',
+            title: 'Description'
+        },
+        {
+            key: 'ID',
+            title: 'ID'
+        },
+        {
+            key: 'createdBy',
+            title: 'Created By'
+        },
+        {
+            key: 'created',
+            title: 'Created'
+        },
+        {
+            key: 'price',
+            title: 'Price'
+        },
+        {
+            key: 'state',
+            title: 'State'
+        },
+
     ]
 };

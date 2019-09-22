@@ -3,12 +3,14 @@ import { COMPANY_NAME, COMPANY_LOGO_URL, COMPANY_COLOR, COMPANY_LINK } from '@/c
 export default {
     getCurrentManipulations: state => {
         let manipulations = [];
-        state.manipulations.forEach(m => {
-            manipulations.push({
-                ...m,
-                text: `${m.code} - ${m.title}`
+        if (state.manipulations) {
+            state.manipulations.forEach(m => {
+                manipulations.push({
+                    ...m,
+                    text: `${m.code} - ${m.title}`
+                });
             });
-        });
+        }
         return manipulations;
     },
     getUngroupedProcedures: state => state.procedures || [],

@@ -14,7 +14,7 @@
             <template slot="emptyState">
                 <md-table-empty-state
                     :md-label="`No unbilled procedures found`"
-                    md-description="To create invoice, firstly please aproove plan, and select unbilled procedures here"
+                    md-description="To create invoice, firstly please approve plan, and select unbilled procedures here"
                 >
                     <md-button class="md-simple md-primary" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`">Go to plans</md-button>
                     <md-button v-if="patient.invoices" class="md-primary" :to="`/${$i18n.locale}/patient/${patient.ID}/billing/invoices`"
@@ -68,7 +68,7 @@ export default {
             patient: 'getPatient',
             currentClinic: 'getCurrentClinic',
             availableBillingTableColumns: 'availableBillingTableColumns',
-            aproovedPlansProcedures: 'getUnbilledAndAproovedPlansProcedures',
+            aproovedPlansProcedures: 'getUnbilledAndApprovedPlansProcedures',
             getManipulationsByProcedureID: 'getManipulationsByProcedureID',
             getManipulationsByProcedureIDs: 'getManipulationsByProcedureIDs',
             manipulationsByPlanID: 'getManipulationsByPlanID'

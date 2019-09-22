@@ -9,6 +9,8 @@ export default {
         phone: 'USER_PHONE',
         address: 'USER_ADDRESS',
         lang: 'USER_LANG',
+        onCreationPatientOpenProfile: 'USER_ON_CREATION_PATIENT_OPEN_PROFILE',
+        onCreationPatientCloseAddForm: 'USER_ON_CREATION_PATIENT_CLOSE_ADD_FORM',
     },
     undefinedUser: {
         lang: 'UNDEFINED_USER_LANG',

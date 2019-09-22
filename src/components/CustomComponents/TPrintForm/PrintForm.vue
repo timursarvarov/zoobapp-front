@@ -7,9 +7,7 @@
                         <div class="card-icon">
                             <md-icon>print</md-icon>
                         </div>
-                        <h4 class="title">
-                            Print
-                        </h4>
+                        <h4 class="title">Print</h4>
                     </md-card-header>
 
                     <md-card-content class="md-layout">
@@ -41,7 +39,7 @@
                                                         <!--*** CONTENT GOES HERE ***-->
                                                         <div class="print-form__page">
                                                             <!-- <div class="print-form__page__block">
-                                                            </div> -->
+                                                            </div>-->
                                                             <t-print-form-patient-bio :patient="patient" />
                                                             <print-form-patient v-if="type === 'patient'" />
                                                             <t-print-form-patient-jaw v-else-if="type === 'jaw'" :patient-props="patientProps" />
@@ -85,7 +83,7 @@
                                                                         :procedure-id="procedureId"
                                                                     />
                                                                 </template>
-                                                            </t-print-form-patient-plan> -->
+                                                            </t-print-form-patient-plan>-->
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -107,12 +105,8 @@
                     </md-card-content>
 
                     <md-card-actions md-alignment="right">
-                        <md-button class=" md-success" @click="showFormL = !showFormL">
-                            close
-                        </md-button>
-                        <md-button class=" md-success" @click="printD()">
-                            Print
-                        </md-button>
+                        <md-button class="md-success" @click="showFormL = !showFormL">close</md-button>
+                        <md-button class="md-success" @click="printD()">Print</md-button>
                     </md-card-actions>
                 </md-card>
             </div>
@@ -122,14 +116,18 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import components from '@/components';
 import { Printd } from 'printd';
 import { PATIENT_ADD_SUB_PROP } from '@/constants';
 
 export default {
     name: 'PrintForm',
     components: {
-        ...components
+        'print-form-patient': () => import('./PrintFormPatient'),
+        't-print-form-patient-bio': () => import('./TPrintFormPatientBio'),
+        't-print-form-patient-jaw': () => import('./TPrintFormPatientJaw'),
+        't-print-form-patient-procedure': () => import('./TPrintFormPatientProcedure'),
+        't-print-form-patient-plan': () => import('./TPrintFormPatientPlan'),
+        't-print-form-patient-header': () => import('./TPrintFormPatientHeader')
     },
     props: {
         showForm: {
@@ -159,7 +157,7 @@ export default {
         ...mapGetters({
             currentClinic: 'getCurrentClinic',
             patient: 'getPatient',
-            getAproovedPlansIDs: 'getAproovedPlansIDs'
+            getApprovedPlansIDs: 'getApprovedPlansIDs'
         }),
         showFormL: {
             get() {
@@ -189,7 +187,7 @@ export default {
     created() {
         if (this.patient.plans) {
             this.selectedPlans = this.lodash.clone(Object.keys(this.patient.plans));
-            // this.selectedPlans = this.getAproovedPlansIDs;
+            // this.selectedPlans = this.getApprovedPlansIDs;
         }
     },
     methods: {

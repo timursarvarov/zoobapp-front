@@ -145,7 +145,7 @@ export default {
     },
     methods: {
         onError(e) {
-            console.log(e);
+            // console.log(e);
         },
         getColorButton(buttonColor) {
             return `md-${buttonColor}`;
@@ -190,7 +190,7 @@ export default {
         },
         dataURItoBlob(dataURI) {
             // convert base64/URLEncoded data component to raw binary data held in a string
-            console.log(dataURI);
+            // console.log(dataURI);
             let byteString;
             if (dataURI.split(',')[0].indexOf('base64') >= 0) {
                 byteString = atob(dataURI.split(',')[1]);

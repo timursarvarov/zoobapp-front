@@ -21,7 +21,7 @@
 }
 
 .IZ-select:after {
-    height: 2px;
+    height: 1px;
 }
 
 .IZ-select.no-after-no-before {
@@ -40,7 +40,7 @@
     .underline-progress-bar {
         position: absolute;
         width: 100%;
-        top: 42px;
+        top: 41px;
         height: 3px;
     }
     .IZ-select__input-wrap {
@@ -60,7 +60,7 @@
             background-color: transparent;
             background-clip: padding-box;
             background: none;
-            border-radius: 2px;
+            border-radius: 1px;
             box-shadow: none;
             position: relative;
             background-size: 0%;
@@ -137,12 +137,12 @@
         text-align: left;
         position: absolute;
         bottom: -14px;
-        font-size: 12px;
+        font-size: 11px;
         transition: 0.3s;
     }
     .IZ-select__menu {
         min-width: 62vw;
-        top: 42px;
+        top: 41px;
         .IZ-select__no-data {
             padding: 15px 0;
         }
@@ -223,7 +223,7 @@
                             .tooth {
                                 width: fit-content;
                                 border: 1px solid #fff;
-                                font-size: 12px;
+                                font-size: 11px;
                                 color: #ffffff;
                                 min-width: 20px;
                                 padding: 1px 6px;

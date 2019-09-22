@@ -251,23 +251,23 @@ export default {
     },
     watch: {
         showForm() {
-            this.openProfile = localStorage.getItem('USER_SETTINGS_OPEN_PATIENT_PROFILE');
+            this.openProfile = localStorage.getItem(LOCAL_STORAGE.user.onCreationPatientOpenProfile);
             if (this.openProfile === 'true') {
                 this.openProfile = true;
             } else if (this.openProfile === null) {
                 this.openProfile = true;
-                localStorage.setItem('USER_SETTINGS_OPEN_PATIENT_PROFILE', true);
+                localStorage.setItem(LOCAL_STORAGE.user.onCreationPatientOpenProfile, true);
                 this.openProfile = true;
             } else {
                 this.openProfile = false;
             }
-            this.closeAddForm = localStorage.getItem('USER_SETTINGS_CLOSE_PATIENT_ADD_FORM');
+            this.closeAddForm = localStorage.getItem(LOCAL_STORAGE.user.onCreationPatientCloseAddForm);
             console.log(this.closeAddForm);
             if (this.closeAddForm === 'true') {
                 this.closeAddForm = true;
             } else if (this.closeAddForm === null) {
                 this.closeAddForm = true;
-                localStorage.setItem('USER_SETTINGS_CLOSE_PATIENT_ADD_FORM', true);
+                localStorage.setItem(LOCAL_STORAGE.user.onCreationPatientCloseAddForm, true);
                 this.closeAddForm = true;
             } else {
                 this.closeAddForm = false;
@@ -305,10 +305,10 @@ export default {
     },
     methods: {
         setOpenProfileAfterCreation() {
-            localStorage.setItem('USER_SETTINGS_OPEN_PATIENT_PROFILE', this.openProfile);
+            localStorage.setItem(LOCAL_STORAGE.user.onCreationPatientOpenProfile, this.openProfile);
         },
         setCloseFormAfter() {
-            localStorage.setItem('USER_SETTINGS_CLOSE_PATIENT_ADD_FORM', this.closeAddForm);
+            localStorage.setItem(LOCAL_STORAGE.user.onCreationPatientCloseAddForm, this.closeAddForm);
         },
         validate() {
             this.$validator.validateAll().then(isValid => {

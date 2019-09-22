@@ -1,6 +1,6 @@
 `<template>
     <div>
-        <md-dialog class="patient-add-form" :md-active.sync="showForm" :md-click-outside-to-close="!loading">
+        <md-dialog class="patient-add-form" :md-active.sync="showFormL" :md-click-outside-to-close="!loading">
             <div>
                 <md-card>
                     <md-card-header class="md-card-header-icon">
@@ -355,9 +355,15 @@ import { SlideYDownTransition } from 'vue2-transitions';
 import { PATIENT_CREATE, NOTIFY, PATIENT_PARAMS_SET, LOCAL_STORAGE } from '@/constants';
 
 export default {
-    name: 'PatientAddForm',
+    name: 'ClinicAddNosologyForm',
     components: {
         SlideYDownTransition
+    },
+    props:{
+        showForm:{
+            type: Boolean,
+            default: () => false
+        },
     },
     data() {
         return {
@@ -408,17 +414,17 @@ export default {
         };
     },
     computed: {
-        showForm: {
+        showFormL: {
             get() {
-                return this.$patientAddForm.patientAddFormShown;
+                return this.showForm;
             },
-            set() {
-                this.$patientAddForm.patientAddFormShown = !this.$patientAddForm.patientAddFormShown;
+            set(newValue) {
+                this.$emit('update:showForm', newValue);
             }
-        }
+        },
     },
     watch: {
-        showForm() {
+         showFormL() {
             this.openProfile = localStorage.getItem(LOCAL_STORAGE.user.onCreationPatientOpenProfile);
             if (this.openProfile === 'true') {
                 this.openProfile = true;
@@ -429,12 +435,12 @@ export default {
             } else {
                 this.openProfile = false;
             }
-            this.closeAddForm = localStorage.getItem(LOCAL_STORAGE.user.onCreationPatientCloseAddForm);
+            this.closeAddForm = localStorage.getItem(LOCAL_STORAGE.user.onCreationNosologyCloseAddForm);
             if (this.closeAddForm === 'true') {
                 this.closeAddForm = true;
             } else if (this.closeAddForm === null) {
                 this.closeAddForm = true;
-                localStorage.setItem(LOCAL_STORAGE.user.onCreationPatientCloseAddForm, true);
+                localStorage.setItem(LOCAL_STORAGE.user.onCreationNosologyCloseAddForm, true);
                 this.closeAddForm = true;
             } else {
                 this.closeAddForm = false;
@@ -481,7 +487,7 @@ export default {
             localStorage.setItem(LOCAL_STORAGE.user.onCreationPatientOpenProfile, this.openProfile);
         },
         setCloseFormAfter() {
-            localStorage.setItem(LOCAL_STORAGE.user.onCreationPatientCloseAddForm, this.closeAddForm);
+            localStorage.setItem(LOCAL_STORAGE.user.onCreationNosologyCloseAddForm, this.closeAddForm);
         },
         validate() {
             this.$validator.validateAll().then(isValid => {
@@ -537,7 +543,7 @@ export default {
                                         });
                                     }
                                     if (this.closeAddForm) {
-                                        this.showForm = false;
+                                        this.showFormL = false;
                                     }
                                     this.clearForm();
                                     this.$store.dispatch(NOTIFY, {

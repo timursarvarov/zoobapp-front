@@ -18,7 +18,7 @@
                             </h4>
                         </div>
                         <div class="md-toolbar-section-end md-layout ml-auto">
-                            <md-switch @change="switchFIlterMode" v-model="filterMode"> Filter mode </md-switch>
+                            <md-switch @change="switchFIlterMode" v-model="filterMode">Filter mode</md-switch>
                             <md-button class="md-just-icon md-simple" @click="showForm = !showForm">
                                 <md-icon>settings</md-icon>
                             </md-button>
@@ -61,11 +61,11 @@
                         </div>
                     </md-toolbar>
                     <div class="table-wrapper">
-                        <div v-if="searching" class="md-layout mx-auto table-wrapper-preloader">
+                        <!-- <div v-if="searching || false" class="md-layout mx-auto table-wrapper-preloader">
                             <div style="height:60px;margin: auto;">
                                 <md-progress-spinner md-mode="indeterminate" />
                             </div>
-                        </div>
+                        </div> -->
                         <md-table
                             :key="filterMode"
                             v-model="tableData"
@@ -97,7 +97,9 @@
                                         sltyle="min-height: 250px;"
                                         md-label="Loading..."
                                         :md-description="`Please be patient, just a few seconds...`"
-                                    />
+                                    >
+                                        <md-progress-spinner :md-diameter="40" :md-stroke="4" md-mode="indeterminate" />
+                                    </md-table-empty-state>
                                 </slide-x-left-transition>
                                 <slide-x-left-transition>
                                     <md-table-empty-state
@@ -152,47 +154,35 @@
                                         </div>
 
                                         <div v-else-if="field.key === 'files' && item[field.key]" class="md-layout md-alignment-left-center">
-                                            <span class="md-layout-item">
-                                                {{ item[field.key].length }}
-                                            </span>
+                                            <span class="md-layout-item">{{ item[field.key].length }}</span>
                                         </div>
                                         <div v-else-if="field.key === 'lastName' && item[field.key]" class="md-layout md-alignment-left-center">
-                                            <span class="md-layout-item">
-                                                {{ item.lastName | capitilize }}
-                                            </span>
+                                            <span class="md-layout-item">{{ item.lastName | capitilize }}</span>
                                         </div>
                                         <div v-else-if="field.key === 'firstName' && item[field.key]" class="md-layout md-alignment-left-center">
-                                            <span class="md-layout-item">
-                                                {{ item.firstName | capitilize }}
-                                            </span>
+                                            <span class="md-layout-item">{{ item.firstName | capitilize }}</span>
                                         </div>
 
                                         <span v-else-if="$moment(item[field.key], $moment.ISO_8601, true).isValid()">
                                             <small v-if="field.key === 'birthday'">
                                                 {{ $moment().diff(item[field.key], 'years') }}
-                                                years
+                                                years old
                                                 <br />
-                                                <small>
-                                                    {{ item[field.key] | moment('calendar') }}
-                                                </small>
+                                                <small>{{ item[field.key] | moment('calendar') }}</small>
                                             </small>
 
                                             <div v-else>
-                                                <small>
-                                                    {{ item[field.key] | moment('from') }}
-                                                </small>
+                                                <small>{{ item[field.key] | moment('from') }}</small>
                                                 <br />
-                                                <small>
-                                                    {{ item[field.key] | moment('calendar') }}
-                                                </small>
+                                                <small>{{ item[field.key] | moment('calendar') }}</small>
                                             </div>
                                         </span>
-                                        <span v-else-if="field.key === 'firstName' || field.key === 'lastName'">
-                                            {{ item[field.key] | capitilize }}
-                                        </span>
+                                        <span v-else-if="field.key === 'firstName' || field.key === 'lastName'">{{
+                                            item[field.key] | capitilize
+                                        }}</span>
 
                                         <span v-else-if="field.key === 'phone'">
-                                            <span> +{{ item[field.key] }} </span>
+                                            <span>+{{ item[field.key] }}</span>
                                         </span>
                                         <div v-else-if="field.key === 'rating'">
                                             <star-rating v-model="item.rating" read-only :glow="5" :show-rating="false" :star-size="12" />
@@ -221,13 +211,13 @@
                 </md-card-content>
                 <md-card-actions md-alignment="space-between">
                     <div class>
-                        <p class="card-category">Showing {{ from + 1 }} to {{ to }} of {{ total }} entries</p>
+                        <p class="card-category">Showing from{{ from + 1 }} to {{ to }} of {{ patientsNum }} patients</p>
                     </div>
                     <pagination
                         v-model="queryParams.pagination.currentPage"
                         class="pagination-no-border pagination-success"
                         :per-page="queryParams.pagination.perPage"
-                        :total="totalPages"
+                        :total="patientsNum"
                     />
                 </md-card-actions>
             </md-card>
@@ -261,10 +251,9 @@ export default {
         searching: false,
         showForm: false,
         showSnackbar: false,
-        perPageOptions: [25, 50],
+        perPageOptions: [5, 25, 50],
         tableData: [],
         selectedPatients: [],
-        total: 0,
         queryParams: {
             currentSort: 'created',
             currentSortOrder: 'desc',
@@ -287,16 +276,13 @@ export default {
         }),
         to() {
             let highBound = this.from + this.queryParams.pagination.perPage;
-            if (this.total < highBound) {
-                highBound = this.total;
+            if (this.patientsNum < highBound) {
+                highBound = this.patientsNum;
             }
             return highBound;
         },
         from() {
             return this.queryParams.pagination.perPage * (this.queryParams.pagination.currentPage - 1);
-        },
-        totalPages() {
-            return Math.ceil(this.total / this.queryParams.pagination.perPage);
         }
     },
     watch: {
@@ -308,7 +294,6 @@ export default {
         },
         selectedPatients(value) {
             if (!this.lodash.isEmpty(value) && this.filterMode) {
-                console.log('selectedPatients', value);
                 this.showSnackbar = true;
             } else {
                 this.showSnackbar = false;
@@ -321,7 +306,6 @@ export default {
             this.search();
         } else {
             this.tableData = this.patients;
-            this.total = Math.ceil(this.patientsNum / this.queryParams.pagination.perPage);
         }
     },
     methods: {
@@ -389,7 +373,6 @@ export default {
                     .then(result => {
                         vm.tableData = result.patients || [];
                         vm.searching = false;
-                        vm.total = Math.ceil(result.patientsNum / vm.queryParams.pagination.perPage);
                         vm.removeClass();
                         return result;
                     })
@@ -425,7 +408,7 @@ export default {
     }
     .underline-progress {
         position: absolute;
-        bottom: 10px;
+        bottom: 28px;
         height: 2px;
         width: inherit;
         margin: 0;

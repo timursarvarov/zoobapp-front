@@ -38,7 +38,7 @@ export default {
         ...mapGetters({
             currentClinic: 'getCurrentClinic',
             patient: 'getPatient',
-            getAproovedPlansIDs: 'getAproovedPlansIDs'
+            getApprovedPlansIDs: 'getApprovedPlansIDs'
         }),
         patientProps() {
             const props = {
@@ -57,7 +57,7 @@ export default {
     created() {
         if (this.patient.plans) {
             this.selectedPlans = this.lodash.clone(Object.keys(this.patient.plans));
-            // this.selectedPlans = this.getAproovedPlansIDs;
+            // this.selectedPlans = this.getApprovedPlansIDs;
         }
     }
 };

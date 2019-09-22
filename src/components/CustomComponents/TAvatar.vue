@@ -3,11 +3,11 @@
         <md-avatar :class="[{ 'md-small': small }, { 'md-avatar-icon': !loaded }]" class="t-avatar">
             <div class="wrapper" :style="{ background: !loaded ? gradient : '' }">
                 <transition name="fade">
-                    <img v-show="loaded && imageSrc" class="avatar-img" :src="imageSrc" :alt="title | acronim" @load="onLoaded" />
+                    <img v-show="loaded && src" class="avatar-img" :src="src" :alt="title | acronim" @load="onLoaded" />
                 </transition>
                 <transition name="fade">
                     <div
-                        v-show="!loaded || !imageSrc"
+                        v-show="!loaded || !src"
                         :style="{ background: gradient }"
                         :class="[{ 'tripple-acr': !small && acronim.length > 2 }, { 'tripple-acr-small': small && acronim.length > 2 }]"
                         class="md-layout md-alignment-center-center avatar-acronim-wrapper"
@@ -70,6 +70,9 @@ export default {
                 text: `${this.textToColor}`
             });
             return color;
+        },
+        src(){
+            return this.imageSrc || '';
         },
         gradient() {
             let colors = 'linear-gradient(45deg';
