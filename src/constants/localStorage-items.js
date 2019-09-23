@@ -11,6 +11,8 @@ export default {
         lang: 'USER_LANG',
         onCreationPatientOpenProfile: 'USER_ON_CREATION_PATIENT_OPEN_PROFILE',
         onCreationPatientCloseAddForm: 'USER_ON_CREATION_PATIENT_CLOSE_ADD_FORM',
+        onCreationNosologyOpenProfile: 'USER_ON_CREATION_NOSOLOGY_OPEN_PROFILE',
+        onCreationNosologyCloseAddForm: 'USER_ON_CREATION_NOSOLOGY_CLOSE_ADD_FORM',
     },
     undefinedUser: {
         lang: 'UNDEFINED_USER_LANG',
@@ -20,4 +22,5 @@ export default {
         anamnesis: 'FAVORITE_ANAMNESIS',
         procedures: 'FAVORITE_PROCEDURES',
     },
+    sideBarPosition: 'SIDE_BAR_POSITION',
 };

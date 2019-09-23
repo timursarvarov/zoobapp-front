@@ -193,9 +193,6 @@ export const COMPANY_LINK = 'https://dental.owl.team';
 export const SIDEBAR_BACKGROUND_URL = 'https://owl.team/sidebar-6.jpg';
 export const LOGIN_BACKGROUND_URL = 'https://owl.team/backround-register.jpg';
 
-// Sidebar
-export const SIDE_BAR_POSITION = 'SIDE_BAR_POSITION';
-
 // Base
 export const BASE_URL = 'https://api.zoobapp.com/v1';
 

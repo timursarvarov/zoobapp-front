@@ -176,7 +176,7 @@
                         }
                     ]"
                 >
-                    <md-table-cell md-numeric md-label="#">{{ index + 1 }}</md-table-cell>
+                    <md-table-cell md-numereic md-label="#">{{ index + 1 }}</md-table-cell>
                     <md-table-cell class="manip_title" md-label="Title">
                         <div class="md-layout">
                             <small>

@@ -9,7 +9,7 @@
         </div>
         <div :class="!printmode ? 'jaw-wrapper' : 'jaw-wrapperprint'">
             <md-toolbar class="hide-on-print md-transparent md-layout jaw-toolbar md-dense md-alignment-center-space-between">
-                <div class="md-layout-item">
+                <div>
                     <slot name="title-start" />
                     <slot name="title-end" />
                 </div>
@@ -84,7 +84,7 @@
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         :viewBox="jawSVG[toothId].viewBox"
-                                        :style="{ width: getCustomWidth(toothId) + (printmode ? 'px' : 'vw') }"
+                                        :style="{ width: teethWidth[toothId] + (printmode ? 'px' : 'vw') }"
                                     >
                                         <g v-if="jawComputed[toothId]">
                                             <template v-for="(value, location) in defaultLocations">
@@ -108,7 +108,7 @@
                                     direction="top"
                                     :align="getMenuAlign('adult', topJawToothIndex)"
                                     :type="type"
-                                    :offset="getCustomWidth(toothId)"
+                                    :offset="teethWidth[toothId]"
                                     @recalculateJaw="calculateJaw"
                                     @showItem="showToothInfo"
                                 />
@@ -128,7 +128,7 @@
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         :viewBox="jawSVG[toothId].viewBox"
-                                        :style="{ width: getCustomWidth(toothId) + (printmode ? 'px' : 'vw') }"
+                                        :style="{ width: teethWidth[toothId] + (printmode ? 'px' : 'vw') }"
                                     >
                                         <g v-if="jawComputed[toothId]">
                                             <template v-for="(value, location) in defaultLocations">
@@ -153,7 +153,7 @@
                                     direction="bottom"
                                     :align="getMenuAlign('adult', bottomAdultTeethIndex)"
                                     :type="type"
-                                    :offset="getCustomWidth(toothId)"
+                                    :offset="teethWidth[toothId]"
                                     @recalculateJaw="calculateJaw"
                                     @showItem="showToothInfo"
                                 />
@@ -175,7 +175,7 @@
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         :viewBox="jawSVG[toothId].viewBox"
-                                        :style="{ width: getCustomWidth(toothId) + (printmode ? 'px' : 'vw') }"
+                                        :style="{ width: teethWidth[toothId] + (printmode ? 'px' : 'vw') }"
                                     >
                                         <g v-if="jawComputed[toothId]">
                                             <template v-for="(value, location) in defaultLocations">
@@ -200,7 +200,7 @@
                                     direction="top"
                                     :align="getMenuAlign('adult', topJawToothIndex)"
                                     :type="type"
-                                    :offset="getCustomWidth(toothId)"
+                                    :offset="teethWidth[toothId]"
                                     @recalculateJaw="calculateJaw"
                                     @showItem="showToothInfo"
                                 />
@@ -220,7 +220,7 @@
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         :viewBox="jawSVG[toothId].viewBox"
-                                        :style="{ width: getCustomWidth(toothId) + (printmode ? 'px' : 'vw') }"
+                                        :style="{ width: teethWidth[toothId] + (printmode ? 'px' : 'vw') }"
                                     >
                                         <g v-if="jawComputed[toothId]">
                                             <template v-for="(value, location) in defaultLocations">
@@ -245,7 +245,7 @@
                                     direction="bottom"
                                     :align="getMenuAlign('adult', bottomAdultTeethIndex)"
                                     :type="type"
-                                    :offset="getCustomWidth(toothId)"
+                                    :offset="teethWidth[toothId]"
                                     @recalculateJaw="calculateJaw"
                                     @showItem="showToothInfo"
                                 />
@@ -297,7 +297,8 @@ import {
     PATIENT_EDIT,
     JAW_LOADER_STOP,
     JAW_LOADER_START,
-    EB_SHOW_PATIENT_PRINT_FORM
+    EB_SHOW_PATIENT_PRINT_FORM,
+    LOCAL_STORAGE
 } from '@/constants';
 import JawMenu from './JawMenu';
 import AnimatedNumber from '@/components/AnimatedNumber';
@@ -345,6 +346,7 @@ export default {
         return {
             mouseOverToothId: '',
             separatedProcedures: {},
+            teethWidth: {},
             windowWidth: 0,
             toggleAll: false,
             toggleAdultTop: false,
@@ -363,6 +365,9 @@ export default {
             currentClinic: 'getCurrentClinic',
             isCalculatingJaw: 'isCalculatingJaw'
         }),
+        sideBarPosition() {
+            return localStorage.getItem(LOCAL_STORAGE.user.sideBarPosition) === '1';
+        },
         teethSystem() {
             return this.currentClinic.teethSystem;
         },
@@ -490,8 +495,9 @@ export default {
             }
         }
     },
-    updated() {
+    mounted() {
         this.handleResize();
+        this.setTeethWidth();
     },
     watch: {
         selectedTeeth: {
@@ -505,17 +511,17 @@ export default {
                 this.calculateJaw();
             },
             deep: true
-        },
-        windowHeight() {
-            this.handleResize();
         }
     },
 
     created() {
         this.calculateJaw('created');
+        window.addEventListener('resize', this.setTeethWidth);
+        window.addEventListener('resize', this.handleResize);
     },
     destroyed() {
         window.removeEventListener('resize', this.handleResize);
+        window.removeEventListener('resize', this.setTeethWidth);
     },
 
     methods: {
@@ -524,6 +530,11 @@ export default {
                 type: 'jaw'
             };
             EventBus.$emit(EB_SHOW_PATIENT_PRINT_FORM, params);
+        },
+        setTeethWidth() {
+            Object.keys(this.jawSVG).forEach(toothId => {
+                this.teethWidth[toothId] = this.getCustomWidth(toothId);
+            });
         },
         changeAgeCategory(category) {
             this.$store.dispatch(JAW_LOADER_START);
@@ -536,6 +547,7 @@ export default {
                 .then(() => {
                     this.selectedTeethLocal = [];
                     this.$store.dispatch(JAW_LOADER_STOP);
+                    this.handleResize();
                 })
                 .catch(err => {
                     this.$store.dispatch(JAW_LOADER_STOP);
@@ -591,51 +603,52 @@ export default {
         },
         getCustomWidth(toothId) {
             const toothWidth = this.jawSVG[toothId].widthPerc;
-
+            const sideBarPosition = localStorage.getItem(LOCAL_STORAGE.user.sideBarPosition) === '1';
             if (this.babyTeeth.includes(toothId)) {
                 if (this.printmode) {
                     return toothWidth * 8;
                 }
                 if (this.windowWidth < 600) {
-                    return toothWidth / 0.65;
+                    return sideBarPosition ? toothWidth / 0.65 : toothWidth / 0.65;
                 }
                 if (this.windowWidth >= 600 && this.windowWidth < 960) {
-                    return toothWidth / 0.65;
+                    return sideBarPosition ? toothWidth / 0.65 : toothWidth / 0.65;
                 }
-                if (this.windowWidth <= 1280 && this.windowWidth > 960) {
-                    return toothWidth / 1.72;
+                if (this.windowWidth <= 1280 && this.windowWidth >= 960) {
+                    return sideBarPosition ? toothWidth / 1.72 : toothWidth / 1.72;
                 }
                 if (this.windowWidth < 1920 && this.windowWidth > 1280) {
-                    return toothWidth / 1.72;
+                    return sideBarPosition ? toothWidth / 1.72 : toothWidth / 1.72;
                 }
                 if (this.windowWidth >= 1920) {
                     return toothWidth / 2;
                 }
-                return toothWidth / 1.72;
+                return sideBarPosition ? toothWidth / 1.72 : toothWidth / 1.72;
             }
             if (this.printmode) {
-                return toothWidth * 6.5;
+                return sideBarPosition ? toothWidth * 6.5 : toothWidth * 6.5;
             }
             if (this.windowWidth < 600) {
-                return toothWidth / 1.15;
+                return sideBarPosition ? toothWidth / 1.15 : toothWidth / 1.15;
             }
             if (this.windowWidth >= 600 && this.windowWidth < 960) {
-                return toothWidth / 1.15;
+                return sideBarPosition ? toothWidth / 1.15 : toothWidth / 1.15;
             }
-            if (this.windowWidth <= 1280 && this.windowWidth > 960) {
-                return toothWidth / 2.65;
+            if (this.windowWidth <= 1280 && this.windowWidth >= 960) {
+                return sideBarPosition ? toothWidth / 2.95 : toothWidth / 2.65;
             }
             if (this.windowWidth < 1920 && this.windowWidth > 1280) {
-                return toothWidth / 2.5;
+                return sideBarPosition ? toothWidth / 2.8 : toothWidth / 2.5;
             }
             if (this.windowWidth >= 1920) {
-                return toothWidth / 2.2;
+                return sideBarPosition ? toothWidth / 2.5 : toothWidth / 2.2;
             }
 
-            return toothWidth / 2.2;
+            return sideBarPosition ? toothWidth / 2.5 : toothWidth / 2.2;
         },
         handleResize() {
             this.windowWidth = window.innerWidth;
+            this.windowHeight = window.clientHeight;
             if (this.$refs.wrjaw) {
                 const jawHeight = this.$refs.wrjaw.clientHeight;
                 this.$emit('onSizeChanged', jawHeight);
@@ -809,31 +822,10 @@ export default {
 
 <style lang="scss" scoped>
 .jaw-wrapper {
-    // .jaw-wrapper-teeth {
-    //     .fade-enter-active,
-    //     .fade-leave-active {
-    //         transition: opacity 0.55s ease-out;
-    //     }
-
-    //     .fade-enter,
-    //     .fade-leave-to {
-    //         opacity: 0;
-    //     }
-    // }
     .jaw-toolbar {
         padding-right: 0px;
         padding-left: 0px;
-        // margin: 0 -15px 0 -15px;
     }
-    // .fade-enter-active,
-    // .fade-leave-active {
-    //     transition: all 0.5s;
-    // }
-
-    // .fade-enter,
-    // .fade-leave-active {
-    //     opacity: 0;
-    // }
     .hint {
         opacity: 0.2;
     }

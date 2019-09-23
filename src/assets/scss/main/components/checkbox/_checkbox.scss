@@ -1,0 +1,4 @@
+.md-checkbox:not(.md-success):not(.md-primary):not(.md-info):not(.md-warning).md-theme-default.md-checked .md-checkbox-container {
+    background-color:$brand-primary;
+    border-color:$brand-primary;
+}

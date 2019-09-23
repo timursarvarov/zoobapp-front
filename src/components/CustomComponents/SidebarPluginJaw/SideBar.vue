@@ -1,12 +1,12 @@
 <template>
     <div class="sidebar" :data-color="activeColor" :data-image="backgroundImage" :data-background-color="backgroundColor" :style="sidebarStyle">
         <div class="logo">
-            <a :href="link" class="simple-text logo-mini" target="_blank" :style="[{ 'margin-left': notification ? '15px' : '17px' }]">
-                <div class="logo-box" :style="[{ 'margin-top': notification ? '-11px' : '-8px' }]">
+            <a :href="link" class="simple-text logo-mini" target="_blank">
+                <div class="logo-box">
                     <t-avatar :textToColor="title" :title="title" :imageSrc="logo" :notification="notification" />
                 </div>
             </a>
-            <a :href="link" class="simple-text logo-normal" target="_blank">
+            <a :href="link" class="simple-text t-clinic-title logo-normal" target="_blank">
                 <template v-if="$route.meta.rtlActive">{{ rtlTitle }}</template>
                 <template v-else>{{ title }}</template>
             </a>
@@ -123,15 +123,5 @@ export default {
     .nav-mobile-menu {
         display: none;
     }
-}
-.logo-box {
-    margin-right: 5px;
-    margin-bottom: 0;
-    margin-left: 0;
-    float: left;
-}
-.logo-mini {
-    width: 40px !important;
-    overflow: visible !important;
 }
 </style>
