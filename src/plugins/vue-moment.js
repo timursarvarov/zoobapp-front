@@ -1,4 +1,5 @@
 import Vue from 'vue';
-// Validation plugin used to validate forms
-
-Vue.use(require('vue-moment'));
+const moment = require('moment');
+Vue.use(require('vue-moment'), {
+    moment
+});

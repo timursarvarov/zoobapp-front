@@ -39,14 +39,29 @@ export default {
             if (!value) {
                 // this.$router.push('login');
             }
+        },
+        lang(val) {
+            if (val && val != 'en') {
+                if (val === 'uz') {
+                    let newVal = 'uz-latn';
+                    let trLocale = require(`moment/locale/${newVal}`);
+                    this.$moment.updateLocale(newVal, trLocale);
+                } else {
+                    let trLocale = require(`moment/locale/${val}`);
+                    this.$moment.updateLocale(val, trLocale);
+                }
+            } else {
+                this.$moment.locale(val);
+            }
         }
     },
     mounted() {
         if (this.refreshTokenExist) {
             this.$store.dispatch(AUTH_INIT);
         } else {
-            this.$router.push({ name: 'Login', params: { lang: this.lang } });
+            this.$router.push({ name: 'login', params: { lang: this.lang } });
         }
+        this.$moment.locale(this.lang);
     }
 };
 </script>

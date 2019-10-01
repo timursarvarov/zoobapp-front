@@ -16,12 +16,16 @@
             @onSelected="selectItem"
         >
             <template slot="title-start-2">
-                <md-button key="addplan" class="md-success md-simple" @click="$emit('addPlan')"> <md-icon>add</md-icon>add plan </md-button>
+                <md-button key="addplan" class="md-success md-simple" @click="$emit('addPlan')">
+                    <md-icon>add</md-icon> {{ $t(`${$options.name}.addNewPlan`) }}
+                </md-button>
             </template>
             <div slot="empty-space">
-                <md-empty-state md-label="No created plans" md-description="To implemet a procedure, you should firstly create a plan">
+                <md-empty-state
+                    :md-label="$t(`${$options.name}.noPlansTitle`)"
+                    :md-description="$t(`${$options.name}.noPlansDescription`)">
                     <md-button class="md-success md-raised" @click="$emit('addPlan')">
-                        Create New Plan
+                        {{ $t(`${$options.name}.addNewPlan`) }}
                     </md-button>
                 </md-empty-state>
             </div>
@@ -40,6 +44,7 @@ export default {
         ...components
     },
     mixins: [tObjProp],
+    name: 'PatientProceduresSearch',
     props: {
         customHeight: {
             type: Number,

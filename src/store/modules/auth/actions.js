@@ -157,11 +157,13 @@ export default {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace('-', '+').replace('_', '/');
         const decodedParms = JSON.parse(window.atob(base64));
-        dispatch(CLINIC_SET_PROPS, { organization: decodedParms.organization });
-        dispatch(USER_SET_PARAM, {
-            type: 'ID',
-            value: decodedParms.userID
-        });
+        if(decodedParms.organization){
+            dispatch(CLINIC_SET_PROPS, { organization: decodedParms.organization });
+            dispatch(USER_SET_PARAM, {
+                type: 'ID',
+                value: decodedParms.userID
+            });
+        }
 
     },
     [AUTH_LOCK]: ({

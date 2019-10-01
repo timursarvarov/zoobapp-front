@@ -3,13 +3,11 @@
         <md-dialog class="plan-add-form" :md-active.sync="showFormL" @md-opened="focusOn('planName')">
             <div>
                 <md-card>
-                    <md-card-header class="md-card-header-icon ">
+                    <md-card-header class="md-card-header-icon">
                         <div class="card-icon md-card-header-green">
                             <md-icon>playlist_add</md-icon>
                         </div>
-                        <h4 class="name">
-                            Add New Plan
-                        </h4>
+                        <h4 class="name">{{ $t(`${$options.name}.title`) }}</h4>
                     </md-card-header>
                     <md-card-content class="md-layout">
                         <div class="md-layout-item">
@@ -20,7 +18,7 @@
                                     { 'md-error': errors.has('planName') }
                                 ]"
                             >
-                                <label>Plane name</label>
+                                <label>{{ $t(`${$options.name}.labelName`) }}</label>
                                 <md-input
                                     ref="planName"
                                     v-model="planName"
@@ -35,12 +33,10 @@
                                     <md-button
                                         v-show="errors.has('planName')"
                                         tabindex="-1"
-                                        class="md-button  md-icon-button md-dense md-input-action"
-                                        @click="(user.planName = ''), focusOn('planName')"
+                                        class="md-button md-icon-button md-dense md-input-action"
+                                        @click="(planName = ''), focusOn('planName')"
                                     >
-                                        <md-icon class="error">
-                                            close
-                                        </md-icon>
+                                        <md-icon class="error">close</md-icon>
                                     </md-button>
                                 </slide-y-down-transition>
                                 <slide-y-down-transition>
@@ -49,9 +45,7 @@
                                         tabindex="-1"
                                         class="md-button md-icon-button md-dense md-input-action noselect md-simple"
                                     >
-                                        <md-icon class="success">
-                                            done
-                                        </md-icon>
+                                        <md-icon class="success">done</md-icon>
                                     </md-button>
                                 </slide-y-down-transition>
                             </md-field>
@@ -61,9 +55,9 @@
                         <md-button :disabled="errors.has('planName') || loading" class="md-success" @click="addPlan()">
                             <span v-if="loading">
                                 <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
-                                &nbsp; Loading...
+                                &nbsp; {{ $t(`${$options.name}.loading`) }}...
                             </span>
-                            <span v-else>Create</span>
+                            <span v-else>{{ $t(`${$options.name}.create`) }}</span>
                         </md-button>
                     </md-card-actions>
                 </md-card>
@@ -79,6 +73,7 @@ export default {
     components: {
         SlideYDownTransition
     },
+    name: 'PlanAddForm',
     props: {
         patientId: {
             type: Number,

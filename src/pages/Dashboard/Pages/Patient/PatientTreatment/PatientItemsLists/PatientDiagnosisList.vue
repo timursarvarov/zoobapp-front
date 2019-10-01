@@ -5,14 +5,13 @@
 <script>
 import { mapGetters } from 'vuex';
 import components from '@/components';
-// import DeleteForm from './DeleteForm.vue';
 import { tObjProp } from '@/mixins';
 
 export default {
     components: {
         ...components
-        // DeleteForm,
     },
+    name: 'PatientDiagnosisList',
     mixins: [tObjProp],
     props: {
         currentType: {

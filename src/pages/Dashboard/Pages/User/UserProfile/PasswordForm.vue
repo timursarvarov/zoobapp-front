@@ -6,7 +6,7 @@
                     <md-icon>lock</md-icon>
                 </div>
                 <h4 class="title">
-                    Password Settings
+                    {{ $t(`${$options.name}.passwordSettings`) }}
                 </h4>
             </md-card-header>
 
@@ -18,7 +18,7 @@
                         { 'md-error': errors.has('oldPassword') }
                     ]"
                 >
-                    <label>Old Password</label>
+                    <label>{{ $t(`${$options.name}.oldPassword`) }}</label>
                     <md-input v-model="oldPassword" v-validate="modelValidations.oldPassword" data-vv-name="oldPassword" type="password" required />
                     <span class="md-error">{{ errors.first('oldPassword') }}</span>
                 </md-field>
@@ -30,7 +30,7 @@
                         { 'md-valid': !errors.has('newPassword') && touched.newPassword }
                     ]"
                 >
-                    <label>New Password</label>
+                    <label>{{ $t(`${$options.name}.newPassword`) }}</label>
                     <md-input
                         ref="newPassword"
                         v-model="newPassword"
@@ -48,7 +48,7 @@
                         { 'md-valid': !errors.has('rNewPassword') && touched.rNewPassword }
                     ]"
                 >
-                    <label>Repeat New Password</label>
+                    <label>{{ $t(`${$options.name}.rNewPassword`) }}</label>
                     <md-input
                         v-model="rNewPassword"
                         v-validate="modelValidations.rNewPassword"
@@ -64,10 +64,11 @@
             <md-card-actions>
                 <md-button :disabled="loading" native-type="submit" class="md-success" @click.native.prevent="validate">
                     <span v-if="loading">
-                        Loading
+                        <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
+                        {{ $t(`${$options.name}.loading`) }}
                     </span>
                     <span v-else>
-                        Update Password
+                        {{ $t(`${$options.name}.updatePassword`) }}
                     </span>
                 </md-button>
             </md-card-actions>

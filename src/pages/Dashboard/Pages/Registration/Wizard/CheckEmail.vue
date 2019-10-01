@@ -1,14 +1,17 @@
 <template>
     <div>
         <h5 class="info-text">
-            Please check your email for code we sent
-            <br />if your email is empty, please check spam too
+            {{ $t(`${$options.name}.title`) }}
+            <br />
+            {{ $t(`${$options.name}.description`) }}
         </h5>
         <div class="md-layout md-gutter">
             <div class="md-layout-item md-size-100">
                 <md-field>
                     <md-icon>email</md-icon>
-                    <label>Email</label>
+                    <label>
+                    {{ $t(`${$options.name}.email`) }}
+                    </label>
                     <md-input v-model="email" v-validate="modelValidations.email" disabled data-vv-name="email" type="text" name="email" />
                 </md-field>
 
@@ -18,7 +21,9 @@
                     :class="[{ 'md-error': errors.has('code') }, { 'md-valid': !errors.has('code') && touched.code }]"
                 >
                     <md-icon>lock_outline</md-icon>
-                    <label>code</label>
+                    <label>
+                        {{ $t(`${$options.name}.code`) }}
+                    </label>
                     <md-input
                         ref="code"
                         v-model="code"

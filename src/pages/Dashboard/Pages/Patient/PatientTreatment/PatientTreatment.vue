@@ -19,14 +19,22 @@
                     >
                         <template v-if="patient.ID" slot="title-start">
                             <md-tabs md-sync-route class="t-md-tabs" :class="currentType">
-                                <md-tab id="tab-home" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan`" md-label="Procedures" />
+                                <md-tab
+                                    id="tab-home"
+                                    :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan`"
+                                    :md-label="$t(`${$options.name}.procedures`)"
+                                />
                                 <md-tab
                                     id="tab-pages"
                                     class="diagnosis"
                                     :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/diagnosis`"
-                                    md-label="Diagnoses"
+                                    :md-label="$t(`${$options.name}.diagnoses`)"
                                 />
-                                <md-tab id="tab-posts" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`" md-label="Anamnes" />
+                                <md-tab
+                                    id="tab-posts"
+                                    :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`"
+                                    :md-label="$t(`${$options.name}.anamnesis`)"
+                                />
                             </md-tabs>
                         </template>
                     </jaw>
@@ -50,7 +58,7 @@
             </keep-alive>
         </div>
 
-        <div class="md-layout-item md-layout md-size-100">
+        <div v-if="showAddPlan">
             <plan-add-form :show-form.sync="showAddPlan" :plans="patient.plans" :patient-id="patient.ID" @onPlanCreated="redirectToProcdures" />
         </div>
     </div>
@@ -69,7 +77,6 @@ import {
 } from '@/constants';
 import PlanAddForm from './PlanAddForm';
 import components from '@/components';
-// import { tObjProp } from '@/mixins';
 import EventBus from '@/plugins/event-bus';
 
 export default {
@@ -102,6 +109,7 @@ export default {
         PlanAddForm,
         ...components
     },
+    name: 'PatientTreatment',
     data() {
         return {
             showToothDiagnosis: false,

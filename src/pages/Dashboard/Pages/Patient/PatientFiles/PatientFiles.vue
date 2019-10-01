@@ -11,9 +11,13 @@
                 :max-filesize="5"
                 @onSuccess="onSuccess"
             >
-                <md-empty-state slot="emptyState" md-icon="cloud_upload" md-label="Add new file" md-description="Click here or drope some files">
+                <md-empty-state
+                    slot="emptyState"
+                    md-icon="cloud_upload"
+                    :md-label="$t(`${$options.name}.addFileTitle`)"
+                    :md-description="$t(`${$options.name}.addFileDescription`)" >
                     <div>
-                        <b>Total {{ files.length }} files ({{ totalFiles | formatBytes }})</b>
+                        <b> {{ $tc(`${$options.name}.totalFiles`, files.length) }} ({{ totalFiles | formatBytes }})</b>
                     </div>
                 </md-empty-state>
             </t-files-add-form>

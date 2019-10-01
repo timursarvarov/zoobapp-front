@@ -46,6 +46,7 @@
 </template>
 <script>
 import { SlideYDownTransition } from 'vue2-transitions';
+import { NOTIFY } from '@/constants';
 import JawAddLocations from '@/components/CustomComponents/Jaw/JawAddLocations';
 
 import { tObjProp } from '@/mixins';
@@ -175,10 +176,18 @@ export default {
         },
         validate() {
             return this.$validator.validateAll().then(res => {
+                if(!res){
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: this.errors.first('locations'),
+                            type: 'warning'
+                        }
+                    });
+                }
                 this.$emit('on-validated', res);
                 this.matchWidth();
                 return res;
-            });
+            })
         },
         isValidLoctions() {
             if (this.originalLocations === undefined) {

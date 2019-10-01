@@ -1,3388 +1,605 @@
 {
-    "diagnosis": {
-        "1": {
-            "code": "K00.0",
-            "description": "Tishlarning tug'ma yo'qligi; u barcha (total anodontiya) yoki faqatgina ayrim tishlar (qisman anodontiya, gipodontiya), hamda bargli va doimiy tishlarga, yoki doimiy dentisning tishlariga bog'liq bo'lishi mumkin.",
-            "title": "Anodontiya"
-        },
-        "2": {
-            "code": "K00.1",
-            "description": "Qo'shimcha tish, portlovchi yoki unerupted, o'xshash bo'lgan guruhdagi boshqa tishlarga o'xshash yoki o'xshash. Uning mavjudligi qo'shni tishlarni chayqashga olib kelishi yoki ularning puflanishiga yo'l qo'ymasligi mumkin.",
-            "title": "Mesiodens"
-        },
-        "3": {
-            "code": "K00.2",
-            "description": "Tishning anomaliyasi, asosan, yuqori lateral tirnoqlarda topilgan. U mo''jizaviy chuqurlikdagi burchakda ishlov berish bilan tavsiflanadi. Tishlaring mikroblari birlashmasi tomonidan ishlab chiqilgan vaqtda ikki tish birlashtirilgan; tishlarga o'zlarining tojlarining emallari, ularning ildiz dentinlari yoki ikkalasi ham qo'shilishi mumkin",
-            "title": "Tishlaring hajmi va shakli anormalliklari"
-        },
-        "4": {
-            "code": "K00.3",
-            "description": "Tish shakllanishi davomida yuqori miqdorda flor tarkibiga ega ichimlik suvidan kelib chiqqan tish emalining surunkali endemik shakli va asta-sekin jigar rangini o'zgartiradigan emalga oq rangli ko'rinishga olib keladigan noma'lum kalsifikatsiya bilan tavsiflanadi. (jablonski stomatologiyasi lug'ati, 1992, s-286) Tish rivojlanishida haddan tashqari flor olishdan kelib chiqadigan holat. Ushbu buzuqlikning namoyishi oq tusdan, tish emalidagi jigar ranglar va yoriqlar yoki chuqurlarga qadar bo'lishi mumkin.",
-            "title": "Tishli tishlar"
-        },
-        "5": {
-            "code": "K00.4",
-            "description": "Odatda o'rta tirnoqning bir tomonida, asosan, maksillarar markaziy va lateral teshiklarni oldingi tishni o'z ichiga oladigan mahalliylashtirilgan hibsga olingan tish taraqqiyoti. Rentgenografik jihatdan tishlarning hayvon ko'rinishi bor. Kalsifikatsiya va prizmatik emalning bitlari pulpada topilishi mumkin va emal ingichka va qisman yo'q. (jablonski, stomatologik tasvirlangan lug'ati, 1982)",
-            "title": "Tish shakllanishidagi buzilishlar"
-        },
-        "6": {
-            "code": "K00.5",
-            "description": "Klinik va genetik jihatdan heterojen genetik nasldan naslga oid kasalliklarga xos tuzilmalar guruhi, odatda dental emal hipoplazi va / yoki tish gipomineralizatsiyasi bilan bog'liq.\n                DSP genidagi mutatsiyalar oqibatida tug'ma tish taraqqiyoti buzilishi. Tishlar zaif, rangsiz va yaroqsiz.\n                Dentin hosil bo'lishining irsiy kasalligi, pulpali oblitratsiyaga bog'liq bo'lgan koronal dentinning normal ko'rinishi, noto'g'ri ildiz shakllanishi va aniq sababsiz periferik lenflar uchun moyillik. (Dorland, 27-chi ed)\n                Tish rivojlanishining autosomal dominant buzilishi, tishlarning rangsizlanishiga olib keluvchi shishasimon dentin bilan tavsiflanadi. Dentin kam mineral tarkibi bilan yaxshi rivojlanadi va pulpa kanali yiqilib ketadi.",
-            "title": "Tish tuzilishidagi irsiy bozukluklar, boshqa joylarda sınıflandırılmamıştır"
-        },
-        "7": {
-            "code": "K00.6",
-            "description": "Tug'ilgandan oldingi tishlar mavjud. Ular yaxshi shakllangan bo'lishi mumkin va odatiy yoki ildizi holda shoxli epiteliya tuzilmalari bo'lishi mumkin. Ular tog 'tepasida gingivae ustida topilgan va tuklar kurtaklari yoki aksessuar dental lamina kurtaklari oldida tish lamina aksessuarlari kurtaklari paydo bo'ladi.",
-            "title": "Tish püskürmesindeki bozukluklar"
-        },
-        "8": {
-            "code": "K00.7",
-            "description": "",
-            "title": "Teething sindromi"
-        },
-        "9": {
-            "code": "K00.8",
-            "description": "Tishlarning shakllanishi paytida rang o'zgarishi mumkin, tishlar NOSning ichki bo'yalishi",
-            "explainRID": "",
-            "templateCode": "",
-            "title": "Tish rivojlanishining boshqa kasalliklari"
-        },
-        "10": {
-            "code": "K00.9",
-            "description": "Tish rivojlanishida yuzaga keladigan tishlarning patologik jarayoni bilan tavsiflangan buzuqlik. Odontogenez paytida paydo bo'lgan tishlarning buzilishi.",
-            "explainRID": "",
-            "templateCode": "",
-            "title": "Tish rivojlanishining nosozligi, aniqlanmagan"
-        },
-        "11": {
-            "code": "K01.0",
-            "description": "Tish juda oddiy bo'lib, uni odatda portlashi mumkin emas.",
-            "title": "O'rnatilgan tish"
-        },
-        "12": {
-            "code": "K01.1",
-            "description": "Jismoniy to'siqdan, odatda, boshqa tishlar bilan parchalanishdan saqlanadigan tish. Ta'sir qilish, shuningdek, periodontal tuzilmalardagi vertikal holatdan tashqari, tishning yo'nalishini ham keltirishi mumkin.",
-            "title": "Ta'sir tishlari"
-        },
-        "13": {
-            "code": "K02.3",
-            "description": "",
-            "title": "Tutuklanan tish kariesleri"
-        },
-        "14": {
-            "code": "K02.51",
-            "description": "",
-            "title": "Emal bilan cheklangan chuqur va yoriq yuzasida tish karikatlari"
-        },
-        "15": {
-            "code": "K02.52",
-            "description": "",
-            "title": "Dentin ichiga kiradigan chuqur va yoriq yuzasida tish toshlari"
-        },
-        "16": {
-            "code": "K02.53",
-            "description": "",
-            "title": "Cho'kma va yoriq yuzasida tish toshlari pulpa ichiga kiradi"
-        },
-        "17": {
-            "code": "K02.61",
-            "description": "",
-            "title": "Tishli kariyes silliq sirtda emal bilan chegaralangan"
-        },
-        "18": {
-            "code": "K02.62",
-            "description": "",
-            "title": "Dentin to'g'ri silliqlashda dentinlar"
-        },
-        "19": {
-            "code": "K02.63",
-            "description": "",
-            "title": "Yumshoq yuzaga pulpa ichiga kiradigan tish shoxlari"
-        },
-        "20": {
-            "code": "K02.7",
-            "description": "",
-            "title": "Tish ildiz karies"
-        },
-        "21": {
-            "code": "K02.9",
-            "description": "",
-            "title": "Tish kariyeri, noaniq"
-        },
-        "22": {
-            "code": "K03.0",
-            "description": "",
-            "title": "Tishlarning haddan tashqari pasayishi"
-        },
-        "23": {
-            "code": "K03.1",
-            "description": "Tishli moddalarni cho'tkasi, bruksizm, yopishish va boshqa mexanik sabablar bilan patologik tashxis. Tishning tortilishidan farqli o'laroq, ushbu turdagi kiyinish faqat tish-to-tish bilan bog'liq bo'lib, mastikatsiyada bo'lgani kabi, faqat okluzal, tirsak va proksimal sirtlarda yuzaga keladi. Bundan tashqari, tish eroziyasidan, bakterial harakatni o'z ichiga olmaydi, kimyoviy jarayonlar orqali tishning qattiq moddasining izchil yo'qolishidan farq qiladi. (Jablonski, stomatologiya lug'ati, 1992, p2)",
-            "title": "Tishlaring abrazivligi"
-        },
-        "24": {
-            "code": "K03.2",
-            "description": "Bakterial harakatni o'z ichiga olmaydi, kimyoviy jarayonlar orqali tishning qattiq moddasini progressiv yo'qotish.",
-            "title": "Tishlaring eroziyasi"
-        },
-        "25": {
-            "code": "K03.3",
-            "description": "Kaltsifik tish to'qimasini qayta tiklash, kation almashinuvini tiklash va osteoklastlarning lakunar rezorbsiyasi natijasida demineralizatsiyani o'z ichiga oladi.\n                Kaltsifik tish to'qimasini qayta tiklash, kation almashinuvini tiklash va osteoklastlarning lakunar rezorbsiyasi natijasida demineralizatsiyani o'z ichiga oladi. Ikki xil mavjud: tashqi (tish patologiyasi natijasida) va ichki (ehtimol, pulpning o'ziga xos yallig'lanishli hiperplaziyasi tomonidan boshlangan).",
-            "title": "Tishlarning patologik emirilishi"
-        },
-        "26": {
-            "code": "K03.4",
-            "description": "Tish sirtida ikkilamchi sementumning haddan tashqari rivojlanishi bilan tavsiflangan regressiv o'zgarish. Bu ildizning har qanday qismida paydo bo'lishi mumkin, lekin uchdan ikkisi apikal odatda ta'sirlanadi.",
-            "title": "Giperektsionoz"
-        },
-        "27": {
-            "code": "K03.5",
-            "description": "Tsementum va alveolyar suyagi sintezi natijasida hosil bo'ladigan tishning qattiq biriktirilishi, periodontal ligamentning obliteratsiyasi bilan. Yarim to'qimalarda va doimiy tishlarda juda kam uchraydi.",
-            "title": "Tishlarning ankilozi"
-        },
-        "28": {
-            "code": "K03.6",
-            "description": "Tish rangi o'zgarishi. Natijalar mahalliy yoki tizimli bo'lishi mumkin va tarkibida tamaki, oziq-ovqat, stomatologik plitalar, karies, restoratif plomba materiallari, travma, dori-darmonlar, infektsiyalar, irsiy kasalliklar va oziq-ovqat etishmovchiligi bo'lishi mumkin.\n                Tishning rangi yoki rangi o'zgarishi bilan tavsiflangan buzuqlik.\n                Periodontal kasalliklarga olib keladigan patologik plakka va hisobga olib keladigan mikrofloralarning to'planishi. Ushbu turdagi biofilmlar turi hisoblanadi. Himoya tish pelletidan nozik farqlanadi.\n                Har qanday sabab tufayli tishni rangi, rangi yoki yaroqsizligi o'zgarishi. Qayta tikuvchi plombalash materiallari, dori vositalari (topikal va tizimli), pulpal nekroz yoki qon ketish javobgar bo'lishi mumkin. (jablonski, stomatologiya lug'ati, 1992, p253)\n                Tish sirtiga, masalan, dental hisoblash yoki plakka va materia alba kabi qattiq yoki yumshoq materiallar",
-            "title": "Tishlarga birikmalar (aksetrlar)"
-        },
-        "29": {
-            "code": "K03.7",
-            "description": "",
-            "title": "Tishli qattiq to'qimalarning posteruptik rang o'zgarishlari"
-        },
-        "30": {
-            "code": "K03.81",
-            "description": "Tishning har qanday qismini tugallamaslik, chuqurlikda va issiqlikka, sovuq, shirin yoki nordon ta'mga va alkogolga nisbatan sezuvchanlik bilan ifodalangan; odatda tanib bo'lmaydilar, chunki tish odatda x-retseptorlari va pulpa hayot sifati testlari uchun normaldir.",
-            "title": "Tishlangan tish"
-        },
-        "31": {
-            "code": "K03.89",
-            "description": "",
-            "title": "Tishlarning qattiq to'qimalarining boshqa kasalliklari"
-        },
-        "32": {
-            "code": "K03.9",
-            "description": "",
-            "title": "Tishlarning qattiq to'qimalari kasalliklari, aniqlanmagan"
-        },
-        "33": {
-            "code": "K04.01",
-            "description": "Dental pulpaning yallig'lanishi, odatda tish kariyeralarida bakterial infeksiya, tish sindromi yoki pulpaning bakterial invaziyaga ta'sir etilishiga olib keladigan boshqa shartlar. Kimyoviy tirnash xususiyati beruvchi moddalar, termal omillar, giperemik o'zgarishlar va boshqa omillar ham pulpitisga olib kelishi mumkin.\n                Tish pulpasining yallig'lanishi.",
-            "title": "Qaytib pulpitis"
-        },
-        "34": {
-            "code": "K04.02",
-            "description": "Dental pulpaning yallig'lanishi, odatda tish kariyeralarida bakterial infeksiya, tish sindromi yoki pulpaning bakterial invaziyaga ta'sir etishiga olib keladigan boshqa shartlar. Kimyoviy tirnash xususiyati beruvchi moddalar, termal omillar, giperemik o'zgarishlar va boshqa omillar ham pulpitisga olib kelishi mumkin.\n                Tish pulpasining yallig'lanishi.",
-            "title": "Qaytarilmas pulpitis"
-        },
-        "35": {
-            "code": "K04.1",
-            "description": "Bakterial invaziya bilan yoki bo'lmagan holda pulpa to'qimalarining o'limi. Nekroz, ekstremal bakterial infeksiya bilan ishemiyaga bog'liq bo'lsa, u pulpa gangrenasi deb ataladi. Nekroz bakteriyalarga xos bo'lmagan bo'lsa, uni xomila mumiysi deb atashadi.",
-            "title": "Pulpa nekrozi"
-        },
-        "36": {
-            "code": "K04.2",
-            "description": "",
-            "title": "Kletchatka degeneratsiyasi"
-        },
-        "37": {
-            "code": "K04.3",
-            "description": "",
-            "title": "Pulpada anormal qattiq to'qimalarni shakllanishi"
-        },
-        "38": {
-            "code": "K04.4",
-            "description": "",
-            "title": "Pulpal kelib chiqishining o'tkir apikal periodontitlari"
-        },
-        "39": {
-            "code": "K04.5",
-            "description": "Periapik to'qimalarning yallig'lanishi. Unda umumiy, aniqlanmagan yoki o'tkir yiringli yallig'lanish mavjud. Surunkali nafas olish yallig'lanishi periapikal granuloma hisoblanadi. Yengil yallig'lanish periapikal xo'ppozdir.",
-            "title": "Surunkali apikal periodontit"
-        },
-        "40": {
-            "code": "K04.6",
-            "description": "",
-            "title": "Sinus bilan periapik xo'ppoz"
-        },
-        "41": {
-            "code": "K04.7",
-            "description": "",
-            "title": "Sinüssiz periapikal xo'ppoz"
-        },
-        "42": {
-            "code": "K04.8",
-            "description": "Sekin-o'sib boruvchi suyuqlik bilan to'lgan epiteliya kostryulkalar naychali pulpa yoki nuqsonli ildiz kanalini to'ldirish bilan tishning tepasida.",
-            "title": "Radikulyar kist"
-        },
-        "43": {
-            "code": "K04.90",
-            "description": "",
-            "title": "Pulpa va periapikal to'qimalarning aniqlanmagan kasalliklari"
-        },
-        "44": {
-            "code": "K04.99",
-            "description": "",
-            "title": "Pulpa va periapikal to'qimalarning boshqa kasalliklari"
-        },
-        "45": {
-            "code": "K05.00",
-            "description": "Gumlarning yallig'lanishi bilan bog'liq buzuqlik; tishlarning atrofidagi va qo'llab-quvvatlovchi tuzilmalariga ta'sir qilishi mumkin.\n                Birlashtirilgan to'qimalarni yo'qotmasdan tutqanoq (gingiva) ning yallig'lanishi.\n                Gingivaning yallig'lanishi, tishni o'rab turgan to'qimalar.",
-            "title": "O'tkir gingivitis, blyashka keltirib chiqaradi"
-        },
-        "46": {
-            "code": "K05.01",
-            "description": "Gumlarning yallig'lanishi bilan bog'liq buzuqlik; tishlarning atrofidagi va qo'llab-quvvatlovchi tuzilmalariga ta'sir qilishi mumkin.\n                Birlashtirilgan to'qimalarni yo'qotmasdan tutqanoq (gingiva) ning yallig'lanishi.\n                Gingivaning yallig'lanishi, tishni o'rab turgan to'qimalar.",
-            "title": "O'tkir gingivitis, blyashka bo'lmagan"
-        },
-        "47": {
-            "code": "K05.10",
-            "description": "Gumlarning yallig'lanishi bilan bog'liq buzuqlik; tishlarning atrofidagi va qo'llab-quvvatlovchi tuzilmalariga ta'sir qilishi mumkin.\n                Birlashtirilgan to'qimalarni yo'qotmasdan tutqanoq (gingiva) ning yallig'lanishi.\n                Gingivaning yallig'lanishi, tishni o'rab turgan to'qimalar.",
-            "title": "Surunkali gingivit, blyashka sababli"
-        },
-        "48": {
-            "code": "K05.11",
-            "description": "Gumlarning yallig'lanishi bilan bog'liq buzuqlik; tishlarning atrofidagi va qo'llab-quvvatlovchi tuzilmalariga ta'sir qilishi mumkin.\n                Birlashtirilgan to'qimalarni yo'qotmasdan tutqanoq (gingiva) ning yallig'lanishi.\n                Gingivaning yallig'lanishi, tishni o'rab turgan to'qimalar.",
-            "title": "Surunkali gingivit, blyashka sababli"
-        },
-        "49": {
-            "code": "K05.20",
-            "description": "Tish plitalari va dental hisoblar kabi mahalliy omillarning mavjudligida tezkor biriktiruvchi yo'qotish va suyaklarni yo'q qilish bilan tavsiflangan periodontiumning yallig'lanishi va yo'qotilishi. Periodontitning bu juda zararli turi ko'pincha yoshlarda uchraydi va erta boshlangan periodontit deb ataladi, ammo bu kasallik ham keksa odamlarda paydo bo'ladi.",
-            "title": "Agressiv periodontit, aniqlanmagan"
-        },
-        "50": {
-            "code": "K05.211",
-            "description": "Tish plitalari va dental hisoblar kabi mahalliy omillarning mavjudligida tezkor biriktiruvchi yo'qotish va suyaklarni yo'q qilish bilan tavsiflangan periodontiumning yallig'lanishi va yo'qotilishi. Periodontitning bu juda zararli turi ko'pincha yoshlarda uchraydi va erta boshlangan periodontit deb ataladi, ammo bu kasallik ham keksa odamlarda paydo bo'ladi.",
-            "title": "Agressiv periodontit, lokalize, mayda"
-        },
-        "51": {
-            "code": "K05.212",
-            "description": "Tish plitalari va dental hisoblar kabi mahalliy omillarning mavjudligida tezkor biriktiruvchi yo'qotish va suyaklarni yo'q qilish bilan tavsiflangan periodontiumning yallig'lanishi va yo'qotilishi. Periodontitning bu juda zararli turi ko'pincha yoshlarda uchraydi va erta boshlangan periodontit deb ataladi, ammo bu kasallik ham keksa odamlarda paydo bo'ladi.",
-            "title": "Agressiv periodontit, lokalize, mo''tadil"
-        },
-        "52": {
-            "code": "K05.213",
-            "description": "Tish plitalari va dental hisoblar kabi mahalliy omillarning mavjudligida tezkor biriktiruvchi yo'qotish va suyaklarni yo'q qilish bilan tavsiflangan periodontiumning yallig'lanishi va yo'qotilishi. Periodontitning bu juda zararli turi ko'pincha yoshlarda uchraydi va erta boshlangan periodontit deb ataladi, ammo bu kasallik ham keksa odamlarda paydo bo'ladi.",
-            "title": "Agressiv periodontit, mahalliy, og'ir"
-        },
-        "53": {
-            "code": "K05.219",
-            "description": "Tish plitalari va dental hisoblar kabi mahalliy omillarning mavjudligida tezkor biriktiruvchi yo'qotish va suyaklarni yo'q qilish bilan tavsiflangan periodontiumning yallig'lanishi va yo'qotilishi. Periodontitning bu juda zararli turi ko'pincha yoshlarda uchraydi va erta boshlangan periodontit deb ataladi, ammo bu kasallik ham keksa odamlarda paydo bo'ladi.",
-            "title": "Agressiv periodontit, lokalize, aniqlanmagan jiddiylik"
-        },
-        "54": {
-            "code": "K05.221",
-            "description": "Tish plitalari va dental hisoblar kabi mahalliy omillarning mavjudligida tezkor biriktiruvchi yo'qotish va suyaklarni yo'q qilish bilan tavsiflangan periodontiumning yallig'lanishi va yo'qotilishi. Periodontitning bu juda zararli turi ko'pincha yoshlarda uchraydi va erta boshlangan periodontit deb ataladi, ammo bu kasallik ham keksa odamlarda paydo bo'ladi.",
-            "title": "Agressiv periodontit, umumiy, engil"
-        },
-        "55": {
-            "code": "K05.222",
-            "description": "Tish plitalari va dental hisoblar kabi mahalliy omillarning mavjudligida tezkor biriktiruvchi yo'qotish va suyaklarni yo'q qilish bilan tavsiflangan periodontiumning yallig'lanishi va yo'qotilishi. Periodontitning bu juda zararli turi ko'pincha yoshlarda uchraydi va erta boshlangan periodontit deb ataladi, ammo bu kasallik ham keksa odamlarda paydo bo'ladi.",
-            "title": "Agressiv periodontit, umumiy, o'rtacha"
-        },
-        "56": {
-            "code": "K05.223",
-            "description": "Tish plitalari va dental hisoblar kabi mahalliy omillarning mavjudligida tezkor biriktiruvchi yo'qotish va suyaklarni yo'q qilish bilan tavsiflangan periodontiumning yallig'lanishi va yo'qotilishi. Periodontitning bu juda zararli turi ko'pincha yoshlarda uchraydi va erta boshlangan periodontit deb ataladi, ammo bu kasallik ham keksa odamlarda paydo bo'ladi.",
-            "title": "Agressiv periodontit, umumiy, og'ir"
-        },
-        "57": {
-            "code": "K05.229",
-            "description": "Tish plitalari va dental hisoblar kabi mahalliy omillarning mavjudligida tezkor biriktiruvchi yo'qotish va suyaklarni yo'q qilish bilan tavsiflangan periodontiumning yallig'lanishi va yo'qotilishi. Periodontitning bu juda zararli turi ko'pincha yoshlarda uchraydi va erta boshlangan periodontit deb ataladi, ammo bu kasallik ham keksa odamlarda paydo bo'ladi.",
-            "title": "Agressiv periodontit, umumiy, aniqlanmagan zo'ravonlik"
-        },
-        "58": {
-            "code": "K05.30",
-            "description": "Bojnn, kotory pornajet desny i kosti vokrug zubov\nXronicheskoe vosalpenie i pateriya parodonta, svyazannye s kolichestvom zubnogo naleteta ili zubnogo kamnya. Xronicheskiy peronodontit vstrechaetsya v osnovnom u vzroslyx i polvilis nazvanie periodontit u vzroslyx, no eto zabolevanie mojet poyavitsya u molodyx lyudey.\nVospalaenie i poterya sudenitelnyx tkaniey, podderjivayushchix ili okrujayushchix zuby. Eto mojet vklyuchat v sebya lyubuyu chast parodontta. Parodontit v nastoyashchee vremya klassifikatsiyaga pro progressressiviy zabolevaniya (xronicheskiy peronodontit, agressiv periodontit), a ne po vozrastu. (s 1999 g. mejdunarodnyy seminar po klassifikatsii zabolevaniy parodonta i sostoyanii, Amerikanskaya akademiya parodontologii)\nVospalitelnaya reaktsiya tseney, okrujayushchix toymb (periododont), obychno v rezultatte rasprostraneniya vospaliyeniya gessen v perodontent.\nDlitelnoe vospalpenie desny, okrujayushchey koronku zuba, obychno ne polnostyu proresenogo zuba.",
-            "title": "Xronologik periodontit, aniqlanmagan"
-        },
-        "59": {
-            "code": "K05.311",
-            "description": "Bojnn, kotory pornajet desny i kosti vokrug zubov\nXronicheskoe vosalpenie i pateriya parodonta, svyazannye s kolichestvom zubnogo naleteta ili zubnogo kamnya. Xronicheskiy peronodontit vstrechaetsya v osnovnom u vzroslyx i polvilis nazvanie periodontit u vzroslyx, no eto zabolevanie mojet poyavitsya u molodyx lyudey.\nVospalaenie i poterya sudenitelnyx tkaniey, podderjivayushchix ili okrujayushchix zuby. Eto mojet vklyuchat v sebya lyubuyu chast parodontta. Parodontit v nastoyashchee vremya klassifikatsiyaga pro progressressiviy zabolevaniya (xronicheskiy peronodontit, agressiv periodontit), a ne po vozrastu. (s 1999 g. mejdunarodnyy seminar po klassifikatsii zabolevaniy parodonta i sostoyanii, Amerikanskaya akademiya parodontologii)\nVospalitelnaya reaktsiya tseney, okrujayushchix toymb (periododont), obychno v rezultatte rasprostraneniya vospaliyeniya gessen v perodontent.\nDlitelnoe vospalpenie desny, okrujayushchey koronku zuba, obychno ne polnostyu proresenogo zuba.",
-            "title": "Surunkali periodontit, lokalize, engil"
-        },
-        "60": {
-            "code": "K05.312",
-            "description": "Bojnn, kotory pornajet desny i kosti vokrug zubov\nXronicheskoe vosalpenie i pateriya parodonta, svyazannye s kolichestvom zubnogo naleteta ili zubnogo kamnya. Xronicheskiy peronodontit vstrechaetsya v osnovnom u vzroslyx i polvilis nazvanie periodontit u vzroslyx, no eto zabolevanie mojet poyavitsya u molodyx lyudey.\nVospalaenie i poterya sudenitelnyx tkaniey, podderjivayushchix ili okrujayushchix zuby. Eto mojet vklyuchat v sebya lyubuyu chast parodontta. Parodontit v nastoyashchee vremya klassifikatsiyaga pro progressressiviy zabolevaniya (xronicheskiy peronodontit, agressiv periodontit), a ne po vozrastu. (s 1999 g. mejdunarodnyy seminar po klassifikatsii zabolevaniy parodonta i sostoyanii, Amerikanskaya akademiya parodontologii)\nVospalitelnaya reaktsiya tseney, okrujayushchix toymb (periododont), obychno v rezultatte rasprostraneniya vospaliyeniya gessen v perodontent.\nDlitelnoe vospalpenie desny, okrujayushchey koronku zuba, obychno ne polnostyu proresenogo zuba.",
-            "title": "Surunkali periodontit, lokalize, mo''tadil"
-        },
-        "61": {
-            "code": "K05.313",
-            "description": "Bojnn, kotory pornajet desny i kosti vokrug zubov\nXronicheskoe vosalpenie i pateriya parodonta, svyazannye s kolichestvom zubnogo naleteta ili zubnogo kamnya. Xronicheskiy peronodontit vstrechaetsya v osnovnom u vzroslyx i polvilis nazvanie periodontit u vzroslyx, no eto zabolevanie mojet poyavitsya u molodyx lyudey.\nVospalaenie i poterya sudenitelnyx tkaniey, podderjivayushchix ili okrujayushchix zuby. Eto mojet vklyuchat v sebya lyubuyu chast parodontta. Parodontit v nastoyashchee vremya klassifikatsiyaga pro progressressiviy zabolevaniya (xronicheskiy peronodontit, agressiv periodontit), a ne po vozrastu. (s 1999 g. mejdunarodnyy seminar po klassifikatsii zabolevaniy parodonta i sostoyanii, Amerikanskaya akademiya parodontologii)\nVospalitelnaya reaktsiya tseney, okrujayushchix toymb (periododont), obychno v rezultatte rasprostraneniya vospaliyeniya gessen v perodontent.\nDlitelnoe vospalpenie desny, okrujayushchey koronku zuba, obychno ne polnostyu proresenogo zuba.",
-            "title": "Surunkali periodontit, mahalliy, og'ir"
-        },
-        "62": {
-            "code": "K05.319",
-            "description": "Bojnn, kotory pornajet desny i kosti vokrug zubov\nXronicheskoe vosalpenie i pateriya parodonta, svyazannye s kolichestvom zubnogo naleteta ili zubnogo kamnya. Xronicheskiy peronodontit vstrechaetsya v osnovnom u vzroslyx i polvilis nazvanie periodontit u vzroslyx, no eto zabolevanie mojet poyavitsya u molodyx lyudey.\nVospalaenie i poterya sudenitelnyx tkaniey, podderjivayushchix ili okrujayushchix zuby. Eto mojet vklyuchat v sebya lyubuyu chast parodontta. Parodontit v nastoyashchee vremya klassifikatsiyaga pro progressressiviy zabolevaniya (xronicheskiy peronodontit, agressiv periodontit), a ne po vozrastu. (s 1999 g. mejdunarodnyy seminar po klassifikatsii zabolevaniy parodonta i sostoyanii, Amerikanskaya akademiya parodontologii)\nVospalitelnaya reaktsiya tseney, okrujayushchix toymb (periododont), obychno v rezultatte rasprostraneniya vospaliyeniya gessen v perodontent.\nDlitelnoe vospalpenie desny, okrujayushchey koronku zuba, obychno ne polnostyu proresenogo zuba.",
-            "title": "Surunkali periodontit, lokalize, aniqlanmagan jiddiylik"
-        },
-        "63": {
-            "code": "K05.321",
-            "description": "Bojnn, kotory pornajet desny i kosti vokrug zubov\nXronicheskoe vosalpenie i pateriya parodonta, svyazannye s kolichestvom zubnogo naleteta ili zubnogo kamnya. Xronicheskiy peronodontit vstrechaetsya v osnovnom u vzroslyx i polvilis nazvanie periodontit u vzroslyx, no eto zabolevanie mojet poyavitsya u molodyx lyudey.\nVospalaenie i poterya sudenitelnyx tkaniey, podderjivayushchix ili okrujayushchix zuby. Eto mojet vklyuchat v sebya lyubuyu chast parodontta. Parodontit v nastoyashchee vremya klassifikatsiyaga pro progressressiviy zabolevaniya (xronicheskiy peronodontit, agressiv periodontit), a ne po vozrastu. (s 1999 g. mejdunarodnyy seminar po klassifikatsii zabolevaniy parodonta i sostoyanii, Amerikanskaya akademiya parodontologii)\nVospalitelnaya reaktsiya tseney, okrujayushchix toymb (periododont), obychno v rezultatte rasprostraneniya vospaliyeniya gessen v perodontent.\nDlitelnoe vospalpenie desny, okrujayushchey koronku zuba, obychno ne polnostyu proresenogo zuba.",
-            "title": "Surunkali periodontit, umumiy, engil"
-        },
-        "64": {
-            "code": "K05.322",
-            "description": "Bojnn, kotory pornajet desny i kosti vokrug zubov\nXronicheskoe vosalpenie i pateriya parodonta, svyazannye s kolichestvom zubnogo naleteta ili zubnogo kamnya. Xronicheskiy peronodontit vstrechaetsya v osnovnom u vzroslyx i polvilis nazvanie periodontit u vzroslyx, no eto zabolevanie mojet poyavitsya u molodyx lyudey.\nVospalaenie i poterya sudenitelnyx tkaniey, podderjivayushchix ili okrujayushchix zuby. Eto mojet vklyuchat v sebya lyubuyu chast parodontta. Parodontit v nastoyashchee vremya klassifikatsiyaga pro progressressiviy zabolevaniya (xronicheskiy peronodontit, agressiv periodontit), a ne po vozrastu. (s 1999 g. mejdunarodnyy seminar po klassifikatsii zabolevaniy parodonta i sostoyanii, Amerikanskaya akademiya parodontologii)\nVospalitelnaya reaktsiya tseney, okrujayushchix toymb (periododont), obychno v rezultatte rasprostraneniya vospaliyeniya gessen v perodontent.\nDlitelnoe vospalpenie desny, okrujayushchey koronku zuba, obychno ne polnostyu proresenogo zuba.",
-            "title": "Surunkali periodontit, umumiy, o'rtacha"
-        },
-        "65": {
-            "code": "K05.323",
-            "description": "Bojnn, kotory pornajet desny i kosti vokrug zubov\nXronicheskoe vosalpenie i pateriya parodonta, svyazannye s kolichestvom zubnogo naleteta ili zubnogo kamnya. Xronicheskiy peronodontit vstrechaetsya v osnovnom u vzroslyx i polvilis nazvanie periodontit u vzroslyx, no eto zabolevanie mojet poyavitsya u molodyx lyudey.\nVospalaenie i poterya sudenitelnyx tkaniey, podderjivayushchix ili okrujayushchix zuby. Eto mojet vklyuchat v sebya lyubuyu chast parodontta. Parodontit v nastoyashchee vremya klassifikatsiyaga pro progressressiviy zabolevaniya (xronicheskiy peronodontit, agressiv periodontit), a ne po vozrastu. (s 1999 g. mejdunarodnyy seminar po klassifikatsii zabolevaniy parodonta i sostoyanii, Amerikanskaya akademiya parodontologii)\nVospalitelnaya reaktsiya tseney, okrujayushchix toymb (periododont), obychno v rezultatte rasprostraneniya vospaliyeniya gessen v perodontent.\nDlitelnoe vospalpenie desny, okrujayushchey koronku zuba, obychno ne polnostyu proresenogo zuba.",
-            "title": "Surunkali periodontit, umumiy, og'ir"
-        },
-        "66": {
-            "code": "K05.329",
-            "description": "Bojnn, kotory pornajet desny i kosti vokrug zubov\nXronicheskoe vosalpenie i pateriya parodonta, svyazannye s kolichestvom zubnogo naleteta ili zubnogo kamnya. Xronicheskiy peronodontit vstrechaetsya v osnovnom u vzroslyx i polvilis nazvanie periodontit u vzroslyx, no eto zabolevanie mojet poyavitsya u molodyx lyudey.\nVospalaenie i poterya sudenitelnyx tkaniey, podderjivayushchix ili okrujayushchix zuby. Eto mojet vklyuchat v sebya lyubuyu chast parodontta. Parodontit v nastoyashchee vremya klassifikatsiyaga pro progressressiviy zabolevaniya (xronicheskiy peronodontit, agressiv periodontit), a ne po vozrastu. (s 1999 g. mejdunarodnyy seminar po klassifikatsii zabolevaniy parodonta i sostoyanii, Amerikanskaya akademiya parodontologii)\nVospalitelnaya reaktsiya tseney, okrujayushchix toymb (periododont), obychno v rezultatte rasprostraneniya vospaliyeniya gessen v perodontent.\nDlitelnoe vospalpenie desny, okrujayushchey koronku zuba, obychno ne polnostyu proresenogo zuba.",
-            "title": "Surunkali periodontit, umumiy, aniqlanmagan zo'ravonlik"
-        },
-        "67": {
-            "code": "K05.4",
-            "description": "Mahalliylashtirilgan agressiv periodontit, ilgari mahalliylashtirilgan balog'at yoshidagi periodontit. Ushbu molarlar va tirnoqlarning alveolyar suyakning yo'qolishi bilan ajralib turuvchi, periodontitning halokatli shakli.",
-            "title": "Periodontoz"
-        },
-        "68": {
-            "code": "K05.5",
-            "description": "",
-            "title": "Boshqa periodontal kasalliklar"
-        },
-        "69": {
-            "code": "K05.6",
-            "description": "Tish atrofidagi gingival to'qimalarda buzilish.\n                Gingival to'qimalarning yallig'lanish jarayoni va / yoki tishlarning periodontal membranasi, g'ayritabiiy chuqur gingival sulkusga olib kelishi mumkin, ehtimol periodontal cho'ntaklar hosil qiladi va alveolyar suyaklarni yo'qotish yo'qotadi.\n                Tishlarni ushlab turadigan, biriktiradigan va o'rab olgan to'qimalarning an'anaviy strukturasi yoki funktsiyasidan chiqish yoki uzilish mavjud bo'lgan holat.\n                Periodontsiyani o'z ichiga olgan patologik jarayonlar - gum (gingiva), alveolyar suyak (alveolyar jarayon), tish sementum va periodontal ligament.",
-            "title": "Periodontal kasallik, aniqlanmagan",
-            "titleRu": ""
-        },
-        "70": {
-            "code": "K06.0",
-            "description": "Tishlaringning ildizlari paydo bo'lishiga olib keladigan tuklar to'qimalarining yo'qotilishi.\n                Ildiz sirtining tutqichi (gingiva) chetidan tish tojidan uzoqda bo'lganida paydo bo'lishi. Bu o'sib borayotgan yosh, kuchli tish cho'tkasi, gingivoning to'qimalari, periodontal ligament va qo'llab-quvvatlovchi suyak (alveolyar jarayonlar) kasalliklari bilan keng tarqalgan.",
-            "title": "Gingival tushkunlik"
-        },
-        "71": {
-            "code": "K06.01",
-            "description": "",
-            "title": "Gingival tushkunlik, mahalliylashtirilgan"
-        },
-        "72": {
-            "code": "K06.010",
-            "description": "",
-            "title": "Mahalliylashgan gingival retsessiya, aniqlanmagan"
-        },
-        "73": {
-            "code": "K06.011",
-            "description": "",
-            "title": "Mahalliylashgan gingival retsessiya, minimal"
-        },
-        "74": {
-            "code": "K06.012",
-            "description": "",
-            "title": "Mahalliy gingival tushkunlik, mo''tadil"
-        },
-        "75": {
-            "code": "K06.013",
-            "description": "",
-            "title": "Mahalliy gingival tushkunlik, og'ir"
-        },
-        "76": {
-            "code": "K06.02",
-            "description": "",
-            "title": "Gingival retsessiya, umumlashtirilgan"
-        },
-        "77": {
-            "code": "K06.020",
-            "description": "",
-            "title": "Yalpi gingival tushkunlik, aniqlanmagan"
-        },
-        "78": {
-            "code": "K06.021",
-            "description": "",
-            "title": "Yalpi gingival tushkunlik, minimal"
-        },
-        "79": {
-            "code": "K06.022",
-            "description": "",
-            "title": "Yalpi gingival tushkunlik, mo''tadil"
-        },
-        "80": {
-            "code": "K06.023",
-            "description": "",
-            "title": "Jeneralleşmiş gingival resesyon, qattiq"
-        },
-        "81": {
-            "code": "K06.1",
-            "description": "Gingivoning ortiqcha o'sishi yoki ta'sis hujayralarining (gingival gipertrofiya) kattalashishi yoki ularning sonining ko'payishi (gingival giperplaziya). (Jablonskiyning stomatologiya lug'atidan, 1992, p574)\n                Odatda autosomal dominant xususiyat sifatida tarqalgan gingival to'qimalarning tarqalgan yoki lokalizatsiyalangan diffuzli o'sishi, ammo ayrim hollarda idyopatik va boshqalar dorilar tomonidan ishlab chiqariladi. Kattalashtirilgan gingiva pushti, qattiq va chinor qoplamali yuzasiga ega bo'lgan teriga o'xshashdir va og'ir holatlarda tishlar deyarli to'la qoplanadi va kengaytirish loyihasi og'iz bo'shlig'iga kiradi. (Dorland, 28-chi ed)",
-            "title": "Gingival kengayish"
-        },
-        "82": {
-            "code": "K06.2",
-            "description": "",
-            "title": "Travma bilan bog'liq gingival va alveolyar tizma jarohati"
-        },
-        "83": {
-            "code": "K06.3",
-            "description": "",
-            "title": "Landshaft alveolyar suyak yo'qotish"
-        },
-        "84": {
-            "code": "K06.8",
-            "description": "Gingival kist, epulis, pyogenik granuloma",
-            "title": "Gingiva va alveolyar tizmalarning boshqa aniqlangan kasalliklari"
-        },
-        "85": {
-            "code": "K06.9",
-            "description": "",
-            "title": "Gingivaning buzilmaganligi va aniqlanmagan alveolyar tizmasi"
-        },
-        "86": {
-            "code": "K08.0",
-            "description": "",
-            "title": "Tiziqlarning tizimli sabablarga ko'ra eksfoliatsiyasi"
-        },
-        "87": {
-            "code": "K08.111",
-            "description": "",
-            "title": "Tishlaring to'liq yo'qolishi, aniqlanmagan sabab, klass 1"
-        },
-        "88": {
-            "code": "K08.102",
-            "description": "",
-            "title": "Tishlaring to'liq yo'qotilishi, aniqlanmagan sabab, klass 2"
-        },
-        "89": {
-            "code": "K08.103",
-            "description": "",
-            "title": "Tishlaring to'liq yo'qolishi, aniqlanmagan sabab, class 3"
-        },
-        "90": {
-            "code": "K08.104",
-            "description": "",
-            "title": "Tishlaring to'liq yo'qolishi, aniqlanmagan sabab, 4 klass"
-        },
-        "91": {
-            "code": "K08.109",
-            "description": "",
-            "title": "Tishlaring to'liq yo'qolishi, aniqlanmagan sabab, aniqlanmagan sinf"
-        },
-        "92": {
-            "code": "K08.111",
-            "description": "",
-            "title": "Tramvay oqibatida tishni to'liq yo'qotish, klass 1"
-        },
-        "93": {
-            "code": "K08.112",
-            "description": "",
-            "title": "Travma tufayli tishlarni to'liq yo'qotish klass 2"
-        },
-        "94": {
-            "code": "K08.113",
-            "description": "",
-            "title": "Tish jarohatlari tufayli tishlarni to'liq yo'qotish, 3 klass"
-        },
-        "95": {
-            "code": "K08.114",
-            "description": "",
-            "title": "To'qnashuv natijasida tishlarni to'liq yo'qotish, 4 klass"
-        },
-        "96": {
-            "code": "K08.119",
-            "description": "",
-            "title": "Tishlar uchun tishlarning to'liq yo'qolishi"
-        },
-        "97": {
-            "code": "K08.121",
-            "description": "",
-            "title": "Periodontal kasalliklar tufayli tishlarni to'liq yo'qotish 1 klass"
-        },
-        "98": {
-            "code": "K08.122",
-            "description": "",
-            "title": "Periodontal kasalliklarning bog'liq bo'lgan tishlarni to'liq yo'qotish 2 klass"
-        },
-        "99": {
-            "code": "K08.123",
-            "description": "",
-            "title": "Periodontal kasalliklar klassi 3 ga bog'liq bo'lgan tishlarni to'liq yo'qotish"
-        },
-        "100": {
-            "code": "K08.124",
-            "description": "",
-            "title": "Periodontal kasalliklar bo'yicha tishlarni to'liq yo'qotish 4 klass"
-        },
-        "101": {
-            "code": "K08.129",
-            "description": "",
-            "title": "Periodontal kasallik tufayli tishlarni to'liq yo'qotish"
-        },
-        "102": {
-            "code": "K08.131",
-            "description": "",
-            "title": "Karies sinfidagi 1 ta tishning to'liq yo'qolishi"
-        },
-        "103": {
-            "code": "K08.132",
-            "description": "",
-            "title": "Karies sinf 2 tufayli tishlarni to'liq yo'qotish"
-        },
-        "104": {
-            "code": "K08.133",
-            "description": "",
-            "title": "Karies sinf 3 tufayli tishlarni to'liq yo'qotish"
-        },
-        "105": {
-            "code": "K08.134",
-            "description": "",
-            "title": "Karies sinf 4 tufayli tishlarni to'liq yo'qotish"
-        },
-        "106": {
-            "code": "K08.139",
-            "description": "",
-            "title": "Karies tufayli tishlarni to'liq yo'qotish"
-        },
-        "107": {
-            "code": "K08.191",
-            "description": "",
-            "title": "Boshqa aniqlangan sabablar sinfiga qarab tishlarni to'liq yo'qotish"
-        },
-        "108": {
-            "code": "K08.192",
-            "description": "",
-            "title": "Boshqa ma'lum sabablarga asoslangan 2-sinfga bog'liq tishlarni to'liq yo'qotish"
-        },
-        "109": {
-            "code": "K08.193",
-            "description": "",
-            "title": "Boshqa aniq sabablar sinfiga qarab tishlarni to'liq yo'qotish"
-        },
-        "110": {
-            "code": "K08.194",
-            "description": "",
-            "title": "Boshqa ko'rsatilgan sabablar sinfiga ko'ra, tishlarni to'liq yo'qotish"
-        },
-        "111": {
-            "code": "K08.199",
-            "description": "",
-            "title": "Boshqa ko'rsatilgan sabablarga ko'ra aniqlanmagan tishlarni yo'qotish, aniqlanmagan sinf"
-        },
-        "112": {
-            "code": "K08.2",
-            "description": "",
-            "title": "Jayron alveolyar tizmasi atrofi"
-        },
-        "113": {
-            "code": "K08.20",
-            "description": "",
-            "title": "Yamoqsiz alveolalar tizmasining aniqlanmagan atrofmi"
-        },
-        "114": {
-            "code": "K08.21",
-            "description": "",
-            "title": "Pastki jag'ning minimal atrofiyasi"
-        },
-        "115": {
-            "code": "K08.22",
-            "description": "",
-            "title": "Pastki jag'ning o'rtacha atrofiyasi"
-        },
-        "116": {
-            "code": "K08.23",
-            "description": "",
-            "title": "Pastki jag'ning  qattiq atrofiyasi"
-        },
-        "117": {
-            "code": "K08.24",
-            "description": "",
-            "title": "Yuqori jag'ning minimal atrofiyasi"
-        },
-        "118": {
-            "code": "K08.25",
-            "description": "",
-            "title": "Yuqori jag'ning o'rtacha atrofi"
-        },
-        "119": {
-            "code": "K08.26",
-            "description": "",
-            "title": "Yuqori jag'ning qattiq atrofi"
-        },
-        "120": {
-            "code": "K08.3",
-            "description": "",
-            "title": "Tish ildizini saqlab qo'ydi"
-        },
-        "121": {
-            "code": "K08.401",
-            "description": "",
-            "title": "Tishlarning qisman yo'qolishi, aniqlanmagan sabablar klassi 1"
-        },
-        "122": {
-            "code": "K08.402",
-            "description": "",
-            "title": "Tishlarning qisman yo'qolishi, aniqlanmagan sabablar klassi 2"
-        },
-        "123": {
-            "code": "K08.403",
-            "description": "",
-            "title": "Tishlarning qisman yo'qolishi, aniqlanmagan sabablar klassi 3"
-        },
-        "124": {
-            "code": "K08.404",
-            "description": "",
-            "title": "Tishlarning qisman yo'qolishi, aniqlanmagan sabablar klassi 4"
-        },
-        "125": {
-            "code": "K08.409",
-            "description": "",
-            "title": "Tishlarning qisman yo'qolishi, noma'lum sababi aniqlanmagan"
-        },
-        "126": {
-            "code": "K08.411",
-            "description": "",
-            "title": "1-darajali jarohati tufayli tishlarni qisman yo'qotish"
-        },
-        "127": {
-            "code": "K08.412",
-            "description": "",
-            "title": "Travma sinf 2 ga bog'liq tishlarning qisman yo'qolishi"
-        },
-        "128": {
-            "code": "K08.413",
-            "description": "",
-            "title": "Travma sinf 3 ga bog'liq qisman tish yo'qotish"
-        },
-        "129": {
-            "code": "K08.414",
-            "description": "",
-            "title": "Travma sinf 4 ga bog'liq qisman tishlarni yo'qotish"
-        },
-        "130": {
-            "code": "K08.419",
-            "description": "",
-            "title": "Shikastlanmagan tana jarohati tufayli tishlarning qisman yo'qolishi"
-        },
-        "131": {
-            "code": "K08.421",
-            "description": "",
-            "title": "Periodontal kasalliklarning 1-sinfiga bog'liq qisman tishlarni yo'qotish"
-        },
-        "132": {
-            "code": "K08.422",
-            "description": "",
-            "title": "Periodontal kasalliklar klassi uchun qisman tishlarni yo'qotish"
-        },
-        "133": {
-            "code": "K08.423",
-            "description": "",
-            "title": "Periodontal kasalliklar klassi 3 ga bog'liq qisman tishlarni yo'qotish"
-        },
-        "134": {
-            "code": "K08.424",
-            "description": "",
-            "title": "Periodontal kasalliklar klassi tufayli qisman tishlarni yo'qotish"
-        },
-        "135": {
-            "code": "K08.429",
-            "description": "",
-            "title": "Periodontal kasalliklarga bog'liq bo'lmagan qisman tishlarni yo'qotish"
-        },
-        "136": {
-            "code": "K08.431",
-            "description": "",
-            "title": "Karies sinfining 1 qismidan qisman tishlarni yo'qotish"
-        },
-        "137": {
-            "code": "K08.432",
-            "description": "",
-            "title": "Kariyer sinfi tufayli qisman tishlarni yo'qotish"
-        },
-        "138": {
-            "code": "K08.433",
-            "description": "",
-            "title": "3-darajali karies tufayli qisman tish halok"
-        },
-        "139": {
-            "code": "K08.434",
-            "description": "",
-            "title": "Parchalanish klassi tufayli qisman tishlarni yo'qotish"
-        },
-        "140": {
-            "code": "K08.439",
-            "description": "",
-            "title": "Karies sababi noma'lum sinfga qisman tishi yo'qoladi"
-        },
-        "141": {
-            "code": "K08.491",
-            "description": "",
-            "title": "1-darajali boshqa sabab tufayli tishlarning qisman yo'qolishi"
-        },
-        "142": {
-            "code": "K08.492",
-            "description": "",
-            "title": "Boshqa aniq sabablarga ko'ra 2-sinfga bog'liq tishlarning qisman yo'qolishi"
-        },
-        "143": {
-            "code": "K08.493",
-            "description": "",
-            "title": "Boshqa ma'lum sabablarga ko'ra sinfning 3 qismini qisman yo'qotish"
-        },
-        "144": {
-            "code": "K08.494",
-            "description": "",
-            "title": "Boshqa ko'rsatilgan sabablarga ko'ra qisman tishlarni yo'qotish"
-        },
-        "145": {
-            "code": "K08.499",
-            "description": "",
-            "title": "Tishlarning qisman yo'qolishi boshqa aniqlangan sabablarga ko'ra aniqlanmagan"
-        },
-        "146": {
-            "code": "K08.50",
-            "description": "",
-            "title": "Tishni aniqlanmagan qoniqarsiz tiklash"
-        },
-        "147": {
-            "code": "K08.51",
-            "description": "",
-            "title": "Tishning ta'mirlash marjlari ochiq"
-        },
-        "148": {
-            "code": "K08.52",
-            "description": "",
-            "title": "Tish tuzatuvchi materiallarni ta'mirlanmagan holda qayta ishlash"
-        },
-        "149": {
-            "code": "K08.530",
-            "description": "",
-            "title": "Materiallarni yo'qotishsiz siqilgan tish tuzatuvchi material"
-        },
-        "150": {
-            "code": "K08.531",
-            "description": "",
-            "title": "Materiallarni yo'qotish bilan jarohatlangan dental restorativ material"
-        },
-        "151": {
-            "code": "K08.532",
-            "description": "",
-            "title": "Singan dental restorativ moddasi aniqlanmagan"
-        },
-        "152": {
-            "code": "K08.54",
-            "description": "",
-            "title": "Og'iz sog'lig'iga biologik jihatdan mos kelmagan tishlarni qayta tiklash konturi"
-        },
-        "153": {
-            "code": "K08.55",
-            "description": "",
-            "title": "Mavjud dental restorativ materiallarga alerjiya"
-        },
-        "154": {
-            "code": "K08.56",
-            "description": "",
-            "title": "Tish mavjud restavratsiyasi yomon estetikasi"
-        },
-        "155": {
-            "code": "K08.59",
-            "description": "",
-            "title": "Tishni boshqa qoniqarsiz tiklash"
-        },
-        "156": {
-            "code": "K08.81",
-            "description": "Tishdagi sezilarli noqulaylik hissi bilan tavsiflangan buzuqlik.\n                Tishdan chiqqan og'riqli hissiyot.\n                Tishlarning yopiq joylarida og'riq.",
-            "title": "Asosiy okluzal travma"
-        },
-        "157": {
-            "code": "K08.82",
-            "description": "Tishdagi sezilarli noqulaylik hissi bilan tavsiflangan buzuqlik.\n                Tishdan chiqqan og'riqli hissiyot.\n                Tishlarning yopiq joylarida og'riq.",
-            "title": "O'rta okluzal travma"
-        },
-        "158": {
-            "code": "K08.89",
-            "description": "Tishdagi sezilarli noqulaylik hissi bilan tavsiflangan buzuqlik.\n                Tishdan chiqqan og'riqli hissiyot.\n                Tishlarning yopiq joylarida og'riq.",
-            "title": "Tish va boshqa yordamchi tuzilmalarning boshqa aniqlangan kasalliklari"
-        },
-        "159": {
-            "code": "K08.9",
-            "description": "Tish to'qimalari yoki tishlarining an'anaviy tuzilishi yoki funktsiyasidan og'ish yoki to'xtab qolish holati.",
-            "title": "Tishlarning buzilishi va yordamchi tuzilmalar, aniqlanmagan"
-        },
-        "160": {
-            "code": "K09.0",
-            "description": "Kist fosfat yoki kichik bezi kanalining yopilishi tufayli.\n                Eng keng tarqalgan follikulyar odontogen kist. Kistning yopishtirilgan tishining eng kamida tovoqning pusht bo'shlig'iga chiqadigan qismi bilan qisman chiqarilgan yoki unumsiz tish bilan bog'liq bo'ladi. Ameloblastomaga olib kelishi mumkin va kamdan-kam hollarda malign transformatsiyalarga uchrashi mumkin.",
-            "title": "Rivojlanish odontogenik kistalari"
-        },
-        "161": {
-            "code": "K09.1",
-            "description": "Jinslarni tashkil etuvchi embrion jarayonlarni birlashtiruvchi liniyalarda epitelial inklüzyonlardan hosil bo'lgan kistlar. Ular orasida nasopalatin yoki shovqinli kanal kisti, papilla kisti, globulomaksiller kist, medial palatal kist, medial alveolyar kist, o'rta mandibular kist va nasoalveolit kisti mavjud.",
-            "title": "Og'iz hududining rivojlanishi (nodontogen bo'lmagan) kistalari"
-        },
-        "162": {
-            "code": "K09.8",
-            "description": "Kistdan tashkil topgan benign neoplazma teriga qo'shilgan epidermis o'xshash to'qima bilan qoplangan.\n                Anormal embrion rivojlanish natijasida benign shish\n                Yaxshi namunalardagi teratom epidermis va epidermis appendagiga o'xshash etuk to'qima bilan qoplangan kistaning mavjudligi bilan tavsiflanadi. Bu tuxumdonlar, testlar va ekstragonadal joylarda, shu jumladan markaziy asab tizimida va terida paydo bo'ladi.\n                Embrion fuzion chiziqlari bo'ylab ko'chirilgan ektodermal tuzilmalardan iborat devor, epiteliya bilan qoplangan birikma to'qima bilan, jumladan terining ishlov berish jarayonida hosil bo'lgan va keratin, sebum va sochni o'z ichiga olgan shish. (Stedman, 25-chi ed.)\n                Soch, mushak va suyak kabi ko'plab turli xil to'qimalarni o'z ichiga olgan benign (saratonsiz) germ hujayrasi o'smasi (hujayralardagi sperma yoki tuxum hujayrasi paydo bo'lishiga olib keladigan o'simta turi).\n                Intradermal yoki teri osti suvsimon tuzilishi, uning devori keratokialin zarralarini o'z ichiga olgan ko'p qatlamlik epiteliy.",
-            "title": "Boshqa mintaqalarda bo'lmagan, og'iz hududining boshqa kistlari"
-        },
-        "163": {
-            "code": "K09.9",
-            "description": "",
-            "explainRID": "",
-            "title": "Og'iz hududining kisti, aniqlanmagan"
-        },
-        "164": {
-            "code": "K11.0",
-            "description": "",
-            "title": "Tuprik bezining atrofi"
-        },
-        "165": {
-            "code": "K11.1",
-            "description": "",
-            "title": "Tuprik bezining gipertrofiyasi"
-        },
-        "166": {
-            "code": "K11.20",
-            "description": "Tupurik beziga ta'sir qiluvchi o'tkir yoki surunkali yallig'lanish jarayoni. Belgilanishlar va alomatlar ta'sir hududida og'riq va muloyimlikni o'z ichiga oladi.\n                Tuprik to'qimalarining yallig'lanishi (tuprik bezlari), odatda infektsiya yoki shikastlanish tufayli.",
-            "title": "Sialoadenit, aniqlanmagan"
-        },
-        "167": {
-            "code": "K11.21",
-            "description": "",
-            "title": "O'tkir sialoadenit"
-        },
-        "168": {
-            "code": "K11.22",
-            "description": "",
-            "title": "O'tkir takroriy sialoadenit"
-        },
-        "169": {
-            "code": "K11.23",
-            "description": "",
-            "title": "Surunkali sialoadenit"
-        },
-        "170": {
-            "code": "K11.3",
-            "description": "",
-            "title": "Tuprik bezining absorbssi"
-        },
-        "171": {
-            "code": "K11.4",
-            "description": "Tuprik bezlari bilan boshqa organ yoki anatomik sayt o'rtasidagi g'ayritabiiy aloqa bilan xarakterlanadi.\n                Tükrük kanali yoki bezi va og'iz bo'shlig'i teri yuzasi orasidagi fistula.\n                Tuprik bezlari bilan boshqa organ yoki anatomik sayt o'rtasidagi g'ayritabiiy aloqa",
-            "title": "Tuprik bezining fistula"
-        },
-        "172": {
-            "code": "K11.5",
-            "description": "Tuxumdon bezida uchraydigan xolos. Ko'p tupurik bezining kaltsiyasi submandibulyar bezada uchraydi, lekin parotid bezi, sublingual va kichik tuprik bezlarida ham bo'lishi mumkin.",
-            "title": "Sialolitaz"
-        },
-        "173": {
-            "code": "K11.6",
-            "description": "Odatda og'izning bir tomoni sekin o'sib boruvchi og'riqsiz chuqur burrowing mucocele taqdim submaxillarar yoki sublingual bezlar kanallari to'sqinlik tufayli, og'iz zaminning ushlab qolish kist shaklida. Bundan tashqari, sublingual kist va sublingual sialocele ham deyiladi.",
-            "title": "Tuprik bezining mushkuli"
-        },
-        "174": {
-            "code": "K11.7",
-            "description": "Og'iz bo'shlig'ida tuprikning chiqishi kamayishi bilan ajralib turadigan buzilish.\n                Tuprikning oqishi kamayib boradigan og'iz bo'shlig'ining holati.\n                Tuprik oqimi kamayadi.\n                Og'iz og'zida og'izda tupurik etarli emas degan xulosa kelib chiqadi. Vaqti-vaqti bilan har bir kishi quruq og'ziga ega - agar ular asabiylashsa, bezovtalansa yoki stress ostida bo'lsa. Ammo har doim og'zingni og'ziga olsangiz, yoki ko'pincha, bu noqulay bo'lishi va jiddiy sog'liqqa olib kelishi mumkin. Og'izning og'iz belgilari o'z ichiga oladi\n                quruq og'iz\n                chaynash, yutish, ta'malash yoki gapirish muammolari\n                og'zini yoqish\n                quruq tomoq hissi\n                lablarini qirib tashladi\n                quruq, qo'pol til\n                og'iz yaralari\n                og'iz infektsiyasi\n                quruq og'zing qarishning oddiy qismi emas. Ba'zi sabablarga ko'ra, dorilar, radiatsiya terapiyasi, kemoterapi va asab ziyonni. tuprik bezlari, Sjogren sindromi, OIV / OITS va diabet kasalliklari ham quruq og'izga olib kelishi mumkin. Davolash sababga bog'liq. Siz qilishingiz mumkin bo'lgan narsalar ichimlik suvidir, kofeinli ichimliklar, tamaki va spirtli ichimliklardan saqlaning, shakarsiz saqichni yutib oling yoki shakarsiz shakarlarni emizasiz. nih: Milliy stomatologiya va kraniofa kasalliklari instituti\n                Og'izni quritib oling. Bu organizmda etarli darajada tupurik paydo bo'lmaganda yuz beradi.\n                Tuprik bezlari sekretsiyasining buzilishi tufayli og'izni quritishi.\n                Tuproqning ko'payishi.",
-            "title": "Tükrük sekresyonunun buzilishi"
-        },
-        "175": {
-            "code": "K11.8",
-            "description": "Odatda karsinom bilan klinik va histologik ravishda aralashtiriladigan kichik tuprik bezlarining yaxshi, yallig'lanishli, o'zgaruvchan yaralangan, vaqti-vaqti bilan ikki tomonlama, o'z-o'zidan davolovchi lezyoni.\n                Ko'krak va tuprik bezlari surunkali, benign va odatda og'riqsiz yallig'lanish shishishi. Ba'zilarda sjogren sindromi, sarkoidoz, qizilo'ngach qizilo'ngach va boshqalar kabi boshqa kasalliklarga aloqador glandularning kengayishi kiradi.",
-            "title": "Tuprik bezining boshqa kasalliklari"
-        },
-        "176": {
-            "code": "K11.9",
-            "description": "Tuxumdon bezini o'z ichiga olgan shishmagan yoki neoplastik (benign yoki malign) kasallik.\n                Parotid, sublingual va submandibular bezlar bo'lgan uch juft tuprik bezining normal strukturasi yoki funktsiyasining shikastlanishi yoki buzilishi mavjud bo'lgan holat.\n                Sizning tupurik bezlaringiz tuprikni hosil qiladi - ba'zan tupurik deb ataladi va kanallar deb ataluvchi oraliq orqali og'ziga bo'shatadi. Tuxum oziq-ovqatingizni namlaydi, chaynash va yutishga yordam beradi. Bu ovqatni hazm qilishga yordam beradi. U sizning og'zingizni tozalaydi va mikroblarni o'ldiradigan antikorlar mavjud. Tuprik bezlari bilan bog'liq muammolar bezlarning tirnash xususiyati va shishishiga olib kelishi mumkin. Bunday alomatlar sabab bo'ladi\n                Og'zingizdagi yomon ta'm\n                Og'zingizni ochish qiyin\n                quruq og'iz\n                yuz yoki og'izdagi og'riq\n                yuz yoki bo'yinning shishishi\n                Tuprik bezlari bilan bog'liq muammolar orasida infektsiya, to'siq yoki saraton mavjud. Muammolar, shuningdek, Mumps yoki Sjogren sindromi kabi boshqa kasalliklar bilan bog'liq bo'lishi mumkin.",
-            "title": "Tuprik bezining kasalligi, aniqlanmagan"
-        },
-        "177": {
-            "code": "K12.0",
-            "description": "Tez-tez chaqaloqlarni emizish tufayli qattiq tomoqning simmetrik eksoriatsiyasi",
-            "title": "Qayta og'iz aftasi"
-        },
-        "178": {
-            "code": "K12.1",
-            "description": "Og'iz bo'shlig'i shilliq qavatining yallig'lanishi bilan xarakterlanadi.\n                Vesikulovirus jinsida kamida ikkita turning (serotip) kelib chiqadigan virusli kasallik: vesikulyar stomatitlar indiana virusi va vesikulyar stomatitlar yangi jersey virusi. U qoramollar, otlar, cho'chqalar va boshqa hayvonlardagi og'iz mukozasida vesikulyar otilishlar bilan tavsiflanadi. Odamlarda vesikulyar stomatit grippga o'xshash kasallikka sabab bo'ladi.\n                Protez tirnash xususiyati tufayli og'izning yallig'lanishi.\n                Og'izning shilliq to'qimalarining yallig'lanishi\n                Mahalliy yoki tizimli omillar tufayli og'iz bo'shlig'i shilliq qavatining yallig'lanishi.\n                Og'izning yumshoq to'qimalarining shilliq qavat kabi yallig'lanishi; tomoq; gingiva; va labda.\n                Og'izdagi shilliq pardalarning yallig'lanishi yoki tirnash xususiyati.",
-            "title": "Stomatitning boshqa shakllari"
-        },
-        "179": {
-            "code": "K12.2",
-            "description": "",
-            "title": "Selülit va og'izning xo'ppozlari"
-        },
-        "180": {
-            "code": "K12.30",
-            "description": "",
-            "title": "Og'iz mukoziti (oshqozon), aniqlanmagan"
-        },
-        "181": {
-            "code": "K12.31",
-            "description": "",
-            "title": "Antineoplastik davolanish tufayli og'iz mukozit (ülseratif)"
-        },
-        "182": {
-            "code": "K12.32",
-            "description": "",
-            "title": "Boshqa preparatlar tufayli og'iz bo'shlig'i (ülseratif)"
-        },
-        "183": {
-            "code": "K12.33",
-            "description": "",
-            "title": "Radiatsiya tufayli og'iz mukozitlari (ülseratif)"
-        },
-        "184": {
-            "code": "K12.39",
-            "description": "",
-            "title": "Boshqa og'iz mukozitlari (ülseratif)"
-        },
-        "185": {
-            "code": "K13.0",
-            "description": "Dudoqning sezilarli noqulay hissi bilan ifodalanadigan buzilish. Dudoqning yallig'lanishi bilan xarakterlanadi. Lipga ta'sir qiladigan yallig'lanish jarayoni. Dudoqlar yallig'lanishi. Turli xil etiologiyalar va patologiya darajalariga ega. Dudakdagi og'riqli hissiyot.",
-            "title": "Ips kasalliklari"
-        },
-        "186": {
-            "code": "K13.1",
-            "description": "",
-            "title": "Yanak va labda tishlash"
-        },
-        "187": {
-            "code": "K13.21",
-            "description": "Og'izdagi shilliq qavatdagi oq nuqta yoki blyashka, klinik yoki patologik jihatdan boshqa kasalliklar kabi xarakterlanishi mumkin emas. Leykotsitlar tashxisoti istisnolardan biridir; kandidoz, liken planus, leukoedema va boshqalar kabi boshqa shart-sharoitlar. Leykotsitlar tashxisi qo'yilguncha chiqarib tashlash kerak. Leykoplaki prekanseron holat bo'lishi mumkin. Og'iz bo'shlig'ining shilliq pardasida oq va pankreatit bo'lib, klinik yoki patologik jihatdan boshqa kasalliklarga o'xshamaydi. Leykotsitlar tashxisoti istisnolardan biridir; kandidoz, liken planus, leukoedema va boshqalar kabi boshqa shart-sharoitlar. Leykotsitlar tashxisi qo'yilguncha chiqarib tashlash kerak. Leykoplaki prekanseron holat bo'lishi mumkin. Og'iz bo'shlig'i ustidan oq nuqta. Bu prekanseron holat bo'lib, ko'pincha tamakidan kelib chiqadi. Agar Epstein-Barr virusi mavjud bo'lsa, bu holat tukli leykoplakiya (leykoplakiya, tuklar) deb ataladi. Og'iz bo'shlig'i mukusida oq nuqta ko'rinadi; Bu prekanseron holat bo'lib, ko'pincha tamakidan kelib chiqadi.",
-            "title": "Og'iz sirtining lökoplakiyasi, shu jumladan til"
-        },
-        "188": {
-            "code": "K13.22",
-            "description": "",
-            "title": "Minimal keratinlashtirilgan qoldiq tizma shilliq qavati"
-        },
-        "189": {
-            "code": "K13.23",
-            "description": "",
-            "title": "Haddan tashqari keratinli qoldiq tizma shilliq qavati"
-        },
-        "190": {
-            "code": "K13.24",
-            "description": "",
-            "title": "Lekokeratoz nikotina palati"
-        },
-        "191": {
-            "code": "K13.29",
-            "description": "Og'iz yoki tilning og'rig'i, og'iz yoki tilning fokal epitelial hiperplazisi, og'iz yoki tilning leukoedema, boshqa og'iz epiteliya buzilishlari",
-            "title": "Og'zaki epiteliya, shu jumladan tilning boshqa buzilishlari"
-        },
-        "192": {
-            "code": "K13.3",
-            "description": "",
-            "title": "Tukli leykoplakiya"
-        },
-        "193": {
-            "code": "K13.4",
-            "description": "Langerhans hujayralarining histiotsitozining klinik ko'rinishi, suyakning (ko'pincha), terining yoki o'pkaning monofokal lezyonlari bilan xarakterlanadi. Bemor odatda kattalar yoki kattalardir, odatda suyaklar suyagi zararlanadi. Etiyolojisi noma'lum. Morfologik jihatdan eozinofil granuloma xarakterli muhitda Langerhans xujayralari mavjudligi bilan xarakterlanadi, bular histiotsitlar, eozinofil neytrofillar va kichik etuk lenfositlarni o'z ichiga oladi.\n                Langerhans histiotsitozining eng yaxshi xulqli klinik shakli, ya'ni oshqozon, ingichka ichak, suyak, o'pka yoki terining shilliq qavatining lokalizatsiya qilingan nodulyar lezyonlarini o'z ichiga oladi, eozinofil infiltratsiyasi bilan; Klinik ko'rinishlar uchun mas'ul bo'lgan ko'plab hujayra Langerhans xujayrasi.\n                Langerhans histiotsitozning eng yaxshi xulqli va keng tarqalgan shakli, asosan suyaklarning lokalizatsiya qilingan nodul lezyonlari, shuningdek, oshqozon, ingichka ichak, o'pka yoki terining shilliq qavati, eozinofil infiltratsiyasi bilan.",
-            "title": "Granuloma va granuloma kabi og'iz mukozasining zararlanishi"
-        },
-        "194": {
-            "code": "K13.5",
-            "description": "",
-            "title": "Og'izli submukoz fibrozi"
-        },
-        "195": {
-            "code": "K13.6",
-            "description": "",
-            "title": "Og'iz bo'shlig'i mukozasining tirnash xususiyati giperplaziyasi"
-        },
-        "196": {
-            "code": "K13.70",
-            "description": "",
-            "title": "Og'iz bo'shlig'i shilliq qavatlarining aniqlanmagan zararlanishi"
-        },
-        "197": {
-            "code": "K13.79",
-            "description": "",
-            "title": "Og'iz bo'shlig'i mukozasining boshqa va aniqlanmagan lezyonlari"
-        },
-        "198": {
-            "code": "K14.0",
-            "description": "Tilning yallig'lanishi.",
-            "title": "Glossit"
-        },
-        "199": {
-            "code": "K14.1",
-            "description": "Tilning yuzasida tartibsiz yamoqlarning rivojlanishi bilan xarakterli holat, xaritaga o'xshash ko'rinishga olib keladi. Yamalar kundan kunga ko'chib o'tadi va odatda davolanmasdan hal qilinadi. Idyopatik kasallik filiform papillaning yo'qolishi bilan tavsiflanadi va oq rangli chiziq bilan bog'langan tirnoqli makulalarning qizil rangli joylarini qoldiradi. Lezyonlar shifo beradi, keyin boshqalar portlashadi.",
-            "title": "Geografik til"
-        },
-        "200": {
-            "code": "K14.2",
-            "description": "",
-            "title": "Medial romboid glossit"
-        },
-        "201": {
-            "code": "K14.3",
-            "description": "Qo'llash mumkin bo'lgan qora sochli til Til qoplangan til Foliat papillosining gipertrofiyasi Lingua villosa nigra",
-            "title": "Til papillosining gipertrofiyasi"
-        },
-        "202": {
-            "code": "K14.4",
-            "description": "Atrofik glossiti uchun amal qiladi",
-            "title": "Til papillosining atrofi"
-        },
-        "203": {
-            "code": "K14.5",
-            "description": "Fisurli til uchun qo'llaniladigan til Yirtqich tili Skrotal til",
-            "title": "Tillangan til"
-        },
-        "204": {
-            "code": "K14.6",
-            "description": "Tilda og'riqli hislar, shu jumladan, yonish hissi.",
-            "title": "Glossodynia"
-        },
-        "205": {
-            "code": "K14.8",
-            "description": "Tilning kengayishini ko'rsatadigan topilma. Tug'ma bo'lishi mumkin bo'lgan yoki lenfatik tomirlarning obstruktsiyasi sababli shish yoki shish tufayli rivojlanishi mumkin bo'lgan juda ko'p katta til mavjudligi yoxud giperprayarizm yoki akromegali bilan bog'liq bo'lishi mumkin. Shuningdek, tishlarning tilidagi bosim tufayli bu malokllik bilan ham bog'liq bo'lishi mumkin.",
-            "title": "Tilning boshqa kasalliklari"
-        },
-        "206": {
-            "code": "K14.9",
-            "description": "Yuqori sirt sizning ta'mli kurtaklaringizni o'z ichiga oladi. Til bilan bog'liq muammolar orasida og'riq, shish, rangi yoki to'qimalarda o'zgarishlar, g'ayritabiiy harakatlar yoki tilni qiyinchilik bilan almashtirish, muammolar bilan shug'ullanish, bu muammolarning ko'pgina sabablari bo'lishi mumkin. Davolash asosiy muammolarga bog'liq.",
-            "title": "Til belgilanmagan kasalliklar"
-        },
-        "207": {
-            "code": "M26.00",
-            "description": "",
-            "title": "Jagning kattaligi aniqlanmagan anomaliya"
-        },
-        "208": {
-            "code": "M26.01",
-            "description": "",
-            "title": "Yuqori jag'ning giperplaziyasi"
-        },
-        "209": {
-            "code": "M26.02",
-            "description": "",
-            "title": "Yuqori jag'ning gipoplazasi"
-        },
-        "210": {
-            "code": "M26.03",
-            "description": "",
-            "title": "Pastki jag'ning hiperplazisi"
-        },
-        "211": {
-            "code": "M26.04",
-            "description": "",
-            "title": "Pastki jag'ning gipoplaziya"
-        },
-        "212": {
-            "code": "M26.05",
-            "description": "",
-            "title": "Makrogeniya"
-        },
-        "213": {
-            "code": "M26.06",
-            "description": "",
-            "title": "Mikrogeniya"
-        },
-        "214": {
-            "code": "M26.07",
-            "description": "",
-            "title": "Juda jag'ning tuberozligi"
-        },
-        "215": {
-            "code": "M26.09",
-            "description": "",
-            "title": "Jag'ning boshqa kattalashgan anomaliyalari"
-        },
-        "216": {
-            "code": "M26.10",
-            "description": "",
-            "title": "Jag-kraniyali bazaviy munosabatlarning aniqlanmagan anomaliyasi"
-        },
-        "217": {
-            "code": "M26.11",
-            "description": "",
-            "title": "Maksillariy assimetriya"
-        },
-        "218": {
-            "code": "M26.12",
-            "description": "",
-            "title": "Boshqa jag' asimetri"
-        },
-        "219": {
-            "code": "M26.19",
-            "description": "",
-            "title": "Jag'-kranial bazaviy munosabatlarning boshqa aniqlangan anomaliyalari"
-        },
-        "220": {
-            "code": "M26.20",
-            "description": "",
-            "title": "Dental arch aloqalarining aniqlanmagan anomaliyasi"
-        },
-        "221": {
-            "code": "M26.211",
-            "description": "",
-            "title": "Malokluziyasi, Angles sinfi 1"
-        },
-        "222": {
-            "code": "M26.212",
-            "description": "",
-            "title": "Yomonlik, Angle sinf 2"
-        },
-        "223": {
-            "code": "M26.213",
-            "description": "",
-            "title": "Buzuqlik, Angliya sinfi 3"
-        },
-        "224": {
-            "code": "M26214",
-            "description": "",
-            "title": "Buzuqlik, burchak sinfining aniqlanmaganlari"
-        },
-        "225": {
-            "code": "M26.220",
-            "description": "",
-            "title": "Old okluzal aloqani oching"
-        },
-        "226": {
-            "code": "M26.23",
-            "description": "",
-            "title": "Haddan tashqari gorizontal qoplama"
-        },
-        "227": {
-            "code": "M26.24",
-            "description": "",
-            "title": "Orqaga aylantirmoq"
-        },
-        "228": {
-            "code": "M26.25",
-            "description": "",
-            "title": "Interar masofasining anomaliyalari"
-        },
-        "229": {
-            "code": "M26.29",
-            "description": "",
-            "title": "Dental munosabatlarning boshqa anomaliyalari"
-        },
-        "230": {
-            "code": "M26.30",
-            "description": "",
-            "title": "To'liq tishli tish yoki tishlarning tish holatining aniqlanmagan anomaliyasi"
-        },
-        "231": {
-            "code": "M26.31",
-            "description": "",
-            "title": "To'liq puflagan tishlarni ag'darish"
-        },
-        "232": {
-            "code": "M26.32",
-            "description": "",
-            "title": "To'liq puflangan tishlarning ortiqcha oralig'i"
-        },
-        "233": {
-            "code": "M26.33",
-            "description": "",
-            "title": "To'liq ochilgan tish yoki tishlar gorizontal joy o'zgarishi"
-        },
-        "234": {
-            "code": "M26.34",
-            "description": "",
-            "title": "To'liq ochilgan tish yoki tishlarning vertikal joy o'zgarishi"
-        },
-        "235": {
-            "code": "M26.35",
-            "description": "",
-            "title": "To'liq ochilgan tish yoki tishlarning aylanishi"
-        },
-        "236": {
-            "code": "M26.36",
-            "description": "",
-            "title": "To'liq puflangan tishlarning (yulning) interkoslyus masofasi kam"
-        },
-        "237": {
-            "code": "M26.37",
-            "description": "",
-            "title": "To'liq puflangan tishlarning ortiqcha intervalgacha masofa"
-        },
-        "238": {
-            "code": "M26.39",
-            "description": "",
-            "title": "To'liq tish va tishlarning tish holatining boshqa anomaliyalari"
-        },
-        "239": {
-            "code": "M26.4",
-            "description": "",
-            "title": "Buzuqlik, aniqlanmagan"
-        },
-        "240": {
-            "code": "M26.50",
-            "description": "",
-            "title": "Dentofasial funktsional anomaliyalar aniqlanmagan"
-        },
-        "241": {
-            "code": "M26.51",
-            "description": "",
-            "title": "Anormal jag'ning yopilishi"
-        },
-        "242": {
-            "code": "M26.52",
-            "description": "",
-            "title": "Cheklangan mandibulyar harakat oralig'i"
-        },
-        "243": {
-            "code": "M26.53",
-            "description": "",
-            "title": "Mandamentni ochish va yopishda og'ish"
-        },
-        "244": {
-            "code": "M26.54",
-            "description": "",
-            "title": "Older ko'rsatmalar etarli emas"
-        },
-        "245": {
-            "code": "M26.55",
-            "description": "",
-            "title": "O'rtacha okklyuziyaning maksimal shpalli xilma-xilligi"
-        },
-        "246": {
-            "code": "M26.56",
-            "description": "",
-            "title": "Ishlamaydigan tomonlama shovqin"
-        },
-        "247": {
-            "code": "M26.57",
-            "description": "",
-            "title": "Posterior okklyuziy yordamning etishmasligi"
-        },
-        "248": {
-            "code": "M26.59",
-            "description": "",
-            "title": "Boshqa dentofasiyal funktsional anomaliyalar"
-        },
-        "249": {
-            "code": "M26.601",
-            "description": "",
-            "title": "Oddiy temporomandibular og'riyotgan buzilishi, aniqlanmagan"
-        },
-        "250": {
-            "code": "M26.602",
-            "description": "",
-            "title": "Chap temporomandibulyar qo'shma og'rig'i, aniqlanmagan"
-        },
-        "251": {
-            "code": "M26.603",
-            "description": "",
-            "title": "Belgilangan ikki tomonlama temporomandibulyar og'rig'i buzilishi"
-        },
-        "252": {
-            "code": "M26.609",
-            "description": "",
-            "title": "Belgilangan temporomandibular og'riyotganlik kasalligi, aniqlanmagan tomon"
-        },
-        "253": {
-            "code": "M26.611",
-            "description": "",
-            "title": "O'ng temporomandibulyar qo'shimchalarning yopishishi va ankilozi"
-        },
-        "254": {
-            "code": "M26.612",
-            "description": "",
-            "title": "Chap temporomandibulyar qo'shimchalarning yopishqoqligi va ankilozi"
-        },
-        "255": {
-            "code": "M26.613",
-            "description": "",
-            "title": "Ikki tomonlama temporomandibulyar qo'shimchalarning yopishishi va ankiloziyasi"
-        },
-        "256": {
-            "code": "M26.619",
-            "description": "",
-            "title": "Ikki tomonlama temporomandibular qo'shma aniqlanmagan tomonlarning yopishishi va ankilozasi"
-        },
-        "257": {
-            "code": "M26.621",
-            "description": "",
-            "title": "O'ng temporomandibular og'riyotgan arralgiya"
-        },
-        "258": {
-            "code": "M26.622",
-            "description": "",
-            "title": "Chap temporomandibular og'riyotgan arralgiya"
-        },
-        "259": {
-            "code": "M26.623",
-            "description": "",
-            "title": "Ikki tomonlama temporomandibular qo'shilish artralgiyasi"
-        },
-        "260": {
-            "code": "M26.629",
-            "description": "",
-            "title": "Ikkala temporomandibulyar qo'shimchaning aniqlanmagan tomoni artraljiyasi"
-        },
-        "261": {
-            "code": "M26.631",
-            "description": "",
-            "title": "O'ng temporomandibulyar qo'shimchalarning eklem diseksiyonu"
-        },
-        "262": {
-            "code": "M26.632",
-            "description": "",
-            "title": "Chap temporomandibulyar qo'shimchalarda eklem diseksiyonu"
-        },
-        "263": {
-            "code": "M26.633",
-            "description": "",
-            "title": "Ikki tomonlama temporomandibulyar qo'shimchalarda eklem diseksiyonu"
-        },
-        "264": {
-            "code": "M26.639",
-            "description": "",
-            "title": "Ikki tomonlama temporomandibulyar qo'shimchalarning aniqlanmagan tomonidagi eklem diseksiyonu"
-        },
-        "265": {
-            "code": "M26.69",
-            "description": "",
-            "title": "Temporomandibulyar qo'shimchalarning boshqa aniqlangan kasalliklari"
-        },
-        "266": {
-            "code": "M26.70",
-            "description": "",
-            "title": "Noma'lum alveolyar anomaliya"
-        },
-        "267": {
-            "code": "M26.71",
-            "description": "",
-            "title": "Alveolalar maxillarli giperplaziyasi"
-        },
-        "268": {
-            "code": "M26.72",
-            "description": "",
-            "title": "Alveolyar mandibular hiperplaziya"
-        },
-        "269": {
-            "code": "M26.73",
-            "description": "",
-            "title": "Alveolyar maxillarar gipoplaziya"
-        },
-        "270": {
-            "code": "M26.74",
-            "description": "",
-            "title": "Alveolalarning mandibular hipoplazisi"
-        },
-        "271": {
-            "code": "M26.79",
-            "description": "",
-            "title": "Boshqa ko'rsatilgan alveolyar anomaliyalar"
-        },
-        "272": {
-            "code": "M26.81",
-            "description": "",
-            "title": "Yumshoq to'qimalarni oldinga siljish"
-        },
-        "273": {
-            "code": "M26.82",
-            "description": "",
-            "title": "Posterior yumshoq to'qimalarni siqish"
-        },
-        "274": {
-            "code": "M26.89",
-            "description": "",
-            "title": "Boshqa dentofasial anomaliyalar"
-        },
-        "275": {
-            "code": "M26.9",
-            "description": "",
-            "title": "Dentofasial anomaliya, aniqlanmagan"
-        },
-        "276": {
-            "code": "M27.0",
-            "description": "",
-            "title": "Jag'ning rivojlanishining buzilishlari"
-        },
-        "277": {
-            "code": "M27.1",
-            "description": "Katta, ko'p yadroli hujayralarni o'z ichiga oladigan neoplastik bo'lmagan yallig'lanishli lezyon, odatda jag' yoki gingiva. Reparativ gigant hujayra granulomini o'z ichiga oladi. Periferik yirik hujayrali granuloma gingivoga (gigant hujayra epulis) ishora qiladi; markaz jag'iga ishora qiladi.",
-            "title": "Gigant hujayrali granuloma, markaziy"
-        },
-        "278": {
-            "code": "M27.2",
-            "description": "",
-            "title": "Jag'larning yallig'lanish shartlari"
-        },
-        "279": {
-            "code": "M27.3",
-            "description": "Ayniqsa, travmatik ekstraktsiyadan keyin tish chiqarishdan keyin yuzaga keladigan holat paydo bo'ladi, natijada yuvilib ketganligi yoki qon ivishini yo'qotishi oqibatida ochilgan suyakning quruq ko'rinishi paydo bo'ladi. Asosan shamollashsiz fokusli osteomiyelit bo'lib, shiddatli og'riq (alveolalgiya) va yomon hid bilan birga keladi. (Dorland, 28-chi ed)",
-            "title": "Jag'ning alveolitlari"
-        },
-        "280": {
-            "code": "M27.40",
-            "description": "Egulik epiteliya bilan qoplangan va patologiyada hosil bo'lgan bo'shliqlarda saqlangan kasallangan lezyonlar; shuningdek, nonepitelyal kistlar (psödokistlar), masalan, shikast yoki soliter kist, statik suyak bo'shlig'i va anevrizmal suyak kistiga nisbatan qo'llaniladi. Haqiqiy jag' kistlari odontogen yoki nodontogen bo'lmagan deb tasniflanadi.",
-            "title": "Jagning aniqlanmagan kistasi"
-        },
-        "281": {
-            "code": "M27.49",
-            "description": "",
-            "title": "Jag'ning boshqa kistalari"
-        },
-        "282": {
-            "code": "M27.51",
-            "description": "",
-            "title": "Endodontik davolanish tufayli ildiz kanalining bo'sh joyini kesish"
-        },
-        "283": {
-            "code": "M27.52",
-            "description": "",
-            "title": "Endodontik ortiqcha to'ldirish"
-        },
-        "284": {
-            "code": "M27.53",
-            "description": "",
-            "title": "Endodontik moddalar to'ldirilishi"
-        },
-        "285": {
-            "code": "M27.59",
-            "description": "",
-            "title": "Oldingi endodontik davolanish bilan bog'liq boshqa periradikulyar patologiya"
-        },
-        "286": {
-            "code": "M27.61",
-            "description": "",
-            "title": "Dental implantning osseointegratsiya etishmovchiligi"
-        },
-        "287": {
-            "code": "M27.62",
-            "description": "",
-            "title": "Dental implantlarning post-osseointegratsion biologik qobiliyati"
-        },
-        "288": {
-            "code": "M27.63",
-            "description": "",
-            "title": "Dental implantlarning post-osseointegratsiya mexanik qobiliyati"
-        },
-        "289": {
-            "code": "M27.69",
-            "description": "",
-            "title": "Boshqa endosseous dental implant etishmovchiligi"
-        },
-        "290": {
-            "code": "M27.8",
-            "description": "Suyakning neoplastik o'sishi bilan xarakterlanadi.\n                Jag'larning fibrozsez merosxo'rligi kasalligi. Shishgan jag'lar va ko'tarilgan ko'zlar cherub ko'rinishini beradi; radyografik tekshiruvlar natijasida ko'p radiolucens aniqlanadi.\n                Odatda sh3bp2 genidagi mutatsiyalar oqibatida noyob kasallik. Ko'tarilgan tolali suyaklarning ortiqcha tolali to'qima bilan ikki tomonlama almashinishi tufayli yuzning pastki qismining ustunligi bilan tavsiflanadi.\n                Suyak yuzasidan tashqariga chiqib, tez-tez xarakterli komponentlarni o'z ichiga olgan benign gipertrofiya.\n                Suyakning neoplastik o'sishi.",
-            "title": "Boshqa ma'lum jag'lar kasalliklari"
-        },
-        "291": {
-            "code": "M27.9",
-            "description": "",
-            "title": "Jag'ning kasalligi, aniqlanmagan"
-        },
-        "categories": {
-            "K00": {
-                "code": "K00",
-                "title": "Tish taraqqiyoti va puflanishining buzilishi"
-            },
-            "K01": {
-                "code": "K01",
-                "title": "U ichiga va ta'sirlangan tish"
-            },
-            "K02": {
-                "code": "K02",
-                "title": "Tishlaring karieslari"
-            },
-            "K03": {
-                "code": "K03",
-                "title": "Tishlaring qattiq to'qimalarining boshqa kasalliklari"
-            },
-            "K04": {
-                "code": "K04",
-                "title": "Pulpa va periapikal to'qimalarning kasalliklari"
-            },
-            "K05": {
-                "code": "K05",
-                "title": "Gingivitis va periodontal kasalliklar"
-            },
-            "K06": {
-                "code": "K06",
-                "title": "Gingiva va qilichli alveolalar tizmasining boshqa kasalliklari"
-            },
-            "K08": {
-                "code": "K08",
-                "title": "Tish va boshqa yordamchi tuzilmalarning boshqa kasalliklari"
-            },
-            "K09": {
-                "code": "K09",
-                "title": "Og'iz mintaqasi kistalari, boshqa joylarda tasniflanmagan"
-            },
-            "K11": {
-                "code": "K11",
-                "title": "Tuprik bezlari kasalliklari"
-            },
-            "K12": {
-                "code": "K12",
-                "title": "Stomatit va shunga o'xshash lezyonlar"
-            },
-            "K13": {
-                "code": "K13",
-                "title": "Dudoqlar va og'iz mukozasining boshqa kasalliklari"
-            },
-            "K14": {
-                "code": "K14",
-                "title": "Tilning kasalliklari"
-            },
-            "M26": {
-                "code": "M26",
-                "title": "Dentofasial anomaliyalar (malokklesiya, shu jumladan)"
-            },
-            "M27": {
-                "code": "M27",
-                "title": "Jag'ning boshqa kasalliklari"
-            }
-        }
-    },
-    "hello": "",
-    "manipulations": {
-        "1": {
-            "categoryCode": "1.1.",
-            "categoryTitle": "Stomatologik tekshiruv va protseduralar",
-            "code": "1.1.1.",
-            "title": "Birlamchi manzilda stomatologik tekshirish"
-        },
-        "2": {
-            "categoryCode": "1.1.",
-            "categoryTitle": "Stomatologik tekshiruv va protseduralar",
-            "code": "1.1.2.",
-            "title": "Davolash jarayonida dinamik nazorat"
-        },
-        "3": {
-            "categoryCode": "1.1.",
-            "categoryTitle": "Stomatologik tekshiruv va protseduralar",
-            "code": "1.1.3.",
-            "title": "Maslahat qarorini chiqarish bilan stomatologiya inspektsiyasi:"
-        },
-        "4": {
-            "categoryCode": "1.1.",
-            "categoryTitle": "Stomatologik tekshiruv va protseduralar",
-            "code": "1.1.4.",
-            "title": "Tish rasmlarini tahlil qilish"
-        },
-        "5": {
-            "categoryCode": "1.1.",
-            "categoryTitle": "Stomatologik tekshiruv va protseduralar",
-            "code": "1.1.5.",
-            "title": "Viziogram, panoramik rentgenogrammalar, ortopantomogramma, teleroentgenogramlar tahlili"
-        },
-        "6": {
-            "categoryCode": "1.1.",
-            "categoryTitle": "Stomatologik tekshiruv va protseduralar",
-            "code": "1.1.6.",
-            "title": "Tadqiqotning qo'shimcha usullari natijalarini tahlil qilish"
-        },
-        "7": {
-            "categoryCode": "1.2.",
-            "categoryTitle": "Professional gigiena",
-            "code": "1.2.1.",
-            "title": "Stomatologik kasalliklarning xavf omillari bo'yicha motivatsiya, bemorni tish cho'tkasida tayyorlash"
-        },
-        "8": {
-            "categoryCode": "1.2.",
-            "categoryTitle": "Professional gigiena",
-            "code": "1.2.2.",
-            "title": "Ftorli yoki bosimli tayyorlash bilan bitta tishni qoplash"
-        },
-        "9": {
-            "categoryCode": "1.2.",
-            "categoryTitle": "Professional gigiena",
-            "code": "1.2.3.",
-            "title": "Keyingi tishni florlangan yoki bosimli tayyorlash bilan qoplash"
-        },
-        "10": {
-            "categoryCode": "1.2.",
-            "categoryTitle": "Professional gigiena",
-            "code": "1.2.4.",
-            "title": "Asosiy tishlarda maxsus indekslarni qo'llash bilan gigienani nazorat qilish"
-        },
-        "11": {
-            "categoryCode": "1.2.",
-            "categoryTitle": "Professional gigiena",
-            "code": "1.2.6.",
-            "title": "Bir tishdan tish blyashchini olib tashlash, tishni tozalash"
-        },
-        "12": {
-            "categoryCode": "1.2.",
-            "categoryTitle": "Professional gigiena",
-            "code": "1.2.9.",
-            "title": "Bir tishdan ultratovush skeyler bilan tish konlarini olib tashlash"
-        },
-        "13": {
-            "categoryCode": "1.2.",
-            "categoryTitle": "Professional gigiena",
-            "code": "1.2.13.",
-            "title": "Tish konlarini olib tashlangandan keyin bitta tishni silab turish"
-        },
-        "14": {
-            "categoryCode": "1.3.",
-            "categoryTitle": "Anestetik yordam",
-            "code": "1.3.1.",
-            "title": "Dasturni anesteziyasi"
-        },
-        "15": {
-            "categoryCode": "1.3.",
-            "categoryTitle": "Anestetik yordam",
-            "code": "1.3.2.",
-            "title": "Infiltratsion anesteziya"
-        },
-        "16": {
-            "categoryCode": "1.3.",
-            "categoryTitle": "Anestetik yordam",
-            "code": "1.3.3.",
-            "title": "Etkazish behushlik"
-        },
-        "17": {
-            "categoryCode": "1.3.",
-            "categoryTitle": "Anestetik yordam",
-            "code": "1.3.4.",
-            "title": "Intraligamentarni anesteziya"
-        },
-        "18": {
-            "categoryCode": "1.3.",
-            "categoryTitle": "Anestetik yordam",
-            "code": "1.3.5.",
-            "title": "Bir martalik shpritsni igna bilan qo'llash"
-        },
-        "19": {
-            "categoryCode": "1.3.",
-            "categoryTitle": "Anestetik yordam",
-            "code": "1.3.6.",
-            "title": "Karppul shpritsini igna bilan qo'llash"
-        },
-        "20": {
-            "categoryCode": "1.3.",
-            "categoryTitle": "Anestetik yordam",
-            "code": "1.3.8.",
-            "title": "Anestetikdan foydalanish"
-        },
-        "21": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.1.",
-            "title": "DENTIVning vaqtinchalik muhrini qo'yish"
-        },
-        "22": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.1.",
-            "title": "SEPTOPAKning vaqtincha muhrini qo'yish"
-        },
-        "23": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.1.",
-            "title": "PARASEPTning vaqtincha muhrini qo'yish"
-        },
-        "24": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.2.",
-            "title": "Qattiq mustahkamlovchi muhrni olib tashlash"
-        },
-        "25": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.3.",
-            "title": "Bir nuqsonli muhrni olib tashlash"
-        },
-        "26": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.7.",
-            "title": "Og'iz bo'shlig'ining antiseptik tank bilan biriktirilishi (sug'orish)"
-        },
-        "27": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.8.",
-            "title": "Bir tishning sakini retraktsiyasi"
-        },
-        "28": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.9.",
-            "title": "Stiptik vositalarni qo'llash"
-        },
-        "29": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.13.",
-            "title": "Gipertrofli gingival papilla pıhtılaşması"
-        },
-        "30": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.14.",
-            "title": "Og'iz bo'shlig'i shilliq pardasini yo'q qilish markazlarini mahalliy davolash"
-        },
-        "31": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.27.",
-            "title": "Sitologiya tadqiqotlari uchun materiallarni namunalar olish"
-        },
-        "32": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.28.",
-            "title": "Mikrobiologik tadqiqotlar uchun moddiy namunalar"
-        },
-        "33": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.29.",
-            "title": "Xistopatologik tadqiqotlar uchun materiallarni namunaviy tekshirish (biopsiya)"
-        },
-        "34": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.1.",
-            "title": "Kasalning har bir tashrifida terapevtik qabul qilishda ishlatiladigan asboblar to'plamini qo'llash"
-        },
-        "35": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.2.",
-            "title": "Bemorning har bir tashrifida jarrohlik qabul qilishda ishlatiladigan asboblar to'plamini qo'llash"
-        },
-        "36": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.5.",
-            "title": "Bemor uchun bir marta ishlatiladigan patnisni qo'llash"
-        },
-        "37": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.6.",
-            "title": "Bir marta ishlatiladigan salva ejektor mexanizmini qo'llash"
-        },
-        "38": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.8.",
-            "title": "Bir marta ishlatiladigan niqobni qo'llash"
-        },
-        "39": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.9.",
-            "title": "Tibbiy juftlik qo'lqoplarini qo'llash"
-        },
-        "40": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.11.",
-            "title": "Stomatologlarning silindrlarni ishlatish"
-        },
-        "41": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.12.",
-            "title": "G'umba to'plarini qo'llash"
-        },
-        "42": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.13.",
-            "title": "Paxta tolasini ishlatish"
-        },
-        "43": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.14.",
-            "title": "Qaychi jarrohlikdan foydalanish"
-        },
-        "44": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.15.",
-            "title": "Pichoq nayza shaklida qo'llanilishi"
-        },
-        "45": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.16.",
-            "title": "Jarrohlik operatsiyalari"
-        },
-        "46": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.17.",
-            "title": "Probni qo'llash"
-        },
-        "47": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.18.",
-            "title": "Bir marta ishlatiladigan skalpelni qo'llash"
-        },
-        "48": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.19.",
-            "title": "Ekstraksiya jarrohligidagi liftni qo'llash"
-        },
-        "49": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.20.",
-            "title": "Bandajdan foydalanish"
-        },
-        "50": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.21.",
-            "title": "Yopishtiruvchi (bir tish) dan foydalanish"
-        },
-        "51": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.30.",
-            "title": "Jel uchun go'shtdan foydalanish"
-        },
-        "52": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.30.1.",
-            "title": "\"Alyumogel\" dasturi"
-        },
-        "53": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.31.",
-            "title": "\"Alvanes\" kukunini ishlatish"
-        },
-        "54": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.31.",
-            "title": "Alvanes pastasini ishlatish"
-        },
-        "55": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.32.",
-            "title": "Ilova chiziqlar"
-        },
-        "56": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.33.",
-            "title": "Diskda polishingni qo'llash"
-        },
-        "57": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.34.",
-            "title": "Qoshiq kyuretazhni qo'llash"
-        },
-        "58": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.35.",
-            "title": "Sutural materialni qo'llash"
-        },
-        "59": {
-            "categoryCode": "1.5.",
-            "categoryTitle": "Stomatologik davolanishning barcha turlariga bemorni tashrif buyurishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "1.5.36.",
-            "title": "Gemo-statik va antiseptik \"Alvostaz-gubka\" kompressiyasini qo'llash"
-        },
-        "60": {
-            "categoryCode": "2.2.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqlarni lokalizatsiya qilish bilan tishlashdan keyin paydo bo'lgan kasalliklarni emas, balki, kariyerlarni davolashda (I, II, III, IV, V-klasslari)",
-            "code": "2.2.1.",
-            "title": "Qorin bo'shlig'ini minimal invaziv preparatlash"
-        },
-        "61": {
-            "categoryCode": "2.2.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqlarni lokalizatsiya qilish bilan tishlashdan keyin paydo bo'lgan kasalliklarni emas, balki, kariyerlarni davolashda (I, II, III, IV, V-klasslari)",
-            "code": "2.2.2.",
-            "title": "Tishning 1/3 tojiga qadar vayronaga aylanadigan qorin bo'shlig'ini tayyorlash"
-        },
-        "62": {
-            "categoryCode": "2.2.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqlarni lokalizatsiya qilish bilan tishlashdan keyin paydo bo'lgan kasalliklarni emas, balki, kariyerlarni davolashda (I, II, III, IV, V-klasslari)",
-            "code": "2.2.3.",
-            "title": "Tishning 1/2 tirsakiga vayronaga aylanishda qorin bo'shlig'ini tayyorlash"
-        },
-        "63": {
-            "categoryCode": "2.2.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqlarni lokalizatsiya qilish bilan tishlashdan keyin paydo bo'lgan kasalliklarni emas, balki, kariyerlarni davolashda (I, II, III, IV, V-klasslari)",
-            "code": "2.2.4.",
-            "title": "Tishning 1/2 dan ziyod tokidan o'ta qirilib ketganida qora tanni tayyorlash"
-        },
-        "64": {
-            "categoryCode": "2.3.",
-            "categoryTitle": "Yalıtkan yotoq ishlab chiqarish",
-            "code": "2.3.1.",
-            "title": "Tarkibida yotqizish izolyatsion tsement ishlab chiqarish"
-        },
-        "65": {
-            "categoryCode": "2.3.",
-            "categoryTitle": "Yalıtkan yotoq ishlab chiqarish",
-            "code": "2.3.2.",
-            "title": "VITREMER shisha ionomerik tsementidan izolyatsion yotqizishni ishlab chiqarish"
-        },
-        "66": {
-            "categoryCode": "2.3.",
-            "categoryTitle": "Yalıtkan yotoq ishlab chiqarish",
-            "code": "2.3.2.",
-            "title": "Shisha ionomerik ionomerik tsement KETAKdan izolyatsion yotqizishni ishlab chiqarish"
-        },
-        "67": {
-            "categoryCode": "2.3.",
-            "categoryTitle": "Yalıtkan yotoq ishlab chiqarish",
-            "code": "2.3.2.",
-            "title": "FILTEK shisha ionomerik tsementidan (suyuqlikdan) izolyatsiyalashni yotqizish"
-        },
-        "68": {
-            "categoryCode": "2.3.",
-            "categoryTitle": "Yalıtkan yotoq ishlab chiqarish",
-            "code": "2.3.3.",
-            "title": "Suratga olingan suratni ajratish (kompozit, kompomer, yassi) yalıtımı ishlab chiqarish"
-        },
-        "69": {
-            "categoryCode": "2.3.",
-            "categoryTitle": "Yalıtkan yotoq ishlab chiqarish",
-            "code": "2.3.5.",
-            "title": "Dori-darmonlarni o'z ichiga olgan kaltsiy ishlab chiqarish"
-        },
-        "70": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.1.",
-            "title": "Yagona ildiz tishining kavis va bo'shliqlarini tayyorlash"
-        },
-        "71": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.2.",
-            "title": "Ko'p o'tkir tuxum va bo'shliqni tayyorlash"
-        },
-        "72": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.3.",
-            "title": "Devitting beruvchi xamirni olish"
-        },
-        "73": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.4.",
-            "title": "Bir quduqqa ishlaydigan kanalning asbobini qayta ishlash"
-        },
-        "74": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.5.",
-            "title": "Bitta yomon yuqadigan kanalni ishlov berish vositasi"
-        },
-        "75": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.8.",
-            "title": "Pulpani amputatsiya qilish"
-        },
-        "76": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.10.",
-            "title": "Bir kanaldan pulpni chiqarib tashlash"
-        },
-        "77": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.11.",
-            "title": "Teri oldindan muhrlangan tishning bitta kanalini ochish va asboblarni qayta ishlash"
-        },
-        "78": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.12.",
-            "title": "Yuqorida avval tsement bilan yopilgan tishning bitta kanalini ochish va asboblarni qayta ishlash, resorcinol formalin salyangoz"
-        },
-        "79": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.15.",
-            "title": "Bir kanalning antiseptik ishlashi"
-        },
-        "80": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.16.",
-            "title": "Ilk kanalni o'tish va kengaytirish uchun maxsus vositalar yordamida bir kanalni ishlov berish"
-        },
-        "81": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.17.",
-            "title": "Bir kanali ichki ichidagi kanalning sarg'ashi"
-        },
-        "82": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.20.",
-            "title": "Bir kanalni xamir bilan yopish (shiling)"
-        },
-        "83": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.21.",
-            "title": "Bir kanalni gutta-percha pinlari bilan bir shiling ustida zichlash usuli bilan yopishtirish"
-        },
-        "84": {
-            "categoryCode": "2.4.",
-            "categoryTitle": "Bir tishni pulpitda va apikal periodontitda endodontal davolash",
-            "code": "2.4.23.",
-            "title": "Kanal uzunligini \"Apekselokator\" usuli yordamida o'lchash"
-        },
-        "85": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.5.",
-            "title": "Bir tishning koronal qismi tiniq engil invaziv preparat bilan qorin bo'shlig'ini tayyorlashda yuzadan qat'i nazar, Blekning I, II, III, IV, V sinflari bilan ajralib turadigan bo'shliqlarni davolashda engil aralashuvchi kompozit material bilan qayta tiklanishi ( materiallar muhrlash, birlashma, FILTEK aksessuarlar to'plami)"
-        },
-        "86": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.6.",
-            "title": "1-to 3 ta tovon qusishidan qat'iy nazar, bir tishning koronal qismini yorug'likli kompozitsion material bilan qayta tiklash Ilek, I, II, III, IV, V-toifadagi bo'sh devorlarni davolashda bo'shliqlarni lokalizatsiya qilish (teri qoplamasi, birlashma, FILTEK aksessuarlar to'plami)"
-        },
-        "87": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.",
-            "title": "I-II, III, IV, V-toifadagi bo'shliqlarning bo'shliqlarini lokalizatsiyalashgan holda, 1/2 ta tojga aylantirilishiga qaramasdan, bir tishning koronal qismini engil kompozit material bilan qayta tiklash. (teri qoplamasi, birlashma, FILTEK aksessuarlar to'plami)"
-        },
-        "88": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.8.",
-            "title": "I-II, III, IV, V-toifadagi bo'shliqlarning bo'shliqlarini bo'shliqlar bilan lokalizatsiya qilishda, 1/2 dan ortiq kronlarning yo'q qilinishidan qat'iy nazar, bir tishning yorug'likli kompozitsion materiallari bilan torsiyasining kornon qismi qayta tiklanishi (teri qoplamasi, birlashma, FILTEK aksessuarlar to'plami)"
-        },
-        "89": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.16.",
-            "title": "Bir tuynukning koronal qismini engil invaziv preparatning (ma'lum bir bo'shliqni tayyorlashda) yuzadan qat'i nazar, bo'shliqlarni lokalizatsiya qilish bilan I, II, III, IV, V toifalari bilan kesishgan, muhrlangan VITREMER)"
-        },
-        "90": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.16.",
-            "title": "Bir tuynukning koronal qismini engil invaziv preparat (masalan, mushaklar) bilan qoplangan slanetsga qaramasdan, Blekning I, II, III, IV, V sinflaridagi bo'shliq bo'shlig'ini davolashda engillashtiruvchi tsement bilan qayta tiklash. KETAK)"
-        },
-        "91": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.16.",
-            "title": "Bir tuynukning koronal qismini engil invaziv preparat (masalan, mushaklar) bilan qoplangan slanetsga qaramasdan, Blekning I, II, III, IV, V sinflaridagi bo'shliq bo'shlig'ini davolashda engillashtiruvchi tsement bilan qayta tiklash. stomatol.restavrats.fluid FILTEK)"
-        },
-        "92": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.17.",
-            "title": "I-II, III, IV, V-klasslari Ilek, II, III, IV, V sinflaridagi bo'shliqning bo'shlig'ini lokalizatsiyalash bilan davolashda tishlaring koronal qismini engillashtiruvchi tsement bilan qayta tiklash. tish (yopishtiruvchi VITREMER)"
-        },
-        "93": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.17.",
-            "title": "I-II, III, IV, V sinfining I, II, III, IV, V toifalari tomonidan bo'shliqlarni lokalizatsiyalashganida, 1/3 ta tojga tenglashib ketganida, bir tishning koronal qismini engillashtiruvchi tsement yordamida qayta tiklash. tish (KETAK materiallarini yopishtiruvchi)"
-        },
-        "94": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.17.",
-            "title": "I-II, III, IV, V sinfining I, II, III, IV, V toifalari tomonidan bo'shliqlarni lokalizatsiyalashganida, 1/3 ta tojga tenglashib ketganida, bir tishning koronal qismini engillashtiruvchi tsement yordamida qayta tiklash. tish (tabiiy stomatol.restavrats.tekuchy FILTEK)"
-        },
-        "95": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.18.",
-            "title": "I, II, III, IV, V sinflarining I, II, III, IV, V toifadagi bo'shliqlarining bo'shliqlarni lokalizatsiya qilishda yoriq sementli tsement bilan bir tishning tori qismining t qismi restavratsiya qilish. tish (yopishtiruvchi VITREMER)"
-        },
-        "96": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.18.",
-            "title": "I-II, III, IV, V-klasslardagi bo'shliqlarning bo'shliqlarini lokalizatsiya qilish bilan birga, bir tishning koronal qismini yorug'lik bilan davolash sementi bilan qayta tiklash. tish (KETAK materiallarini yopishtiruvchi)"
-        },
-        "97": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.18.",
-            "title": "I-II, III, IV, V-klasslardagi bo'shliqlarning bo'shliqlarini lokalizatsiya qilish bilan birga, bir tishning koronal qismini yorug'lik bilan davolash sementi bilan qayta tiklash. tish (tabiiy stomatol.restavrats.tekuchy FILTEK)"
-        },
-        "98": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.19.",
-            "title": "I-II, III, IV, V sinfining I, II, III, IV, V toifalari tomonidan bo'shliqlarning lokalizatsiyasi bilan ajralib turgan bo'shliqni davolashda 1 tadan tishning koronal qismi qayta tiklanishi tish (yopishtiruvchi VITREMER)"
-        },
-        "99": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.19.",
-            "title": "I-II, III, IV, V sinfining I, II, III, IV, V toifalari tomonidan bo'shliqlarning lokalizatsiyasi bilan ajralib turgan bo'shliqni davolashda 1 tadan tishning koronal qismi qayta tiklanishi tish (KETAK materiallarini yopishtiruvchi)"
-        },
-        "100": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.22.",
-            "title": "Tarmoqning koronal qismini ankraj bilan tiklash (bir intrapulparparcha pin) bir kanalda tiklash (muhr bo'lmagan holda)"
-        },
-        "101": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.23.",
-            "title": "Tishning toj qismini (to'g'ridan-to'g'ri) qoplash (yopiq zararsiz)"
-        },
-        "102": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.24.",
-            "title": "Tishning toj qismini burchakka ajratishda ajratish (muhr bosimisiz)"
-        },
-        "103": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.25.",
-            "title": "Tishlaring toj qismini karies va pulpitni davolashda tiklash (yopiq zararsiz)"
-        },
-        "104": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.26.",
-            "title": "Frontal tishning toj qismining anatomik shaklini to'liq tiklash (yopiq turmushsiz)"
-        },
-        "105": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.27.",
-            "title": "Chaynash tishining toj qismining anatomik shaklini to'liq tiklash (yopiq zararsiz)"
-        },
-        "106": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.28.",
-            "title": "Matritsani o'rnatish (metall)"
-        },
-        "107": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.28.",
-            "title": "Matritsalarni joylashtirish (muhrlarni modellash uchun)"
-        },
-        "108": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.28.",
-            "title": "Matritsalarni joylashtirish (planimetrik qism)"
-        },
-        "109": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.29.",
-            "title": "Kassalarni qo'llash"
-        },
-        "110": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.33.",
-            "title": "Fotokrugalangan kompozit materialdan polishing, polishingni yopish"
-        },
-        "111": {
-            "categoryCode": "2.5.",
-            "categoryTitle": "Yuzidan qat'i nazar, bo'shliqni lokalizatsiya qilish bilan, bir tuynukning (1, 2, III, IV, V-klasslari Bleka tomonidan) davolashda bir tishning koronal qismini tiklash",
-            "code": "2.5.34.",
-            "title": "Polishing, polishingni yopish"
-        },
-        "112": {
-            "categoryCode": "2.7.",
-            "categoryTitle": "Periodontiy kasalliklarini davolash",
-            "code": "2.7.1.",
-            "title": "Bir tishdagi periodontal cho'ntaklarning kultetatsiyasi"
-        },
-        "113": {
-            "categoryCode": "2.7.",
-            "categoryTitle": "Periodontiy kasalliklarini davolash",
-            "code": "2.7.4.",
-            "title": "Bir sextant sohasidagi himoya bintlar"
-        },
-        "114": {
-            "categoryCode": "2.12.",
-            "categoryTitle": "Terapevtik qabul qilishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "2.12.1.",
-            "title": "qo'llaniladigan davolash uslubiga muvofiq materiallardan foydalanish"
-        },
-        "115": {
-            "categoryCode": "2.12.",
-            "categoryTitle": "Terapevtik qabul qilishda ishlatiladigan vositalar, mahsulotlar va tibbiy yordam vositalaridan foydalanish",
-            "code": "2.12.2.",
-            "title": "qo'llaniladigan davolash usuli bo'yicha asbob-uskunalar, mahsulotlar va tibbiy yordam vositalarini qo'llash"
-        },
-        "116": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.1.",
-            "title": "Operatsiyadan keyingi bemorning bandaji"
-        },
-        "117": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.2.",
-            "title": "Operatsiyadan keyingi harakatlar"
-        },
-        "118": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.3.",
-            "title": "Bemorni operatsiya qilishga tayyorlash"
-        },
-        "119": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.4.",
-            "title": "Intermaxilliy kauchuk qoralama o'zgarishi"
-        },
-        "120": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.5.",
-            "title": "Rauera-da intermaxillerli suvosti ligasi o'zgarishi"
-        },
-        "121": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.6.",
-            "title": "Shinalarni olib tashlash"
-        },
-        "122": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.7.",
-            "title": "Datchiklarni olib tashlash"
-        },
-        "123": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.8.",
-            "title": "Suture"
-        },
-        "124": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.9.",
-            "title": "Operatsiyani amalga oshirish vaqtida bitta tikuvni o'rnatish"
-        },
-        "125": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.10.",
-            "title": "Yagona ildiz tishini nippers tomonidan olib tashlash operatsiyasi"
-        },
-        "126": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.11.",
-            "title": "Yagona ildiz tishini nippers va liftlar orqali olib tashlash"
-        },
-        "127": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.12.",
-            "title": "Muborak periostalle bezini kesib olib, tekis ildizning tishlarini guplash usuli bilan ishlash"
-        },
-        "128": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.13.",
-            "title": "Ekstrakte qilingan bitta-ildiz tishini kesish usuli bilan shilliq periostal pog'onani kesish bilan ishlatish"
-        },
-        "129": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.14.",
-            "title": "Yumshoq tishni yorib tashlash bilan ishlov berish"
-        },
-        "130": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.15.",
-            "title": "Ko'paytma tishni yorib olish va asansör orqali olib tashlash"
-        },
-        "131": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.16.",
-            "title": "Shilliq periostal bezini kesib olib, muloyimlik tishini guplash usuli bilan olib tashlash"
-        },
-        "132": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.17.",
-            "title": "Ko'p ildizli tishni shilliq periostal bezning chiqib ketish usuli bilan olib tashlash"
-        },
-        "133": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.18.",
-            "title": "Retinirovanny tishning olib tashlanishi"
-        },
-        "134": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.19.",
-            "title": "Qaytilgan tishni murakkab olib tashlash operatsiyasi"
-        },
-        "135": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.20.",
-            "title": "Uchinchi darajali mobillik yoki bir sut tishining ikkinchi tishini olib tashlash"
-        },
-        "136": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.21.",
-            "title": "Tishli tishning teshigiga dorilarni yuborish"
-        },
-        "137": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.22.",
-            "title": "Tish teshigidan qon ketishni to'xtatish"
-        },
-        "138": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.23.",
-            "title": "Operatsiya jarohatida qon ketishni to'xtatish"
-        },
-        "139": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.24.",
-            "title": "Kompaktostatik operatsiya"
-        },
-        "140": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.25.",
-            "title": "Yuqori jag'ning bitta tish ildizining yuqori qismini rezektsiya qilish"
-        },
-        "141": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.26.",
-            "title": "Pastki jag'ning bitta tish ildizining yuqori qismini rezektsiya qilish"
-        },
-        "142": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.27.",
-            "title": "Tuxumning tishining ildizini amputatsiya qilishning eng yaxshi jagari"
-        },
-        "143": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.28.",
-            "title": "Koronaro-radikulyar tuxumlarning tishining ajratilishining pastki jaggi"
-        },
-        "144": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.29.",
-            "title": "Maltirut tishining gemisektionining pastki jagari"
-        },
-        "145": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.30.",
-            "title": "Remplantatsiya jarayoni"
-        },
-        "146": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.31.",
-            "title": "Alveolotomiya tishining bitta teshigidan"
-        },
-        "147": {
-            "categoryCode": "3.1.",
-            "categoryTitle": "Umumiy stomatologik tadbirlar (terapevtik, ambulator va jarrohlik, ortopedik, ortodontik)",
-            "code": "3.1.32.",
-            "title": "Bir tishli tishning alveolyar o'qining tepasiga tuzatish"
-        },
-        "148": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.1.",
-            "title": "Protezlarni murakkablashtiradigan jag'ning atom qismlarini olib tashlash"
-        },
-        "149": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.2.",
-            "title": "Jellarning alveolyar kurtaklardagi shilliq qavati ortiqcha (5 sm)"
-        },
-        "150": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.3.",
-            "title": "Limber bo'ylab tilning bo'yinbog'ini, lablarini lenta bilan uzaytirish"
-        },
-        "151": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.4.",
-            "title": "Popovich Frenuloplatika"
-        },
-        "152": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.5.",
-            "title": "Glikman Frenuloplasti"
-        },
-        "153": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.6.",
-            "title": "Tilning kesilgan burchak qismini kesish"
-        },
-        "154": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.7.",
-            "title": "Bitta implantni endosvalning ikkita asosiy usuli (silindrsimon, vint, estrodiol, plastinka) bilan implantatsiyalash. Implantatsiyadan keyingi vnedenie (1 bosqich)."
-        },
-        "155": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.8.",
-            "title": "Bitta implantni endosvalning ikkita asosiy usuli (silindrsimon, vint, estrodiol, plastinka) bilan implantatsiyalash. Desnevy manzhetka (2-bosqich) quruvchisini o'rnatish."
-        },
-        "156": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.9.",
-            "title": "Endoskopni bitta implantning bir bosqichli usuli bilan implantatsiyasi"
-        },
-        "157": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.10.",
-            "title": "Bitta implantning to'g'ridan-to'g'ri endossalni implantatsiyasi (silindrsimon, vint)"
-        },
-        "158": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.11.",
-            "title": "Dentalniy implantatsiyasida osteokonferativ va to'siqli membranlarni chiqarish"
-        },
-        "159": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.12.",
-            "title": "Otolog qondan tishli implantatsiyadan foydalangan holda osteokonferativ dorilarni qabul qilish"
-        },
-        "160": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.13.",
-            "title": "Implantning boshlig'i"
-        },
-        "161": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.14.",
-            "title": "Osteokondukativ preparatlarni qo'llash bilan alveolyar tortishning ortishi"
-        },
-        "162": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.15.",
-            "title": "Avto suyakli preparatlarni qo'llash orqali alveolyar jarayonda o'sish"
-        },
-        "163": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.16.",
-            "title": "Maksiller sinusning pastki qismini (yopiq sinusli lift) yoki nok-shaped teshikning tubini ko'taring"
-        },
-        "164": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.17.",
-            "title": "Maksimal ko'k osti ostidagi dalada alveolyar urishning balandligi to'planganda. Asansör (ochiq texnik)"
-        },
-        "165": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.18.",
-            "title": "Implant vintini olib tashlash usuli"
-        },
-        "166": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.19.",
-            "title": "Iplantni olib tashlash operatsiyasi"
-        },
-        "167": {
-            "categoryCode": "3.3.",
-            "categoryTitle": "Marginal periodontsiyali kasalliklarni davolashning jarrohlik usullari",
-            "code": "3.3.1.",
-            "title": "Tseshinskogo-Vidmana-Nejmana (ikkita tishda)"
-        },
-        "168": {
-            "categoryCode": "3.3.",
-            "categoryTitle": "Marginal periodontsiyali kasalliklarni davolashning jarrohlik usullari",
-            "code": "3.3.2.",
-            "title": "Artyushevichga ko'ra, og'iz bo'shlig'ining chuqurlashishi (ochiq usul) (yopiq texnik)"
-        },
-        "169": {
-            "categoryCode": "3.3.",
-            "categoryTitle": "Marginal periodontsiyali kasalliklarni davolashning jarrohlik usullari",
-            "code": "3.3.3.",
-            "title": "Og'iz bo'shlig'ini chuqurlashtirish (ochiq usul)"
-        },
-        "170": {
-            "categoryCode": "3.3.",
-            "categoryTitle": "Marginal periodontsiyali kasalliklarni davolashning jarrohlik usullari",
-            "code": "3.3.4.",
-            "title": "Bir tish gingivektomiya operatsiyasi"
-        },
-        "171": {
-            "categoryCode": "3.3.",
-            "categoryTitle": "Marginal periodontsiyali kasalliklarni davolashning jarrohlik usullari",
-            "code": "3.3.5.",
-            "title": "Gingivektomiyaning ikkita tishida ishlashi"
-        },
-        "172": {
-            "categoryCode": "3.3.",
-            "categoryTitle": "Marginal periodontsiyali kasalliklarni davolashning jarrohlik usullari",
-            "code": "3.3.6.",
-            "title": "Antiseptik izolyatsiyalovchi bandajni qo'yish"
-        },
-        "173": {
-            "categoryCode": "3.3.",
-            "categoryTitle": "Marginal periodontsiyali kasalliklarni davolashning jarrohlik usullari",
-            "code": "3.3.7.",
-            "title": "Marginal periodontsiyadagi operatsiyalarda osteokonstruktiv materiallardan foydalanish"
-        },
-        "174": {
-            "categoryCode": "3.3.",
-            "categoryTitle": "Marginal periodontsiyali kasalliklarni davolashning jarrohlik usullari",
-            "code": "3.3.8.",
-            "title": "Marginal periodontsiyadagi to'siq membranlarini qo'llash"
-        },
-        "175": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.1.",
-            "title": "Ildiz tubining rezektsiyasiz tek ildiz tishida sistektomiya operatsiyasi"
-        },
-        "176": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.2.",
-            "title": "Sistektomiya operatsiyalari bir tishda ildizning tepa qismini rezektsiya qilish va retrograd sızdırmazlığı bilan amalga oshiriladi"
-        },
-        "177": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.3.",
-            "title": "Ildiz tubining rezektsiyasiz bir multirut tishida sistektomiya operatsiyasi"
-        },
-        "178": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.4.",
-            "title": "Suyak bo'shlig'ini osteogenezni rag'batlantiradigan moddalar bilan to'ldirish"
-        },
-        "179": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.5.",
-            "title": "Og'iz bo'shlig'i shilliq qavatining papillomini olib tashlash"
-        },
-        "180": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.6.",
-            "title": "Epulisni jeldagi alveolyar shishani qusur almashtirishsiz olib tashlash"
-        },
-        "181": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.7.",
-            "title": "Jag'ning buzilishi o'rnini bosuvchi alveolyar jarayonning epulisini olib tashlash"
-        },
-        "182": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.8.",
-            "title": "Og'iz bo'shlig'ida hipoglossal kistning sistotomiyasi"
-        },
-        "183": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.9.",
-            "title": "Og'iz bo'shlig'i shilliq pardasi, labda tupurik bezining retension kistini olib tashlash"
-        },
-        "184": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.10.",
-            "title": "Ateromani olib tashlash"
-        },
-        "185": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.11.",
-            "title": "3 sm gacha diametrli lipomani olib tashlash"
-        },
-        "186": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.12.",
-            "title": "Dudaklardagi gemangiomani, og'iz bo'shlig'i shilliq pardasini, diametri 1 sm gacha bo'lgan tilni, plastikni almashtirish bilan"
-        },
-        "187": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.13.",
-            "title": "Dudoqlardagi prekanser holatlarini, og'iz bo'shlig'ining shilliq qavatini, tilni, yuzni terini plastik nosozlik bilan almashtirish bilan bartaraf etish"
-        },
-        "188": {
-            "categoryCode": "3.4.",
-            "categoryTitle": "Og'iz bo'shlig'ida benign o'smalari va saratonga o'xshash yangi shakllanishi bo'lgan bemorlarni davolash",
-            "code": "3.4.14.",
-            "title": "Gipertrofiyali interdental nipelni eksizyoni yoki pıhtılaşması"
-        },
-        "189": {
-            "categoryCode": "3.5.",
-            "categoryTitle": "Maksillofasiyal sohaning yallig'lanish jarayoni",
-            "code": "3.5.1.",
-            "title": "Subperiyal abstsessni dastlabki jarrohlik yo'li bilan davolash"
-        },
-        "190": {
-            "categoryCode": "3.5.",
-            "categoryTitle": "Maksillofasiyal sohaning yallig'lanish jarayoni",
-            "code": "3.5.2.",
-            "title": "Paradental abstsessni dastlabki jarrohlik yo'li bilan davolash"
-        },
-        "191": {
-            "categoryCode": "3.5.",
-            "categoryTitle": "Maksillofasiyal sohaning yallig'lanish jarayoni",
-            "code": "3.5.3.",
-            "title": "Perikoronotomiya"
-        },
-        "193": {
-            "categoryCode": "3.5.",
-            "categoryTitle": "Maksillofasiyal sohaning yallig'lanish jarayoni",
-            "code": "3.5.5.",
-            "title": "Alveolitni davolash tishining bitta teshigi"
-        },
-        "194": {
-            "categoryCode": "3.5.",
-            "categoryTitle": "Maksillofasiyal sohaning yallig'lanish jarayoni",
-            "code": "3.5.6.",
-            "title": "Maksimofillikning yumshoq matosining xo'ppozlarini birlamchi jarrohlik yo'li bilan qayta ishlash"
-        },
-        "195": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.1.",
-            "title": "Katta tuprik bezlari chiqish kanallarini chizish"
-        },
-        "196": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.2.",
-            "title": "Katta tuprik bezining kanalini chalinish"
-        },
-        "197": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.3.",
-            "title": "Tuprik bezlarini massaj va instillatsiya qilish"
-        },
-        "198": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.4.",
-            "title": "Sialoektomiya submandibulyar tuprik bezining bir chiqish kanalidan ajratilgan holda"
-        },
-        "199": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.5.",
-            "title": "Surunkali cheklangan odontogen osteomiyelitda sekrektomiya"
-        },
-        "200": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.6.",
-            "title": "Og'iz bo'shlig'ining yumshoq to'qimalariga jarohatlar etkazishning dastlabki jarrohlik amaliyoti, matolarning nuqsoni 2 sm gacha"
-        },
-        "201": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.7.",
-            "title": "Odamning yumshoq to'qimalari va og'iz bo'shlig'ining matosining nuqsoni 2 sm gacha bo'lgan shikastlanishlarni dastlabki jarroxlik qilish"
-        },
-        "202": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.8.",
-            "title": "Maksimal ko'krak teshilishining plastik qismlari"
-        },
-        "203": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.9.",
-            "title": "Odamning yumshoq to'qimalari va og'iz bo'shlig'ining shilliq pardasi bo'ylab 2 sm gacha cho'zilgan"
-        },
-        "204": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.10.",
-            "title": "Birlamchi kechiktirilgan tikuvlarni inson yarasiga solish"
-        },
-        "205": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.11.",
-            "title": "Ikkilamchi kechiktirilgan tikuvlarni inson yarasiga solish"
-        },
-        "206": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.12.",
-            "title": "Trigeminal nervlarning filiallarini tashxislash"
-        },
-        "207": {
-            "categoryCode": "3.6.",
-            "categoryTitle": "Boshqa jarrohlik harakatlar",
-            "code": "3.6.13.",
-            "title": "Tashxis pnötur"
-        },
-        "208": {
-            "categoryCode": "7.",
-            "categoryTitle": "Jismoniy terapiya (stomatologiya kasalliklarini fizioterapevtik davolash)",
-            "code": "7.1.",
-            "title": "Yuz va bo'ynidagi ultra chastotali (UVCh) elektr zonasi"
-        },
-        "209": {
-            "categoryCode": "7.",
-            "categoryTitle": "Jismoniy terapiya (stomatologiya kasalliklarini fizioterapevtik davolash)",
-            "code": "7.5.",
-            "title": "Ultrasonik terapiya"
-        },
-        "210": {
-            "categoryCode": "7.",
-            "categoryTitle": "Jismoniy terapiya (stomatologiya kasalliklarini fizioterapevtik davolash)",
-            "code": "7.7.",
-            "title": "Mikroto'lqinli mikrodalga \"Luch-2\" (Mikroto'lqinli pechni davolash)"
-        },
-        "211": {
-            "categoryCode": "7.",
-            "categoryTitle": "Jismoniy terapiya (stomatologiya kasalliklarini fizioterapevtik davolash)",
-            "code": "7.9.",
-            "title": "Lazer terapiyasi"
-        },
-        "212": {
-            "categoryCode": "8.",
-            "categoryTitle": "Radiologik diagnostika (stomatologiya)",
-            "code": "8.1.",
-            "title": "X-nurni tahlil qilish maqsadi"
-        },
-        "213": {
-            "categoryCode": "8.",
-            "categoryTitle": "Radiologik diagnostika (stomatologiya)",
-            "code": "8.2.",
-            "title": "X-Rayning biting"
-        },
-        "214": {
-            "categoryCode": "8.",
-            "categoryTitle": "Radiologik diagnostika (stomatologiya)",
-            "code": "8.3.",
-            "title": "Panoramik X-Ray"
-        },
-        "215": {
-            "categoryCode": "8.",
-            "categoryTitle": "Radiologik diagnostika (stomatologiya)",
-            "code": "8.4.",
-            "title": "Sefalometrik rentgen"
-        },
-        "216": {
-            "categoryCode": "8.",
-            "categoryTitle": "Radiologik diagnostika (stomatologiya)",
-            "code": "8.5.",
-            "title": "ConeBeam CT-rentgen (1 jag')"
-        },
-        "217": {
-            "categoryCode": "8.",
-            "categoryTitle": "Radiologik diagnostika (stomatologiya)",
-            "code": "8.6.",
-            "title": "ConeBeam CT-rentgen (2 jag')"
-        },
-        "218": {
-            "categoryCode": "9.",
-            "categoryTitle": "Qonni sinash",
-            "code": "9.1.",
-            "title": "Qonni sinash"
-        },
-        "219": {
-            "categoryCode": "10.",
-            "categoryTitle": "Muhrlash",
-            "code": "10.1.",
-            "title": "Silikon"
-        },
-        "220": {
-            "categoryCode": "11.",
-            "categoryTitle": "Veneer",
-            "code": "11.1.",
-            "title": "Veneer"
-        },
-        "221": {
-            "categoryCode": "2.7.",
-            "categoryTitle": "Periodontiy kasalliklarini davolash",
-            "code": "2.7.5.",
-            "title": "Tish dami"
-        },
-        "222": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.81.",
-            "title": "Gum konturlash jarrohligi"
-        },
-        "223": {
-            "categoryCode": "1.4.",
-            "categoryTitle": "Boshqa umumiy stomatologik tadbirlar",
-            "code": "1.4.82.",
-            "title": "Gum payvandlash"
-        },
-        "224": {
-            "categoryCode": "12.",
-            "categoryTitle": "Oqish",
-            "code": "12.1.",
-            "title": "Uyda oqartirish vositasi"
-        },
-        "225": {
-            "categoryCode": "12.",
-            "categoryTitle": "Oqish",
-            "code": "12.2.",
-            "title": "Ofisda lazerning oqlanishi"
-        },
-        "226": {
-            "categoryCode": "12.",
-            "categoryTitle": "Oqish",
-            "code": "12.3.",
-            "title": "Oqalash birikmasi to'plami"
-        },
-        "227": {
-            "categoryCode": "12.",
-            "categoryTitle": "Oqish",
-            "code": "12.4.",
-            "title": "Ichki sayqallash"
-        },
-        "228": {
-            "categoryCode": "13.",
-            "categoryTitle": "Protezlar",
-            "code": "13.1.",
-            "title": "Tuyoqlarni olib tashlash"
-        },
-        "229": {
-            "categoryCode": "13.",
-            "categoryTitle": "Protezlar",
-            "code": "13.2.",
-            "title": "Vaqtinchalik toj"
-        },
-        "230": {
-            "categoryCode": "13.",
-            "categoryTitle": "Protezlar",
-            "code": "13.3.",
-            "title": "Tsement toji"
-        },
-        "231": {
-            "categoryCode": "2.3.",
-            "categoryTitle": "Yalıtkan yotoq ishlab chiqarish",
-            "code": "2.3.4.",
-            "title": "Barcha chinni inleylar"
-        },
-        "232": {
-            "categoryCode": "2.3.",
-            "categoryTitle": "Yalıtkan yotoq ishlab chiqarish",
-            "code": "2.3.7.",
-            "title": "Kompozit onlay"
-        },
-        "233": {
-            "categoryCode": "2.3.",
-            "categoryTitle": "Yalıtkan yotoq ishlab chiqarish",
-            "code": "2.3.8.",
-            "title": "Barcha chinni ishlab chiqarish"
-        },
-        "234": {
-            "categoryCode": "2.3.",
-            "categoryTitle": "Yalıtkan yotoq ishlab chiqarish",
-            "code": "2.3.9.",
-            "title": "Barcha chinni ishlab chiqarish"
-        },
-        "235": {
-            "categoryCode": "2.3.",
-            "categoryTitle": "Yalıtkan yotoq ishlab chiqarish",
-            "code": "2.3.91.",
-            "title": "Barcha chinni qoplama"
-        },
-        "236": {
-            "categoryCode": "2.3.",
-            "categoryTitle": "Yalıtkan yotoq ishlab chiqarish",
-            "code": "2.3.92.",
-            "title": "Porkayin titanium tojiga birlashtirildi"
-        },
-        "237": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.101.",
-            "title": "Barcha 6 ta ga"
-        },
-        "238": {
-            "categoryCode": "3.2.",
-            "categoryTitle": "Og'iz bo'shlig'ining jarrohlik usulida tayyorlangan tish protezi protezi uchun",
-            "code": "3.2.102.",
-            "title": "Barcha 6 ta ga"
-        },
-        "239": {
-            "categoryCode": "14.",
-            "categoryTitle": "Orthondontic",
-            "code": "14.1.",
-            "title": "An'anaviy metall burchaklar - oddiy hol: ekstraktsiya talab qilinmaydi"
-        },
-        "240": {
-            "categoryCode": "14.",
-            "categoryTitle": "Orthondontic",
-            "code": "14.2.",
-            "title": "An'anaviy metall burmalar - olishni talab qiladi (ekstraksiya uchun yig'im o'z ichiga olmaydi)"
-        },
-        "241": {
-            "categoryCode": "14.",
-            "categoryTitle": "Orthondontic",
-            "code": "14.3.",
-            "title": "An'anaviy metall ustunlar - murakkab hol: molar, ildiz ishlatilgan tish va hokazo"
-        },
-        "242": {
-            "categoryCode": "14.",
-            "categoryTitle": "Orthondontic",
-            "code": "14.4.",
-            "title": "An'anaviy keramik parchalari - oddiy hol: hech qanday ekstraktsiya talab qilinmaydi"
-        },
-        "243": {
-            "categoryCode": "14.",
-            "categoryTitle": "Orthondontic",
-            "code": "14.5.",
-            "title": "An'anaviy keramik parchalari - murakkab hol: molar, ildiz davolash qilingan tish va hokazo"
-        },
-        "244": {
-            "categoryCode": "14.",
-            "categoryTitle": "Orthondontic",
-            "code": "14.6.",
-            "title": "Invisalign ClinCheck"
-        },
-        "245": {
-            "categoryCode": "14.",
-            "categoryTitle": "Orthondontic",
-            "code": "14.7.",
-            "title": "Invisalign"
-        },
-        "246": {
-            "categoryCode": "14.",
-            "categoryTitle": "Orthondontic",
-            "code": "14.9.",
-            "title": "Funktsional asbob"
-        }
-    },
-    "no-button": "",
-    "procedures": {
-        "1": {
-            "code": "1.1",
-            "description": "",
-            "title": "Maslahat va davolash rejasi"
-        },
-        "2": {
-            "code": "1.2",
-            "description": "",
-            "title": "Periapikal X-Ray"
-        },
-        "3": {
-            "code": "1.3",
-            "description": "",
-            "title": "Radiografiya"
-        },
-        "4": {
-            "code": "1.4",
-            "description": "",
-            "title": "Panoramik X-Ray"
-        },
-        "5": {
-            "code": "1.5",
-            "description": "",
-            "title": "Sefalometrik rentgen"
-        },
-        "6": {
-            "code": "1.6",
-            "description": "",
-            "title": "ConeBeam CT-rentgen (1 jag')"
-        },
-        "7": {
-            "code": "1.7",
-            "description": "",
-            "title": "ConeBeam CT-rentgen (2 jag')"
-        },
-        "8": {
-            "code": "1.8",
-            "description": "",
-            "title": "Qonni sinash"
-        },
-        "9": {
-            "code": "2.1",
-            "description": "",
-            "title": "Kompozit plomba (minimal)"
-        },
-        "10": {
-            "code": "2.2",
-            "description": "",
-            "title": "Kompozit plomba (o'rta)"
-        },
-        "11": {
-            "code": "2.3",
-            "description": "",
-            "title": "Kompozit plomba (kengaytirilgan)"
-        },
-        "12": {
-            "code": "2.4",
-            "description": "",
-            "title": "Kompozit plomba (keng)"
-        },
-        "13": {
-            "code": "2.5",
-            "description": "",
-            "title": "Kosmetik kompozit qatronlarni tiklash"
-        },
-        "14": {
-            "code": "2.6",
-            "description": "",
-            "title": "Tish bo'shlig'ini to'ldirish"
-        },
-        "15": {
-            "code": "2.7",
-            "description": "",
-            "title": "Silikon"
-        },
-        "16": {
-            "code": "2.8",
-            "description": "",
-            "title": "Kompozit qoplama"
-        },
-        "17": {
-            "code": "2.9",
-            "description": "",
-            "title": "Tish dami"
-        },
-        "18": {
-            "code": "3.1",
-            "description": "",
-            "title": "Ildiz kanallarini davolash (oldingi)"
-        },
-        "19": {
-            "code": "3.2",
-            "description": "",
-            "title": "Ildiz kanallarini davolash (premolar)"
-        },
-        "20": {
-            "code": "3.3",
-            "description": "",
-            "title": "Ildiz kanallarini davolash (molar)"
-        },
-        "21": {
-            "code": "3.4",
-            "description": "",
-            "title": "Ildiz kanali qayta ishlash (oldingi)"
-        },
-        "22": {
-            "code": "3.5",
-            "description": "",
-            "title": "Ildiz kanallarini qayta ishlash (premolar)"
-        },
-        "23": {
-            "code": "3.6",
-            "description": "",
-            "title": "Ildiz kanalini qayta ishlash (molar)"
-        },
-        "24": {
-            "code": "3.7",
-            "description": "",
-            "title": "To'g'ridan-to'g'ri pulpa qopqog'i"
-        },
-        "25": {
-            "code": "3.8",
-            "description": "",
-            "title": "Abscess drenaj / Abscess davolash"
-        },
-        "26": {
-            "code": "4.1",
-            "description": "",
-            "title": "Tozalash va abraziv (engil hisob)"
-        },
-        "27": {
-            "code": "4.2",
-            "description": "",
-            "title": "Tahorat va cilalanish (O'rtacha hisob-kitob)"
-        },
-        "28": {
-            "code": "4.3",
-            "description": "",
-            "title": "Tahorat va cilalama (og'ir hisob)"
-        },
-        "29": {
-            "code": "4.4",
-            "description": "",
-            "title": "Lokal anestezik ostida tishlarni tozalash va polishing"
-        },
-        "30": {
-            "code": "4.5",
-            "description": "",
-            "title": "Periodontal cho'ntak terapiyasi (jarrohlik bo'lmagan)"
-        },
-        "31": {
-            "code": "4.6",
-            "description": "",
-            "title": "Operektektomiya"
-        },
-        "32": {
-            "code": "4.7",
-            "description": "",
-            "title": "Еish go'shti jarrohligi"
-        },
-        "33": {
-            "code": "4.8",
-            "description": "",
-            "title": "Tish go'shti payvandlash"
-        },
-        "34": {
-            "code": "5.1",
-            "description": "",
-            "title": "Uyda oqartirish uchun to'plam (Zoom)"
-        },
-        "35": {
-            "code": "5.2",
-            "description": "",
-            "title": "Zoom 2 bilan in-ofis lazerini oqartirish"
-        },
-        "36": {
-            "code": "5.3",
-            "description": "",
-            "title": "Oqalash birikmasi to'plami"
-        },
-        "37": {
-            "code": "5.4",
-            "description": "",
-            "title": "Ichki sayqallash"
-        },
-        "38": {
-            "code": "6.1",
-            "description": "",
-            "title": "Tuyoqlarni olib tashlash"
-        },
-        "39": {
-            "code": "6.2",
-            "description": "",
-            "title": "Vaqtinchalik toj (PMMA)"
-        },
-        "40": {
-            "code": "6.3",
-            "description": "",
-            "title": "Tsement toji"
-        },
-        "41": {
-            "code": "6.4",
-            "description": "",
-            "title": "Kompozit inley"
-        },
-        "42": {
-            "code": "6.5",
-            "description": "",
-            "title": "Barcha chinni inley (Emax CAD)"
-        },
-        "43": {
-            "code": "6.6",
-            "description": "",
-            "title": "Kompozit onlay"
-        },
-        "44": {
-            "code": "6.7",
-            "description": "",
-            "title": "Barcha chinni onlay (Emax CAD)"
-        },
-        "45": {
-            "code": "6.8",
-            "description": "",
-            "title": "Barcha chinni qoplama (Emax CAD)"
-        },
-        "46": {
-            "code": "6.9",
-            "description": "",
-            "title": "Titusga tojlangan porkayin (SAPR / CAM)"
-        },
-        "47": {
-            "code": "7.1",
-            "description": "",
-            "title": "Nobel Biocare / SGS Shveytsariya dental implant"
-        },
-        "48": {
-            "code": "7.2",
-            "description": "",
-            "title": "Suyak payvandlash"
-        },
-        "49": {
-            "code": "7.3",
-            "description": "",
-            "title": "Suyaklarning yangilanishi membranasi"
-        },
-        "50": {
-            "code": "7.4",
-            "description": "",
-            "title": "Sinus o'sishi (yopiq)"
-        },
-        "51": {
-            "code": "7.5",
-            "description": "",
-            "title": "Sinuslarni kengaytirish (Ochiq)"
-        },
-        "52": {
-            "code": "7.6",
-            "description": "",
-            "title": "Hammasi bo'lib 8 (Nobel Biocare / SGS Shveytsariya dental implant)"
-        },
-        "53": {
-            "code": "7.7",
-            "description": "",
-            "title": "Hammasi bo'lib 6 (Nobel Biocare / SGS Shveytsariya dental implant)"
-        },
-        "54": {
-            "code": "8.1",
-            "description": "",
-            "title": "An'anaviy metall burchaklar - oddiy hol: ekstraktsiya talab qilinmaydi"
-        },
-        "55": {
-            "code": "8.2",
-            "description": "",
-            "title": "An'anaviy metall burmalar - olishni talab qiladi (ekstraksiya uchun yig'im o'z ichiga olmaydi)"
-        },
-        "56": {
-            "code": "8.3",
-            "description": "",
-            "title": "An'anaviy metall ustunlar - murakkab hol: molar, ildiz ishlatilgan tish va hokazo"
-        },
-        "57": {
-            "code": "8.4",
-            "description": "",
-            "title": "An'anaviy keramik parchalari - oddiy hol: hech qanday ekstraktsiya talab qilinmaydi"
-        },
-        "58": {
-            "code": "8.5",
-            "description": "",
-            "title": "An'anaviy keramik buyumlar - olishni talab qiladi (ekstraksiya uchun yig'im o'z ichiga olmaydi)"
-        },
-        "59": {
-            "code": "8.6",
-            "description": "",
-            "title": "An'anaviy keramik parchalari - murakkab hol: molar, ildiz davolash qilingan tish va hokazo"
-        },
-        "60": {
-            "code": "8.7",
-            "description": "",
-            "title": "ClinCheck Alignerlar"
-        },
-        "61": {
-            "code": "8.8",
-            "description": "",
-            "title": "Invisalign"
-        },
-        "62": {
-            "code": "8.9",
-            "description": "",
-            "title": "Funktsional asbob"
-        },
-        "63": {
-            "code": "9.1",
-            "description": "",
-            "title": "Doimiy tish chiqarish"
-        },
-        "64": {
-            "code": "9.2",
-            "description": "",
-            "title": "Donolik tishlarini olish (yuqori jag')"
-        },
-        "65": {
-            "code": "9.3",
-            "description": "",
-            "title": "Donolik tishlarini olish (pastki jag')"
-        },
-        "66": {
-            "code": "9.4",
-            "description": "",
-            "title": "Jarrohlik tishlarini olish"
-        },
-        "67": {
-            "code": "9.5",
-            "description": "",
-            "title": "Suyak paxtasi bilan tish chiqarish"
-        },
-        "68": {
-            "code": "9.6",
-            "description": "",
-            "title": "Crown uzaytiruvchi jarrohlik"
-        },
-        "69": {
-            "code": "9.7",
-            "description": "",
-            "title": "Tish go'shti jarrohligi"
-        },
-        "categories": {
-            "1": {
-                "code": "1.1",
-                "title": "Tashxislang"
-            },
-            "2": {
-                "code": "2",
-                "title": "Qayta tiklash"
-            },
-            "3": {
-                "code": "3",
-                "title": "Ildiz kanali"
-            },
-            "4": {
-                "code": "4",
-                "title": "Gigiena"
-            },
-            "5": {
-                "code": "5",
-                "title": "Oqish"
-            },
-            "6": {
-                "code": "6",
-                "title": "Protezlar"
-            },
-            "7": {
-                "code": "7",
-                "title": "Implantatsiya"
-            },
-            "8": {
-                "code": "8",
-                "title": "Orthondontic"
-            },
-            "9": {
-                "code": "9",
-                "title": "Jarrohligi"
-            }
-        }
-    },
-    "welcome": "",
-    "yes-button": ""
+	"AuthLayout": {
+		"choose_clinic": "Klinikani tanlash",
+		"dashbord": "Statistik",
+		"lock": "Qulflash",
+		"login": "Kirish",
+		"pricing": "Narxlar",
+		"register": "Ro'yxat"
+	},
+	"CheckEmail": {
+		"code": "@:common.code",
+		"description": "Agar sizning elektron pochtangiz bo'sh bo'lsa, spamni ham tekshiring",
+		"email": "@:common.email",
+		"title": "Biz yuborgan kod uchun elektron pochtangizni tekshiring"
+	},
+	"ClinicManipulations": {
+		"addManipulation": "Manipulyatsiyani qo'shing",
+		"disable": "O'chirish",
+		"enable": "Sarf materiallari",
+		"filtered": "Filtrlangan:",
+		"loadingDescription": "Iltimos, deyarli sabr qiling, bir necha soniya kuting...",
+		"loadingTitle": "Manipulyatsiyalar yuklanmoqda",
+		"noFound": "Hech qanday manipulyatsiya topilmadi.",
+		"selectCategory": "Manipulyatsiya toifasini tanlang",
+		"selected": "Tanlangan",
+		"selectedManipulations": "manipulyatsiyalar | manipulyatsiya | manipulyatsiyalar",
+		"totalManipulations": "Hech qanday manipulyatsiya yo'q | Bitta manipulyatsiya | {count} manipulyatsiya | {count} manipulyatsiyalar",
+		"unselect": "Tanlovni bekor qilish"
+	},
+	"ClinicNosologyTable": {
+		"ID": "@:common.ID",
+		"categoryCode": "Kod kategoriyasi",
+		"categoryTitle": "Kategoriya sarlavhasi",
+		"created": "@:common.created",
+		"createdBy": "@:common.createdBy",
+		"description": "@:common.description",
+		"editorTitle": "Jadval ustunlarini o'rnating",
+		"noFoundDescription": "Hech qanday {currentType} topilmadi. Yuqoriga o'ting va yangi {currentType} yarating.",
+		"noFoundTitle": "",
+		"paginationItems": "{count} elementlar | {count} element | {count} elementlar",
+		"paginationNumFrom": "Ko'rsatilgan {n} dan | Ko'rsatilgan  {n} dan | Ko'rsatilgan {n} dan ",
+		"paginationNumTo": "{n} ga",
+		"perPage": "Sahifadagi elementlar",
+		"price": "@:common.price",
+		"state": "@:common.state",
+		"title": "@:common.title",
+		"typeToSearch": "Izlash uchun bosing"
+	},
+	"ClinicSelect": {
+		"choose": "Tanlash",
+		"selectClinicTitle": "Klinikani tanlang"
+	},
+	"ClinicSettings": {
+		"FDI": "FDI Jahon stomatologiya federatsiyasi",
+		"UNS": "Universal raqamlash tizimi",
+		"addClinicLogo": "Klinikaning logotipini qo'shing",
+		"address": "@:common.address",
+		"addressHint": "Klinikaning web -sayti manzili",
+		"chooseClinicLogo": "Klinik logotipni tanlang",
+		"clinicName": "Klinikaning nomi",
+		"clinicNameHint": "Klinikaning nomini kiriting",
+		"description": "@:common.description",
+		"email": "@:common.email",
+		"palmer": "Palmer raqamlash tizimi",
+		"phone": "@:common.phone",
+		"saving": "@:common.saving",
+		"selectCurrency": "Pul birligini tanlang",
+		"selectUTC": "UTC vaqt mintaqasini tanlang",
+		"tax": "Soliq",
+		"teethSystem": "Tishlar tizimi",
+		"updateSettings": "Sozlamalarni yangilanish"
+	},
+	"DashbordLayout": {
+		"calendar": "Taqvim",
+		"clinicSettings": "Klinik sozlamalar",
+		"consumables": "Sarf materiallari",
+		"dashbord": "Statistik",
+		"manipulations": "Manipulyatsiyalar",
+		"myProfile": "Mening profilim",
+		"notifications": "Bildirishnomalar",
+		"patients": "Bemorlar",
+		"payment": "To'lovlar",
+		"procedures": "Protseduralar",
+		"settings": "Sozlamalar"
+	},
+	"ForgotPassword": {
+		"email": "@:common.email",
+		"enterEmail": "Parolni tiklash uchun elektron pochta manzilini kiriting",
+		"send": "Yuborish"
+	},
+	"GetEmail": {
+		"email": "@:common.email",
+		"title": "Elektron pochtangizni qo'ying, biz sizga tasdiq kodini yuboramiz"
+	},
+	"Jaw": {
+		"ageCategoryBaby": "",
+		"anamnesis": "@:common.anamnesis",
+		"babyTeeth": "Chaqaloq tishlari",
+		"chooseAllTeeth": "Barcha tishlarni tanlang",
+		"chooseBottomTeeth": "Pastki tishni tanlang",
+		"chooseTopTeeth": "Yuqori tishlarni tanlang",
+		"diagnoses": "@:common.diagnoses",
+		"hasAdultNosology": "Voyaga etgan odamlarning jag'lari mavjud",
+		"hasBabyNosology": "Chaqaloq jag'iga oid narsalar mavjud",
+		"hidedLocations:": "Yashirin joylar:",
+		"multipleChooseHint": "Bir nechta tishlarni tanlash uchun \"Ctrl + click\" yoki \"Shift + click\" -ni bosing",
+		"printJaw": "Jag'ni bosib chiqarish",
+		"procedures": "@:common.procedures",
+		"toothSelected": "Hech qanday tish tanlanmagan | Bitta tish tanlandi | {count} tish tanlandi| {count} tishlar tanlandi"
+	},
+	"JawAddLocations": {
+		"anamnes": "Anamnez",
+		"availableTeeth": "Mavjud tishlar",
+		"diagnose": "Tashxis",
+		"dropAllLocations": "Barcha joylarni tashlash",
+		"noTeethDescription": " {item} tishlarni ko'rsatmasdan saqlanadi",
+		"noTeethTitle": " {item} uchun tish tanlanmagan",
+		"procedure": "Protsedura",
+		"selectTeeth": "Tishlarni tanlang",
+		"setForAllTeeth": "Barcha tishlar uchun oxirgi o'zgarishni o'rnating",
+		"toggleTeeth": "Barcha tishlarni tanlang / belgisini olib tashlang"
+	},
+	"Login": {
+		"forgotPassword": "Parolni unutib qo'ydim",
+		"login": "Kirish",
+		"password": "@:common.password",
+		"userName": "@:common.userName"
+	},
+	"PasswordForm": {
+		"loading": "Saqlash",
+		"newPassword": "Yangi Parol",
+		"oldPassword": "Eski parol",
+		"passwordSettings": "Parol sozlamalari",
+		"rNewPassword": "Yangi parolni qayta kiriting",
+		"updatePassword": "Parolni yangilang"
+	},
+	"PatientAddForm": {
+		"addAllergyPressEnter": "Allergiya qo'shing va \"Enter\" tugmasini bosing",
+		"addNewPatient": "Yangi bemor qo'shing",
+		"addPatient": "Bemorni qo'shing",
+		"closeFormAfterAdding": "Qo'shgandan keyin shaklni yoping",
+		"doctors": "Shifokorlar",
+		"email": "Elektron pochta",
+		"firstName": "Ismi",
+		"lastName": "Familiya",
+		"loading": "Yuklanmoqda...",
+		"noAllergy": "Allergiya yo'q",
+		"openPatientProfileAfterAdding": "Qo'shgandan keyin bemor profilini oching",
+		"phone": "Telefon",
+		"source": "Manba"
+	},
+	"PatientBilling": {
+		"invoices": "Hisob-fakturalar",
+		"payments": "To'lovlar",
+		"unbilledProcedures": "Hisobga olinmagan protseduralar"
+	},
+	"PatientBillingInvoices": {
+		"createInvoice": "Hisob-fakturani yarating",
+		"noInvoiceDescription": "Hisob qaydnomasini yaratish uchun avval rejani tasdiqlang va shu erda hisobga olinmagan muolajalarni tanlang.",
+		"noInvoiceTitle": "Hech qanday fakturalar topilmadi"
+	},
+	"PatientBillingUnbiledProcedures": {
+		"allInvoices": "Barcha fakturalar",
+		"balance": "Balans",
+		"complete": "To'liq deb belgilang",
+		"createInvoice": "Hisob-fakturani yarating",
+		"discounts": "Chegirmalar",
+		"goToInvoices": "Hisob-fakturalarga o'ting",
+		"goToPlans": "Rejalarga o'tish",
+		"noUnbilledProceduresDescription": "Hisob qaydnomasini yaratish uchun avval rejani tasdiqlang va shu erda hisobga olinmagan muolajalarni tanlang.",
+		"noUnbilledProceduresTitle": "Yozib olinmagan protseduralar topilmadi",
+		"proceduresFor": "uchun protseduralar | uchun protsedura | uchun protseduralar",
+		"selectAll": "Hammasini belgilash",
+		"selected": "Tanlangan:",
+		"tax": "Soliq",
+		"unbilledProcedures": "Hisobga olinmagan protseduralar",
+		"unselect": "Tanlovni bekor qilish"
+	},
+	"PatientCard": {
+		"addAllergent": "Allergiya nomini kiriting va \"Enter\" ni bosing",
+		"addAllergy": "Allergiya qo'shing ...",
+		"addPhoto": "Bemorning rasmini qo'shing",
+		"address": "@:common.address",
+		"birthday": "@:common.birthday",
+		"email": "@:common.email",
+		"firstName": "@:common.firstName",
+		"lastName": "@:common.lastName",
+		"phone": "@:common.phone",
+		"saveChanges": "@:common.saveChanges",
+		"saving": "@:common.saving",
+		"showRating": "Reytingni ko'rsatish",
+		"source": "@:common.source",
+		"yearsOld": "@:common.yearsOld"
+	},
+	"PatientFiles": {
+		"addFileDescription": "Bu erga bosing yoki ba'zi fayllarni tashlab yuboring",
+		"addFileTitle": "Yangi fayl qo'shing",
+		"totalFiles": "Jami {count} fayllar | Jami bitta fayl | Jami {count} fayl"
+	},
+	"PatientNosologyTable": {
+		"ID": "ID",
+		"code": "@:common.code",
+		"created": "@:common.created",
+		"createdBy": "@:common.createdBy",
+		"description": "@:common.description",
+		"editorTitle": "Jadval ustunlarini o'rnating",
+		"manipulations": "@:common.manipulations",
+		"noFoundDescription": "Hech qanday {currentType} topilmadi. Yuqoriga o'ting va yangi {currentType} yarating.",
+		"noFoundTitle": "",
+		"paginationItems": "{count} elementlar | {count} element | {count} elementlar",
+		"paginationNumFrom": "Ko'rsatilgan {n} dan | Ko'rsatilgan  {n} dan | Ko'rsatilgan {n} dan ",
+		"paginationNumTo": "{n} ga",
+		"perPage": "Bir sahifada elementlar",
+		"planID": "Rejasi",
+		"price": "@:common.price",
+		"puginationNumForm": "Ko'rsatilgan {n} dan | Ko'rsatilgan  {n} dan | Ko'rsatilgan {n} dan ",
+		"state": "@:common.state",
+		"teeth": "@:common.teeth",
+		"title": "@:common.title",
+		"typeToSearch": "Izlash uchun bosing",
+		"updated": "@:common.updated"
+	},
+	"PatientNotes": {
+		"addNote": "Qayd qo'shish",
+		"createNote": "Yaratish haqida eslatma",
+		"writeaCoolNote": "Ajoyib eslatma yozing"
+	},
+	"PatientPlanAddForm": {
+		"create": "Yaratmoq",
+		"labelName": "Reja nomi",
+		"loading": "@:common.loading",
+		"title": "Yangi reja qo'shing"
+	},
+	"PatientPlansList": {
+		"noPlansDescription": "Hech qanday reja tanlanmagan, iltimos birini tanlang",
+		"noPlansTitle": "Tanlangan rejalar yo'q",
+		"noPlansWithIdDescription": " {ID} ID bilan hech qanday reja topilmadi. Yuqoriga o'ting va yangisini yarating.",
+		"noPlansWithIdTitle": " {{ID}} raqami bilan rejalar yo'q",
+		"scrollTop": "Scroll Top"
+	},
+	"PatientProceduresList": {
+		"approve": "Rejani tasdiqlang",
+		"changePlanTitle": "Reja nomini o'zgartirish",
+		"complete": "To'liq deb belgilang",
+		"createInvoice": "Hisob-fakturani yaratish",
+		"created": "Yaratilgan",
+		"deletePlan": "Rejani o'chirish",
+		"noProceduresDescription": "Yuqoriga o'ting va yangisini yarating",
+		"noProceduresTitle": "Hech qanday protsedura topilmadi",
+		"planName": "Reja nomi",
+		"printPlan": "Rejasi chop etish",
+		"proceduresFor": "protseduralar | protsedura | protseduralar",
+		"scrollTop": "Yuqoriga o‘tkazish",
+		"selectAll": "Hammasini belgilash",
+		"selected": "Tanlangan",
+		"totalManipulations": "Umumiy manipulyatsiyalar",
+		"totalPrice": "Umumiy narx",
+		"totalProcedures": "Umumiy protseduralar",
+		"unApprove": "Rejani tasdiqlamang",
+		"unbilledProcedures": "Hisobga olinmagan protseduralar",
+		"unselect": "Tanlovni bekor qilish"
+	},
+	"PatientProceduresSearch": {
+		"addNewPlan": "Yangi reja qo'shish",
+		"noPlansDescription": "Jarayonni amalga oshirish uchun siz avval reja tuzishingiz kerak",
+		"noPlansTitle": "Yaratilgan rejalar yo'q"
+	},
+	"PatientProfile": {
+		"BIO": "BIO",
+		"billing": "Hisob-kitob",
+		"files": "Fayllar",
+		"notes": "Izohlar",
+		"print": "Chop etish",
+		"treatment": "Davolash"
+	},
+	"PatientTreatment": {
+		"anamnesis": "@:common.anamnesis",
+		"diagnoses": "@:common.diagnoses",
+		"procedures": "@:common.procedures"
+	},
+	"PatientsList": {
+		"ID": "@:common.ID",
+		"address": "@:common.address",
+		"allergy": "@:common.allergy",
+		"allergyToolTip": "Allergiyaga e'tibor bering",
+		"birthday": "@:common.birthday",
+		"created": "@:common.created",
+		"createdBy": "@:common.createdBy",
+		"editorTitle": "Bemorlarga ustunlar tartibini o'rnating",
+		"filterMode": "Filtr rejimi",
+		"firstName": "@:common.firstName",
+		"lastName": "@:common.lastName",
+		"loadingDescription": "Iltimos, bir necha soniya kuting ...",
+		"loadingErrorAction": "Qayta urinib ko'ring",
+		"loadingErrorDescription": "Ulanishda xatolik yuz berdi",
+		"loadingErrorTitle": "Xato yuz berdi",
+		"loadingTitle": "Yuklanmoqda...",
+		"name": "@:common.name",
+		"nothingFoundCreateNew": "Yangi bemorni yarating",
+		"nothingFoundDescription": " \"{query}\" so'rovi uchun hech qanday bemor topilmadi.\nBoshqa qidiruv so'zlarini kiriting yoki yangi bemorni yarating.",
+		"nothingFoundTitle": "Hech qanday bemor topilmadi",
+		"paginationItems": "{count} bemorlardan | {count} bemorlardan | {count} bemorlardan",
+		"paginationNumFrom": "Ko'rsatilgan {n} dan | Ko'rsatilgan  {n} dan | Ko'rsatilgan {n} dan ",
+		"paginationNumTo": "{n} ga",
+		"patientNum": "Bemorlar yo'q Jami bitta bemor | Bemorlar yo'q Jami bitta bemor | Jami {count} bemor",
+		"perPage": "Har bir sahifada bemorlar",
+		"phone": "@:common.phone",
+		"rating": "@:common.rating",
+		"searchTitle": "Bemorni topish uchun bosing",
+		"title": "Bemorlar ro'yxati",
+		"yearsOld": "@:common.yearsOld"
+	},
+	"PlanAddForm": {
+		"create": "Reja tuzing",
+		"labelName": "Rejaning nomi",
+		"loading": "Yuklanmoqda...",
+		"title": "Reja qo'shish"
+	},
+	"RegistrationWizard": {
+		"account": "Qayd yozuvi",
+		"buildProfile": "O'z profilingizni yarating",
+		"buildProfileDescription": "Ushbu ma'lumot sizning hisob qaydnomangizni yaratishda foydalaniladi.",
+		"clinic": "@:common.clinic",
+		"email": "@:common.email",
+		"verification": "Tasdiqlash"
+	},
+	"SetAccount": {
+		"email": "@:common.email",
+		"firstName": "@:common.firstName",
+		"lastName": "@:common.lastName",
+		"password": "@:common.password",
+		"repeatPassword": "Parolni qaytadan kiriting",
+		"title": "Asosiy ma'lumotlardan boshlaylik",
+		"userName": "@:common.userName"
+	},
+	"SetClinic": {
+		"chooseClinicLogo": "Klinik logotipni tanlang",
+		"clinicName": "Klinikaning nomi",
+		"setClinic": "Klinikangizni o'rnating",
+		"title": "Klinikangizni o'rnating"
+	},
+	"TCollapseSearch": {
+		"search-anamnesis": "Protseduralarni qidirish",
+		"search-diagnosis": "Diagnoslar qidiruv",
+		"search-procedures": "Protseduralarni qidirish",
+		"showAll": "@:common.showAll"
+	},
+	"TTableEditor": {
+		"ID": "@:common.ID",
+		"address": "@:common.address",
+		"allergy": "@:common.allergy",
+		"availableColumns": "Mavjud ustunlar",
+		"birthday": "@:common.birthday",
+		"cancel": "@:common.cancel",
+		"categoryCode": "Kod kategoriyasi",
+		"categoryTitle": "Kategoriya sarlavhasi",
+		"code": "@:common.code",
+		"created": "@:common.created",
+		"createdBy": "@:common.createdBy",
+		"currentColumns": "Joriy ustunlar",
+		"description": "@:common.description",
+		"firstName": "@:common.firstName",
+		"hint": "Satrga tortib buyurtma berish va jadvalga yangi ustun qo'shish",
+		"lastName": "@:common.lastName",
+		"manipulations": "@:common.manipulations",
+		"name": "@:common.name",
+		"phone": "@:common.phone",
+		"price": "@:common.price",
+		"rating": "@:common.rating",
+		"save": "@:common.save",
+		"state": "@:common.state",
+		"teeth": "@:common.teeth",
+		"title": "Bemorlar ro'yxati",
+		"updated": "@:common.updated"
+	},
+	"TWizardAddItem": {
+		"adding": "qo'shmoqda",
+		"anamnes": "Anamnez",
+		"appointment": "Uchrashuv",
+		"description": "Ta'rif",
+		"diagnose": "Tashxis",
+		"edit": "tahrirlash",
+		"files": "Fayllar",
+		"locations": "Joylar",
+		"manipulations": "Manipulyatsiyalar",
+		"procedure": "Protsedura",
+		"selescTooth": "Iltimos, tishni tanlang",
+		"teethWithLocations": "Tanlangan joylari bo'lgan tishlar:",
+		"titleEdit": ""
+	},
+	"Teeth": {
+		"11": "Yuqori o'ng markaziy kesma",
+		"12": "Yuqori o'ng lateral kesma",
+		"13": "Yuqori o'ng qirg'oq tishi",
+		"14": "Yuqori o'ng birinchi premolar",
+		"15": "Yuqoridan o'ngga",
+		"16": "Yuqori o'ng birinchi molyar",
+		"17": "Yuqori o'ng ikkinchi molyar",
+		"18": "Yuqori o'ng uchinchi molyar",
+		"21": "Yuqori chap markaziy kesma",
+		"22": "Yuqori chap lateral kesma",
+		"23": "Yuqori chap qirrali tish",
+		"24": "Yuqori chap birinchi premolar",
+		"25": "Yuqori chap ikkinchi premolar",
+		"26": "Yuqori chap birinchi molyar",
+		"27": "Yuqori chap ikkinchi molyar",
+		"28": "Yuqori chap uchinchi molar",
+		"31": "Pastki chap markaziy kesma",
+		"32": "Pastki chap lateral kesma",
+		"33": "Pastki chap qanot tishi",
+		"34": "Pastki chap birinchi premolar",
+		"35": "Pastki chap ikkinchi premolar",
+		"36": "Pastki chap birinchi molyar",
+		"37": "Pastki chap ikkinchi molyar",
+		"38": "Pastki chap uchinchi molyar",
+		"41": "To'g'ri pastki markaziy kesma",
+		"42": "Pastki o'ng lateral kesma",
+		"43": "Pastki o'ng qanot tishi",
+		"44": "Pastki o'ng birinchi premolar",
+		"45": "Pastki o'ng ikkinchi premolar",
+		"46": "Pastki o'ng birinchi molyar",
+		"47": "Pastki o'ng ikkinchi molyar",
+		"48": "Quyi o'ng molyar",
+		"51": "Yuqori o'ng markaziy kesma",
+		"52": "Yuqori o'ng lateral kesma",
+		"53": "Yuqori o'ng qirg'oq tishi",
+		"54": "Yuqori o'ng birinchi molyar",
+		"55": "Yuqori o'ng ikkinchi molyar",
+		"61": "Yuqori chap markaziy kesma",
+		"62": "Yuqori chap lateral kesma",
+		"63": "Yuqori chap qirrali tish",
+		"64": "Yuqori chap birinchi molyar",
+		"65": "Yuqori chap ikkinchi molyar",
+		"71": "Pastki chap markaziy kesma",
+		"72": "Pastki chap lateral kesma",
+		"73": "Pastki chap qanot tishi",
+		"74": "Pastki chap birinchi molyar",
+		"75": "Pastki chap ikkinchi molyar",
+		"81": "To'g'ri pastki markaziy kesma",
+		"82": "Pastki o'ng lateral kesma",
+		"83": "Pastki o'ng qanot tishi",
+		"84": "Pastki o'ng birinchi molyar",
+		"85": "Pastki o'ng ikkinchi molyar"
+	},
+	"UserCard": {
+		"aboutMe": "Men haqimda",
+		"addYourPhoto": "Rasmingizni qo'shing",
+		"address": "@:common.address",
+		"email": "@:common.email",
+		"firstName": "@:common.firstName",
+		"language": "Til",
+		"lastName": "@:common.lastName",
+		"loading": "Saqlash",
+		"phone": "@:common.phone",
+		"updateProfile": "Profilni yangilang",
+		"userName": "@:common.userName"
+	},
+	"common": {
+		"ID": "ID",
+		"address": "Manzil",
+		"allergy": "Allergiya",
+		"anamnesis": "Anamnez",
+		"birthday": "Tug'ilgan sana",
+		"cancel": "Bekor qilish",
+		"clinic": "Klinika",
+		"code": "Kod",
+		"create": "Yaratmoq",
+		"created": "Yaratilgan sana",
+		"createdBy": "Muallif",
+		"description": "Ta'rif",
+		"diagnoses": "Tashxis",
+		"email": "Elektron pochta",
+		"files": "Fayllar",
+		"firstName": "Ismi",
+		"lastName": "Familiya",
+		"manipulations": "Manipulyatsiyalar",
+		"name": "Ismi",
+		"password": "Parol",
+		"phone": "Telefon",
+		"planID": "Reja nomi",
+		"price": "Narxi",
+		"procedures": "Protseduralar",
+		"rating": "Baho",
+		"save": "Saqlash",
+		"saveChanges": "O'zgarishlarni saqlash",
+		"saving": "Saqlash",
+		"search": "Qidirsh",
+		"showAll": "Hammasini ko'rsatish",
+		"source": "Manba",
+		"state": "Hozirgi holat",
+		"teeth": "Tishlar",
+		"title": "Sarlavha",
+		"updated": "Yangilandi",
+		"userName": "Foydalanuvchi ismi",
+		"yearsOld": "Bir yildan kam | Bir yoshli | {count} yosh"
+	},
+	"validations": {
+		"attributes": {
+			"allergy": "Allergiya qo'shing",
+			"clinicName": "Klinikaning nomi kiritilishi shart",
+			"code": "Kodni kiritish shart",
+			"email": " {_field_} maydoni yaroqli elektron pochta bo'lishi kerak",
+			"firstName": "Ism maydonini kiritish shart.",
+			"lastName": "Familiya maydoni to'ldirilishi shart.",
+			"locations": "Tish ustidagi joyni ko'rsatish kerak",
+			"name": "Ism kiritilishi shart.",
+			"newPassword": "Yangi parol talab qilinadi",
+			"noteText": "Izoh talab etiladi",
+			"oldPassword": "Eski parol yaroqsiz",
+			"password": "Parol talab qilinadi",
+			"phone": "Telefon talab qilinadi",
+			"planName": "Reja nomi kiritilishi shart",
+			"rPassword": "Parollar bir xil bo'lishi kerak",
+			"required": "{0} maydonini kiritish shart.",
+			"source": "Manba kiritilishi shart",
+			"url": "Web sayt maydoni to'g'ri URL manzili bo'lishi kerak",
+			"username": "Foydalanuvchi ismi kiritilishi shart"
+		},
+		"custom": {
+			"allergy": {
+				"required": "Allergiya talab qilinadi"
+			},
+			"clinicName": {
+				"min": "Klinikaning nomi kamida {1} belgidan iborat bo'lishi kerak.",
+				"required": "Klinikaning nomi kiritilishi shart"
+			},
+			"code": {
+				"min": "Reja nomi kamida {1} belgidan iborat bo'lishi kerak",
+				"required": "Kodni kiritish shart"
+			},
+			"email": {
+				"email": "Elektron pochta maydoni yaroqli elektron pochta bo'lishi kerak",
+				"required": "Elektron pochta manzili kiritilishi shart"
+			},
+			"firstName": {
+				"firstName": "Ism maydonini kiritish shart.",
+				"min": "Ism maydoni kamida {1} belgidan iborat bo'lishi kerak.",
+				"required": "Ismni kiritish shart"
+			},
+			"lastName": {
+				"lastName": "Familiya maydoni to'ldirilishi shart.",
+				"min": "Familiya maydoni kamida {1} belgidan iborat bo'lishi kerak.",
+				"required": "Familiyani kiritish shart"
+			},
+			"locations": {
+				"required": "Tish ustidagi joyni ko'rsatish kerak"
+			},
+			"name": {
+				"required": "Ismni kiritish shart"
+			},
+			"newPassword": {
+				"min": "Yangi parol kamida {1} belgidan iborat bo'lishi kerak.",
+				"required": "Yangi parol talab qilinadi"
+			},
+			"noteText": {
+				"min": "Qayd maydoni kamida {1} belgidan iborat bo'lishi kerak.",
+				"required": "Izoh talab etiladi"
+			},
+			"oldPassword": {
+				"min": "Eski parol kamida {1} belgidan iborat bo'lishi kerak.",
+				"required": "Eski parol talab qilinadi"
+			},
+			"password": {
+				"min": "Parol kamida {1} belgidan iborat bo'lishi kerak.",
+				"required": "Parol talab qilinadi"
+			},
+			"phone": {
+				"min": "Telefon kamida {1} belgidan iborat bo'lishi kerak",
+				"required": "Telefon talab qilinadi"
+			},
+			"planName": {
+				"min": "Reja nomi kamida {1} belgidan iborat bo'lishi kerak",
+				"required": "Reja nomi kiritilishi shart",
+				"verify_plan": "Reja nomi noyob bo'lishi kerak"
+			},
+			"rNewPassword": {
+				"confirmed": "Parollar bir xil bo'lishi kerak",
+				"min": "Yangi parol kamida {1} belgidan iborat bo'lishi kerak.",
+				"required": "Yangi parolni takrorlang"
+			},
+			"rPassword": {
+				"confirmed": "Parollar bir xil bo'lishi kerak",
+				"required": "Parol talab qilinadi"
+			},
+			"source": {
+				"min": "Manba maydoni kamida {1} belgidan iborat bo'lishi kerak.",
+				"required": "Manba kiritilishi shart"
+			},
+			"url": {
+				"url": "Web sayt maydoni to'g'ri URL manzili bo'lishi kerak"
+			},
+			"username": {
+				"min": "Foydalanuvchi nomi kamida {1} belgidan iborat bo'lishi kerak.",
+				"required": "Foydalanuvchi ismi kiritilishi shart"
+			}
+		},
+		"messages": {
+			"_default": " {_field_} maydoni to'ldirilishi shart",
+			"confirmed": "Maydonlar bir-biriga mos kelishi kerak",
+			"min": " {_field_} maydoni kamida {length} belgidan iborat bo'lishi kerak",
+			"required": " {_field_} maydoni to'ldirilishi shart",
+			"url": ""
+		}
+	}
 }

@@ -1,7 +1,7 @@
 <template lang="html">
     <div>
         <t-toolbar-row :headers="headers" />
-        <md-toolbar class="md-transparent md-elevation-0" >
+        <md-toolbar class="md-transparent md-elevation-0">
             <div class="md-toolbar-row">
                 <div class="md-toolbar-section-start">
                     {{ currentPlan.state }}
@@ -13,7 +13,7 @@
                             print
                         </md-icon>
                         <md-tooltip>
-                            Print plan
+                            {{ $t(`${$options.name}.printPlan`) }}
                         </md-tooltip>
                     </md-button>
                     <md-button class="md-just-icon md-simple">
@@ -21,7 +21,7 @@
                             edit
                         </md-icon>
                         <md-tooltip>
-                            Change plan title
+                            {{ $t(`${$options.name}.changePlanTitle`) }}
                         </md-tooltip>
                     </md-button>
                     <md-button class="md-just-icon md-simple" @click="showDeleteItemSnackbar = true">
@@ -29,20 +29,20 @@
                             delete
                         </md-icon>
                         <md-tooltip>
-                            Delete plan
+                            {{ $t(`${$options.name}.deletePlan`) }}
                         </md-tooltip>
                     </md-button>
                     <md-button v-if="currentPlan.state === 1" class="md-simple" @click="unApprovePlan(currentPlanID)">
                         <md-icon>
                             cancel
                         </md-icon>
-                        not approve
+                        {{ $t(`${$options.name}.unApprove`) }}
                     </md-button>
                     <md-button v-else class="md-info" @click="approvePlan(currentPlanID)">
                         <md-icon>
                             check
                         </md-icon>
-                        Approve plan
+                        {{ $t(`${$options.name}.approve`) }}
                     </md-button>
                 </div>
             </div>
@@ -57,9 +57,12 @@
             @customSort="customSort"
         >
             <template slot="emptyState">
-                <md-table-empty-state :md-label="`No procedures found`" md-description="Scroll top, and create a new one">
+                <md-table-empty-state
+                    :md-label="$t(`${$options.name}.noProceduresTitle`)"
+                    :md-description="$t(`${$options.name}.noProceduresDescription`)"
+                >
                     <md-button class="md-primary md-raised" @click="scrollToTop()">
-                        Scroll Top
+                        {{ $t(`${$options.name}.scrollTop`) }}
                     </md-button>
                 </md-table-empty-state>
             </template>
@@ -73,24 +76,24 @@
         >
             <div class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100">
                 <div class="snackbar-text-wrapper ">
-                    Selected:
+                    {{ $t(`${$options.name}.selected`) }}
                     <animated-number :value="selectedItems.length" />
-                    procedures for
+                    {{ $tc(`${$options.name}.proceduresFor`, selectedItems.length) }}
                     <animated-number :value="selectedItemsPrice" />
                     {{ currentClinic.currencyCode }}
                 </div>
                 <div class="snackbar-action-wrapper  ml-auto md-alignment-center-right ">
                     <md-button v-if="selectedItems.length === currentPlanProcedures.length" class="md-simple" @click="unselectAll()">
-                        Unselect
+                        {{ $t(`${$options.name}.unselect`) }}
                     </md-button>
                     <md-button v-else class="md-simple" @click="selectedItems = currentPlanProcedures">
-                        Select all
+                        {{ $t(`${$options.name}.selectAll`) }}
                     </md-button>
                     <md-button class="md-simple" @click="showDeleteItemSnackbar = false">
-                        Complete
+                        {{ $t(`${$options.name}.complete`) }}
                     </md-button>
                     <md-button class="md-success" @click="showCreateInvoice()">
-                        Create invoice
+                        {{ $t(`${$options.name}.createInvoice`) }}
                     </md-button>
                 </div>
             </div>
@@ -111,6 +114,7 @@ export default {
         ...components,
         PatientNosologyTable
     },
+    name: 'PatientProceduresList',
     props: {
         currentPlan: {
             type: Object,
@@ -125,6 +129,7 @@ export default {
             sortedData: []
         };
     },
+    name: 'PatientProceduresList',
     computed: {
         ...mapGetters({
             patient: 'getPatient',
@@ -133,7 +138,7 @@ export default {
             manipulationsByPlanID: 'getManipulationsByPlanID',
             getManipulationsByProcedureIDs: 'getManipulationsByProcedureIDs',
             currentPlanID: 'getCurrentPlanID',
-            getManipulationsByProcedureID: 'getManipulationsByProcedureID',
+            getManipulationsByProcedureID: 'getManipulationsByProcedureID'
         }),
         getPlanTotalPrice() {
             return this.manipulationsByPlanID(this.currentPlan.ID).reduce((a, b) => a + (b.totalPrice || 0), 0);
@@ -145,14 +150,14 @@ export default {
         headers() {
             const headers = [
                 {
-                    title: 'Plan Name',
-                    subTitlePrefix: 'created',
+                    title: this.$t(`${this.$options.name}.planName`),
+                    subTitlePrefix: this.$t(`${this.$options.name}.created`),
                     subTitlePostfix: moment(this.currentPlan.created).format('MMM Do YYYY'),
                     valuePrefix: this.currentPlan.name,
                     valuePostfix: null
                 },
                 {
-                    title: 'Unbilled Procedures',
+                    title: this.$t(`${this.$options.name}.unbilledProcedures`),
                     subTitlePrefix: this.unbilledProceduresPrice,
                     subTitlePostfix: this.currentClinic.currencyCode,
                     subTitleToFix: 2,
@@ -161,7 +166,7 @@ export default {
                     valuePostfix: null
                 },
                 {
-                    title: 'Total Procedures',
+                    title: this.$t(`${this.$options.name}.totalProcedures`),
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     subTitleToFix: 0,
@@ -170,7 +175,7 @@ export default {
                     valuePostfix: null
                 },
                 {
-                    title: 'Total Manipulations',
+                    title: this.$t(`${this.$options.name}.totalManipulations`),
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     subTitleToFix: 0,
@@ -179,7 +184,7 @@ export default {
                     valuePostfix: null
                 },
                 {
-                    title: 'Total Price',
+                    title: this.$t(`${this.$options.name}.totalPrice`),
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     subTitleToFix: 0,

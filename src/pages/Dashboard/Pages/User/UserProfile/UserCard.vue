@@ -5,7 +5,7 @@
             :max-filesize="2000"
             :image-src="user.avatar"
             :title="user.firstName + ' ' + user.lastName"
-            :form-title="'Add your photo'"
+            :form-title="$t(`${$options.name}.addYourPhoto`)"
             :button-color="'green'"
             @on-created="updateUserAvatar"
         />
@@ -20,7 +20,7 @@
                             { 'md-error': errors.has('firstName') }
                         ]"
                     >
-                        <label>First Name</label>
+                        <label>{{ $t(`${$options.name}.firstName`) }}</label>
                         <md-input
                             ref="firstName"
                             v-model="user.firstName"
@@ -64,7 +64,7 @@
                             { 'md-error': errors.has('lastName') }
                         ]"
                     >
-                        <label>Last Name</label>
+                        <label>{{ $t(`${$options.name}.lastName`) }}</label>
                         <md-input
                             ref="lastName"
                             v-model="user.lastName"
@@ -102,7 +102,7 @@
 
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field class="with-subline">
-                        <label>User Name</label>
+                        <label>{{ $t(`${$options.name}.userName`) }}</label>
                         <md-input v-model="user.userName" disabled type="text" />
                     </md-field>
                 </div>
@@ -114,7 +114,7 @@
                             { 'md-error': errors.has('phone') }
                         ]"
                     >
-                        <label>Phone</label>
+                        <label>{{ $t(`${$options.name}.phone`) }} </label>
                         <span class="md-prefix">+</span>
                         <md-input ref="phone" v-model="user.phone" v-validate="modelValidations.phone" type="number" data-vv-name="phone" required />
                         <span class="md-error">{{ errors.first('phone') }}</span>
@@ -151,7 +151,7 @@
                             { 'md-error': errors.has('email') }
                         ]"
                     >
-                        <label>Email</label>
+                        <label>{{ $t(`${$options.name}.email`) }}</label>
                         <md-input ref="email" v-model="user.email" v-validate="modelValidations.email" type="text" data-vv-name="email" required />
                         <span class="md-error">{{ errors.first('email') }}</span>
                         <slide-y-down-transition>
@@ -182,36 +182,25 @@
 
                 <div class="md-layout-item md-small-size-100 md-size-33">
                     <md-field class="with-subline">
-                        <label>Address</label>
+                        <label>{{ $t(`${$options.name}.address`) }}</label>
                         <md-input v-model="user.address" type="text" />
-                    </md-field>
-                </div>
-                <div class="md-layout-item md-small-size-100 md-size-33">
-                    <md-field>
-                        <label for="language">Language</label>
-                        <md-select id="language" v-model="user.lang" name="language">
-                            <md-option :value="1">
-                                English
-                            </md-option>
-                            <md-option :value="2">
-                                Русский
-                            </md-option>
-                            <md-option :value="3">
-                                Uzbek
-                            </md-option>
-                        </md-select>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-size-100">
                     <md-field maxlength="5">
-                        <label>About Me</label>
+                        <label>{{ $t(`${$options.name}.aboutMe`) }}</label>
                         <md-textarea v-model="aboutme" />
                     </md-field>
                 </div>
                 <div class="md-layout-item md-size-100 text-right">
                     <md-button :disabled="lodash.isEmpty(changedFields) || loading" class="md-raised md-success mt-4" @click="updateProfile">
-                        <span v-if="loading">Loading</span>
-                        <span v-else>Update Profile</span>
+                        <span v-if="loading">
+                        <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
+                            {{ $t(`${$options.name}.loading`) }}
+                        </span>
+                        <span v-else>
+                            {{ $t(`${$options.name}.updateProfile`) }}
+                        </span>
                     </md-button>
                 </div>
             </div>

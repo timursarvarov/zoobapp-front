@@ -1,7 +1,7 @@
 <template>
     <div>
         <h5 class="info-text">
-            Put your email, we will send you verification code
+            {{ $t(`${$options.name}.title`) }}
         </h5>
         <div class="md-layout md-gutter">
             <div class="md-layout-item md-size-100">
@@ -9,7 +9,9 @@
                     :class="[{ 'md-valid': !errors.has('email') && touched.email }, { 'md-form-group': true }, { 'md-error': errors.has('email') }]"
                 >
                     <md-icon>email</md-icon>
-                    <label>Email</label>
+                    <label>
+                        {{ $t(`${$options.name}.email`) }}
+                    </label>
                     <md-input
                         ref="email"
                         v-model="email"

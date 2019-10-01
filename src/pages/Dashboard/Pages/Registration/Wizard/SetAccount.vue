@@ -1,7 +1,7 @@
 <template>
     <div>
         <h5 class="info-text">
-            Let's start with the basic information
+            {{ $t(`${$options.name}.title`) }}
         </h5>
         <div class="md-layout md-gutter">
             <div class="md-layout-item md-size-50 md-small-size-100">
@@ -11,7 +11,9 @@
                     :class="[{ 'md-valid': !errors.has('username') && touched.username }, { 'md-error': errors.has('username') }]"
                 >
                     <md-icon>face</md-icon>
-                    <label>User Name</label>
+                    <label>
+                            {{ $t(`${$options.name}.userName`) }}
+                    </label>
                     <md-input
                         ref="username"
                         v-model="account.username"
@@ -46,7 +48,9 @@
                     :class="[{ 'md-valid': !errors.has('firstName') && touched.firstName }, { 'md-error': errors.has('firstName') }]"
                 >
                     <md-icon>looks_one</md-icon>
-                    <label>First Name</label>
+                    <label>
+                        {{ $t(`${$options.name}.firstName`) }}
+                    </label>
                     <md-input
                         ref="firstName"
                         v-model="account.firstName"
@@ -81,7 +85,7 @@
                     :class="[{ 'md-valid': !errors.has('lastName') && touched.lastName }, { 'md-error': errors.has('lastName') }]"
                 >
                     <md-icon>looks_two</md-icon>
-                    <label>Last Name</label>
+                    <label>{{ $t(`${$options.name}.lastName`) }}</label>
                     <md-input
                         ref="lastName"
                         v-model="account.lastName"
@@ -114,7 +118,7 @@
             <div class="md-layout-item md-size-50 md-small-size-100">
                 <md-field :class="[{ 'md-form-group': true }]">
                     <md-icon>email</md-icon>
-                    <label>Email</label>
+                    <label>{{ $t(`${$options.name}.email`) }}</label>
                     <md-input
                         v-model="email"
                         v-validate="modelValidations.email"
@@ -133,7 +137,7 @@
                     :class="[{ 'md-error': errors.has('password') }, { 'md-valid': !errors.has('password') && touched.password }]"
                 >
                     <md-icon>lock_outline</md-icon>
-                    <label>Password</label>
+                    <label>{{ $t(`${$options.name}.password`) }}</label>
                     <md-input
                         ref="password"
                         v-model="account.password"
@@ -164,10 +168,10 @@
                 <md-field
                     slot="inputs"
                     class="md-form-group"
-                    :class="[{ 'md-error': errors.has('password') }, { 'md-valid': !errors.has('password') && touched.password }]"
+                    :class="[{ 'md-error': errors.has('rPassword') }, { 'md-valid': !errors.has('rPassword') && touched.rPassword }]"
                 >
                     <md-icon>lock_outline</md-icon>
-                    <label>Repeate Password</label>
+                    <label>{{ $t(`${$options.name}.repeatPassword`) }}</label>
                     <md-input
                         ref="rPassword"
                         v-model="account.rPassword"

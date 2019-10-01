@@ -4,30 +4,55 @@
             <template slot="content">
                 <!-- <span class="md-nav-tabs-title">Set new:</span> -->
                 <md-tabs md-sync-route class="md-success" md-alignment="left">
-                    <md-tab id="tab-bio" :to="`/${$i18n.locale}/patient/${patient.ID}/bio`" md-icon="account_box" md-label="BIO">
+                    <md-tab
+                        id="tab-bio"
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/bio`"
+                        md-icon="account_box"
+                        :md-label="$t(`${$options.name}.BIO`)"
+                    >
                         <div class="md-layout">
                             <router-view name="Bio" />
                         </div>
                     </md-tab>
-                    <md-tab id="tab-treatment" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`" md-icon="local_hospital" md-label="Treatment">
+                    <md-tab
+                        id="tab-treatment"
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`"
+                        md-icon="local_hospital"
+                        :md-label="$t(`${$options.name}.treatment`)"
+                    >
                         <div class="md-layout">
                             <keep-alive>
                                 <router-view name="treatmentchild" />
                             </keep-alive>
                         </div>
                     </md-tab>
-                    <md-tab id="tab-billing" :to="`/${$i18n.locale}/patient/${patient.ID}/billing`" md-icon="account_balance" md-label="Billing">
+                    <md-tab
+                        id="tab-billing"
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/billing`"
+                        md-icon="account_balance"
+                        :md-label="$t(`${$options.name}.billing`)"
+                    >
                         <div class="md-layout">
                             <router-view name="Billing" />
                         </div>
                     </md-tab>
-                    <md-tab id="tab-notes" :to="`/${$i18n.locale}/patient/${patient.ID}/notes`" md-icon="question_answer" md-label="Notes">
+                    <md-tab
+                        id="tab-notes"
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/notes`"
+                        md-icon="question_answer"
+                        :md-label="$t(`${$options.name}.notes`)"
+                    >
                         <router-view name="Notes" />
                     </md-tab>
-                    <md-tab id="tab-files" :to="`/${$i18n.locale}/patient/${patient.ID}/files`" md-icon="folder_shared" md-label="Files">
+                    <md-tab
+                        id="tab-files"
+                        :to="`/${$i18n.locale}/patient/${patient.ID}/files`"
+                        md-icon="folder_shared"
+                        :md-label="$t(`${$options.name}.files`)"
+                    >
                         <router-view name="Files" />
                     </md-tab>
-                    <md-tab id="tab-print" md-icon="print" md-label="Print" @click="showPrint()" />
+                    <md-tab id="tab-print" md-icon="print" :md-label="$t(`${$options.name}.print`)" @click="showPrint()" />
                 </md-tabs>
                 <patient-items-wizard />
                 <patient-print-form />

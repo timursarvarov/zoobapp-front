@@ -20,43 +20,61 @@
                         data-toggle="dropdown"
                     >
                         <md-icon>more_vert</md-icon>
-                        <span v-if="shouldShowNotification" class="notification md-success">{{ ageCategoryBaby ? 'A' : 'B' }}</span>
+                        <span v-if="shouldShowNotification" class="notification md-success">
+                            {{ ageCategoryBaby ? 'A' : 'B' }}
+                            <md-tooltip v-if="ageCategoryBaby" style="width:auto;">
+                                {{ $t(`${$options.name}.hasBabyNosology`) }}
+                            </md-tooltip>
+                            <md-tooltip v-else style="width:auto;">
+                                {{ $t(`${$options.name}.hasAdultNosology`) }}
+                            </md-tooltip>
+                        </span>
                     </md-button>
 
                     <md-menu-content style="z-index:100;">
                         <md-menu-item>
                             <md-switch v-model="ageCategoryBaby">
-                                Baby teeth
+                                {{ $t(`${$options.name}.babyTeeth`) }}
                                 <span v-if="shouldShowNotification" class="notification md-success">{{ ageCategoryBaby ? 'A' : 'B' }}</span>
                             </md-switch>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-switch v-model="prefer" value="anamnesis" @change="calculateJaw('Anamnes')">Anamnes</md-switch>
+                            <md-switch v-model="prefer" value="anamnesis" @change="calculateJaw('Anamnes')">{{
+                                $t(`${$options.name}.anamnesis`)
+                            }}</md-switch>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-switch v-model="prefer" value="diagnosis" @change="calculateJaw('Diagnoe')">Diagnose</md-switch>
+                            <md-switch v-model="prefer" value="diagnosis" @change="calculateJaw('Diagnoe')">{{
+                                $t(`${$options.name}.diagnoses`)
+                            }}</md-switch>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-switch v-model="prefer" value="procedures" @change="calculateJaw('Procedure')">Procedure</md-switch>
+                            <md-switch v-model="prefer" value="procedures" @change="calculateJaw('Procedure')">{{
+                                $t(`${$options.name}.procedures`)
+                            }}</md-switch>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-switch v-model="toggleAll" @change="ageCategoryBaby ? toggleTeeth(babyTeeth) : toggleTeeth(adultTeeth)"
-                                >Toggle all</md-switch
-                            >
+                            <md-switch v-model="toggleAll" @change="ageCategoryBaby ? toggleTeeth(babyTeeth) : toggleTeeth(adultTeeth)">
+                                {{ $t(`${$options.name}.chooseAllTeeth`) }}
+                            </md-switch>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-switch v-model="toggleAdultTop" @change="ageCategoryBaby ? toggleTeeth(topBabyTeeth) : toggleTeeth(topAdultTeeth)"
-                                >Toggle Top</md-switch
-                            >
+                            <md-switch v-model="toggleAdultTop" @change="ageCategoryBaby ? toggleTeeth(topBabyTeeth) : toggleTeeth(topAdultTeeth)">
+                                {{ $t(`${$options.name}.chooseTopTeeth`) }}
+                            </md-switch>
                         </md-menu-item>
                         <md-menu-item>
                             <md-switch
                                 v-model="toggleAdultBottom"
                                 @change="ageCategoryBaby ? toggleTeeth(bottomBabyTeeth) : toggleTeeth(bottomAdultTeeth)"
-                                >Toggle Bottom</md-switch
                             >
+                                {{ $t(`${$options.name}.chooseBottomTeeth`) }}
+                            </md-switch>
                         </md-menu-item>
-                        <md-menu-item v-if="!printmode" @click="showPrint()"> <md-icon>print</md-icon>print </md-menu-item>
+                        <md-menu-item v-if="!printmode" @click="showPrint()">
+                            <md-icon>print</md-icon>
+                            {{ $t(`${$options.name}.printJaw`) }}
+                        </md-menu-item>
                     </md-menu-content>
                 </md-menu>
             </md-toolbar>
@@ -260,20 +278,15 @@
                         class="md-layout-item"
                         :class="[{ 'text-info': selectedTeethLocal.length > 0 }, { 'text-warning': selectedTeethLocal.length === 0 }]"
                     >
-                        <span>
-                            <animated-number :value="selectedTeethLocal.length" />
-                        </span>
-                        &nbsp;
-                        <span v-show="selectedTeethLocal.length <= 1">tooth selected</span>
-                        <span v-show="selectedTeethLocal.length > 1">teeth selected</span>
+                        <small>{{ $tc(`${$options.name}.toothSelected`, selectedTeethLocal.length) }}</small>
                     </div>
                     <small v-show="prefer.length < 3" class="text-warning hided-prefer">
-                        Hided locations:
+                        {{ $t(`${$options.name}.multipleChooseHint`) }}
                         <transition-group name="list">
-                            <span v-for="(item, key) in hidedPrefer" :key="key + 0" class="list-item">{{ ` ${item},` }}</span>
+                            <span v-for="(item, key) in hidedPrefer" :key="key + 0" class="list-item">{{ $t(`jaw.${item}`), }}</span>
                         </transition-group>
                     </small>
-                    <small v-show="prefer.length === 3" class="hint">'ctrl + click' or 'shift + click' to multiple choose</small>
+                    <small v-show="prefer.length === 3" class="hint">{{ $t(`${$options.name}.multipleChooseHint`) }}</small>
                 </div>
             </transition>
             <div v-if="!printmode" class="md-layout-item">
@@ -301,7 +314,6 @@ import {
     LOCAL_STORAGE
 } from '@/constants';
 import JawMenu from './JawMenu';
-import AnimatedNumber from '@/components/AnimatedNumber';
 import { mapGetters } from 'vuex';
 import EventBus from '@/plugins/event-bus';
 
@@ -309,7 +321,6 @@ export default {
     name: 'Jaw',
     components: {
         JawMenu,
-        AnimatedNumber
     },
     mixins: [tObjProp, jawFunctions],
     props: {
@@ -498,6 +509,9 @@ export default {
     mounted() {
         this.handleResize();
         this.setTeethWidth();
+    },
+    updated() {
+        this.handleResize();
     },
     watch: {
         selectedTeeth: {

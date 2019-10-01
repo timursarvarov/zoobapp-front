@@ -8,14 +8,14 @@
                             <md-icon>email</md-icon>
                         </div>
                         <h4 class="title">
-                            Enter email to recover a password
+                            {{ $t(`${$options.name}.enterEmail`) }}
                         </h4>
                     </md-card-header>
 
                     <md-card-content class="md-layout">
                         <div class="md-layout-item md-size-100">
                             <md-field :class="[{ 'md-valid': !errors.has('email') && touched.email }, { 'md-error': errors.has('email') }]">
-                                <label>Email</label>
+                                <label>{{ $t(`${$options.name}.email`) }}</label>
                                 <md-input ref="email" v-model="email" v-validate="modelValidations.email" type="email" data-vv-name="email" />
                                 <span class="md-error">{{ errors.first('email') }}</span>
                                 <slide-y-down-transition>
@@ -37,11 +37,13 @@
                             </md-field>
                         </div>
                     </md-card-content>
-                    <div class="actions md-layout md-gutter">
-                        <md-button class="ml-auto md-success" @click="sendPassword()">
-                            Send
-                        </md-button>
-                    </div>
+                    <md-card-actions>
+                        <div class="actions md-layout md-gutter">
+                            <md-button class="ml-auto md-success" @click="sendPassword()">
+                                {{ $t(`${$options.name}.send`) }}
+                            </md-button>
+                        </div>
+                    </md-card-actions>
                 </md-card>
             </div>
         </md-dialog>
@@ -70,7 +72,8 @@ export default {
             },
             modelValidations: {
                 email: {
-                    email: true
+                    email: true,
+                    required: true
                 }
             }
         };

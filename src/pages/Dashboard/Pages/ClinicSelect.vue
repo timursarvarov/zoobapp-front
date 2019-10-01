@@ -8,7 +8,7 @@
                         <md-icon>domain</md-icon>
                     </div>
                     <h4 class="title">
-                        Select Clinic
+                        {{ $t(`${$options.name}.selectClinic`) }}
                     </h4>
                 </md-card-header>
 
@@ -25,7 +25,7 @@
                 </md-card-content>
                 <md-card-actions>
                     <md-button :disabled="!checkedClinicId" class="md-success" @click="setClinic()">
-                        Choose
+                        {{ $t(`${$options.name}.choose`) }}
                     </md-button>
                 </md-card-actions>
             </md-card>

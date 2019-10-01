@@ -9,14 +9,14 @@
                             :text-to-color="patient.ID"
                             :image-src="patient.avatar"
                             :title="patient.firstName + ' ' + patient.lastName"
-                            :form-title="'Add patient foto'"
+                            :form-title="$t(`${$options.name}.addPhoto`)"
                             :button-color="'green'"
                             @on-created="updatepatientAvatar"
                         />
                     </div>
                     <div class="md-layout-item md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between">
                         <div class="md-layout-item">
-                            <md-switch v-model="showRating">Show Rating</md-switch>
+                            <md-switch v-model="showRating">{{ $t(`${$options.name}.showRating`) }}</md-switch>
                         </div>
                         <div class="md-layout-item">
                             <star-rating v-show="showRating" v-model="patient.rating" :glow="5" :show-rating="false" :star-size="18" />
@@ -32,7 +32,7 @@
                             { 'md-error': errors.has('firstName') }
                         ]"
                     >
-                        <label>First Name</label>
+                        <label>{{ $t(`${$options.name}.firstName`) }}</label>
                         <md-input
                             v-model="patient.firstName"
                             v-validate="modelValidations.firstName"
@@ -60,7 +60,7 @@
                             { 'md-error': errors.has('lastName') }
                         ]"
                     >
-                        <label>Last Name</label>
+                        <label>{{ $t(`${$options.name}.lastName`) }}</label>
                         <md-input
                             v-model="patient.lastName"
                             v-validate="modelValidations.lastName"
@@ -88,7 +88,7 @@
                             { 'md-error': errors.has('phone') }
                         ]"
                     >
-                        <label>Phone</label>
+                        <label>{{ $t(`${$options.name}.phone`) }}</label>
                         <span class="md-prefix">+</span>
                         <md-input
                             v-model="patient.phone"
@@ -112,27 +112,23 @@
             <div class="md-layout md-small-size-100 md-size-50">
                 <div class="md-layout-item md-size-100">
                     <md-field>
-                        <label>Source</label>
+                        <label>{{ $t(`${$options.name}.source`) }}</label>
                         <md-input v-model="patient.source" :disabled="loading" />
                     </md-field>
                 </div>
 
                 <div class="md-layout-item md-size-100">
                     <md-field>
-                        <label>Address</label>
+                        <label>{{ $t(`${$options.name}.address`) }}</label>
                         <md-input v-model="patient.address" :disabled="loading" />
                     </md-field>
                 </div>
 
                 <div class="md-layout-item md-size-100">
                     <md-datepicker v-model="preparedBirthDate" md-immediately :md-model-type="String" disabled="loading">
-                        <label
-                            >Birthday date
-                            <span v-if="preparedBirthDate">
-                                (
-                                {{ $moment().diff(preparedBirthDate, 'years') }}
-                                years old )
-                            </span>
+                        <label>
+                            {{ $t(`${$options.name}.birthday`) }}
+                            <span v-if="preparedBirthDate">({{ $tc(`${$options.name}.yearsOld`, $moment().diff(preparedBirthDate, 'years')) }})</span>
                         </label>
                     </md-datepicker>
                 </div>
@@ -146,7 +142,7 @@
                             { 'md-error': errors.has('email') }
                         ]"
                     >
-                        <label>Email Address </label>
+                        <label>{{ $t(`${$options.name}.email`) }}</label>
                         <md-input
                             v-model="patient.email"
                             v-validate="modelValidations.email"
@@ -165,8 +161,8 @@
                     </md-field>
                 </div>
                 <div class="md-layout-item md-size-100">
-                    <md-chips v-model="allergy" :disabled="loading" class="md-danger" md-placeholder="Add allergy..." />
-                    <span class="small helper">Enter allergent name and click "Enter"</span>
+                    <md-chips v-model="allergy" :disabled="loading" class="md-danger" :md-placeholder="$t(`${$options.name}.addAllergy`)" />
+                    <span class="small helper">{{ $t(`${$options.name}.addAllergent`) }}</span>
                 </div>
             </div>
         </md-card-content>
@@ -174,12 +170,11 @@
             <md-button :disabled="loading" class="md-raised md-success mt-4" @click="updateProfile">
                 <div v-if="loading">
                     <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />&nbsp;
-                    <span>Saving...</span>
+                    <span>{{ $t(`${$options.name}.saving`) }}...</span>
                 </div>
-                <span v-else>Update Profile</span>
+                <span v-else>{{ $t(`${$options.name}.saveChanges`) }}</span>
             </md-button>
         </md-card-actions>
-        <!-- <generator/> -->
     </div>
 </template>
 <script>
@@ -233,11 +228,12 @@ export default {
             },
             modelValidations: {
                 lastName: {
-                    required: true
+                    required: true,
+                    min: 1
                 },
                 firstName: {
                     required: true,
-                    min: 2
+                    min: 1
                 },
                 email: {
                     email: true
@@ -312,41 +308,48 @@ export default {
             this.touched.phone = true;
         },
         updateProfile() {
-            this.$validator.validateAll('firstName', 'email', 'phone', 'lastName').then(result => {
-                if (result) {
-                    this.loading = true;
-                    this.$store
-                        .dispatch(PATIENT_EDIT, {
-                            params: {
-                                firstName: this.patient.firstName,
-                                lastName: this.patient.lastName,
-                                email: this.patient.email,
-                                phone: parseInt(this.patient.phone, 10),
-                                address: this.patient.address,
-                                allergy: this.patient.allergy,
-                                source: this.patient.source,
-                                color: this.patient.color,
-                                birthday: moment(this.preparedBirthDate).format(),
-                                rating: parseFloat(this.patient.rating)
-                            }
-                        })
-                        .then(response => {
-                            if (response) {
+            this.$validator
+                .validateAll()
+                .then(result => {
+                    if (result) {
+                        this.loading = true;
+                        this.$store
+                            .dispatch(PATIENT_EDIT, {
+                                params: {
+                                    firstName: this.patient.firstName,
+                                    lastName: this.patient.lastName,
+                                    email: this.patient.email,
+                                    phone: parseInt(this.patient.phone, 10),
+                                    address: this.patient.address,
+                                    allergy: this.patient.allergy,
+                                    source: this.patient.source,
+                                    color: this.patient.color,
+                                    birthday: moment(this.preparedBirthDate).format(),
+                                    rating: parseFloat(this.patient.rating)
+                                }
+                            })
+                            .then(response => {
+                                if (response) {
+                                    this.loading = false;
+                                    this.$store.dispatch(NOTIFY, {
+                                        settings: {
+                                            message: 'Settings updated successfully',
+                                            type: 'success'
+                                        }
+                                    });
+                                }
+                            })
+                            .catch(err => {
+                                console.log(err);
                                 this.loading = false;
-                                this.$store.dispatch(NOTIFY, {
-                                    settings: {
-                                        message: 'Settings updated successfully',
-                                        type: 'success'
-                                    }
-                                });
-                            }
-                        })
-                        .catch(err => {
-                            this.loading = false;
-                            throw new Error(err);
-                        });
-                }
-            });
+                                throw new Error(err);
+                            });
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    throw new Error(err);
+                });
         },
 
         updatepatientAvatar(fd) {

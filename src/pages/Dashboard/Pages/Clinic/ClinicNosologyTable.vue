@@ -8,7 +8,7 @@
                         <slot name="firsToolbarStart" />
                     </div>
                     <div class="md-toolbar-section-end">
-                    <slot name="firsToolbarEnd" />
+                        <slot name="firsToolbarEnd" />
                         <md-button class="md-just-icon md-simple" @click="showTableEditor = !showTableEditor">
                             <md-icon>settings</md-icon>
                         </md-button>
@@ -18,7 +18,7 @@
             <md-toolbar class="md-transparent">
                 <div class="md-layout-item md-size-33">
                     <md-field>
-                        <label for="pages">Per page</label>
+                        <label for="pages">{{ $t(`${$options.name}.perPage`) }}</label>
                         <md-select v-model="pagination.perPage" name="pages">
                             <md-option v-for="item in pagination.perPageOptions" :key="item" :label="item" :value="item">{{ item }}</md-option>
                         </md-select>
@@ -29,7 +29,8 @@
                 </div>
                 <div class="md-layout md-layout-item md-size-33 ml-auto">
                     <md-field>
-                        <md-input v-model="searchQuery" type="search" class="mb-3" clearable style="width: 200px" placeholder="Search records" />
+                        <label for="pages">{{ $t(`${$options.name}.typeToSearch`) }}</label>
+                        <md-input v-model="searchQuery" type="search" class="mb-3" clearable style="width: 200px" />
                     </md-field>
                 </div>
             </md-toolbar>
@@ -45,8 +46,8 @@
                 <div />
                 <md-table-empty-state
                     v-if="!hasSlot('emptyState')"
-                    :md-label="`No ${currentType} found`"
-                    :md-description="`No ${currentType}  found. Scroll top, and create new ${currentType} .`"
+                    :md-label="$t(`${$options.name}.noFoundTitle`, { currentType })"
+                    :md-description="$t(`${$options.name}.noFoundDescription`, { currentType })"
                 />
                 <slot name="emptyState" v-else />
 
@@ -61,7 +62,7 @@
                         v-for="field in itemsTableColumns"
                         :key="field.key"
                         :class="field"
-                        :md-label="field.title.toString()"
+                        :md-label="$t(`${$options.name}.${field.key}`)"
                         :md-sort-by="field.key"
                     >
                         <div v-if="field.key === 'code' && item.code" :class="field.key">{{ item.code }}</div>
@@ -121,7 +122,11 @@
             </md-table>
             <md-card-actions md-alignment="space-between">
                 <div>
-                    <p class="card-category">Showing {{ from + 1 }} to {{ to }} of {{ total }} entries</p>
+                     <p class="card-category">
+                        {{ $tc(`${$options.name}.paginationNumFrom`, total, { n: from }) }}
+                        {{ $tc(`${$options.name}.paginationNumTo`, total, { n: to }) }}
+                        {{ $tc(`${$options.name}.paginationItems`, total) }}
+                    </p>
                 </div>
                 <pagination
                     v-model="pagination.currentPage"
@@ -134,7 +139,7 @@
         <t-table-editor
             icon="settings"
             color="success"
-            :title="`Set ${currentType} columns order`"
+            :title="$t(`${$options.name}.editorTitle`)"
             :available-table-columns="computedAvailableItemsTableColumns"
             :table-columns="itemsTableColumns"
             :show-form.sync="showTableEditor"
@@ -173,7 +178,7 @@ import {
 import EventBus from '@/plugins/event-bus';
 
 export default {
-    name: 'ClinicNosoologyTable',
+    name: 'ClinicNosologyTable',
     components: {
         ...components
     },

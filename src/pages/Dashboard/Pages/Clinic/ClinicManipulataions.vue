@@ -7,8 +7,11 @@
                         <md-icon>assignment</md-icon>
                     </div>
                     <h4 class="title">
-                        Total Manipulations: {{ getCurrentManipulations.length }}
-                        <small v-if="filteredData.length !== getCurrentManipulations">Filtered: {{ filteredData.length }}</small>
+                        {{ $tc(`${$options.name}.totalManipulations`, getCurrentManipulations.length) }}
+                        <small v-if="filteredData.length !== getCurrentManipulations">
+                            {{ $t(`${$options.name}.filtered`) }}
+                            {{ filteredData.length }}</small
+                        >
                     </h4>
                 </md-card-header>
                 <md-card-content>
@@ -16,15 +19,15 @@
                         <md-table-empty-state
                             v-if="loading"
                             slot="emptyState"
-                            :md-label="`Loading manipulations`"
-                            :md-description="`Please be patient almoast loaded`"
+                            :md-label="$t(`${$options.name}.loadingTitle`)"
+                            :md-description="$t(`${$options.name}.loadingDescription`)"
                         >
                             <md-progress-spinner :md-diameter="40" :md-stroke="4" md-mode="indeterminate" />
                         </md-table-empty-state>
                         <template slot="firsToolbarEnd">
                             <md-button @click="showAddNosologyForm = true" class="md-simple">
                                 <md-icon>add</md-icon>
-                                add Manipulation
+                                {{ $t(`${$options.name}.addManipulation`) }}
                             </md-button>
                         </template>
                         <template slot="firsToolbarStart">
@@ -65,21 +68,21 @@
                                     </template>
 
                                     <template slot="input-start">
-                                        <label for="input">Select manipulation category</label>
+                                        <label for="input"> {{ $t(`${$options.name}.selectCategory`) }}</label>
                                     </template>
                                     <template v-if="item" slot="item" slot-scope="{ item }">
                                         <div style="display: flex;">
                                             <md-button class="IZ-select-button md-layout-item">
                                                 <span class="text-left">{{ `${item.text}` }}</span>
-                                                <span class="text-right">{{ `${item.num}` }}</span>
+                                                <span class="text-right">{{ $tc(`${$options.name}.totalManipulations`, item.num) }} </span>
                                             </md-button>
                                         </div>
                                     </template>
                                     <template slot="no-data">
                                         <div class="md-layout" style="display: flex; white-space: pre-wrap;oveflow:hidden;">
-                                            <span class="md-layout-item md-size-100" style="white-space: pre-wrap;oveflow:hidden;"
-                                                >No manipulations were found.</span
-                                            >
+                                            <span class="md-layout-item md-size-100" style="white-space: pre-wrap;oveflow:hidden;">
+                                                {{ $t(`${$options.name}.noFound`) }}
+                                            </span>
                                         </div>
                                     </template>
                                 </cool-select>
@@ -92,16 +95,22 @@
         <md-snackbar v-if="showItemSnackbar" :md-position="'center'" :md-duration="10000" :md-active.sync="showItemSnackbar" md-persistent>
             <div class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100">
                 <div class="snackbar-text-wrapper">
-                    Selected: &nbsp;
-                    <animated-number :value="selectedItems.length" />manipulations
+                    {{ $t(`${$options.name}.selected`) }}
+                    : &nbsp;
+                    <animated-number :value="selectedItems.length" />
+                    {{ $tc(`${$options.name}.selectedManipulations`, selectedItems.length) }}
                 </div>
                 <div class="snackbar-action-wrapper ml-auto md-alignment-center-right">
-                    <md-button v-if="selectedItems.length === getCurrentManipulations.length" class="md-simple" @click="unselectAll()"
-                        >Unselect</md-button
-                    >
+                    <md-button v-if="selectedItems.length === getCurrentManipulations.length" class="md-simple" @click="unselectAll()">
+                        {{ $t(`${$options.name}.unselect`) }}
+                    </md-button>
                     <md-button v-else class="md-simple" @click="selectedItems = getCurrentManipulations">Select all</md-button>
-                    <md-button class="md-simple">Disable</md-button>
-                    <md-button class="md-success">Enable</md-button>
+                    <md-button class="md-simple">
+                        {{ $t(`${$options.name}.disable`) }}
+                    </md-button>
+                    <md-button class="md-success">
+                        {{ $t(`${$options.name}.enable`) }}
+                    </md-button>
                 </div>
             </div>
         </md-snackbar>
@@ -123,7 +132,7 @@ export default {
     components: {
         ...components,
         ClinicNosologyTable,
-        'clinic-add-nosology-form':() => import('./ClinicAddNosologyForm'),
+        'clinic-add-nosology-form': () => import('./ClinicAddNosologyForm'),
         CoolSelect
     },
     data() {

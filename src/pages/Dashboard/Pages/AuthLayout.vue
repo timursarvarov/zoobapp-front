@@ -7,7 +7,7 @@
             <div class="md-toolbar-row md-offset">
                 <div class="md-toolbar-section-start">
                     <h3 class="md-title">
-                        {{ $route.name }}
+                        {{ $t(`${$options.name}.${$route.name}`) }}
                     </h3>
                 </div>
                 <div class="md-toolbar-section-end">
@@ -25,65 +25,31 @@
                         <md-list>
                             <md-list-item v-if="isStateAuthenticated" to="dashboard">
                                 <!-- <router-link to="dashboard" > -->
-                                <md-icon>dashboard</md-icon>Dashboard
+                                <md-icon>dashboard</md-icon>
+                                {{ $t(`${$options.name}.dashbord`) }}
                                 <!-- </router-link> -->
                             </md-list-item>
                             <md-list-item @click="linkClick">
-                                <router-link to="pricing"> <md-icon>attach_money</md-icon>Pricing </router-link>
+                                <router-link to="pricing"> <md-icon>attach_money</md-icon>
+                                {{ $t(`${$options.name}.pricing`) }}
+                                </router-link>
                             </md-list-item>
                             <md-list-item @click="linkClick">
-                                <router-link to="register"> <md-icon>person_add</md-icon>Register </router-link>
+                                <router-link to="register"> <md-icon>person_add</md-icon>
+                                {{ $t(`${$options.name}.register`) }}
+                                </router-link>
                             </md-list-item>
                             <md-list-item @click="linkClick">
-                                <router-link to="login"> <md-icon>fingerprint</md-icon>login </router-link>
+                                <router-link to="login"> <md-icon>fingerprint</md-icon>
+                                {{ $t(`${$options.name}.login`) }}
+                                </router-link>
                             </md-list-item>
                             <md-list-item v-if="isProfileLoaded" @click="linkClick">
-                                <router-link to="lock"> <md-icon>lock_open</md-icon>lock </router-link>
+                                <router-link to="lock"> <md-icon>lock_open</md-icon>
+                                {{ $t(`${$options.name}.lock`) }}
+                                </router-link>
                             </md-list-item>
                             <t-language-switcher />
-                            <!-- <li class="md-list-item">
-                                <a
-                                    class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                                >
-                                    <div class="md-list-item-content">
-                                        <drop-down direction="down">
-                                            <md-button
-                                                slot="title"
-                                                class="md-simple dropdown-toggle md-list-item-content"
-                                                data-toggle="dropdown"
-                                            >
-                                                <md-icon>
-                                                    <img
-                                                        style="margin-right:10px"
-                                                        :src="`./assets/images/flags/${$i18n.locale}.png`"
-                                                    />
-                                                </md-icon>
-                                                <span>{{languages[$i18n.locale].name}}</span>
-                                                <p class="hidden-lg hidden-md">Language</p>
-                                            </md-button>
-                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                <li
-                                                    v-for="(lang, key) in languages"
-                                                    v-show="lang.code!==$i18n.locale"
-                                                    :key="key"
-                                                    @click="changeLanguage(lang)"
-                                                    :class="[{'selected-menu-top-navbar': $i18n.locale === lang.code }]"
-                                                >
-                                                    <a
-                                                        :style="{color:  $i18n.locale === lang.code ? '#fff!important': ''}"
-                                                    >
-                                                        <img
-                                                            style="margin-right:10px"
-                                                            :src="`./assets/images/flags/${lang.code}.png`"
-                                                        />
-                                                        {{languages[lang.code].name}}
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </drop-down>
-                                    </div>
-                                </a>
-                            </li>-->
                         </md-list>
                     </div>
                 </div>

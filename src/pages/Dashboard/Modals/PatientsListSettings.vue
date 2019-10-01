@@ -136,16 +136,7 @@ export default {
                 data: `Draggable 2 - ${i}`
             })),
             newTableColumn: null,
-            newColumns: [
-                {
-                    key: 'ID1',
-                    title: 'ID'
-                },
-                {
-                    key: 'address1',
-                    title: 'Address'
-                }
-            ],
+            newColumns: [],
             availableColumns: []
         };
     },

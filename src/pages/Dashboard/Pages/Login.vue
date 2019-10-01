@@ -7,7 +7,7 @@
                 <h4 slot="title" class="title">
                     Log in
                 </h4>
-                <md-button slot="buttons" class="md-just-icon md-simple md-white">
+                <!-- <md-button slot="buttons" class="md-just-icon md-simple md-white">
                     <i class="fab fa-facebook-square" />
                 </md-button>
                 <md-button slot="buttons" class="md-just-icon md-simple md-white">
@@ -18,14 +18,14 @@
                 </md-button>
                 <p slot="description" class="description">
                     Or Be Classical
-                </p>
+                </p> -->
                 <div slot="inputs">
                     <md-field
                         class="md-form-group with-subline"
                         :class="[{ 'md-valid': !errors.has('username') && touched.username }, { 'md-error': errors.has('username') }]"
                     >
                         <md-icon>face</md-icon>
-                        <label>User Name</label>
+                        <label for="userName">{{ $t(`${$options.name}.userName`) }}</label>
                         <md-input
                             ref="username"
                             v-model="username"
@@ -67,7 +67,7 @@
                         :class="[{ 'md-error': errors.has('password') }, { 'md-valid': !errors.has('password') && touched.password }]"
                     >
                         <md-icon>lock_outline</md-icon>
-                        <label>Password</label>
+                        <label for="password">{{ $t(`${$options.name}.password`) }}</label>
                         <md-input
                             ref="password"
                             v-model="password"
@@ -78,13 +78,16 @@
                             required
                             @keyup.enter="login()"
                         />
+                        <span class="md-error">{{ errors.first('password') }}</span>
                     </md-field>
                     <div class="md-layout">
-                        <small class="md-simple ml-auto" @click="showForgot = !showForgot">Forgot password?</small>
+                        <small class="md-simple ml-auto" @click="showForgot = !showForgot">
+                            {{ $t(`${$options.name}.forgotPassword`) }}
+                        </small>
                     </div>
                 </div>
-                <md-button slot="footer" class="md-simple md-success md-lg" @click="login">
-                    Lets Go
+                <md-button slot="footer" class="md-success md-lg" @click="login">
+                    {{ $t(`${$options.name}.login`) }}
                 </md-button>
             </login-card>
             <!-- </form> -->
@@ -166,14 +169,14 @@ export default {
             if (this.errors.has('username') || !this.username) {
                 this.showErrorsValidate('username');
                 this.$store.dispatch(NOTIFY, {
-                    settings: { message: 'Введите валидный логин' }
+                    settings: { message: this.errors.first('username') }
                 });
                 return;
             }
             if (this.errors.has('password') || !this.password) {
                 this.showErrorsValidate('password');
                 this.$store.dispatch(NOTIFY, {
-                    settings: { message: 'Введите валидный пароль' }
+                    settings: { message: this.errors.first('password') }
                 });
                 return;
             }

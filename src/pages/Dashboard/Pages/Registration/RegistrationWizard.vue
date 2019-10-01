@@ -1,33 +1,33 @@
 <template>
     <div class="md-layout md-gutter wizard-registration-form">
         <div class="md-layout-item md-size-66 md-xsmall-size-100 md-small-size-80 mx-auto">
-            <simple-wizard>
+            <wizard>
                 <template slot="header">
                     <h3 class="title">
-                        Build your profile
+                        {{ $t(`${$options.name}.buildProfile`) }}
                     </h3>
                     <h5 class="category">
-                        This information we will use to create your account.
+                        {{ $t(`${$options.name}.buildProfileDescription`) }}
                     </h5>
                 </template>
 
                 <wizard-tab :before-change="() => validateStep('step1')">
                     <template slot="label">
-                        Email
+                        {{ $t(`${$options.name}.email`) }}
                     </template>
                     <get-email ref="step1" :error.sync="errorEmail" @on-validated="onStepValidated" @validated-email="setEmail" />
                 </wizard-tab>
 
                 <wizard-tab :before-change="() => validateStep('step2')">
                     <template slot="label">
-                        Verification
+                        {{ $t(`${$options.name}.verification`) }}
                     </template>
                     <check-email ref="step2" :email="email" :error.sync="errorCode" @validated-code="setCode" @on-validated="onStepValidated" />
                 </wizard-tab>
 
                 <wizard-tab :before-change="() => validateStep('step3')">
                     <template slot="label">
-                        Account
+                        {{ $t(`${$options.name}.account`) }}
                     </template>
                     <set-account
                         ref="step3"
@@ -40,7 +40,7 @@
 
                 <wizard-tab :before-change="() => validateStep('step4')">
                     <template slot="label">
-                        Clinic
+                        {{ $t(`${$options.name}.clinic`) }}
                     </template>
                     <set-clinic
                         ref="step4"
@@ -50,19 +50,29 @@
                         @on-validated="onStepValidated"
                     />
                 </wizard-tab>
-            </simple-wizard>
+            </wizard>
         </div>
     </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
 import components from '@/components';
+import CheckEmail from './Wizard/CheckEmail';
+import Account from './Wizard/Account';
+import GetEmail from './Wizard/GetEmail';
+import SetAccount from './Wizard/SetAccount';
+import SetClinic from './Wizard/SetClinic';
 import { USER_REGISTER, NOTIFY, AUTH_REQUEST, CLINIC_LOGO_UPLOAD, CLINIC_UPDATE, SERVER_ERRORS } from '@/constants';
 
 export default {
-    name: 'RefistrationWizard',
+    name: 'RegistrationWizard',
     components: {
-        ...components
+        ...components,
+        CheckEmail,
+        Account,
+        GetEmail,
+        SetAccount,
+        SetClinic
     },
     data() {
         return {

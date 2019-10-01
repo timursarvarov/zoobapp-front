@@ -11,6 +11,7 @@ export default {
     components: {
         ...components
     },
+    name: 'PatientAnamnesisList',
     props: {
         currentType: {
             type: String,

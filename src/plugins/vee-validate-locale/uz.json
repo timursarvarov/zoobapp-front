@@ -1,0 +1,31 @@
+{
+    "code": "uz",
+    "messages": {
+        "alpha": "{_field_} maydoni faqat alifbo belgilaridan iborat bo'lishi mumkin",
+        "alpha_num": "The {_field_} field may only contain alpha-numeric characters",
+        "alpha_dash": "{_field_} maydoni faqat alfa-raqamli belgilarni o'z ichiga olishi mumkin",
+        "alpha_spaces": "{_field_} maydoni faqat alifbo belgilaridan va bo'sh joylardan iborat bo'lishi mumkin",
+        "between": "{_field_} maydoni {min} va {max} orasida bo'lishi kerak",
+        "confirmed": "{_field_} maydonini tasdiqlash mos kelmadi",
+        "digits": "{_field_} maydoni raqamli bo'lishi kerak va aniq {uzunligi} raqamlardan iborat bo'lishi kerak",
+        "dimensions": "{_field_} maydoni {balandligi} piksel bo'yicha {kengligi} piksel bo'lishi kerak",
+        "email": "{_field_} maydoni to'g'ri elektron pochta manzili bo'lishi kerak ",
+        "excluded": "{_field_} maydoni noto‘g‘ri qiymat",
+        "ext": "{_field_} maydoni yaroqli fayl emas",
+        "image": "{_field_} maydoni rasm bo'lishi kerak",
+        "integer": "{_field_} maydoni butun son bo'lishi kerak",
+        "length": "{_field_} maydoni {uzunligi} uzun bo'lishi kerak",
+        "max_value": "{_field_} maydoni {max} yoki undan kam bo'lishi kerak",
+        "max": "{_field_} maydoni {uzunligi} belgilaridan ko'p bo'lmasligi mumkin",
+        "mimes": "{_field_} maydoni to'g'ri fayl turiga ega bo'lishi kerak",
+        "min_value": "{_field_} maydoni {min} yoki undan ko'p bo'lishi kerak",
+        "min": "{_field_} maydoni kamida {uzunligi} belgidan iborat bo'lishi kerak",
+        "numeric": "{_field_} maydoni faqat raqamli belgilardan iborat bo'lishi mumkin",
+        "oneOf": "{_field_} maydoni noto‘g‘ri qiymat",
+        "regex": "{_field_} maydon formati noto‘g‘ri",
+        "required_if": "{_field_} maydoni to'ldirilishi shart",
+        "required": "{_field_} maydoni to'ldirilishi shart",
+        "size": "{_field_} maydon hajmi {size} KB dan kam bo'lishi kerak",
+        "validations.attributes.firstName": "First name uzzz"
+    }
+}

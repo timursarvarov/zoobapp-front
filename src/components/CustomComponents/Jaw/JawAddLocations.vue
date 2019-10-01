@@ -5,7 +5,9 @@
                 <div class="md-layout md-gutter">
                     <div class="md-layout-item">
                         <md-field class="">
-                            <label for="teeth">Available Teeth</label>
+                            <label for="teeth">
+                                {{ $t(`${$options.name}.availableTeeth`) }}
+                            </label>
                             <md-select
                                 id="teeth"
                                 ref="selecteeth"
@@ -15,7 +17,7 @@
                                 @md-selected="setSelectableTeeth(selectableTeethExtraChoose)"
                             >
                                 <md-option v-for="(value, index) in teethToSearch" :key="index" :value="value">
-                                    {{ value | toCurrentTeethSystem }} - {{ value | toCurrentTeethSystem(true) }}
+                                    {{ value | toCurrentTeethSystem }} - {{ $t(`Teeth.${value}`) }}
                                 </md-option>
                             </md-select>
                         </md-field>
@@ -27,21 +29,18 @@
                 <div class="md-alignment-center-right md-layout">
                     <md-button class="md-primary md-round md-simple" @click="setLastLocationForAllTeeth()">
                         <md-icon>done_all</md-icon>
-                        set for all
                         <md-tooltip v-if="'locations' in originalItem" md-delay="1000">
-                            Toggle teeth
+                            {{ $t(`${$options.name}.toggleTeeth`) }}
                         </md-tooltip>
                         <md-tooltip v-else md-delay="1000">
-                            Set last created
-                            <br />change for all teeth
+                            {{ $t(`${$options.name}.setForAllTeeth`) }}
                         </md-tooltip>
                     </md-button>
 
                     <md-button class="md-primary md-round md-simple" @click="dropAllLocations()">
                         <md-icon>clear_all</md-icon>
-                        reset
                         <md-tooltip md-delay="1000">
-                            Drop all locations
+                            {{ $t(`${$options.name}.dropAllLocations`) }}
                         </md-tooltip>
                     </md-button>
                     <drop-down direction="down">
@@ -51,17 +50,17 @@
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li>
                                 <md-switch v-model="prefer" value="anamnesis" @change="preferChanged()">
-                                    Anamnes
+                                    {{ $t(`${$options.name}.anamnes`) }}
                                 </md-switch>
                             </li>
                             <li>
                                 <md-switch v-model="prefer" value="diagnosis" @change="preferChanged()">
-                                    Diagnose
+                                    {{ $t(`${$options.name}.diagnose`) }}
                                 </md-switch>
                             </li>
                             <li>
                                 <md-switch v-model="prefer" value="procedures" @change="preferChanged()">
-                                    Procedure
+                                    {{ $t(`${$options.name}.procedure`) }}
                                 </md-switch>
                             </li>
                         </ul>
@@ -115,11 +114,13 @@
             <div v-else class="jaw md-layout-item">
                 <md-empty-state
                     md-icon="change_history"
-                    :md-label="`No selected teeth for ${selectedItem.code} ${selectedItem.title}`"
-                    :md-description="`The ${typeSingleName}  ${selectedItem.code} ${selectedItem.title} will be stored without indicating teeth`"
+                    :md-label="$t(`${$options.name}.noTeethTitle`, { item: `${selectedItem.code} ${selectedItem.title}` })"
+                    :md-description="
+                        $t(`${$options.name}.noTeethDescription`, { item: `${typeSingleName}  ${selectedItem.code} ${selectedItem.title}` })
+                    "
                 >
                     <md-button class="md-primary md-raised" @click="focusOn('selecteeth')">
-                        Select Teeth
+                        {{ $t(`${$options.name}.selectTeeth`) }}
                     </md-button>
                 </md-empty-state>
             </div>

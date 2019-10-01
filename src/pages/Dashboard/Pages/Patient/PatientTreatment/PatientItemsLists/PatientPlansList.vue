@@ -20,17 +20,17 @@
                 <router-view v-if="$route && $route.params && $route.params.planID in patient.plans" :id="key" :current-plan="plan" />
                 <md-empty-state
                     v-else-if="patient.plans && Object.keys(patient.plans).length > 0"
-                    md-label="No selected plans"
-                    :md-description="`No plan selected, please choose one`"
+                    :md-label="$t(`${$options.name}.noPlansTitle`)"
+                    :md-description="$t(`${$options.name}.noPlansDescription`)"
                 >
                 </md-empty-state>
                 <md-empty-state
                     v-else-if="$route && $route.params"
-                    :md-label="`No plan with ID ${$route.params.planID}`"
-                    :md-description="`No pla with ID ${$route.params.planID} found. Scroll top, and create new one.`"
+                    :md-label="$t(`${$options.name}.noPlansWithIdTitle`, { ID: $route.params.planID })"
+                    :md-description="$t(`${$options.name}.noPlansWithIdDescription`, { ID: $route.params.planID })"
                 >
                     <md-button class="md-primary md-raised" @click="scrollToTop()">
-                        Scroll Top
+                        {{ $t(`${$options.name}.scrollTop`) }}
                     </md-button>
                 </md-empty-state>
             </md-tab>
@@ -61,6 +61,7 @@ export default {
         }
         next();
     },
+    name: 'PatientPlansList',
     components: {
         ...components
         // DeleteForm,

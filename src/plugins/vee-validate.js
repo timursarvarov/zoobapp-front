@@ -1,7 +1,10 @@
 import Vue from 'vue';
 // Validation plugin used to validate forms
 import VeeValidate from 'vee-validate';
-// Lib imports
+import en from './vee-validate-locale/en.json';
+// import ru from './vee-validate-locale/ru.json';
+// import uz from './vee-validate-locale/uz.json';
+import i18n from './vue-i18n';
 
 const toLower = text => {
     if (text) {
@@ -53,7 +56,13 @@ VeeValidate.Validator.extend('is_exist', {
             });
         })
 });
-
 Vue.use(VeeValidate, {
-    fieldsBagName: 'fields'
+    fieldsBagName: 'fields',
+    i18nRootKey: 'validations', // customize the root path for validation messages.
+    i18n,
+    dictionary: {
+        en
+        // ru,
+        // uz
+    }
 });

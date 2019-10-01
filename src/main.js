@@ -5,6 +5,7 @@ import store from './store';
 import DashboardPlugin from './material-dashboard';
 import router from './routes';
 import i18n from './plugins/vue-i18n';
+import './plugins/vee-validate';
 
 // Plugins
 import App from './App.vue';

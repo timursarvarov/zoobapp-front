@@ -15,7 +15,7 @@
                 <div class="collapse-actions md-small-size-100 md-size-50">
                     <div class=" collapse-toolbar__grow">
                         <md-field class="no-margin ">
-                            <label>Search {{ type }}</label>
+                            <label> {{ $t(`${$options.name}.search-${type}`) }}</label>
                             <md-input v-model="search" />
                             <slide-y-down-transition>
                                 <md-button v-show="search.length > 0" class="md-simple md-icon-button md-dense md-input-action " @click="search = ''">
@@ -35,7 +35,7 @@
                             <md-icon :class="[{ rotate: toggleAll }]">
                                 keyboard_arrow_down
                             </md-icon>
-                            <md-tooltip md-delay="500"> Show all {{ type }} </md-tooltip>
+                            <md-tooltip md-delay="500"> {{ $t(`${$options.name}.showAll`) }} </md-tooltip>
                         </md-button>
                     </div>
                 </div>
@@ -158,7 +158,7 @@ const fuseOptions = {
 };
 
 export default {
-    name: 'CollapsableSearchPanel',
+    name: 'TCollapseSearch',
     components: {
         SlideYDownTransition,
         CustomCollapse

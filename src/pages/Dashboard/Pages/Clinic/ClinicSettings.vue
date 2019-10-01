@@ -5,7 +5,7 @@
             :max-filesize="2000"
             :image-src="currentClinic.logo"
             :title="currentClinic.name"
-            :form-title="'Add clinic logo'"
+            :form-title="$t(`${$options.name}.addClinicLogo`)"
             :button-color="'green'"
             @on-created="updateClinicLogo"
         />
@@ -15,7 +15,7 @@
                     <md-field
                         :class="[{ 'with-subline': true }, { 'md-valid': !errors.has('name') && touched.name }, { 'md-error': errors.has('name') }]"
                     >
-                        <label>Clinic Name</label>
+                        <label>{{ $t(`${$options.name}.clinicName`) }}</label>
                         <md-input
                             ref="name"
                             v-model="name"
@@ -25,7 +25,9 @@
                             data-vv-name="name"
                             required
                         />
-                        <span v-show="!errors.has('name') && touched.name" class="md-helper-text">Enter a cool currentClinic name</span>
+                        <span v-show="!errors.has('name') && touched.name" class="md-helper-text">
+                            {{ $t(`${$options.name}.clinicNameHint`) }}
+                        </span>
                         <span class="md-error">{{ errors.first('name') }}</span>
                         <slide-y-down-transition>
                             <md-button
@@ -61,7 +63,7 @@
                             { 'md-error': errors.has('phone') }
                         ]"
                     >
-                        <label>Phone</label>
+                        <label>{{ $t(`${$options.name}.phone`) }}</label>
                         <span class="md-prefix">+</span>
                         <md-input
                             ref="phone"
@@ -101,7 +103,7 @@
 
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field class="with-subline">
-                        <label>Address</label>
+                        <label>{{ $t(`${$options.name}.address`) }}</label>
                         <md-input v-model="address" type="text" />
                     </md-field>
                 </div>
@@ -110,7 +112,7 @@
                     <md-field
                         :class="[{ 'with-subline': true }, { 'md-valid': !errors.has('url') && touched.url }, { 'md-error': errors.has('url') }]"
                     >
-                        <label>Clinic web site address</label>
+                        <label> {{ $t(`${$options.name}.addressHint`) }}</label>
                         <md-input
                             ref="url"
                             v-model="url"
@@ -156,7 +158,7 @@
                             { 'md-error': errors.has('email') }
                         ]"
                     >
-                        <label>Email</label>
+                        <label>{{ $t(`${$options.name}.email`) }}</label>
                         <md-input
                             ref="email"
                             v-model="email"
@@ -198,7 +200,7 @@
                     <md-field
                         :class="[{ 'with-subline': true }, { 'md-valid': !errors.has('tax') && touched.tax }, { 'md-error': errors.has('tax') }]"
                     >
-                        <label>Tax %</label>
+                        <label>{{ $t(`${$options.name}.tax`) }} %</label>
                         <md-input
                             ref="tax"
                             v-model="tax"
@@ -237,23 +239,23 @@
                 </div>
                 <div class="md-layout md-layout-item md-small-size-100 md-size-33">
                     <md-field class="with-subline">
-                        <label for="teethSystem">Teeth System</label>
+                        <label for="teethSystem"> {{ $t(`${$options.name}.teethSystem`) }} </label>
                         <md-select id="teethSystem" v-model="teethSystem" :disabled="loading" name="teethSystem">
                             <md-option :value="1">
-                                FDI World Dental Federation notation
+                                {{ $t(`${$options.name}.FDI`) }}
                             </md-option>
                             <md-option :value="2">
-                                Universal numbering system
+                                {{ $t(`${$options.name}.UNS`) }}
                             </md-option>
                             <md-option :value="3">
-                                Palmer notation method
+                                {{ $t(`${$options.name}.palmer`) }}
                             </md-option>
                         </md-select>
                     </md-field>
                 </div>
                 <div class="md-layout md-layout-item md-size-33">
                     <md-field class="with-subline">
-                        <label for="selectedCurrency">Select Currency</label>
+                        <label for="selectedCurrency">{{ $t(`${$options.name}.selectCurrency`) }}</label>
                         <md-select id="selectedCurrency" v-model="selectedCurrency" md-dense name="selectedCurrency">
                             <md-option v-for="(item, key) in currency" :key="key" :disabled="loading" :value="item.code">
                                 {{ `${item.code} - ${item.symbol} ${item.name} ` }}
@@ -263,7 +265,7 @@
                 </div>
                 <div class="md-layout md-layout-item md-size-33">
                     <md-field class="with-subline">
-                        <label for="teethSystem">Select UTC Timezone</label>
+                        <label for="teethSystem">{{ $t(`${$options.name}.selectUTC`) }}</label>
                         <md-select id="selectedCurrency" v-model="selectedTimezone" md-dense name="selectedCurrency">
                             <md-option v-for="(item, key) in timezones" :key="key" :disabled="loading" :value="item.offset">
                                 {{ item.UTC }}
@@ -275,7 +277,7 @@
 
                 <div class="md-layout md-layout-item md-size-100">
                     <md-field class="with-subline" maxlength="5">
-                        <label>Description</label>
+                        <label>{{ $t(`${$options.name}.description`) }}</label>
                         <md-textarea v-model="description" />
                     </md-field>
                 </div>
@@ -286,12 +288,10 @@
                 <div v-if="loading">
                     <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
                     &nbsp;
-                    <span>
-                        Saving...
-                    </span>
+                    <span> {{ $t(`${$options.name}.saving`) }}... </span>
                 </div>
                 <span v-else>
-                    Update Settings
+                    {{ $t(`${$options.name}.saving`) }}
                 </span>
             </md-button>
         </md-card-actions>

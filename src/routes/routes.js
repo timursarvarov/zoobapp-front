@@ -205,32 +205,32 @@ const authPages = {
     children: [
         {
             path: 'login',
-            name: 'Login',
+            name: 'login',
             meta: { requiresAuth: false },
             component: load('Pages/Login')
         },
         {
             path: 'choose_clinic',
-            name: 'Clinic Selection',
+            name: 'choose_clinic',
             meta: { requiresAuth: true },
             component: load('Pages/ClinicSelect')
             // beforeEnter: ifAuthenticatedNotselectedClinic,
         },
         {
             path: 'register',
-            name: 'Register',
+            name: 'register',
             meta: { requiresAuth: false },
-            component: load('Pages/Registration/Wizard')
+            component: load('Pages/Registration/RegistrationWizard')
         },
         {
             path: 'pricing',
-            name: 'Pricing',
+            name: 'pricing',
             meta: { requiresAuth: false },
             component: load('Pages/Pricing')
         },
         {
             path: 'lock',
-            name: 'Lock',
+            name: 'lock',
             meta: { requiresAuth: false },
             component: load('Pages/Lock')
         }

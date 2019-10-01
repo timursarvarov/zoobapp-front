@@ -277,7 +277,7 @@ export default {
         logout() {
             this.$store.dispatch(AUTH_LOGOUT).then(() => {
                 this.$router.push({
-                    name: 'Login',
+                    name: 'login',
                     params: { lang: this.$i18n.locale }
                 });
             });

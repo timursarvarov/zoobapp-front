@@ -8,7 +8,7 @@
                             <md-icon>person_add</md-icon>
                         </div>
                         <h4 class="title">
-                            Add New Patient
+                            {{ $t(`${$options.name}.addNewPatient`) }}
                         </h4>
                     </md-card-header>
 
@@ -23,7 +23,7 @@
                                     { 'md-error': errors.has('firstName') }
                                 ]"
                             >
-                                <label for="the_firstName23">First Name</label>
+                                <label for="firstName">{{ $t(`${$options.name}.firstName`) }}</label>
                                 <md-input
                                     ref="firstName"
                                     v-model="firstName"
@@ -70,7 +70,7 @@
                                     { 'md-error': errors.has('lastName') }
                                 ]"
                             >
-                                <label>Last Name</label>
+                                <label for="firstName">{{ $t(`${$options.name}.lastName`) }}</label>
                                 <md-input
                                     ref="lastName"
                                     v-model="lastName"
@@ -117,7 +117,7 @@
                                     { 'md-error': errors.has('email') }
                                 ]"
                             >
-                                <label>Email</label>
+                                <label for="firstName">{{ $t(`${$options.name}.email`) }}</label>
                                 <md-input
                                     ref="email"
                                     v-model="email"
@@ -163,7 +163,7 @@
                                     { 'md-error': errors.has('phone') }
                                 ]"
                             >
-                                <label>Phone</label>
+                                <label for="firstName">{{ $t(`${$options.name}.phone`) }}</label>
                                 <span class="md-prefix">+</span>
                                 <md-input
                                     ref="phone"
@@ -203,7 +203,7 @@
                         </div>
                         <div class="md-layout-item">
                             <md-field class="with-subline">
-                                <label for="movies">Doctors</label>
+                                <label for="firstName">{{ $t(`${$options.name}.doctors`) }}</label>
                                 <md-select id="movies" v-model="selectedDoctors" :disabled="loading" name="movies" multiple>
                                     <md-option value="fight-club">
                                         Fight Club
@@ -238,7 +238,7 @@
                                     { 'md-error': errors.has('source') }
                                 ]"
                             >
-                                <label>Source</label>
+                                <label for="firstName">{{ $t(`${$options.name}.source`) }}</label>
                                 <md-input
                                     ref="source"
                                     v-model="source"
@@ -279,7 +279,7 @@
 
                         <div class="md-layout-item md-size-100 md-small-size-100">
                             <md-checkbox v-model="noAllergy" :disabled="loading" class="md-primary">
-                                No Allergy
+                                <label for="firstName">{{ $t(`${$options.name}.noAllergy`) }}</label>
                             </md-checkbox>
                         </div>
 
@@ -298,7 +298,7 @@
                                 class="md-danger"
                                 data-vv-name="allergy"
                             >
-                                <label>Add allergy and press 'ENTER'</label>
+                                <label for="firstName">{{ $t(`${$options.name}.addAllergyPressEnter`) }}</label>
                                 <slide-y-down-transition>
                                     <md-button
                                         v-show="errors.has('allergy')"
@@ -325,24 +325,29 @@
                             </md-chips>
                             <span class="md-error">{{ errors.first('allergy') }}</span>
                         </div>
+                        <div class="md-layout md-layout-item  wrapper-chips md-size-100 md-small-size-100">
+                            <div class="md-layout-item  md-size-50 md-small-size-100" >
+                                <md-checkbox v-model="closeAddForm" class="md-primary" @change="setCloseFormAfter()">
+                                    {{ $t(`${$options.name}.closeFormAfterAdding`) }}
+                                </md-checkbox>
+                            </div>
+                            <div class="md-layout-item  md-size-50 md-small-size-100" >
+                                <md-checkbox v-model="openProfile" class="md-primary" @change="setOpenProfileAfterCreation()">
+                                    {{ $t(`${$options.name}.openPatientProfileAfterAdding`) }}
+                                </md-checkbox>
+                            </div>
+                        </div>
                     </md-card-content>
                     <md-card-actions md-alignment="right">
-                        <div>
-                            <md-checkbox v-model="closeAddForm" class="md-primary" @change="setCloseFormAfter()">
-                                Close form after
-                            </md-checkbox>
-                        </div>
-                        <div>
-                            <md-checkbox v-model="openProfile" class="md-primary" @change="setOpenProfileAfterCreation()">
-                                Open patient profile
-                            </md-checkbox>
-                        </div>
                         <md-button :disabled="loading" class="md-success" @click="addPatient()">
                             <span v-if="loading">
                                 <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
-                                &nbsp; Loading...
+                                &nbsp;
+                                {{ $t(`${$options.name}.loading`) }}
                             </span>
-                            <span v-else>Add patient</span>
+                            <span v-else>
+                                {{ $t(`${$options.name}.addPatient`) }}
+                            </span>
                         </md-button>
                     </md-card-actions>
                 </md-card>

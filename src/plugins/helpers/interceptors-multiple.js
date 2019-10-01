@@ -15,6 +15,7 @@ export default function() {
                 })
                 .catch(err => {
                     store.dispatch(USER_LOGOUT);
+                    console.log(err)
                     throw new Error(err);
                 });
         });

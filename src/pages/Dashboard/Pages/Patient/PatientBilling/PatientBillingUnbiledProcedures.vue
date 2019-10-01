@@ -13,20 +13,23 @@
             </template>
             <template slot="emptyState">
                 <md-table-empty-state
-                    :md-label="`No unbilled procedures found`"
-                    md-description="To create invoice, firstly please approve plan, and select unbilled procedures here"
+                    :md-label="$t(`${$options.name}.noUnbilledProceduresTitle`)"
+                    :md-description="$t(`${$options.name}.noUnbilledProceduresDescription`)"
                 >
-                    <md-button class="md-simple md-primary" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`">Go to plans</md-button>
-                    <md-button v-if="patient.invoices" class="md-primary" :to="`/${$i18n.locale}/patient/${patient.ID}/billing/invoices`"
-                        >Go to Invoices</md-button
-                    >
+                    <md-button class="md-simple md-primary" :to="`/${$i18n.locale}/patient/${patient.ID}/treatment`">
+                        {{ $t(`${$options.name}.goToPlans`) }}
+                    </md-button>
+                    <md-button v-if="patient.invoices" class="md-primary" :to="`/${$i18n.locale}/patient/${patient.ID}/billing/invoices`">
+                        {{ $t(`${$options.name}.goToInvoices`) }}
+                    </md-button>
                 </md-table-empty-state>
             </template>
         </patient-nosology-table>
         <md-snackbar :md-position="'center'" :md-duration="10000" :md-active.sync="showSnackbar" md-persistent>
             <div class="snackbar-text-wrapper">
-                Selected:
-                <animated-number :value="selectedItems.length" />procedures for
+                {{ $t(`${$options.name}.selected`) }}
+                <animated-number :value="selectedItems.length" />
+                {{ $tc(`${$options.name}.proceduresFor`, selectedItems.length) }}
                 <animated-number :value="totalPrice" />
                 {{ currentClinic.currencyCode }}
             </div>
@@ -35,11 +38,18 @@
                     v-if="selectedItems.length === filteredItems.length"
                     class="md-simple"
                     @click="(selectedItems = []), (showSnackbar = false)"
-                    >Unselect</md-button
                 >
-                <md-button v-else class="md-simple" @click="selectedItems = filteredItems">Select all</md-button>
-                <md-button class="md-simple" @click="showSnackbar = false">Complete</md-button>
-                <md-button class="md-success" @click="showCreateInvoice()">Create invoice</md-button>
+                    {{ $t(`${$options.name}.unselect`) }}
+                </md-button>
+                <md-button v-else class="md-simple" @click="selectedItems = filteredItems">
+                    {{ $t(`${$options.name}.selectAll`) }}
+                </md-button>
+                <md-button class="md-simple" @click="showSnackbar = false">
+                    {{ $t(`${$options.name}.complete`) }}
+                </md-button>
+                <md-button class="md-success" @click="showCreateInvoice()">
+                    {{ $t(`${$options.name}.createInvoice`) }}
+                </md-button>
             </div>
         </md-snackbar>
     </div>
@@ -54,6 +64,7 @@ export default {
         ...components,
         PatientNosologyTable
     },
+    name: 'PatientBillingUnbiledProcedures',
     props: {},
     data() {
         return {
@@ -98,14 +109,14 @@ export default {
         headers() {
             const headers = [
                 {
-                    title: 'Ballance',
+                    title: this.$t(`${this.$options.name}.balance`),
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     valuePrefix: 2,
                     valuePostfix: this.currentClinic.currencyCode
                 },
                 {
-                    title: 'Unbilled Procedures',
+                    title: this.$t(`${this.$options.name}.unbilledProcedures`),
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     subTitleToFix: 0,
@@ -114,7 +125,7 @@ export default {
                     valuePostfix: null
                 },
                 {
-                    title: 'All invoices',
+                    title: this.$t(`${this.$options.name}.allInvoices`),
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     subTitleToFix: 0,
@@ -123,7 +134,7 @@ export default {
                     valuePostfix: null
                 },
                 {
-                    title: 'Discounts',
+                    title: this.$t(`${this.$options.name}.discounts`),
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     subTitleToFix: 0,
@@ -132,7 +143,7 @@ export default {
                     valuePostfix: null
                 },
                 {
-                    title: 'Tax',
+                    title: this.$t(`${this.$options.name}.tax`),
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     subTitleToFix: 0,

@@ -8,11 +8,8 @@
             @onSelected="onSelected"
         >
             <template slot="emptyState">
-                <md-table-empty-state
-                    :md-label="`No invoices found`"
-                    md-description="To create invoice, firstly please approve plan, and select unbilled procedures here"
-                >
-                    <md-button class="md-primary">Create invoice</md-button>
+                <md-table-empty-state :md-label="$t(`${$options.name}.noInvoiceTitle`)" :md-description="$t(`${$options.name}.noInvoiceDescription`)">
+                    <md-button class="md-primary">{{ $t(`${$options.name}.createInvoice`) }}</md-button>
                 </md-table-empty-state>
             </template>
         </patient-nosology-table>

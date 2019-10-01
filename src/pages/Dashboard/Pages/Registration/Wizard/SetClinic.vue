@@ -1,7 +1,7 @@
 <template>
     <div>
         <h5 class="info-text">
-            Set your clinic
+            <label>{{ $t(`${$options.name}.setClinic`) }}</label>
         </h5>
         <div class="md-layout md-gutter">
             <div class="md-layout-item md-size-100 md-small-size-100">
@@ -22,7 +22,7 @@
                         <input ref="imageInserter" type="file" accept="image/*" @change="onFileChange" />
                     </div>
                     <h6 class="description">
-                        Choose Clinic Logo
+                        <label>{{ $t(`${$options.name}.chooseClinicLogo`) }}</label>
                     </h6>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                     ]"
                 >
                     <md-icon>business</md-icon>
-                    <label>Clinic Name</label>
+                    <label>{{ $t(`${$options.name}.clinicName`) }}</label>
                     <md-input
                         ref="clinicName"
                         v-model="clinicName"

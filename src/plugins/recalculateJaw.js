@@ -7,7 +7,7 @@ export default function recalculateJaw(jawEthalon, patientItems) {
         patientItems[itemType].forEach(item => {
             //! переделать после реализации в беке
             // eslint-disable-next-line no-constant-condition
-            if (true || item.showInJaw) {
+            if (true || (item.showInJaw && item.teeth)) {
                 Object.keys(item.teeth).forEach(toothId => {
                     Object.keys(item.teeth[toothId]).forEach(kLocation => {
                         if (kLocation in calcJaw[itemType][toothId]) {

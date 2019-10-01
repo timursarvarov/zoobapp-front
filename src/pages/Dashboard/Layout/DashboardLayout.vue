@@ -12,11 +12,11 @@
             <mobile-menu />
             <template slot="links">
                 <sidebar-item v-if="$route.meta.rtlActive" :link="{ name: 'لوحة القيادةة', icon: 'dashboard', path: `/${$i18n.locale}/dashboard` }" />
-                <sidebar-item v-else :link="{ name: 'Dashboard', icon: 'dashboard', path: `/${$i18n.locale}/dashboard` }" />
+                <sidebar-item v-else :link="{ name: $t(`${$options.name}.dashbord`), icon: 'dashboard', path: `/${$i18n.locale}/dashboard` }" />
                 <sidebar-item v-if="$route.meta.rtlActive" :link="{ name: 'التقويم', icon: 'date_range', path: `/${$i18n.locale}/calendar` }" />
-                <sidebar-item v-else :link="{ name: 'Calendar', icon: 'date_range', path: `/${$i18n.locale}/calendar` }" />
+                <sidebar-item v-else :link="{ name: $t(`${$options.name}.calendar`), icon: 'date_range', path: `/${$i18n.locale}/calendar` }" />
 
-                <sidebar-item :link="{ name: 'Patients', icon: 'supervised_user_circle', path: `/${$i18n.locale}/patients` }" />
+                <sidebar-item :link="{ name: $t(`${$options.name}.patients`), icon: 'supervised_user_circle', path: `/${$i18n.locale}/patients` }" />
                 <sidebar-item
                     v-if="patient.ID !== null"
                     :link="{
@@ -30,18 +30,30 @@
                     }"
                     class="separated-down"
                 />
-                <sidebar-item :link="{ name: 'Settings', icon: 'settings' }" class="separated-down">
+                <sidebar-item :link="{ name: $t(`${$options.name}.settings`), icon: 'settings' }" class="separated-down">
                     <sidebar-item
-                        :link="{ name: 'Clinic Settings', icon: 'image', path: `/${$i18n.locale}/clinic/${selectedClinic.ID || 2}/settings` }"
+                        :link="{
+                            name: $t(`${$options.name}.clinicSettings`),
+                            icon: 'image',
+                            path: `/${$i18n.locale}/clinic/${selectedClinic.ID || 2}/settings`
+                        }"
                     />
-                    <sidebar-item :link="{ name: 'Procedures', path: `/${$i18n.locale}/clinic/${selectedClinic.ID || 2}/procedures` }" />
-                    <sidebar-item :link="{ name: 'Manipulations', path: `/${$i18n.locale}/clinic/${selectedClinic.ID}/manipulations` }" />
-                    <sidebar-item :link="{ name: 'Consumables', path: `/${$i18n.locale}/clinic/${selectedClinic.ID}/consumables` }" />
-                    <sidebar-item :link="{ name: 'Payment', path: 'payment' }" />
-                    <sidebar-item :link="{ name: 'Notifications', path: 'notifications' }" />
+                    <sidebar-item
+                        :link="{ name: $t(`${$options.name}.myProfile`), icon: 'account_circle', path: `/${$i18n.locale}/settings/user/` }"
+                    />
+                    <sidebar-item
+                        :link="{ name: $t(`${$options.name}.procedures`), path: `/${$i18n.locale}/clinic/${selectedClinic.ID || 2}/procedures` }"
+                    />
+                    <sidebar-item
+                        :link="{ name: $t(`${$options.name}.manipulations`), path: `/${$i18n.locale}/clinic/${selectedClinic.ID}/manipulations` }"
+                    />
+                    <sidebar-item
+                        :link="{ name: $t(`${$options.name}.consumables`), path: `/${$i18n.locale}/clinic/${selectedClinic.ID}/consumables` }"
+                    />
+                    <sidebar-item :link="{ name: $t(`${$options.name}.payment`), path: 'payment' }" />
+                    <sidebar-item :link="{ name: $t(`${$options.name}.notifications`), path: 'notifications' }" />
                 </sidebar-item>
                 <template v-if="process === 'development'">
-                    <sidebar-item :link="{ name: 'My Profile', icon: 'account_circle', path: `/${$i18n.locale}/settings/user/` }" />
                     <sidebar-item v-if="$route.meta.rtlActive" :link="{ name: 'صفحات', icon: 'image' }">
                         <sidebar-item :link="{ name: 'التسعير', path: `/${$i18n.locale}/pricing` }" />
                         <sidebar-item :link="{ name: 'دعم رتل', path: `/${$i18n.locale}/pages-rtl` }" />
@@ -55,7 +67,7 @@
                         <sidebar-item :link="{ name: 'Pricing', path: `/${$i18n.locale}/pricing` }" />
                         <sidebar-item :link="{ name: 'RTL Support', path: `/${$i18n.locale}/page-rtl` }" />
                         <sidebar-item :link="{ name: 'Timeline', path: `/${$i18n.locale}/pages-timeline` }" />
-                        <sidebar-item :link="{ name: 'Login', path: `/${$i18n.locale}/login` }" />
+                        <sidebar-item :link="{ name: 'login', path: `/${$i18n.locale}/login` }" />
                         <sidebar-item :link="{ name: 'Register', path: `/${$i18n.locale}/register` }" />
                         <sidebar-item :link="{ name: 'Lock Screen', path: `/${$i18n.locale}/lock` }" />
                         <sidebar-item :link="{ name: 'User Profile', path: `/${$i18n.locale}/pages-user` }" />
@@ -179,8 +191,8 @@ export default {
         backgroundImage() {
             return SIDEBAR_BACKGROUND_URL;
         },
-        process(){
-            return process.env.NODE_ENV
+        process() {
+            return process.env.NODE_ENV;
         }
     },
     mounted() {

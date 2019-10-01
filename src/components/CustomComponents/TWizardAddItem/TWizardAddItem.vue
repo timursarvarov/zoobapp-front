@@ -11,11 +11,11 @@
                 >
                     <template slot="header">
                         <h5 class="title">
-                            {{ singleItemName | capitilize }}
-                            <span v-if="itemToCreate.ID"
-                                >edit: <small>ID {{ itemToCreate.ID }}</small></span
-                            >
-                            <span v-else>adding:</span>
+                            {{ $t(`${$options.name}.${singleItemName}`) }}
+                            <span v-if="itemToCreate.ID">
+                                {{ $t(`${$options.name}.edit`) }}:
+                            <small>ID {{ itemToCreate.ID }}</small></span>
+                            <span v-else>{{ $t(`${$options.name}.adding`) }}:</span>
                             &nbsp;
                             <b>{{ selectedItem.code }}</b>
                             {{ selectedItem.title }}
@@ -23,13 +23,17 @@
                         </h5>
                         <span>
                             <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
-                                <span v-if="isEmpty(itemToCreate.teeth)">Please selesct tooth</span>
+                                <span v-if="isEmpty(itemToCreate.teeth)">
+                                    {{ $t(`${$options.name}.selectTooth`) }}
+                                    </span>
                                 <span v-else>
                                     <slide-y-down-transition>
                                         <span v-show="!isEmpty(originalItem.locations)">For:</span>
                                     </slide-y-down-transition>
                                     <slide-y-down-transition>
-                                        <span v-show="isEmpty(originalItem.locations)">Teeth with disease area:</span>
+                                        <span v-show="isEmpty(originalItem.locations)">
+                                            {{ $t(`${$options.name}.teethWithLocations`) }}
+                                        </span>
                                     </slide-y-down-transition>
                                 </span>
                                 <transition-group name="list">
@@ -42,7 +46,7 @@
                     </template>
                     <wizard-tab v-if="showTab('locations')" name="locations" :before-change="() => validateStep('step1')">
                         <template slot="label">
-                            Locations
+                            {{ $t(`${$options.name}.locations`) }}
                         </template>
                         <t-item-tooth-locations
                             ref="step1"
@@ -61,7 +65,7 @@
 
                     <wizard-tab v-if="showTab('manipulations')" name="manipulations" :before-change="() => validateStep('step2')">
                         <template slot="label">
-                            Manipulations
+                            {{ $t(`${$options.name}.manipulations`) }}
                         </template>
                         <t-item-manipulations
                             ref="step2"
@@ -75,19 +79,19 @@
                     </wizard-tab>
                     <wizard-tab v-if="showTab('files')" name="files" :before-change="() => validateStep('step3')">
                         <template slot="label">
-                            Files
+                            {{ $t(`${$options.name}.files`) }}
                         </template>
                         <t-item-files ref="step3" :size="jawListSize" />
                     </wizard-tab>
                     <wizard-tab v-if="showTab('description')" name="description" :before-change="() => validateStep('step4')">
                         <template slot="label">
-                            Description
+                            {{ $t(`${$options.name}.description`) }}
                         </template>
                         <t-item-description ref="step4" v-model="descriptionLocal" :size="jawListSize" :descriptions="originalDescriptions" />
                     </wizard-tab>
                     <wizard-tab v-if="showTab('appointment')" name="appointment" :before-change="() => validateStep('step5')">
                         <template slot="label">
-                            Appointment
+                            {{ $t(`${$options.name}.appointment`) }}
                         </template>
                         <t-item-appointment ref="step5" :show-appointment="showAppointment" :size="jawListSize" />
                     </wizard-tab>
@@ -299,7 +303,7 @@ export default {
                         error => {
                             this.$store.dispatch(NOTIFY, {
                                 settings: {
-                                    message: 'error.response.data.error',
+                                    message: error.response.data.error,
                                     type: 'warning'
                                 }
                             });
@@ -336,7 +340,7 @@ export default {
                         error => {
                             this.$store.dispatch(NOTIFY, {
                                 settings: {
-                                    message: 'error.response.data.error',
+                                    message: error.response.data.error,
                                     type: 'warning'
                                 }
                             });
@@ -442,14 +446,6 @@ export default {
             if (ref === 'step1') {
                 if (!this.$refs[ref]) return false;
                 return this.$refs[ref].validate().then(res => {
-                    if (!res) {
-                        this.$store.dispatch(NOTIFY, {
-                            settings: {
-                                message: 'Please choose tooth locations',
-                                type: 'warning'
-                            }
-                        });
-                    }
                     if (res) {
                         return Promise.resolve(this.saveItem());
                     }
