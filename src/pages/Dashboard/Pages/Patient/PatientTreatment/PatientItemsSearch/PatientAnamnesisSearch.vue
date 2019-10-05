@@ -66,6 +66,9 @@ export default {
     watch: {
         lang(val) {
             this.getItems(val);
+        },
+        ageCategory() {
+            this.recalculateItemsLocal = !this.recalculateItemsLocal;
         }
     },
     created() {

@@ -62,28 +62,6 @@
                                                                     />
                                                                 </template>
                                                             </t-print-form-patient-plan>
-
-                                                            <!-- <div class="print-form__page__block">
-                                                                <t-print-form-patient-jaw :patient-props="patientProps" />
-                                                            </div>
-                                                            <div class="print-form__page__block">
-                                                                    <t-print-form-patient-procedure :procedure-id="3" />
-                                                                </div>
-                                                            <div v-for="(planID, i) in selectedPlans" :key="i" >
-                                                            <t-print-form-patient-plan
-                                                                v-for="(planID, i) in selectedPlans"
-                                                                :planID="planID"
-                                                                :num="i"
-                                                                :key="i"
-                                                            >
-                                                                <template slot="procedures" slot-scope="{ procedureId, index, showManipulations }">
-                                                                    <t-print-form-patient-procedure
-                                                                        :showManipulations="showManipulationsGlobal && showManipulations"
-                                                                        :num="index + 1"
-                                                                        :procedure-id="procedureId"
-                                                                    />
-                                                                </template>
-                                                            </t-print-form-patient-plan>-->
                                                         </div>
                                                     </td>
                                                 </tr>

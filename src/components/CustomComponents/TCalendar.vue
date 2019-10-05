@@ -1,5 +1,6 @@
 <template>
     <FullCalendar
+        :key="lang"
         ref="fullCalendar"
         class="t-f-calendar"
         :header="{
@@ -16,6 +17,13 @@
         :select-mirror="true"
         :local="lang"
         :events="events"
+        :buttonText="{
+            today: $t(`${$options.name}.today`),
+            month: $t(`${$options.name}.month`),
+            week: $t(`${$options.name}.week`),
+            day: $t(`${$options.name}.day`),
+            list: $t(`${$options.name}.list`)
+        }"
         @dateClick="handleDateClick"
         @select="handleDateSelect"
     />
@@ -39,6 +47,9 @@ export default {
     name: 'TCallendar',
     components: {
         FullCalendar
+    },
+    beforeDestroy: function() {
+        this.$refs.fullCalendar.destroy;
     },
     data() {
         return {
@@ -94,14 +105,14 @@ export default {
                     title: 'Click for Creative Tim',
                     start: new Date(y, m, 21),
                     end: new Date(y, m, 22),
-                    url: 'http://www.creative-tim.com/',
+                    url: 'http://www.zoobapp.com/',
                     className: 'event-orange'
                 },
                 {
                     title: 'Click for Google',
                     start: new Date(y, m, 21),
                     end: new Date(y, m, 22),
-                    url: 'http://www.creative-tim.com/',
+                    url: 'http://www.zoobapp.com/',
                     className: 'event-orange'
                 }
             ]
@@ -130,25 +141,17 @@ export default {
         },
         initiateCalendar() {
             this.calendarApi = this.$refs.fullCalendar.getApi();
-            // this.calendarApi.setOption('locale', this.lang);
+            this.calendarApi.setOption('locale', this.lang);
             // this.calendarApi.setOption('timeZoneParam', 'UTC');
         }
     },
     computed: {
         ...mapGetters({
-            user: 'getProfile'
+            user: 'getProfile',
+            lang: 'getLang'
         }),
         getNamedTimeZone() {
             return null;
-        },
-        lang() {
-            if (this.user.lang === 1) {
-                return 'en';
-            }
-            if (this.user.lang === 2) {
-                return 'ru';
-            }
-            return 'en';
         },
         locales() {
             return [ruLocale];

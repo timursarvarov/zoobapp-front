@@ -15,7 +15,7 @@
                             :disable-first-item-select-on-enter="true"
                             item-text="text"
                             item-value="title"
-                            :placeholder="selectedDescription ? '' : 'Select description'"
+                            :placeholder="selectedDescription ? '' : $t(`${$options.name}.selectDescription`)"
                             @focus="coolSelectFocus = true"
                             @blur="coolSelectFocus = false"
                             @select="setDescription"
@@ -33,9 +33,9 @@
                             </template>
                             <template slot="no-data">
                                 <div class="md-layout" style="display: flex; white-space: pre-wrap;oveflow:hidden;">
-                                    <span class="md-layout-item md-size-100" style="white-space: pre-wrap;oveflow:hidden;"
-                                        >No procedures were found.</span
-                                    >
+                                    <span class="md-layout-item md-size-100" style="white-space: pre-wrap;oveflow:hidden;">
+                                        {{ $t(`${$options.name}.selectDescription`) }}
+                                    </span>
                                 </div>
                             </template>
                         </cool-select>
@@ -50,7 +50,7 @@ import TWuswug from '@/components/CustomComponents/TWuswug';
 import { CoolSelect } from 'vue-cool-select';
 
 export default {
-    name: 't-item-description',
+    name: 'TItemDescription',
     components: {
         TWuswug,
         CoolSelect

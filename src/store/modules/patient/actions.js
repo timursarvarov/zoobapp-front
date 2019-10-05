@@ -60,11 +60,10 @@ export default {
         const patientItems = {
             procedures: rootGetters.getPatientCurrentAndApprovedPlanProcedures,
             diagnosis: rootGetters.getPatientDiagnosis,
-            ananmnesis: rootGetters.getPatientAnamnesis
+            anamnesis: rootGetters.getPatientAnamnesis
         };
 
         // const startTime = performance.now();
-
         const jaw = recalculateJaw(rootGetters.jawEthalon, patientItems);
         // const duration = performance.now() - startTime;
         // console.log(`someMethodIThinkMightBeSlow took ${duration}ms`);
@@ -362,6 +361,86 @@ export default {
                     reject(err);
                 });
         }),
+    [PATIENT_ANAMNES_SET]: ({ commit, state, getters, dispatch }, { anamnes }) =>
+        new Promise((resolve, reject) => {
+            commit(PATIENT_PARAM_SET, {
+                paramName: 'status',
+                paramValue: 'loading'
+            });
+            axios
+                .post(
+                    '/',
+                    JSON.stringify({
+                        jsonrpc: '2.0',
+                        method: 'Patients.AddAnamnes',
+                        params: {
+                            patientID: state.ID,
+                            planID: getters.getCurrentPlanID,
+                            catalogProcedureID: anamnes.catalogProcedureID,
+                            description: anamnes.description,
+                            teeth: anamnes.teeth
+                        },
+                        id: 1
+                    })
+                )
+                .then(resp => {
+                    console.log(resp)
+                    if (resp.data.error) {
+                        commit(PATIENT_PARAM_SET, {
+                            paramName: 'status',
+                            paramValue: 'error'
+                        });
+                        reject(resp.data.error);
+                    }
+                    commit(PATIENT_PARAM_SET, {
+                        paramName: 'status',
+                        paramValue: 'success'
+                    });
+                    const anamnesN = resp.data.result;
+                    anamnesN.justAdded = true;
+                    // добавляем процедуру в массиы процедур
+                    commit(PATIENT_PARAM_PUSH, {
+                        paramName: 'anamnesis',
+                        paramValue: anamnesN,
+                        paramKey: `${anamnesN.ID}`
+                    });
+                    dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+                        params: {
+                            paramName: 'anamnesis',
+                            paramIndex: anamnesN.ID,
+                            subParamName: 'justAdded',
+                            subParamValue: false
+                        }
+                    });
+                    // записываем дефолтные манипуляции
+                    if (anamnesN.manipulations) {
+                        anamnesN.manipulations.forEach(m => {
+                            commit(PATIENT_PARAM_PUSH, {
+                                paramName: 'manipulations',
+                                paramValue: { ...m, justAdded: true },
+                                paramKey: `${m.ID}`
+                            });
+                            dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+                                params: {
+                                    paramName: 'manipulations',
+                                    paramIndex: m.ID,
+                                    subParamName: 'justAdded',
+                                    subParamValue: false
+                                }
+                            });
+                        });
+                    }
+                    dispatch(PATIENT_JAW_UPDATE);
+                    resolve(anamnesN);
+                })
+                .catch(err => {
+                    commit(PATIENT_PARAM_SET, {
+                        paramName: 'status',
+                        paramValue: 'error'
+                    });
+                    reject(err);
+                });
+        }),
     [PATIENT_PROCEDURE_SET]: ({ commit, state, getters, dispatch }, { procedure }) =>
         new Promise((resolve, reject) => {
             commit(PATIENT_PARAM_SET, {
@@ -377,7 +456,7 @@ export default {
                         params: {
                             patientID: state.ID,
                             planID: getters.getCurrentPlanID,
-                            catalogProcedureID: procedure.procedureID,
+                            catalogProcedureID: procedure.catalogProcedureID,
                             teeth: procedure.teeth
                         },
                         id: 1
@@ -654,7 +733,7 @@ export default {
                         paramName: 'procedures',
                         paramIndex: manipulationParamsN.procedureID,
                         subParamName: 'manipulations',
-                        subParamIndex:state.procedures[manipulationParamsN.procedureID].manipulations
+                        subParamIndex: state.procedures[manipulationParamsN.procedureID].manipulations
                             ? state.procedures[manipulationParamsN.procedureID].manipulations.length
                             : 0,
                         subParamKey: manipulationParamsN.ID,
@@ -790,22 +869,22 @@ export default {
         });
         dispatch(PATIENT_JAW_UPDATE);
     },
-    [PATIENT_ANAMNES_SET]: ({ commit, state, dispatch }, { anamnes }) => {
-        commit(PATIENT_PARAM_PUSH, {
-            paramName: 'anamnesis',
-            paramKey: state.anamnesis && state.anamnesis.length ? state.anamnesis.length : 0,
-            paramValue: anamnes
-        });
-        dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
-            params: {
-                paramName: 'anamnesis',
-                paramIndex: anamnes.ID,
-                subParamName: 'justAdded',
-                subParamValue: false
-            }
-        });
-        dispatch(PATIENT_JAW_UPDATE);
-    },
+    // [PATIENT_ANAMNES_SET]: ({ commit, state, dispatch }, { anamnes }) => {
+    //     commit(PATIENT_PARAM_PUSH, {
+    //         paramName: 'anamnesis',
+    //         paramKey: state.anamnesis && state.anamnesis.length ? state.anamnesis.length : 0,
+    //         paramValue: anamnes
+    //     });
+    //     dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+    //         params: {
+    //             paramName: 'anamnesis',
+    //             paramIndex: anamnes.ID,
+    //             subParamName: 'justAdded',
+    //             subParamValue: false
+    //         }
+    //     });
+    //     dispatch(PATIENT_JAW_UPDATE);
+    // },
     [PATIENT_SUB_PARAM_SET]: ({ commit }, { params }) =>
         new Promise(resolve => {
             commit(PATIENT_SUB_PARAM_SET, params);

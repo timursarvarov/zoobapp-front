@@ -2,6 +2,7 @@
 /* eslint-disable indent */
 export default {
     getPatient: state => state,
+    ageCategory: state => state.ageCategory,
     getPatientAgeCategory: state => state.ageCategory,
     getPatientStatus: state => state.status,
     isPatient: state => !!state.ID,
@@ -45,8 +46,22 @@ export default {
         }
         return plansIDs;
     },
-    getPatientDiagnosis: state => state.diagnosis || [],
-    getPatientAnamnesis: state => state.anamnesis || [],
+    getPatientDiagnosis: state => {
+        let diagnosis =[];
+        if(state.diagnosis){{
+            diagnosis = Object.values(state.diagnosis);
+        }}
+        return diagnosis;
+
+    },
+    getPatientAnamnesis: state => {
+        let anamnesis =[];
+        if(state.anamnesis){{
+            anamnesis = Object.values(state.anamnesis);
+        }}
+        return anamnesis;
+
+    },
     getPatientCurrentPlanProcedures: (state, rootGetters) => {
         let procedures = [];
         const planID = rootGetters.getCurrentPlanID;
@@ -170,7 +185,7 @@ export default {
     getPatientProcedureByID: state => ID =>
         state.procedures && state.procedures[ID] ? state.procedures[ID] : {},
     getPatientAnanmnesisByID: state => ID =>
-        state.ananmnesis && state.ananmnesis[ID] ? state.ananmnesis[ID] : {},
+        state.anamnesis && state.anamnesis[ID] ? state.anamnesis[ID] : {},
     getPatientDiagnosisByID: state => ID =>
         state.diagnosis && state.diagnosis[ID] ? state.diagnosis[ID] : {},
     getInvoicesAll: state =>

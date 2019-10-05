@@ -1,8 +1,8 @@
 <template>
     <div class="print_patient_jaw" :class="[{ 'hide-on-print': !showJaw }]">
         <md-subheader class="hide-on-print-actions">
-            Print: &nbsp;
-            <md-checkbox v-model="showJaw">Jaw</md-checkbox>
+            {{ $t(`${$options.name}.print`) }}: &nbsp;
+            <md-checkbox v-model="showJaw">{{ $t(`${$options.name}.jaw`) }}</md-checkbox>
         </md-subheader>
 
         <jaw

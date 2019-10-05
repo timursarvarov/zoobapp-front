@@ -3,8 +3,8 @@
         <small v-for="(m, i) in getManipulationsByProcedureID(procedureId)" :key="m.ID" class="items-manipulations_wrapper">
             <span class="text-left">{{ i + 1 }}. {{ m.title }}</span>
             <div class="text-right">
-                {{ m.qty }} * {{ m.price || 0 }} =
-                {{ m.totalPrice || 0 }}
+                {{ m.qty }} * {{ m.price || 0 | numSeparator }} =
+                {{ m.totalPrice || 0 | numSeparator }}
                 {{ currentClinic.currencyCode }}
             </div>
             <br />

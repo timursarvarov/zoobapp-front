@@ -189,7 +189,8 @@ export default {
             selectedClinic: 'getCurrentClinic'
         }),
         backgroundImage() {
-            return SIDEBAR_BACKGROUND_URL;
+            let backgroundImage = `url(${require('@/assets/images/bg/sidebar-6.jpg')})`;
+            return backgroundImage;
         },
         process() {
             return process.env.NODE_ENV;

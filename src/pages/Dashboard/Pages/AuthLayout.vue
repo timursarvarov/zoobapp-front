@@ -30,23 +30,27 @@
                                 <!-- </router-link> -->
                             </md-list-item>
                             <md-list-item @click="linkClick">
-                                <router-link to="pricing"> <md-icon>attach_money</md-icon>
-                                {{ $t(`${$options.name}.pricing`) }}
+                                <router-link to="pricing">
+                                    <md-icon>attach_money</md-icon>
+                                    {{ $t(`${$options.name}.pricing`) }}
                                 </router-link>
                             </md-list-item>
                             <md-list-item @click="linkClick">
-                                <router-link to="register"> <md-icon>person_add</md-icon>
-                                {{ $t(`${$options.name}.register`) }}
+                                <router-link to="register">
+                                    <md-icon>person_add</md-icon>
+                                    {{ $t(`${$options.name}.register`) }}
                                 </router-link>
                             </md-list-item>
                             <md-list-item @click="linkClick">
-                                <router-link to="login"> <md-icon>fingerprint</md-icon>
-                                {{ $t(`${$options.name}.login`) }}
+                                <router-link to="login">
+                                    <md-icon>fingerprint</md-icon>
+                                    {{ $t(`${$options.name}.login`) }}
                                 </router-link>
                             </md-list-item>
                             <md-list-item v-if="isProfileLoaded" @click="linkClick">
-                                <router-link to="lock"> <md-icon>lock_open</md-icon>
-                                {{ $t(`${$options.name}.lock`) }}
+                                <router-link to="lock">
+                                    <md-icon>lock_open</md-icon>
+                                    {{ $t(`${$options.name}.lock`) }}
                                 </router-link>
                             </md-list-item>
                             <t-language-switcher />
@@ -83,8 +87,7 @@
                             </ul>
                         </nav>
                         <div class="copyright text-center">
-                            &copy; {{ new Date().getFullYear() }}
-                            <a href="https://www.creative-tim.com/?ref=mdf-vuejs" target="_blank">Creative Tim</a>, made with
+                            &copy; {{ new Date().getFullYear() }} <a href="https://www.zoobapp.com/" target="_blank">Owl Team</a>, made with
                             <i class="fa fa-heart heart" /> for a better web
                         </div>
                     </div>
@@ -140,8 +143,7 @@ export default {
             //     Lock: './img/backround-register.jpg',
             // };
             return {
-                // backgroundImage: `url(${images[this.$route.name]})`,
-                backgroundImage: `url(${LOGIN_BACKGROUND_URL})`
+                backgroundImage: `url(${require('@/assets/images/bg/backround-register.jpg')})`
             };
         },
         setPageClass() {

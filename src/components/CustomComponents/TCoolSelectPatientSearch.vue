@@ -31,7 +31,7 @@
             </md-button>
         </template>
         <template slot="input-start">
-            <label for="input">Search for patient</label>
+            <label for="input"> {{ $t(`${$options.name}.label`) }}</label>
         </template>
         <template slot="input-after">
             <md-progress-bar v-if="searching" class="underline-progress-bar" :md-stroke="2" md-mode="indeterminate" />
@@ -41,19 +41,21 @@
                 <div class="md-layout">
                     <div>
                         <md-subheader class="text-center">
-                            Type at least 3 letters to search by phone, email or name
+                            {{ $t(`${$options.name}.searchMin`) }}
                         </md-subheader>
                     </div>
                 </div>
             </div>
             <div v-else-if="noData">
                 <div class="md-layout">
-                    <div class="md-size-100 md-layout md-alignment-center-center" style="white-space: pre-wrap;oveflow:hidden; padding: 0 0 15px 0;">
-                        <span class="md-layout-item">No patients matching "{{ searchText }}" were found.</span>
+                    <div class="md-size-100 md-layout md-alignment-center-center" style="oveflow:hidden; padding: 0 0 15px 0;">
+                        <span class="md-layout-item">
+                            {{ $t(`${$options.name}.noFound`, { searchText }) }}
+                        </span>
                     </div>
                     <div class="md-layout md-layout-item md-alignment-center md-size-100">
                         <md-button class="md-success md-sm" @click="showPatientAddForm()">
-                            Create patient
+                            {{ $t(`${$options.name}.createPatient`) }}
                         </md-button>
                     </div>
                 </div>
@@ -61,11 +63,11 @@
 
             <div v-else-if="serverError">
                 <md-subheader class="text-center">
-                    Connection problems
+                    {{ $t(`${$options.name}.connectionProblems`) }}
                 </md-subheader>
 
                 <md-button class="md-success md-layout-item md-sm" @click="getPatients()">
-                    Retry
+                    {{ $t(`${$options.name}.retry`) }}
                 </md-button>
             </div>
         </template>
@@ -87,22 +89,6 @@
                         <span v-if="item.phone">{{ '+' + item.phone }}</span>
                     </div>
                 </md-button>
-                <!-- <md-button class="IZ-select-button btn-avatar">
-                    <t-avatar
-                        class="search-avatar"
-                        :textToColor="item.ID"
-                        :imageSrc="item.avatar"
-                        :title="item.firstName + ' ' + item.lastName"
-                        :notification="item.allergy && item.allergy.length ? 'A' : ''"
-                    />
-                    <div class="md-serched-list-item-text text-left">
-                        <span>
-                            {{ item.firstName | capitilize}} {{ item.lastName | capitilize }}
-                            <br />
-                        </span>
-                        <span v-if="item.phone">{{ "+" + item.phone }}</span>
-                    </div>
-                </md-button> -->
             </div>
         </template>
         <template v-if="patients ? patients.length > 1 : false" slot="after-items">
@@ -114,18 +100,18 @@
                         </div>
                         <div slot="no-results">
                             <div class="md-title text-center">
-                                No more patients
+                                {{ $t(`${$options.name}.noMore`) }}
                             </div>
                         </div>
                         <div slot="error" slot-scope="{ trigger }">
                             <div class="md-layout">
                                 <div class="md-layout-item" style="padding: 15px 0;">
                                     <md-subheader class="text-center">
-                                        Oops! Connection problems
+                                        {{ $t(`${$options.name}.connectionProblems`) }}
                                     </md-subheader>
                                     <div class="md-layout-item md-size-100">
                                         <md-button class="md-primary md-layout-item mx-auto md-sm" @click="trigger">
-                                            Retry
+                                            {{ $t(`${$options.name}.retry`) }}
                                         </md-button>
                                     </div>
                                 </div>
@@ -137,8 +123,10 @@
         </template>
         <template v-if="totalPatients" slot="after-items-fixed">
             <div style="display: flex;">
-                <div style="flex-grow:1" class="md-layout-item">
-                    <md-subheader class="text-center"> Total found: {{ totalPatients }} patients </md-subheader>
+                <div style="flex-grow:1" class="md-layout-item md-layout text-center">
+                    <small style="padding: 4px; text-align: center;" class="md-layout-item ml-auto md-caption text-center">{{
+                        $tc(`${$options.name}.total`, totalPatients)
+                    }}</small>
                 </div>
             </div>
         </template>
@@ -163,6 +151,7 @@ import { CoolSelect } from "vue-cool-select";
 import InfiniteLoading from "vue-infinite-loading";
 
 export default {
+    name: 'TCoolSelectPatientSearch',
     components: {
         tAvatar,
         CoolSelect,

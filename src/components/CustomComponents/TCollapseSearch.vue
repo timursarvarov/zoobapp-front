@@ -75,10 +75,13 @@
 
                                     <div class="md-list-item-text">
                                         <span v-html="item.title" />
-                                        <small v-if="!lodash.isEmpty(item.locations) && selectedTeeth.length == 0" class="description text-warning">
-                                            Please firstly choose a tooth
+                                        <small
+                                            v-if="!lodash.isEmpty(item.locations) && selectedTeeth.length == 0"
+                                            class="description md-caption text-warning"
+                                        >
+                                            {{ $t(`${$options.name}.chooseTooth`) }}
                                         </small>
-                                        <small v-else class="description" v-html="item.description" />
+                                        <small v-else class="description md-caption" v-html="item.description" />
                                     </div>
 
                                     <md-button

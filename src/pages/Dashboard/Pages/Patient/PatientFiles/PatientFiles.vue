@@ -15,7 +15,8 @@
                     slot="emptyState"
                     md-icon="cloud_upload"
                     :md-label="$t(`${$options.name}.addFileTitle`)"
-                    :md-description="$t(`${$options.name}.addFileDescription`)" >
+                    :md-description="$t(`${$options.name}.addFileDescription`)"
+                >
                     <div>
                         <b> {{ $tc(`${$options.name}.totalFiles`, files.length) }} ({{ totalFiles | formatBytes }})</b>
                     </div>

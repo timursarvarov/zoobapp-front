@@ -25,9 +25,7 @@
                         </md-field>
                     </div>
                     <div slot="footer">
-                        <md-button class="md-info" @click="createNote()">
-                            Add note {{ $t(`${$options.name}.addNote`) }}
-                        </md-button>
+                        <md-button class="md-info" @click="createNote()"> Add note {{ $t(`${$options.name}.addNote`) }} </md-button>
                     </div>
                 </time-line-item>
                 <time-line-item

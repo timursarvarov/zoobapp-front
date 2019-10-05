@@ -898,7 +898,8 @@
     .print-form .print-patient-procedure .teeth-block__title {
       margin-left: 5px;
       margin-right: 5px;
-      display: flex; }
+      display: flex;
+      width: 100px; }
     .print-form .print_patient_plan__procedure .print-patient-procedure .teeth-block__teeth,
     .print-form .print-patient-procedure .teeth-block__teeth {
       margin-right: 5px;
@@ -941,9 +942,6 @@
         margin-right: 5px;
         display: flex;
         align-items: center; }
-        .print-form .print_patient_plan__procedure .print-patient-procedure_manipulations__row .manipulation_code,
-        .print-form .print-patient-procedure_manipulations__row .manipulation_code {
-          width: 3%; }
         .print-form .print_patient_plan__procedure .print-patient-procedure_manipulations__row .manipulation_title,
         .print-form .print-patient-procedure_manipulations__row .manipulation_title {
           width: 45%; }
@@ -959,6 +957,9 @@
         .print-form .print_patient_plan__procedure .print-patient-procedure_manipulations__row .manipulation_total,
         .print-form .print-patient-procedure_manipulations__row .manipulation_total {
           max-width: 14%; }
+  .print-form .print_patient_plan__procedure .print-patient-procedure .description-wrapper,
+  .print-form .print-patient-procedure .description-wrapper {
+    padding: 15px 25px; }
 
 .print-form .print_patient_plan__header {
   border-bottom: 2px solid rgba(128, 128, 128, 0.171); }

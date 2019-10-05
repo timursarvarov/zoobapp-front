@@ -9,9 +9,7 @@
             <div class="md-layout-item md-size-100">
                 <md-field>
                     <md-icon>email</md-icon>
-                    <label>
-                    {{ $t(`${$options.name}.email`) }}
-                    </label>
+                    <label> zoom{{ $t(`${$options.name}.email`) }} </label>
                     <md-input v-model="email" v-validate="modelValidations.email" disabled data-vv-name="email" type="text" name="email" />
                 </md-field>
 

@@ -149,6 +149,15 @@
 		"phone": "Телефон",
 		"source": "Источник"
 	},
+	"PatientAnamnesisList": {
+		"complete": "Отметить как завершенный",
+		"createInvoice": "Создать счет",
+		"proceduresFor": "процедур на | процедура на  | процедур на | процедуры на",
+		"proceduresInAnamnes": "процедур в анамнезе | процедура в анамнезе| процедур в анамнезе | процедуры в анамнезе",
+		"selectAll": "Выбрать все",
+		"selected": "Выбранно",
+		"unselect": "Отменить выбор"
+	},
 	"PatientBilling": {
 		"invoices": "Счета-фактуры",
 		"payments": "Платежи",
@@ -195,6 +204,8 @@
 	"PatientFiles": {
 		"addFileDescription": "Кликните здесь или переместите несколько файлов сюда",
 		"addFileTitle": "Добавьте новый файл",
+		"addNewFiles": "Пожалуйста, добавьте новый файл",
+		"addNewFilesDescription": "Кликните здесь или переместите несколько файлов сюда",
 		"totalFiles": "Всего {count} файлов | Всего один файл | Всего {count} файла | Всего {count} файлов"
 	},
 	"PatientNosologyTable": {
@@ -205,8 +216,8 @@
 		"description": "@:common.description",
 		"editorTitle": "Установить столбцы таблицы",
 		"manipulations": "@:common.manipulations",
-		"noFoundDescription": " {currentType} не найдено Прокрутите вверх и создайте новый {currentType} .",
-		"noFoundTitle": "",
+		"noFoundDescription": "Ничего не найдено Прокрутите вверх и создайте новый элемент .",
+		"noFoundTitle": "Нечего показать",
 		"paginationItems": "{count} элементов | {count} элемента | {count} элементов",
 		"paginationNumFrom": "Отображен от {n} | Отображены от {n} | Отображено от {n} ",
 		"paginationNumTo": "до {n} из",
@@ -214,6 +225,7 @@
 		"planID": "План",
 		"price": "@:common.price",
 		"puginationNumForm": "Показано из {n} | Показано из {n} | Показано из {n}",
+		"scrollTop": "Прокрутить вверх ",
 		"state": "@:common.state",
 		"teeth": "@:common.teeth",
 		"title": "@:common.title",
@@ -236,7 +248,7 @@
 		"noPlansTitle": "Нет выбранных планов",
 		"noPlansWithIdDescription": "План с идентификатором {ID} не найден. Прокрутите вверх и создайте новый.",
 		"noPlansWithIdTitle": "Нет планов с идентификатором {{ID}}",
-		"scrollTop": "Scroll Top"
+		"scrollTop": "Прокрутить вверх "
 	},
 	"PatientProceduresList": {
 		"approve": "Утвердить план",
@@ -249,7 +261,7 @@
 		"noProceduresTitle": "Процедуры не найдены",
 		"planName": "Название плана",
 		"printPlan": "Печать плана",
-		"proceduresFor": "процедур на | процедура на  | процедур на | процедуры на",
+		"proceduresFor": "процедур на | процедура на  | процедуры на | процедур на",
 		"scrollTop": "Прокрутить вверх ",
 		"selectAll": "Выбрать все",
 		"selected": "Выбранно",
@@ -287,6 +299,8 @@
 		"created": "@:common.created",
 		"createdBy": "@:common.createdBy",
 		"editorTitle": "Установить порядок столбцов пациентов",
+		"email": "@:common.email",
+		"files": "Файлы",
 		"filterMode": "Режим фильтра",
 		"firstName": "@:common.firstName",
 		"lastName": "@:common.lastName",
@@ -295,7 +309,7 @@
 		"loadingErrorDescription": "Что-то не так с подключением",
 		"loadingErrorTitle": "Произошла ошибка",
 		"loadingTitle": "Загрузка...",
-		"name": "@:common.name",
+		"name": "Пациент",
 		"nothingFoundCreateNew": "Создать нового пациента",
 		"nothingFoundDescription": " Не найдено ни одного пациента по запросу \"{query}\" .\nПопробуйте другой поисковый запрос или создайте нового пациента.",
 		"nothingFoundTitle": "Пациенты не найдены",
@@ -307,7 +321,9 @@
 		"phone": "@:common.phone",
 		"rating": "@:common.rating",
 		"searchTitle": "Введите, чтобы найти пациента",
+		"source": "Источник",
 		"title": "Список пациентов",
+		"updated": "Oбновлен",
 		"yearsOld": "@:common.yearsOld"
 	},
 	"PlanAddForm": {
@@ -324,6 +340,65 @@
 		"email": "@:common.email",
 		"verification": "Верификация"
 	},
+	"Routes": {
+		"Authentication": "Аутентификация",
+		"Billing": "",
+		"Bio": "BIO",
+		"Buttons": "Кнопки",
+		"Calendar": "Календарь",
+		"Charts": "Графики",
+		"Clinic": "Клиника",
+		"Clinic Procedures": "Процедуры клиники",
+		"Clinic Settings": "Настройки клиники",
+		"Components": "Компоненты",
+		"Consumables": "Расходные материалы",
+		"Dashboard": "Статистика",
+		"Extended Forms": "Расширенные формы",
+		"Extended Tables": "Расширенные таблицы",
+		"Files": "Файлы",
+		"Forms": "Формы",
+		"Full Screen Map": "Карта полного экрана",
+		"Google Maps": "Карты Гугл",
+		"Grid System": "Сетка",
+		"Icons": "Иконки",
+		"Manipulations": "Манипуляции",
+		"Maps": "Карты",
+		"My Profile": "Мой профайл",
+		"Notes": "Заметки",
+		"Notifications": "Уведомления",
+		"Pages": "Страницы",
+		"Pagianted Tables": "Таблицы Pagianted",
+		"Panels": "панели",
+		"PatientTreatmentent": "Лечение пациента",
+		"PatientTreatmententItems": "PatientTreatmententItems",
+		"Patients": "Пациенты",
+		"Regular Forms": "Обычные формы",
+		"Regular Tables": "Обычные таблицы",
+		"Settings": "Настройки",
+		"Sweet Alert": "Sweet Alert",
+		"Tables": "таблицы",
+		"Timeline Page": "Страница временной шкалы",
+		"Treatment": "Лечение",
+		"Typography": "Типография",
+		"User Page": "Страница пользователя",
+		"Validation Forms": "Формы валидации",
+		"Vector Map": "Векторная карта",
+		"Widgets": "Виджеты",
+		"Wizard": "Wizard",
+		"anamnesis": "Анамнез",
+		"choose_clinic": "Выбор Клиники",
+		"diagnosis": "Диагнозы",
+		"invoices": "Счета-фактуры",
+		"lock": "Блокировка",
+		"login": "Авторизация",
+		"payments": "Платежи",
+		"plan": "План",
+		"pricing": "Цены",
+		"procedures": "Процедуры",
+		"register": "Регистрация",
+		"statistic": "Статистика",
+		"unbilledProcedures": "Неучтенные процедуры"
+	},
 	"SetAccount": {
 		"email": "@:common.email",
 		"firstName": "@:common.firstName",
@@ -339,11 +414,77 @@
 		"setClinic": "Настройте клинику",
 		"title": "Установите свою клинику"
 	},
+	"TCallendar": {
+		"day": "День",
+		"list": "Список",
+		"month": "Месяц",
+		"today": "Сегодня",
+		"week": "Неделя"
+	},
 	"TCollapseSearch": {
+		"chooseTooth": "Пожалуйста, сначала выберите зуб",
 		"search-anamnesis": "Поиск процедур",
 		"search-diagnosis": "Поиск Диагнозов",
 		"search-procedures": "Поиск процедур",
 		"showAll": "@:common.showAll"
+	},
+	"TCoolSelectPatientSearch": {
+		"connectionProblems": "Проблемы с подключением",
+		"createPatient": "Создать нового пациента",
+		"label": "Поиск пациентов",
+		"noFound": "Не найдено ни одного пациента, соответствующего \"{searchText}\" .",
+		"noMore": "Больше нет пациентов",
+		"retry": "Повторить",
+		"searchMin": "Введите не менее 3 букв для поиска по телефону, электронной почте или имени",
+		"total": "Пациенты не найдены | Один пациент найден | Найдено {count} пациентов | Найдено {count} пациента"
+	},
+	"TItemDescription": {
+		"selectDescription": "Выберите шаблон описания"
+	},
+	"TItemFiles": {
+		"addNewFiles": "Добавить новый файл",
+		"addNewFilesDescription": "Нажмите здесь или перетащите несколько файлов"
+	},
+	"TItemManipulations": {
+		"delete": "Удалить",
+		"deleteManipulation": "Удалить манипуляцию:",
+		"deleting": "Удаление ...",
+		"noManipulationsDescription": "Пожалуйста, выберите манипуляции",
+		"noManipulationsTitle": "Никаких манипуляций не найдено",
+		"noManipulationsWereFound": "Манипуляций не обнаружено",
+		"price": "@:common.price",
+		"qty": "Кол-во",
+		"selectManipulation": "Выберите манипуляцию",
+		"title": "Название",
+		"total": "Итоговая цена",
+		"totalManipulations": "Всего манипуляций",
+		"totalPrice": "Итоговая цена:"
+	},
+	"TPrintFormPatientBio": {
+		"address": "@:common.address",
+		"allergy": "@:common.allergy",
+		"birthday": "@:common.birthday",
+		"email": "@:common.email",
+		"jaw": "Челюсть",
+		"phone": "@:common.phone",
+		"print": "Распечатать"
+	},
+	"TPrintFormPatientHeader": {
+		"phone": "@:common.phone",
+		"url": "Веб-сайт"
+	},
+	"TPrintFormPatientJaw": {
+		"jaw": "Челюсть",
+		"print": "Распечатать:"
+	},
+	"TPrintFormPatientPlan": {
+		"manipulations": "Манипуляции",
+		"plan": "План",
+		"print": "Распечатать:",
+		"procedures": "Процедуры"
+	},
+	"TPrintFormPatientProcedure": {
+		"teeth": "Нет выбранных зубов | Один Зуб | {count} Зуба | {count}  Зубов "
 	},
 	"TTableEditor": {
 		"ID": "@:common.ID",
@@ -387,6 +528,9 @@
 		"selescTooth": "Пожалуйста, выберите зуб",
 		"teethWithLocations": "Зубы с выбранными локациями:",
 		"titleEdit": ""
+	},
+	"TWuswug": {
+		"writeSomething": "Напишите что-нибудь …"
 	},
 	"Teeth": {
 		"11": "Верхний правый центральный резец",
@@ -441,6 +585,14 @@
 		"83": "Нижний правый клык",
 		"84": "Нижний правый первый моляр",
 		"85": "Нижний правый второй моляр"
+	},
+	"TopNavBar": {
+		"addPatient": "Добавить пациента",
+		"lock": "Блокировка",
+		"logout": "Выйти",
+		"more": "Еще",
+		"myProfile": "Мой профайл",
+		"notifications": "Уведомления"
 	},
 	"UserCard": {
 		"aboutMe": "Обо мне",
@@ -512,6 +664,7 @@
 			"planName": "Требуется название плана",
 			"rPassword": "Пароли должны совпадать",
 			"required": "{0} обязательно для заполнения.",
+			"selectedManipID": "Есть несохраненные манипуляции",
 			"source": "Требуется источник",
 			"url": "Поле Веб Адресса  должно быть действительным URL",
 			"username": "Имя пользователя требуется"
@@ -582,6 +735,9 @@
 				"confirmed": "Пароли должны совпадать",
 				"required": "Требуется пароль"
 			},
+			"selectedManipID": {
+				"is_exist": "Есть несохраненные манипуляции"
+			},
 			"source": {
 				"min": "Поле источник должно содержать не менее {1} символов.",
 				"required": "Требуется источник"
@@ -597,6 +753,7 @@
 		"messages": {
 			"_default": "Поле {n} обязательно для заполнения",
 			"confirmed": "Поля должны совпадать",
+			"is_exist": "Есть несохраненные манипуляции",
 			"min": "Поле {_field_} должно содержать не менее {length} символов",
 			"required": "Поле {n} обязательно для заполнения",
 			"url": ""

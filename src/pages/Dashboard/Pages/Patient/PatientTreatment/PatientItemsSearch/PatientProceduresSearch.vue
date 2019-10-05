@@ -21,9 +21,7 @@
                 </md-button>
             </template>
             <div slot="empty-space">
-                <md-empty-state
-                    :md-label="$t(`${$options.name}.noPlansTitle`)"
-                    :md-description="$t(`${$options.name}.noPlansDescription`)">
+                <md-empty-state :md-label="$t(`${$options.name}.noPlansTitle`)" :md-description="$t(`${$options.name}.noPlansDescription`)">
                     <md-button class="md-success md-raised" @click="$emit('addPlan')">
                         {{ $t(`${$options.name}.addNewPlan`) }}
                     </md-button>
@@ -54,11 +52,11 @@ export default {
             type: Array,
             default: () => []
         },
-        ageCategory: {
-            type: String,
-            default: () => 'adultTeeth'
-        },
         hideSlot: {
+            type: Boolean,
+            default: () => false
+        },
+        recalculateItems: {
             type: Boolean,
             default: () => false
         }
@@ -75,7 +73,8 @@ export default {
         ...mapGetters({
             favoriteProcedures: 'favoriteProcedures',
             currentProcedures: 'getCurrentClinicProcedures',
-            currentPlanID: 'getCurrentPlanID'
+            currentPlanID: 'getCurrentPlanID',
+            ageCategory: 'ageCategory'
         }),
         lang() {
             return this.$i18n.locale;
@@ -84,7 +83,11 @@ export default {
     watch: {
         lang(val) {
             this.getItems(val);
-        }
+        },
+        ageCategory() {
+            this.recalculateItemsLocal = !this.recalculateItemsLocal;
+        },
+        recalculateItems() {}
     },
     created() {
         this.getItems();

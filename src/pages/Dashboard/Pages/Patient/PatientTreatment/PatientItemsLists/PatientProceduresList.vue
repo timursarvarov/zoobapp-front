@@ -49,6 +49,7 @@
         </md-toolbar>
         <router-view></router-view>
         <patient-nosology-table
+            selectable
             current-type="procedures"
             extraClass="no"
             :items="sortedData"
@@ -129,7 +130,6 @@ export default {
             sortedData: []
         };
     },
-    name: 'PatientProceduresList',
     computed: {
         ...mapGetters({
             patient: 'getPatient',
@@ -202,6 +202,11 @@ export default {
             return this.totalPrice(this.unbilledProcedures.map(p => p.ID));
         }
     },
+    watch: {
+        currentPlanProcedures() {
+            this.customSort();
+        }
+    },
     methods: {
         sortBytypes(currentSort, currentSortOrder) {
             const vm = this;
@@ -236,7 +241,7 @@ export default {
             });
             return val;
         },
-        customSort(currentSort, currentSortOrder) {
+        customSort(currentSort = 'created', currentSortOrder = 'asc') {
             const vm = this;
             if (currentSort === 'teeth') {
                 vm.sortedData = vm.currentPlanProcedures.sort((a, b) => {
@@ -299,9 +304,6 @@ export default {
         onSelected(items) {
             this.selectedItems = items;
             this.showDeleteItemSnackbar = items.length > 0;
-        },
-        showItemInfo(params) {
-            this.$emit('showItemInfo', params);
         },
         redirectToPlan() {
             console.log('redirested');

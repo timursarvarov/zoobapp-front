@@ -14,8 +14,8 @@ export default function() {
                     resolve(result.accessToken);
                 })
                 .catch(err => {
-                    store.dispatch(USER_LOGOUT);
                     console.log(err)
+                    store.dispatch(USER_LOGOUT);
                     throw new Error(err);
                 });
         });

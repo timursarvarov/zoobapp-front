@@ -3,7 +3,7 @@
         <editor-menu-bar v-slot="{ commands, isActive }" :editor="editor">
             <div class="wuswug-header">
                 <md-toolbar class="md-transparent md-layout">
-                    <div class="md-layout-item md-size-50 md-small-size-100 md-large-size-30">
+                    <div class="md-layout-item md-size-50 md-small-size-100 md-xlarge-size-30">
                         <slot name="start" />
                     </div>
                     <div class="md-layout-item">
@@ -98,7 +98,7 @@
                 </md-toolbar>
             </div>
         </editor-menu-bar>
-        <editor-content class="md-layout-item" :autofocus="true" :editor="editor" placeholder="Write something …" />
+        <editor-content class="md-layout-item" :autofocus="true" :editor="editor" />
     </div>
 </template>
 
@@ -160,7 +160,7 @@ export default {
                     new History(),
                     new Placeholder({
                         emptyNodeClass: 'is-empty',
-                        emptyNodeText: 'Write something …',
+                        emptyNodeText: this.$t(`${this.$options.name}.writeSomething`),
                         showOnlyWhenEditable: true
                     })
                 ],

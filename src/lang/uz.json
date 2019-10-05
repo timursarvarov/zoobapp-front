@@ -149,6 +149,15 @@
 		"phone": "Telefon",
 		"source": "Manba"
 	},
+	"PatientAnamnesisList": {
+		"complete": "To'liq deb belgilang",
+		"createInvoice": "Hisob-fakturani yaratish",
+		"proceduresFor": "protseduralar | protsedura | protseduralar",
+		"proceduresInAnamnes": "anamnezdagi muolajalar | anamnezdagi muolajalar | anamnezdagi muolajalar",
+		"selectAll": "Hammasini belgilash",
+		"selected": "Tanlangan",
+		"unselect": "Tanlovni bekor qilish"
+	},
 	"PatientBilling": {
 		"invoices": "Hisob-fakturalar",
 		"payments": "To'lovlar",
@@ -195,6 +204,8 @@
 	"PatientFiles": {
 		"addFileDescription": "Bu erga bosing yoki ba'zi fayllarni tashlab yuboring",
 		"addFileTitle": "Yangi fayl qo'shing",
+		"addNewFiles": "Iltimos, yangi fayl qo'shing",
+		"addNewFilesDescription": "Bu erga bosing yoki ba'zi fayllarni tashlab yuboring",
 		"totalFiles": "Jami {count} fayllar | Jami bitta fayl | Jami {count} fayl"
 	},
 	"PatientNosologyTable": {
@@ -205,8 +216,8 @@
 		"description": "@:common.description",
 		"editorTitle": "Jadval ustunlarini o'rnating",
 		"manipulations": "@:common.manipulations",
-		"noFoundDescription": "Hech qanday {currentType} topilmadi. Yuqoriga o'ting va yangi {currentType} yarating.",
-		"noFoundTitle": "",
+		"noFoundDescription": "Hech qanday element topilmadi. Yuqoriga o'ting va yangisini yarating.",
+		"noFoundTitle": "Hech narsa ko'rsatilmaydi",
 		"paginationItems": "{count} elementlar | {count} element | {count} elementlar",
 		"paginationNumFrom": "Ko'rsatilgan {n} dan | Ko'rsatilgan  {n} dan | Ko'rsatilgan {n} dan ",
 		"paginationNumTo": "{n} ga",
@@ -214,6 +225,7 @@
 		"planID": "Rejasi",
 		"price": "@:common.price",
 		"puginationNumForm": "Ko'rsatilgan {n} dan | Ko'rsatilgan  {n} dan | Ko'rsatilgan {n} dan ",
+		"scrollTop": "Yuqoriga o‘tkazish",
 		"state": "@:common.state",
 		"teeth": "@:common.teeth",
 		"title": "@:common.title",
@@ -236,7 +248,7 @@
 		"noPlansTitle": "Tanlangan rejalar yo'q",
 		"noPlansWithIdDescription": " {ID} ID bilan hech qanday reja topilmadi. Yuqoriga o'ting va yangisini yarating.",
 		"noPlansWithIdTitle": " {{ID}} raqami bilan rejalar yo'q",
-		"scrollTop": "Scroll Top"
+		"scrollTop": "Yuqoriga o‘tkazish"
 	},
 	"PatientProceduresList": {
 		"approve": "Rejani tasdiqlang",
@@ -287,6 +299,8 @@
 		"created": "@:common.created",
 		"createdBy": "@:common.createdBy",
 		"editorTitle": "Bemorlarga ustunlar tartibini o'rnating",
+		"email": "@:common.email",
+		"files": "Fayllar",
 		"filterMode": "Filtr rejimi",
 		"firstName": "@:common.firstName",
 		"lastName": "@:common.lastName",
@@ -295,7 +309,7 @@
 		"loadingErrorDescription": "Ulanishda xatolik yuz berdi",
 		"loadingErrorTitle": "Xato yuz berdi",
 		"loadingTitle": "Yuklanmoqda...",
-		"name": "@:common.name",
+		"name": "Bemor",
 		"nothingFoundCreateNew": "Yangi bemorni yarating",
 		"nothingFoundDescription": " \"{query}\" so'rovi uchun hech qanday bemor topilmadi.\nBoshqa qidiruv so'zlarini kiriting yoki yangi bemorni yarating.",
 		"nothingFoundTitle": "Hech qanday bemor topilmadi",
@@ -307,7 +321,9 @@
 		"phone": "@:common.phone",
 		"rating": "@:common.rating",
 		"searchTitle": "Bemorni topish uchun bosing",
+		"source": "Manba",
 		"title": "Bemorlar ro'yxati",
+		"updated": "Yangilandi",
 		"yearsOld": "@:common.yearsOld"
 	},
 	"PlanAddForm": {
@@ -324,6 +340,65 @@
 		"email": "@:common.email",
 		"verification": "Tasdiqlash"
 	},
+	"Routes": {
+		"Authentication": "Haqiqiylikni tekshirish",
+		"Billing": "",
+		"Bio": "BIO",
+		"Buttons": "Tugmalar",
+		"Calendar": "Taqvim",
+		"Charts": "Grafikalar",
+		"Clinic": "Klinika",
+		"Clinic Procedures": "Klinik muolajalar",
+		"Clinic Settings": "Klinik sozlamalar",
+		"Components": "Komponentlar",
+		"Consumables": "Sarf materiallari",
+		"Dashboard": "Statistik",
+		"Extended Forms": "Kengaytirilgan shakllar",
+		"Extended Tables": "Kengaytirilgan jadvallar",
+		"Files": "Fayllar",
+		"Forms": "Shakllar",
+		"Full Screen Map": "To'liq ekran xaritasi",
+		"Google Maps": "Google xaritalari",
+		"Grid System": "Grid tizimi",
+		"Icons": "Belgilar",
+		"Manipulations": "Manipulyatsiyalar",
+		"Maps": "Xaritalar",
+		"My Profile": "Mening profilim",
+		"Notes": "Izohlar",
+		"Notifications": "Bildirishnomalar",
+		"Pages": "Sahifalar",
+		"Pagianted Tables": "Pigment stollari",
+		"Panels": "Panellar",
+		"PatientTreatmentent": "Bemorni davolash",
+		"PatientTreatmententItems": "BemorTreatmententItemalar",
+		"Patients": "Bemorlar",
+		"Regular Forms": "Doimiy shakllar",
+		"Regular Tables": "Oddiy jadvallar",
+		"Settings": "Sozlamalar",
+		"Sweet Alert": "Shirin ogohlantirish",
+		"Tables": "Jadvallar",
+		"Timeline Page": "Yilnomalar sahifasi",
+		"Treatment": "Davolash",
+		"Typography": "Tipografiya",
+		"User Page": "Foydalanuvchi sahifasi",
+		"Validation Forms": "Tasdiqlash shakllari",
+		"Vector Map": "Vektorli xarita",
+		"Widgets": "Vidjetlar",
+		"Wizard": "Wizard",
+		"anamnesis": "Anamnez",
+		"choose_clinic": "Klinikani tanlash",
+		"diagnosis": "Tashxis",
+		"invoices": "Hisob-fakturalar",
+		"lock": "Qulflash",
+		"login": "Kirish",
+		"payments": "To'lovlar",
+		"plan": "Rejasi",
+		"pricing": "Narxlar",
+		"procedures": "Protseduralar",
+		"register": "Ro'yxat",
+		"statistic": "Statistik",
+		"unbilledProcedures": "Hisobga olinmagan protseduralar"
+	},
 	"SetAccount": {
 		"email": "@:common.email",
 		"firstName": "@:common.firstName",
@@ -339,11 +414,77 @@
 		"setClinic": "Klinikangizni o'rnating",
 		"title": "Klinikangizni o'rnating"
 	},
+	"TCallendar": {
+		"day": "Kun",
+		"list": "Ro‘yxat",
+		"month": "Oy",
+		"today": "Bugun",
+		"week": "Hafta"
+	},
 	"TCollapseSearch": {
+		"chooseTooth": "Iltimos, avval tishni tanlang",
 		"search-anamnesis": "Protseduralarni qidirish",
 		"search-diagnosis": "Diagnoslar qidiruv",
 		"search-procedures": "Protseduralarni qidirish",
 		"showAll": "@:common.showAll"
+	},
+	"TCoolSelectPatientSearch": {
+		"connectionProblems": "Ulanish bilan bog'liq muammolar",
+		"createPatient": "Yangi bemorni yarating",
+		"label": "Bemorni qidirish",
+		"noFound": "\"{searchText}\" ga mos keladigan bemor topilmadi.",
+		"noMore": "Boshqa bemor yo'q",
+		"retry": "Qayta urinish",
+		"searchMin": "Telefon, elektron pochta yoki ism orqali qidirish uchun kamida 3 harf kiriting",
+		"total": "Hech qanday bemor topilmadi | Bitta bemor topildi | {count} bemor topildi | {count} bemorlar topildi"
+	},
+	"TItemDescription": {
+		"selectDescription": "Tavsif shablonini tanlang"
+	},
+	"TItemFiles": {
+		"addNewFiles": "Yangi fayl qo'shing",
+		"addNewFilesDescription": "Bu erga bosing yoki ba'zi fayllarni tashlab yuboring"
+	},
+	"TItemManipulations": {
+		"delete": "Yo'q qilish",
+		"deleteManipulation": "Manipulyatsiyani o'chirish:",
+		"deleting": "O‘chirilmoqda ...",
+		"noManipulationsDescription": "Iltimos, manipulyatsiyani tanlang",
+		"noManipulationsTitle": "Hech qanday manipulyatsiya topilmadi",
+		"noManipulationsWereFound": "Hech qanday manipulyatsiya topilmadi",
+		"price": "@:common.price",
+		"qty": "Miqdori",
+		"selectManipulation": "Manipulyatsiyani tanlang",
+		"title": "Sarlavha",
+		"total": "Umumiy narx",
+		"totalManipulations": "Umumiy manipulyatsiyalar",
+		"totalPrice": "Umumiy narx:"
+	},
+	"TPrintFormPatientBio": {
+		"address": "@:common.address",
+		"allergy": "@:common.allergy",
+		"birthday": "@:common.birthday",
+		"email": "@:common.email",
+		"jaw": "Jag'",
+		"phone": "@:common.phone",
+		"print": "Chop eting"
+	},
+	"TPrintFormPatientHeader": {
+		"phone": "@:common.phone",
+		"url": "URL manzili"
+	},
+	"TPrintFormPatientJaw": {
+		"jaw": "Jag'",
+		"print": "Chop eting:"
+	},
+	"TPrintFormPatientPlan": {
+		"manipulations": "Manipulyatsiyalar",
+		"plan": "Rejasi",
+		"print": "Chop eting:",
+		"procedures": "Protseduralar"
+	},
+	"TPrintFormPatientProcedure": {
+		"teeth": "Tanlangan tishlar yo'q | Bitta tish | {count} Tishlar"
 	},
 	"TTableEditor": {
 		"ID": "@:common.ID",
@@ -387,6 +528,9 @@
 		"selescTooth": "Iltimos, tishni tanlang",
 		"teethWithLocations": "Tanlangan joylari bo'lgan tishlar:",
 		"titleEdit": ""
+	},
+	"TWuswug": {
+		"writeSomething": "Nimadir yozing …"
 	},
 	"Teeth": {
 		"11": "Yuqori o'ng markaziy kesma",
@@ -441,6 +585,14 @@
 		"83": "Pastki o'ng qanot tishi",
 		"84": "Pastki o'ng birinchi molyar",
 		"85": "Pastki o'ng ikkinchi molyar"
+	},
+	"TopNavBar": {
+		"addPatient": "Bemorni qo'shing",
+		"lock": "Qulflash",
+		"logout": "Chiqish",
+		"more": "Ko'proq",
+		"myProfile": "Mening profilim",
+		"notifications": "Bildirishnomalar"
 	},
 	"UserCard": {
 		"aboutMe": "Men haqimda",
@@ -512,6 +664,7 @@
 			"planName": "Reja nomi kiritilishi shart",
 			"rPassword": "Parollar bir xil bo'lishi kerak",
 			"required": "{0} maydonini kiritish shart.",
+			"selectedManipID": "Saqlanmagan manipulyatsiyalar mavjud",
 			"source": "Manba kiritilishi shart",
 			"url": "Web sayt maydoni to'g'ri URL manzili bo'lishi kerak",
 			"username": "Foydalanuvchi ismi kiritilishi shart"
@@ -582,6 +735,9 @@
 				"confirmed": "Parollar bir xil bo'lishi kerak",
 				"required": "Parol talab qilinadi"
 			},
+			"selectedManipID": {
+				"is_exist": "Saqlanmagan manipulyatsiyalar mavjud"
+			},
 			"source": {
 				"min": "Manba maydoni kamida {1} belgidan iborat bo'lishi kerak.",
 				"required": "Manba kiritilishi shart"
@@ -597,6 +753,7 @@
 		"messages": {
 			"_default": " {_field_} maydoni to'ldirilishi shart",
 			"confirmed": "Maydonlar bir-biriga mos kelishi kerak",
+			"is_exist": "Saqlanmagan manipulyatsiyalar mavjud",
 			"min": " {_field_} maydoni kamida {length} belgidan iborat bo'lishi kerak",
 			"required": " {_field_} maydoni to'ldirilishi shart",
 			"url": ""

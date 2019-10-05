@@ -10,31 +10,28 @@
             </div>
             <div class="sub_title">
                 <div>
-                    <small>
-                        Phone:
-                        <b>+{{ patient.phone }}</b>
-                    </small>
+                    <small> {{ $t(`${$options.name}.phone`) }}: +{{ patient.phone }} </small>
                 </div>
                 <div v-if="patient.birthday">
                     <small>
-                        Birth date
-                        <b>{{ patient.birthday | moment('YYYY/MMMM/D')  }}</b>
+                        {{ $t(`${$options.name}.birthday`) }}:
+                        {{ patient.birthday | moment('YYYY/MMMM/D') }}
                     </small>
                 </div>
                 <div v-if="patient.address">
                     <small>
-                        Address
-                        <b>{{ patient.address }}</b>
+                        {{ $t(`${$options.name}.birthday`) }}:
+                        {{ patient.address }}
                     </small>
                 </div>
                 <div v-if="patient.email">
                     <small>
-                        email
-                        <b>{{ patient.email }}</b>
+                        {{ $t(`${$options.name}.email`) }}:
+                        {{ patient.email }}
                     </small>
                 </div>
                 <div v-if="patient.allergy && patient.allergy.length > 0" class="allergy_wrapper">
-                    <b>ALLERGY</b>:
+                    <b>{{ $t(`${$options.name}.allergy`) }}:</b>:
                     <span v-for="(a, i) in patient.allergy" :key="i" class="allergy">
                         <span>
                             {{ a }}

@@ -18,18 +18,13 @@
             </div>
             <div class="print-patient-procedure_header__price">
                 <div class="price-sum">
-                    {{ procedurePrice }}
+                    {{ procedurePrice | numSeparator }}
                     &nbsp;{{ currencyCode }}
                 </div>
             </div>
         </div>
         <div v-if="procedure.teeth && Object.keys(procedure.teeth).length > 0" class="teeth-block">
-            <div class="teeth-block__title">
-                Teeth:&nbsp;
-                <span>
-                    <b> {{ Object.keys(procedure.teeth).length }} </b>
-                </span>
-            </div>
+            <div class="teeth-block__title">{{ $tc(`${$options.name}.teeth`, Object.keys(procedure.teeth).length) }}:</div>
             <div class="teeth-block__teeth">
                 <span v-for="(toothID, toothKey) in procedure.teeth" :key="toothKey" class="tooth procedures">
                     <small>{{ toothKey | toCurrentTeethSystem }}</small>
@@ -41,25 +36,29 @@
                 <div class="manipulation manipulation_num">
                     <small>{{ mInd + 1 }}</small>
                 </div>
-                <div v-if="manip.code" class="manipulation manipulation_code">
-                    <small>{{ manip.code }} - </small>
-                </div>
                 <div class="manipulation manipulation_title">
-                    <small>{{ manip.title }}</small>
+                    <small>
+                        <span>{{ manip.code }} - &nbsp;</span>
+                        {{ manip.title }}
+                    </small>
                 </div>
                 <div class="manipulation manipulation_qty">
                     <small>{{ manip.qty }}</small>
                 </div>
                 <div class="manipulation manipulation_ac">*</div>
                 <div class="manipulation manipulation_price">
-                    <small>{{ (manip.price ? manip.price : 0).toFixed(2) }}</small>
+                    <small>{{ (manip.price ? manip.price : 0).toFixed(2) | numSeparator }}</small>
                 </div>
                 <div class="manipulation manipulation_total">
-                    <small>{{ manip.totalPrice.toFixed(2) }} &nbsp;{{ currencyCode }}</small>
+                    <small>{{ manip.totalPrice.toFixed(2) | numSeparator }} &nbsp;{{ currencyCode }}</small>
                 </div>
             </div>
         </div>
-        <div v-html="procedure.description" class="print-patient-procedure_description" />
+        <div class="description-wrapper">
+            <small>
+                <div v-html="procedure.description" class="print-patient-procedure_description" />
+            </small>
+        </div>
     </div>
 </template>
 <script>

@@ -149,6 +149,15 @@
 		"phone": "Phone",
 		"source": "Source"
 	},
+	"PatientAnamnesisList": {
+		"complete": "Mark as complete",
+		"createInvoice": "Create invoice",
+		"proceduresFor": "procedures for | procedure for | procedures for",
+		"proceduresInAnamnes": "procedures in anamnesis | procedure in anamnesis | procedures in anamnesis ",
+		"selectAll": "Select all",
+		"selected": "Selected",
+		"unselect": "Unselect"
+	},
 	"PatientBilling": {
 		"invoices": "Invoices",
 		"payments": "Payments",
@@ -195,6 +204,8 @@
 	"PatientFiles": {
 		"addFileDescription": "Click here or drop some files",
 		"addFileTitle": "Add new file",
+		"addNewFiles": "Please add new file",
+		"addNewFilesDescription": "Click here or drop some files",
 		"totalFiles": "Total {count} files | Total one file | Total {count} files"
 	},
 	"PatientNosologyTable": {
@@ -205,8 +216,8 @@
 		"description": "@:common.description",
 		"editorTitle": "Set table columns",
 		"manipulations": "@:common.manipulations",
-		"noFoundDescription": "No {currentType}  found. Scroll top, and create new {currentType} .",
-		"noFoundTitle": "No {currentType} found",
+		"noFoundDescription": "No elements found. Scroll top, and create new one.",
+		"noFoundTitle": "Nothing to show ",
 		"paginationItems": "{count} elements | {count} element | {count} elements",
 		"paginationNumFrom": "Showing from {n} | Showing from {n} | Showing from {n}",
 		"paginationNumTo": "to {n} of",
@@ -214,6 +225,7 @@
 		"planID": "Plan",
 		"price": "@:common.price",
 		"puginationNumForm": "Showing from {n} | Showing from {n} | Showing from {n}",
+		"scrollTop": "Scroll Top",
 		"state": "@:common.state",
 		"teeth": "@:common.teeth",
 		"title": "@:common.title",
@@ -287,6 +299,8 @@
 		"created": "@:common.created",
 		"createdBy": "@:common.createdBy",
 		"editorTitle": "Set patients columns order",
+		"email": "@:common.email",
+		"files": "Files",
 		"filterMode": "Filter mode",
 		"firstName": "@:common.firstName",
 		"lastName": "@:common.lastName",
@@ -295,7 +309,7 @@
 		"loadingErrorDescription": "Something wrong with connection",
 		"loadingErrorTitle": "Error occured",
 		"loadingTitle": "Loading...",
-		"name": "@:common.name",
+		"name": "Patient",
 		"nothingFoundCreateNew": "Create New Patient",
 		"nothingFoundDescription": " No patients found for \"{query}\" query.\nTry a different search term or create a new patient.",
 		"nothingFoundTitle": "No patients found",
@@ -307,7 +321,9 @@
 		"phone": "@:common.phone",
 		"rating": "@:common.rating",
 		"searchTitle": "Type to find a patient",
+		"source": "Source",
 		"title": "Patients list",
+		"updated": "Updated",
 		"yearsOld": "@:common.yearsOld"
 	},
 	"PlanAddForm": {
@@ -324,6 +340,65 @@
 		"email": "@:common.email",
 		"verification": "Verification"
 	},
+	"Routes": {
+		"Authentication": "Authentication",
+		"Billing": "Billing",
+		"Bio": "BIO",
+		"Buttons": "Buttons",
+		"Calendar": "Calendar",
+		"Charts": "Charts",
+		"Clinic": "Clinic",
+		"Clinic Procedures": "Clinic Procedures",
+		"Clinic Settings": "Clinic Settings",
+		"Components": "Components",
+		"Consumables": "Consumables",
+		"Dashboard": "Statistic",
+		"Extended Forms": "Extended Forms",
+		"Extended Tables": "Extended Tables",
+		"Files": "Files",
+		"Forms": "Forms",
+		"Full Screen Map": "Full Screen Map",
+		"Google Maps": "Google Maps",
+		"Grid System": "Grid System",
+		"Icons": "Icons",
+		"Manipulations": "Manipulations",
+		"Maps": "Maps",
+		"My Profile": "My Profile",
+		"Notes": "Notes",
+		"Notifications": "Notifications",
+		"Pages": "Pages",
+		"Pagianted Tables": "Pagianted Tables",
+		"Panels": "Panels",
+		"PatientTreatmentent": "Patient Treatment",
+		"PatientTreatmententItems": "PatientTreatmententItems",
+		"Patients": "Patients",
+		"Regular Forms": "Regular Forms",
+		"Regular Tables": "Regular Tables",
+		"Settings": "Settings",
+		"Sweet Alert": "Sweet Alert",
+		"Tables": "Tables",
+		"Timeline Page": "Timeline Page",
+		"Treatment": "Treatment",
+		"Typography": "Typography",
+		"User Page": "User Page",
+		"Validation Forms": "Validation Forms",
+		"Vector Map": "Vector Map",
+		"Widgets": "Widgets",
+		"Wizard": "Wizard",
+		"anamnesis": "Anamnesis",
+		"choose_clinic": "Clinic Selection",
+		"diagnosis": "Diagnoses",
+		"invoices": "invoices",
+		"lock": "Lock",
+		"login": "Login",
+		"payments": "Payments",
+		"plan": "Plan",
+		"pricing": "Pricing",
+		"procedures": "Procedures",
+		"register": "Register",
+		"statistic": "Statistic",
+		"unbilledProcedures": "Unbilled procedures"
+	},
 	"SetAccount": {
 		"email": "@:common.email",
 		"firstName": "@:common.firstName",
@@ -339,11 +414,77 @@
 		"setClinic": "Set clinic",
 		"title": "Set your clinic"
 	},
+	"TCallendar": {
+		"day": "Day",
+		"list": "List",
+		"month": "Month",
+		"today": "Today",
+		"week": "Week"
+	},
 	"TCollapseSearch": {
+		"chooseTooth": "Please firstly choose a tooth",
 		"search-anamnesis": "Procedures Search ",
 		"search-diagnosis": "Diagnoses Search ",
 		"search-procedures": "Procedures Search ",
 		"showAll": "@:common.showAll"
+	},
+	"TCoolSelectPatientSearch": {
+		"connectionProblems": "Connection Problems",
+		"createPatient": "Create new patient",
+		"label": "Patient Search",
+		"noFound": "No patients matching \"{searchText}\" were found.",
+		"noMore": "No more patients",
+		"retry": "Retry",
+		"searchMin": "Type at least 3 letters to search by phone, email or name",
+		"total": "No patients found | One patient found | {count} patients found"
+	},
+	"TItemDescription": {
+		"selectDescription": "Select description template"
+	},
+	"TItemFiles": {
+		"addNewFiles": "Add New File",
+		"addNewFilesDescription": "Click here or drop some files"
+	},
+	"TItemManipulations": {
+		"delete": "Delete",
+		"deleteManipulation": "Delete Manipulation:",
+		"deleting": "Deleting ...",
+		"noManipulationsDescription": "Please select manipulation",
+		"noManipulationsTitle": "No manipulations found",
+		"noManipulationsWereFound": "No manipulations were found",
+		"price": "@:common.price",
+		"qty": "Qty",
+		"selectManipulation": "Select manipulation",
+		"title": "Title",
+		"total": "Total",
+		"totalManipulations": "Total manipulations",
+		"totalPrice": "Total price:"
+	},
+	"TPrintFormPatientBio": {
+		"address": "@:common.address",
+		"allergy": "@:common.allergy",
+		"birthday": "@:common.birthday",
+		"email": "@:common.email",
+		"jaw": "Jaw",
+		"phone": "@:common.phone",
+		"print": "Print"
+	},
+	"TPrintFormPatientHeader": {
+		"phone": "@:common.phone",
+		"url": "URL"
+	},
+	"TPrintFormPatientJaw": {
+		"jaw": "Jaw",
+		"print": "Print:"
+	},
+	"TPrintFormPatientPlan": {
+		"manipulations": "Manipulations",
+		"plan": "Plan",
+		"print": "Print:",
+		"procedures": "Procedures"
+	},
+	"TPrintFormPatientProcedure": {
+		"teeth": "No selected Teeth | One Tooth | {count} Teeth"
 	},
 	"TTableEditor": {
 		"ID": "@:common.ID",
@@ -387,6 +528,9 @@
 		"selescTooth": "Please select tooth",
 		"teethWithLocations": "Teeth with selected locations: ",
 		"titleEdit": ""
+	},
+	"TWuswug": {
+		"writeSomething": "Write something …"
 	},
 	"Teeth": {
 		"11": "Upper right central incisor",
@@ -441,6 +585,14 @@
 		"83": "Lower right canine tooth",
 		"84": "Lower right first molar",
 		"85": "Lower right second molar"
+	},
+	"TopNavBar": {
+		"addPatient": "Add patient",
+		"lock": "Lock",
+		"logout": "Logout",
+		"more": "More",
+		"myProfile": "My Profile",
+		"notifications": "Notifications"
 	},
 	"UserCard": {
 		"aboutMe": "About me",
@@ -512,6 +664,7 @@
 			"planName": "The plan  name is required",
 			"rPassword": "Passwords must match",
 			"required": "The {0} field is required.",
+			"selectedManipID": "There are unsaved manipulations",
 			"source": "Source is required",
 			"url": "The Web site address field should be valid URL",
 			"username": "User name is required"
@@ -582,6 +735,9 @@
 				"confirmed": "Passwords must match",
 				"required": "Password required"
 			},
+			"selectedManipID": {
+				"is_exist": "There are unsaved manipulations"
+			},
 			"source": {
 				"min": "Source field must be at least {1} characters.",
 				"required": "Source is required"
@@ -597,6 +753,7 @@
 		"messages": {
 			"_default": "The {_field_} field is required",
 			"confirmed": "Fields must match",
+			"is_exist": "There are unsaved manipulations",
 			"min": "The {_field_} field must be at least {length} characters",
 			"required": "The {_field_} field is required",
 			"url": ""

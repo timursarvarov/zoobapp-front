@@ -12,7 +12,7 @@
                 >
                     <md-icon>face</md-icon>
                     <label>
-                            {{ $t(`${$options.name}.userName`) }}
+                        {{ $t(`${$options.name}.userName`) }}
                     </label>
                     <md-input
                         ref="username"

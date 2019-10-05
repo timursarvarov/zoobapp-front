@@ -2,60 +2,59 @@
     <div class="md-layout md-gutter set-diagnose-form">
         <div class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
             <div class="mx-auto" style="flex-grow:1;">
-                <keep-alive>
-                    <jaw
-                        :selected-teeth="selectedTeeth"
-                        :age-category="!!patient.ageCategory"
-                        :jaw="patient.jaw || {}"
-                        :patient-items="{
-                            diagnosis: patient.diagnosis,
-                            procedures: currentPlanProcedures,
-                            anamnesis: patient.anamnesis
-                        }"
-                        :type="currentType"
-                        @onSelectedTeeth="onSelectedTeeth"
-                        @showToothInfo="showToothInfo"
-                        @onSizeChanged="matchHeight"
-                    >
-                        <template v-if="patient.ID" slot="title-start">
-                            <md-tabs md-sync-route class="t-md-tabs" :class="currentType">
-                                <md-tab
-                                    id="tab-home"
-                                    :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan`"
-                                    :md-label="$t(`${$options.name}.procedures`)"
-                                />
-                                <md-tab
-                                    id="tab-pages"
-                                    class="diagnosis"
-                                    :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/diagnosis`"
-                                    :md-label="$t(`${$options.name}.diagnoses`)"
-                                />
-                                <md-tab
-                                    id="tab-posts"
-                                    :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`"
-                                    :md-label="$t(`${$options.name}.anamnesis`)"
-                                />
-                            </md-tabs>
-                        </template>
-                    </jaw>
-                </keep-alive>
+                <!-- <keep-alive> -->
+                <jaw
+                    :selected-teeth="selectedTeeth"
+                    :age-category="!!patient.ageCategory"
+                    :jaw="patient.jaw || {}"
+                    :patient-items="{
+                        diagnosis: patient.diagnosis,
+                        procedures: currentPlanProcedures,
+                        anamnesis: patient.anamnesis
+                    }"
+                    :type="currentType"
+                    @onSelectedTeeth="onSelectedTeeth"
+                    @showToothInfo="showToothInfo"
+                    @onSizeChanged="matchHeight"
+                >
+                    <template v-if="patient.ID" slot="title-start">
+                        <md-tabs md-sync-route class="t-md-tabs" :class="currentType">
+                            <md-tab
+                                id="tab-home"
+                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan`"
+                                :md-label="$t(`${$options.name}.procedures`)"
+                            />
+                            <md-tab
+                                id="tab-pages"
+                                class="diagnosis"
+                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/diagnosis`"
+                                :md-label="$t(`${$options.name}.diagnoses`)"
+                            />
+                            <md-tab
+                                id="tab-posts"
+                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`"
+                                :md-label="$t(`${$options.name}.anamnesis`)"
+                            />
+                        </md-tabs>
+                    </template>
+                </jaw>
+                <!-- </keep-alive> -->
             </div>
         </div>
         <keep-alive>
-            <router-view
-                name="search"
-                class="md-layout-item md-layout md-small-size-100 md-xsmall-size-100 md-gutter md-medium-size-50 md-size-50"
-                :custom-height="jawHeight"
-                :selected-teeth="selectedTeeth"
-                :recalculate-items="recalculateCollapseItems"
-                @addPlan="addPlan"
-                @onSelectItem="selectItem"
-            />
+        <router-view
+            name="search"
+            class="md-layout-item md-layout md-small-size-100 md-xsmall-size-100 md-gutter md-medium-size-50 md-size-50"
+            :custom-height="jawHeight"
+            :selected-teeth="selectedTeeth"
+            @addPlan="addPlan"
+            @onSelectItem="selectItem"
+        />
         </keep-alive>
         <div style="margin-top:30px;" class="md-layout-item  md-size-100">
-            <keep-alive>
-                <router-view ref="items-lists" name="list" :current-type="currentType" :plans="patient.plans" @showItemInfo="selectItem" />
-            </keep-alive>
+            <!-- <keep-alive> -->
+            <router-view ref="items-lists" name="list" :current-type="currentType" :plans="patient.plans" @showItemInfo="selectItem" />
+            <!-- </keep-alive> -->
         </div>
 
         <div v-if="showAddPlan">
@@ -119,7 +118,6 @@ export default {
             search: '',
             selectedTeeth: [],
             showAddPlan: false,
-            recalculateCollapseItems: false,
             loadingAllPLans: false,
             showPrint: false,
             selecteditemLocal: {}
@@ -154,6 +152,9 @@ export default {
         },
         files() {
             return this.patient.files;
+        },
+        ageCategory() {
+            return this.patient.ageCategory;
         },
         stepsForWizard() {
             if (this.currentType === 'anamnesis') {
@@ -234,9 +235,6 @@ export default {
                     }
                 });
             }
-        },
-        onRecalculateCollapseItems() {
-            this.recalculateCollapseItems = !this.recalculateCollapseItems;
         },
         addPlan() {
             if (this.patient.plans && this.patient.plans.length >= 10) {

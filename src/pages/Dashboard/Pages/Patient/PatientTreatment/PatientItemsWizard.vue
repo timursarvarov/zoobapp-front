@@ -60,6 +60,11 @@ export default {
             this.showItems(payLoad);
         });
     },
+    beforeDestroy() {
+        EventBus.$off(EB_SHOW_ITEM_WIZARD, payLoad => {
+            this.showItems(payLoad);
+        });
+    },
     methods: {
         showItems(payLoad) {
             this.selectedItem = payLoad.item;
@@ -72,7 +77,7 @@ export default {
             } else if (this.type === 'procedures' && ID) {
                 return this.getPatientProcedureByID(ID);
             } else if (this.type === 'anamnesis' && ID) {
-                return this.getAnamnesisById(ID);
+                return this.getPatientAnanmnesisByID(ID);
             } else {
                 return {};
             }

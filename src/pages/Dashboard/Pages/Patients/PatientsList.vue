@@ -278,7 +278,6 @@ export default {
         },
         from() {
             let num = this.queryParams.pagination.perPage * (this.queryParams.pagination.currentPage - 1) + 1;
-            console.log(num);
             return num;
         }
     },

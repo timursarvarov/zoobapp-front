@@ -10,14 +10,10 @@
                 </div>
                 <div class="sub_title">
                     <div>
-                        <small>
-                            phone: <b>+{{ currentClinic.phone }}</b></small
-                        >
+                        <small> {{ $t(`${$options.name}.phone`) }}: &nbsp; +{{ currentClinic.phone }} </small>
                     </div>
                     <div>
-                        <small>
-                            url: <b>{{ currentClinic.url }}</b></small
-                        >
+                        <small> {{ $t(`${$options.name}.url`) }}: &nbsp;{{ currentClinic.url }} </small>
                     </div>
                 </div>
             </div>

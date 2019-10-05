@@ -181,12 +181,13 @@ export default {
                         commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'error' });
                         reject(resp.data.error);
                     }
-                    commit(CLINIC_SET_PROP, { propName: 'procedures', propValue: filterItems(false, resp.data.result) });
-                    commit(CLINIC_SET_PROP, { propName: 'ungroupedprocedures', propValue: filterItems('NoNeedGroupilized', resp.data.result) });
-                    commit(CLINIC_SET_PROP, { propName: 'ungroupedanamnesis', propValue: filterItems('NoNeedGroupilized', resp.data.result) });
-                    commit(CLINIC_SET_PROP, { propName: 'ungroupedanamnesis', propValue: resp.data.result });
-                    commit(CLINIC_SET_PROP, { propName: 'anamnesis', propValue: filterItems(false, resp.data.result) });
-                    commit(CLINIC_SET_PROP, { propName: 'anamnesis', propValue: filterItems(false, resp.data.result) });
+                    const procedures = filterItems(false, resp.data.result);
+                    const ungrouped = filterItems('NoNeedGroupilized', resp.data.result);
+                    commit(CLINIC_SET_PROP, { propName: 'procedures', propValue: procedures });
+                    commit(CLINIC_SET_PROP, { propName: 'ungroupedprocedures', propValue: ungrouped });
+                    commit(CLINIC_SET_PROP, { propName: 'ungroupedanamnesis', propValue: ungrouped });
+                    commit(CLINIC_SET_PROP, { propName: 'anamnesis', propValue: procedures });
+                    commit(CLINIC_SET_PROP, { propName: 'anamnesis', propValue: procedures });
                     commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'success' });
                     resolve(resp.data.result);
                 })

@@ -58,7 +58,9 @@
                         </template>
 
                         <template slot="input-start">
-                            <label for="input">Select manipulation</label>
+                            <label for="input">
+                                {{ $t(`${$options.name}.selectManipulation`) }}
+                            </label>
                         </template>
                         <template v-if="item" slot="item" slot-scope="{ item }">
                             <div style="display: flex;">
@@ -70,9 +72,9 @@
                         </template>
                         <template slot="no-data">
                             <div class="md-layout" style="display: flex; white-space: pre-wrap;oveflow:hidden;">
-                                <span class="md-layout-item md-size-100" style="white-space: pre-wrap;oveflow:hidden;"
-                                    >No manipulations were found.</span
-                                >
+                                <span class="md-layout-item md-size-100" style="white-space: pre-wrap;oveflow:hidden;">
+                                    {{ $t(`${$options.name}.noManipulationsWereFound`) }}
+                                </span>
                             </div>
                         </template>
                     </cool-select>
@@ -80,7 +82,7 @@
                 <div class="md-layout md-alignment-center-space-between">
                     <div class="manipulations-input md-layout-item md-size-25">
                         <md-field class>
-                            <label>Qty</label>
+                            <label>{{ $t(`${$options.name}.qty`) }}</label>
                             <md-input
                                 id="qty"
                                 key="qty"
@@ -96,7 +98,7 @@
                     </div>
                     <div class="manipulations-input md-layout-item md-size-25">
                         <md-field class>
-                            <label>Price {{ currencyCode }}</label>
+                            <label>{{ $t(`${$options.name}.price`) }} {{ currencyCode }}</label>
                             <md-input
                                 id="price"
                                 ref="price"
@@ -112,7 +114,7 @@
                     </div>
                     <div class="manipulations-input md-layout-item md-size-25">
                         <md-field class>
-                            <label>Total {{ currencyCode }}</label>
+                            <label>{{ $t(`${$options.name}.total`) }} {{ currencyCode }}</label>
                             <md-input v-model="manipulationsPriceTotal" tabindex="-1" type="number" disabled />
                         </md-field>
                     </div>
@@ -162,7 +164,10 @@
 
         <div class="content-wrapper">
             <md-table :value="currentManipulations" table-header-color="green" class="table-striped table-with-header table-hover">
-                <md-table-empty-state md-label="No manipulations found" md-description="please select manipilation" />
+                <md-table-empty-state
+                    :md-label="$t(`${$options.name}.noManipulationsTitle`)"
+                    :md-description="$t(`${$options.name}.noManipulationsDescription`)"
+                />
                 <md-table-row
                     slot="md-table-row"
                     slot-scope="{ item, index }"
@@ -177,7 +182,7 @@
                     ]"
                 >
                     <md-table-cell md-numereic md-label="#">{{ index + 1 }}</md-table-cell>
-                    <md-table-cell class="manip_title" md-label="Title">
+                    <md-table-cell class="manip_title" :md-label="$t(`${$options.name}.title`)">
                         <div class="md-layout">
                             <small>
                                 <span v-if="item.code"> {{ item.code }} - </span>
@@ -185,7 +190,7 @@
                             >
                         </div>
                     </md-table-cell>
-                    <md-table-cell md-label="Total" class="cell-manipulations-total">
+                    <md-table-cell :md-label="$t(`${$options.name}.total`)" class="cell-manipulations-total">
                         <small> {{ item.qty }} * {{ item.price }} = &nbsp; </small>
                         <b>{{ item.totalPrice }} </b> &nbsp;
                         <small>{{ currencyCode }}</small>
@@ -208,7 +213,7 @@
                         <th class="md-table-head">
                             <div class="md-table-head-container md-ripple md-disabled">
                                 <div class="md-table-head-label">
-                                    Total manipulations:
+                                    {{ $t(`${$options.name}.totalManipulations`) }}:
                                     {{ currentManipulations.length }}
                                 </div>
                             </div>
@@ -216,7 +221,7 @@
                         <th class="md-table-head">
                             <div class="md-table-head-container md-ripple md-disabled">
                                 <div class="md-table-head-label">
-                                    Total price:
+                                    {{ $t(`${$options.name}.totalPrice`) }}:
                                     <animated-number :value="totalPrice" />
                                     {{ currencyCode }}
                                 </div>
@@ -229,7 +234,7 @@
         <md-snackbar :md-position="'center'" :md-duration="true ? Infinity : 4000" :md-active.sync="showSnackbar" md-persistent>
             <div class="snackbar-text-wrapper">
                 <div>
-                    <small>Delete Manipulation:</small>
+                    <small> {{ $t(`${$options.name}.deleteManipulation`) }}: </small>
                 </div>
                 {{ manipulationToDelete.code }}
                 {{ manipulationToDelete.title }}
@@ -240,9 +245,14 @@
                 <md-button :disabled="deleting" class="md-warning" @click="deleteManipulation()">
                     <div v-if="deleting">
                         <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />&nbsp;
-                        <span>Deleting...</span>
+                        <span>
+                            {{ $t(`${$options.name}.deleting`) }}
+                        </span>
                     </div>
-                    <span v-else> <md-icon>delete</md-icon>delete </span>
+                    <span v-else>
+                        <md-icon>delete</md-icon>
+                        {{ $t(`${$options.name}.delete`) }}
+                    </span>
                 </md-button>
             </div>
         </md-snackbar>
@@ -562,6 +572,14 @@ export default {
         validate() {
             this.touched.selectedManipID = false;
             return this.$validator.validateAll().then(res => {
+                if (!res) {
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: this.errors.first('selectedManipID'),
+                            type: 'warning'
+                        }
+                    });
+                }
                 this.$emit('on-validated', res, 'step2');
                 this.$emit('validated-code', this.code);
                 return res;

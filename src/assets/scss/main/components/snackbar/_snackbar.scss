@@ -1,5 +1,6 @@
 .md-snackbar {
     // width: fit-content;
+    z-index: 11000;
     max-width: 70vw;
     min-width: 70vw;
     @media screen and (max-width: 1200px) {

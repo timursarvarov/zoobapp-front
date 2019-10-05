@@ -13,8 +13,8 @@
                         <h5 class="title">
                             {{ $t(`${$options.name}.${singleItemName}`) }}
                             <span v-if="itemToCreate.ID">
-                                {{ $t(`${$options.name}.edit`) }}:
-                            <small>ID {{ itemToCreate.ID }}</small></span>
+                                {{ $t(`${$options.name}.edit`) }}: <small>ID {{ itemToCreate.ID }}</small></span
+                            >
                             <span v-else>{{ $t(`${$options.name}.adding`) }}:</span>
                             &nbsp;
                             <b>{{ selectedItem.code }}</b>
@@ -25,7 +25,7 @@
                             <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
                                 <span v-if="isEmpty(itemToCreate.teeth)">
                                     {{ $t(`${$options.name}.selectTooth`) }}
-                                    </span>
+                                </span>
                                 <span v-else>
                                     <slide-y-down-transition>
                                         <span v-show="!isEmpty(originalItem.locations)">For:</span>
@@ -281,9 +281,47 @@ export default {
             }
             return null;
         },
+        setAnamnes() {
+            const anamnes = {
+                catalogProcedureID: this.itemToCreate.catalogAnamnesID,
+                teeth: this.itemToCreate.teeth
+            };
+            console.log(anamnes)
+            this.isLoading = true;
+            return new Promise((resolve, reject) => {
+                this.$store
+                    .dispatch(PATIENT_ANAMNES_SET, {
+                        anamnes
+                    })
+                    .then(
+                        response => {
+                            this.itemToCreate.ID = response.ID;
+                            this.itemToCreate.teeth = response.teeth;
+                            this.itemToCompare = this.lodash.cloneDeep(response);
+                            this.isLoading = false;
+                            resolve(true);
+                        },
+                        error => {
+                            console.log(error)
+                            this.$store.dispatch(NOTIFY, {
+                                settings: {
+                                    message: error.response.data.error,
+                                    type: 'warning'
+                                }
+                            });
+                            this.isLoading = false;
+                            reject(error);
+                        }
+                    )
+                    .catch(err => {
+                        this.isLoading = false;
+                        throw new Error(err);
+                    });
+            });
+        },
         setProcedure() {
             const procedure = {
-                procedureID: this.itemToCreate.catalogProcedureID,
+                catalogProcedureID: this.itemToCreate.catalogProcedureID,
                 teeth: this.itemToCreate.teeth
             };
             this.isLoading = true;
@@ -362,10 +400,13 @@ export default {
                 });
             }
             if (this.currentType === 'anamnesis') {
-                this.$store.dispatch(PATIENT_ANAMNES_SET, {
-                    // anamnesis
-                    anamnes: 'anamnesis'
-                });
+                if (this.needToSaveItem()) {
+                    return Promise.resolve(this.setAnamnes());
+                }
+                if (this.needToSaveEdited()) {
+                    return Promise.resolve(this.saveProcedureTeeth());
+                }
+                return true;
             }
             if (this.currentType === 'procedures') {
                 if (this.needToSaveItem()) {
@@ -410,6 +451,7 @@ export default {
         },
         // инициируем локальный диагноз
         initiateLocalItem() {
+
             this.itemToCreate = this.lodash.cloneDeep(this.selectedItem);
             this.itemToCompare = this.lodash.cloneDeep(this.selectedItem);
             this.selectedTeethL = this.lodash.cloneDeep(this.selectedItem.teeth);
@@ -455,14 +497,6 @@ export default {
             if (ref === 'step2') {
                 if (!this.$refs[ref]) return false;
                 return this.$refs[ref].validate().then(res => {
-                    if (!res) {
-                        this.$store.dispatch(NOTIFY, {
-                            settings: {
-                                message: 'You have unsaved manipulation',
-                                type: 'warning'
-                            }
-                        });
-                    }
                     return res;
                 });
             }

@@ -3,7 +3,7 @@
         <small v-for="(p, i) in procedures" :key="p.ID" class="items-manipulations_wrapper">
             <span class="text-left"> {{ i + 1 }}. {{ p.title }} - ({{ getManipulationsByProcedureID(p.ID).length }}manipulations) </span>
             <div class="text-right">
-                {{ procedureTotalPrice(p.ID) }}&nbsp;
+                {{ procedureTotalPrice(p.ID) | numSeparator }}&nbsp;
                 <small>{{ currentClinic.currencyCode }}</small>
             </div>
             <br />

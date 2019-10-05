@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="md-alignment-center-right md-layout">
-                    <md-button class="md-primary md-round md-simple" @click="setLastLocationForAllTeeth()">
+                    <md-button class="md-primary md-just-icon md-round md-simple" @click="setLastLocationForAllTeeth()">
                         <md-icon>done_all</md-icon>
                         <md-tooltip v-if="'locations' in originalItem" md-delay="1000">
                             {{ $t(`${$options.name}.toggleTeeth`) }}
@@ -37,7 +37,7 @@
                         </md-tooltip>
                     </md-button>
 
-                    <md-button class="md-primary md-round md-simple" @click="dropAllLocations()">
+                    <md-button class="md-primary md-just-icon md-round md-simple" @click="dropAllLocations()">
                         <md-icon>clear_all</md-icon>
                         <md-tooltip md-delay="1000">
                             {{ $t(`${$options.name}.dropAllLocations`) }}
@@ -420,7 +420,7 @@ export default {
             }
             // если приорет локаций включен и нет локаций от предыдущиих диагнозов
             //  то показывай все локции согласно диагнозу
-            if (location in this.originalItem.view) {
+            if (this.originalItem.view && location in this.originalItem.view) {
                 const value = this.getNestedProperty(this.originalItem, 'view', location);
                 return !value;
             }

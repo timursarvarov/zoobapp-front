@@ -152,8 +152,20 @@ export default {
             title: 'ID'
         },
         {
+            key: 'name',
+            title: 'Name'
+        },
+        {
             key: 'address',
             title: 'Address'
+        },
+        {
+            key: 'phone',
+            title: 'Phone'
+        },
+        {
+            key: 'rating',
+            title: 'Rating'
         },
         {
             key: 'allergy',
@@ -180,24 +192,12 @@ export default {
             title: 'Files'
         },
         {
-            key: 'name',
-            title: 'Name'
-        },
-        {
             key: 'firstName',
             title: 'First Name'
         },
         {
             key: 'lastName',
             title: 'Last Name'
-        },
-        {
-            key: 'phone',
-            title: 'Phone'
-        },
-        {
-            key: 'rating',
-            title: 'Rating'
         },
         {
             key: 'source',
@@ -466,7 +466,6 @@ export default {
         {
             key: 'state',
             title: 'State'
-        },
-
+        }
     ]
 };

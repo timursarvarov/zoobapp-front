@@ -21,9 +21,9 @@
                         :md-label="$t(`${$options.name}.treatment`)"
                     >
                         <div class="md-layout">
-                            <keep-alive>
-                                <router-view name="treatmentchild" />
-                            </keep-alive>
+                            <!-- <keep-alive> -->
+                            <router-view name="treatmentchild" />
+                            <!-- </keep-alive> -->
                         </div>
                     </md-tab>
                     <md-tab

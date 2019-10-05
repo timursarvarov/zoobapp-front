@@ -195,7 +195,7 @@
                 <div class="md-layout-item md-size-100 text-right">
                     <md-button :disabled="lodash.isEmpty(changedFields) || loading" class="md-raised md-success mt-4" @click="updateProfile">
                         <span v-if="loading">
-                        <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
+                            <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
                             {{ $t(`${$options.name}.loading`) }}
                         </span>
                         <span v-else>

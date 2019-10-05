@@ -29,8 +29,8 @@
                 </div>
             </md-toolbar>
             <md-table
-                md-fixed-headere
                 :md-selected-value.sync="selectedItemsL"
+                md-fixed-headere
                 :value="queriedData || []"
                 :md-sort.sync="currentSort"
                 :md-sort-order.sync="currentSortOrder"
@@ -41,9 +41,14 @@
                 <div />
                 <md-table-empty-state
                     v-if="!hasSlot('emptyState')"
-                    :md-label="$t(`${$options.name}.noFoundTitle`, { currentType })"
-                    :md-description="$t(`${$options.name}.noFoundDescription`, { currentType })"
-                />
+                    md-icon="sentiment_dissatisfied"
+                    :md-label="$t(`${$options.name}.noFoundTitle`)"
+                    :md-description="$t(`${$options.name}.noFoundDescription`)"
+                >
+                    <md-button class="md-primary md-raised" @click="scrollToTop()">
+                        {{ $t(`${$options.name}.scrollTop`) }}
+                    </md-button>
+                </md-table-empty-state>
                 <slot name="emptyState" v-else />
 
                 <md-table-row
@@ -51,7 +56,7 @@
                     :key="item.ID"
                     slot-scope="{ item }"
                     :class="[{ 'just-added': item.justAdded }, { 'to-delete': item.ID === itemToDelete.ID }]"
-                    :md-selectable="currentType === 'procedures' || currentType === 'billing' ? 'multiple' : 'single'"
+                    :[isSelectableRow()]="selectable ? 'multiple' : 'single'"
                 >
                     <md-table-cell
                         v-for="field in itemsTableColumns"
@@ -107,7 +112,9 @@
 
                         <div v-else-if="field.key === 'price' && item.manipulations" class="price">
                             <span class="price_title">
-                                <span class="md-title">{{ getManipulationsByProcedureID(item.ID).reduce((a, b) => a + b.totalPrice, 0) }}</span>
+                                <span class="md-title">{{
+                                    getManipulationsByProcedureID(item.ID).reduce((a, b) => a + b.totalPrice, 0) | numSeparator
+                                }}</span>
                                 &nbsp;
                                 <small>{{ currentClinic.currencyCode }}</small>
                             </span>
@@ -259,6 +266,10 @@ export default {
         extraClass: {
             type: String,
             default: () => 'paginated-table'
+        },
+        selectable: {
+            type: Boolean,
+            default: () => false
         }
     },
     data() {
@@ -272,7 +283,6 @@ export default {
             itemToEdit: {},
             showTableEditor: false,
             showDeleteForm: false,
-            showSnackbar: false,
             currentSort: 'created',
             currentSortOrder: 'asc',
             pagination: {
@@ -304,7 +314,14 @@ export default {
                 return this.selectedItems;
             },
             set(value) {
-                this.$emit('onSelected', value);
+                if (this.selectable) {
+                    if (Array.isArray(value)) {
+                        this.$emit('onSelected', value);
+                    } else {
+                        let items = [value];
+                        this.$emit('onSelected', items);
+                    }
+                }
             }
         },
         queriedData() {
@@ -370,9 +387,6 @@ export default {
             }
             this.searchedData = result;
         },
-        selectedItems() {
-            this.showSnackbar = this.selectedItems.length > 0;
-        },
         showDeleteItemSnackbar(val) {
             if (!val) {
                 this.itemToDelete = '';
@@ -392,6 +406,12 @@ export default {
     },
 
     methods: {
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
+        isSelectableRow() {
+            return this.selectable ? 'md-selectable' : '';
+        },
         hasSlot(slotName) {
             return this.slotsPassed && this.slotsPassed[slotName];
         },
@@ -404,7 +424,6 @@ export default {
                     }
                 });
             }
-            this.recalculateJaw(itemType);
         },
         setComputedAvailableItemsTableColumns() {
             this.computedAvailableItemsTableColumns = this.defaultFields;
@@ -429,9 +448,6 @@ export default {
             localStorage.setItem(this.currentTypeToLocalStorage, JSON.stringify(e));
             this.setItemsTableColumns();
             this.setComputedAvailableItemsTableColumns();
-        },
-        onSelect() {
-            this.showSnackbar = !this.showSnackbar;
         },
         ifDiagnoseHasLocations(teeth) {
             if (!teeth) return false;

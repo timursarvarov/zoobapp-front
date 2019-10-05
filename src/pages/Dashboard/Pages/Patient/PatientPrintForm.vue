@@ -10,6 +10,11 @@ export default {
     components: {
         ...components
     },
+    beforeDestroy() {
+        EventBus.$off(EB_SHOW_PATIENT_PRINT_FORM, payLoad => {
+            this.showItems(payLoad);
+        });
+    },
     data() {
         return {
             showPrintForm: false,

@@ -14,9 +14,11 @@
                 <div slot="emptyState">
                     <div>
                         <div style="color: #AAAAAA" class="md-title">
-                            Add new file
+                            {{ $t(`${$options.name}.addNewFiles`) }}
                         </div>
-                        <span style="color: #AAAAAA">Click here or drope some files</span>
+                        <span style="color: #AAAAAA">
+                            {{ $t(`${$options.name}.addNewFilesDescription`) }}
+                        </span>
                     </div>
                 </div>
             </t-files-add-form>

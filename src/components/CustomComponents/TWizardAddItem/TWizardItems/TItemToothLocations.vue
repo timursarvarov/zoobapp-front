@@ -176,7 +176,7 @@ export default {
         },
         validate() {
             return this.$validator.validateAll().then(res => {
-                if(!res){
+                if (!res) {
                     this.$store.dispatch(NOTIFY, {
                         settings: {
                             message: this.errors.first('locations'),
@@ -187,7 +187,7 @@ export default {
                 this.$emit('on-validated', res);
                 this.matchWidth();
                 return res;
-            })
+            });
         },
         isValidLoctions() {
             if (this.originalLocations === undefined) {

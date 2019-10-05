@@ -9,14 +9,15 @@
                     </b>
                 </div>
                 <div>
-                    <b>{{ getPlanTotalPrice(plan.ID) }}</b>
+                    <b>{{ getPlanTotalPrice(plan.ID) | numSeparator }}{{ currentClinic.currencyCode }}</b>
                 </div>
             </h4>
             <md-subheader class="hide-on-print-actions">
-                Print: &nbsp;
-                <md-checkbox v-model="showPlan">Plan</md-checkbox>
-                <md-checkbox v-if="showPlan" v-model="showProcedures">Procedures</md-checkbox>
-                <md-checkbox v-if="showProcedures && showPlan" v-model="showManipulations">Mainpulations</md-checkbox>
+                {{ $t(`${$options.name}.print`) }}
+                &nbsp;
+                <md-checkbox v-model="showPlan">{{ $t(`${$options.name}.plan`) }}</md-checkbox>
+                <md-checkbox v-if="showPlan" v-model="showProcedures">{{ $t(`${$options.name}.procedures`) }}</md-checkbox>
+                <md-checkbox v-if="showProcedures && showPlan" v-model="showManipulations">{{ $t(`${$options.name}.manipulations`) }}</md-checkbox>
             </md-subheader>
         </div>
         <template v-if="canShowPlan">
@@ -84,9 +85,7 @@ export default {
     methods: {
         getPlanTotalPrice(planID) {
             const totalPrice = this.manipulationsByPlanID(planID).reduce((a, b) => a + (b.totalPrice || 0), 0);
-            return totalPrice
-                ? ` ${totalPrice.toFixed(2)} ${this.currentClinic.currencyCode}`
-                : ` ${(0).toFixed(2)} ${this.currentClinic.currencyCode}`;
+            return totalPrice ? `${totalPrice.toFixed(2)}` : `${(0).toFixed(2)}`;
         }
     }
 };

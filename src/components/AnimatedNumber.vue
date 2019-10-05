@@ -46,7 +46,7 @@ export default {
                 .easing(TWEEN.Easing.Quadratic.Out)
                 .to({ tweeningNumber: newValue }, this.duration)
                 .onUpdate(object => {
-                    vm.animatedNumber = object.tweeningNumber.toFixed(this.toFix);
+                    vm.animatedNumber = object.tweeningNumber.toFixed(this.toFix).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
                     // vm.animatedNumber = Number(object.tweeningNumber).toFixed(this.toFix);
                 })
                 .start();

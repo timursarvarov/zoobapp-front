@@ -22,7 +22,7 @@
                             :notification="!lodash.isEmpty(patient.allergy) ? 'A' : ''"
                         />
                     </template>
-                    <span v-else>{{ $route.name }}</span>
+                    <span v-else>{{ $t(`Routes.${$route.name}`) }}</span>
                 </h3>
             </div>
             <div class="md-toolbar-section-end">
@@ -42,7 +42,9 @@
                             <a class="md-list-item-router md-list-item-container md-button-clean" @click="goTo('/')">
                                 <div v-ripple class="md-list-item-content">
                                     <i class="material-icons">dashboard</i>
-                                    <p class="hidden-lg hidden-md">Dashboard</p>
+                                    <p class="hidden-lg hidden-md">
+                                        {{ $t(`Routes.Dashboard`) }}
+                                    </p>
                                 </div>
                             </a>
                         </li>
@@ -51,7 +53,7 @@
                                 <div v-ripple class="md-list-item-content">
                                     <i class="material-icons">person_add</i>
                                     <p class="hidden-lg hidden-md">
-                                        Add patient
+                                        {{ $t(`${$options.name}.addPatient`) }}
                                     </p>
                                 </div>
                             </a>
@@ -64,7 +66,7 @@
                                             <md-icon>notifications</md-icon>
                                             <span class="notification">5</span>
                                             <p class="hidden-lg hidden-md">
-                                                Notifications
+                                                {{ $t(`${$options.name}.notifications`) }}
                                             </p>
                                         </md-button>
                                         <ul class="dropdown-menu dropdown-menu-right">
@@ -96,7 +98,7 @@
                                         <md-button slot="title" class="md-button md-round md-just-icon md-simple" data-toggle="dropdown">
                                             <md-icon>more_vert</md-icon>
                                             <p class="hidden-lg hidden-md">
-                                                More
+                                                {{ $t(`${$options.name}.more`) }}
                                             </p>
                                         </md-button>
                                         <ul class="dropdown-menu dropdown-menu-right">
@@ -109,25 +111,25 @@
                                                         :image-src="user.avatar"
                                                         :title="user.firstName + ' ' + user.lastName"
                                                     />
-                                                    My Profile
+                                                    {{ $t(`${$options.name}.myProfile`) }}
                                                 </router-link>
                                             </li>
                                             <li class="md-layout" @click="showPatientAddForm()">
                                                 <a href="#" class="md-layout-item">
                                                     <md-icon>person_add</md-icon>
-                                                    Add Patient
+                                                    {{ $t(`${$options.name}.addPatient`) }}
                                                 </a>
                                             </li>
                                             <li class="md-layout" @click="lock()">
                                                 <a href="#" class="md-layout-item">
                                                     <md-icon>lock</md-icon>
-                                                    Lock
+                                                    {{ $t(`${$options.name}.lock`) }}
                                                 </a>
                                             </li>
                                             <li class="md-layout" @click="logout()">
                                                 <a href="#">
                                                     <md-icon>arrow_back</md-icon>
-                                                    Logout
+                                                    {{ $t(`${$options.name}.logout`) }}
                                                 </a>
                                             </li>
                                             <li class="md-layout">
@@ -194,6 +196,7 @@ export default {
     components: {
         ...components
     },
+    name: 'TopNavBar',
     data() {
         return {
             totalPatients: 0,
