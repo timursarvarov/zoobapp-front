@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 /* eslint-disable max-len */
+import { isEmpty } from 'lodash';
 import axios from 'axios';
 import {
     PATIENT_CREATE,
@@ -384,7 +385,7 @@ export default {
                     })
                 )
                 .then(resp => {
-                    console.log(resp)
+                    console.log(resp);
                     if (resp.data.error) {
                         commit(PATIENT_PARAM_SET, {
                             paramName: 'status',
@@ -430,7 +431,9 @@ export default {
                             });
                         });
                     }
-                    dispatch(PATIENT_JAW_UPDATE);
+                    if (!isEmpty(anamnesN.teeth)) {
+                        dispatch(PATIENT_JAW_UPDATE);
+                    }
                     resolve(anamnesN);
                 })
                 .catch(err => {
@@ -517,7 +520,9 @@ export default {
                             });
                         });
                     }
-                    dispatch(PATIENT_JAW_UPDATE);
+                    if (!isEmpty(procedureN.teeth)) {
+                        dispatch(PATIENT_JAW_UPDATE);
+                    }
                     resolve(procedureN);
                 })
                 .catch(err => {
@@ -575,7 +580,9 @@ export default {
                             subParamValue: false
                         }
                     });
-                    dispatch(PATIENT_JAW_UPDATE);
+                    if (!isEmpty(procedureN.teeth)) {
+                        dispatch(PATIENT_JAW_UPDATE);
+                    }
                     resolve(procedureN);
                 })
                 .catch(err => {
@@ -636,7 +643,9 @@ export default {
                         subParamIndex: state.plans[procedure.planID].procedures.findIndex(pID => pID === procedure.ID),
                         subParamID: procedure.ID
                     });
-                    dispatch(PATIENT_JAW_UPDATE);
+                    if (!isEmpty(procedure.teeth)) {
+                        dispatch(PATIENT_JAW_UPDATE);
+                    }
                     resolve(resp.data);
                 })
                 .catch(err => {
@@ -867,24 +876,10 @@ export default {
                 subParamValue: false
             }
         });
-        dispatch(PATIENT_JAW_UPDATE);
+        if (!isEmpty(diagnose.teeth)) {
+            dispatch(PATIENT_JAW_UPDATE);
+        }
     },
-    // [PATIENT_ANAMNES_SET]: ({ commit, state, dispatch }, { anamnes }) => {
-    //     commit(PATIENT_PARAM_PUSH, {
-    //         paramName: 'anamnesis',
-    //         paramKey: state.anamnesis && state.anamnesis.length ? state.anamnesis.length : 0,
-    //         paramValue: anamnes
-    //     });
-    //     dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
-    //         params: {
-    //             paramName: 'anamnesis',
-    //             paramIndex: anamnes.ID,
-    //             subParamName: 'justAdded',
-    //             subParamValue: false
-    //         }
-    //     });
-    //     dispatch(PATIENT_JAW_UPDATE);
-    // },
     [PATIENT_SUB_PARAM_SET]: ({ commit }, { params }) =>
         new Promise(resolve => {
             commit(PATIENT_SUB_PARAM_SET, params);
@@ -1050,7 +1045,6 @@ export default {
                             paramName: 'status',
                             paramValue: 'success'
                         });
-                        dispatch(PATIENT_JAW_UPDATE);
                         resolve(resp.data.result.patients[0]);
                     }
                 })

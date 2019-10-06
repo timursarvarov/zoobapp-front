@@ -1,4 +1,3 @@
-/* eslint-disable no-tabs */
 import { TEETH_INITIATION, TEETH_INITIATION_ETHALON } from '@/constants';
 import state from './state';
 
@@ -55,11 +54,9 @@ export default {
             });
         });
         const jawEthalon = {};
-        // eslint-disable-next-line
-        for (let attr in jaw) {
-            // eslint-disable-next-line
-            if (jaw.hasOwnProperty(attr)) jawEthalon[attr] = jaw[attr];
-        }
+        Object.keys(jaw).forEach(jawType => {
+            jawEthalon[jawType] = jaw[jawType];
+        });
         commit(TEETH_INITIATION_ETHALON, jawEthalon);
     }
 };
