@@ -274,10 +274,13 @@ export default {
                 this.tabLinkWidth = clientWidth;
                 this.tabLinkHeight = clientHeight;
             }
+        },
+        throttleOnResize(){
+             throttle(this.onResize, 40);
         }
     },
     destroyed() {
-        window.removeEventListener('resize');
+        window.removeEventListener('resize', this.throttleOnResize());
     },
     mounted() {
         this.activeTabIndex = this.startIndex;
@@ -288,9 +291,10 @@ export default {
         });
         window.addEventListener(
             "resize",
-            () => {
-                throttle(this.onResize, 40);
-            },
+            this.throttleOnResize(),
+            // () => {
+            //     throttle(this.onResize, 40);
+            // },
             false
         );
     },

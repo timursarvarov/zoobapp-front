@@ -23,15 +23,15 @@
                         </h5>
                         <span>
                             <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
-                                <span v-if="isEmpty(itemToCreate.teeth)">
+                                <span v-if="lodash.isEmpty(itemToCreate.teeth)">
                                     {{ $t(`${$options.name}.selectTooth`) }}
                                 </span>
                                 <span v-else>
                                     <slide-y-down-transition>
-                                        <span v-show="!isEmpty(originalItem.locations)">For:</span>
+                                        <span v-show="!lodash.isEmpty(originalItem.locations)">For:</span>
                                     </slide-y-down-transition>
                                     <slide-y-down-transition>
-                                        <span v-show="isEmpty(originalItem.locations)">
+                                        <span v-show="lodash.isEmpty(originalItem.locations)">
                                             {{ $t(`${$options.name}.teethWithLocations`) }}
                                         </span>
                                     </slide-y-down-transition>
@@ -286,7 +286,7 @@ export default {
                 catalogProcedureID: this.itemToCreate.catalogAnamnesID,
                 teeth: this.itemToCreate.teeth
             };
-            console.log(anamnes)
+            console.log(anamnes);
             this.isLoading = true;
             return new Promise((resolve, reject) => {
                 this.$store
@@ -302,7 +302,7 @@ export default {
                             resolve(true);
                         },
                         error => {
-                            console.log(error)
+                            console.log(error);
                             this.$store.dispatch(NOTIFY, {
                                 settings: {
                                     message: error.response.data.error,
@@ -451,7 +451,6 @@ export default {
         },
         // инициируем локальный диагноз
         initiateLocalItem() {
-
             this.itemToCreate = this.lodash.cloneDeep(this.selectedItem);
             this.itemToCompare = this.lodash.cloneDeep(this.selectedItem);
             this.selectedTeethL = this.lodash.cloneDeep(this.selectedItem.teeth);

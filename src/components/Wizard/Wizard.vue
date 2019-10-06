@@ -254,9 +254,6 @@ export default {
       }
     }
   },
-   destroyed() {
-        window.removeEventListener('resize');
-    },
   mounted() {
     this.activeTabIndex = this.startIndex;
     this.$nextTick(() => {

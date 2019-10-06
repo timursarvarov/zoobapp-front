@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!isEmpty(files)" class="files-list">
+    <div v-if="!lodash.isEmpty(files)" class="files-list">
         <div class="">
             <md-table
                 v-viewer="options"
