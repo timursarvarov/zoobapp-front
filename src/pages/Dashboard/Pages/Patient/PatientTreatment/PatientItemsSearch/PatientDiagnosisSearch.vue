@@ -114,7 +114,7 @@ export default {
         },
         selectItem(item) {
             if (item) {
-                if (!this.isEmpty(item.locations) && this.selectedTeeth.length === 0) {
+                if (!this.lodash.isEmpty(item.locations) && this.selectedTeeth.length === 0) {
                     this.$store.dispatch(NOTIFY, {
                         settings: {
                             message: 'Please first select teeth',

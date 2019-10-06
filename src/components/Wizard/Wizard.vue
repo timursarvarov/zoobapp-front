@@ -254,6 +254,9 @@ export default {
       }
     }
   },
+   destroyed() {
+        window.removeEventListener('resize');
+    },
   mounted() {
     this.activeTabIndex = this.startIndex;
     this.$nextTick(() => {
@@ -306,7 +309,7 @@ export default {
      .moving-tab{
        background-color: #9c27b0!important;
      }
-    
+
 
 }
 .wizard-navigation .nav-link {

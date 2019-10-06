@@ -339,7 +339,7 @@ export default {
         },
         toothClick(event, toothId) {
             if (
-                (this.isEmpty(this.originalItem.locations) || this.originalItem.functionType === 'toggleAll') &&
+                (this.lodash.isEmpty(this.originalItem.locations) || this.originalItem.functionType === 'toggleAll') &&
                 !event.target.classList.contains('selectable-location')
             ) {
                 this.toggleTooth(toothId);
@@ -367,11 +367,11 @@ export default {
             const toothClasses = {
                 // класс 'selectable-location' применяется для не выбранных парадонтитов
                 /* selectable-location */
-                'selectable-location': this.getNestedProperty(this.originalItem, 'locations', location) !== undefined,
+                'selectable-location': this.$_getNestedProperty(this.originalItem, 'locations', location) !== undefined,
 
                 // Название класса локации из высчитанной формуллы для отображеня в диагнозов анамнеза и лечения
                 /* anamnesis || procedures|| diagnosis */
-                [this.preferableJawClasses(toothId, location, this.jaw, this.prefer)]: true,
+                [this.$_preferableJawClasses(toothId, location, this.jaw, this.prefer)]: true,
 
                 // Название класса локации из svg для отображеня в норме
                 /* root || corona|| gum etc. */
@@ -379,7 +379,7 @@ export default {
 
                 // класс 'seleced' применяется для выбранной локации
                 /* selected */
-                selected: this.getNestedProperty(this.item, 'teeth', toothId, location) !== undefined,
+                selected: this.$_getNestedProperty(this.item, 'teeth', toothId, location) !== undefined,
 
                 // СВОЙСТВО hide применяется если во view выбранного диагноза нет текущей локации
                 hide: this.checkForHidingLocation(toothId, location)
@@ -390,7 +390,7 @@ export default {
         // Высчитывваем в какую очередь нужно прятать локацию в зависимости от выбронного приоретета показа(анамнез дигноз или лечение)
         checkForHidingLocation(toothId, location) {
             // проверяем наличие локации в вычесленной челюсти
-            const hide = this.isHidingClicableLocation(
+            const hide = this.$_isHidingClicableLocation(
                 toothId,
                 location,
                 this.jaw,
@@ -421,7 +421,7 @@ export default {
             // если приорет локаций включен и нет локаций от предыдущиих диагнозов
             //  то показывай все локции согласно диагнозу
             if (this.originalItem.view && location in this.originalItem.view) {
-                const value = this.getNestedProperty(this.originalItem, 'view', location);
+                const value = this.$_getNestedProperty(this.originalItem, 'view', location);
                 return !value;
             }
             if (hide === undefined) {
@@ -441,7 +441,7 @@ export default {
         },
         //  Устанавливаем последнюю указанную локацию для всех выбранных зубов
         setLastLocationForAllTeeth() {
-            if (!this.isEmpty(this.originalItem.locations)) {
+            if (!this.lodash.isEmpty(this.originalItem.locations)) {
                 if (this.lastAction.location) {
                     const teethWithSameLocation = this.getTeethWithSameLocation(this.lastAction.location);
                     const teethWithOutL = this.selectableTeeth.filter(el => !teethWithSameLocation.includes(`${el}`));
@@ -458,7 +458,7 @@ export default {
                     });
                 }
             } else if (!this.lodash.isEmpty(this.selectedItem.teeth)) {
-                if (this.selectableTeeth.length === this.numProps(this.item.teeth)) {
+                if (this.selectableTeeth.length === this.$_numProps(this.item.teeth)) {
                     this.selectableTeeth.forEach(toothId => {
                         this.dropTooth(toothId);
                     });
@@ -481,9 +481,9 @@ export default {
         },
         chooseLocation(toothId, location) {
             // если выбранная область относиться к текущему диагнозу
-            if (this.hasProp(this.originalItem.locations, location)) {
+            if (this.$_hasProp(this.originalItem.locations, location)) {
                 // если выбранный зуб не находиться в списке зубов дигноза
-                if (!this.hasProp(this.item.teeth, toothId)) {
+                if (!this.$_hasProp(this.item.teeth, toothId)) {
                     this.item.teeth[toothId] = {};
                 }
                 // false = локация для удаления, true = для выбора области к лечению
@@ -493,7 +493,7 @@ export default {
                 this.item = addLocation(location, this.item, this.originalItem, toothId);
 
                 // удаляем зуб из диагноза если у него нет локациий
-                if (this.isEmpty(this.item.teeth[toothId])) {
+                if (this.lodash.isEmpty(this.item.teeth[toothId])) {
                     delete this.item.teeth[toothId];
                 }
             }
@@ -508,7 +508,7 @@ export default {
         },
         setLocationOnLoad(location, toothId, value) {
             if (value !== undefined) {
-                if (!this.hasProp(this.item.teeth, toothId)) {
+                if (!this.$_hasProp(this.item.teeth, toothId)) {
                     this.item.teeth[toothId] = {};
                 }
                 this.item.teeth[toothId][location] = value;
@@ -522,10 +522,10 @@ export default {
         setAllTeethOnLoad() {
             const { setOnLoad } = this.originalItem;
             // если нет локаций
-            if (!this.isEmpty(setOnLoad)) {
+            if (!this.lodash.isEmpty(setOnLoad)) {
                 Object.keys(setOnLoad).forEach(location => {
                     this.selectableTeeth.forEach(toothId => {
-                        if (this.hasProp(setOnLoad, location)) {
+                        if (this.$_hasProp(setOnLoad, location)) {
                             this.setLocationOnLoad(location, toothId, setOnLoad[location]);
                         }
                     });
@@ -536,7 +536,7 @@ export default {
             Object.keys(this.selectedItem.teeth).forEach(toothId => {
                 const tooth = this.selectedItem.teeth[toothId];
                 // если нет локаций
-                if (!this.isEmpty(tooth)) {
+                if (!this.lodash.isEmpty(tooth)) {
                     Object.keys(tooth).forEach(location => {
                         this.setLocationOnLoad(location, toothId, tooth[location]);
                     });
@@ -562,9 +562,9 @@ export default {
             }
             if (this.selectableTeeth.length > 0) {
                 // устанавливаем локации setOnLoad локации
-                if (!this.isEmpty(this.originalItem.locations)) {
+                if (!this.lodash.isEmpty(this.originalItem.locations)) {
                     // если диагноз редактируемый
-                    if (!this.isEmpty(this.selectedItem.teeth)) {
+                    if (!this.lodash.isEmpty(this.selectedItem.teeth)) {
                         this.setAllEditableTeethOnLoad();
                     } else {
                         this.setAllTeethOnLoad();

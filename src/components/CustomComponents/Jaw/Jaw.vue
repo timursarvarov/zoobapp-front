@@ -384,7 +384,7 @@ export default {
                 if (type !== this.type) {
                     Object.keys(this.jaw[type]).forEach(toothId => {
                         if (!teeth.includes(toothId)) {
-                            if (!this.isEmpty(this.jaw[type][toothId])) {
+                            if (!this.lodash.isEmpty(this.jaw[type][toothId])) {
                                 teeth.push(toothId);
                             }
                         }
@@ -503,6 +503,7 @@ export default {
         }
     },
     mounted() {
+        this.calculateJaw();
         this.handleResize();
         this.setTeethWidth();
     },
@@ -525,7 +526,7 @@ export default {
     },
 
     created() {
-        this.calculateJaw('created');
+        // this.calculateJaw('created');
         window.addEventListener('resize', this.setTeethWidth);
         window.addEventListener('resize', this.handleResize);
     },
@@ -603,7 +604,7 @@ export default {
             toothClasses = {
                 // Название класса локации из высчитанной формуллы для отображеня в диагнозов анамнеза и лечения
                 /* anamnes || procedure|| diagnose */
-                [this.preferableJawClasses(toothId, location, this.jaw, this.prefer)]: true,
+                [this.$_preferableJawClasses(toothId, location, this.jaw, this.prefer)]: true,
 
                 // Название класса локации из svg для отображеня в норме
                 /* root || corona|| gum etc. */
@@ -710,7 +711,7 @@ export default {
                         }
                         jaw[toothId][location].classes = this.getToothClasses(toothId, location);
                         // СВОЙСТВО hide применяется если во view выбранного диагноза нет текущей локации
-                        jaw[toothId][location].hide = this.isHidingLocation(toothId, location, this.jaw, this.prefer, this.defaultLocations);
+                        jaw[toothId][location].hide = this.$_isHidingLocation(toothId, location, this.jaw, this.prefer, this.defaultLocations);
                     });
                 });
                 resolve(jaw);

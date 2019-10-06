@@ -236,7 +236,7 @@ export default {
             return result;
         },
         InOriginalItemViewValue(location) {
-            const result = this.getNestedProperty(this.originalItem, 'view', location);
+            const result = this.$_getNestedProperty(this.originalItem, 'view', location);
             return result;
         },
         hasKeyInSelectedD(location) {
@@ -246,7 +246,7 @@ export default {
         // Высчитывваем в какую очередь нужно присвоить класс для показа локации в зависимости от выбронного приоретета показа(анамнез дигноз или лечение)
         setLocationOnLoad(location, toothId, value) {
             if (value !== undefined) {
-                if (!this.hasProp(this.diagnose.teeth, toothId)) {
+                if (!this.$_hasProp(this.diagnose.teeth, toothId)) {
                     this.diagnose.teeth[toothId] = {};
                 }
                 this.diagnose.teeth[toothId][location] = value;
@@ -260,10 +260,10 @@ export default {
         setAllTeethOnLoad() {
             const { setOnLoad } = this.originalItem;
             // если нет локаций
-            if (!this.isEmpty(setOnLoad)) {
+            if (!this.lodash.isEmpty(setOnLoad)) {
                 Object.keys(setOnLoad).forEach(location => {
                     this.selectableTeeth.forEach(toothId => {
-                        if (this.hasProp(setOnLoad, location)) {
+                        if (this.$_hasProp(setOnLoad, location)) {
                             this.setLocationOnLoad(location, toothId, setOnLoad[location]);
                         }
                     });
@@ -274,7 +274,7 @@ export default {
             Object.keys(this.selectedItem.teeth).forEach(toothId => {
                 const tooth = this.selectedItem.teeth[toothId];
                 // если нет локаций
-                if (!this.isEmpty(tooth)) {
+                if (!this.lodash.isEmpty(tooth)) {
                     Object.keys(tooth).forEach(location => {
                         this.setLocationOnLoad(location, toothId, tooth[location]);
                     });
@@ -300,9 +300,9 @@ export default {
             }
             if (this.selectableTeeth.length > 0) {
                 // устанавливаем локации setOnLoad локации
-                if (!this.isEmpty(this.originalItem.locations)) {
+                if (!this.lodash.isEmpty(this.originalItem.locations)) {
                     // если диагноз редактируемый
-                    if (!this.isEmpty(this.selectedItem.teeth)) {
+                    if (!this.lodash.isEmpty(this.selectedItem.teeth)) {
                         this.setAllEditableTeethOnLoad();
                     } else {
                         this.setAllTeethOnLoad();
@@ -321,7 +321,7 @@ export default {
             Object.keys(this.defaultLocations).forEach(location => {
                 tooth[location] = {
                     class: this.jaw[this.type][this.toothId][location] ? this.classTypeComputed : ''
-                    // this.preferableJawClasses(this.toothId, location),
+                    // this.$_preferableJawClasses(this.toothId, location),
                 };
             });
 

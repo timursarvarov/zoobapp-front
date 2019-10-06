@@ -4,6 +4,8 @@
 export default function recalculateJaw(jawEthalon, patientItems) {
     const calcJaw = JSON.parse(JSON.stringify(jawEthalon));
     Object.keys(patientItems).forEach(itemType => {
+        // console.log(itemType);
+        // console.log(patientItems);
         patientItems[itemType].forEach(item => {
             //! переделать после реализации в беке
             // eslint-disable-next-line no-constant-condition

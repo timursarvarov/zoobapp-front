@@ -193,10 +193,10 @@ export default {
             if (this.originalLocations === undefined) {
                 return true;
             }
-            if (this.isEmpty(this.originalLocations)) {
+            if (this.lodash.isEmpty(this.originalLocations)) {
                 return true;
             }
-            return !this.isEmpty(this.procedureLocal.teeth);
+            return !this.lodash.isEmpty(this.procedureLocal.teeth);
         }
     }
 };

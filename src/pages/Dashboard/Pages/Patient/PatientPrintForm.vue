@@ -1,5 +1,5 @@
 <template>
-    <print-form :showForm.sync="showPrintForm" :type="type" :selected-item="selectedItem" />
+    <print-form v-if="showPrintForm" :showForm.sync="showPrintForm" :type="type" :selected-item="selectedItem" />
 </template>
 <script>
 import { mapGetters } from 'vuex';
@@ -11,9 +11,7 @@ export default {
         ...components
     },
     beforeDestroy() {
-        EventBus.$off(EB_SHOW_PATIENT_PRINT_FORM, payLoad => {
-            this.showItems(payLoad);
-        });
+        EventBus.$off();
     },
     data() {
         return {

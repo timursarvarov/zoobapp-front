@@ -1,7 +1,7 @@
 /* eslint-disable no-tabs */
 const jawFunctions = {
     methods: {
-        preferableJawClasses(toothId, location, jaw, prefer) {
+        $_preferableJawClasses(toothId, location, jaw, prefer) {
             let toothClass = '';
             if (this.lodash.isEmpty(jaw) || !prefer || prefer.length === 0) {
                 return toothClass;
@@ -23,7 +23,7 @@ const jawFunctions = {
             }
             return toothClass;
         },
-        isHidingLocation(toothId, location, jaw, prefer, defaultLocations) {
+        $_isHidingLocation(toothId, location, jaw, prefer, defaultLocations) {
             // если не установлен прдедпочитаемы вид (prefer) то возвращаем значение по умолчанию
             if (this.lodash.isEmpty(jaw) || prefer.length === 0) {
                 return !defaultLocations[location];
@@ -37,13 +37,13 @@ const jawFunctions = {
 
             // получаем значенин локации в типах челюсти
             if (toothId in jaw.anamnesis && location in jaw.anamnesis[toothId]) {
-                anamnes = this.getNestedProperty(jaw.anamnesis, toothId, location);
+                anamnes = this.$_getNestedProperty(jaw.anamnesis, toothId, location);
             }
             if (toothId in jaw.procedures && location in jaw.procedures[toothId]) {
-                procedure = this.getNestedProperty(jaw.procedures, toothId, location);
+                procedure = this.$_getNestedProperty(jaw.procedures, toothId, location);
             }
             if (toothId in jaw.diagnosis && location in jaw.diagnosis[toothId]) {
-                diagnose = this.getNestedProperty(jaw.diagnosis, toothId, location);
+                diagnose = this.$_getNestedProperty(jaw.diagnosis, toothId, location);
             }
             /* определяем необходимость скрывать локацию(если ее нет
             	ни в одном поле вычесленной челюсти (процедуры, анамнез, или лечение))
@@ -71,11 +71,11 @@ const jawFunctions = {
             }
             return hide;
         },
-        isHidingClicableLocation(toothId, location, jaw, prefer, defaultLocations, locationType, originalItem) {
+        $_isHidingClicableLocation(toothId, location, jaw, prefer, defaultLocations, locationType, originalItem) {
             // если не установлен прдедпочитаемы вид (prefer) то возвращаем значение по умолчанию
             if (prefer.length === 0) {
                 if (location in originalItem.view) {
-                    const hide = !this.getNestedProperty(originalItem, 'view', location);
+                    const hide = !this.$_getNestedProperty(originalItem, 'view', location);
                     return hide;
                 }
                 return !defaultLocations[location];
@@ -89,13 +89,13 @@ const jawFunctions = {
 
             // получаем значенин локации в типах челюсти
             if (toothId in jaw.anamnesis && location in jaw.anamnesis[toothId]) {
-                anamnes = this.getNestedProperty(jaw.anamnesis, toothId, location);
+                anamnes = this.$_getNestedProperty(jaw.anamnesis, toothId, location);
             }
             if (toothId in jaw.procedures && location in jaw.procedures[toothId]) {
-                procedure = this.getNestedProperty(jaw.procedures, toothId, location);
+                procedure = this.$_getNestedProperty(jaw.procedures, toothId, location);
             }
             if (toothId in jaw.diagnosis && location in jaw.diagnosis[toothId]) {
-                diagnose = this.getNestedProperty(jaw.diagnosis, toothId, location);
+                diagnose = this.$_getNestedProperty(jaw.diagnosis, toothId, location);
             }
             /* определяем необходимость скрывать локацию(если ее нет
             	ни в одном поле вычесленной челюсти (процедуры, анамнез, или лечение))
@@ -109,7 +109,7 @@ const jawFunctions = {
                 }
             } else if (locationType === 'anamnesis') {
                 if (location in originalItem.view) {
-                    hide = !this.getNestedProperty(originalItem, 'view', location);
+                    hide = !this.$_getNestedProperty(originalItem, 'view', location);
                 }
             }
             if (prefer.includes('diagnosis')) {
@@ -118,7 +118,7 @@ const jawFunctions = {
                 }
             } else if (locationType === 'diagnosis') {
                 if (location in originalItem.view) {
-                    const value = this.getNestedProperty(originalItem, 'view', location);
+                    const value = this.$_getNestedProperty(originalItem, 'view', location);
                     hide = !value;
                 }
             }
@@ -128,31 +128,31 @@ const jawFunctions = {
                 }
             } else if (locationType === 'procedures') {
                 if (location in originalItem.view) {
-                    const value = this.getNestedProperty(originalItem, 'view', location);
+                    const value = this.$_getNestedProperty(originalItem, 'view', location);
                     hide = !value;
                 }
             }
 
             return hide;
         },
-        hasProp(obj, prop) {
+        $_hasProp(obj, prop) {
             if (!obj || !prop) {
                 return false;
             }
             const hasProperty = Object.prototype.hasOwnProperty.call(obj, prop);
             return hasProperty;
         },
-        getNestedProperty(object = {}, key1 = null, key2 = null, key3 = null) {
-            // if (this.isEmpty(object)) return undefined;
-            if (this.hasProp(object, key1)) {
+        $_getNestedProperty(object = {}, key1 = null, key2 = null, key3 = null) {
+            // if (this.lodash.isEmpty(object)) return undefined;
+            if (this.$_hasProp(object, key1)) {
                 if (!key2) {
                     return object[key1];
                 }
-                if (this.hasProp(object[key1], key2)) {
+                if (this.$_hasProp(object[key1], key2)) {
                     if (!key3) {
                         return object[key1][key2];
                     }
-                    if (this.hasProp(object[key1][key2], key3)) {
+                    if (this.$_hasProp(object[key1][key2], key3)) {
                         return object[key1][key2][key3];
                     }
                     return undefined;

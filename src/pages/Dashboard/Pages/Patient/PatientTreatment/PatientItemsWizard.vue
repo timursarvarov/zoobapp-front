@@ -61,9 +61,7 @@ export default {
         });
     },
     beforeDestroy() {
-        EventBus.$off(EB_SHOW_ITEM_WIZARD, payLoad => {
-            this.showItems(payLoad);
-        });
+        EventBus.$off();
     },
     methods: {
         showItems(payLoad) {

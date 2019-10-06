@@ -87,7 +87,7 @@
                             </ul>
                         </nav>
                         <div class="copyright text-center">
-                            &copy; {{ new Date().getFullYear() }} <a href="https://www.zoobapp.com/" target="_blank">Owl Team</a>, made with
+                            &copy; {{ new Date().getFullYear() }} <a href="#" target="_blank">Owl Team</a>, made with
                             <i class="fa fa-heart heart" /> for a better web
                         </div>
                     </div>
