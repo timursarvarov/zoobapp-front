@@ -14,7 +14,7 @@ pipelines:
           script:
             - npm install
             - npm run build
-            - ssh -T root@165.227.180.111 rm -fr $REMOTE_PATH*
+            - ssh -T webuser@165.227.180.111 rm -fr $REMOTE_PATH*
             - pipe: atlassian/sftp-deploy:0.5.0
               variables:
                 USER: 'webuser'
