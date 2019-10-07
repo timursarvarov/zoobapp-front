@@ -14,11 +14,11 @@ pipelines:
           script:
             - npm install
             - npm run build
-            - ssh -T root@159.89.246.107 rm -fr $REMOTE_PATH*
+            - ssh -T root@165.227.180.111 rm -fr $REMOTE_PATH*
             - pipe: atlassian/sftp-deploy:0.5.0
               variables:
-                USER: 'root'
-                SERVER: '159.89.246.107'
+                USER: 'webuser'
+                SERVER: '165.227.180.111'
                 REMOTE_PATH: $REMOTE_PATH
                 LOCAL_PATH: 'dist/*'
                 DEBUG: 'true'
