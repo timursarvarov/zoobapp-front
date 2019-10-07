@@ -31,7 +31,7 @@ export default {
         validate() {
             console.log(this.showAppointment);
             return this.$validator.validateAll().then(res => {
-                this.$emit('on-validated', res, 'step2');
+                this.$emit('on-validated', res);
                 this.$emit('validated-code', this.code);
                 return res;
             });

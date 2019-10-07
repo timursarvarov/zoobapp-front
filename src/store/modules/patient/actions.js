@@ -862,24 +862,34 @@ export default {
                     reject(err);
                 });
         }),
-    [PATIENT_DIAGNOSE_SET]: ({ commit, state, dispatch }, { diagnose }) => {
-        commit(PATIENT_PARAM_PUSH, {
-            paramName: 'diagnosis',
-            paramKey: state.diagnosis && state.diagnosis.length ? state.diagnosis.length : 0,
-            paramValue: diagnose
-        });
-        dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
-            params: {
+    [PATIENT_DIAGNOSE_SET]: ({ commit, dispatch }, { diagnose }) =>
+        new Promise(resolve => {
+            const diagnoseN = {
+                ...diagnose,
+                ID: Math.random(),
+                justAdded: true
+            };
+            diagnoseN.justAdded = true;
+            // добавляем процедуру в массиы процедур
+            commit(PATIENT_PARAM_PUSH, {
                 paramName: 'diagnosis',
-                paramIndex: diagnose.ID,
-                subParamName: 'justAdded',
-                subParamValue: false
+                paramValue: diagnoseN,
+                paramKey: `${diagnoseN.ID}`
+            });
+            dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+                params: {
+                    paramName: 'diagnosis',
+                    paramIndex: diagnoseN.ID,
+                    subParamName: 'justAdded',
+                    subParamValue: false
+                }
+            });
+            if (!isEmpty(diagnose.teeth)) {
+                dispatch(PATIENT_JAW_UPDATE);
             }
-        });
-        if (!isEmpty(diagnose.teeth)) {
-            dispatch(PATIENT_JAW_UPDATE);
-        }
-    },
+            resolve(diagnoseN);
+        }).catch(err => throwError(err)),
+
     [PATIENT_SUB_PARAM_SET]: ({ commit }, { params }) =>
         new Promise(resolve => {
             commit(PATIENT_SUB_PARAM_SET, params);

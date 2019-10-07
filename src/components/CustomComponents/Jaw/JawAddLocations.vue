@@ -21,6 +21,12 @@
                                 </md-option>
                             </md-select>
                         </md-field>
+                        <!-- <md-field class="">
+                            <label for="teeth">
+                                {{ $t(`${$options.name}.availableTeeth`) }}
+                            </label>
+                            <md-input number numeric v-model="cw">sdsd</md-input>
+                        </md-field> -->
                     </div>
                     <div class="loc-error md-layout md-alignment-center-left">
                         <slot class="md-layout-item" name="title" />
@@ -68,7 +74,7 @@
                 </div>
             </md-toolbar>
         </div>
-        <div :style="[{ 'max-width': `${jawListWidth}px` }]" class="jaw-list-container">
+        <div ref="wrapper" :style="[{ 'max-width': `${jawListWidth}px` }]" class="jaw-list-container">
             <div v-if="selectableTeeth.length > 0" class="jaw md-layout-item">
                 <transition-group name="fade" class="jaw-list mx-auto noselect">
                     <template>
@@ -87,7 +93,7 @@
                                 xmlns="http://www.w3.org/2000/svg"
                                 :viewBox="jawSVG[toothId].viewBox"
                                 :style="{
-                                    width: getCustomWidth(toothId) + 'vh'
+                                    width: getCustomWidth(toothId) + 'px'
                                     //'width':  jawSVG[toothId].widthPerc * 1.56 + (windowWidth < 700 ? 'vmax' : 'vmin'),
                                     //minWidth: jawSVG[toothId].widthPerc * 1.66 + 'vh'
                                 }"
@@ -191,6 +197,8 @@ export default {
             disabled: false,
             jawComputed: {},
             windowWidth: 1,
+            teethWdth: {},
+            cw: 1,
             prefer: ['diagnosis', 'anamnesis', 'procedures'],
             SvgTeeth: [],
             lastAction: {
@@ -281,52 +289,15 @@ export default {
         },
         getCustomWidth(toothId) {
             const toothWidth = this.jawSVG[toothId].widthPerc;
-
-            if (this.jawType === 'baby') {
-                if (this.windowHeigth < 768) {
-                    // console.log(1);
-                    return toothWidth * (this.windowHeigth / (this.windowHeigth - 350));
+            if (this.$refs.wrapper) {
+                const wrapperHeigth = this.$refs.wrapper.clientHeight;
+                if (wrapperHeigth) {
+                    if (this.jawType === 'baby') {
+                        return (toothWidth * wrapperHeigth) / 39;
+                    }
+                    return (toothWidth * wrapperHeigth) / 39;
                 }
-                if (this.windowHeigth >= 768 && this.windowHeigth < 900) {
-                    // console.log(2);
-                    return toothWidth * (this.windowHeigth / (this.windowHeigth - 350));
-                }
-                if (this.windowHeigth <= 1050 && this.windowHeigth > 900) {
-                    // console.log(3);
-                    return toothWidth * (this.windowHeigth / (this.windowHeigth - 440));
-                }
-                if (this.windowHeigth < 1080 && this.windowHeigth > 1050) {
-                    // console.log(4);
-                    return toothWidth * (this.windowHeigth / (this.windowHeigth - 440));
-                }
-                if (this.windowHeigth >= 1080) {
-                    // console.log(5);
-                    return toothWidth * (this.windowHeigth / (this.windowHeigth - 440));
-                }
-                return toothWidth / 1.72;
             }
-            if (this.windowHeigth < 768) {
-                // console.log(1);
-                return toothWidth * (this.windowHeigth / (this.windowHeigth - 350));
-            }
-            if (this.windowHeigth >= 768 && this.windowHeigth < 900) {
-                // console.log(2);
-                return toothWidth * (this.windowHeigth / (this.windowHeigth - 200));
-            }
-            if (this.windowHeigth <= 1050 && this.windowHeigth > 900) {
-                // console.log(3);
-                return toothWidth * (this.windowHeigth / (this.windowHeigth - 320));
-            }
-            if (this.windowHeigth < 1080 && this.windowHeigth > 1050) {
-                // console.log(4);
-                return toothWidth * (this.windowHeigth / (this.windowHeigth - 340));
-            }
-            if (this.windowHeigth >= 1080) {
-                // console.log(5);
-                return toothWidth * (this.windowHeigth / (this.windowHeigth - 340));
-            }
-
-            return toothWidth / 2.2;
         },
         functionName(fun) {
             let ret = fun.toString();
@@ -349,6 +320,7 @@ export default {
             if (toothId in this.item.teeth) {
                 delete this.item.teeth[`${toothId}`];
             } else {
+                console.log(this.originalItem);
                 this.item.teeth[`${toothId}`] = {};
                 const firstLocation = Object.keys(this.originalItem.locations).find(location => this.originalItem.locations[location] !== undefined);
                 if (firstLocation) {

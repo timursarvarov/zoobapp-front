@@ -120,6 +120,11 @@
 		"setForAllTeeth": "Barcha tishlar uchun oxirgi o'zgarishni o'rnating",
 		"toggleTeeth": "Barcha tishlarni tanlang / belgisini olib tashlang"
 	},
+	"JawMenu": {
+		"anamnesis": "@:common.anamnesis",
+		"diagnosis": "@:common.diagnosis",
+		"procedures": "@:common.procedures"
+	},
 	"Login": {
 		"forgotPassword": "Parolni unutib qo'ydim",
 		"login": "Kirish",
@@ -423,6 +428,8 @@
 	},
 	"TCollapseSearch": {
 		"chooseTooth": "Iltimos, avval tishni tanlang",
+		"noFoundDescription": "Boshqa qidiruv panellarini sinab ko'ring",
+		"noFoundTitle": "Hech narsa topilmadi",
 		"search-anamnesis": "Protseduralarni qidirish",
 		"search-diagnosis": "Diagnoslar qidiruv",
 		"search-procedures": "Protseduralarni qidirish",
@@ -621,6 +628,7 @@
 		"createdBy": "Muallif",
 		"description": "Ta'rif",
 		"diagnoses": "Tashxis",
+		"diagnosis": "Tashxis",
 		"email": "Elektron pochta",
 		"files": "Fayllar",
 		"firstName": "Ismi",
@@ -645,6 +653,9 @@
 		"updated": "Yangilandi",
 		"userName": "Foydalanuvchi ismi",
 		"yearsOld": "Bir yildan kam | Bir yoshli | {count} yosh"
+	},
+	"jaw": {
+		"anamnesis": ""
 	},
 	"validations": {
 		"attributes": {

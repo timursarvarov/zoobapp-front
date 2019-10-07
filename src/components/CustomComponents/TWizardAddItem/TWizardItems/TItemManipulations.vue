@@ -313,15 +313,9 @@ export default {
     },
     data() {
         return {
-            progressTimeout: 100,
-            delay: null,
-            showForm: false,
-            canDelete: true,
-            onValidate: false,
             focusedField: null,
             manipulationsNum: 1,
             manipulationPrice: 0,
-            step: 1,
             coolSelectFocus: false,
             manipulationsPriceTotal: 0,
             selectedManipulationID: '',
@@ -580,7 +574,7 @@ export default {
                         }
                     });
                 }
-                this.$emit('on-validated', res, 'step2');
+                this.$emit('on-validated', res);
                 this.$emit('validated-code', this.code);
                 return res;
             });

@@ -49,7 +49,7 @@ export default {
         size: {
             type: Object,
             default: () => {}
-        }
+        },
     },
     data() {
         return {
@@ -99,7 +99,7 @@ export default {
         },
         validate() {
             return this.$validator.validateAll().then(res => {
-                this.$emit('on-validated', res, 'step3');
+                this.$emit('on-validated', res);
                 return res;
             });
         }

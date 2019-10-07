@@ -13,8 +13,9 @@ export default {
         }
         return manipulations;
     },
-    getUngroupedProcedures: state => state.procedures || [],
-    getUngroupedDiagnosis: state => state.diagnosis || [],
+    getUngroupedProcedures: state => state.ungroupedprocedures || [],
+    getUngroupedAnamnesis: state => state.ungroupedanamnesis || [],
+    getUngroupedDiagnosis: state => state.ungroupeddiagnosis || [],
     getCurrentClinic: state => {
         const clinic = {};
         Object.keys(state).forEach(key => {

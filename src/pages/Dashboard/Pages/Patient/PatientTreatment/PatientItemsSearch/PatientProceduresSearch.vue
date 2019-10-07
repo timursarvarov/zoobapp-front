@@ -73,6 +73,7 @@ export default {
         ...mapGetters({
             favoriteProcedures: 'favoriteProcedures',
             currentProcedures: 'getCurrentClinicProcedures',
+            ungroupedProcedures: 'getUngroupedProcedures',
             currentPlanID: 'getCurrentPlanID',
             ageCategory: 'ageCategory'
         }),
@@ -143,7 +144,11 @@ export default {
                         }
                     });
                 } else {
-                    this.$emit('onSelectItem', item);
+                    // вытаскиваем неизмененную fuse поиском оригинальную нозологию
+                    const unchangedItem = Object.values(this.ungroupedProcedures).find(i=>i.ID === item.ID)
+                    if(unchangedItem){
+                        this.$emit('onSelectItem', unchangedItem);
+                    }
                 }
             }
         }

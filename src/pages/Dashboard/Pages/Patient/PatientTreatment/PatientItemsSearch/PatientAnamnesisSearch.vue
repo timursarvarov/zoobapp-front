@@ -51,13 +51,14 @@ export default {
             recalculateItemsLocal: false,
             selecteditemLocal: {},
             loading: false,
-            lastAgeCategory: 0
+            lastAgeCategory: 0,
         };
     },
     computed: {
         ...mapGetters({
             favoriteAnamnesis: 'favoriteAnamnesis',
-            currentAnamnesis: 'getCurrentClinicAnamnesis'
+            currentAnamnesis: 'getCurrentClinicAnamnesis',
+            ungroupedAnamnesis: 'getUngroupedAnamnesis'
         }),
         lang() {
             return this.$i18n.locale;
@@ -125,7 +126,11 @@ export default {
                         }
                     });
                 } else {
-                    this.$emit('onSelectItem', item);
+                    const unchangedItem = Object.values(this.ungroupedAnamnesis).find(i => i.ID === item.ID);
+                    console.log(this.ungroupedAnamnesis, item)
+                    if (unchangedItem) {
+                        this.$emit('onSelectItem', unchangedItem);
+                    }
                 }
             }
         }

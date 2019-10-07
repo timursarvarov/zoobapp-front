@@ -102,7 +102,6 @@ export default {
             });
             localStorage.removeItem(LOCAL_STORAGE.user[key]);
         });
-        commit(USER_LOGOUT);
     },
     [USER_INITIAL]: ({ dispatch, commit, state }) => {
         const USER_NAME = localStorage.getItem('USER_NAME');

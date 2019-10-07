@@ -50,7 +50,7 @@ export default {
                 return ['locations', 'files', 'description'];
             }
             if (this.type === 'procedures') {
-                return ['locations', 'manipulations', 'files', 'description', 'appointments'];
+                return ['locations', 'manipulations', 'files', 'description', 'appointment'];
             }
             return [];
         }

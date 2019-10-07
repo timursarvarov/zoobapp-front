@@ -13,43 +13,40 @@
                         <h5 class="title">
                             {{ $t(`${$options.name}.${singleItemName}`) }}
                             <span v-if="itemToCreate.ID">
-                                {{ $t(`${$options.name}.edit`) }}: <small>ID {{ itemToCreate.ID }}</small></span
-                            >
+                                {{ $t(`${$options.name}.edit`) }}:
+                                <small>ID {{ itemToCreate.ID }}</small>
+                            </span>
                             <span v-else>{{ $t(`${$options.name}.adding`) }}:</span>
                             &nbsp;
                             <b>{{ selectedItem.code }}</b>
                             {{ selectedItem.title }}
-                            <span v-if="currentPlan.name" class="category">– {{ currentPlan.name | capitilize }}</span>
+                            <span v-if="currentPlan.name && currentType === 'procedure'" class="category">– {{ currentPlan.name | capitilize }}</span>
                         </h5>
                         <span>
                             <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
-                                <span v-if="lodash.isEmpty(itemToCreate.teeth)">
-                                    {{ $t(`${$options.name}.selectTooth`) }}
-                                </span>
+                                <span v-if="lodash.isEmpty(itemToCreate.teeth)">{{ $t(`${$options.name}.selectTooth`) }}</span>
                                 <span v-else>
                                     <slide-y-down-transition>
                                         <span v-show="!lodash.isEmpty(originalItem.locations)">For:</span>
                                     </slide-y-down-transition>
                                     <slide-y-down-transition>
-                                        <span v-show="lodash.isEmpty(originalItem.locations)">
-                                            {{ $t(`${$options.name}.teethWithLocations`) }}
-                                        </span>
+                                        <span v-show="lodash.isEmpty(originalItem.locations)">{{ $t(`${$options.name}.teethWithLocations`) }}</span>
                                     </slide-y-down-transition>
                                 </span>
                                 <transition-group name="list">
-                                    <span v-for="(item, key) in itemToCreate.teeth" :key="key + 0" class="list-item">{{
-                                        key | toCurrentTeethSystem
-                                    }}</span>
+                                    <span v-for="(item, key) in itemToCreate.teeth" :key="key + 0" class="list-item">
+                                        {{ key | toCurrentTeethSystem }}
+                                    </span>
                                 </transition-group>
                             </span>
                         </span>
                     </template>
-                    <wizard-tab v-if="showTab('locations')" name="locations" :before-change="() => validateStep('step1')">
+                    <wizard-tab v-if="showTab('locations')" name="locations" :before-change="() => validateStep('locations')">
                         <template slot="label">
                             {{ $t(`${$options.name}.locations`) }}
                         </template>
                         <t-item-tooth-locations
-                            ref="step1"
+                            ref="locations"
                             v-model="selectedItemLocal"
                             :original-item="originalItem"
                             :jaw="jaw"
@@ -63,12 +60,12 @@
                         />
                     </wizard-tab>
 
-                    <wizard-tab v-if="showTab('manipulations')" name="manipulations" :before-change="() => validateStep('step2')">
+                    <wizard-tab v-if="showTab('manipulations')" name="manipulations" :before-change="() => validateStep('manipulations')">
                         <template slot="label">
                             {{ $t(`${$options.name}.manipulations`) }}
                         </template>
                         <t-item-manipulations
-                            ref="step2"
+                            ref="manipulations"
                             :original-item="originalItem"
                             :item-i-d="itemToCreate.ID || null"
                             :size="jawListSize"
@@ -77,23 +74,23 @@
                             @addManipulations="manipulationsCreated"
                         />
                     </wizard-tab>
-                    <wizard-tab v-if="showTab('files')" name="files" :before-change="() => validateStep('step3')">
+                    <wizard-tab v-if="showTab('files')" name="files" :before-change="() => validateStep('files')">
                         <template slot="label">
                             {{ $t(`${$options.name}.files`) }}
                         </template>
-                        <t-item-files ref="step3" :size="jawListSize" />
+                        <t-item-files ref="files" :size="jawListSize" />
                     </wizard-tab>
-                    <wizard-tab v-if="showTab('description')" name="description" :before-change="() => validateStep('step4')">
+                    <wizard-tab v-if="showTab('description')" name="description" :before-change="() => validateStep('description')">
                         <template slot="label">
                             {{ $t(`${$options.name}.description`) }}
                         </template>
-                        <t-item-description ref="step4" v-model="descriptionLocal" :size="jawListSize" :descriptions="originalDescriptions" />
+                        <t-item-description ref="description" v-model="descriptionLocal" :size="jawListSize" :descriptions="originalDescriptions" />
                     </wizard-tab>
-                    <wizard-tab v-if="showTab('appointment')" name="appointment" :before-change="() => validateStep('step5')">
+                    <wizard-tab v-if="showTab('appointment')" name="appointment" :before-change="() => validateStep('appointment')">
                         <template slot="label">
                             {{ $t(`${$options.name}.appointment`) }}
                         </template>
-                        <t-item-appointment ref="step5" :show-appointment="showAppointment" :size="jawListSize" />
+                        <t-item-appointment ref="appointment" :show-appointment="showAppointment" :size="jawListSize" />
                     </wizard-tab>
                 </simple-wizard>
             </div>
@@ -135,6 +132,10 @@ export default {
         jaw: {
             type: Object,
             default: () => {}
+        },
+        steps: {
+            type: Array,
+            default: () => []
         },
         currentType: {
             type: String,
@@ -355,6 +356,43 @@ export default {
                     });
             });
         },
+        setDiagnose() {
+            const diagnose = {
+                catalogDiagnoseID: this.itemToCreate.catalogDiagnoseID,
+                teeth: this.itemToCreate.teeth
+            };
+            this.isLoading = true;
+            return new Promise((resolve, reject) => {
+                this.$store
+                    .dispatch(PATIENT_DIAGNOSE_SET, {
+                        diagnose
+                    })
+                    .then(
+                        response => {
+                            this.itemToCreate.ID = response.ID;
+                            this.itemToCreate.teeth = response.teeth;
+                            this.itemToCompare = this.lodash.cloneDeep(response);
+                            this.isLoading = false;
+                            resolve(true);
+                        },
+                        error => {
+                            this.$store.dispatch(NOTIFY, {
+                                settings: {
+                                    message: error.response.data.error,
+                                    type: 'warning'
+                                }
+                            });
+                            this.isLoading = false;
+                            reject(error);
+                        }
+                    )
+                    .catch(err => {
+                        console.log(err);
+                        this.isLoading = false;
+                        throw new Error(err);
+                    });
+            });
+        },
         saveProcedureTeeth() {
             const params = {
                 procedureID: this.itemToCreate.ID,
@@ -394,10 +432,13 @@ export default {
         },
         saveItem() {
             if (this.currentType === 'diagnosis') {
-                this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
-                    // diagnose
-                    diagnose: 'diagnose'
-                });
+                if (this.needToSaveItem()) {
+                    return Promise.resolve(this.setDiagnose());
+                }
+                if (this.needToSaveEdited()) {
+                    return Promise.resolve(this.saveProcedureTeeth());
+                }
+                return true;
             }
             if (this.currentType === 'anamnesis') {
                 if (this.needToSaveItem()) {
@@ -421,16 +462,20 @@ export default {
         },
         saveDescription() {
             if (this.currentType === 'diagnosis') {
-                this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
-                    // diagnose
-                    diagnose: 'diagnose'
-                });
+                // this.$store.dispatch(PATIENT_DIAGNOSE_SET, {
+                //     // diagnose
+                //     diagnose: 'diagnose'
+                // });
+                this.isDialogVisibleL = false;
+                return true;
             }
             if (this.currentType === 'anamnesis') {
-                this.$store.dispatch(PATIENT_ANAMNES_SET, {
-                    // anamnesis
-                    anamnes: 'anamnesis'
-                });
+                // this.$store.dispatch(PATIENT_ANAMNES_SET, {
+                //     // anamnesis
+                //     anamnes: 'anamnesis'
+                // });
+                this.isDialogVisibleL = false;
+                return true;
             }
             if (this.currentType === 'procedures') {
                 console.log('save edited description', this.needToSaveDescription());
@@ -484,7 +529,7 @@ export default {
             this.jawListSize = value;
         },
         validateStep(ref) {
-            if (ref === 'step1') {
+            if (ref === 'locations') {
                 if (!this.$refs[ref]) return false;
                 return this.$refs[ref].validate().then(res => {
                     if (res) {
@@ -493,13 +538,13 @@ export default {
                     return res;
                 });
             }
-            if (ref === 'step2') {
+            if (ref === 'manipulations') {
                 if (!this.$refs[ref]) return false;
                 return this.$refs[ref].validate().then(res => {
                     return res;
                 });
             }
-            if (ref === 'step3') {
+            if (ref === 'files') {
                 if (!this.$refs[ref]) return false;
                 return this.$refs[ref].validate().then(res => {
                     if (!res) {
@@ -514,7 +559,7 @@ export default {
                     return res;
                 });
             }
-            if (ref === 'step4') {
+            if (ref === 'description') {
                 if (!this.$refs[ref]) return false;
                 return this.$refs[ref].validate().then(res => {
                     if (!res) {
@@ -526,17 +571,18 @@ export default {
                         });
                         return false;
                     }
+                        console.log('this.isDialogVisibleL')
                     if (res) {
                         return Promise.resolve(this.saveDescription());
                     }
-                    // ! работает не правильно надо переделать
                     if (this.currentType !== 'procedures') {
                         this.isDialogVisibleL = false;
                     }
+                    // ! работает не правильно надо переделать
                     return res;
                 });
             }
-            if (ref === 'step5') {
+            if (ref === 'appointment') {
                 if (!this.$refs[ref]) return false;
                 return this.$refs[ref].validate().then(res => {
                     if (!res) {

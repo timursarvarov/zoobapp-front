@@ -63,9 +63,9 @@
         }
         max-width: 70vw;
         position: relative;
-        max-height: 62vh;
-        min-height: 62vh;
-        height: 62vh;
+        // max-height: 62vh;
+        // min-height: 62vh;
+        // height: 62vh;
         overflow-y: scroll;
         // overflow-x: scroll;
         &::-webkit-scrollbar {
@@ -222,16 +222,20 @@
                     // padding-bottom: 10px !important;
                     // max-height: 52vh;
                     // min-height:  52vh;
+                    height: 100%;
                     display: flex;
                     flex-direction: column;
                     // padding: 15px;
                     border-radius: 5px;
                     .tooth {
+                        padding-bottom: 10px;
+                        padding-top: 10px;
                         height: 100%;
                         display: block;
+                        overflow: hidden;
                         .tooth-number {
                             border: none;
-                            padding-top: 1vh;
+                            // padding-top: 1vh;
                             font-size: 1.8em;
                             font-weight: 400;
                             overflow: show;
@@ -258,6 +262,7 @@
                         }
                     }
                     .jaw-list {
+                        height: 100%;
                         // max-height: 52vh;
                         // min-height: 52vh;
                         display: flex;

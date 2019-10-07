@@ -40,7 +40,7 @@
             <md-menu-content class="md-select-menu">
                 <template v-for="(subItems, name, index) in items">
                     <md-menu-item :key="index" class="tooth-menu-item item-categoty">
-                        <b>{{ name | capitilize }}:</b>
+                        <b>{{ $t(`${$options.name}.${name}`) }}:</b>
                     </md-menu-item>
                     <md-menu-item
                         v-for="(item, key) in subItems"

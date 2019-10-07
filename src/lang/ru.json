@@ -120,6 +120,11 @@
 		"setForAllTeeth": "Установите последнее изменение для всех зубов",
 		"toggleTeeth": "Выбрать / отменить выбор всех зубов"
 	},
+	"JawMenu": {
+		"anamnesis": "@:common.anamnesis",
+		"diagnosis": "@:common.diagnosis",
+		"procedures": "@:common.procedures"
+	},
 	"Login": {
 		"forgotPassword": "Я забыл пароль",
 		"login": "Авторизоваться",
@@ -423,6 +428,8 @@
 	},
 	"TCollapseSearch": {
 		"chooseTooth": "Пожалуйста, сначала выберите зуб",
+		"noFoundDescription": "Попробуйте другой поисковый запрос ",
+		"noFoundTitle": "Ничего не найдено",
 		"search-anamnesis": "Поиск процедур",
 		"search-diagnosis": "Поиск Диагнозов",
 		"search-procedures": "Поиск процедур",
@@ -621,6 +628,7 @@
 		"createdBy": "Aвтор",
 		"description": "Описание",
 		"diagnoses": "Диагнозы",
+		"diagnosis": "Диагнозы",
 		"email": "Эл. адрес",
 		"files": "Файлы",
 		"firstName": "Имя",
@@ -645,6 +653,9 @@
 		"updated": "Oбновлен",
 		"userName": "Имя пользователя",
 		"yearsOld": "Меньше года | Один год | {count} года | {count} лет"
+	},
+	"jaw": {
+		"anamnesis": ""
 	},
 	"validations": {
 		"attributes": {

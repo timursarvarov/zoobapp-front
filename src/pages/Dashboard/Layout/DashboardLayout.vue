@@ -155,7 +155,7 @@ import { mapGetters } from 'vuex';
 import TopNavbar from './TopNavbar.vue';
 import ContentFooter from './ContentFooter.vue';
 import MobileMenu from './Extra/MobileMenu.vue';
-import { SIDEBAR_BACKGROUND_URL, LOCAL_STORAGE } from '@/constants';
+import { LOCAL_STORAGE } from '@/constants';
 // import UserMenu from './Extra/UserMenu.vue';
 
 function hasElement(className) {

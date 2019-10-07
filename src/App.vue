@@ -36,8 +36,14 @@ export default {
             deep: true
         },
         isProfileLoaded(value) {
-            if (!value) {
-                // this.$router.push('login');
+            if (!value && this.$route.meta && this.$route.meta.requiresAuth) {
+                this.$router.push('login');
+                this.$router.push({
+                    name: 'login',
+                    params: {
+                        lang: this.$i18n.locale
+                    }
+                });
             }
         },
         lang(val) {

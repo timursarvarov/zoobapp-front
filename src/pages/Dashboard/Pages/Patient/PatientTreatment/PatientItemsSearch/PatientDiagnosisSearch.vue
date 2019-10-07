@@ -54,7 +54,8 @@ export default {
     computed: {
         ...mapGetters({
             favoriteDiagnosis: 'favoriteDiagnosis',
-            currentDiagnosis: 'getCurrentClinicDiagnosis'
+            currentDiagnosis: 'getCurrentClinicDiagnosis',
+            ungroupedDiagnosis: 'getUngroupedDiagnosis'
         }),
         lang() {
             return this.$i18n.locale;
@@ -122,7 +123,10 @@ export default {
                         }
                     });
                 } else {
-                    this.$emit('onSelectItem', item);
+                    const unchangedItem = Object.values(this.ungroupedDiagnosis).find(i => i.ID === item.ID);
+                    if (unchangedItem) {
+                        this.$emit('onSelectItem', unchangedItem);
+                    }
                 }
             }
         }

@@ -120,7 +120,7 @@ export default {
         },
         validate() {
             return this.$validator.validateAll().then(res => {
-                this.$emit('on-validated', res, 'step2');
+                this.$emit('on-validated', res);
                 this.$emit('validated-code', this.code);
                 return res;
             });

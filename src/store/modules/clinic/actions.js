@@ -153,7 +153,7 @@ export default {
                         reject(resp.data.error);
                     }
                     commit(CLINIC_SET_PROP, { propName: 'diagnosis', propValue: filterItems(false, resp.data.result) });
-                    commit(CLINIC_SET_PROP, { propName: 'ungroupeddiagnosis', propValue: resp.data.result });
+                    // commit(CLINIC_SET_PROP, { propName: 'ungroupeddiagnosis', propValue: resp.data.result });
                     commit(CLINIC_SET_PROP, { propName: 'ungroupeddiagnosis', propValue: filterItems('NoNeedGroupilized', resp.data.result) });
                     commit(CLINIC_SET_PROP, { propName: 'status', propValue: 'success' });
                     resolve(resp.data.result);

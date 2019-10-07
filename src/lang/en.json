@@ -120,6 +120,11 @@
 		"setForAllTeeth": "Set last change for all teeth",
 		"toggleTeeth": "Drop all locations"
 	},
+	"JawMenu": {
+		"anamnesis": "@:common.anamnesis",
+		"diagnosis": "@:common.diagnosis",
+		"procedures": "@:common.procedures"
+	},
 	"Login": {
 		"forgotPassword": "I forgot password",
 		"login": "Login",
@@ -423,6 +428,8 @@
 	},
 	"TCollapseSearch": {
 		"chooseTooth": "Please firstly choose a tooth",
+		"noFoundDescription": "Try another search params",
+		"noFoundTitle": "Nothing found",
 		"search-anamnesis": "Procedures Search ",
 		"search-diagnosis": "Diagnoses Search ",
 		"search-procedures": "Procedures Search ",
@@ -621,6 +628,7 @@
 		"createdBy": "Author",
 		"description": "Description",
 		"diagnoses": "Diagnoses",
+		"diagnosis": "Diagnoses",
 		"email": "Email",
 		"files": "Files",
 		"firstName": "First Name",
@@ -645,6 +653,9 @@
 		"updated": "Updated",
 		"userName": "User name",
 		"yearsOld": "Less than a year | One year old | {count} years old"
+	},
+	"jaw": {
+		"anamnesis": ""
 	},
 	"validations": {
 		"attributes": {

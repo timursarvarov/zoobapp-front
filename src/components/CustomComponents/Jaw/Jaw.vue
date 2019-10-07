@@ -76,7 +76,6 @@
             <div>
                 <slot name="top" />
             </div>
-
             <div class="jaw-wrapper-teeth">
                 <transition mode="out-in" appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
                     <div v-if="ageCategoryBaby" key="babyTeeth" class="jaw-scroll">
@@ -269,9 +268,7 @@
             </div>
             <transition name="slide">
                 <div v-if="!printmode" class="md-layout ">
-                    <div
-                        :class="[{ 'text-info': selectedTeethLocal.length > 0 }, { 'text-warning': selectedTeethLocal.length === 0 }]"
-                    >
+                    <div :class="[{ 'text-info': selectedTeethLocal.length > 0 }, { 'text-warning': selectedTeethLocal.length === 0 }]">
                         <small>{{ $tc(`${$options.name}.toothSelected`, selectedTeethLocal.length) }}</small>
                     </div>
                     <div class="md-layout-item">
@@ -307,7 +304,6 @@ import {
     JAW_LOADER_STOP,
     JAW_LOADER_START,
     EB_SHOW_PATIENT_PRINT_FORM,
-    LOCAL_STORAGE
 } from '@/constants';
 import JawMenu from './JawMenu';
 import { mapGetters } from 'vuex';
@@ -363,7 +359,8 @@ export default {
             teethSettngs: [],
             showSelectedToothDialog: false,
             jawComputed: {},
-            selectedTeethLocal: []
+            selectedTeethLocal: [],
+            lastHeight: 0,
         };
     },
 
@@ -372,8 +369,8 @@ export default {
             currentClinic: 'getCurrentClinic',
             isCalculatingJaw: 'isCalculatingJaw'
         }),
-        sideBarPosition() {
-            return localStorage.getItem(LOCAL_STORAGE.user.sideBarPosition) === '1';
+        sideBarMinimized() {
+            return this.$sidebar.isMinimized;
         },
         teethSystem() {
             return this.currentClinic.teethSystem;
@@ -526,16 +523,17 @@ export default {
     },
 
     created() {
-        // this.calculateJaw('created');
-        window.addEventListener('resize', this.setTeethWidth);
-        window.addEventListener('resize', this.handleResize);
+        window.addEventListener('resize', this.resizeAll);
     },
     destroyed() {
-        window.removeEventListener('resize', this.handleResize);
-        window.removeEventListener('resize', this.setTeethWidth);
+        window.removeEventListener('resize', this.resizeAll);
     },
 
     methods: {
+        resizeAll(){
+            this.handleResize();
+            this.setTeethWidth();
+        },
         showPrint() {
             const params = {
                 type: 'jaw'
@@ -544,7 +542,7 @@ export default {
         },
         setTeethWidth() {
             Object.keys(this.jawSVG).forEach(toothId => {
-                this.teethWidth[toothId] = this.getCustomWidth(toothId);
+               this.$set(this.teethWidth, toothId, this.getCustomWidth(toothId));
             });
         },
         changeAgeCategory(category) {
@@ -614,52 +612,50 @@ export default {
         },
         getCustomWidth(toothId) {
             const toothWidth = this.jawSVG[toothId].widthPerc;
-            const sideBarPosition = localStorage.getItem(LOCAL_STORAGE.user.sideBarPosition) === '1';
             if (this.babyTeeth.includes(toothId)) {
                 if (this.printmode) {
                     return toothWidth * 8;
                 }
                 if (this.windowWidth < 600) {
-                    return sideBarPosition ? toothWidth / 0.65 : toothWidth / 0.65;
+                    return this.sideBarMinimized ? toothWidth / 0.65 : toothWidth / 0.65;
                 }
                 if (this.windowWidth >= 600 && this.windowWidth < 960) {
-                    return sideBarPosition ? toothWidth / 0.65 : toothWidth / 0.65;
+                    return this.sideBarMinimized ? toothWidth / 0.65 : toothWidth / 0.65;
                 }
                 if (this.windowWidth <= 1280 && this.windowWidth >= 960) {
-                    return sideBarPosition ? toothWidth / 1.72 : toothWidth / 1.72;
+                    return this.sideBarMinimized ? toothWidth / 1.72 : toothWidth / 1.72;
                 }
                 if (this.windowWidth < 1920 && this.windowWidth > 1280) {
-                    return sideBarPosition ? toothWidth / 1.72 : toothWidth / 1.72;
+                    return this.sideBarMinimized ? toothWidth / 1.72 : toothWidth / 1.72;
                 }
                 if (this.windowWidth >= 1920) {
                     return toothWidth / 2;
                 }
-                return sideBarPosition ? toothWidth / 1.72 : toothWidth / 1.72;
+                return this.sideBarMinimized ? toothWidth / 1.72 : toothWidth / 1.72;
             }
             if (this.printmode) {
-                return sideBarPosition ? toothWidth * 6.5 : toothWidth * 6.5;
+                return this.sideBarMinimized ? toothWidth * 6.5 : toothWidth * 6.5;
             }
             if (this.windowWidth < 600) {
-                return sideBarPosition ? toothWidth / 1.15 : toothWidth / 1.15;
+                return this.sideBarMinimized ? toothWidth / 1.15 : toothWidth / 1.15;
             }
             if (this.windowWidth >= 600 && this.windowWidth < 960) {
-                return sideBarPosition ? toothWidth / 1.15 : toothWidth / 1.15;
+                return this.sideBarMinimized ? toothWidth / 1.15 : toothWidth / 1.15;
             }
             if (this.windowWidth <= 1280 && this.windowWidth >= 960) {
-                return sideBarPosition ? toothWidth / 2.95 : toothWidth / 2.65;
+                return this.sideBarMinimized ? toothWidth / 3 : toothWidth / 2.65;
             }
             if (this.windowWidth < 1920 && this.windowWidth > 1280) {
-                return sideBarPosition ? toothWidth / 2.8 : toothWidth / 2.5;
+                return this.sideBarMinimized ? toothWidth / 2.8 : toothWidth / 2.5;
             }
             if (this.windowWidth >= 1920) {
-                return sideBarPosition ? toothWidth / 2.5 : toothWidth / 2.2;
+                return this.sideBarMinimized ? toothWidth / 2.5 : toothWidth / 2.2;
             }
 
-            return sideBarPosition ? toothWidth / 2.5 : toothWidth / 2.2;
+            return this.sideBarMinimized ? toothWidth / 2.5 : toothWidth / 2.2;
         },
         handleResize() {
             this.windowWidth = window.innerWidth;
-            this.windowHeight = window.clientHeight;
             if (this.$refs.wrjaw) {
                 const jawHeight = this.$refs.wrjaw.clientHeight;
                 this.$emit('onSizeChanged', jawHeight);
