@@ -46,11 +46,12 @@ export default {
                 .then(resp => {
                     if (resp.data.error) {
                         commit(AUTH_SET_PROP, { propName: 'status', propValue: 'error' });
+                        commit(AUTH_SET_PROP, { propName: 'accessToken', propValue: '' });
                         reject(resp.data.error)
                     }
                     axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.result.accessToken;
                     commit(AUTH_SET_PROP, { propName: 'status', propValue: 'success' });
-                    commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
+                    // commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
                     if (resp.data.result.accessToken) commit(AUTH_SET_PROP, { propName: 'accessToken', propValue: resp.data.result.accessToken });
                     localStorage.setItem('accessToken', resp.data.result.accessToken);
                     localStorage.setItem('expiresAt', resp.data.result.expiresAt);
@@ -62,7 +63,8 @@ export default {
                 .catch(err => {
                     reject(err);
                     commit(AUTH_SET_PROP, { propName: 'status', propValue: 'error' });
-                    commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
+                    // commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
+                    commit(AUTH_SET_PROP, { propName: 'accessToken', propValue: '' });
                     localStorage.removeItem('accessToken');
                     reject(err);
                 });
@@ -93,8 +95,9 @@ export default {
                     console.log(resp)
                     if (resp.data.error) {
                         commit(AUTH_SET_PROP, { propName: 'status', propValue: 'error' });
-                        commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
+                        // commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
                         commit(AUTH_SET_PROP, { propName: 'hasRefreshTokenError', propValue: true });
+                        commit(AUTH_SET_PROP, { propName: 'accessToken', propValue: '' });
                         dispatch(USER_LOGOUT);
                         localStorage.removeItem('accessToken');
                         localStorage.removeItem('refreshToken');
@@ -104,15 +107,16 @@ export default {
                     localStorage.setItem('expiresAt', resp.data.result.expiresAt);
                     axios.defaults.headers.common.Authorization = 'Bearer ' + resp.data.result.accessToken;
                     commit(AUTH_SET_PROP, { propName: 'status', propValue: 'success' });
-                    commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
+                    // commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
                     if (resp.data.result.accessToken) commit(AUTH_SET_PROP, { propName: 'accessToken', propValue: resp.data.result.accessToken });
                     dispatch(AUTH_DECODE_TOKEN);
                     resolve(resp.data.result);
                 })
                 .catch(err => {
                     commit(AUTH_SET_PROP, { propName: 'status', propValue: 'error' });
-                    commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
+                    // commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
                     commit(AUTH_SET_PROP, { propName: 'hasRefreshTokenError', propValue: true });
+                    commit(AUTH_SET_PROP, { propName: 'accessToken', propValue: '' });
                     dispatch(USER_LOGOUT);
                     localStorage.removeItem('accessToken');
                     localStorage.removeItem('refreshToken');

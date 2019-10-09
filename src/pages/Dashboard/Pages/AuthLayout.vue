@@ -24,10 +24,8 @@
                     <div class="md-collapse" :class="{ 'off-canvas-sidebar': responsive }">
                         <md-list>
                             <md-list-item v-if="isStateAuthenticated" to="dashboard">
-                                <!-- <router-link to="dashboard" > -->
                                 <md-icon>dashboard</md-icon>
                                 {{ $t(`${$options.name}.dashbord`) }}
-                                <!-- </router-link> -->
                             </md-list-item>
                             <md-list-item @click="linkClick">
                                 <router-link to="pricing">

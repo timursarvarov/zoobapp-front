@@ -1,5 +1,5 @@
 export default {
-    isStateAuthenticated: state => state.accessToken,
+    isStateAuthenticated: state => !!state.accessToken,
     isLocked: state => !!state.username,
     authStatus: state => state.status,
     fetchStateAccessToken: state => state.accessToken,

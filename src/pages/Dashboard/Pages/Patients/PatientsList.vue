@@ -57,6 +57,7 @@
                             </div>
                         </div> -->
                         <md-table
+                            md-fixed-header
                             :key="filterMode"
                             v-model="tableData"
                             @md-selected="onSelect"
