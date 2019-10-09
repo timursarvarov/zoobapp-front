@@ -1,17 +1,16 @@
 <template lang="html">
-    <div class="md-layout md-gutter set-diagnose-form">
-        <div class="md-layout-item md-layout md-gutter md-small-size-100 md-xsmall-size-100 md-medium-size-50 md-size-50">
-            <div class="mx-auto" style="flex-grow:1;">
+    <div class="md-layout set-diagnose-form">
+        <div class="md-layout md-layout-item md-medium-size-100 md-size-100">
+            <div
+                class="md-layout-item md-layout  md-small-size-100 md-xsmall-size-100  md-large-size-50 md-medium-size-50  "
+                :class="[this.$sidebar.isMinimized ? ' md-sized-100 md-alignment-top-center' : ' md-sidze-50']"
+            >
+                <!-- <div class="mx-auto" style="flex-grow:1;"> -->
                 <!-- <keep-alive> -->
                 <jaw
                     :selected-teeth="selectedTeeth"
                     :age-category="!!patient.ageCategory"
                     :jaw="patient.jaw || {}"
-                    :patient-items="{
-                        diagnosis: patient.diagnosis,
-                        procedures: currentPlanProcedures,
-                        anamnesis: patient.anamnesis
-                    }"
                     :type="currentType"
                     @onSelectedTeeth="onSelectedTeeth"
                     @showToothInfo="showToothInfo"
@@ -39,19 +38,21 @@
                     </template>
                 </jaw>
                 <!-- </keep-alive> -->
+                <!-- </div> -->
             </div>
+            <keep-alive>
+                <router-view
+                    name="search"
+                    class="md-layout-item md-layout md-small-size-100 md-xsmall-size-100 md-large-size-50 md-medium-size-50  "
+                    :class="[this.$sidebar.isMinimized ? ' md-sdize-100' : ' md-sizde-50']"
+                    :custom-height="jawHeight"
+                    :selected-teeth="selectedTeeth"
+                    @addPlan="addPlan"
+                    @onSelectItem="selectItem"
+                />
+            </keep-alive>
         </div>
-        <keep-alive>
-        <router-view
-            name="search"
-            class="md-layout-item md-layout md-small-size-100 md-xsmall-size-100 md-gutter md-medium-size-50 md-size-50"
-            :custom-height="jawHeight"
-            :selected-teeth="selectedTeeth"
-            @addPlan="addPlan"
-            @onSelectItem="selectItem"
-        />
-        </keep-alive>
-        <div style="margin-top:30px;" class="md-layout-item  md-size-100">
+        <div style="margin-top:30px;" class="md-layout-item  md-size-100 md-medium-size-100">
             <!-- <keep-alive> -->
             <router-view ref="items-lists" name="list" :current-type="currentType" :plans="patient.plans" @showItemInfo="selectItem" />
             <!-- </keep-alive> -->

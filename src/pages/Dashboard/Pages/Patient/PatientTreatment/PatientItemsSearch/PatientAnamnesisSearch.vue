@@ -1,7 +1,7 @@
 <template lang="html">
     <div>
         <t-collapse-search
-            :style="[{ 'max-height': `${customHeight}px` }]"
+            :style="[{ 'max-heigfht': `${customHeight}px` }]"
             class="set-procedure-form"
             :items="currentAnamnesis"
             :selected-teeth="selectedTeeth"
@@ -51,7 +51,7 @@ export default {
             recalculateItemsLocal: false,
             selecteditemLocal: {},
             loading: false,
-            lastAgeCategory: 0,
+            lastAgeCategory: 0
         };
     },
     computed: {
@@ -127,7 +127,7 @@ export default {
                     });
                 } else {
                     const unchangedItem = Object.values(this.ungroupedAnamnesis).find(i => i.ID === item.ID);
-                    console.log(this.ungroupedAnamnesis, item)
+                    console.log(this.ungroupedAnamnesis, item);
                     if (unchangedItem) {
                         this.$emit('onSelectItem', unchangedItem);
                     }

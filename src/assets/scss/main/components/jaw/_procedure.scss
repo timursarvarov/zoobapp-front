@@ -6,7 +6,7 @@
     }
     .procedures {
         &.tooth-number {
-            color: $brand-success;
+            color: #5cb85c;
         }
         &.coronaLingualIncisalDistal,
         &.coronaLingualIncisalMiddle,
@@ -38,7 +38,7 @@
         &.bridge,
         &.veneer,
         &.silant {
-            fill: $brand-success !important;
+            fill: #5cb85c !important;
             stroke: #020202;
             stroke-width: 0.25px;
         }
@@ -48,7 +48,7 @@
         &.coronaLingual,
         &.coronaTop,
         &.coronaLabial {
-            stroke: $brand-success;
+            stroke: #5cb85c;
             stroke-width: 2px;
         }
         &.rootCanal {
@@ -57,7 +57,7 @@
         &.periodontit,
         &.rootCanal,
         &.bone {
-            fill: $brand-success !important;
+            fill: #5cb85c !important;
             stroke-width: 0;
             opacity: 0.6;
         }
@@ -67,7 +67,7 @@
         &.paradontit3,
         &.paradontit4 {
             opacity: 1;
-            stroke: $brand-success;
+            stroke: #5cb85c;
             stroke-linejoin: round;
             stroke-width: 4px;
             fill: none !important;

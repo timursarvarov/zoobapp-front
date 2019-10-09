@@ -1,7 +1,7 @@
 <template>
     <div class="wizard-tab-content" :style="[{ 'min-width': size.width ? `${size.width}px` : `70vw` }, { 'min-height': `${size.height}px` }]">
-        <div v-if="showAppointment" class="md-layout-item">
-            <t-calendar />
+        <div ref="contentHeight" v-if="showAppointment" class="md-layout-item">
+            <t-calendar :contentHeight="size.height" />
         </div>
     </div>
 </template>
@@ -24,7 +24,7 @@ export default {
     },
     data() {
         return {
-            modelValidations: {}
+            modelValidations: {},
         };
     },
     methods: {

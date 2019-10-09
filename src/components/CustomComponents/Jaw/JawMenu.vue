@@ -181,19 +181,19 @@ export default {
         },
         buttonWidth() {
             if (this.windowWidth < 600) {
-                return 2.3;
+                return 1.8;
             }
             if (this.windowWidth >= 600 && this.windowWidth < 960) {
-                return 2.3;
+                return 1.8;
             }
             if (this.windowWidth <= 1280 && this.windowWidth > 960) {
                 return 1.8;
             }
             if (this.windowWidth < 1920 && this.windowWidth > 1280) {
-                return 2.3;
+                return 1.8;
             }
             if (this.windowWidth >= 1920) {
-                return 2.3;
+                return 1.8;
             }
             return 4;
         }

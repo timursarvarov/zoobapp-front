@@ -49,6 +49,8 @@
         overflow-y: scroll;
         // max-height: 40vh;
         // min-height: 30vh;
+        min-height: 300px;
+        height: 30vh;
         padding: 6px;
         &::-webkit-scrollbar {
             width: 7px;

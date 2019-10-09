@@ -16,6 +16,7 @@
         :time-zone-param="'UTC'"
         :select-mirror="true"
         :local="lang"
+        :contentHeight="contentHeight"
         :events="events"
         :buttonText="{
             today: $t(`${$options.name}.today`),
@@ -50,6 +51,12 @@ export default {
     },
     beforeDestroy: function() {
         this.$refs.fullCalendar.destroy;
+    },
+    props:{
+        contentHeight: {
+            type: [Number, String],
+            default: () => 600
+        }
     },
     data() {
         return {

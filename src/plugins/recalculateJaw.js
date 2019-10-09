@@ -5,10 +5,18 @@ export default function recalculateJaw(jawEthalon, patientItems) {
     const calcJaw = JSON.parse(JSON.stringify(jawEthalon));
     Object.keys(patientItems).forEach(itemType => {
         patientItems[itemType].forEach(item => {
-            console.log(item)
-            console.log(itemType)
-            console.log(jawEthalon)
-            console.log(patientItems)
+            if(!item){
+                console.log('noItem')
+            }
+            if(!itemType){
+                console.log('noitemType')
+            }
+            if(!jawEthalon){
+                console.log('nojawEthalon')
+            }
+            if(!patientItems){
+                console.log('nopatientItems')
+            }
             //! переделать после реализации в беке
             // eslint-disable-next-line no-constant-condition
             if (true || (item.showInJaw && item.teeth)) {

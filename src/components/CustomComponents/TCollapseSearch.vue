@@ -1,50 +1,53 @@
 /* eslint-disable vue/no-v-html */
 <template lang="html">
     <div class="t-collapse-search-wrapper noselect">
-        <div v-show="loading" class="no-plan-space" :style="[{ 'max-height': customHeight - 70 + 'px' }, { 'min-height': customHeight - 70 + 'px' }]">
+        <md-toolbar class=" md-transparent no-side-padding md-layout md-alignment-top-space-between collapse-toolbar__items">
+            <div v-show="!loading" class="collapse-actions md-small-size-100 md-size-50">
+                <slot name="title-start-1" />
+                <slot name="title-start-2" />
+            </div>
+            <div v-show="!loading" class="collapse-actions md-small-size-100 md-size-50">
+                <div class=" collapse-toolbar__grow">
+                    <md-field class="no-margin ">
+                        <label> {{ $t(`${$options.name}.search-${type}`) }}</label>
+                        <md-input v-model="search" />
+                        <slide-y-down-transition>
+                            <md-button v-show="search.length > 0" class="md-simple md-icon-button md-dense md-input-action " @click="search = ''">
+                                <md-icon
+                                    :style="{
+                                        color: getItems.length === 0 ? '#9c27b0 !important' : ''
+                                    }"
+                                >
+                                    close
+                                </md-icon>
+                            </md-button>
+                        </slide-y-down-transition>
+                    </md-field>
+                </div>
+                <div class="ml-auto collapse-toolbar__nogrow">
+                    <md-button class="md-mini md-just-icon md-simple md-round" @click="toggleAll = !toggleAll">
+                        <md-icon :class="[{ rotate: toggleAll }]">
+                            keyboard_arrow_down
+                        </md-icon>
+                        <md-tooltip md-delay="500"> {{ $t(`${$options.name}.showAll`) }} </md-tooltip>
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+        <div
+            v-show="loading"
+            class="no-plan-space collapse-wrapper"
+            :style="[{ 'max-heigsht': customHeight - 70 + 'px' }, { 'min-heigsht': customHeight - 70 + 'px' }]"
+        >
             <md-empty-state>
                 <md-progress-spinner md-mode="indeterminate" />
             </md-empty-state>
         </div>
         <div v-show="!loading">
-            <md-toolbar class=" md-transparent no-side-padding md-layout md-alignment-top-space-between collapse-toolbar__items">
-                <div class="collapse-actions md-small-size-100 md-size-50">
-                    <slot name="title-start-1" />
-                    <slot name="title-start-2" />
-                </div>
-                <div class="collapse-actions md-small-size-100 md-size-50">
-                    <div class=" collapse-toolbar__grow">
-                        <md-field class="no-margin ">
-                            <label> {{ $t(`${$options.name}.search-${type}`) }}</label>
-                            <md-input v-model="search" />
-                            <slide-y-down-transition>
-                                <md-button v-show="search.length > 0" class="md-simple md-icon-button md-dense md-input-action " @click="search = ''">
-                                    <md-icon
-                                        :style="{
-                                            color: getItems.length === 0 ? '#9c27b0 !important' : ''
-                                        }"
-                                    >
-                                        close
-                                    </md-icon>
-                                </md-button>
-                            </slide-y-down-transition>
-                        </md-field>
-                    </div>
-                    <div class="ml-auto collapse-toolbar__nogrow">
-                        <md-button class="md-mini md-just-icon md-simple md-round" @click="toggleAll = !toggleAll">
-                            <md-icon :class="[{ rotate: toggleAll }]">
-                                keyboard_arrow_down
-                            </md-icon>
-                            <md-tooltip md-delay="500"> {{ $t(`${$options.name}.showAll`) }} </md-tooltip>
-                        </md-button>
-                    </div>
-                </div>
-            </md-toolbar>
-
             <div
                 v-show="!hideSlot && getItems.length > 0"
                 class="collapse-wrapper "
-                :style="[{ 'max-height': customHeight - 70 + 'px' }, { 'min-height': customHeight - 70 + 'px' }]"
+                :style="[{ 'max-heisght': customHeight - 70 + 'px' }, { 'min-heigsht': customHeight - 70 + 'px' }]"
             >
                 <custom-collapse
                     v-show="!hideSlot"

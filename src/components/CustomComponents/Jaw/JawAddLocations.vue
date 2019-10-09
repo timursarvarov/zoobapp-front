@@ -93,7 +93,7 @@
                                 xmlns="http://www.w3.org/2000/svg"
                                 :viewBox="jawSVG[toothId].viewBox"
                                 :style="{
-                                    width: getCustomWidth(toothId) + 'px'
+                                    // width: getCustomWidth[toothId] + 'px'
                                     //'width':  jawSVG[toothId].widthPerc * 1.56 + (windowWidth < 700 ? 'vmax' : 'vmin'),
                                     //minWidth: jawSVG[toothId].widthPerc * 1.66 + 'vh'
                                 }"
@@ -261,6 +261,23 @@ export default {
         jawSVG() {
             return jawSVGjs;
         }
+        // getCustomWidth() {
+        //     const teethWidth = {};
+        //     if (this.$refs.wrapper) {
+        //         const wrapperHeigth = this.$refs.wrapper.clientHeight;
+        //         if (wrapperHeigth) {
+        //             this.selectableTeeth.forEach(toothId => {
+        //                 const toothWidth = this.jawSVG[toothId].widthPerc;
+        //                 console.log((toothWidth * wrapperHeigth) / 39, wrapperHeigth);
+        //                 // if (this.jawType === 'baby') {
+        //                     //     teethWidth[toothId] = (toothWidth * wrapperHeigth) / 39;
+        //                 // }
+        //                 teethWidth[toothId] = (toothWidth * wrapperHeigth) / 39;
+        //             });
+        //         }
+        //     }
+        //     return teethWidth;
+        // }
     },
     destroyed() {
         window.removeEventListener('resize', this.handleResize);
@@ -287,18 +304,19 @@ export default {
                 return null;
             }
         },
-        getCustomWidth(toothId) {
-            const toothWidth = this.jawSVG[toothId].widthPerc;
-            if (this.$refs.wrapper) {
-                const wrapperHeigth = this.$refs.wrapper.clientHeight;
-                if (wrapperHeigth) {
-                    if (this.jawType === 'baby') {
-                        return (toothWidth * wrapperHeigth) / 39;
-                    }
-                    return (toothWidth * wrapperHeigth) / 39;
-                }
-            }
-        },
+        // getCustomWidth(toothId) {
+        //     const toothWidth = this.jawSVG[toothId].widthPerc;
+        //     if (this.$refs.wrapper) {
+        //         const wrapperHeigth = this.$refs.wrapper.clientHeight;
+        //         if (wrapperHeigth) {
+        //             console.log((toothWidth * wrapperHeigth) / 39, wrapperHeigth);
+        //             if (this.jawType === 'baby') {
+        //                 return (toothWidth * wrapperHeigth) / 39;
+        //             }
+        //             return (toothWidth * wrapperHeigth) / 39;
+        //         }
+        //     }
+        // },
         functionName(fun) {
             let ret = fun.toString();
             ret = ret.substr('function '.length);
@@ -320,7 +338,6 @@ export default {
             if (toothId in this.item.teeth) {
                 delete this.item.teeth[`${toothId}`];
             } else {
-                console.log(this.originalItem);
                 this.item.teeth[`${toothId}`] = {};
                 const firstLocation = Object.keys(this.originalItem.locations).find(location => this.originalItem.locations[location] !== undefined);
                 if (firstLocation) {

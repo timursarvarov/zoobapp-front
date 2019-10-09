@@ -1,7 +1,7 @@
 <template lang="html">
     <div>
         <t-collapse-search
-            :style="[{ 'max-height': `${customHeight}px` }]"
+            :style="[{ 'max-heigfht': `${customHeight}px` }]"
             class="set-procedure-form"
             :items="currentProcedures"
             :selected-teeth="selectedTeeth"
@@ -145,8 +145,8 @@ export default {
                     });
                 } else {
                     // вытаскиваем неизмененную fuse поиском оригинальную нозологию
-                    const unchangedItem = Object.values(this.ungroupedProcedures).find(i=>i.ID === item.ID)
-                    if(unchangedItem){
+                    const unchangedItem = Object.values(this.ungroupedProcedures).find(i => i.ID === item.ID);
+                    if (unchangedItem) {
                         this.$emit('onSelectItem', unchangedItem);
                     }
                 }

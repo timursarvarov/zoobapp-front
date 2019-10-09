@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "compile:print": "node-sass 'src/assets/scss/main/components/print/global.scss' 'public/css/print.css' -w",
+    "compile:print": "node-sass 'src/assets/scss/main/components/print/global-print.scss' 'public/css/print.css' -w",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",

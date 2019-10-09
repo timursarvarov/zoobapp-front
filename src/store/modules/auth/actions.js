@@ -95,10 +95,10 @@ export default {
                         commit(AUTH_SET_PROP, { propName: 'status', propValue: 'error' });
                         commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
                         commit(AUTH_SET_PROP, { propName: 'hasRefreshTokenError', propValue: true });
-                        // dispatch(USER_LOGOUT);
+                        dispatch(USER_LOGOUT);
                         localStorage.removeItem('accessToken');
                         localStorage.removeItem('refreshToken');
-                        reject(resp.data.error)
+                        reject(resp.data.error);
                     }
                     localStorage.setItem('accessToken', resp.data.result.accessToken);
                     localStorage.setItem('expiresAt', resp.data.result.expiresAt);
@@ -113,7 +113,7 @@ export default {
                     commit(AUTH_SET_PROP, { propName: 'status', propValue: 'error' });
                     commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
                     commit(AUTH_SET_PROP, { propName: 'hasRefreshTokenError', propValue: true });
-                    // dispatch(USER_LOGOUT);
+                    dispatch(USER_LOGOUT);
                     localStorage.removeItem('accessToken');
                     localStorage.removeItem('refreshToken');
                     reject(err);
