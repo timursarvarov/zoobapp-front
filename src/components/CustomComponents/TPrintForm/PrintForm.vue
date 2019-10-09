@@ -85,7 +85,7 @@
                     <md-card-actions md-alignment="right">
                         <md-button class="md-success" @click="showFormL = !showFormL">close</md-button>
                         <md-button class="md-success" @click="printD()">Print</md-button>
-                        <md-button class="md-success" @click="print()">Print</md-button>
+                        <!-- <md-button class="md-success" @click="print()">Print</md-button> -->
                     </md-card-actions>
                 </md-card>
             </div>

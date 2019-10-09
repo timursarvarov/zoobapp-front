@@ -2,7 +2,7 @@
     <div class="md-layout set-diagnose-form">
         <div class="md-layout md-layout-item md-medium-size-100 md-size-100">
             <div
-                class="md-layout-item md-layout  md-small-size-100 md-xsmall-size-100  md-large-size-50 md-medium-size-50  "
+                class="md-layout-item md-layout md-xlarge-size-50 md-small-size-100 md-xsmall-size-100  md-large-size-50 md-medium-size-50  "
                 :class="[this.$sidebar.isMinimized ? ' md-sized-100 md-alignment-top-center' : ' md-sidze-50']"
             >
                 <!-- <div class="mx-auto" style="flex-grow:1;"> -->
@@ -43,7 +43,7 @@
             <keep-alive>
                 <router-view
                     name="search"
-                    class="md-layout-item md-layout md-small-size-100 md-xsmall-size-100 md-large-size-50 md-medium-size-50  "
+                    class="md-layout-item md-layout md-xlarge-size-50 md-small-size-100 md-xsmall-size-100 md-large-size-50 md-medium-size-50  "
                     :class="[this.$sidebar.isMinimized ? ' md-sdize-100' : ' md-sizde-50']"
                     :custom-height="jawHeight"
                     :selected-teeth="selectedTeeth"

@@ -7,7 +7,7 @@
                 </div>
             </div>
         </div>
-        <div :class="!printmode ? 'jaw-wrapper' : 'jaw-wrapperprint'">
+        <div class="jaw-wrapper jaw-wrapperprint">
             <md-toolbar class="hide-on-print md-transparent md-layout jaw-toolbar md-dense md-alignment-center-space-between">
                 <div>
                     <slot name="title-start" />
@@ -66,7 +66,7 @@
                                 >{{ $t(`${$options.name}.chooseBottomTeeth`) }}</md-switch
                             >
                         </md-menu-item>
-                        <md-menu-item v-if="!printmode" @click="showPrint()">
+                        <md-menu-item v-if="!printMode" @click="showPrint()">
                             <md-icon>print</md-icon>
                             {{ $t(`${$options.name}.printJaw`) }}
                         </md-menu-item>
@@ -77,206 +77,217 @@
                 <slot name="top" />
             </div>
             <div class="jaw-wrapper-teeth">
-                <!-- <transition mode="out-in" appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut"> -->
-                <div v-if="ageCategoryBaby" key="babyTeeth" class="jaw-scroll">
-                    <div class="jaw-top md-alignment-top-center md-size-100">
-                        <div
-                            v-for="(toothId, topJawToothIndex) in topBabyTeeth"
-                            :key="toothId"
-                            v-ripple
-                            :id="`toothId${toothId}`"
-                            class="tooth"
-                            :ref="toothId"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="tooth-content"
-                                :class="[{ selected: selectedTeethLocal.includes(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"
-                                @click.exact="selectTooth(toothId)"
-                                @click.ctrl.exact="selectTooth(toothId, 'multiple')"
-                                @click.meta.exact="selectTooth(toothId, 'multiple')"
-                                @click.shift.exact="selectTooth(toothId, 'shift')"
-                                :viewBox="jawSVG[toothId].viewBox"
-                                :style="{ weidth: teethWidth[toothId] + (printmode ? 'px' : 'vw') }"
+                <transition mode="out-in" appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+                    <div v-if="ageCategoryBaby" key="babyTeeth" class="jaw-scroll">
+                        <div class="jaw-top md-alignment-top-center md-size-100">
+                            <div
+                                v-for="(toothId, topJawToothIndex) in topBabyTeeth"
+                                :key="toothId"
+                                v-ripple
+                                :id="`toothId${toothId}`"
+                                class="tooth"
+                                :ref="toothId"
+                                :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width*0.05}vmax` },
+                                { minWidth: `${jawSVG[toothId].width/2}px` }]"
                             >
-                                <g v-if="jawComputed[toothId]">
-                                    <template v-for="(value, location) in defaultLocations">
-                                        <path
-                                            v-if="!jawComputed[toothId][location].hide"
-                                            :key="`${toothId}${location}`"
-                                            :class="[jawComputed[toothId][location].classes]"
-                                            :d="jawSVG[toothId][location]"
-                                        />
-                                    </template>
-                                </g>
-                            </svg>
-                            <jaw-menu
-                                :printmode="printmode"
-                                :btn-class="btnClass"
-                                :selected="isToothSelected(toothId)"
-                                :window-width="windowWidth"
-                                :teeth-system="teethSystem"
-                                :tooth-id="toothId"
-                                direction="top"
-                                :align="getMenuAlign('adult', topJawToothIndex)"
-                                :type="type"
-                                :offset="teethWidth[toothId]"
-                                @recalculateJaw="calculateJaw"
-                                @showItem="showToothInfo"
-                            />
+                                <svg
+                                     preserveAspectRatio="xMidYMid meet"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="tooth-content"
+                                    :class="[
+                                        { selected: selectedTeethLocal.includes(toothId) },
+                                        { isToothShownDiagnose: isToothShownDiagnose(toothId) }
+                                    ]"
+                                    @click.exact="selectTooth(toothId)"
+                                    @click.ctrl.exact="selectTooth(toothId, 'multiple')"
+                                    @click.meta.exact="selectTooth(toothId, 'multiple')"
+                                    @click.shift.exact="selectTooth(toothId, 'shift')"
+                                    :viewBox="jawSVG[toothId].viewBox"
+                                >
+                                    <g v-if="jawComputed[toothId]">
+                                        <template v-for="(value, location) in defaultLocations">
+                                            <path
+                                                v-if="!jawComputed[toothId][location].hide"
+                                                :key="`${toothId}${location}`"
+                                                :class="[jawComputed[toothId][location].classes]"
+                                                :d="jawSVG[toothId][location]"
+                                            />
+                                        </template>
+                                    </g>
+                                </svg>
+                                <jaw-menu
+                                    :printMode="printMode"
+                                    :btn-class="btnClass"
+                                    :selected="isToothSelected(toothId)"
+                                    :window-width="windowWidth"
+                                    :teeth-system="teethSystem"
+                                    :tooth-id="toothId"
+                                    direction="top"
+                                    :align="getMenuAlign('adult', topJawToothIndex)"
+                                    :type="type"
+                                    :offset="teethWidth[toothId]"
+                                    @recalculateJaw="calculateJaw"
+                                    @showItem="showToothInfo"
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div class="jaw-bottom md-size-100">
-                        <div
-                            v-for="(toothId, bottomAdultTeethIndex) in bottomBabyTeeth"
-                            :key="toothId"
-                            v-ripple
-                            :id="`toothId${toothId}`"
-                            class="tooth"
-                            :ref="toothId"
-                        >
-                            <svg
-                                class="tooth-content"
-                                :class="[{ selected: isToothSelected(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"
-                                @click.exact="selectTooth(toothId)"
-                                @click.ctrl.exact="selectTooth(toothId, 'multiple')"
-                                @click.meta.exact="selectTooth(toothId, 'multiple')"
-                                @click.shift.exact="selectTooth(toothId, 'shift')"
-                                xmlns="http://www.w3.org/2000/svg"
-                                :viewBox="jawSVG[toothId].viewBox"
-                                :style="{ weidth: teethWidth[toothId] + (printmode ? 'px' : 'vw') }"
+                        <div class="jaw-bottom md-size-100">
+                            <div
+                                v-for="(toothId, bottomAdultTeethIndex) in bottomBabyTeeth"
+                                :key="toothId"
+                                v-ripple
+                                :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width*0.05}vmax` },
+                                { minWidth: `${jawSVG[toothId].width/2}px` }]"
+                                :id="`toothId${toothId}`"
+                                class="tooth"
+                                :ref="toothId"
                             >
-                                <g v-if="jawComputed[toothId]">
-                                    <template v-for="(value, location) in defaultLocations">
-                                        <path
-                                            v-if="!jawComputed[toothId][location].hide"
-                                            :key="`${toothId}${location}`"
-                                            :class="[jawComputed[toothId][location].classes]"
-                                            :d="jawSVG[toothId][location]"
-                                        />
-                                    </template>
-                                </g>
-                            </svg>
+                                <svg
+                                     preserveAspectRatio="xMidYMid meet"
+                                    class="tooth-content"
+                                    :class="[{ selected: isToothSelected(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"
+                                    @click.exact="selectTooth(toothId)"
+                                    @click.ctrl.exact="selectTooth(toothId, 'multiple')"
+                                    @click.meta.exact="selectTooth(toothId, 'multiple')"
+                                    @click.shift.exact="selectTooth(toothId, 'shift')"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    :viewBox="jawSVG[toothId].viewBox"
+                                >
+                                    <g v-if="jawComputed[toothId]">
+                                        <template v-for="(value, location) in defaultLocations">
+                                            <path
+                                                v-if="!jawComputed[toothId][location].hide"
+                                                :key="`${toothId}${location}`"
+                                                :class="[jawComputed[toothId][location].classes]"
+                                                :d="jawSVG[toothId][location]"
+                                            />
+                                        </template>
+                                    </g>
+                                </svg>
 
-                            <jaw-menu
-                                :printmode="printmode"
-                                :btn-class="btnClass"
-                                :selected="isToothSelected(toothId)"
-                                :window-width="windowWidth"
-                                :teeth-system="teethSystem"
-                                :tooth-id="toothId"
-                                direction="bottom"
-                                :align="getMenuAlign('adult', bottomAdultTeethIndex)"
-                                :type="type"
-                                :offset="teethWidth[toothId]"
-                                @recalculateJaw="calculateJaw"
-                                @showItem="showToothInfo"
-                            />
+                                <jaw-menu
+                                    :printMode="printMode"
+                                    :btn-class="btnClass"
+                                    :selected="isToothSelected(toothId)"
+                                    :window-width="windowWidth"
+                                    :teeth-system="teethSystem"
+                                    :tooth-id="toothId"
+                                    direction="bottom"
+                                    :align="getMenuAlign('adult', bottomAdultTeethIndex)"
+                                    :type="type"
+                                    :offset="teethWidth[toothId]"
+                                    @recalculateJaw="calculateJaw"
+                                    @showItem="showToothInfo"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div v-if="!ageCategoryBaby" key="adultTeeth" class="jaw-scroll">
-                    <div class="jaw-top md-alignment-top-center md-size-100">
-                        <div
-                            v-for="(toothId, topJawToothIndex) in topAdultTeeth"
-                            :key="toothId"
-                            v-ripple
-                            :id="`toothId${toothId}`"
-                            class="tooth"
-                            :ref="toothId"
-                        >
-                            <svg
-                                :class="[{ selected: isToothSelected(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"
-                                class="tooth-content"
-                                @click.exact="selectTooth(toothId)"
-                                @click.ctrl.exact="selectTooth(toothId, 'multiple')"
-                                @click.meta.exact="selectTooth(toothId, 'multiple')"
-                                @click.shift.exact="selectTooth(toothId, 'shift')"
-                                xmlns="http://www.w3.org/2000/svg"
-                                :viewBox="jawSVG[toothId].viewBox"
-                                :style="{ weidth: teethWidth[toothId] + (printmode ? 'px' : 'vw') }"
+                    <div v-if="!ageCategoryBaby" key="adultTeeth" class="jaw-scroll">
+                        <div class="jaw-top md-alignment-top-center md-size-100">
+                            <div
+                                v-for="(toothId, topJawToothIndex) in topAdultTeeth"
+                                :key="toothId"
+                                v-ripple
+                                :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width*0.05}vmax` },
+                                { minWidth: `${jawSVG[toothId].width/2}px` }]"
+                                :id="`toothId${toothId}`"
+                                class="tooth"
+                                :ref="toothId"
                             >
-                                <g v-if="jawComputed[toothId]">
-                                    <template v-for="(value, location) in defaultLocations">
-                                        <path
-                                            v-if="!jawComputed[toothId][location].hide"
-                                            :key="`${toothId}${location}`"
-                                            :class="[jawComputed[toothId][location].classes]"
-                                            :d="jawSVG[toothId][location]"
-                                        />
-                                    </template>
-                                </g>
-                            </svg>
+                                <svg
+                                     preserveAspectRatio="xMidYMid meet"
 
-                            <jaw-menu
-                                :printmode="printmode"
-                                :btn-class="btnClass"
-                                :selected="isToothSelected(toothId)"
-                                :window-width="windowWidth"
-                                :teeth-system="teethSystem"
-                                :tooth-id="toothId"
-                                direction="top"
-                                :align="getMenuAlign('adult', topJawToothIndex)"
-                                :type="type"
-                                :offset="teethWidth[toothId]"
-                                @recalculateJaw="calculateJaw"
-                                @showItem="showToothInfo"
-                            />
+                                    :class="[{ selected: isToothSelected(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"                                    class="tooth-content"
+                                    @click.exact="selectTooth(toothId)"
+                                    @click.ctrl.exact="selectTooth(toothId, 'multiple')"
+                                    @click.meta.exact="selectTooth(toothId, 'multiple')"
+                                    @click.shift.exact="selectTooth(toothId, 'shift')"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    :viewBox="jawSVG[toothId].viewBox"
+                                >
+                                    <g v-if="jawComputed[toothId]">
+                                        <template v-for="(value, location) in defaultLocations">
+                                            <path
+                                                v-if="!jawComputed[toothId][location].hide"
+                                                :key="`${toothId}${location}`"
+                                                :class="[jawComputed[toothId][location].classes]"
+                                                :d="jawSVG[toothId][location]"
+                                            />
+                                        </template>
+                                    </g>
+                                </svg>
+
+                                <jaw-menu
+                                    :printMode="printMode"
+                                    :btn-class="btnClass"
+                                    :selected="isToothSelected(toothId)"
+                                    :window-width="windowWidth"
+                                    :teeth-system="teethSystem"
+                                    :tooth-id="toothId"
+                                    direction="top"
+                                    :align="getMenuAlign('adult', topJawToothIndex)"
+                                    :type="type"
+                                    :offset="teethWidth[toothId]"
+                                    @recalculateJaw="calculateJaw"
+                                    @showItem="showToothInfo"
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div class="jaw-bottom md-size-100">
-                        <div
-                            v-for="(toothId, bottomAdultTeethIndex) in bottomAdultTeeth"
-                            :key="toothId"
-                            v-ripple
-                            :id="`toothId${toothId}`"
-                            class="tooth"
-                            :ref="toothId"
-                        >
-                            <svg
-                                :class="[{ selected: isToothSelected(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"
-                                class="tooth-content"
-                                @click.exact="selectTooth(toothId)"
-                                @click.ctrl.exact="selectTooth(toothId, 'multiple')"
-                                @click.meta.exact="selectTooth(toothId, 'multiple')"
-                                @click.shift.exact="selectTooth(toothId, 'shift')"
-                                xmlns="http://www.w3.org/2000/svg"
-                                :viewBox="jawSVG[toothId].viewBox"
-                                :style="{ weidth: teethWidth[toothId] + (printmode ? 'px' : 'vw') }"
+                        <div class="jaw-bottom md-size-100">
+                            <div
+                                v-for="(toothId, bottomAdultTeethIndex) in bottomAdultTeeth"
+                                :key="toothId"
+                                v-ripple
+                                :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width*0.05}vmax` },
+                                { minWidth: `${jawSVG[toothId].width/2}px` }]"
+                                :id="`toothId${toothId}`"
+                                class="tooth"
+                                :ref="toothId"
                             >
-                                <g v-if="jawComputed[toothId]">
-                                    <template v-for="(value, location) in defaultLocations">
-                                        <path
-                                            v-if="!jawComputed[toothId][location].hide"
-                                            :key="`${toothId}${location}`"
-                                            :class="[jawComputed[toothId][location].classes]"
-                                            :d="jawSVG[toothId][location]"
-                                        />
-                                    </template>
-                                </g>
-                            </svg>
+                                <svg
+                                     preserveAspectRatio="xMidYMid meet"
 
-                            <jaw-menu
-                                :printmode="printmode"
-                                :btn-class="btnClass"
-                                :selected="isToothSelected(toothId)"
-                                :window-width="windowWidth"
-                                :teeth-system="teethSystem"
-                                :tooth-id="toothId"
-                                direction="bottom"
-                                :align="getMenuAlign('adult', bottomAdultTeethIndex)"
-                                :type="type"
-                                :offset="teethWidth[toothId]"
-                                @recalculateJaw="calculateJaw"
-                                @showItem="showToothInfo"
-                            />
+                                    :class="[{ selected: isToothSelected(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"
+                                    class="tooth-content"                                    @click.exact="selectTooth(toothId)"
+                                    @click.ctrl.exact="selectTooth(toothId, 'multiple')"
+                                    @click.meta.exact="selectTooth(toothId, 'multiple')"
+                                    @click.shift.exact="selectTooth(toothId, 'shift')"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    :viewBox="jawSVG[toothId].viewBox"
+                                >
+                                    <g v-if="jawComputed[toothId]">
+                                        <template v-for="(value, location) in defaultLocations">
+                                            <path
+                                                v-if="!jawComputed[toothId][location].hide"
+                                                :key="`${toothId}${location}`"
+                                                :class="[jawComputed[toothId][location].classes]"
+                                                :d="jawSVG[toothId][location]"
+                                            />
+                                        </template>
+                                    </g>
+                                </svg>
+
+                                <jaw-menu
+                                    :printMode="printMode"
+                                    :btn-class="btnClass"
+                                    :selected="isToothSelected(toothId)"
+                                    :window-width="windowWidth"
+                                    :teeth-system="teethSystem"
+                                    :tooth-id="toothId"
+                                    direction="bottom"
+                                    :align="getMenuAlign('adult', bottomAdultTeethIndex)"
+                                    :type="type"
+                                    :offset="teethWidth[toothId]"
+                                    @recalculateJaw="calculateJaw"
+                                    @showItem="showToothInfo"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- </transition> -->
+                </transition>
             </div>
             <transition name="slide">
-                <div v-if="!printmode" class="md-layout md-alignment-space-between-center">
+                <div v-if="!printMode" class="md-layout md-alignment-space-between-center">
                     <div :class="[{ 'text-info': selectedTeethLocal.length > 0 }, { 'text-warning': selectedTeethLocal.length === 0 }]">
                         <small>{{ $tc(`${$options.name}.toothSelected`, selectedTeethLocal.length) }}</small>
                     </div>
@@ -291,7 +302,7 @@
                     </div>
                 </div>
             </transition>
-            <div v-if="!printmode" class="md-layout-item">
+            <div v-if="!printMode" class="md-layout-item">
                 <slot name="bottom" />
             </div>
         </div>
@@ -325,7 +336,7 @@ export default {
     },
     mixins: [tObjProp, jawFunctions],
     props: {
-        printmode: {
+        printMode: {
             type: Boolean,
             default: () => false
         },
@@ -500,6 +511,7 @@ export default {
         }
     },
     mounted() {
+        console.log(jawSVGjs);
         this.calculateJaw();
         // this.handleResize();
         // this.setTeethWidth();

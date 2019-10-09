@@ -7,7 +7,7 @@
 
         <jaw
             v-if="showJaw"
-            printmode
+            printMode
             :age-category="!!patientProps.ageCategory"
             :jaw="patientProps.jaw || {}"
             :patient-items="patientProps.patientItems"
