@@ -511,13 +511,7 @@ export default {
         }
     },
     mounted() {
-        console.log(jawSVGjs);
         this.calculateJaw();
-        // this.handleResize();
-        // this.setTeethWidth();
-    },
-    updated() {
-        // this.handleResize();
     },
     watch: {
         selectedTeeth: {
