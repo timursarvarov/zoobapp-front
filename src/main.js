@@ -39,12 +39,11 @@ new Vue({
         Chartist
     },
     render: h => h(App),
-    mq:
-    {
+    mq: {
         xsmall: '(max-width: 599px)',
         small: '(max-width: 959px)',
         medium: '(max-width: 1279px)',
         large: '(max-width: 1919px)',
         xlarge: '(min-width: 1920px)'
-      }
+    }
 });

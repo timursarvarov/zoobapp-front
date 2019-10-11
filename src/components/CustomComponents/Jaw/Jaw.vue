@@ -288,8 +288,10 @@
             </div>
             <transition name="slide">
                 <div v-if="!printMode" class="md-gutter md-alignment-space-between-center">
-                    <span :class="[{ 'text-info': selectedTeethLocal.length > 0 }, { 'text-warning': selectedTeethLocal.length === 0 }]"
-                        class="md-layout-item">
+                    <span
+                        :class="[{ 'text-info': selectedTeethLocal.length > 0 }, { 'text-warning': selectedTeethLocal.length === 0 }]"
+                        class="md-layout-item"
+                    >
                         <small>{{ $tc(`${$options.name}.toothSelected`, selectedTeethLocal.length) }}</small>
                     </span>
                     <small class="md-layout-item hint">{{ $t(`${$options.name}.${teethSystemL}`) }} </small> &nbsp;
