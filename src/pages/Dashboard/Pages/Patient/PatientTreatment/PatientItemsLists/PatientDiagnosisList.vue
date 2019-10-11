@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="md-layout-item  md-size-100">
+    <div>
         <patient-nosology-table
             current-type="diagnosis"
             extraClass="no"

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <md-dialog class="patient-add-form" :md-active.sync="showFormL">
+        <md-dialog class="patient-add-form " :md-active.sync="showFormL">
             <div>
                 <md-card>
                     <md-card-header class="md-card-header-icon">
@@ -12,7 +12,7 @@
 
                     <md-card-content class="md-layout">
                         <div class="md-layout-item">
-                            <div class="print-form__wrapper">
+                            <div class="print-form__wrapper md-scrollbar">
                                 <div ref="print" id="myelement">
                                     <div class="print-form">
                                         <!-- <t-print-form-patient-jaw :patient-props="patientProps" /> -->
@@ -85,7 +85,7 @@
                     <md-card-actions md-alignment="right">
                         <md-button class="md-success" @click="showFormL = !showFormL">close</md-button>
                         <md-button class="md-success" @click="printD()">Print</md-button>
-                        <!-- <md-button class="md-success" @click="print()">Print</md-button> -->
+                        <md-button class="md-success" @click="print()">Print</md-button>
                     </md-card-actions>
                 </md-card>
             </div>

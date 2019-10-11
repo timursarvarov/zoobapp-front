@@ -362,6 +362,70 @@ export default {
                     reject(err);
                 });
         }),
+    [PATIENT_DIAGNOSE_SET]: ({ commit, state, getters, dispatch }, { diagnose }) =>
+        new Promise((resolve, reject) => {
+            commit(PATIENT_PARAM_SET, {
+                paramName: 'status',
+                paramValue: 'loading'
+            });
+            axios
+                .post(
+                    '/',
+                    JSON.stringify({
+                        jsonrpc: '2.0',
+                        method: 'Patients.AddDiagnose',
+                        params: {
+                            patientID: state.ID,
+                            planID: getters.getCurrentPlanID,
+                            catalogDiagnoseID: diagnose.catalogDiagnoseID,
+                            description: diagnose.description,
+                            teeth: diagnose.teeth
+                        },
+                        id: 1
+                    })
+                )
+                .then(resp => {
+                    console.log(resp);
+                    if (resp.data.error) {
+                        commit(PATIENT_PARAM_SET, {
+                            paramName: 'status',
+                            paramValue: 'error'
+                        });
+                        reject(resp.data.error);
+                    }
+                    commit(PATIENT_PARAM_SET, {
+                        paramName: 'status',
+                        paramValue: 'success'
+                    });
+                    const diagnoseN = resp.data.result;
+                    diagnoseN.justAdded = true;
+                    // добавляем процедуру в массиы процедур
+                    commit(PATIENT_PARAM_PUSH, {
+                        paramName: 'diagnosis',
+                        paramValue: diagnoseN,
+                        paramKey: `${diagnoseN.ID}`
+                    });
+                    dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+                        params: {
+                            paramName: 'diagnosis',
+                            paramIndex: diagnoseN.ID,
+                            subParamName: 'justAdded',
+                            subParamValue: false
+                        }
+                    });
+                    if (!isEmpty(diagnoseN.teeth)) {
+                        dispatch(PATIENT_JAW_UPDATE);
+                    }
+                    resolve(diagnoseN);
+                })
+                .catch(err => {
+                    commit(PATIENT_PARAM_SET, {
+                        paramName: 'status',
+                        paramValue: 'error'
+                    });
+                    reject(err);
+                });
+        }),
     [PATIENT_ANAMNES_SET]: ({ commit, state, getters, dispatch }, { anamnes }) =>
         new Promise((resolve, reject) => {
             commit(PATIENT_PARAM_SET, {
@@ -862,33 +926,6 @@ export default {
                     reject(err);
                 });
         }),
-    [PATIENT_DIAGNOSE_SET]: ({ commit, dispatch }, { diagnose }) =>
-        new Promise(resolve => {
-            const diagnoseN = {
-                ...diagnose,
-                ID: Math.random(),
-                justAdded: true
-            };
-            diagnoseN.justAdded = true;
-            // добавляем процедуру в массиы процедур
-            commit(PATIENT_PARAM_PUSH, {
-                paramName: 'diagnosis',
-                paramValue: diagnoseN,
-                paramKey: `${diagnoseN.ID}`
-            });
-            dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
-                params: {
-                    paramName: 'diagnosis',
-                    paramIndex: diagnoseN.ID,
-                    subParamName: 'justAdded',
-                    subParamValue: false
-                }
-            });
-            if (!isEmpty(diagnose.teeth)) {
-                dispatch(PATIENT_JAW_UPDATE);
-            }
-            resolve(diagnoseN);
-        }).catch(err => throwError(err)),
 
     [PATIENT_SUB_PARAM_SET]: ({ commit }, { params }) =>
         new Promise(resolve => {

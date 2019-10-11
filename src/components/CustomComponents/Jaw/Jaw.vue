@@ -78,7 +78,7 @@
             </div>
             <div class="jaw-wrapper-teeth">
                 <transition mode="out-in" appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-                    <div v-if="ageCategoryBaby" key="babyTeeth" class="jaw-scroll">
+                    <div v-if="ageCategoryBaby" key="babyTeeth" class="jaw-scroll md-scrollbar">
                         <div class="jaw-top md-alignment-top-center md-size-100">
                             <div
                                 v-for="(toothId, topJawToothIndex) in topBabyTeeth"
@@ -87,11 +87,11 @@
                                 :id="`toothId${toothId}`"
                                 class="tooth"
                                 :ref="toothId"
-                                :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width*0.05}vmax` },
-                                { minWidth: `${jawSVG[toothId].width/2}px` }]"
+                                :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width * toothWitdh}vmax` }]"
                             >
+                                <!-- { minWidth: `${jawSVG[toothId].width * ($mq.phone ? 0.09 : 0.05)}vmax` } -->
                                 <svg
-                                     preserveAspectRatio="xMidYMid meet"
+                                    preserveAspectRatio="xMidYMid meet"
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="tooth-content"
                                     :class="[
@@ -136,14 +136,14 @@
                                 v-for="(toothId, bottomAdultTeethIndex) in bottomBabyTeeth"
                                 :key="toothId"
                                 v-ripple
-                                :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width*0.05}vmax` },
-                                { minWidth: `${jawSVG[toothId].width/2}px` }]"
                                 :id="`toothId${toothId}`"
                                 class="tooth"
                                 :ref="toothId"
+                                :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width * toothWitdh}vmax` }]"
                             >
+                                <!-- { minWidth: `${jawSVG[toothId].width * ($mq.phone ? 0.09 : 0.05)}vmax` } -->
                                 <svg
-                                     preserveAspectRatio="xMidYMid meet"
+                                    preserveAspectRatio="xMidYMid meet"
                                     class="tooth-content"
                                     :class="[{ selected: isToothSelected(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"
                                     @click.exact="selectTooth(toothId)"
@@ -182,22 +182,22 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="!ageCategoryBaby" key="adultTeeth" class="jaw-scroll">
+                    <div v-if="!ageCategoryBaby" key="adultTeeth" class="jaw-scroll md-scrollbar md-scrollbar">
                         <div class="jaw-top md-alignment-top-center md-size-100">
                             <div
                                 v-for="(toothId, topJawToothIndex) in topAdultTeeth"
                                 :key="toothId"
                                 v-ripple
-                                :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width*0.05}vmax` },
-                                { minWidth: `${jawSVG[toothId].width/2}px` }]"
                                 :id="`toothId${toothId}`"
                                 class="tooth"
                                 :ref="toothId"
+                                :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width * toothWitdh}vmax` }]"
                             >
+                                <!-- { minWidth: `${jawSVG[toothId].width * ($mq.phone ? 0.09 : 0.05)}vmax` } -->
                                 <svg
-                                     preserveAspectRatio="xMidYMid meet"
-
-                                    :class="[{ selected: isToothSelected(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"                                    class="tooth-content"
+                                    preserveAspectRatio="xMidYMid meet"
+                                    :class="[{ selected: isToothSelected(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"
+                                    class="tooth-content"
                                     @click.exact="selectTooth(toothId)"
                                     @click.ctrl.exact="selectTooth(toothId, 'multiple')"
                                     @click.meta.exact="selectTooth(toothId, 'multiple')"
@@ -238,17 +238,17 @@
                                 v-for="(toothId, bottomAdultTeethIndex) in bottomAdultTeeth"
                                 :key="toothId"
                                 v-ripple
-                                :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width*0.05}vmax` },
-                                { minWidth: `${jawSVG[toothId].width/2}px` }]"
                                 :id="`toothId${toothId}`"
                                 class="tooth"
                                 :ref="toothId"
+                                :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width * toothWitdh}vmax` }]"
                             >
+                                <!-- { minWidth: `${jawSVG[toothId].width * ($mq.phone ? 0.09 : 0.05)}vmax` } -->
                                 <svg
-                                     preserveAspectRatio="xMidYMid meet"
-
+                                    preserveAspectRatio="xMidYMid meet"
                                     :class="[{ selected: isToothSelected(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"
-                                    class="tooth-content"                                    @click.exact="selectTooth(toothId)"
+                                    class="tooth-content"
+                                    @click.exact="selectTooth(toothId)"
                                     @click.ctrl.exact="selectTooth(toothId, 'multiple')"
                                     @click.meta.exact="selectTooth(toothId, 'multiple')"
                                     @click.shift.exact="selectTooth(toothId, 'shift')"
@@ -287,19 +287,21 @@
                 </transition>
             </div>
             <transition name="slide">
-                <div v-if="!printMode" class="md-layout md-alignment-space-between-center">
-                    <div :class="[{ 'text-info': selectedTeethLocal.length > 0 }, { 'text-warning': selectedTeethLocal.length === 0 }]">
+                <div v-if="!printMode" class="md-gutter md-alignment-space-between-center">
+                    <span :class="[{ 'text-info': selectedTeethLocal.length > 0 }, { 'text-warning': selectedTeethLocal.length === 0 }]"
+                        class="md-layout-item">
                         <small>{{ $tc(`${$options.name}.toothSelected`, selectedTeethLocal.length) }}</small>
-                    </div>
-                    <div class="md-layout-item text-right">
+                    </span>
+                    <small class="md-layout-item hint">{{ $t(`${$options.name}.${teethSystemL}`) }} </small> &nbsp;
+                    <span class="md-layout-item text-right">
                         <small v-show="prefer.length < 3" class="text-warning hided-prefer">
                             {{ $t(`${$options.name}.multipleChooseHint`) }}
                             <transition-group name="list">
-                                <span v-for="(item, key) in hidedPrefer" :key="key + 0" class="list-item">{{ $t(`jaw.${item}`), }}</span>
+                                <span v-for="(item, key) in hidedPrefer" :key="key + 0" class="list-item">{{ $t(`${$options.name}.${item}`), }}</span>
                             </transition-group>
                         </small>
                         <small v-show="prefer.length === 3" class="hint">{{ $t(`${$options.name}.multipleChooseHint`) }}</small>
-                    </div>
+                    </span>
                 </div>
             </transition>
             <div v-if="!printMode" class="md-layout-item">
@@ -380,6 +382,20 @@ export default {
             currentClinic: 'getCurrentClinic',
             isCalculatingJaw: 'isCalculatingJaw'
         }),
+        toothWitdh() {
+            if (this.$mq.xsmall) {
+                return 0.08;
+            } else if (this.$mq.small) {
+                return 0.094;
+            } else if (this.$mq.medium) {
+                return 0.064;
+            } else if (this.$mq.large) {
+                return 0.05;
+            } else if (this.$mq.xlarge) {
+                return 0.051;
+            }
+            return 0.064;
+        },
         sideBarMinimized() {
             return this.$sidebar.isMinimized;
         },

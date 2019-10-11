@@ -60,6 +60,7 @@
     "vue-i18n": "^8.14.0",
     "vue-infinite-loading": "^2.4.4",
     "vue-lodash": "^2.0.2",
+    "vue-match-media": "^1.0.3",
     "vue-material": "^1.0.0-beta-11",
     "vue-moment": "^4.0.0",
     "vue-ripple-directive": "^2.0.1",

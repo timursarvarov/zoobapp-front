@@ -99,14 +99,17 @@
 		"chooseAllTeeth": "Barcha tishlarni tanlang",
 		"chooseBottomTeeth": "Pastki tishni tanlang",
 		"chooseTopTeeth": "Yuqori tishlarni tanlang",
-		"diagnoses": "@:common.diagnoses",
+		"diagnoses": "tashxis",
+		"fdi": "Tishlarni raqamlash tizimi: FDI",
 		"hasAdultNosology": "Voyaga etgan odamlarning jag'lari mavjud",
 		"hasBabyNosology": "Chaqaloq jag'iga oid narsalar mavjud",
 		"hidedLocations:": "Yashirin joylar:",
-		"multipleChooseHint": "Bir nechta tishlarni tanlash uchun \"Ctrl + click\" yoki \"Shift + click\" -ni bosing",
+		"multipleChooseHint": "Bir nechta tishlarni tanlash uchun 'Strl + click' yoki 'Shift + click' ni bosing",
+		"palmer": "Tishlarni raqamlash tizimi: Palmer",
 		"printJaw": "Jag'ni bosib chiqarish",
-		"procedures": "@:common.procedures",
-		"toothSelected": "Hech qanday tish tanlanmagan | Bitta tish tanlandi | {count} tish tanlandi| {count} tishlar tanlandi"
+		"procedures": "tartibi",
+		"toothSelected": "Hech qanday tish tanlanmagan | Bitta tish tanlandi | {count} tish tanlandi| {count} tishlar tanlandi",
+		"universal": "Tishlarni raqamlash tizimi: Universal"
 	},
 	"JawAddLocations": {
 		"anamnes": "Anamnez",
@@ -523,15 +526,20 @@
 	},
 	"TWizardAddItem": {
 		"adding": "qo'shmoqda",
+		"addingAnamnesis": "Anamnez qo'shilishi",
+		"addingDiagnosis": "Tashxis qo'yish",
+		"addingProcedures": "Tartibga qo'shish",
 		"anamnes": "Anamnez",
 		"appointment": "Uchrashuv",
 		"description": "Ta'rif",
 		"diagnose": "Tashxis",
 		"edit": "tahrirlash",
+		"editAnamnesis": "Anamnezni tahrirlash",
+		"editDiagnosis": "Tashxisni tahrirlash",
+		"editProcedures": "Jarayonni tahrirlash",
 		"files": "Fayllar",
 		"locations": "Joylar",
 		"manipulations": "Manipulyatsiyalar",
-		"procedure": "Protsedura",
 		"selescTooth": "Iltimos, tishni tanlang",
 		"teethWithLocations": "Tanlangan joylari bo'lgan tishlar:",
 		"titleEdit": ""
@@ -653,9 +661,6 @@
 		"updated": "Yangilandi",
 		"userName": "Foydalanuvchi ismi",
 		"yearsOld": "Bir yildan kam | Bir yoshli | {count} yosh"
-	},
-	"jaw": {
-		"anamnesis": ""
 	},
 	"validations": {
 		"attributes": {

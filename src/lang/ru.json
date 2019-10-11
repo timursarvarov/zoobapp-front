@@ -94,19 +94,22 @@
 	},
 	"Jaw": {
 		"ageCategoryBaby": "",
-		"anamnesis": "@:common.anamnesis",
+		"anamnesis": "анамнез",
 		"babyTeeth": "Молочные зубы",
 		"chooseAllTeeth": "Выбрать все зубы",
 		"chooseBottomTeeth": "Выбрать нижние зубы",
 		"chooseTopTeeth": "Выберать верхние зубы",
-		"diagnoses": "@:common.diagnoses",
+		"diagnoses": "диагнозов",
+		"fdi": "Система нумерации зубов: FDI",
 		"hasAdultNosology": "Существуют записи во взрослой челюсти",
 		"hasBabyNosology": "Существуют записи в детской челюсти",
 		"hidedLocations:": "Скрытые локации:",
-		"multipleChooseHint": "Нажмите «Ctrl + клик» или «Shift + клик», чтобы выбрать несколько",
+		"multipleChooseHint": "Нажмите «Ctrl + клик» или «Shift + клик», чтобы выбрать несколько зубов",
+		"palmer": "Система нумерации зубов: Палмер",
 		"printJaw": "Печать челюсти",
-		"procedures": "@:common.procedures",
-		"toothSelected": "Зубы не выбраны | Один  зуб выбран| {count} зуба выбрано | {count} зубов выбрано"
+		"procedures": "процедур",
+		"toothSelected": "Зубы не выбраны | Один  зуб выбран| {count} зуба выбрано | {count} зубов выбрано",
+		"universal": "Система нумерации зубов: Универсальная"
 	},
 	"JawAddLocations": {
 		"anamnes": "Анамнез",
@@ -523,15 +526,20 @@
 	},
 	"TWizardAddItem": {
 		"adding": "добавление",
+		"addingAnamnesis": "Добавление анамнеза",
+		"addingDiagnosis": "Добавление диагноза",
+		"addingProcedures": "Добавление процедуры",
 		"anamnes": "Анамнез",
 		"appointment": "Встреча",
 		"description": "Описание",
 		"diagnose": "Диагноз",
-		"edit": "редактирование",
+		"edit": "Редактирование",
+		"editAnamnesis": "Редактирование анамнеза",
+		"editDiagnosis": "Редактирование диагноза",
+		"editProcedures": "Редактирование процедуры",
 		"files": "Файлы",
 		"locations": "Локации",
 		"manipulations": "Манипуляции",
-		"procedure": "Процедура",
 		"selescTooth": "Пожалуйста, выберите зуб",
 		"teethWithLocations": "Зубы с выбранными локациями:",
 		"titleEdit": ""
@@ -653,9 +661,6 @@
 		"updated": "Oбновлен",
 		"userName": "Имя пользователя",
 		"yearsOld": "Меньше года | Один год | {count} года | {count} лет"
-	},
-	"jaw": {
-		"anamnesis": ""
 	},
 	"validations": {
 		"attributes": {

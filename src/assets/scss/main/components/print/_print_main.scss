@@ -3,13 +3,14 @@
     @media (max-width:600px) {
         max-width: 90vw;
     }
+    padding: 20px;
     max-width: 70vw;
     max-height: 58vh;
     min-height: 200px;
     overflow: hidden;
     overflow-x: scroll;
     overflow-y: scroll;
-    background: rgba(238, 238, 238, 0.436);
+    // background: rgba(238, 238, 238, 0.436);
 }
 .print-form {
     position: relative;
@@ -40,14 +41,14 @@
         min-width: 20cm;
         padding-top: 5px;
         page-break-after: always;
-        &__block:not(:first-child){
+        // &__block:not(:first-child){
             // margin-top: 5px;
             // padding-top: 5px;
             // border-top: 1px solid rgba(128, 128, 128, 0.514);
-        }
-        &__block{
+        // }
+        // &__block{
 
-        }
+        // }
     }
 }
 // .print-form {

@@ -64,6 +64,7 @@
         max-width: 70vw;
         max-height: 80vh;
         position: relative;
+        height: 100%;
         // max-height: 62vh;
         // min-height: 62vh;
         // height: 62vh;
@@ -174,12 +175,12 @@
                 background-color: yellow !important;
                 padding: 0 !important;
             }
-            .content-wrapper {
-                .md-table-content {
+            // .content-wrapper {
+                // .md-table-content {
                     // max-height: calc(100vh - 450px)!important;
                     // max-height: 47vh!important;
-                }
-            }
+                // }
+            // }
         }
         .jaw-list-wrapper {
             min-width: 57vw;
@@ -280,9 +281,9 @@
                             opacity: 1;
                             transform: scale(1);
                         }
-                        .tooth-leave-active {
+                        // .tooth-leave-active {
                             /*position: absolute;*/
-                        }
+                        // }
                         .tooth-move {
                             opacity: 1;
                             transition: all 0.5s;

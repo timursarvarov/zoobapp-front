@@ -4,6 +4,18 @@
     flex-grow: 1;
     align-items: stretch;
     margin: 20px 5px;
+    overflow: auto;
+    // overflow-x: scroll;
+    // overflow: hidden;
+    // overflow-y: scroll;
+    &::-webkit-scrollbar {
+        height: 7px;
+        // background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: grey;
+        border-radius: 7px;
+    }
     &__section:not(:first-child) {
         text-align: right;
         justify-content: space-between;
@@ -39,9 +51,9 @@
     .md-toolbar .md-field:before {
         bottom: 1px;
     }
-    .md-menu {
+    // .md-menu {
         // position: absolute;
         // top: 15px;
         // right: 15px;
-    }
+    // }
 }

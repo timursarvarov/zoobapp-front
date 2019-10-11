@@ -9,3 +9,4 @@ import './vue-cool-select';
 import './lodash';
 import './vue-i18n';
 import './vue-qr';
+import './vue-match-media';

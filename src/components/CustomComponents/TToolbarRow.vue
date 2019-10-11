@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="md-layout">
-        <div class="md-toolbar-row md-elevation-4  t-toolbar">
+        <div class="md-toolbar-row md-elevation-4  t-toolbar md-scrollbar">
             <div v-for="(head, key) in headers" :key="key" class="md-layout-item t-toolbar__section">
                 <div class=" t-toolbar__section-text">
                     <b>{{ head.title }} </b>

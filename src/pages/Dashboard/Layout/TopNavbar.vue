@@ -70,20 +70,20 @@
                                             </p>
                                         </md-button>
                                         <ul class="dropdown-menu dropdown-menu-right">
-                                            <li>
-                                                <a href="#">Mike John responded to your email</a>
+                                            <li class="md-layout">
+                                                <a href="#" class="md-layout">Mike John responded to your email</a>
                                             </li>
-                                            <li>
-                                                <a href="#">You have 5 new tasks</a>
+                                            <li class="md-layout">
+                                                <a href="#" class="md-layout">You have 5 new tasks</a>
                                             </li>
-                                            <li>
-                                                <a href="#">You're now friend with Andrew</a>
+                                            <li class="md-layout">
+                                                <a href="#" class="md-layout">You're now friend with Andrew</a>
                                             </li>
-                                            <li>
-                                                <a href="#">Another Notification</a>
+                                            <li class="md-layout">
+                                                <a href="#" class="md-layout">Another Notification</a>
                                             </li>
-                                            <li>
-                                                <a href="#">Another One</a>
+                                            <li class="md-layout">
+                                                <a href="#" class="md-layout">Another One</a>
                                             </li>
                                         </ul>
                                     </drop-down>
@@ -115,19 +115,19 @@
                                                 </router-link>
                                             </li>
                                             <li class="md-layout" @click="showPatientAddForm()">
-                                                <a href="#" class="md-layout-item">
+                                                <a href="#" class="md-layout">
                                                     <md-icon>person_add</md-icon>
                                                     {{ $t(`${$options.name}.addPatient`) }}
                                                 </a>
                                             </li>
                                             <li class="md-layout" @click="lock()">
-                                                <a href="#" class="md-layout-item">
+                                                <a href="#" class="md-layout">
                                                     <md-icon>lock</md-icon>
                                                     {{ $t(`${$options.name}.lock`) }}
                                                 </a>
                                             </li>
                                             <li class="md-layout" @click="logout()">
-                                                <a href="#">
+                                                <a href="#" class="md-layout">
                                                     <md-icon>arrow_back</md-icon>
                                                     {{ $t(`${$options.name}.logout`) }}
                                                 </a>
@@ -140,6 +140,7 @@
                                                             'dropdown-toggle': clinics && clinics.length > 1
                                                         }
                                                     ]"
+                                                    class="md-layout"
                                                     @click="toggleMultiLevel"
                                                 >
                                                     <img
@@ -164,6 +165,7 @@
                                                             :style="{
                                                                 color: clinic.ID === currnentClinic.ID ? '#fff!important' : ''
                                                             }"
+                                                            class="md-layout"
                                                             href="#"
                                                         >
                                                             <img

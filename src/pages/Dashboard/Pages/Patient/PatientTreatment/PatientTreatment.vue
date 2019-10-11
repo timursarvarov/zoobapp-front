@@ -1,8 +1,8 @@
 <template lang="html">
     <div class="md-layout set-diagnose-form">
-        <div class="md-layout md-layout-item md-medium-size-100 md-size-100">
+        <div class="md-layout  md-medium-size-100 md-size-100">
             <div
-                class="md-layout-item md-layout md-xlarge-size-50 md-small-size-100 md-xsmall-size-100  md-large-size-50 md-medium-size-50  "
+                class=" md-layout md-layout-item md-xlarge-size-50 md-small-size-100 md-xsmall-size-100  md-large-size-50 md-medium-size-50  "
                 :class="[this.$sidebar.isMinimized ? ' md-sized-100 md-alignment-top-center' : ' md-sidze-50']"
             >
                 <!-- <div class="mx-auto" style="flex-grow:1;"> -->
@@ -43,8 +43,7 @@
             <keep-alive>
                 <router-view
                     name="search"
-                    class="md-layout-item md-layout md-xlarge-size-50 md-small-size-100 md-xsmall-size-100 md-large-size-50 md-medium-size-50  "
-                    :class="[this.$sidebar.isMinimized ? ' md-sdize-100' : ' md-sizde-50']"
+                    class="md-layout-item md-layout  md-large-size-50 md-xlarge-size-50 md-small-size-100 md-xsmall-size-100"
                     :custom-height="jawHeight"
                     :selected-teeth="selectedTeeth"
                     @addPlan="addPlan"
@@ -52,9 +51,9 @@
                 />
             </keep-alive>
         </div>
-        <div style="margin-top:30px;" class="md-layout-item  md-size-100 md-medium-size-100">
+        <div style="margin-top:30px;" class="md-layout-item  md-size-100">
             <!-- <keep-alive> -->
-            <router-view ref="items-lists" name="list" :current-type="currentType" :plans="patient.plans" @showItemInfo="selectItem" />
+            <router-view name="list" :current-type="currentType" :plans="patient.plans" @showItemInfo="selectItem" />
             <!-- </keep-alive> -->
         </div>
 

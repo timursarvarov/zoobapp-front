@@ -184,7 +184,9 @@
                                             <b>{{ item[field.key] }}</b>
                                         </span>
                                     </div>
-                                    <div v-else>{{ item[field.key] }}</div>
+                                    <div v-else>
+                                        <small>{{ item[field.key] }}</small>
+                                    </div>
                                 </md-table-cell>
                             </md-table-row>
                         </md-table>

@@ -49,14 +49,16 @@
         overflow-y: scroll;
         // max-height: 40vh;
         // min-height: 30vh;
-        @media (max-width: 960px) {
-            height: 18vw;
+        @media (max-width: 959px) {
+            height: 34vw;
+            min-height: 34vmax;
         }
         @media (max-width: 1200px) and (min-width: 960px) {
-            height: 18vw;
+            height: 28vmax;
+            min-height: 18vmin;
         }
-        height: 18vw;
-        min-height: 300px;
+        min-height: 18vmin;
+        height: 18vw;   
         padding: 6px;
         &::-webkit-scrollbar {
             width: 7px;

@@ -13,6 +13,7 @@
         >
             <!-- :disabled="items.length === 0 && !hasOtherItemTypes" -->
             <md-button
+                v-if="!printMode"
                 :disabled="lodash.isEmpty(items)"
                 :class="[
                     { 'has-items': items[type] && items[type].length > 0 },
@@ -25,17 +26,20 @@
                 ]"
                 class="md-button t-tooth-button md-round dropdown-toggle"
                 :style="{
-                    maxWidth: !printmode ? `${buttonWidth}em` : '22px',
-                    minWidth: !printmode ? `${buttonWidth}em` : '22px',
-                    maxHeight: !printmode ? `${buttonWidth}em` : '22px',
-                    minHeight: !printmode ? `${buttonWidth}em` : '22px',
+                    maxWidth: !printMode ? `${buttonWidth}em` : '22px',
+                    minWidth: !printMode ? `${buttonWidth}em` : '22px',
+                    maxHeight: !printMode ? `${buttonWidth}em` : '22px',
+                    minHeight: !printMode ? `${buttonWidth}em` : '22px',
                     borderRdius: 20 + 'px',
-                    fontSize: !printmode ? '0.8em' : '12px'
+                    fontSize: !printMode ? '0.8em' : '12px'
                 }"
                 md-menu-trigger
             >
                 {{ toothId | toCurrentTeethSystem }}
             </md-button>
+            <span v-else>
+                {{ toothId | toCurrentTeethSystem }}
+            </span>
 
             <md-menu-content class="md-select-menu">
                 <template v-for="(subItems, name, index) in items">
@@ -92,7 +96,7 @@ import EventBus from '@/plugins/event-bus';
 export default {
     name: 'JawMenu',
     props: {
-        printmode: {
+        printMode: {
             type: Boolean,
             default: () => false
         },

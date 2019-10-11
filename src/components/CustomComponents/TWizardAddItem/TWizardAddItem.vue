@@ -3,20 +3,26 @@
         <div class="wizard-add-diagnose-form">
             <div>
                 <simple-wizard
-                    :finish-button-text="`Save ${singleItemName}`"
+                    :finish-button-text="`Done`"
                     :tab-color="tabColor"
                     :is-loading="isLoading"
                     :validate-mode="!needToSaveItem() && !needToSaveEdited()"
                     @tab-change="onTabChange"
+                    @onCancel="isDialogVisibleL = false"
                 >
                     <template slot="header">
                         <h5 class="title">
-                            {{ $t(`${$options.name}.${singleItemName}`) }}
                             <span v-if="itemToCreate.ID">
-                                {{ $t(`${$options.name}.edit`) }}:
-                                <small>ID {{ itemToCreate.ID }}</small>
+                                <span v-if="currentType === 'anamnesis'">{{ $t(`${$options.name}.editAnamnesis`) }}:</span>
+                                <span v-if="currentType === 'procedures'">{{ $t(`${$options.name}.editProcedures`) }}:</span>
+                                <span v-if="currentType === 'diagnosis'">{{ $t(`${$options.name}.editDiagnosis`) }}:</span>
+                                <!-- <small>ID {{ itemToCreate.ID }}</small> -->
                             </span>
-                            <span v-else>{{ $t(`${$options.name}.adding`) }}:</span>
+                            <span v-else>
+                                <span v-if="currentType === 'anamnesis'">{{ $t(`${$options.name}.addingAnamnesis`) }}:</span>
+                                <span v-if="currentType === 'procedures'">{{ $t(`${$options.name}.addingProcedures`) }}:</span>
+                                <span v-if="currentType === 'diagnosis'">{{ $t(`${$options.name}.addingDiagnosis`) }}:</span>
+                            </span>
                             &nbsp;
                             <b>{{ selectedItem.code }}</b>
                             {{ selectedItem.title }}
@@ -571,7 +577,7 @@ export default {
                         });
                         return false;
                     }
-                        console.log('this.isDialogVisibleL')
+                    console.log('this.isDialogVisibleL');
                     if (res) {
                         return Promise.resolve(this.saveDescription());
                     }

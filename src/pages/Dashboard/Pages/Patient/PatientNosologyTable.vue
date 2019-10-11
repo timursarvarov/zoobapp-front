@@ -3,7 +3,7 @@
         <div>
             <slot name="toolbar" />
             <md-toolbar class="md-transparent">
-                <div class="md-layout-item md-size-33">
+                <div class="md-layout-item md-size-33 md-small-size-100">
                     <md-field>
                         <label for="pages">{{ $t(`${$options.name}.perPage`) }}</label>
                         <md-select v-model="pagination.perPage" name="pages">
@@ -11,17 +11,17 @@
                         </md-select>
                     </md-field>
                 </div>
-                <div class="md-layout md-layout-item md-size-33">
+                <div class="md-layout md-layout-item md-size-33 md-small-size-100">
                     <slot name="header" />
                 </div>
-                <div class="md-layout md-layout-item md-size-33 ml-auto">
-                    <div class="md-layout-item md-size-80">
+                <div class="md-layout md-layout-item md-size-33 md-small-size-100 ml-auto">
+                    <div class="md-size-80 md-layout">
                         <md-field>
                             <label for="pages">{{ $t(`${$options.name}.typeToSearch`) }}</label>
                             <md-input v-model="searchQuery" type="search" class="mb-3" clearable style="width: 200px" />
                         </md-field>
                     </div>
-                    <div class="md-layout-item md-size-20 ml-auto">
+                    <div class="md-size-20 ml-auto">
                         <md-button class="md-just-icon md-simple" @click="showTableEditor = !showTableEditor">
                             <md-icon>settings</md-icon>
                         </md-button>

@@ -85,9 +85,7 @@
                             v-ripple
                             :class="[{ selected: isSelected(toothId) }, { tooth: true }]"
                             @click="toothClick($event, toothId)"
-                            :style="[
-                                { width: `${jawSVG[toothId].width * 0.3}vh` },
-                                { minWidth: `${jawSVG[toothId].width/2}px` }]"
+                            :style="[{ width: `${jawSVG[toothId].width * 0.24}vh` }, { minWidth: `${jawSVG[toothId].width / 2}px` }]"
                         >
                             <div class="tooth-number noselect">
                                 <span>{{ toothId | toCurrentTeethSystem }}</span>

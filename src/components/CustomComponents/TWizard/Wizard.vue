@@ -72,6 +72,9 @@
                             <md-button v-if="activeTabIndex > 0" class="btn-previous" @click.native="prevTab">
                                 {{ prevButtonText }}
                             </md-button>
+                            <md-button class="md-simple" @click.native="cancel">
+                                {{ cancelButtonText }}
+                            </md-button>
                         </div>
 
                         <div>
@@ -115,6 +118,10 @@ export default {
         prevButtonText: {
             type: String,
             default: "Previous"
+        },
+        cancelButtonText: {
+            type: String,
+            default: "Cancel"
         },
         nextButtonText: {
             type: String,
@@ -253,6 +260,9 @@ export default {
         },
         prevTab() {
             this.activeTabIndex--;
+        },
+        cancel() {
+            this.$emit('onCancel')
         },
         async navigateToTab(index) {
             if (this.validateMode || this.tabs[index].checked) {

@@ -94,19 +94,22 @@
 	},
 	"Jaw": {
 		"ageCategoryBaby": "",
-		"anamnesis": "@:common.anamnesis",
+		"anamnesis": "anamnesis",
 		"babyTeeth": "Baby teeth",
 		"chooseAllTeeth": "Choose All Teeth",
 		"chooseBottomTeeth": "Choose bottom Teeth",
 		"chooseTopTeeth": "Choose top Teeth",
-		"diagnoses": "@:common.diagnoses",
+		"diagnoses": "diagnoses",
+		"fdi": "Teeth numeration system: FDI",
 		"hasAdultNosology": "Adult  jaw items exist",
 		"hasBabyNosology": "Baby jaw items exist",
 		"hidedLocations:": "Hided locations:",
-		"multipleChooseHint": "Push 'Сtrl + click' or 'Shift + click' to multiple choose",
+		"multipleChooseHint": "Push 'Сtrl + click' or 'Shift + click' to multiple teeth choose",
+		"palmer": "Teeth numeration system: Palmer",
 		"printJaw": "Print Jaw",
-		"procedures": "@:common.procedures",
-		"toothSelected": "No teeth selected | One tooth selected | {count} Selected"
+		"procedures": "procedure",
+		"toothSelected": "No teeth selected | One tooth selected | {count} Selected",
+		"universal": "Teeth numeration system: Universal"
 	},
 	"JawAddLocations": {
 		"anamnes": "Anamnesis",
@@ -523,15 +526,20 @@
 	},
 	"TWizardAddItem": {
 		"adding": "adding",
+		"addingAnamnesis": "Anamnesis adding",
+		"addingDiagnosis": "Diagnosis adding",
+		"addingProcedures": "Procedure adding",
 		"anamnes": "Anamnesis",
 		"appointment": "Appointment",
 		"description": "Description",
 		"diagnose": "Diagnose",
 		"edit": "editing",
+		"editAnamnesis": "Anamnesis editing",
+		"editDiagnosis": "Diagnosis editing",
+		"editProcedures": "Procedure editing",
 		"files": "Files",
 		"locations": "Locations",
 		"manipulations": "Manipulations",
-		"procedure": "Procedure",
 		"selescTooth": "Please select tooth",
 		"teethWithLocations": "Teeth with selected locations: ",
 		"titleEdit": ""
@@ -653,9 +661,6 @@
 		"updated": "Updated",
 		"userName": "User name",
 		"yearsOld": "Less than a year | One year old | {count} years old"
-	},
-	"jaw": {
-		"anamnesis": ""
 	},
 	"validations": {
 		"attributes": {
