@@ -134,8 +134,6 @@ export default {
             dispatch(CLINICS_PROP_SET, { clinics });
         }
         dispatch(AUTH_DECODE_TOKEN);
-        dispatch(TEETH_INITIATION_ETHALON);
-
     },
 
     [AUTH_LOGOUT]: ({

@@ -57,12 +57,13 @@
 <script>
 import { mapGetters } from 'vuex';
 import components from '@/components';
-import PatientNosologyTable from '@/pages/Dashboard/Pages/Patient/PatientNosologyTable';
+import { STORE_KEY_PATIENT } from '@/constants';
+import patientComponents from '@/pages/Dashboard/Pages/Patient/PatientComponents';
 
 export default {
     components: {
         ...components,
-        PatientNosologyTable
+        ...patientComponents
     },
     name: 'PatientBillingUnbiledProcedures',
     props: {},
@@ -76,13 +77,13 @@ export default {
     },
     computed: {
         ...mapGetters({
-            patient: 'getPatient',
+            patient: `${STORE_KEY_PATIENT}/getPatient`,
             currentClinic: 'getCurrentClinic',
-            availableBillingTableColumns: 'availableBillingTableColumns',
-            aproovedPlansProcedures: 'getUnbilledAndApprovedPlansProcedures',
-            getManipulationsByProcedureID: 'getManipulationsByProcedureID',
-            getManipulationsByProcedureIDs: 'getManipulationsByProcedureIDs',
-            manipulationsByPlanID: 'getManipulationsByPlanID'
+            availableBillingTableColumns: 'getAvailableBillingTableColumns',
+            aproovedPlansProcedures: `${STORE_KEY_PATIENT}/getUnbilledAndApprovedPlansProcedures`,
+            getManipulationsByProcedureID: `${STORE_KEY_PATIENT}/getManipulationsByProcedureID`,
+            getManipulationsByProcedureIDs: `${STORE_KEY_PATIENT}/getManipulationsByProcedureIDs`,
+            manipulationsByPlanID: `${STORE_KEY_PATIENT}/getManipulationsByPlanID`
         }),
         filteredItems() {
             const procedures = this.lodash.cloneDeep(this.aproovedPlansProcedures);

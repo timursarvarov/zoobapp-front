@@ -18,15 +18,15 @@
 
                 <sidebar-item :link="{ name: $t(`${$options.name}.patients`), icon: 'supervised_user_circle', path: `/${$i18n.locale}/patients` }" />
                 <sidebar-item
-                    v-if="patient.ID !== null"
+                    v-if="lastPatient.ID"
                     :link="{
-                        name: `${capitalize(patient.firstName)} ${capitalize(patient.lastName)}`,
+                        name: `${capitalize(lastPatient.firstName)} ${capitalize(lastPatient.lastName)}`,
                         icon: 'account_circle',
-                        img: patient.avatar ? patient.avatar : '',
-                        textTocolor: patient.ID,
-                        acronim: patient.firstName + ' ' + patient.lastName,
-                        notification: patient.allergy.length > 0 ? 'A' : '',
-                        path: `/${$i18n.locale}/patient/${patient.ID}/bio`
+                        img: lastPatient.avatar ? lastPatient.avatar : '',
+                        textTocolor: lastPatient.ID,
+                        acronim: lastPatient.firstName + ' ' + lastPatient.lastName,
+                        notification: lastPatient.allergy && lastPatient.allergy.length > 0 ? 'A' : '',
+                        path: `/${$i18n.locale}/patient/${lastPatient.ID}/bio`
                     }"
                     class="separated-down"
                 />
@@ -184,7 +184,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            patient: 'getPatient',
+            lastPatient: 'getLastPatient',
             currentClinic: 'getCurrentClinic',
             selectedClinic: 'getCurrentClinic'
         }),

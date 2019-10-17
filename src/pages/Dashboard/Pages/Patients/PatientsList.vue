@@ -29,7 +29,7 @@
                             <div class="md-toolbar-section-end md-layout ml-auto"></div>
                         </md-toolbar>
                     </transition-expand>
-                    <md-toolbar class="md-transparent">
+                    <!-- <md-toolbar class="md-transparent">
                         <div class="md-toolbar-section-start md-layout">
                             <div class="md-size-50 md-small-size-100">
                                 <md-field>
@@ -49,7 +49,7 @@
                                 <md-progress-bar v-if="searching" class="underline-progress" :md-stroke="1" md-mode="indeterminate" />
                             </div>
                         </div>
-                    </md-toolbar>
+                    </md-toolbar> -->
                     <div class="table-wrapper">
                         <!-- <div v-if="searching || false" class="md-layout mx-auto table-wrapper-preloader">
                             <div style="height:60px;margin: auto;">
@@ -66,42 +66,59 @@
                             :md-sort-order.sync="queryParams.currentSortOrder"
                             :md-sort-fn="customSort"
                         >
-                            <div style="height: 250px; position: inherit; overflow:hidden;">
-                                <slide-x-left-transition>
-                                    <md-table-empty-state
-                                        v-show="status === 'success'"
-                                        sltyle="min-height: 250px;"
-                                        :md-label="$t(`${$options.name}.nothingFoundTitle`)"
-                                        :md-description="$t(`${$options.name}.nothingFoundDescription`, { query: queryParams.searchQuery })"
-                                    >
-                                        <md-button class="md-primary md-raised" @click="$patientAddForm.showPatientAddForm(true)">
-                                            {{ $t(`${$options.name}.nothingFoundCreateNew`) }}
-                                        </md-button>
-                                    </md-table-empty-state>
-                                </slide-x-left-transition>
-                                <slide-x-left-transition>
-                                    <md-table-empty-state
-                                        v-show="status === 'loading'"
-                                        sltyle="min-height: 250px;"
-                                        :md-label="$t(`${$options.name}.loadingTitle`)"
-                                        :md-description="$t(`${$options.name}.loadingDescription`)"
-                                    >
-                                        <md-progress-spinner :md-diameter="40" :md-stroke="4" md-mode="indeterminate" />
-                                    </md-table-empty-state>
-                                </slide-x-left-transition>
-                                <slide-x-left-transition>
-                                    <md-table-empty-state
-                                        v-show="status === 'error'"
-                                        sltyle="min-height: 250px;"
-                                        :md-label="$t(`${$options.name}.loadingErrorTitle`)"
-                                        :md-description="$t(`${$options.name}.loadingErrorDescription`)"
-                                    >
-                                        <md-button class="md-primary md-raised" @click="search">
-                                            {{ $t(`${$options.name}.loadingErrorAction`) }}
-                                        </md-button>
-                                    </md-table-empty-state>
-                                </slide-x-left-transition>
-                            </div>
+                            <md-table-toolbar>
+                                <div class="md-toolbar-section-start md-layout">
+                                    <div class="md-size-50 md-small-size-100">
+                                        <md-field>
+                                            <label for="pages">{{ $t(`${$options.name}.perPage`) }}</label>
+                                            <md-select v-model="queryParams.pagination.perPage" name="pages">
+                                                <md-option v-for="item in perPageOptions" :key="item" :label="item" :value="item">{{
+                                                    item
+                                                }}</md-option>
+                                            </md-select>
+                                        </md-field>
+                                    </div>
+                                </div>
+                                <div class="md-toolbar-section-end ml-auto">
+                                    <div style="width: 300px">
+                                        <md-field :class="{ 'no-after-no-before': searching }">
+                                            <label>{{ $t(`${$options.name}.searchTitle`) }}</label>
+                                            <md-input v-model="queryParams.searchQuery" type="search" class="mb-3" />
+                                        </md-field>
+                                        <md-progress-bar v-if="searching" class="underline-progress" :md-stroke="1" md-mode="indeterminate" />
+                                    </div>
+                                </div>
+                            </md-table-toolbar>
+
+                            <md-table-empty-state
+                                v-if="status === 'success'"
+                                sltyle="min-height: 250px;"
+                                :md-label="$t(`${$options.name}.nothingFoundTitle`)"
+                                :md-description="$t(`${$options.name}.nothingFoundDescription`, { query: queryParams.searchQuery })"
+                            >
+                                <md-button class="md-primary md-raised" @click="$patientAddForm.showPatientAddForm(true)">
+                                    {{ $t(`${$options.name}.nothingFoundCreateNew`) }}
+                                </md-button>
+                            </md-table-empty-state>
+
+                            <md-table-empty-state
+                                v-else-if="status === 'loading'"
+                                sltyle="min-height: 250px;"
+                                :md-label="$t(`${$options.name}.loadingTitle`)"
+                                :md-description="$t(`${$options.name}.loadingDescription`)"
+                            >
+                                <md-progress-spinner :md-diameter="40" :md-stroke="4" md-mode="indeterminate" />
+                            </md-table-empty-state>
+                            <md-table-empty-state
+                                v-else-if="status === 'error'"
+                                sltyle="min-height: 250px;"
+                                :md-label="$t(`${$options.name}.loadingErrorTitle`)"
+                                :md-description="$t(`${$options.name}.loadingErrorDescription`)"
+                            >
+                                <md-button class="md-primary md-raised" @click="search">
+                                    {{ $t(`${$options.name}.loadingErrorAction`) }}
+                                </md-button>
+                            </md-table-empty-state>
 
                             <md-table-row
                                 slot="md-table-row"
@@ -227,20 +244,19 @@
 </template>
 
 <script>
-import { SlideXLeftTransition } from 'vue2-transitions';
+// import { SlideXLeftTransition } from 'vue2-transitions';
 import StarRating from 'vue-star-rating';
 import { mapGetters } from 'vuex';
 import { setTimeout } from 'timers';
 import components from '@/components';
 import { PATIENTS_REQUEST, USER_PATIENTS_COLUMNS } from '@/constants';
-// import { tObjProp } from '@/mixins';
 
 export default {
     name: 'PatientsList',
     components: {
         ...components,
-        StarRating,
-        SlideXLeftTransition
+        StarRating
+        // SlideXLeftTransition
     },
     // mixins: [tObjProp],
     data: () => ({
@@ -265,12 +281,12 @@ export default {
     }),
     computed: {
         ...mapGetters({
-            patients: 'getPatients',
-            patient: 'goToPatient',
-            patientsNum: 'getPatientsNum',
-            status: 'patientsStatus',
+            patients: `getPatients`,
+            patientsNum: `getPatientsNum`,
+            status: `patientsStatus`,
             lang: 'getLang',
-            availablePatientsTableColumns: 'availablePatientsTableColumns'
+            availablePatientsTableColumns: 'availablePatientsTableColumns',
+            availablePatientsTableColumnsOnLoad: 'availablePatientsTableColumnsOnLoad'
         }),
         to() {
             let highBound = this.from + this.queryParams.pagination.perPage;
@@ -321,7 +337,7 @@ export default {
         },
         setPatientsTableColumns() {
             const columns2 = JSON.parse(localStorage.getItem(USER_PATIENTS_COLUMNS));
-            this.patientsTableColumns = columns2 || this.availablePatientsTableColumns;
+            this.patientsTableColumns = columns2 || this.availablePatientsTableColumnsOnLoad;
         },
         goToPatient(patient) {
             const lang = this.$i18n.locale;
@@ -375,7 +391,7 @@ export default {
                     .then(result => {
                         vm.tableData = result.patients || [];
                         vm.searching = false;
-                        vm.removeClass();
+                        // vm.removeClass();
                         return result;
                     })
                     .catch(() => {
@@ -383,25 +399,29 @@ export default {
                         return [];
                     });
             }, DELAY);
-        },
-
-        removeClass() {
-            setTimeout(() => {
-                if (document.querySelector('.just-added')) {
-                    this.patients.forEach((patient, index) => {
-                        if (patient.justAdded) {
-                            this.patients[index].justAdded = false;
-                        }
-                    });
-                }
-            }, 3000);
         }
+
+        // removeClass() {
+        // setTimeout(() => {
+        //     if (document.querySelector('.just-added')) {
+        //         this.patients.forEach((patient, index) => {
+        //             if (patient.justAdded) {
+        //                 this.patients[index].justAdded = false;
+        //             }
+        //         });
+        //     }
+        // }, 3000);
+        // }
     }
 };
 </script>
 
 <style lang="scss">
 .patients-list-wrapper {
+    .md-table-empty {
+        max-height: unset !important;
+        height: unset !important;
+    }
     .no-after-no-before {
         &:after,
         &:before {
@@ -410,7 +430,7 @@ export default {
     }
     .underline-progress {
         position: absolute;
-        bottom: 28px;
+        bottom: 20px;
         height: 2px;
         width: inherit;
         margin: 0;

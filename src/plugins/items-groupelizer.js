@@ -15,13 +15,18 @@ export default function filterItems(NoNeedGroupilized, items = []) {
     }
     items.forEach(item => {
         let groupIndex = filteredItems.findIndex(el => el.code === item.categoryCode);
+        // если группа нозоологии не создана
         if (groupIndex === -1) {
             groupIndex =
                 filteredItems.push({
                     code: item.categoryCode,
-                    title: item.title,
+                    title: item.categoryTitle,
                     codes: []
                 }) - 1;
+            filteredItems[groupIndex].codes.push({
+                ...LOCATIONS[item.templateID],
+                ...item
+            });
         } else {
             // if (item.available && !filterAvailable) {
             filteredItems[groupIndex].codes.push({

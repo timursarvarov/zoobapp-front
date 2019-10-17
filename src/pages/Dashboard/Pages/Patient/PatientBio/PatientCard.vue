@@ -3,7 +3,9 @@
         <md-card-content class="md-layout">
             <div class="md-layout md-small-size-100 md-size-50">
                 <div class="md-layout-item md-layout md-size-100 avatart-wrapper">
-                    <div class="md-layout-item md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between">
+                    <div
+                        class="md-layout-item md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between"
+                    >
                         <t-avatar-input
                             :disabled="loading"
                             :text-to-color="patient.ID"
@@ -14,12 +16,20 @@
                             @on-created="updatepatientAvatar"
                         />
                     </div>
-                    <div class="md-layout-item md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between">
+                    <div
+                        class="md-layout-item md-small-size-100 md-size-50 md-layout switch md-alignment-center-space-between"
+                    >
                         <div class="md-layout-item">
                             <md-switch v-model="showRating">{{ $t(`${$options.name}.showRating`) }}</md-switch>
                         </div>
                         <div class="md-layout-item">
-                            <star-rating v-show="showRating" v-model="patient.rating" :glow="5" :show-rating="false" :star-size="18" />
+                            <star-rating
+                                v-show="showRating"
+                                v-model="patient.rating"
+                                :glow="5"
+                                :show-rating="false"
+                                :star-size="18"
+                            />
                         </div>
                     </div>
                 </div>
@@ -46,7 +56,10 @@
                             <md-icon v-show="errors.has('firstName')" class="error">close</md-icon>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon v-show="!errors.has('firstName') && touched.firstName" class="success">done</md-icon>
+                            <md-icon
+                                v-show="!errors.has('firstName') && touched.firstName"
+                                class="success"
+                            >done</md-icon>
                         </slide-y-down-transition>
                     </md-field>
                 </div>
@@ -74,7 +87,10 @@
                             <md-icon v-show="errors.has('lastName')" class="error">close</md-icon>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon v-show="!errors.has('lastName') && touched.lastName" class="success">done</md-icon>
+                            <md-icon
+                                v-show="!errors.has('lastName') && touched.lastName"
+                                class="success"
+                            >done</md-icon>
                         </slide-y-down-transition>
                     </md-field>
                 </div>
@@ -103,7 +119,10 @@
                             <md-icon v-show="errors.has('phone')" class="error">close</md-icon>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon v-show="!errors.has('phone') && touched.phone" class="success">done</md-icon>
+                            <md-icon
+                                v-show="!errors.has('phone') && touched.phone"
+                                class="success"
+                            >done</md-icon>
                         </slide-y-down-transition>
                     </md-field>
                 </div>
@@ -125,10 +144,17 @@
                 </div>
 
                 <div class="md-layout-item md-size-100">
-                    <md-datepicker v-model="preparedBirthDate" md-immediately :md-model-type="String" disabled="loading">
+                    <md-datepicker
+                        v-model="preparedBirthDate"
+                        md-immediately
+                        :md-model-type="String"
+                        disabled="loading"
+                    >
                         <label>
                             {{ $t(`${$options.name}.birthday`) }}
-                            <span v-if="preparedBirthDate">({{ $tc(`${$options.name}.yearsOld`, $moment().diff(preparedBirthDate, 'years')) }})</span>
+                            <span
+                                v-if="preparedBirthDate"
+                            >({{ $tc(`${$options.name}.yearsOld`, $moment().diff(preparedBirthDate, 'years')) }})</span>
                         </label>
                     </md-datepicker>
                 </div>
@@ -156,12 +182,20 @@
                             <md-icon v-show="errors.has('email')" class="error">close</md-icon>
                         </slide-y-down-transition>
                         <slide-y-down-transition>
-                            <md-icon v-show="!errors.has('email') && touched.email" class="success">done</md-icon>
+                            <md-icon
+                                v-show="!errors.has('email') && touched.email"
+                                class="success"
+                            >done</md-icon>
                         </slide-y-down-transition>
                     </md-field>
                 </div>
                 <div class="md-layout-item md-size-100">
-                    <md-chips v-model="allergy" :disabled="loading" class="md-danger" :md-placeholder="$t(`${$options.name}.addAllergy`)" />
+                    <md-chips
+                        v-model="allergy"
+                        :disabled="loading"
+                        class="md-danger"
+                        :md-placeholder="$t(`${$options.name}.addAllergy`)"
+                    />
                     <span class="small helper">{{ $t(`${$options.name}.addAllergent`) }}</span>
                 </div>
             </div>
@@ -169,7 +203,12 @@
         <md-card-actions>
             <md-button :disabled="loading" class="md-raised md-success mt-4" @click="updateProfile">
                 <div v-if="loading">
-                    <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />&nbsp;
+                    <md-progress-spinner
+                        class="t-white"
+                        :md-diameter="12"
+                        :md-stroke="2"
+                        md-mode="indeterminate"
+                    />&nbsp;
                     <span>{{ $t(`${$options.name}.saving`) }}...</span>
                 </div>
                 <span v-else>{{ $t(`${$options.name}.saveChanges`) }}</span>
@@ -181,7 +220,7 @@
 import { mapGetters } from 'vuex';
 import { SlideYDownTransition } from 'vue2-transitions';
 import StarRating from 'vue-star-rating';
-import { PATIENT_AVATAR_UPLOAD, NOTIFY, PATIENT_EDIT } from '@/constants';
+import { PATIENT_AVATAR_UPLOAD, NOTIFY, PATIENT_EDIT, STORE_KEY_PATIENT } from '@/constants';
 import components from '@/components';
 import moment from 'moment';
 
@@ -247,7 +286,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            patient: 'getPatient'
+            patient: `${STORE_KEY_PATIENT}/getPatient`
         }),
         allergy: {
             // getter
@@ -314,7 +353,7 @@ export default {
                     if (result) {
                         this.loading = true;
                         this.$store
-                            .dispatch(PATIENT_EDIT, {
+                            .dispatch(`$_patient/${PATIENT_EDIT}`, {
                                 params: {
                                     firstName: this.patient.firstName,
                                     lastName: this.patient.lastName,
@@ -359,7 +398,7 @@ export default {
             };
 
             this.$store
-                .dispatch(PATIENT_AVATAR_UPLOAD, {
+                .dispatch(`$_patient/${PATIENT_AVATAR_UPLOAD}`, {
                     patient
                 })
                 .then(

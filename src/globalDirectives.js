@@ -11,6 +11,13 @@ const GlobalDirectives = {
     install(Vue) {
         Vue.directive('click-outside', vClickOutside);
         Vue.directive('ripple', Ripple);
+        Vue.directive('focus', {
+            // Когда привязанный элемент вставлен в DOM...
+            inserted: function(el) {
+                // Переключаем фокус на элемент
+                el.focus();
+            }
+        });
     }
 };
 

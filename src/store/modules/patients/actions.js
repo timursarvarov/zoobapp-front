@@ -2,10 +2,8 @@
 import axios from 'axios';
 import {
     PATIENTS_REQUEST,
-    PATIENTS_PATIENT_UPDATE,
     PATIENTS_PATIENT_ADD,
     PATIENTS_RESET,
-    LOADER_SWITCH_OFF,
     PATIENTS_SET_PROP,
 } from '@/constants';
 
@@ -98,24 +96,6 @@ export default {
         //         });
         // });
 
-    },
-    [PATIENTS_PATIENT_UPDATE]: ({
-        commit,
-        state
-    }, {
-        patient
-    }) => {
-        if (state.patients.length > 0) {
-            const index = state.patients.findIndex(function(e) {
-                return e.ID === patient.ID;
-            });
-            if (index === -1) return;
-            const payload = {
-                index: index,
-                patient: patient
-            };
-            commit(PATIENTS_PATIENT_UPDATE, payload);
-        }
     },
     [PATIENTS_PATIENT_ADD]: ({
         commit,

@@ -19,7 +19,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { NOTIFY, CLINIC_DIAGNOSIS_GET, LOCAL_STORAGE } from '@/constants';
+import { NOTIFY, CLINIC_DIAGNOSIS_GET, STORE_KEY_PATIENT, LOCAL_STORAGE } from '@/constants';
 import components from '@/components';
 import { tObjProp } from '@/mixins';
 
@@ -47,16 +47,19 @@ export default {
             recalculateItemsLocal: false,
             selecteditemLocal: {},
             loading: false,
-            lastAgeCategory: 0,
-            ageCategory: 'ageCategory'
+            lastAgeCategory: 0
         };
     },
     computed: {
         ...mapGetters({
             favoriteDiagnosis: 'favoriteDiagnosis',
             currentDiagnosis: 'getCurrentClinicDiagnosis',
+            patient: `${STORE_KEY_PATIENT}/getPatient`,
             ungroupedDiagnosis: 'getUngroupedDiagnosis'
         }),
+        ageCategory() {
+            return this.patient.ageCategory;
+        },
         lang() {
             return this.$i18n.locale;
         }

@@ -40,7 +40,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { PATIENT_PLAN_SWITCH_CURRENT } from '@/constants';
+import { PATIENT_PLAN_SWITCH_CURRENT, STORE_KEY_PATIENT } from '@/constants';
 import components from '@/components';
 
 export default {
@@ -74,11 +74,11 @@ export default {
 
     computed: {
         ...mapGetters({
-            patient: 'getPatient',
+            patient: `${STORE_KEY_PATIENT}/getPatient`,
             currentClinic: 'getCurrentClinic',
-            currentPlanProcedures: 'getPatientCurrentPlanProcedures',
-            currentPlanID: 'getCurrentPlanID',
-            manipulationsByPlanID: 'getManipulationsByPlanID'
+            currentPlanProcedures: `${STORE_KEY_PATIENT}/getPatientCurrentPlanProcedures`,
+            currentPlanID: `${STORE_KEY_PATIENT}/getCurrentPlanID`,
+            manipulationsByPlanID: `${STORE_KEY_PATIENT}/getManipulationsByPlanID`
         }),
         tabHeaders() {
             const tabHeaders = [];
@@ -103,7 +103,7 @@ export default {
         },
         setCurrentPlan(planID) {
             if (planID) {
-                this.$store.dispatch(PATIENT_PLAN_SWITCH_CURRENT, {
+                this.$store.dispatch(`$_patient/${PATIENT_PLAN_SWITCH_CURRENT}`, {
                     planID
                 });
             }
@@ -115,7 +115,7 @@ export default {
         },
         onChangeTab(plan) {
             if (this.patient.currentPlan && this.patient.currentPlan.ID !== plan.ID) {
-                this.$store.dispatch(PATIENT_PLAN_SWITCH_CURRENT, {
+                this.$store.dispatch(`$_patient/${PATIENT_PLAN_SWITCH_CURRENT}`, {
                     planID: plan.ID
                 });
             }

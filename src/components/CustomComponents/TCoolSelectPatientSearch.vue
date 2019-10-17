@@ -133,22 +133,11 @@
     </cool-select>
 </template>
 <script>
-/* eslint-disable */
-import {
-    CLINIC_AUTH_REQUEST,
-    AUTH_LOGOUT,
-    PATIENTS_REQUEST,
-    AUTH_LOCK,
-    NOTIFY,
-    AVAILABLE_LANGUAGES,
-    LOCAL_STORAGE,
-    USER_UPDATE,
-    PATIENT_GET,
-} from "@/constants";
-import { mapGetters } from "vuex";
-import tAvatar from "@/components/CustomComponents/TAvatar";
-import { CoolSelect } from "vue-cool-select";
-import InfiniteLoading from "vue-infinite-loading";
+import { PATIENTS_REQUEST, NOTIFY } from '@/constants';
+import { mapGetters } from 'vuex';
+import tAvatar from '@/components/CustomComponents/TAvatar';
+import { CoolSelect } from 'vue-cool-select';
+import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
     name: 'TCoolSelectPatientSearch',
@@ -162,8 +151,8 @@ export default {
             totalPatients: 0,
             callbackLauncher: null,
             infiniteId: 1,
-            searchText: "",
-            searchTerm: "",
+            searchText: '',
+            searchTerm: '',
             patients: [],
             coolSelectFocus: false,
             serverError: false,
@@ -177,19 +166,19 @@ export default {
     methods: {
         goToPatient(patient) {
             if (patient) {
-                 this.$router.push({
+                this.$router.push({
                     name: 'Bio',
                     params: {
                         lang: this.$i18n.locale,
-                        patientID: patient.ID,
-                    },
+                        patientID: patient.ID
+                    }
                 });
-                 this.$store.dispatch(NOTIFY, {
-                        settings: {
-                            message: 'Patient changed',
-                            type: 'success',
-                        },
-                    });
+                this.$store.dispatch(NOTIFY, {
+                    settings: {
+                        message: 'Patient changed',
+                        type: 'success'
+                    }
+                });
             }
         },
         infiniteHandler($state) {
@@ -218,8 +207,8 @@ export default {
                     }
                 })
                 .catch(err => {
-                    throw new Error(err);;
                     $state.error();
+                    throw new Error(err);
                 })
                 .then(() => {
                     this.searching = false;
@@ -227,7 +216,7 @@ export default {
         },
         getPatients() {
             this.lastSearchItem = this.searchText;
-            const promise = new Promise((resolve, reject) => {
+            const promise = new Promise(resolve => {
                 if (!this.searchText || this.searchText.length < 3) {
                     resolve([]);
                 } else {
@@ -268,7 +257,7 @@ export default {
                                 })
                                 .catch(err => {
                                     vm.serverError = true;
-                                    throw new Error(err);;
+                                    throw new Error(err);
                                 })
                                 .then(() => {
                                     vm.searching = false;
@@ -276,7 +265,7 @@ export default {
                         );
                     }, DELAY);
                 }
-            }).catch(err => {
+            }).catch(() => {
                 this.searching = false;
                 this.serverError = true;
             });
@@ -285,18 +274,14 @@ export default {
     },
     computed: {
         ...mapGetters({
-            loading: "loading",
-            patient: "getPatient",
-            clinics: "getClinics",
-            user: "getProfile",
-            currnentClinic: "getCurrentClinic",
-            accessToken: "fetchStateAccessToken",
-            expiresAt: "expiresAt",
-            lang: "getLang"
-        }),
-        languages() {
-            return AVAILABLE_LANGUAGES;
-        }
+            loading: 'loading',
+            clinics: 'getClinics',
+            user: 'getProfile',
+            currnentClinic: 'getCurrentClinic',
+            accessToken: 'fetchStateAccessToken',
+            expiresAt: 'expiresAt',
+            lang: 'getLang'
+        })
     }
 };
 </script>

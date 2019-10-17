@@ -25,19 +25,20 @@ export default {
     },
     watch: {
         getNotify: {
-            handler() {
-                const newNotify = {};
-                const el = this;
-                Object.keys(el.getNotify).forEach(key => {
-                    newNotify[key] = el.getNotify[key];
-                });
-                this.$notify(newNotify);
+            handler: function(newValue, oldValue) {
+                if (newValue.notify !== oldValue.notify) {
+                    const newNotify = {};
+                    const el = this;
+                    Object.keys(el.getNotify).forEach(key => {
+                        newNotify[key] = el.getNotify[key];
+                    });
+                    this.$notify(newNotify);
+                }
             },
             deep: true
         },
         isProfileLoaded(value) {
             if (!value && this.$route.meta && this.$route.meta.requiresAuth) {
-                this.$router.push('login');
                 this.$router.push({
                     name: 'login',
                     params: {

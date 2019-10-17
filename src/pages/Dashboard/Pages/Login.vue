@@ -27,6 +27,7 @@
                         <md-icon>face</md-icon>
                         <label for="userName">{{ $t(`${$options.name}.userName`) }}</label>
                         <md-input
+                            v-focus
                             ref="username"
                             v-model="username"
                             v-validate="modelValidations.username"
@@ -86,7 +87,7 @@
                         </small>
                     </div>
                 </div>
-                <md-button slot="footer" class="md-success md-lg" @click="login">
+                <md-button slot="footer" class="md-success md-simple" @click="login">
                     {{ $t(`${$options.name}.login`) }}
                 </md-button>
             </login-card>

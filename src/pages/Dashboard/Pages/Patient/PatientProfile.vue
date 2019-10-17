@@ -58,21 +58,21 @@
                 <patient-print-form />
             </template>
         </nav-tabs-card>
-        <div v-show="!patient.ID && patientStatus === 'loading'" class="jaw md-layout-item">
+        <div v-show="!patient.ID && patient.status === 'loading'" class="jaw md-layout-item">
             <div v-if="true" style="margin:auto; height:100%" class="md-layout mx-auto patient-wrapper-preloader">
                 <div style="height:60px;margin: auto;">
                     <md-progress-spinner md-mode="indeterminate" />
                 </div>
             </div>
         </div>
-        <div v-show="!patient.ID && patientStatus === 'error'" class="jaw md-layout-item">
+        <div v-show="!patient.ID && patient.status === 'error'" class="jaw md-layout-item">
             <md-empty-state md-icon="error" md-label="No connection" md-description="No server connection">
                 <md-button class="md-primary md-raised" @click="getPatient">
                     RETRY
                 </md-button>
             </md-empty-state>
         </div>
-        <div v-show="!patient.ID && patientStatus === 'notExist'" class="jaw md-layout-item">
+        <div v-show="!patient.ID && patient.status === 'notExist'" class="jaw md-layout-item">
             <md-empty-state
                 md-icon="person_outline"
                 md-label="No patient found"
@@ -89,42 +89,53 @@
 <script>
 import { mapGetters } from 'vuex';
 import components from '@/components';
-import { PATIENT_GET, EB_SHOW_PATIENT_PRINT_FORM } from '@/constants';
-import store from '@/store';
-import PatientItemsWizard from './PatientTreatment/PatientItemsWizard';
-import PatientPrintForm from './PatientPrintForm';
+import { PATIENT_GET, STORE_KEY_PATIENT, EB_SHOW_PATIENT_PRINT_FORM } from '@/constants';
+import PatientPrintForm from './PatientPrintForm/PatientPrintForm';
 import EventBus from '@/plugins/event-bus';
+import patientComponents from '@/pages/Dashboard/Pages/Patient/PatientComponents';
+import store from './_store';
+
+
 
 export default {
-    beforeRouteEnter(to, from, next) {
-        if (!store.getters.getPatient.ID || `${store.getters.getPatient.ID}` !== `${to.params.patientID}`) {
-            store
-                .dispatch(PATIENT_GET, {
-                    patientID: to.params.patientID
-                })
-                .then(patient => {
-                    if (patient) {
-                        next(vm => {
-                            vm.setWindowTitle();
-                        });
-                    }
-                })
-                .catch(err => {
-                    next(to);
-                    throw err;
-                });
-        } else {
-            next();
-        }
-    },
+    // beforeRouteEnter(to, from, next) {
+    // const STORE_KEY_PATIENT = '$_patient';
+    // console.log(store._modules);
+    // // eslint-disable-next-line no-underscore-dangle
+    // if (!(STORE_KEY_PATIENT in store._modules.root._children)) {
+    //     store.registerModule(STORE_KEY_PATIENT, store);
+    // }
+    // if (!store.getters.getPatient.ID || `${store.getters.getPatient.ID}` !== `${to.params.patientID}`) {
+    //     store
+    //         .dispatch(`$_patient/${PATIENT_GET, {
+    //             patientID: to.params.patientID
+    //         })
+    //         .then(patient => {
+    //             if (patient) {
+    //                 next(vm => {
+    //                     vm.setWindowTitle();
+    //                 });
+    //             }
+    //         })
+    //         .catch(err => {
+    //             next(to);
+    //             throw err;
+    //         });
+    // } else {
+    //     next();
+    // }
+    // },
     beforeRouteLeave(to, from, next) {
         document.title = 'ZoobApp';
         next();
     },
+    beforeDestroy(){
+        this.$store.unregisterModule(STORE_KEY_PATIENT);
+    },
     name: 'PatientProfile',
     components: {
         ...components,
-        PatientItemsWizard,
+        ...patientComponents,
         PatientPrintForm
     },
     data() {
@@ -136,11 +147,26 @@ export default {
             selectedDiagnose: []
         };
     },
+    created() {
+        if (!(STORE_KEY_PATIENT in this.$store._modules.root._children)) {
+            this.$store.registerModule(STORE_KEY_PATIENT, store);
+        }
+        this.$store
+            .dispatch(`$_patient/${PATIENT_GET}`, {
+                patientID: this.$route.params.patientID
+            })
+            .then(patient => {
+                if (patient) {
+                    this.setWindowTitle();
+                }
+            })
+            .catch(err => {
+                throw err;
+            });
+    },
     computed: {
         ...mapGetters({
-            jaw: 'jaw',
-            patient: 'getPatient',
-            patientStatus: 'getPatientStatus'
+            patient: `${STORE_KEY_PATIENT}/getPatient`,
         }),
         routePatientID() {
             return this.$route.params.patientID;
@@ -177,7 +203,7 @@ export default {
         getPatient() {
             if (this.$route.params.patientID && (this.patient.ID === null || this.patient.ID !== parseInt(this.$route.params.patientID, 10))) {
                 this.$store
-                    .dispatch(PATIENT_GET, {
+                    .dispatch(`$_patient/${PATIENT_GET}`, {
                         patientID: this.$route.params.patientID
                     })
                     .then(() => {

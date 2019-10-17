@@ -25,7 +25,8 @@ const store = new Vuex.Store({
     getters,
     modules,
     mutations,
-    state
+    state,
+    strict: process.env.NODE_ENV !== 'production'
 });
 
 export default store;

@@ -72,10 +72,10 @@ import {
     PATIENT_ANAMNES_UPDATE,
     PATIENT_PROCEDURE_UPDATE,
     EB_SHOW_ITEM_WIZARD,
-    PATIENT_JAW_UPDATE
+    STORE_KEY_PATIENT,
 } from '@/constants';
-import PlanAddForm from './PlanAddForm';
 import components from '@/components';
+import patientComponents from '@/pages/Dashboard/Pages/Patient/PatientComponents';
 import EventBus from '@/plugins/event-bus';
 
 export default {
@@ -105,8 +105,8 @@ export default {
         });
     },
     components: {
-        PlanAddForm,
-        ...components
+        ...components,
+        ...patientComponents
     },
     name: 'PatientTreatment',
     data() {
@@ -125,16 +125,14 @@ export default {
     },
     computed: {
         ...mapGetters({
-            jaw: 'jaw',
-            patient: 'getPatient',
-            teethSchema: 'teethSchema',
+            patient: `${STORE_KEY_PATIENT}/getPatient`,
             currentClinic: 'getCurrentClinic',
             user: 'getProfile',
             access_token: 'fetchStateAccessToken',
-            getProceduresByIds: 'getProceduresByIds',
-            getPatientCurrentPlanProcedures: 'getPatientCurrentPlanProcedures',
-            currentPlanID: 'getCurrentPlanID',
-            currentPlanProcedures: 'getPatientCurrentPlanProcedures'
+            getProceduresByIds: `${STORE_KEY_PATIENT}/getProceduresByIds`,
+            getPatientCurrentPlanProcedures: `${STORE_KEY_PATIENT}/getPatientCurrentPlanProcedures`,
+            currentPlanID: `${STORE_KEY_PATIENT}/getCurrentPlanID`,
+            currentPlanProcedures: `${STORE_KEY_PATIENT}/getPatientCurrentPlanProcedures`
         }),
         currentType() {
             if (this.$route.meta && this.$route.meta.type) {
@@ -210,9 +208,6 @@ export default {
         }
     },
     methods: {
-        rec() {
-            this.$store.dispatch(PATIENT_JAW_UPDATE);
-        },
         redirectToProcdures(planID) {
             if (this.$route.name !== 'procedures') {
                 this.$router.push({
@@ -291,12 +286,12 @@ export default {
             this.selectedTeeth = teeth;
         },
         saveEditedAnamnes(a) {
-            this.$store.dispatch(PATIENT_ANAMNES_UPDATE, {
+            this.$store.dispatch(`$_patient/${PATIENT_ANAMNES_UPDATE}`, {
                 anamnes: a
             });
         },
         saveEditedProcedure(p) {
-            this.$store.dispatch(PATIENT_PROCEDURE_UPDATE, {
+            this.$store.dispatch(`$_patient/${PATIENT_PROCEDURE_UPDATE}`, {
                 params: {
                     procedure: p,
                     planID: this.currentPlanID
@@ -304,7 +299,7 @@ export default {
             });
         },
         saveEditedDiagnose(d) {
-            this.$store.dispatch(PATIENT_DIAGNOSE_UPDATE, {
+            this.$store.dispatch(`$_patient/${PATIENT_DIAGNOSE_UPDATE}`, {
                 diagnose: d
             });
         },
@@ -323,7 +318,7 @@ export default {
             };
             procedureL.showInJaw = true;
             procedureL.id = Math.random();
-            this.$store.dispatch(PATIENT_PROCEDURE_SET, {
+            this.$store.dispatch(`$_patient/${PATIENT_PROCEDURE_SET}`, {
                 planID: this.currentPlanID,
                 procedure: procedureL,
                 patientID: this.patient.ID

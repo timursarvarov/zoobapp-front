@@ -531,9 +531,9 @@ export default {
                             .then(patient => {
                                 if (patient) {
                                     if (this.openProfile) {
-                                        this.$store.dispatch(PATIENT_PARAMS_SET, {
-                                            patient
-                                        });
+                                        // this.$store.dispatch(PATIENT_PARAMS_SET, {
+                                        //     patient
+                                        // });
                                         this.$router.push({
                                             name: 'Treatment',
                                             params: {

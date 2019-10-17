@@ -11,6 +11,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import PatientCard from './PatientCard';
+import { STORE_KEY_PATIENT } from '@/constants';
 
 export default {
     name: 'PatientBio',
@@ -19,7 +20,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            patient: 'getPatient'
+            patient: `${STORE_KEY_PATIENT}/getPatient`
         })
     }
 };

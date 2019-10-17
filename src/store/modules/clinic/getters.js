@@ -1,4 +1,4 @@
-import { COMPANY_NAME, COMPANY_LOGO_URL, COMPANY_COLOR, COMPANY_LINK } from '@/constants';
+import { COMPANY_NAME, COMPANY_LOGO_URL, COMPANY_COLOR, STORE_KEY_PATIENT, COMPANY_LINK } from '@/constants';
 
 export default {
     getCurrentManipulations: state => {
@@ -40,7 +40,7 @@ export default {
                 diagnosis.push({
                     title: group.title,
                     code: group.code,
-                    codes: group.codes.filter(item => item.ageCategory.includes(getters.getPatientAgeCategory))
+                    codes: group.codes.filter(item => item.ageCategory.includes(getters[`${STORE_KEY_PATIENT}/getPatientAgeCategory`]))
                 });
             });
         }
@@ -53,7 +53,7 @@ export default {
                 procedures.push({
                     title: group.title,
                     code: group.code,
-                    codes: group.codes.filter(item => item.ageCategory.includes(getters.getPatientAgeCategory))
+                    codes: group.codes.filter(item => item.ageCategory.includes(getters[`${STORE_KEY_PATIENT}/getPatientAgeCategory`]))
                 });
             });
         }
@@ -66,7 +66,7 @@ export default {
                 anamnesis.push({
                     title: group.title,
                     code: group.code,
-                    codes: group.codes.filter(item => item.ageCategory.includes(getters.getPatientAgeCategory))
+                    codes: group.codes.filter(item => item.ageCategory.includes(getters[`${STORE_KEY_PATIENT}/getPatientAgeCategory`]))
                 });
             });
         }

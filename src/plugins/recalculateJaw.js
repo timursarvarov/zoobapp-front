@@ -1,22 +1,12 @@
 /** localType - avaolable procedures, diagnoses , anamneses*/
-/** jawEthalon - эталон начального отображения локаций зубов */
+/** JAw_ETHALON - эталон начального отображения локаций зубов */
+import { JAw_ETHALON } from '@/constants';
+import { cloneDeep } from 'lodash';
 
-export default function recalculateJaw(jawEthalon, patientItems) {
-    const calcJaw = JSON.parse(JSON.stringify(jawEthalon));
+export default function recalculateJaw(patientItems) {
+    const calcJaw = cloneDeep(JAw_ETHALON);
     Object.keys(patientItems).forEach(itemType => {
         patientItems[itemType].forEach(item => {
-            if(!item){
-                console.log('noItem')
-            }
-            if(!itemType){
-                console.log('noitemType')
-            }
-            if(!jawEthalon){
-                console.log('nojawEthalon')
-            }
-            if(!patientItems){
-                console.log('nopatientItems')
-            }
             //! переделать после реализации в беке
             // eslint-disable-next-line no-constant-condition
             if (true || (item.showInJaw && item.teeth)) {

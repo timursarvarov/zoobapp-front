@@ -19,6 +19,7 @@
                             <md-icon>lock_outline</md-icon>
                             <label>Enter Password</label>
                             <md-input
+                                v-focus
                                 v-model="password"
                                 ref="password"
                                 v-validate="modelValidations.password"
@@ -93,9 +94,6 @@ export default {
         ...mapGetters({
             user: 'getProfile'
         })
-    },
-    mounted() {
-        this.$refs.password.$el.focus();
     },
     methods: {
         validate() {

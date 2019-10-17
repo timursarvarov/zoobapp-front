@@ -42,15 +42,15 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { EB_SHOW_PATIENT_PRINT_FORM } from '@/constants';
+import { EB_SHOW_PATIENT_PRINT_FORM, STORE_KEY_PATIENT } from '@/constants';
 import components from '@/components';
-import PatientNosologyTable from '@/pages/Dashboard/Pages/Patient/PatientNosologyTable';
+import patientComponents from '@/pages/Dashboard/Pages/Patient/PatientComponents';
 import EventBus from '@/plugins/event-bus';
 
 export default {
     components: {
         ...components,
-        PatientNosologyTable
+        ...patientComponents
     },
     name: 'PatientAnamnesisList',
     props: {
@@ -69,9 +69,9 @@ export default {
     },
     computed: {
         ...mapGetters({
-            patient: 'getPatient',
+            patient: `${STORE_KEY_PATIENT}/getPatient`,
             currentClinic: 'getCurrentClinic',
-            getPatientAnamnesis: 'getPatientAnamnesis'
+            getPatientAnamnesis: `${STORE_KEY_PATIENT}/getPatientAnamnesis`
         })
     },
     watch: {

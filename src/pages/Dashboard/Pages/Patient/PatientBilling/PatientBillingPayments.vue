@@ -5,23 +5,20 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import components from '@/components';
+import { STORE_KEY_PATIENT } from '@/constants';
 
 export default {
     name: 'PatientBillingPayments',
-    components: {
-        ...components
-    },
     props: {},
     data() {
         return {};
     },
     computed: {
         ...mapGetters({
-            getInvoicesAll: 'getInvoicesAll',
-            patient: 'getPatient',
+            getInvoicesAll: `${STORE_KEY_PATIENT}/getInvoicesAll`,
+            patient: `${STORE_KEY_PATIENT}/getPatient`,
             currentClinic: 'getCurrentClinic',
-            getPaymentsAll: 'getPaymentsAll'
+            getPaymentsAll: `${STORE_KEY_PATIENT}/getPaymentsAll`
         })
     }
 };

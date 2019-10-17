@@ -173,6 +173,7 @@ import {
     PATIENT_PROCEDURE_DELETE,
     EB_SHOW_ITEM_WIZARD,
     EB_SHOW_PATIENT_PRINT_FORM,
+    STORE_KEY_PATIENT,
     NOTIFY
 } from '@/constants';
 import EventBus from '@/plugins/event-bus';
@@ -239,7 +240,7 @@ export default {
     computed: {
         ...mapGetters({
             currentClinic: 'getCurrentClinic',
-            patient: 'getPatient',
+            patient: `${STORE_KEY_PATIENT}/getPatient`,
             getAvailableManipulationsTableColumns: 'getAvailableManipulationsTableColumns'
         }),
         slotsPassed() {

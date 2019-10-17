@@ -12,17 +12,21 @@
         <div class="md-toolbar-row">
             <div class="md-toolbar-section-start">
                 <h3 class="md-title">
-                    <template v-if="$route.params.patientID && (patient.firstName || patient.lastName)" class="md-layout md-alignment-left-center">
+                    <small
+                        v-if="$route.params.patientID && (lastPatient.firstName || lastPatient.lastName)"
+                        class="md-layout md-alignment-left-center"
+                    >
                         <avatar-box
-                            v-if="$route.params.patientID && (patient.firstName || patient.lastName)"
-                            :avatar="patient.avatar"
-                            :id="patient.ID"
-                            :firstLine="`${patient.firstName} ${patient.lastName}`"
-                            :notificationClass="patient.allergy ? 'warning' : ''"
-                            :notification="!lodash.isEmpty(patient.allergy) ? 'A' : ''"
+                            v-if="$route.params.patientID && (lastPatient.firstName || lastPatient.lastName)"
+                            :avatar="lastPatient.avatar"
+                            :id="lastPatient.ID"
+                            :firstLine="`${lastPatient.firstName} ${lastPatient.lastName}`"
+                            :notificationClass="lastPatient.allergy ? 'warning' : ''"
+                            :notification="!lodash.isEmpty(lastPatient.allergy) ? 'A' : ''"
                         />
-                    </template>
-                    <span v-else>{{ $t(`Routes.${$route.name}`) }}</span>
+                    </small>
+                    <small v-if="$route.params.patientID && (lastPatient.firstName || lastPatient.lastName)">></small>
+                    <small class="md-layout-item">{{ $t(`Routes.${$route.name}`) }}</small>
                 </h3>
             </div>
             <div class="md-toolbar-section-end">
@@ -192,7 +196,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import components from '@/components';
-import { CLINIC_AUTH_REQUEST, AUTH_LOGOUT, AUTH_LOCK, NOTIFY, AVAILABLE_LANGUAGES } from '@/constants';
+import { CLINIC_AUTH_REQUEST, AUTH_LOGOUT, AUTH_LOCK, NOTIFY } from '@/constants';
 
 export default {
     components: {
@@ -214,22 +218,20 @@ export default {
             noData: false,
             perPage: 20,
             page: 1
+            // lastPatient: {}
         };
     },
     computed: {
         ...mapGetters({
             loading: 'loading',
-            patient: 'getPatient',
+            lastPatient: 'getLastPatient',
             clinics: 'getClinics',
             user: 'getProfile',
             currnentClinic: 'getCurrentClinic',
             accessToken: 'fetchStateAccessToken',
             expiresAt: 'expiresAt',
             lang: 'getLang'
-        }),
-        languages() {
-            return AVAILABLE_LANGUAGES;
-        }
+        })
     },
     methods: {
         goTo(route) {
@@ -280,12 +282,7 @@ export default {
             }
         },
         logout() {
-            this.$store.dispatch(AUTH_LOGOUT).then(() => {
-                this.$router.push({
-                    name: 'login',
-                    params: { lang: this.$i18n.locale }
-                });
-            });
+            this.$store.dispatch(AUTH_LOGOUT).then(() => {});
         },
         lock() {
             this.$store.dispatch(AUTH_LOCK).then(() => {
@@ -303,7 +300,7 @@ export default {
         color: white !important;
     }
 }
-.patient-header-avatar {
+.lastPatient-header-avatar {
     width: 40px;
 }
 .wrapper-progress-bar {

@@ -33,7 +33,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { NOTIFY, CLINIC_PROCEDURES_GET, LOCAL_STORAGE } from '@/constants';
+import { NOTIFY, CLINIC_PROCEDURES_GET, STORE_KEY_PATIENT, LOCAL_STORAGE } from '@/constants';
 import components from '@/components';
 import { tObjProp } from '@/mixins';
 
@@ -74,9 +74,12 @@ export default {
             favoriteProcedures: 'favoriteProcedures',
             currentProcedures: 'getCurrentClinicProcedures',
             ungroupedProcedures: 'getUngroupedProcedures',
-            currentPlanID: 'getCurrentPlanID',
-            ageCategory: 'ageCategory'
+            currentPlanID: `${STORE_KEY_PATIENT}/getCurrentPlanID`,
+            patient: `${STORE_KEY_PATIENT}/getPatient`
         }),
+        ageCategory() {
+            return this.patient.ageCategory;
+        },
         lang() {
             return this.$i18n.locale;
         }
@@ -98,6 +101,7 @@ export default {
         getItems(languageChanged) {
             if (this.currentProcedures.length === 0 || languageChanged) {
                 this.loading = true;
+                console.log('getItems', this.currentProcedures);
                 this.$store
                     .dispatch(CLINIC_PROCEDURES_GET)
                     .then(() => {

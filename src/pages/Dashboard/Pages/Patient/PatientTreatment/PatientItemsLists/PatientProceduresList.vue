@@ -105,15 +105,15 @@
 <script>
 import moment from 'moment';
 import { mapGetters } from 'vuex';
-import { NOTIFY, PATIENT_PLAN_EDIT, PATIENT_PLAN_DELETE, EB_SHOW_PATIENT_PRINT_FORM } from '@/constants';
+import { NOTIFY, PATIENT_PLAN_EDIT, STORE_KEY_PATIENT, PATIENT_PLAN_DELETE, EB_SHOW_PATIENT_PRINT_FORM } from '@/constants';
 import components from '@/components';
-import PatientNosologyTable from '@/pages/Dashboard/Pages/Patient/PatientNosologyTable';
+import patientComponents from '@/pages/Dashboard/Pages/Patient/PatientComponents';
 import EventBus from '@/plugins/event-bus';
 
 export default {
     components: {
         ...components,
-        PatientNosologyTable
+        ...patientComponents
     },
     name: 'PatientProceduresList',
     props: {
@@ -132,13 +132,13 @@ export default {
     },
     computed: {
         ...mapGetters({
-            patient: 'getPatient',
+            patient: `${STORE_KEY_PATIENT}/getPatient`,
             currentClinic: 'getCurrentClinic',
-            currentPlanProcedures: 'getPatientCurrentPlanProcedures',
-            manipulationsByPlanID: 'getManipulationsByPlanID',
-            getManipulationsByProcedureIDs: 'getManipulationsByProcedureIDs',
-            currentPlanID: 'getCurrentPlanID',
-            getManipulationsByProcedureID: 'getManipulationsByProcedureID'
+            currentPlanProcedures: `${STORE_KEY_PATIENT}/getPatientCurrentPlanProcedures`,
+            manipulationsByPlanID: `${STORE_KEY_PATIENT}/getManipulationsByPlanID`,
+            getManipulationsByProcedureIDs: `${STORE_KEY_PATIENT}/getManipulationsByProcedureIDs`,
+            currentPlanID: `${STORE_KEY_PATIENT}/getCurrentPlanID`,
+            getManipulationsByProcedureID: `${STORE_KEY_PATIENT}/getManipulationsByProcedureID`
         }),
         getPlanTotalPrice() {
             return this.manipulationsByPlanID(this.currentPlan.ID).reduce((a, b) => a + (b.totalPrice || 0), 0);
@@ -281,7 +281,7 @@ export default {
             return sum || 0;
         },
         unApprovePlan(planID) {
-            this.$store.dispatch(PATIENT_PLAN_EDIT, {
+            this.$store.dispatch(`$_patient/${PATIENT_PLAN_EDIT}`, {
                 planID,
                 key: 'state',
                 value: null
@@ -295,7 +295,7 @@ export default {
             this.showDeleteItemSnackbar = false;
         },
         approvePlan(planID) {
-            this.$store.dispatch(PATIENT_PLAN_EDIT, {
+            this.$store.dispatch(`$_patient/${PATIENT_PLAN_EDIT}`, {
                 planID,
                 key: 'state',
                 value: 1
@@ -318,7 +318,7 @@ export default {
         deletePlan() {
             this.deleting = true;
             this.$store
-                .dispatch(PATIENT_PLAN_DELETE, {
+                .dispatch(`$_patient/${PATIENT_PLAN_DELETE}`, {
                     planID: this.currentPlan.ID
                 })
                 .then()

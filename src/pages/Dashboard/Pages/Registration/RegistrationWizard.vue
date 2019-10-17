@@ -3,12 +3,12 @@
         <div class="md-layout-item md-size-66 md-xsmall-size-100 md-small-size-80 mx-auto">
             <wizard>
                 <template slot="header">
-                    <h3 class="title">
+                    <h4 class="title title_text">
                         {{ $t(`${$options.name}.buildProfile`) }}
-                    </h3>
-                    <h5 class="category">
+                    </h4>
+                    <div class="category">
                         {{ $t(`${$options.name}.buildProfileDescription`) }}
-                    </h5>
+                    </div>
                 </template>
 
                 <wizard-tab :before-change="() => validateStep('step1')">
@@ -58,18 +58,19 @@
 import { mapGetters } from 'vuex';
 import components from '@/components';
 import CheckEmail from './Wizard/CheckEmail';
-import Account from './Wizard/Account';
+// import Account from './Wizard/Account';
 import GetEmail from './Wizard/GetEmail';
 import SetAccount from './Wizard/SetAccount';
 import SetClinic from './Wizard/SetClinic';
-import { USER_REGISTER, NOTIFY, AUTH_REQUEST, CLINIC_LOGO_UPLOAD, CLINIC_UPDATE, SERVER_ERRORS } from '@/constants';
+import { USER_REGISTER, STORE_KEY_REGISTRATION, NOTIFY, AUTH_REQUEST, CLINIC_LOGO_UPLOAD, CLINIC_UPDATE, SERVER_ERRORS } from '@/constants';
+import store from './_store';
 
 export default {
     name: 'RegistrationWizard',
     components: {
         ...components,
         CheckEmail,
-        Account,
+        // Account,
         GetEmail,
         SetAccount,
         SetClinic
@@ -107,9 +108,17 @@ export default {
             clinicName: ''
         };
     },
+    created() {
+        if (!(STORE_KEY_REGISTRATION in this.$store._modules.root._children)) {
+            this.$store.registerModule(STORE_KEY_REGISTRATION, store);
+        }
+    },
+    beforeDestroy() {
+        this.$store.unregisterModule(STORE_KEY_REGISTRATION);
+    },
     computed: {
         ...mapGetters({
-            currentClinic: 'getCurrentClinic'
+            currentClinic: `${STORE_KEY_REGISTRATION}/getCurrentClinic`
         })
     },
     methods: {
@@ -144,7 +153,6 @@ export default {
                     if (this.errorEmail.exceptions.some(val => val === this.email)) {
                         this.errorEmail.message = 'Wrong code';
                         return false;
-
                         // в проверка на frontend валидацию и отправка в back
                     }
                     if (res) {
@@ -296,6 +304,9 @@ export default {
 </script>
 <style lang="scss">
 .wizard-registration-form {
+    .title_text{
+        color: #3c4858;
+    }
     span.md-error {
         padding-left: 38px !important;
     }

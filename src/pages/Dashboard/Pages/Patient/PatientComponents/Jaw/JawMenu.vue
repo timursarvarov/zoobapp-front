@@ -1,0 +1,452 @@
+<template>
+    <div class="tooth-menu__wrapper" :class="direction + '-tooth-menu__wrapper'">
+        <!-- :md-offset-x="127+offset"
+        :md-offset-y="-36"-->
+        <md-menu
+            :md-offset-x="127 + offset"
+            :md-close-on-select="false"
+            md-align-trigger
+            md-size="medium"
+            :md-direction="`${direction}-start`"
+            @md-opened="opened = !opened"
+            @md-closed="opened = !opened"
+        >
+            <!-- :disabled="items.length === 0 && !hasOtherItemTypes" -->
+            <md-button
+                v-if="!printMode"
+                :disabled="lodash.isEmpty(items)"
+                :class="[
+                    { 'has-items': items[type] && items[type].length > 0 },
+                    { [type]: items[type] && items[type].length > 0 },
+                    { [btnClass]: items[type] && items[type].length > 0 },
+                    { 'md-simple': items[type] && items[type].length == 0 && hasOtherItemTypes },
+                    { 'tooth-selected': selected },
+                    { 'has-other-items': hasOtherItemTypes },
+                    { circle: opened }
+                ]"
+                class="md-button t-tooth-button md-round dropdown-toggle"
+                :style="{
+                    maxWidth: !printMode ? `${buttonWidth}em` : '22px',
+                    minWidth: !printMode ? `${buttonWidth}em` : '22px',
+                    maxHeight: !printMode ? `${buttonWidth}em` : '22px',
+                    minHeight: !printMode ? `${buttonWidth}em` : '22px',
+                    borderRdius: 20 + 'px',
+                    fontSize: !printMode ? '0.8em' : '12px'
+                }"
+                md-menu-trigger
+            >
+                {{ toothId | toCurrentTeethSystem }}
+            </md-button>
+            <span v-else>
+                {{ toothId | toCurrentTeethSystem }}
+            </span>
+
+            <md-menu-content class="md-select-menu">
+                <template v-for="(subItems, name, index) in items">
+                    <md-menu-item :key="index" class="tooth-menu-item item-categoty">
+                        <b>{{ $t(`${$options.name}.${name}`) }}:</b>
+                    </md-menu-item>
+                    <md-menu-item
+                        v-for="(item, key) in subItems"
+                        :key="`${key}${index}`"
+                        class="tooth-menu-item"
+                        :md-ripple="false"
+                        :class="[{ 'no-locations': item.hasLocations }, { [`tooth-${name}-content`]: true }]"
+                        @click="menuClick($event, item, toothId, name)"
+                    >
+                        <div class="tooth-diagnosis-content__item">
+                            <div class="tooth-items-code">
+                                <span>
+                                    <b>{{ item.code }}</b>
+                                </span>
+                            </div>
+                            <div class="tooth-diagnosis-text">
+                                <span class="tooth-diagnosis-text-item">
+                                    <span>{{ item.title }}</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div v-show="item.hasLocations" class="tooth-diagnosis-actions">
+                            <md-button
+                                :class="[{ 'md-info': item.showInJaw }]"
+                                class="md-just-icon md-simple md-round"
+                                @click.stop="toggleItemVisibility(item, name)"
+                            >
+                                <md-icon v-if="item.showInJaw">
+                                    visibility
+                                </md-icon>
+                                <md-icon v-else>
+                                    visibility_off
+                                </md-icon>
+                            </md-button>
+                        </div>
+                    </md-menu-item>
+                </template>
+            </md-menu-content>
+        </md-menu>
+    </div>
+</template>
+<script>
+// import { tObjProp } from '@/mixins';
+import { mapGetters } from 'vuex';
+import { PATIENT_ITEM_VISIBILITY_TOGGLE, STORE_KEY_PATIENT, EB_SHOW_ITEM_WIZARD } from '@/constants';
+import EventBus from '@/plugins/event-bus';
+
+export default {
+    name: 'JawMenu',
+    props: {
+        printMode: {
+            type: Boolean,
+            default: () => false
+        },
+        selected: {
+            type: Boolean,
+            default: () => false
+        },
+        btnClass: {
+            type: String,
+            default: () => 'md-primary'
+        },
+        toothId: {
+            type: String,
+            default: () => ''
+        },
+        teethSystem: {
+            type: Number,
+            default: () => 1
+        },
+        windowWidth: {
+            type: Number,
+            default: () => 1
+        },
+        direction: {
+            type: String,
+            default: () => 'top'
+        },
+        align: {
+            type: String,
+            default: () => 'center'
+        },
+        type: {
+            type: String,
+            default: () => 'diagnosis'
+        },
+        offset: {
+            type: Number,
+            default: () => 5
+        }
+    },
+    data() {
+        return {
+            opened: false,
+            hover: ''
+        };
+    },
+    computed: {
+        ...mapGetters({
+            diagnosis: `${STORE_KEY_PATIENT}/getPatientDiagnosis`,
+            anamnesis: `${STORE_KEY_PATIENT}/getPatientAnamnesis`,
+            procedures: `${STORE_KEY_PATIENT}/getPatientCurrentPlanProcedures`,
+            getCurrentClinicOriginalItem: 'getCurrentClinicOriginalItem'
+        }),
+        items() {
+            let items = {};
+            const patientItems = {
+                diagnosis: this.diagnosis,
+                anamnesis: this.anamnesis,
+                procedures: this.procedures
+            };
+            Object.keys(patientItems).forEach(itemType => {
+                patientItems[itemType].forEach(patientItemW => {
+                    if (patientItemW.teeth && this.toothId in patientItemW.teeth) {
+                        if (!(itemType in items)) {
+                            items[itemType] = [];
+                        }
+                        items[itemType].push({
+                            //!удалить после реализации code  на бэкенде
+                            code: this.getItemSCode(patientItemW),
+                            hasLocations: !this.lodash.isEmpty(patientItemW.teeth[this.toothId]),
+                            ...patientItemW
+                        });
+                    }
+                });
+            });
+            return items;
+        },
+        hasOtherItemTypes() {
+            let hasItems = false;
+            Object.keys(this.items).forEach(category => {
+                if (category !== this.type && this.items[category].length > 0) {
+                    hasItems = true;
+                }
+            });
+            return hasItems;
+        },
+        buttonWidth() {
+            if (this.windowWidth < 600) {
+                return 1.8;
+            }
+            if (this.windowWidth >= 600 && this.windowWidth < 960) {
+                return 1.8;
+            }
+            if (this.windowWidth <= 1280 && this.windowWidth > 960) {
+                return 1.8;
+            }
+            if (this.windowWidth < 1920 && this.windowWidth > 1280) {
+                return 1.8;
+            }
+            if (this.windowWidth >= 1920) {
+                return 1.8;
+            }
+            return 4;
+        }
+    },
+    methods: {
+        //!удалить после реализации code  на бэкенде
+        getItemSCode(patientItemW) {
+            let code = '';
+            let catalogID = '';
+            if (this.type === 'diagnosis') {
+                catalogID = patientItemW.catalogDiagnoseID;
+            } else if (this.type === 'procedures') {
+                catalogID = patientItemW.catalogProcedureID;
+            } else if (this.type === 'anamnesis') {
+                catalogID = patientItemW.catalogAnamnesID;
+            }
+            code = this.getCurrentClinicOriginalItem(this.type, catalogID).code;
+            return code;
+        },
+        toggleItemVisibility(item, type) {
+            if (item.id) {
+                this.$store.dispatch(`$_patient/${PATIENT_ITEM_VISIBILITY_TOGGLE}`, {
+                    params: {
+                        itemId: item.id,
+                        type
+                    }
+                });
+            }
+        },
+
+        menuClick(event, item, toothId, type) {
+            const params = {
+                item,
+                toothId,
+                type
+            };
+            this.emitClick(params);
+        },
+        emitClick(params) {
+            EventBus.$emit(EB_SHOW_ITEM_WIZARD, params);
+        }
+    }
+};
+</script>
+
+<style lang="scss">
+.top-tooth-menu__wrapper {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0.3vh);
+}
+.bottom-tooth-menu__wrapper {
+    left: 50%;
+    transform: translate(-50%, -0.3vh);
+    bottom: 0;
+}
+.top-tooth-menu__wrapper,
+.down-tooth-menu__wrapper,
+.tooth-menu__wrapper {
+    position: absolute;
+
+    .dropdown-menu-center {
+        transform: translate(-50%, 0) !important;
+    }
+    .tooth-selected {
+        cursor: pointer;
+    }
+    .t-tooth-button.tooth-selected {
+        color: white !important;
+        // background-color: white!important;
+    }
+    .tooth-selected {
+        .t-tooth-button {
+            color: white !important;
+            background-color: none !important;
+        }
+        // color: grey!important;
+    }
+    .has-items {
+        box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2), 0 2px 5px 1px rgba(0, 0, 0, 0.14), 0 3px 7px 2px rgba(0, 0, 0, 0.12) !important;
+    }
+    .anamnesis .anamnesis:active {
+        background-color: #00bcd4 !important;
+    }
+    .diagnosis {
+        background-color: #9c27b0 !important;
+    }
+    .diagnosis:active {
+        background-color: #9c27b0 !important;
+    }
+    .procedures .procedures:active {
+        background-color: #4caf50 !important;
+    }
+    .tooth-selected.t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures) {
+        // box-shadow:none;
+        background-color: transparent !important;
+        color: white !important;
+        box-shadow: none;
+        font-weight: 800;
+    }
+    .t-tooth-button:not(.has-other-items):not(.has-items):not(.anamnesis):not(.diagnosis):not(.procedures):not(.tooth-selected) {
+        box-shadow: none;
+        background-color: white !important;
+        color: grey !important;
+    }
+    .t-tooth-button:hover {
+        box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 1px 8px 0 rgba(0, 0, 0, 0.12) !important;
+    }
+    .t-tooth-button.circle {
+        box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 1px 8px 0 rgba(0, 0, 0, 0.12) !important;
+    }
+    .t-tooth-button.has-other-items:not(.anamnesis):not(.diagnosis):not(.procedures) {
+        background-color: white !important;
+        color: grey !important;
+        box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.2), 0 2px 5px 1px rgba(0, 0, 0, 0.14), 0 3px 7px 2px rgba(0, 0, 0, 0.12);
+    }
+    .t-tooth-button {
+        // background-color: white!important;
+        box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 1px 8px 0 rgba(0, 0, 0, 0.12);
+        position: relative;
+        .md-ripple {
+            min-height: 0;
+            min-width: 0;
+            max-height: inherit;
+            max-width: inherit;
+            padding: 0 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            .md-button-content {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                align-self: center !important;
+                margin: auto;
+                span {
+                    align-self: center;
+                }
+            }
+            &:after {
+                display: none !important;
+                // display: inline-block;
+                // width: 0;
+                // height: 0;
+                // margin: 0!important;
+            }
+        }
+    }
+}
+.tooth-diagnosis-content {
+    .md-list-item-button:hover {
+        color: white !important;
+        background-color: #4caf50 !important;
+        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12);
+    }
+}
+.tooth-anamnesis-content {
+    .md-list-item-button:hover {
+        color: white !important;
+        background-color: #808080 !important;
+        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12);
+    }
+}
+.tooth-procedures-content {
+    .md-list-item-button:hover {
+        color: white !important;
+        background-color: #9c27b0 !important;
+        box-shadow: 0 2px 2px 0 rgba(76, 175, 80, 0.14), 0 3px 1px -2px rgba(76, 175, 80, 0.2), 0 1px 5px 0 rgba(76, 175, 80, 0.12);
+    }
+}
+.item-categoty {
+    min-height: 20px !important;
+    padding: 5px 5px;
+    margin: 0 0.3125rem !important;
+    align-items: center;
+    position: relative;
+    .md-list-item-container {
+        .md-list-item-content.md-ripple {
+            min-height: 15px !important;
+            padding: 5px !important;
+            // border-radius: 3px;
+        }
+    }
+}
+.no-locations {
+    padding-right: 35px;
+}
+.tooth-menu-item:not(.item-categoty) {
+    margin: 0 0.3125rem !important;
+    align-items: center;
+    position: relative;
+    .md-list-item-button {
+        overflow: visible;
+    }
+
+    .md-list-item-container {
+        .md-list-item-content.md-ripple {
+            padding: 5px !important;
+            border-radius: 3px;
+        }
+        .md-list-item-content {
+            display: flex;
+            font-size: 12px;
+            min-height: 12px !important;
+            margin-right: 30px;
+            span {
+                padding: 0 0 0 5px !important;
+            }
+            cursor: pointer;
+            .tooth-diagnosis-content__item {
+                display: flex;
+                flex-grow: 1;
+                overflow: hidden;
+                // margin-right: 30px;
+            }
+            .tooth-items-code {
+                padding-right: 5px;
+            }
+            .md-list-item-text {
+                position: relative;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .tooth-diagnosis-text {
+                flex-grow: 1;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                // padding:0 30px 0 0 !important;
+                .tooth-diagnosis-text-item {
+                    padding: 0 !important;
+                }
+            }
+        }
+        .tooth-diagnosis-actions {
+            position: absolute;
+            right: -30px;
+            .md-button {
+                max-height: 17px;
+                min-width: 24px;
+                max-width: 24px;
+                padding: 0;
+                .md-ripple {
+                    min-height: inherit;
+                    min-width: inherit;
+                    padding: 0 !important;
+                }
+            }
+        }
+    }
+}
+</style>

@@ -34,7 +34,8 @@ import { tObjProp } from '@/mixins';
 import {
     AUTH_REFRESH_TOKEN,
     PATIENT_ADD_SUB_PROP,
-    BASE_URL
+    BASE_URL,
+    STORE_KEY_PATIENT
     // eslint-disable-next-line import/no-unresolved
 } from '@/constants';
 
@@ -55,7 +56,7 @@ export default {
     computed: {
         ...mapGetters({
             access_token: 'fetchStateAccessToken',
-            patient: 'getPatient',
+            patient: `${STORE_KEY_PATIENT}/getPatient`,
             tokenExpiresAt: 'expiresAt'
         }),
         url() {
@@ -76,7 +77,7 @@ export default {
     },
     methods: {
         onSuccess(response) {
-            this.$store.dispatch(PATIENT_ADD_SUB_PROP, {
+            this.$store.dispatch(`$_patient/${PATIENT_ADD_SUB_PROP}`, {
                 params: {
                     propName: 'files',
                     value: response[0]

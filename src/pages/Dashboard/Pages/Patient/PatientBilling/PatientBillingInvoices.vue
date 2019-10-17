@@ -18,13 +18,14 @@
 <script>
 import components from '@/components';
 import { mapGetters } from 'vuex';
-import PatientNosologyTable from '@/pages/Dashboard/Pages/Patient/PatientNosologyTable';
+import { STORE_KEY_PATIENT } from '@/constants';
+import patientComponents from '@/pages/Dashboard/Pages/Patient/PatientComponents';
 
 export default {
     name: 'PatientBillingInvoices',
     components: {
         ...components,
-        PatientNosologyTable
+        ...patientComponents
     },
     props: {},
     data() {
@@ -34,8 +35,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            getInvoicesAll: 'getInvoicesAll',
-            patient: 'getPatient',
+            getInvoicesAll: `${STORE_KEY_PATIENT}/getInvoicesAll`,
+            patient: `${STORE_KEY_PATIENT}/getPatient`,
             currentClinic: 'getCurrentClinic'
         })
     },

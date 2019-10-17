@@ -208,6 +208,24 @@ export default {
             title: 'Updated'
         }
     ],
+    availablePatientsTableColumnsOnLoad: [
+        {
+            key: 'name',
+            title: 'Name'
+        },
+        {
+            key: 'phone',
+            title: 'Phone'
+        },
+        {
+            key: 'allergy',
+            title: 'Allergy'
+        },
+        {
+            key: 'email',
+            title: 'Email'
+        }
+    ],
     availableAnamnesTableColumns: [
         {
             key: 'code',

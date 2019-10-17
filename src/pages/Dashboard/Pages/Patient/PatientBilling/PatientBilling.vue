@@ -37,11 +37,15 @@
 <script>
 import { mapGetters } from 'vuex';
 import components from '@/components';
+import { STORE_KEY_PATIENT } from '@/constants';
+import patientComponents from '@/pages/Dashboard/Pages/Patient/PatientComponents';
+// import { constants } from 'crypto';
 
 export default {
     name: 'PatientBilling',
     components: {
-        ...components
+        ...components,
+        ...patientComponents
     },
     data() {
         return {
@@ -66,7 +70,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            patient: 'getPatient'
+            patient: `${STORE_KEY_PATIENT}/getPatient`
         }),
         selectedItems() {
             return this.selectedItemsL || [];

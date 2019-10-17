@@ -24,6 +24,7 @@ export default {
     getAvailableDiagnosisTableColumns: state => state.availableDiagnosisTableColumns,
     getAvailableProceduresTableColumns: state => state.availableProceduresTableColumns,
     getAvailableBillingTableColumns: state => state.availableBillingTableColumns,
+    availablePatientsTableColumnsOnLoad: state => state.availablePatientsTableColumnsOnLoad,
     getAvailableInvoiceTableColumns: state => state.availableInvoiceTableColumns,
     getAvailableManipulationsTableColumns: state => state.availableManipulationsTableColumns,
     getLang: state => {

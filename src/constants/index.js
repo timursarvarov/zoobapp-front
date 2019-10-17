@@ -1,5 +1,6 @@
-import PROCEDURES_L from './procedures';
+// import PROCEDURES_L from './procedures';
 import LOCATIONS_L from './locations';
+import JAw_ETHALON_L from './jawEthalon';
 
 import TEETH_DEFAULT_LOCATIONS_L from './tooth-default-locations';
 import TEETH_SCHEMA_L from './teeth-schema';
@@ -22,7 +23,8 @@ import UPLOAD_FILE_SETTINGS_L from './upload-file-settings';
 import LOCAL_STORAGE_L from './localStorage-items';
 import AVAILABLE_LANGUAGES_L from './languages';
 
-export const PROCEDURES = PROCEDURES_L;
+// export const PROCEDURES = PROCEDURES_L;
+export const JAw_ETHALON = JAw_ETHALON_L;
 export const LOCATIONS = LOCATIONS_L;
 
 // Teeth schema locations
@@ -103,8 +105,12 @@ export const PATIENTS_RESET = 'PATIENTS_RESET';
 export const PATIENTS_ERROR = 'PATIENTS_ERROR';
 export const PATIENTS_SET = 'PATIENTS_SET';
 export const PATIENTS_SET_PROP = 'PATIENTS_SET_PROP';
-export const PATIENTS_PATIENT_UPDATE = 'PATIENTS_PATIENT_UPDATE';
 export const PATIENTS_PATIENT_ADD = 'PATIENTS_PATIENT_ADD';
+
+//Last Patient{
+    export const  LAST_PATIENT_SET  = 'LAST_PATIENT_SET';
+    export const   LAST_PATIENT_UNSET  = 'LAST_PATIENT_UNSET';
+    export const    LAST_PATIENT_PARAM_PUSH  = 'LAST_PATIENT_PARAM_PUSH';
 
 // Patient
 export const PATIENT_CREATE = 'PATIENT_CREATE';
@@ -182,7 +188,7 @@ export const DIAGNOSIS_ERROR = 'DIAGNOSIS_ERROR';
 export const DIAGNOSIS_SET = 'DIAGNOSIS_SET';
 
 // Teeth
-export const TEETH_INITIATION = 'TEETH_INITIATION';
+// export const TEETH_INITIATION = 'TEETH_INITIATION';
 export const TEETH_INITIATION_ETHALON = 'TEETH_INITIATION_ETHALON';
 
 // Company
@@ -212,3 +218,10 @@ export const FALLBACK_LANGUAGE = 'en';
 // EventBus Events
 export const EB_SHOW_ITEM_WIZARD = 'EB_SHOW_ITEM_WIZARD';
 export const EB_SHOW_PATIENT_PRINT_FORM = 'EB_SHOW_PATIENT_PRINT_FORM';
+
+// Store keys
+export const STORE_KEY_PATIENT = '$_patient';
+export const STORE_KEY_REGISTRATION = '$_registration';
+export const STORE_KEY_PATIENTS = '$_patients';
+
+

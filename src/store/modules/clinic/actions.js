@@ -83,7 +83,7 @@ export default {
                         // dispatch(AUTH_SUCCESS, { result: resp.data.result });
                         dispatch(AUTH_DECODE_TOKEN);
                         dispatch(USER_REQUEST);
-                        dispatch(PATIENT_UNSET);
+                        // dispatch(PATIENT_UNSET);
                         commit(CLINIC_SET_PROP, { propName: 'isRefreshing', propValue: false });
                         resolve(resp.data.result);
                     })

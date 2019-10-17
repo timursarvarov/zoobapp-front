@@ -265,7 +265,7 @@ const patientPages = {
                         disableScroll: true
                     },
                     components: {
-                        Notes: load('Pages/Patient/Notes')
+                        Notes: load('Pages/Patient/PatientNotes/Notes')
                     }
                 },
                 {

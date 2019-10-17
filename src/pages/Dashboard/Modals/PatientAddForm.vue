@@ -357,7 +357,7 @@
 </template>
 <script>
 import { SlideYDownTransition } from 'vue2-transitions';
-import { PATIENT_CREATE, NOTIFY, PATIENT_PARAMS_SET, LOCAL_STORAGE } from '@/constants';
+import { PATIENT_CREATE, NOTIFY, LOCAL_STORAGE } from '@/constants';
 
 export default {
     name: 'PatientAddForm',
@@ -530,9 +530,6 @@ export default {
                             .then(patient => {
                                 if (patient) {
                                     if (this.openProfile) {
-                                        this.$store.dispatch(PATIENT_PARAMS_SET, {
-                                            patient
-                                        });
                                         this.$router.push({
                                             name: 'Treatment',
                                             params: {

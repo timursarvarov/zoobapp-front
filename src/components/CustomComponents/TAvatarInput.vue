@@ -95,7 +95,7 @@ export default {
                 this.showForm = true;
                 this.clearImage();
             } else {
-                this.$store.dispatch(NOTIFY, {
+                this.$store.dispatch( {
                     settings: {
                         message: 'No files selected!',
                         type: 'warning'

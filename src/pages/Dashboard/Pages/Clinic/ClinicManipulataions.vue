@@ -124,7 +124,7 @@ import { mapGetters } from 'vuex';
 import components from '@/components';
 import ClinicNosologyTable from './ClinicNosologyTable';
 // import ClinicAddNosologyForm from './ClinicAddNosologyForm';
-import { CLINIC_MANIPULATIONS_GET } from '@/constants';
+import { CLINIC_MANIPULATIONS_GET, STORE_KEY_PATIENT } from '@/constants';
 import { CoolSelect } from 'vue-cool-select';
 
 export default {
@@ -149,7 +149,7 @@ export default {
     computed: {
         ...mapGetters({
             currentClinic: 'getCurrentClinic',
-            patient: 'getPatient',
+            patient: `${STORE_KEY_PATIENT}/getPatient`,
             getAvailableAnamnesTableColumns: 'getAvailableAnamnesTableColumns',
             getCurrentManipulations: 'getCurrentManipulations'
         }),

@@ -8,7 +8,6 @@ import {
     USER_UPDATE,
     USER_SET_PARAM,
     USER_LOGOUT,
-    USER_REGISTER,
     USER_PROP_SET,
     LOCAL_STORAGE
 } from '@/constants';
@@ -116,37 +115,6 @@ export default {
             dispatch(USER_REQUEST);
         }
     },
-    [USER_REGISTER]: ({ commit }, { params }) =>
-        new Promise((resolve, reject) => {
-            commit(USER_REQUEST);
-            axios
-                .post(
-                    '/',
-                    JSON.stringify({
-                        jsonrpc: '2.0',
-                        method: 'Auth.Registration',
-                        params: {
-                            username: params.username,
-                            firstName: params.firstName,
-                            lastName: params.lastName,
-                            password: params.password
-                        },
-                        id: 1
-                    })
-                )
-                .then(resp => {
-                    if (resp.data.error) {
-                        commit(USER_ERROR);
-                        reject(resp.data.error);
-                    }
-                    commit(USER_SUCCESS);
-                    resolve(resp.data.result);
-                })
-                .catch(err => {
-                    commit(USER_ERROR);
-                    reject(err);
-                });
-        }),
     [USER_AVATAR_UPLOAD]: ({ commit }, { fd }) =>
         new Promise((resolve, reject) => {
             commit(USER_REQUEST);

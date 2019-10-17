@@ -177,7 +177,7 @@
 </template>
 <script>
 import { SlideYDownTransition } from 'vue2-transitions';
-import { PATIENT_CREATE, NOTIFY, PATIENT_PARAMS_SET } from '@/constants';
+import { PATIENT_CREATE, NOTIFY } from '@/constants';
 
 const randomMC = require('random-material-color');
 
@@ -349,9 +349,6 @@ export default {
                         .then(response => {
                             if (response) {
                                 if (this.openProfile) {
-                                    this.$store.dispatch(PATIENT_PARAMS_SET, {
-                                        patient: response.data
-                                    });
                                     this.$router.push({
                                         name: 'PatientProcedure',
                                         params: { patientID: response.data.ID }
