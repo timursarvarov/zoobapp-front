@@ -34,6 +34,19 @@ VeeValidate.Validator.extend('verify_plan', {
             });
         })
 });
+VeeValidate.Validator.extend('verify_clinic_name', {
+    // Custom validation message
+    getMessage: (field, params, data) => (data && data.message) || 'Something went wrong',
+
+    // Custom validation rule
+    validate: (value, plans) =>
+        new Promise(resolve => {
+            resolve({
+                valid: searchByName(plans, value).length === 0,
+                data: searchByName(plans, value).length === 0 ? undefined : { message: `Clinic with name ${value} is already exist` }
+            });
+        })
+});
 VeeValidate.Validator.extend('is_after', {
     // Custom validation message
     getMessage: () => 'The due date shoud be after current date.',

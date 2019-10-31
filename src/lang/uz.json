@@ -1,5 +1,6 @@
 {
 	"AuthLayout": {
+		"Authentication": "Haqiqiylikni tekshirish",
 		"choose_clinic": "Klinikani tanlash",
 		"dashbord": "Statistik",
 		"lock": "Qulflash",
@@ -48,6 +49,7 @@
 	},
 	"ClinicSelect": {
 		"choose": "Tanlash",
+		"selectClinic": "Klinikani tanlang",
 		"selectClinicTitle": "Klinikani tanlang"
 	},
 	"ClinicSettings": {
@@ -100,6 +102,7 @@
 		"chooseBottomTeeth": "Pastki tishni tanlang",
 		"chooseTopTeeth": "Yuqori tishlarni tanlang",
 		"diagnoses": "tashxis",
+		"diagnosis": "Tashxis",
 		"fdi": "Tishlarni raqamlash tizimi: FDI",
 		"hasAdultNosology": "Voyaga etgan odamlarning jag'lari mavjud",
 		"hasBabyNosology": "Chaqaloq jag'iga oid narsalar mavjud",
@@ -405,7 +408,8 @@
 		"procedures": "Protseduralar",
 		"register": "Ro'yxat",
 		"statistic": "Statistik",
-		"unbilledProcedures": "Hisobga olinmagan protseduralar"
+		"unbilledProcedures": "Hisobga olinmagan protseduralar",
+		"undefined": "Bunday sahifa yo'q"
 	},
 	"SetAccount": {
 		"email": "@:common.email",
@@ -605,6 +609,7 @@
 		"85": "Pastki o'ng ikkinchi molyar"
 	},
 	"TopNavBar": {
+		"addClinic": "Klinikani qo'shing",
 		"addPatient": "Bemorni qo'shing",
 		"lock": "Qulflash",
 		"logout": "Chiqish",

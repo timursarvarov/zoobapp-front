@@ -143,7 +143,7 @@ export default {
                     '/',
                     JSON.stringify({
                         jsonrpc: '2.0',
-                        method: 'Organizations.GetDiagnoses',
+                        method: 'Organizations.GetDiagnosis',
                         id: 1
                     })
                 )

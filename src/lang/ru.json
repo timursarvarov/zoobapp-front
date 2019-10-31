@@ -1,5 +1,6 @@
 {
 	"AuthLayout": {
+		"Authentication": "Аутентификация",
 		"choose_clinic": "Выбор Клиники",
 		"dashbord": "Статистика",
 		"lock": "Блокировка",
@@ -48,6 +49,7 @@
 	},
 	"ClinicSelect": {
 		"choose": "Выбрать",
+		"selectClinic": "Выберите клинику",
 		"selectClinicTitle": "Выберите клинику"
 	},
 	"ClinicSettings": {
@@ -100,6 +102,7 @@
 		"chooseBottomTeeth": "Выбрать нижние зубы",
 		"chooseTopTeeth": "Выберать верхние зубы",
 		"diagnoses": "диагнозов",
+		"diagnosis": "Диагнозы",
 		"fdi": "Система нумерации зубов: FDI",
 		"hasAdultNosology": "Существуют записи во взрослой челюсти",
 		"hasBabyNosology": "Существуют записи в детской челюсти",
@@ -405,7 +408,8 @@
 		"procedures": "Процедуры",
 		"register": "Регистрация",
 		"statistic": "Статистика",
-		"unbilledProcedures": "Неучтенные процедуры"
+		"unbilledProcedures": "Неучтенные процедуры",
+		"undefined": "Нет такой страницы"
 	},
 	"SetAccount": {
 		"email": "@:common.email",
@@ -605,6 +609,7 @@
 		"85": "Нижний правый второй моляр"
 	},
 	"TopNavBar": {
+		"addClinic": "Добавье клинику",
 		"addPatient": "Добавить пациента",
 		"lock": "Блокировка",
 		"logout": "Выйти",

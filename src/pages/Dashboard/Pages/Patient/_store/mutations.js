@@ -5,13 +5,13 @@ import {
     PATIENT_PARAM_SET,
     PATIENT_PARAM_PUSH,
     PATIENT_PARAM_DELETE,
+    PATIENT_ANAMNES_SET,
     // PATIENT_ITEM_VISIBILITY_TOGGLE,
     PATIENT_SUB_PARAMS_SET,
     PATIENT_SUB_PARAM_PUSH,
     PATIENT_PARAM_REWRITE,
     PATIENT_SUB_PARAM_DELETE
 } from '@/constants';
-
 export default {
     [PATIENT_LOGOUT]: state => {
         Object.keys(state).forEach(key => {
@@ -55,6 +55,13 @@ export default {
             Vue.set(state, subParamName, {});
         }
         Vue.set(state[subParamName], subParamKey, subParamValue);
+    },
+    [PATIENT_ANAMNES_SET]: (state, { paramName, subParamName, subParamIndex, subParamValue }) => {
+        if (!state[paramName][subParamName]) {
+            Vue.set(state[paramName], subParamName, []);
+        }
+        Vue.set(state[paramName][subParamName], subParamIndex, subParamValue);
+        console.log(state[paramName], subParamName, subParamIndex, subParamValue)
     },
     [PATIENT_SUB_PARAM_DELETE]: (state, { param, paramIndex, subParam, subParamIndex, subParamID }) => {
         Vue.delete(state[param][paramIndex][subParam], subParamIndex);

@@ -23,7 +23,7 @@
                                     ref="planName"
                                     v-model="planName"
                                     v-validate="{ verify_plan: names, required: true, min: 2 }"
-                                    autofocus
+                                    v-focus
                                     type="text"
                                     data-vv-name="planName"
                                     required
@@ -92,10 +92,10 @@ export default {
         return {
             loading: false,
             planName: null,
-            names: null,
             touched: {
                 planName: false
-            }
+            },
+
         };
     },
     computed: {
@@ -106,13 +106,21 @@ export default {
             set(value) {
                 this.$emit('update:showForm', value);
             }
+        },
+        names() {
+            const names = [];
+            if (this.plans) {
+                Object.values(this.plans).forEach((plan, index) => {
+                    names[index] = plan.name;
+                });
+            }
+            return names;
         }
     },
     watch: {
         showFormL(value) {
             if (value) {
                 this.setInitialName();
-                this.setPlansNames();
                 this.$nextTick(() => {
                     this.focusOn('planName');
                 });
@@ -131,72 +139,69 @@ export default {
                 this.$refs[ref].$el.focus();
             });
         },
-        // validate() {
-        //     this.$validator.validateAll().then((isValid) => {
-        //         this.$emit('on-submit', this.registerForm, isValid);
-        //     });
-        //     this.touched.planName = true;
-        // },
-        // clearForm() {
-        //     this.planName = null;
-        //     this.showFormL = false;
-        //     this.$validator.reset();
-        // },
+        validate() {
+            this.$validator.validateAll().then(isValid => {
+                this.$emit('on-submit', this.registerForm, isValid);
+            });
+            this.touched.planName = true;
+        },
+        clearForm() {
+            this.planName = null;
+            this.showFormL = false;
+            this.$validator.reset();
+        },
         setInitialName() {
             this.planName = `Plan № ${this.plans ? Object.keys(this.plans).length + 1 : 1}`;
         },
-        setPlansNames() {
-            this.names = [];
-            if (this.plans) {
-                Object.values(this.plans).forEach((plan, index) => {
-                    this.names[index] = plan.name;
-                });
-            }
-        },
         addPlan() {
             if (this.planName) {
-                this.$validator.validateAll().then(result => {
-                    if (result) {
-                        this.loading = true;
-                        this.$store
-                            .dispatch(`$_patient/${PATIENT_PLAN_SET}`, {
-                                planName: this.planName
-                            })
-                            .then(resp => {
-                                if (resp) {
-                                    this.$emit('onPlanCreated', resp.ID);
+                this.$validator
+                    .validateAll()
+                    .then(result => {
+                        if (result) {
+                            this.loading = true;
+                            this.$store
+                                .dispatch(`$_patient/${PATIENT_PLAN_SET}`, {
+                                    planName: this.planName
+                                })
+                                .then(resp => {
+                                    if (resp) {
+                                        this.$emit('onPlanCreated', resp.ID);
+                                        this.$store.dispatch(NOTIFY, {
+                                            settings: {
+                                                message: `${this.planName} plan added`,
+                                                type: 'success'
+                                            }
+                                        });
+                                        this.$validator.reset();
+                                        this.showFormL = false;
+                                        this.$router.push({
+                                            name: 'procedures',
+                                            params: {
+                                                lang: this.$i18n.locale,
+                                                patientID: this.patientId,
+                                                planID: resp.ID
+                                            }
+                                        });
+                                    }
+                                })
+                                .catch(err => {
                                     this.$store.dispatch(NOTIFY, {
                                         settings: {
-                                            message: `${this.planName} plan added`,
-                                            type: 'success'
+                                            message: err,
+                                            type: 'warning'
                                         }
                                     });
-                                    this.$validator.reset();
-                                    this.showFormL = false;
-                                    this.$router.push({
-                                        name: 'procedures',
-                                        params: {
-                                            lang: this.$i18n.locale,
-                                            patientID: this.patientId,
-                                            planID: resp.ID
-                                        }
-                                    });
-                                }
-                            })
-                            .catch(err => {
-                                this.$store.dispatch(NOTIFY, {
-                                    settings: {
-                                        message: err,
-                                        type: 'warning'
-                                    }
+                                    console.log(err);
+                                })
+                                .then(() => {
+                                    this.loading = false;
                                 });
-                                console.log(err);
-                            })
-                            .then(() => {
-                                this.loading = false;
-                            });
-                    }
-                });
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
             }
         }
     }

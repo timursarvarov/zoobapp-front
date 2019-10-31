@@ -14,7 +14,7 @@
 </template>
 <script>
 export default {
-    name: 'WizardTab',
+    name: 'TWizardTab',
     props: {
         label: String,
         name: String,

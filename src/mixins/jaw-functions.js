@@ -1,6 +1,7 @@
 /* eslint-disable no-tabs */
 const jawFunctions = {
     methods: {
+
         $_preferableJawClasses(toothId, location, jaw, prefer) {
             let toothClass = '';
             if (this.lodash.isEmpty(jaw) || !prefer || prefer.length === 0) {
@@ -23,6 +24,7 @@ const jawFunctions = {
             }
             return toothClass;
         },
+
         $_isHidingLocation(toothId, location, jaw, prefer, defaultLocations) {
             // если не установлен прдедпочитаемы вид (prefer) то возвращаем значение по умолчанию
             if (this.lodash.isEmpty(jaw) || prefer.length === 0) {
@@ -71,6 +73,7 @@ const jawFunctions = {
             }
             return hide;
         },
+
         $_isHidingClicableLocation(toothId, location, jaw, prefer, defaultLocations, locationType, originalItem) {
             // если не установлен прдедпочитаемы вид (prefer) то возвращаем значение по умолчанию
             if (prefer.length === 0) {
@@ -135,6 +138,7 @@ const jawFunctions = {
 
             return hide;
         },
+
         $_hasProp(obj, prop) {
             if (!obj || !prop) {
                 return false;
@@ -142,6 +146,7 @@ const jawFunctions = {
             const hasProperty = Object.prototype.hasOwnProperty.call(obj, prop);
             return hasProperty;
         },
+
         $_getNestedProperty(object = {}, key1 = null, key2 = null, key3 = null) {
             // if (this.lodash.isEmpty(object)) return undefined;
             if (this.$_hasProp(object, key1)) {

@@ -63,10 +63,10 @@ export default {
             diagnosis: getters.getPatientDiagnosis,
             anamnesis: getters.getPatientAnamnesis
         };
-        // const startTime = performance.now();
+        const startTime = performance.now();
         const jaw = recalculateJaw(patientItems);
-        // const duration = performance.now() - startTime;
-        // console.log(`someMethodIThinkMightBeSlow took ${duration}ms`);
+        const duration = performance.now() - startTime;
+        console.log(`PATIENT_JAW_UPDATE took ${duration}ms`);
         commit(PATIENT_PARAM_SET, { paramName: 'jaw', paramValue: jaw });
     },
     [PATIENT_ITEM_JUST_ADDED_TOGGLE]: ({ commit }, { params }) => {
@@ -384,7 +384,6 @@ export default {
                     })
                 )
                 .then(resp => {
-                    console.log(resp);
                     if (resp.data.error) {
                         commit(PATIENT_PARAM_SET, {
                             paramName: 'status',
@@ -448,7 +447,7 @@ export default {
                     })
                 )
                 .then(resp => {
-                    console.log(resp);
+                    console.log(resp)
                     if (resp.data.error) {
                         commit(PATIENT_PARAM_SET, {
                             paramName: 'status',
@@ -464,13 +463,38 @@ export default {
                     anamnesN.justAdded = true;
                     // добавляем процедуру в массиы процедур
                     commit(PATIENT_PARAM_PUSH, {
-                        paramName: 'anamnesis',
+                        paramName: 'procedures',
                         paramValue: anamnesN,
                         paramKey: `${anamnesN.ID}`
                     });
+                    commit(PATIENT_ANAMNES_SET, {
+                        paramName: 'anamnesis',
+                        subParamName: 'procedures',
+                        subParamIndex: state.anamnesis && state.anamnesis.procedures && state.anamnesis.procedures.length > 0 ? state.anamnesis.procedures.length : 0,
+                        subParamValue: anamnesN.ID,
+                    });
+
+                    if (anamnesN.manipulations) {
+                        anamnesN.manipulations.forEach(m => {
+                            commit(PATIENT_PARAM_PUSH, {
+                                paramName: 'manipulations',
+                                paramValue: { ...m, justAdded: true },
+                                paramKey: `${m.ID}`
+                            });
+                            dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
+                                params: {
+                                    paramName: 'manipulations',
+                                    paramIndex: m.ID,
+                                    subParamName: 'justAdded',
+                                    subParamValue: false
+                                }
+                            });
+                        });
+                    }
+
                     dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
                         params: {
-                            paramName: 'anamnesis',
+                            paramName: 'procedures',
                             paramIndex: anamnesN.ID,
                             subParamName: 'justAdded',
                             subParamValue: false
@@ -1034,17 +1058,13 @@ export default {
             paramValue
         });
     },
-    [PATIENT_PARAMS_SET]: ({ commit, dispatch }, { patient }) => {
+    [PATIENT_PARAMS_SET]: ({ commit }, { patient }) => {
         Object.keys(patient).forEach(field => {
             commit(PATIENT_PARAM_SET, {
                 paramName: field,
                 paramValue: patient[field]
             });
         });
-        // ! убрать после выпуска в backend
-        commit(PATIENT_PARAM_SET, { paramName: 'diagnosis', paramValue: null });
-        commit(PATIENT_PARAM_SET, { paramName: 'anamnesis', paramValue: null });
-        // dispatch(TEETH_INITIATION, { patient });
     },
     [PATIENT_GET]: ({ commit, dispatch }, { patientID }) =>
         new Promise((resolve, reject) => {
@@ -1095,6 +1115,7 @@ export default {
                             paramName: 'status',
                             paramValue: 'success'
                         });
+                        dispatch(PATIENT_JAW_UPDATE);
                         resolve(resp.data.result.patients[0]);
                     }
                 })

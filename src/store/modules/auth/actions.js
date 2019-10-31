@@ -92,8 +92,8 @@ export default {
                     })
                 )
                 .then(resp => {
-                    console.log(resp)
-                    if (resp.data.error) {
+                    // console.log(resp)
+                    if (resp.data.error)     {
                         commit(AUTH_SET_PROP, { propName: 'status', propValue: 'error' });
                         // commit(AUTH_SET_PROP, { propName: 'hasLoadedOnce', propValue: true });
                         commit(AUTH_SET_PROP, { propName: 'hasRefreshTokenError', propValue: true });

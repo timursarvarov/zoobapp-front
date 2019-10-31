@@ -6,7 +6,7 @@
                 :class="[this.$sidebar.isMinimized ? ' md-sized-100 md-alignment-top-center' : ' md-sidze-50']"
             >
                 <!-- <div class="mx-auto" style="flex-grow:1;"> -->
-                <!-- <keep-alive> -->
+                 <keep-alive>
                 <jaw
                     :selected-teeth="selectedTeeth"
                     :age-category="!!patient.ageCategory"
@@ -37,7 +37,7 @@
                         </md-tabs>
                     </template>
                 </jaw>
-                <!-- </keep-alive> -->
+                 </keep-alive>
                 <!-- </div> -->
             </div>
             <keep-alive>
@@ -72,7 +72,7 @@ import {
     PATIENT_ANAMNES_UPDATE,
     PATIENT_PROCEDURE_UPDATE,
     EB_SHOW_ITEM_WIZARD,
-    STORE_KEY_PATIENT,
+    STORE_KEY_PATIENT
 } from '@/constants';
 import components from '@/components';
 import patientComponents from '@/pages/Dashboard/Pages/Patient/PatientComponents';
@@ -82,27 +82,17 @@ export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
             if (to.name !== 'procedures') {
-                if (to.params.planID !== undefined) {
-                    vm.$router.push({
-                        name: 'procedures',
-                        params: {
-                            lang: vm.$i18n.locale,
-                            patientID: vm.patient.ID,
-                            planID: to.params.planID
-                        }
-                    });
-                } else if (vm.currentPlanID) {
-                    vm.$router.push({
-                        name: 'procedures',
-                        params: {
-                            lang: vm.$i18n.locale,
-                            patientID: vm.patient.ID,
-                            planID: vm.currentPlanID
-                        }
-                    });
-                }
+                vm.$router.push({
+                    name: 'procedures',
+                    params: {
+                        lang: vm.$i18n.locale,
+                        patientID: vm.patient.ID,
+                        planID: to.params.planID || vm.currentPlanID
+                    }
+                })
+                console.log(vm.currentPlanID, 'beforeRouteEnter')
             }
-        });
+        })
     },
     components: {
         ...components,
@@ -186,7 +176,9 @@ export default {
     },
     watch: {
         $route(val) {
+            console.log(this.currentPlanID, val)
             if (val.name === 'plan' && this.currentPlanID) {
+                console.log(this.currentPlanID, 'redirected')
                 this.$nextTick(() => {
                     this.redirectToProcdures(this.currentPlanID);
                 });
@@ -195,32 +187,38 @@ export default {
         currentPlanID(val, old) {
             if (!(old in this.patient.plans)) {
                 if (val) {
+                    console.log('redirectToProcdures',val, old)
                     this.redirectToProcdures(val);
                 } else {
+                    console.log('redirectToPlan', val, old)
                     this.redirectToPlan();
                 }
             }
         }
     },
     mounted() {
-        if (this.$route.params && this.$route.params.planID && this.currentPlanID !== this.$route.params.planID) {
+        if ((this.$route.params && this.$route.params.planID && this.currentPlanID !== this.$route.params.planID ) || !this.$route.params.planID) {
+            console.log(this.currentPlanID , this.$route.params.planID)
             this.redirectToProcdures(this.currentPlanID);
         }
     },
     methods: {
         redirectToProcdures(planID) {
+            console.log(planID)
             if (this.$route.name !== 'procedures') {
                 this.$router.push({
                     name: 'procedures',
                     params: {
                         lang: this.$i18n.locale,
                         patientID: this.patient.ID,
-                        planID
+                        planID: planID,
                     }
                 });
+                console.log(this.currentPlanID,  this.$route,  'redirected procedures')
             }
         },
         redirectToPlan() {
+            console.log(this.currentPlanID,  this.$route,  'redirected plan')
             if (this.$route.name !== 'plan') {
                 this.$router.push({
                     name: 'plan',

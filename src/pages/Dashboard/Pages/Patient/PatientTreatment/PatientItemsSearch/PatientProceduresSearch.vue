@@ -101,7 +101,6 @@ export default {
         getItems(languageChanged) {
             if (this.currentProcedures.length === 0 || languageChanged) {
                 this.loading = true;
-                console.log('getItems', this.currentProcedures);
                 this.$store
                     .dispatch(CLINIC_PROCEDURES_GET)
                     .then(() => {

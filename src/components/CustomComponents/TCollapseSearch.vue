@@ -117,7 +117,6 @@
             >
                 <md-empty-state
                     :class="getClassType"
-                    md-icon="sentiment_dissatisfied"
                     :md-label="$t(`${$options.name}.noFoundTitle`)"
                     :md-description="$t(`${$options.name}.noFoundDescription`)"
                 />

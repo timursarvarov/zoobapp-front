@@ -119,19 +119,25 @@
                                                 </router-link>
                                             </li>
                                             <li class="md-layout" @click="showPatientAddForm()">
-                                                <a href="#" class="md-layout">
+                                                <a  class="md-layout">
                                                     <md-icon>person_add</md-icon>
                                                     {{ $t(`${$options.name}.addPatient`) }}
                                                 </a>
                                             </li>
+                                            <li class="md-layout" @click="showAddClinicForm()">
+                                                <a class="md-layout">
+                                                    <md-icon>bussiness</md-icon>
+                                                    {{ $t(`${$options.name}.addClinic`) }}
+                                                </a>
+                                            </li>
                                             <li class="md-layout" @click="lock()">
-                                                <a href="#" class="md-layout">
+                                                <a class="md-layout">
                                                     <md-icon>lock</md-icon>
                                                     {{ $t(`${$options.name}.lock`) }}
                                                 </a>
                                             </li>
                                             <li class="md-layout" @click="logout()">
-                                                <a href="#" class="md-layout">
+                                                <a class="md-layout">
                                                     <md-icon>arrow_back</md-icon>
                                                     {{ $t(`${$options.name}.logout`) }}
                                                 </a>
@@ -276,6 +282,10 @@ export default {
         showPatientAddForm() {
             this.$patientAddForm.showPatientAddForm(true);
         },
+        showAddClinicForm() {
+            console.log(this.$clinicAddForm)
+            this.$clinicAddForm.showClinicAddForm(true);
+        },
         minimizeSidebar() {
             if (this.$sidebar) {
                 this.$sidebar.toggleMinimize();
@@ -286,7 +296,7 @@ export default {
         },
         lock() {
             this.$store.dispatch(AUTH_LOCK).then(() => {
-                this.$router.push('lock');
+                this.$router.push({ name: 'lock', params: {lang: this.$i18n.locale } })
             });
         }
     }

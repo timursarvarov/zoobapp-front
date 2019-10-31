@@ -27,6 +27,7 @@
                         <md-icon>face</md-icon>
                         <label for="userName">{{ $t(`${$options.name}.userName`) }}</label>
                         <md-input
+                            if="userName"
                             v-focus
                             ref="username"
                             v-model="username"
@@ -70,6 +71,7 @@
                         <md-icon>lock_outline</md-icon>
                         <label for="password">{{ $t(`${$options.name}.password`) }}</label>
                         <md-input
+                            id="password"
                             ref="password"
                             v-model="password"
                             v-validate="modelValidations.password"
@@ -98,7 +100,6 @@
 </template>
 <script>
 import { SlideYDownTransition } from 'vue2-transitions';
-import { setTimeout } from 'timers';
 import components from '@/components';
 import { AUTH_REQUEST, NOTIFY, CLINIC_AUTH_REQUEST, SERVER_ERRORS } from '@/constants';
 import ForgotPassword from './ForgotPassword.vue';
@@ -139,16 +140,6 @@ export default {
             this.touched.password = true;
         }
     },
-    mounted() {
-        this.$nextTick(() => {
-            const vm = this;
-            setTimeout(() => {
-                if (vm.$refs.username) {
-                    vm.$refs.username.$el.focus();
-                }
-            }, 1000);
-        });
-    },
     methods: {
         focusOn(ref) {
             if (!this.$refs[ref]) {
@@ -183,7 +174,7 @@ export default {
             }
             this.$store.dispatch(AUTH_REQUEST, { username, password }).then(
                 result => {
-                    if (result.organizations.length === 1) {
+                    if (result.organizations && result.organizations.length === 1) {
                         this.setClinic(result);
                     } else {
                         this.$router.push('choose_clinic');

@@ -197,7 +197,7 @@ const Settings = {
 };
 
 const authPages = {
-    path: '',
+    path: 'auth',
     component: load('Pages/AuthLayout'),
     name: 'Authentication',
     meta: { requiresAuth: false },
@@ -460,7 +460,7 @@ const routes = [
             authPages,
             {
                 path: '',
-                redirect: '/:lang/dashboard',
+                redirect: `/${Trans.getUserSupportedLang()}/dashboard`,
                 component: load('Layout/DashboardLayout'),
                 children: [
                     {

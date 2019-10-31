@@ -144,6 +144,7 @@
             <content-footer v-if="!$route.meta.hideFooter" />
         </div>
         <patient-add-form />
+        <clinic-add-form />
     </div>
 </template>
 <script>

@@ -8,7 +8,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { AUTH_INIT, AVAILABLE_LANGUAGES } from '@/constants';
+import { AVAILABLE_LANGUAGES, AUTH_REFRESH_TOKEN } from '@/constants';
+import { Trans } from '@/plugins/translation';
 
 export default {
     name: 'App',
@@ -17,10 +18,15 @@ export default {
             getNotify: 'getNotify',
             refreshTokenExist: 'fetchStateRefreshToken',
             isProfileLoaded: 'isProfileLoaded',
-            lang: 'getLang'
+            lang: 'getLang',
+            user: 'getProfile',
         }),
+
         languages() {
             return AVAILABLE_LANGUAGES;
+        },
+        i18nLang(){
+            return this.$i18n.locale;
         }
     },
     watch: {
@@ -38,6 +44,7 @@ export default {
             deep: true
         },
         isProfileLoaded(value) {
+            console.log(value)
             if (!value && this.$route.meta && this.$route.meta.requiresAuth) {
                 this.$router.push({
                     name: 'login',
@@ -47,28 +54,43 @@ export default {
                 });
             }
         },
-        lang(val) {
-            if (val && val != 'en') {
-                if (val === 'uz') {
-                    let newVal = 'uz-latn';
-                    let trLocale = require(`moment/locale/${newVal}`);
-                    this.$moment.updateLocale(newVal, trLocale);
-                } else {
-                    let trLocale = require(`moment/locale/${val}`);
-                    this.$moment.updateLocale(val, trLocale);
-                }
-            } else {
-                this.$moment.locale(val);
-            }
+        i18nLang() {
+            this.setMomentLang(Trans.getUserSupportedLang());
         }
     },
     mounted() {
         if (this.refreshTokenExist) {
-            this.$store.dispatch(AUTH_INIT);
-        } else {
-            this.$router.push({ name: 'login', params: { lang: this.lang } });
+            this.$store
+                .dispatch(AUTH_REFRESH_TOKEN)
+                .then()
+                .catch((err) => {
+                    console.log(err)
+                    if (this.$route.name !== 'login') {
+                        this.$router.push({ name: 'login', params: { lang: Trans.getUserSupportedLang() } });
+                    }
+                });
+        } else if (this.$route.name !== 'login') {
+            this.$router.push({ name: 'login', params: { lang: Trans.getUserSupportedLang() } });
         }
-        this.$moment.locale(this.lang);
+        this.setMomentLang(this.$i18n.locale);
+    },
+    methods: {
+        setMomentLang(val) {
+            if (val && val != 'en-US') {
+                if (val && val != 'en') {
+                    if (val === 'uz') {
+                        let newVal = 'uz-latn';
+                        let trLocale = require(`moment/locale/${newVal}`);
+                        this.$moment.updateLocale(newVal, trLocale);
+                    } else {
+                        let trLocale = require(`moment/locale/${val}`);
+                        this.$moment.updateLocale(val, trLocale);
+                    }
+                } else if(val) {
+                    this.$moment.locale(val);
+                }
+            }
+        }
     }
 };
 </script>

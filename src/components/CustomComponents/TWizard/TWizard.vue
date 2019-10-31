@@ -101,7 +101,7 @@
 import throttle from "./throttle";
 
 export default {
-    name: "simple-wizard",
+    name: "TWizard",
     props: {
         startIndex: {
             type: Number,

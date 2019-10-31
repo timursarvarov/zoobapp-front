@@ -34,7 +34,7 @@ export default {
         const systemLang = navigator.language.split('-')[0];
         const undefinedUserLanguage = localStorage.getItem(LOCAL_STORAGE.undefinedUser.lang);
         if (undefinedUserLanguage && undefinedUserLanguage in AVAILABLE_LANGUAGES) {
-            return undefinedUserLanguage;
+            return undefinedUserLanguage || DEFAULT_LANGUAGE;
         }
         if (systemLang && systemLang in AVAILABLE_LANGUAGES) {
             return systemLang;

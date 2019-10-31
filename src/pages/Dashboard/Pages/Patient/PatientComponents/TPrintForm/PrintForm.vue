@@ -48,20 +48,21 @@
                                                                 :num="1"
                                                                 :procedure-id="selectedItem.ID"
                                                             />
-                                                            <t-print-form-patient-plan
-                                                                v-else-if="type === 'plan'"
-                                                                :planID="`${selectedItem.ID}`"
-                                                                :num="0"
-                                                                s
-                                                            >
-                                                                <template slot="procedures" slot-scope="{ procedureId, index, showManipulations }">
-                                                                    <t-print-form-patient-procedure
-                                                                        :showManipulations="showManipulationsGlobal && showManipulations"
-                                                                        :num="index + 1"
-                                                                        :procedure-id="procedureId"
-                                                                    />
-                                                                </template>
-                                                            </t-print-form-patient-plan>
+                                                            <t-print-form-patient-procedures
+                                                                :selectedItem="selectedItem"
+                                                                v-else-if="type === 'plan'" />
+<!--                                                            <t-print-form-patient-plan-->
+<!--                                                                :planID="`${selectedItem.ID}`"-->
+<!--                                                                :num="0"-->
+<!--                                                            >-->
+<!--                                                                <template slot="procedures" slot-scope="{ procedureId, index, showManipulations }">-->
+<!--                                                                    <t-print-form-patient-procedure-->
+<!--                                                                        :showManipulations="showManipulationsGlobal && showManipulations"-->
+<!--                                                                        :num="index + 1"-->
+<!--                                                                        :procedure-id="procedureId"-->
+<!--                                                                    />-->
+<!--                                                                </template>-->
+<!--                                                            </t-print-form-patient-plan>-->
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -106,7 +107,8 @@ export default {
         't-print-form-patient-jaw': () => import('./TPrintFormPatientJaw'),
         't-print-form-patient-procedure': () => import('./TPrintFormPatientProcedure'),
         't-print-form-patient-plan': () => import('./TPrintFormPatientPlan'),
-        't-print-form-patient-header': () => import('./TPrintFormPatientHeader')
+        't-print-form-patient-header': () => import('./TPrintFormPatientHeader'),
+        't-print-form-patient-procedures': () => import('./TPrintFormPatientProcedures')
     },
     props: {
         showForm: {
@@ -128,7 +130,6 @@ export default {
                 footer: 100,
                 header: 100
             },
-            showManipulationsGlobal: true,
             selectedPlans: []
         };
     },

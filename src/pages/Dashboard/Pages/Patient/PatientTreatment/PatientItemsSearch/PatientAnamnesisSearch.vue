@@ -127,7 +127,6 @@ export default {
                     });
                 } else {
                     const unchangedItem = Object.values(this.ungroupedAnamnesis).find(i => i.ID === item.ID);
-                    console.log(this.ungroupedAnamnesis, item);
                     if (unchangedItem) {
                         this.$emit('onSelectItem', unchangedItem);
                     }

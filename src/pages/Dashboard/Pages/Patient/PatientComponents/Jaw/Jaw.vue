@@ -299,7 +299,7 @@
                         <small v-show="prefer.length < 3" class="text-warning hided-prefer">
                             {{ $t(`${$options.name}.multipleChooseHint`) }}
                             <transition-group name="list">
-                                <span v-for="(item, key) in hidedPrefer" :key="key + 0" class="list-item">{{ $t(`${$options.name}.${item}`), }}</span>
+                                <span v-for="(item, key) in hidedPrefer" :key="key + 0" class="list-item">{{ $t(`${$options.name}.${item}`) }}</span>
                             </transition-group>
                         </small>
                         <small v-show="prefer.length === 3" class="hint">{{ $t(`${$options.name}.multipleChooseHint`) }}</small>
@@ -314,6 +314,7 @@
 </template>
 <script>
 import jawSVGjs from './jawSVG';
+import jawWorkerFunc from './jaw-worker';
 import { tObjProp, jawFunctions } from '@/mixins';
 import {
     TEETH_ADDULT_ALL,
@@ -364,6 +365,7 @@ export default {
     },
     data() {
         return {
+            jawWorker: null,
             mouseOverToothId: '',
             separatedProcedures: {},
             teethWidth: {},
@@ -399,27 +401,27 @@ export default {
             }
             return 0.064;
         },
-        sideBarMinimized() {
-            return this.$sidebar.isMinimized;
-        },
+        // sideBarMinimized() {
+        //     return this.$sidebar.isMinimized;
+        // },
         teethSystem() {
             return this.currentClinic.teethSystem;
         },
-        teethWithOtherTypes() {
-            const teeth = [];
-            Object.keys(this.jaw).forEach(type => {
-                if (type !== this.type) {
-                    Object.keys(this.jaw[type]).forEach(toothId => {
-                        if (!teeth.includes(toothId)) {
-                            if (!this.lodash.isEmpty(this.jaw[type][toothId])) {
-                                teeth.push(toothId);
-                            }
-                        }
-                    });
-                }
-            });
-            return teeth;
-        },
+        // teethWithOtherTypes() {
+        //     const teeth = [];
+        //     Object.keys(this.jaw).forEach(type => {
+        //         if (type !== this.type) {
+        //             Object.keys(this.jaw[type]).forEach(toothId => {
+        //                 if (!teeth.includes(toothId)) {
+        //                     if (!this.lodash.isEmpty(this.jaw[type][toothId])) {
+        //                         teeth.push(toothId);
+        //                     }
+        //                 }
+        //             });
+        //         }
+        //     });
+        //     return teeth;
+        // },
         shouldShowNotification() {
             if (this.ageCategoryBaby) {
                 return this.hasAdultTeeth;
@@ -538,6 +540,9 @@ export default {
             this.calculateJaw();
         }
     },
+    created() {
+        this.jawWorker = this.$worker.create([{ message: 'jawWorkerFunc', func: jawWorkerFunc }]);
+    },
     watch: {
         selectedTeeth: {
             handler(val) {
@@ -580,19 +585,6 @@ export default {
         showToothInfo(params) {
             this.$emit('showToothInfo', params);
         },
-        toggleAllTeeth() {
-            if (this.ageCategory === 1) {
-                if (this.selectedTeethLocal.length > 0) {
-                    this.selectedTeethLocal = [];
-                } else {
-                    this.selectedTeethLocal = this.babyTeeth;
-                }
-            } else if (this.selectedTeethLocal.length > 0) {
-                this.selectedTeethLocal = [];
-            } else {
-                this.selectedTeethLocal = this.adultTeeth;
-            }
-        },
         getMenuAlign(type = 'adult', index) {
             if (type === 'adult') {
                 if (index + 1 >= 12) {
@@ -613,31 +605,33 @@ export default {
         },
         getToothClasses(toothId, location) {
             let toothClasses = {};
+            const prefClass = this.$_preferableJawClasses(toothId, location, this.jaw, this.prefer);
             toothClasses = {
-                // Название класса локации из высчитанной формуллы для отображеня в диагнозов анамнеза и лечения
-                /* anamnes || procedure|| diagnose */
-                [this.$_preferableJawClasses(toothId, location, this.jaw, this.prefer)]: true,
-
                 // Название класса локации из svg для отображеня в норме
                 /* root || corona|| gum etc. */
                 [location]: true
             };
+            // Название класса локации из высчитанной формуллы для отображеня в диагнозов анамнеза и лечения
+            /* anamnes || procedure|| diagnose */
+            if (prefClass) {
+                toothClasses[prefClass] = true;
+            }
             return toothClasses;
         },
-        toggleTeeth(teethToTogle) {
+        toggleTeeth(teethToToggle) {
             const existingTeeth = [];
             const selTeeth = this.lodash.cloneDeep(this.selectedTeethLocal);
             this.selectedTeethLocal = [];
 
-            for (let index = 0; index < teethToTogle.length; index += 1) {
-                if (selTeeth.indexOf(teethToTogle[index]) > -1) {
-                    existingTeeth.push(teethToTogle[index]);
+            for (let index = 0; index < teethToToggle.length; index += 1) {
+                if (selTeeth.indexOf(teethToToggle[index]) > -1) {
+                    existingTeeth.push(teethToToggle[index]);
                 }
             }
             if (existingTeeth.length === 0) {
-                this.selectedTeethLocal = selTeeth.concat(teethToTogle);
-            } else if (existingTeeth.length < teethToTogle.length) {
-                const teethToAdd = teethToTogle.filter(el => existingTeeth.indexOf(el) < 0);
+                this.selectedTeethLocal = selTeeth.concat(teethToToggle);
+            } else if (existingTeeth.length < teethToToggle.length) {
+                const teethToAdd = teethToToggle.filter(el => existingTeeth.indexOf(el) < 0);
                 this.selectedTeethLocal = selTeeth.concat(teethToAdd);
             } else {
                 const teethToDelete = selTeeth.filter(el => existingTeeth.indexOf(el) >= 0);
@@ -646,58 +640,38 @@ export default {
             this.$emit('onSelectedTeeth', this.selectedTeethLocal);
         },
         calculateJaw() {
-            this.calculatePromise().then(jaw => {
-                // if (process.env.NODE_ENV === 'development') {
-                // const startTime = performance.now();
-                //     this.jawComputed = jaw;
-                //     this.$store.dispatch(`$_patient/${JAW_LOADER_STOP);
-                //     const duration = performance.now() - startTime;
-                //     console.log(`Jaw calculating took ${duration}ms`);
-                // } else {
-                this.jawComputed = jaw;
-                this.$store.dispatch(JAW_LOADER_STOP);
-                // }
-            });
-        },
-        calculatePromise() {
-            return new Promise(resolve => {
-                const jaw = {};
-                this.teeth.forEach(toothId => {
-                    jaw[toothId] = {};
-                    Object.keys(this.defaultLocations).forEach(location => {
-                        if (!(location in jaw[toothId])) {
-                            jaw[toothId][location] = {};
-                        }
-                        jaw[toothId][location].classes = this.getToothClasses(toothId, location);
-                        // СВОЙСТВО hide применяется если во view выбранного диагноза нет текущей локации
-                        jaw[toothId][location].hide = this.$_isHidingLocation(toothId, location, this.jaw, this.prefer, this.defaultLocations);
-                    });
+            this.$store.dispatch(JAW_LOADER_START);
+            // const startTime = performance.now();
+            this.jawWorker
+                .postMessage('jawWorkerFunc', [
+                    {
+                        teeth: this.teeth,
+                        jaw: this.jaw,
+                        prefer: this.prefer,
+                        defaultLocations: this.defaultLocations
+                    }
+                ])
+                .then(result => {
+                    this.jawComputed = result;
+                    this.$store.dispatch(JAW_LOADER_STOP);
+                })
+                .catch(() => {
+                    this.$store.dispatch(JAW_LOADER_STOP);
+                    // console.error;
                 });
-                resolve(jaw);
-            });
-        },
-
-        setTeeth() {
-            for (let i = 0; i < this.teeth.length; i += 1) {
-                this.teethSettngs[i] = {
-                    toothID: this.teeth[i]
-                };
-
-                Object.keys(this.defaultLocations).forEach(key => {
-                    this.teethSettngs[i][key] = this.defaultLocations[key];
-                });
-            }
+            // const duration = performance.now() - startTime;
+            // console.log(`calculateJaw took ${duration}ms`);
         },
         selectTooth(tooth, type) {
             if ('ontouchstart' in document.documentElement) {
-                this.selectToothOnTouchdevice(tooth);
+                this.selectToothOnTouchDevice(tooth);
             } else {
-                this.selectToothOnNotTouchdevice(tooth, type);
+                this.selectToothOnNotTouchDevice(tooth, type);
             }
-            this.tooggleTeeth();
+            this.toggleTeethP();
             this.$emit('onSelectedTeeth', this.selectedTeethLocal);
         },
-        selectToothOnTouchdevice(tooth) {
+        selectToothOnTouchDevice(tooth) {
             const toothIndex = this.selectedTeethLocal.findIndex(val => val === tooth);
             if (toothIndex > -1) {
                 this.selectedTeethLocal.splice(toothIndex, 1);
@@ -705,7 +679,7 @@ export default {
                 this.selectedTeethLocal.unshift(tooth);
             }
         },
-        selectToothOnNotTouchdevice(tooth, type) {
+        selectToothOnNotTouchDevice(tooth, type) {
             if (type === 'multiple') {
                 const index = this.selectedTeethLocal.indexOf(tooth);
                 if (index === -1) {
@@ -749,7 +723,7 @@ export default {
                 this.selectedTeethLocal.unshift(tooth);
             }
         },
-        tooggleTeeth() {
+        toggleTeethP() {
             let bottomTeethCount = 0;
             let topTeethCount = 0;
 
@@ -786,6 +760,9 @@ export default {
             }
             return false;
         }
+    },
+    beforeDestroy() {
+        this.jawWorker = null;
     }
 };
 </script>

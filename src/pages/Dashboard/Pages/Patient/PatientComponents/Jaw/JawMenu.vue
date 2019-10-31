@@ -165,7 +165,7 @@ export default {
                         }
                         items[itemType].push({
                             //!удалить после реализации code  на бэкенде
-                            code: this.getItemSCode(patientItemW),
+                            // code: this.getItemSCode(patientItemW),
                             hasLocations: !this.lodash.isEmpty(patientItemW.teeth[this.toothId]),
                             ...patientItemW
                         });
@@ -212,9 +212,10 @@ export default {
             } else if (this.type === 'procedures') {
                 catalogID = patientItemW.catalogProcedureID;
             } else if (this.type === 'anamnesis') {
-                catalogID = patientItemW.catalogAnamnesID;
+                catalogID = patientItemW.catalogProcedureID;
             }
             code = this.getCurrentClinicOriginalItem(this.type, catalogID).code;
+            console.log(code,this.type)
             return code;
         },
         toggleItemVisibility(item, type) {

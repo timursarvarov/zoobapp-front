@@ -94,6 +94,7 @@ export default {
                 });
         }),
     [USER_LOGOUT]: ({ commit, state }) => {
+        console.log(USER_LOGOUT)
         Object.keys(state.profile).forEach(key => {
             commit(USER_PROP_SET, {
                 propKey: key,

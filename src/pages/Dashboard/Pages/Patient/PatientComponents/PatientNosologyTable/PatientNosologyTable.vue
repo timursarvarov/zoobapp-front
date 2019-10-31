@@ -5,8 +5,8 @@
             <md-toolbar class="md-transparent">
                 <div class="md-layout-item md-size-33 md-small-size-100">
                     <md-field>
-                        <label for="pages">{{ $t(`${$options.name}.perPage`) }}</label>
-                        <md-select v-model="pagination.perPage" name="pages">
+                        <label>{{ $t(`${$options.name}.perPage`) }}</label>
+                        <md-select id="pages" v-model="pagination.perPage" name="pages">
                             <md-option v-for="item in pagination.perPageOptions" :key="item" :label="item" :value="item">{{ item }}</md-option>
                         </md-select>
                     </md-field>
@@ -17,7 +17,7 @@
                 <div class="md-layout md-layout-item md-size-33 md-small-size-100 ml-auto">
                     <div class="md-size-80 md-layout">
                         <md-field>
-                            <label for="pages">{{ $t(`${$options.name}.typeToSearch`) }}</label>
+                            <label>{{ $t(`${$options.name}.typeToSearch`) }}</label>
                             <md-input v-model="searchQuery" type="search" class="mb-3" clearable style="width: 200px" />
                         </md-field>
                     </div>
@@ -84,11 +84,6 @@
                             :firstLine="item.createdBy.firstName"
                             :secondLine="item.createdBy.lastName"
                         />
-                        <manipulations-box v-if="field.key === 'manipulations' && item.manipulations" :procedureId="item.ID" />
-
-                        <div v-else-if="field.key === 'state'">
-                            <div>{{ item.state }}</div>
-                        </div>
 
                         <div v-else-if="field.key === 'ID'">
                             <div class="md-title">{{ item.ID }}</div>
@@ -110,46 +105,53 @@
                             <small>{{ item.updated | moment('calendar') }}</small>
                         </div>
 
-                        <div v-else-if="field.key === 'price' && item.manipulations" class="price">
-                            <span class="price_title">
-                                <span class="md-title">{{
-                                    getManipulationsByProcedureID(item.ID).reduce((a, b) => a + b.totalPrice, 0) | numSeparator
-                                }}</span>
-                                &nbsp;
-                                <small>{{ currentClinic.currencyCode }}</small>
-                            </span>
-                            <span class="md-small-hide price_sub-title">
-                                <br />
-                                <small class="text-left">
-                                    {{ getManipulationsByProcedureID(item.ID).length }}
-                                    manipulations
-                                </small>
-                            </span>
-                        </div>
-                        <avatar-box v-else-if="field.key === 'planID'" small :id="item.planID" :firstLine="patient.plans[item.planID].name" />
-                        <div v-else-if="field.key === 'discount'">
-                            <span class="md-title">{{ item.discout || 0 }}%</span>
-                        </div>
-                        <div v-else-if="field.key === 'dueDate' && item.dueDate">
-                            <div v-if="!item.dueDate">No date</div>
-                            <div v-else>
-                                <span class>
-                                    {{ item.dueDate | moment('from') }}
-                                    <br />
-                                </span>
-                                <small>{{ item.dueDate | moment('calendar') }}</small>
+                        <template v-if="currentType !== 'diagnosis'">
+                            <manipulations-box v-if="field.key === 'manipulations' && item.manipulations" :procedureId="item.ID" />
+
+                            <div v-else-if="field.key === 'state'">
+                                <div>{{ item.state }}</div>
                             </div>
-                        </div>
-                        <div v-else-if="field.key === 'payments'">
-                            <span v-if="item.payments">{{ item.payments.length }}</span>
-                            <span v-else>No payments</span>
-                        </div>
-                        <procedures-box v-else-if="field.key === 'procedures' && item.procedures" :proceduresIds="item.procedures" />
-                        <div v-else-if="field.key === 'tax'" class="md-title">{{ item.tax || 0 }}%</div>
-                        <div class="md-title" v-else-if="field.key === 'total'">
-                            {{ item.total || 0 }}
-                            <small>{{ currentClinic.currencyCode }}</small>
-                        </div>
+                            <div v-else-if="field.key === 'price' && item.manipulations" class="price">
+                                <span class="price_title">
+                                    <span class="md-title">{{
+                                        getManipulationsByProcedureID(item.ID).reduce((a, b) => a + b.totalPrice, 0) | numSeparator
+                                    }}</span>
+                                    &nbsp;
+                                    <small>{{ currentClinic.currencyCode }}</small>
+                                </span>
+                                <span class="md-small-hide price_sub-title">
+                                    <br />
+                                    <small class="text-left">
+                                        {{ getManipulationsByProcedureID(item.ID).length }}
+                                        manipulations
+                                    </small>
+                                </span>
+                            </div>
+                            <avatar-box v-else-if="field.key === 'planID'" small :id="item.planID" :firstLine="patient.plans[item.planID].name" />
+                            <div v-else-if="field.key === 'discount'">
+                                <span class="md-title">{{ item.discout || 0 }}%</span>
+                            </div>
+                            <div v-else-if="field.key === 'dueDate' && item.dueDate">
+                                <div v-if="!item.dueDate">No date</div>
+                                <div v-else>
+                                    <span class>
+                                        {{ item.dueDate | moment('from') }}
+                                        <br />
+                                    </span>
+                                    <small>{{ item.dueDate | moment('calendar') }}</small>
+                                </div>
+                            </div>
+                            <div v-else-if="field.key === 'payments'">
+                                <span v-if="item.payments">{{ item.payments.length }}</span>
+                                <span v-else>No payments</span>
+                            </div>
+                            <procedures-box v-else-if="field.key === 'procedures' && item.procedures" :proceduresIds="item.procedures" />
+                            <div v-else-if="field.key === 'tax'" class="md-title">{{ item.tax || 0 }}%</div>
+                            <div class="md-title" v-else-if="field.key === 'total'">
+                                {{ item.total || 0 }}
+                                <small>{{ currentClinic.currencyCode }}</small>
+                            </div>
+                        </template>
                     </md-table-cell>
 
                     <md-table-cell v-if="currentType !== 'invoices'" md-label="Actions">

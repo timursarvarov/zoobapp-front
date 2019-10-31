@@ -18,7 +18,7 @@ import GlobalDirectives from './globalDirectives';
 import SideBarJaw from './components/CustomComponents/SidebarPluginJaw';
 // Global Add Patient Form
 import { PatientAddForm } from './pages/Dashboard/Modals';
-// import ClinicAddForm from './pages/Dashboard/Modals';
+import {ClinicAddForm} from './pages/Dashboard/Modals';
 // Tabs plugin. Used on Panels page.
 
 // asset imports
@@ -36,7 +36,8 @@ export default {
         Vue.use(GlobalDirectives);
         Vue.use(VueMaterial);
         Vue.use(SideBarJaw);
-        Vue.use(PatientAddForm);
         Vue.use(Notifications);
+        Vue.use(ClinicAddForm);
+        Vue.use(PatientAddForm);
     }
 };

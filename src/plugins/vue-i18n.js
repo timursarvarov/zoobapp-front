@@ -28,10 +28,6 @@ VueI18n.prototype.getChoiceIndex = function(choice, choicesLength) {
 Vue.use(VueI18n);
 
 const i18n = new VueI18n({
-    // locale: 'en', // set locale
-    // fallbackLocale: 'en',
     silentTranslationWarn: process.env.NODE_ENV === 'production',
-    locale: 'en'
 });
-
 export default i18n;

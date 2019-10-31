@@ -53,13 +53,14 @@
         }
         &.rootCanal {
             stroke-width: 2px;
+            fill: lighten( #5bc0de, 83.5%)!important;
         }
         &.periodontit,
         &.rootCanal,
         &.bone {
-            fill: lighten( #5bc0de, 83.5%)!important;
+            fill:  #5bc0de !important;
             stroke-width: 0;
-            opacity: 0.6;
+            //opacity: 0.6;
         }
         &.gum,
         &.paradontit1,

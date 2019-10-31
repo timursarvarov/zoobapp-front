@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import routes from './routes';
 import store from '@/store';
 import { LOADER_START, LOADER_STOP } from '@/constants';
+import { Trans } from '@/plugins/translation';
 
 Vue.use(Router);
 
@@ -34,15 +35,15 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     store.dispatch(LOADER_START);
-    // console.log('start')
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
         if (!store.getters.isStateAuthenticated && to.name !== 'login') {
-            console.log(to);
             next({
-                path: '/login',
-                query: { redirect: to.fullPath }
+                name: 'login',
+                params: {
+                    lang: Trans.getUserSupportedLang()
+                }
             });
         } else {
             next();

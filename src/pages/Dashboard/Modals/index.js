@@ -10,16 +10,13 @@ const patientAddFormStore = {
 
 const clinicAddFormStore = {
     clinicAddFormShown: false,
-    showPatientAddForm(value) {
-        this.patientAddFormShown = value;
+    showClinicAddForm(value) {
+        this.clinicAddFormShown = value;
     }
 };
 
 const ClinicAddForml = {
     install(Vue) {
-        // if (options && options.sidebarLinks) {
-        //   SidebarStore.sidebarLinks = options.sidebarLinks;
-        // }
         Vue.mixin({
             data() {
                 return {

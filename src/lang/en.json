@@ -1,5 +1,6 @@
 {
 	"AuthLayout": {
+		"Authentication": "Authentication",
 		"choose_clinic": "Clinic Selection",
 		"dashbord": "Statistic",
 		"lock": "Lock",
@@ -48,6 +49,7 @@
 	},
 	"ClinicSelect": {
 		"choose": "Choose",
+		"selectClinic": "Select clinic",
 		"selectClinicTitle": "Select Clinic"
 	},
 	"ClinicSettings": {
@@ -100,6 +102,7 @@
 		"chooseBottomTeeth": "Choose bottom Teeth",
 		"chooseTopTeeth": "Choose top Teeth",
 		"diagnoses": "diagnoses",
+		"diagnosis": "Diagnoses",
 		"fdi": "Teeth numeration system: FDI",
 		"hasAdultNosology": "Adult  jaw items exist",
 		"hasBabyNosology": "Baby jaw items exist",
@@ -405,7 +408,8 @@
 		"procedures": "Procedures",
 		"register": "Register",
 		"statistic": "Statistic",
-		"unbilledProcedures": "Unbilled procedures"
+		"unbilledProcedures": "Unbilled procedures",
+		"undefined": "No such page"
 	},
 	"SetAccount": {
 		"email": "@:common.email",
@@ -605,6 +609,7 @@
 		"85": "Lower right second molar"
 	},
 	"TopNavBar": {
+		"addClinic": "Add clinic",
 		"addPatient": "Add patient",
 		"lock": "Lock",
 		"logout": "Logout",

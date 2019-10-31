@@ -67,7 +67,9 @@ const Trans = {
             return Promise.reject(new Error('Language not supported'));
         }
         if (i18n.locale === lang) {
-            return Promise.resolve(lang).catch((err) => { throw new Error(err); });
+            return Promise.resolve(lang).catch((err) => {
+                throw new Error(err); }
+                );
         } // has been loaded prior
         return Trans.loadLanguageFile(lang).then((msgs) => {
             i18n.setLocaleMessage(lang, msgs.default || msgs);

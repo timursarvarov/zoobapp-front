@@ -55,10 +55,33 @@ export default function() {
         },
         error => {
             // store.dispatch(LOADER_STOP);
-            const {
-                config,
-                response: { status }
-            } = error;
+            console.log(error)
+            if(error === '' ){
+                const { refreshToken, hasRefreshTokenError } = store.state.auth;
+                const originalRequest = config;
+                if (refreshToken && !hasRefreshTokenError) {
+                    if (!sentRequestToRefreshToken) {
+                        sentRequestToRefreshToken = true;
+
+                        issueToken().then(token => {
+                            sentRequestToRefreshToken = false;
+
+                            onTokenRefreshed(token);
+                        });
+                    }
+
+                    const requestPromise = new Promise(resolve => {
+                        collectRequests(token => {
+                            originalRequest.headers.Authorization = `Bearer ${token}`;
+
+                            resolve(axios(originalRequest));
+                        });
+                    });
+
+                    return requestPromise;
+                }
+            }
+            const { config, response: { status } } = error;
             if (status) {
                 const { refreshToken, hasRefreshTokenError } = store.state.auth;
                 const originalRequest = config;

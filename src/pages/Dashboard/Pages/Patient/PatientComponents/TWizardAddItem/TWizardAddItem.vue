@@ -2,7 +2,7 @@
     <md-dialog :md-click-outside-to-close="!isLoading" :md-active.sync="isDialogVisibleL" class="jaw-dialog-wrapper">
         <div class="wizard-add-diagnose-form">
             <div>
-                <wizard
+                <t-wizard
                     :finish-button-text="`Done`"
                     :tab-color="tabColor"
                     :is-loading="isLoading"
@@ -47,7 +47,7 @@
                             </span>
                         </span>
                     </template>
-                    <wizard-tab v-if="showTab('locations')" name="locations" :before-change="() => validateStep('locations')">
+                    <t-wizard-tab v-if="showTab('locations')" name="locations" :before-change="() => validateStep('locations')">
                         <template slot="label">
                             {{ $t(`${$options.name}.locations`) }}
                         </template>
@@ -63,9 +63,9 @@
                             :current-type="currentType"
                             @mounted-size="setSize"
                         />
-                    </wizard-tab>
+                    </t-wizard-tab>
 
-                    <wizard-tab v-if="showTab('manipulations')" name="manipulations" :before-change="() => validateStep('manipulations')">
+                    <t-wizard-tab v-if="showTab('manipulations')" name="manipulations" :before-change="() => validateStep('manipulations')">
                         <template slot="label">
                             {{ $t(`${$options.name}.manipulations`) }}
                         </template>
@@ -78,26 +78,26 @@
                             :manipulations="currentClinic.manipulationsComputed"
                             @addManipulations="manipulationsCreated"
                         />
-                    </wizard-tab>
-                    <wizard-tab v-if="showTab('files')" name="files" :before-change="() => validateStep('files')">
+                    </t-wizard-tab>
+                    <t-wizard-tab v-if="showTab('files')" name="files" :before-change="() => validateStep('files')">
                         <template slot="label">
                             {{ $t(`${$options.name}.files`) }}
                         </template>
                         <t-item-files ref="files" :size="jawListSize" />
-                    </wizard-tab>
-                    <wizard-tab v-if="showTab('description')" name="description" :before-change="() => validateStep('description')">
+                    </t-wizard-tab>
+                    <t-wizard-tab v-if="showTab('description')" name="description" :before-change="() => validateStep('description')">
                         <template slot="label">
                             {{ $t(`${$options.name}.description`) }}
                         </template>
                         <t-item-description ref="description" v-model="descriptionLocal" :size="jawListSize" :descriptions="originalDescriptions" />
-                    </wizard-tab>
-                    <wizard-tab v-if="showTab('appointment')" name="appointment" :before-change="() => validateStep('appointment')">
+                    </t-wizard-tab>
+                    <t-wizard-tab v-if="showTab('appointment')" name="appointment" :before-change="() => validateStep('appointment')">
                         <template slot="label">
                             {{ $t(`${$options.name}.appointment`) }}
                         </template>
                         <t-item-appointment ref="appointment" :show-appointment="showAppointment" :size="jawListSize" />
-                    </wizard-tab>
-                </wizard>
+                    </t-wizard-tab>
+                </t-wizard>
             </div>
         </div>
     </md-dialog>
@@ -284,7 +284,7 @@ export default {
                 return 'catalogProcedureID';
             }
             if (this.currentType === 'anamnesis') {
-                return 'catalogAnamnesID';
+                return 'catalogProcedureID';
             }
             return null;
         },

@@ -306,14 +306,6 @@ export default {
             title: 'Updated'
         },
         {
-            key: 'manipulations',
-            title: 'Manipulations'
-        },
-        {
-            key: 'price',
-            title: 'Price'
-        },
-        {
             key: 'state',
             title: 'State'
         }

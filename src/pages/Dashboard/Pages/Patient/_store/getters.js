@@ -1,17 +1,17 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable indent */
+
+import { isEmpty } from 'lodash';
+
 export default {
     getPatient: state => state,
     getPatientAgeCategory: state => state.ageCategory,
     // getPatientStatus: state => state.status,
     // isPatient: state => !!state.ID,
     getCurrentPlanID: state => {
-        if (state.plans) {
-            const currentPlan = Object.values(state.plans).find(
-                p => p.current === true
-            );
-            if (currentPlan) {
-                return currentPlan.ID;
+        if (!isEmpty(state.plans)) {
+            if (state.currentPlanID) {
+                return state.currentPlanID
             }
             const aproovedPlan = Object.values(state.plans).find(
                 p => p.state === 1
@@ -53,10 +53,10 @@ export default {
         return diagnosis;
 
     },
-    getPatientAnamnesis: state => {
+    getPatientAnamnesis: (state, rootGetters) => {
         let anamnesis =[];
-        if(state.anamnesis){{
-            anamnesis = Object.values(state.anamnesis);
+        if(state.anamnesis && state.anamnesis.procedures){{
+             anamnesis = rootGetters.getProceduresByIds( state.anamnesis.procedures);
         }}
         return anamnesis;
 
@@ -74,7 +74,7 @@ export default {
         return procedures;
     },
     getPatientCurrentAndApprovedPlanProcedures: (state, rootGetters) => {
-        if (!state.plans) return [];
+        if ( isEmpty(state.plans)) return [];
         const currentPlanID = rootGetters.getCurrentPlanID;
         let allPlanIDs = Object.keys(state.plans).filter(
             planID =>
@@ -113,19 +113,19 @@ export default {
         }
         return procedures;
     },
-    // getUnbilledProceduresByIds: state => ids => {
-    //     const procedures = [];
-    //     if (ids && ids.length > 0 && state.procedures) {
-    //         ids.forEach(ID => {
-    //             if (state.procedures[ID] && !state.procedures[ID].invoiceID) {
-    //                 procedures.push({
-    //                     ...state.procedures[ID]
-    //                 });
-    //             }
-    //         });
-    //     }
-    //     return procedures;
-    // },
+    getUnbilledProceduresByIds: state => ids => {
+        const procedures = [];
+        if (ids && ids.length > 0 && state.procedures) {
+            ids.forEach(ID => {
+                if (state.procedures[ID] && !state.procedures[ID].invoiceID) {
+                    procedures.push({
+                        ...state.procedures[ID]
+                    });
+                }
+            });
+        }
+        return procedures;
+    },
     getManipulationsByProcedureID: state => pID => {
         let manipulations = [];
         if (pID && state.manipulations) {
@@ -184,7 +184,7 @@ export default {
     getPatientProcedureByID: state => ID =>
         state.procedures && state.procedures[ID] ? state.procedures[ID] : {},
     getPatientAnanmnesisByID: state => ID =>
-        state.anamnesis && state.anamnesis[ID] ? state.anamnesis[ID] : {},
+        state.procedures && state.procedures[ID] ? state.procedures[ID] : {},
     getPatientDiagnosisByID: state => ID =>
         state.diagnosis && state.diagnosis[ID] ? state.diagnosis[ID] : {},
     getInvoicesAll: state =>

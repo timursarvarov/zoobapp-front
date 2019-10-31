@@ -1,3 +1,5 @@
 export default {
-    getClinics: state => state.clinics
+    getClinics: (state) => {
+        return state.clinics || []
+    }
 };

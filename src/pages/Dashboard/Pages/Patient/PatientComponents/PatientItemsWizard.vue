@@ -18,7 +18,7 @@ import EventBus from '@/plugins/event-bus';
 export default {
     components: {
         ...components,
-...patientComponents
+        ...patientComponents
     },
     data() {
         return {
@@ -67,21 +67,11 @@ export default {
     },
     methods: {
         showItems(payLoad) {
+            console.log(payLoad.item)
             this.selectedItem = payLoad.item;
             this.type = payLoad.type;
             this.showAddItemWizard = true;
         },
-        getItem(ID) {
-            if (this.type === 'diagnosis' && ID) {
-                return this.getPatientDiagnosisByID(ID);
-            } else if (this.type === 'procedures' && ID) {
-                return this.getPatientProcedureByID(ID);
-            } else if (this.type === 'anamnesis' && ID) {
-                return this.getPatientAnanmnesisByID(ID);
-            } else {
-                return {};
-            }
-        }
     }
 };
 </script>

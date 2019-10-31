@@ -1,17 +1,22 @@
 <template>
     <div class="md-layout lock-wrapper text-center">
         <div class="md-layout-item md-size-50 md-small-size-100">
-            <form>
                 <lock-card>
                     <div slot="imageProfile" class="avatar-container">
-                        <div class="avatarC">
-                            <div v-if="!user.avatar" class="md-layout md-alignment-center-center wrapper-acronim">
-                                <div class="md-layout-item acronim">
-                                    <span>{{ (user.firstName + ' ' + user.lastName) | acronim }}</span>
-                                </div>
-                            </div>
-                            <div v-else class="avatar" :style="{ 'background-image': 'url(' + user.avatar + ')' }" />
-                        </div>
+                    <t-avatar
+                        class="avatarC"
+                        :text-to-color="user.id"
+                        :image-src="user.avatar"
+                        :title="user.firstName + ' ' + user.lastName"
+                    />
+<!--                        <div class="avatarC">-->
+<!--                            <div v-if="!user.avatar" class="md-layout md-alignment-center-center wrapper-acronim">-->
+<!--                                <div class="md-layout-item acronim">-->
+<!--                                    <span>{{ (user.firstName + ' ' + user.lastName) | acronim }}</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div v-else class="avatar" :style="{ 'background-image': 'url(' + user.avatar + ')' }" />-->
+<!--                        </div>-->
                     </div>
                     <h4 slot="title" class="title">{{ user.firstName | capitilize }} {{ user.lastName | capitilize }}</h4>
                     <div slot="content">
@@ -50,7 +55,6 @@
                         Unlock
                     </md-button>
                 </lock-card>
-            </form>
             <forgot-password :show-form.sync="showForgot" />
         </div>
     </div>
@@ -60,12 +64,30 @@ import { mapGetters } from 'vuex';
 import { SlideYDownTransition } from 'vue2-transitions';
 import components from '@/components';
 import ForgotPassword from './ForgotPassword.vue';
-import { AUTH_REQUEST, NOTIFY } from '@/constants';
+import { AUTH_REQUEST, CLINIC_AUTH_REQUEST, NOTIFY } from '@/constants';
 
 export default {
     name: 'Lock',
     beforeRouteEnter(to, from, next) {
-        localStorage.setItem('lastRoutePathBeforeLock', from.path);
+        next(vm => {
+            console.log(from.name, vm.user)
+            if(from.name && vm.user.userName){
+                const lockParams = JSON.stringify ({
+                    routeName: (from.name),
+                    routeMeta: (from.meta),
+                    routeParams: (from.params),
+                    clinicID: (vm.clinic.ID),
+                });
+                localStorage.setItem('lockParams',lockParams);
+            } else {
+                vm.$router.push({
+                    name: 'login',
+                    params: {
+                        lang: vm.$i18n.locale
+                    }
+                });
+            }
+        });
         next();
     },
 
@@ -92,7 +114,10 @@ export default {
     },
     computed: {
         ...mapGetters({
-            user: 'getProfile'
+            user: 'getProfile',
+            clinic: 'getCurrentClinic',
+            isLocked : 'isLocked',
+            authState: 'authState'
         })
     },
     methods: {
@@ -112,19 +137,8 @@ export default {
             }
             const { user, password } = this;
             this.$store.dispatch(AUTH_REQUEST, { username: user.userName, password }).then(
-                () => {
-                    const lastRoutePathBeforeLock = localStorage.getItem('lastRoutePathBeforeLock');
-                    if (lastRoutePathBeforeLock) {
-                        this.$router.push(lastRoutePathBeforeLock);
-                    } else {
-                        this.$router.push('/');
-                    }
-                    this.$store.dispatch(NOTIFY, {
-                        settings: {
-                            message: `Welcome ${user.firstName}  ${user.lastName}`,
-                            type: 'info'
-                        }
-                    });
+                (result) => {
+                    this.setClinic(result);
                 },
                 error => {
                     if (error.response.data.message === 'Wrong password') {
@@ -135,6 +149,29 @@ export default {
                     }
                 }
             );
+        },
+        setClinic(data) {
+            const lockParams = JSON.parse(localStorage.getItem('lockParams'));
+            this.$store
+                .dispatch(CLINIC_AUTH_REQUEST, {
+                    clinicId: lockParams.clinicID,
+                    accessToken: data.accessToken
+                })
+                .then(result => {
+                    if (result.accessToken) {
+                        if (lockParams && lockParams.routeMeta && lockParams.routeMeta.requiresAuth === false) {
+                            this.$router.push({ name: 'Dashboard', params: {lang: this.$i18n.locale } })
+                        } else {
+                            this.$router.push({ name: lockParams.routeName, params : lockParams.routeParams })
+                        }
+                        this.$store.dispatch(NOTIFY, {
+                            settings: {
+                                message: `Welcome ${this.user.firstName}  ${this.user.lastName}`,
+                                type: 'success',
+                            }
+                        });
+                    }
+                });
         },
         showErrorsValidate(errField = 'username') {
             const field = this.$validator.fields.find({
@@ -196,7 +233,8 @@ export default {
             overflow: hidden;
             transition: all 0.2s;
             -webkit-transition: all 0.2s;
-            .avatar {
+            margin: 0px;
+            .t-avatar {
                 cursor: default !important;
                 background-position: 50%;
                 background-repeat: no-repeat;
