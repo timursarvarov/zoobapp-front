@@ -54,6 +54,7 @@ export default {
     created() {
         if (!this.plan.procedures || this.plan.procedures.length < 1) {
             this.showProcedures = false;
+            console.log(this.showPlan );
             this.showPlan = false;
         }
     },
@@ -77,10 +78,11 @@ export default {
             return this.getPatientProcedureByID(this.procedureId);
         },
         plan() {
-            if (this.patient.plans && Object.keys(this.patient.plans).length > 0) {
+            if (!this.lodash.isEmpty(this.patient.plans)) {
+                console.log(this.patient.plans[this.planID].ID)
                 return this.patient.plans[this.planID];
             }
-            return null;
+            return {};
         }
     },
     methods: {

@@ -48,7 +48,6 @@ import { SlideYDownTransition } from 'vue2-transitions';
 import { NOTIFY } from '@/constants';
 import JawAddLocations from '../../Jaw/JawAddLocations';
 
-
 export default {
     name: 'TLocationsWizardItems',
     components: {

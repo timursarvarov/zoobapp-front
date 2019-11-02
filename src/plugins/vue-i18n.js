@@ -28,6 +28,6 @@ VueI18n.prototype.getChoiceIndex = function(choice, choicesLength) {
 Vue.use(VueI18n);
 
 const i18n = new VueI18n({
-    silentTranslationWarn: process.env.NODE_ENV === 'production',
+    silentTranslationWarn: process.env.NODE_ENV === 'production'
 });
 export default i18n;

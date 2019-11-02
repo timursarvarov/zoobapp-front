@@ -71,7 +71,7 @@ export default {
             });
             return color;
         },
-        src(){
+        src() {
             return this.imageSrc || '';
         },
         gradient() {

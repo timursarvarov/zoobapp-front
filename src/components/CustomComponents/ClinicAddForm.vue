@@ -22,7 +22,10 @@
                                     v-focus
                                     v-model="clinicName"
                                     v-validate="{ verify_clinic_name: names, required: true, min: 2 }"
-                                    type="text" data-vv-name="clinicName" required />
+                                    type="text"
+                                    data-vv-name="clinicName"
+                                    required
+                                />
                                 <span class="md-error">{{ errors.first('clinicName') }}</span>
                                 <slide-y-down-transition>
                                     <md-icon v-show="errors.has('clinicName')" class="error">
@@ -37,7 +40,7 @@
                             </md-field>
                             <md-field>
                                 <label>Description</label>
-                                <md-textarea v-model="clinicDescription"/>
+                                <md-textarea v-model="clinicDescription" />
                             </md-field>
                         </div>
                     </md-card-content>
@@ -61,10 +64,10 @@ export default {
     components: {
         SlideYDownTransition
     },
-    props:{
-        showAddClinic:{
+    props: {
+        showAddClinic: {
             type: Boolean,
-            default: ()=> false,
+            default: () => false
         }
     },
     data() {
@@ -73,23 +76,22 @@ export default {
             clinicName: null,
             clinicDescription: null,
             touched: {
-                clinicName: false,
+                clinicName: false
             },
             modelValidations: {
                 clinicName: {
                     required: true,
                     min: 3
-                },
-
+                }
             }
         };
     },
     computed: {
         ...mapGetters({
-            clinics: "getClinics",
+            clinics: 'getClinics'
         }),
-        names(){
-            return this.clinics.map((c)=> c.name );
+        names() {
+            return this.clinics.map(c => c.name);
         },
         showForm: {
             get() {

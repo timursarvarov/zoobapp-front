@@ -447,7 +447,7 @@ export default {
                     })
                 )
                 .then(resp => {
-                    console.log(resp)
+                    console.log(resp);
                     if (resp.data.error) {
                         commit(PATIENT_PARAM_SET, {
                             paramName: 'status',
@@ -470,8 +470,11 @@ export default {
                     commit(PATIENT_ANAMNES_SET, {
                         paramName: 'anamnesis',
                         subParamName: 'procedures',
-                        subParamIndex: state.anamnesis && state.anamnesis.procedures && state.anamnesis.procedures.length > 0 ? state.anamnesis.procedures.length : 0,
-                        subParamValue: anamnesN.ID,
+                        subParamIndex:
+                            state.anamnesis && state.anamnesis.procedures && state.anamnesis.procedures.length > 0
+                                ? state.anamnesis.procedures.length
+                                : 0,
+                        subParamValue: anamnesN.ID
                     });
 
                     if (anamnesN.manipulations) {
@@ -904,7 +907,7 @@ export default {
                     reject(err);
                 });
         }),
-    [PATIENT_PLAN_DELETE]: ({ commit, state }, { planID }) =>
+    [PATIENT_PLAN_DELETE]: ({ commit, state, dispatch }, { planID }) =>
         new Promise((resolve, reject) => {
             commit(PATIENT_PARAM_SET, {
                 paramName: 'status',
@@ -936,9 +939,16 @@ export default {
                         paramIndex: planID
                     });
                     commit(PATIENT_PARAM_SET, {
+                        paramName: 'currentPlanID',
+                        paramValue: null
+                    });
+                    commit(PATIENT_PARAM_SET, {
                         paramName: 'status',
                         paramValue: 'success'
                     });
+                    if (isEmpty(state.plans)) {
+                        dispatch(PATIENT_JAW_UPDATE);
+                    }
                     resolve(resp.data.result);
                 })
                 .catch(err => {

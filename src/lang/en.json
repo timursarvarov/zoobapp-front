@@ -255,11 +255,19 @@
 		"title": "Add New Plan"
 	},
 	"PatientPlansList": {
+		"addNewPlan": "Add new plan",
+		"cancel": "Cancel",
+		"deletePlan": "@:common.delete",
+		"deletePlanForm": "Delete plan?",
+		"deleting": "Deleting...",
 		"noPlansDescription": "No plan selected, please choose one",
 		"noPlansTitle": "No selected plans",
 		"noPlansWithIdDescription": "No plan with ID {ID} found. Scroll top, and create new one.",
-		"noPlansWithIdTitle": "No Plans with Id {{ID}}",
-		"scrollTop": "Scroll Top"
+		"noPlansWithIdTitle": "No Plan with Id {ID}",
+		"planDeleted": "Plan deleted",
+		"planTotal": "Total: ",
+		"scrollTop": "Scroll Top",
+		"somethingWrong": "Something wrong, plan don't deleted"
 	},
 	"PatientProceduresList": {
 		"approve": "Approve plan",
@@ -474,6 +482,13 @@
 		"totalManipulations": "Total manipulations",
 		"totalPrice": "Total price:"
 	},
+	"TPrintFormPatientAnamnes": {
+		"print": "Print: ",
+		"printAnamnes": "Anamnes",
+		"printAnamnesManipulations": "Manipulations",
+		"printAnamnesProcedures": "Procedures",
+		"title": "Anamnes"
+	},
 	"TPrintFormPatientBio": {
 		"address": "@:common.address",
 		"allergy": "@:common.allergy",
@@ -483,6 +498,13 @@
 		"phone": "@:common.phone",
 		"print": "Print"
 	},
+	"TPrintFormPatientDiagnosis": {
+		"print": "Print",
+		"printDiagnose": "Diagnoses",
+		"printDiagnoseManipulations": "Manipulations",
+		"printDiagnoseProcedures": "Procedures",
+		"title": "Diagnoses"
+	},
 	"TPrintFormPatientHeader": {
 		"phone": "@:common.phone",
 		"url": "URL"
@@ -491,14 +513,19 @@
 		"jaw": "Jaw",
 		"print": "Print:"
 	},
+	"TPrintFormPatientNosology": {
+		"teeth": "No selected teeth | One tooth | {count} Teeth"
+	},
 	"TPrintFormPatientPlan": {
 		"manipulations": "Manipulations",
 		"plan": "Plan",
 		"print": "Print:",
 		"procedures": "Procedures"
 	},
-	"TPrintFormPatientProcedure": {
-		"teeth": "No selected Teeth | One Tooth | {count} Teeth"
+	"TPrintFormPatientTreatment": {
+		"print": "Print:",
+		"title": "Treatment",
+		"treatment": "Treatment"
 	},
 	"TTableEditor": {
 		"ID": "@:common.ID",
@@ -642,6 +669,7 @@
 		"create": "Create",
 		"created": "Created Date",
 		"createdBy": "Author",
+		"delete": "Delete",
 		"description": "Description",
 		"diagnoses": "Diagnoses",
 		"diagnosis": "Diagnoses",

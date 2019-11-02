@@ -119,7 +119,7 @@
                                                 </router-link>
                                             </li>
                                             <li class="md-layout" @click="showPatientAddForm()">
-                                                <a  class="md-layout">
+                                                <a class="md-layout">
                                                     <md-icon>person_add</md-icon>
                                                     {{ $t(`${$options.name}.addPatient`) }}
                                                 </a>
@@ -283,7 +283,7 @@ export default {
             this.$patientAddForm.showPatientAddForm(true);
         },
         showAddClinicForm() {
-            console.log(this.$clinicAddForm)
+            console.log(this.$clinicAddForm);
             this.$clinicAddForm.showClinicAddForm(true);
         },
         minimizeSidebar() {
@@ -296,7 +296,7 @@ export default {
         },
         lock() {
             this.$store.dispatch(AUTH_LOCK).then(() => {
-                this.$router.push({ name: 'lock', params: {lang: this.$i18n.locale } })
+                this.$router.push({ name: 'lock', params: { lang: this.$i18n.locale } });
             });
         }
     }

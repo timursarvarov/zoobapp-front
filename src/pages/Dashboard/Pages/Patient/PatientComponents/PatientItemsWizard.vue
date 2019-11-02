@@ -11,7 +11,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { EB_SHOW_ITEM_WIZARD , STORE_KEY_PATIENT} from '@/constants';
+import { EB_SHOW_ITEM_WIZARD, STORE_KEY_PATIENT } from '@/constants';
 import components from '@/components';
 import patientComponents from '@/pages/Dashboard/Pages/Patient/PatientComponents';
 import EventBus from '@/plugins/event-bus';
@@ -67,11 +67,11 @@ export default {
     },
     methods: {
         showItems(payLoad) {
-            console.log(payLoad.item)
+            console.log(payLoad.item);
             this.selectedItem = payLoad.item;
             this.type = payLoad.type;
             this.showAddItemWizard = true;
-        },
+        }
     }
 };
 </script>

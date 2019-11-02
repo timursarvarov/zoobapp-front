@@ -42,27 +42,26 @@
                                                             </div>-->
                                                             <t-print-form-patient-bio :patient="patient" />
                                                             <print-form-patient v-if="type === 'patient'" />
-                                                            <t-print-form-patient-jaw v-else-if="type === 'jaw'" :patient-props="patientProps" />
-                                                            <t-print-form-patient-procedure
+                                                            <t-print-form-patient-jaw
+                                                                v-else-if="type === 'jaw'"
+                                                                :patient-props="patientProps" />
+                                                            <t-print-form-patient-nosology
                                                                 v-else-if="type === 'procedures'"
                                                                 :num="1"
                                                                 :procedure-id="selectedItem.ID"
                                                             />
-                                                            <t-print-form-patient-procedures
+                                                            <t-print-form-patient-treatment
                                                                 :selectedItem="selectedItem"
-                                                                v-else-if="type === 'plan'" />
-<!--                                                            <t-print-form-patient-plan-->
-<!--                                                                :planID="`${selectedItem.ID}`"-->
-<!--                                                                :num="0"-->
-<!--                                                            >-->
-<!--                                                                <template slot="procedures" slot-scope="{ procedureId, index, showManipulations }">-->
-<!--                                                                    <t-print-form-patient-procedure-->
-<!--                                                                        :showManipulations="showManipulationsGlobal && showManipulations"-->
-<!--                                                                        :num="index + 1"-->
-<!--                                                                        :procedure-id="procedureId"-->
-<!--                                                                    />-->
-<!--                                                                </template>-->
-<!--                                                            </t-print-form-patient-plan>-->
+                                                                v-else-if="type === 'plan'"
+                                                            />
+                                                            <t-print-form-patient-diagnosis
+                                                                :selectedItem="selectedItem"
+                                                                v-else-if="type === 'diagnosis'"
+                                                            />
+                                                            <t-print-form-patient-anamnesis
+                                                                :selectedItem="selectedItem"
+                                                                v-else-if="type === 'anamnesis'"
+                                                            />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -86,7 +85,7 @@
                     <md-card-actions md-alignment="right">
                         <md-button class="md-success" @click="showFormL = !showFormL">close</md-button>
                         <md-button class="md-success" @click="printD()">Print</md-button>
-                        <md-button class="md-success" @click="print()">Print</md-button>
+<!--                        <md-button class="md-success" @click="print()">Print</md-button>-->
                     </md-card-actions>
                 </md-card>
             </div>
@@ -105,10 +104,11 @@ export default {
         'print-form-patient': () => import('./PrintFormPatient'),
         't-print-form-patient-bio': () => import('./TPrintFormPatientBio'),
         't-print-form-patient-jaw': () => import('./TPrintFormPatientJaw'),
-        't-print-form-patient-procedure': () => import('./TPrintFormPatientProcedure'),
-        't-print-form-patient-plan': () => import('./TPrintFormPatientPlan'),
+        't-print-form-patient-nosology': () => import('./TPrintFormPatientNosology'),
         't-print-form-patient-header': () => import('./TPrintFormPatientHeader'),
-        't-print-form-patient-procedures': () => import('./TPrintFormPatientProcedures')
+        't-print-form-patient-treatment': () => import('./TPrintFormPatientTreatment'),
+        't-print-form-patient-diagnosis': () => import('./TPrintFormPatientDiagnosis.vue'),
+        't-print-form-patient-anamnesis': () => import('./TPrintFormPatientAnamnesis.vue')
     },
     props: {
         showForm: {

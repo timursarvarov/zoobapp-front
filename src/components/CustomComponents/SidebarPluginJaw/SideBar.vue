@@ -106,7 +106,7 @@ export default {
     computed: {
         sidebarStyle() {
             return {
-                backgroundImage: this.backgroundImage,
+                backgroundImage: this.backgroundImage
             };
         }
     },

@@ -326,12 +326,12 @@
                             <span class="md-error">{{ errors.first('allergy') }}</span>
                         </div>
                         <div class="md-layout md-layout-item  wrapper-chips md-size-100 md-small-size-100">
-                            <div class="md-layout-item  md-size-50 md-small-size-100" >
+                            <div class="md-layout-item  md-size-50 md-small-size-100">
                                 <md-checkbox v-model="closeAddForm" class="md-primary" @change="setCloseFormAfter()">
                                     {{ $t(`${$options.name}.closeFormAfterAdding`) }}
                                 </md-checkbox>
                             </div>
-                            <div class="md-layout-item  md-size-50 md-small-size-100" >
+                            <div class="md-layout-item  md-size-50 md-small-size-100">
                                 <md-checkbox v-model="openProfile" class="md-primary" @change="setOpenProfileAfterCreation()">
                                     {{ $t(`${$options.name}.openPatientProfileAfterAdding`) }}
                                 </md-checkbox>

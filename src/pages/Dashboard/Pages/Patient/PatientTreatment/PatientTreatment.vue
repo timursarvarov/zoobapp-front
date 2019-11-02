@@ -1,43 +1,44 @@
 <template lang="html">
-    <div class="md-layout set-diagnose-form">
+    <div v-cloak class="md-layout set-diagnose-form">
         <div class="md-layout  md-medium-size-100 md-size-100">
             <div
                 class=" md-layout md-layout-item md-xlarge-size-50 md-small-size-100 md-xsmall-size-100  md-large-size-50 md-medium-size-50  "
                 :class="[this.$sidebar.isMinimized ? ' md-sized-100 md-alignment-top-center' : ' md-sidze-50']"
             >
                 <!-- <div class="mx-auto" style="flex-grow:1;"> -->
-                 <keep-alive>
-                <jaw
-                    :selected-teeth="selectedTeeth"
-                    :age-category="!!patient.ageCategory"
-                    :jaw="patient.jaw || {}"
-                    :type="currentType"
-                    @onSelectedTeeth="onSelectedTeeth"
-                    @showToothInfo="showToothInfo"
-                    @onSizeChanged="matchHeight"
-                >
-                    <template v-if="patient.ID" slot="title-start">
-                        <md-tabs md-sync-route class="t-md-tabs" :class="currentType">
-                            <md-tab
-                                id="tab-home"
-                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan`"
-                                :md-label="$t(`${$options.name}.procedures`)"
-                            />
-                            <md-tab
-                                id="tab-pages"
-                                class="diagnosis"
-                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/diagnosis`"
-                                :md-label="$t(`${$options.name}.diagnoses`)"
-                            />
-                            <md-tab
-                                id="tab-posts"
-                                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`"
-                                :md-label="$t(`${$options.name}.anamnesis`)"
-                            />
-                        </md-tabs>
-                    </template>
-                </jaw>
-                 </keep-alive>
+                <keep-alive>
+                    <jaw
+                        :age-category="!!patient.ageCategory"
+                        :jaw="patient.jaw || {}"
+                        :selected-teeth="selectedTeeth"
+                        :type="currentType"
+                        @onSelectedTeeth="onSelectedTeeth"
+                        @onSizeChanged="matchHeight"
+                        @showToothInfo="showToothInfo"
+                        v-cloak
+                    >
+                        <template v-if="patient.ID" slot="title-start">
+                            <md-tabs md-sync-route class="t-md-tabs" :class="currentType">
+                                <md-tab
+                                    id="tab-home"
+                                    :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan`"
+                                    :md-label="$t(`${$options.name}.procedures`)"
+                                />
+                                <md-tab
+                                    id="tab-pages"
+                                    class="diagnosis"
+                                    :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/diagnosis`"
+                                    :md-label="$t(`${$options.name}.diagnoses`)"
+                                />
+                                <md-tab
+                                    id="tab-posts"
+                                    :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/anamnesis`"
+                                    :md-label="$t(`${$options.name}.anamnesis`)"
+                                />
+                            </md-tabs>
+                        </template>
+                    </jaw>
+                </keep-alive>
                 <!-- </div> -->
             </div>
             <keep-alive>
@@ -53,12 +54,12 @@
         </div>
         <div style="margin-top:30px;" class="md-layout-item  md-size-100">
             <!-- <keep-alive> -->
-            <router-view name="list" :current-type="currentType" :plans="patient.plans" @showItemInfo="selectItem" />
+            <router-view name="list" @addPlan="addPlan" :current-type="currentType" :plans="patient.plans" @showItemInfo="selectItem" />
             <!-- </keep-alive> -->
         </div>
 
         <div v-if="showAddPlan">
-            <plan-add-form :show-form.sync="showAddPlan" :plans="patient.plans" :patient-id="patient.ID" @onPlanCreated="redirectToProcdures" />
+            <plan-add-form :show-form.sync="showAddPlan" :plans="patient.plans" :patient-id="patient.ID" />
         </div>
     </div>
 </template>
@@ -81,18 +82,17 @@ import EventBus from '@/plugins/event-bus';
 export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            if (to.name !== 'procedures') {
+            if (`${vm.currentPlanID}` !== `${to.params.planID}`) {
                 vm.$router.push({
                     name: 'procedures',
                     params: {
                         lang: vm.$i18n.locale,
                         patientID: vm.patient.ID,
-                        planID: to.params.planID || vm.currentPlanID
+                        planID: vm.currentPlanID
                     }
-                })
-                console.log(vm.currentPlanID, 'beforeRouteEnter')
+                });
             }
-        })
+        });
     },
     components: {
         ...components,
@@ -176,55 +176,22 @@ export default {
     },
     watch: {
         $route(val) {
-            console.log(this.currentPlanID, val)
             if (val.name === 'plan' && this.currentPlanID) {
-                console.log(this.currentPlanID, 'redirected')
                 this.$nextTick(() => {
                     this.redirectToProcdures(this.currentPlanID);
                 });
             }
-        },
-        currentPlanID(val, old) {
-            if (!(old in this.patient.plans)) {
-                if (val) {
-                    console.log('redirectToProcdures',val, old)
-                    this.redirectToProcdures(val);
-                } else {
-                    console.log('redirectToPlan', val, old)
-                    this.redirectToPlan();
-                }
-            }
-        }
-    },
-    mounted() {
-        if ((this.$route.params && this.$route.params.planID && this.currentPlanID !== this.$route.params.planID ) || !this.$route.params.planID) {
-            console.log(this.currentPlanID , this.$route.params.planID)
-            this.redirectToProcdures(this.currentPlanID);
         }
     },
     methods: {
         redirectToProcdures(planID) {
-            console.log(planID)
             if (this.$route.name !== 'procedures') {
                 this.$router.push({
                     name: 'procedures',
                     params: {
                         lang: this.$i18n.locale,
                         patientID: this.patient.ID,
-                        planID: planID,
-                    }
-                });
-                console.log(this.currentPlanID,  this.$route,  'redirected procedures')
-            }
-        },
-        redirectToPlan() {
-            console.log(this.currentPlanID,  this.$route,  'redirected plan')
-            if (this.$route.name !== 'plan') {
-                this.$router.push({
-                    name: 'plan',
-                    params: {
-                        lang: this.$i18n.locale,
-                        patientID: this.patient.ID
+                        planID
                     }
                 });
             }
@@ -240,9 +207,6 @@ export default {
             } else {
                 this.showAddPlan = true;
             }
-        },
-        onShowPrint() {
-            this.showPrint = true;
         },
         getItemCatalogFieldName() {
             if (this.currentType === 'diagnosis') {

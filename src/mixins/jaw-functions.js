@@ -1,7 +1,6 @@
 /* eslint-disable no-tabs */
 const jawFunctions = {
     methods: {
-
         $_preferableJawClasses(toothId, location, jaw, prefer) {
             let toothClass = '';
             if (this.lodash.isEmpty(jaw) || !prefer || prefer.length === 0) {

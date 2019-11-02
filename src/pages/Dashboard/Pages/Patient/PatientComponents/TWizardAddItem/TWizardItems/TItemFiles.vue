@@ -44,7 +44,7 @@ export default {
         size: {
             type: Object,
             default: () => {}
-        },
+        }
     },
     data() {
         return {

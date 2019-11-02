@@ -42,7 +42,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { EB_SHOW_PATIENT_PRINT_FORM , STORE_KEY_PATIENT} from '@/constants';
+import { EB_SHOW_PATIENT_PRINT_FORM, STORE_KEY_PATIENT } from '@/constants';
 import components from '@/components';
 import patientComponents from '@/pages/Dashboard/Pages/Patient/PatientComponents';
 import EventBus from '@/plugins/event-bus';

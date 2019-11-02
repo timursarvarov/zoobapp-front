@@ -255,11 +255,19 @@
 		"title": "Добавить новый план"
 	},
 	"PatientPlansList": {
+		"addNewPlan": "Добавить новый план",
+		"cancel": "Отменить",
+		"deletePlan": "@:common.delete",
+		"deletePlanForm": "Удалить план?",
+		"deleting": "Удаление ...",
 		"noPlansDescription": "План не выбран, пожалуйста, выберите один",
 		"noPlansTitle": "Нет выбранных планов",
 		"noPlansWithIdDescription": "План с идентификатором {ID} не найден. Прокрутите вверх и создайте новый.",
-		"noPlansWithIdTitle": "Нет планов с идентификатором {{ID}}",
-		"scrollTop": "Прокрутить вверх "
+		"noPlansWithIdTitle": "Нет плана с идентификатором {ID}",
+		"planDeleted": "План удален",
+		"planTotal": "Всего:",
+		"scrollTop": "Прокрутить вверх ",
+		"somethingWrong": "Что-то не так, план не удален"
 	},
 	"PatientProceduresList": {
 		"approve": "Утвердить план",
@@ -474,6 +482,13 @@
 		"totalManipulations": "Всего манипуляций",
 		"totalPrice": "Итоговая цена:"
 	},
+	"TPrintFormPatientAnamnes": {
+		"print": "Печатать:",
+		"printAnamnes": "Анамнез",
+		"printAnamnesManipulations": "Манипуляции",
+		"printAnamnesProcedures": "Процедуры",
+		"title": "Анамнез"
+	},
 	"TPrintFormPatientBio": {
 		"address": "@:common.address",
 		"allergy": "@:common.allergy",
@@ -483,6 +498,13 @@
 		"phone": "@:common.phone",
 		"print": "Распечатать"
 	},
+	"TPrintFormPatientDiagnosis": {
+		"print": "Печать",
+		"printDiagnose": "Диагнозы",
+		"printDiagnoseManipulations": "Манипуляции",
+		"printDiagnoseProcedures": "Процедуры",
+		"title": "Диагнозы"
+	},
 	"TPrintFormPatientHeader": {
 		"phone": "@:common.phone",
 		"url": "Веб-сайт"
@@ -491,14 +513,19 @@
 		"jaw": "Челюсть",
 		"print": "Распечатать:"
 	},
+	"TPrintFormPatientNosology": {
+		"teeth": "Нет выбранных зубов | Один зуб | {count} зуба | {count}  зубов "
+	},
 	"TPrintFormPatientPlan": {
 		"manipulations": "Манипуляции",
 		"plan": "План",
 		"print": "Распечатать:",
 		"procedures": "Процедуры"
 	},
-	"TPrintFormPatientProcedure": {
-		"teeth": "Нет выбранных зубов | Один Зуб | {count} Зуба | {count}  Зубов "
+	"TPrintFormPatientTreatment": {
+		"print": "Печать",
+		"title": "Лечение ",
+		"treatment": "Лечение"
 	},
 	"TTableEditor": {
 		"ID": "@:common.ID",
@@ -642,6 +669,7 @@
 		"create": "Создать",
 		"created": "Дата создания",
 		"createdBy": "Aвтор",
+		"delete": "Удалить",
 		"description": "Описание",
 		"diagnoses": "Диагнозы",
 		"diagnosis": "Диагнозы",

@@ -6,6 +6,6 @@ export default {
         horizontalAlign: 'left',
         verticalAlign: 'bottom',
         type: 'warning',
-        status: '',
+        status: ''
     }
 };

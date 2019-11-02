@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-        <div class="description-wrapper">
+        <div v-if="procedure.description" class="description-wrapper">
             <small>
                 <div v-html="procedure.description" class="print-patient-procedure_description" />
             </small>
@@ -66,7 +66,7 @@ import { mapGetters } from 'vuex';
 import { STORE_KEY_PATIENT } from '@/constants';
 
 export default {
-    name: 'TPrintFormPatientProcedure',
+    name: 'TPrintFormPatientNosology',
     props: {
         procedureId: {
             type: Number,
@@ -79,6 +79,10 @@ export default {
         showManipulations: {
             type: Boolean,
             default: () => true
+        },
+        currentType: {
+            type: String,
+            default: () => 'procedures'
         }
     },
     data() {
@@ -91,9 +95,13 @@ export default {
             currentClinic: 'getCurrentClinic',
             patient: `${STORE_KEY_PATIENT}/getPatient`,
             getPatientProcedureByID: `${STORE_KEY_PATIENT}/getPatientProcedureByID`,
+            getPatientDiagnosisByID: `${STORE_KEY_PATIENT}/getPatientDiagnosisByID`,
             getManipulationsByProcedureID: `${STORE_KEY_PATIENT}/getManipulationsByProcedureID`
         }),
         procedure() {
+            if (this.currentType === 'diagnose') {
+                return this.getPatientDiagnosisByID(this.procedureId) || {};
+            }
             return this.getPatientProcedureByID(this.procedureId) || {};
         },
         currencyCode() {

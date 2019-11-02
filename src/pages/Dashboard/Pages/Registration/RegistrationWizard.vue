@@ -304,7 +304,7 @@ export default {
 </script>
 <style lang="scss">
 .wizard-registration-form {
-    .title_text{
+    .title_text {
         color: #3c4858;
     }
     span.md-error {

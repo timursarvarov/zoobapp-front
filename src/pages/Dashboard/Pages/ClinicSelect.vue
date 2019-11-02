@@ -24,7 +24,7 @@
                     </div>
                 </md-card-content>
                 <md-card-actions>
-                    <md-button class="md-simple" @click="showClinicAddForm() ">
+                    <md-button class="md-simple" @click="showClinicAddForm()">
                         {{ $t(`${$options.name}.addClinic`) }}
                     </md-button>
                     <md-button :disabled="!checkedClinicId" class="md-success" @click="setClinic()">
@@ -33,25 +33,23 @@
                 </md-card-actions>
             </md-card>
         </div>
-        <clinic-add-form
-        :showAddClinic.sync="showAddClinic"/>
+        <clinic-add-form :showAddClinic.sync="showAddClinic" />
     </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
 import { CLINIC_AUTH_REQUEST } from '@/constants';
-import components from "@/components"
+import components from '@/components';
 
 export default {
     name: 'ClinicSelect',
-    components:{
+    components: {
         ...components
     },
     data() {
         return {
             checkedClinicId: null,
-            showAddClinic: false,
-
+            showAddClinic: false
         };
     },
     computed: {

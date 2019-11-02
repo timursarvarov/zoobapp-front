@@ -99,12 +99,21 @@
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import { SlideYDownTransition } from 'vue2-transitions';
 import components from '@/components';
 import { AUTH_REQUEST, NOTIFY, CLINIC_AUTH_REQUEST, SERVER_ERRORS } from '@/constants';
 import ForgotPassword from './ForgotPassword.vue';
 
 export default {
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            if (from) {
+                vm.fromParams.from = from;
+                vm.fromParams.clinicID = vm.clinic.ID;
+            }
+        });
+    },
     name: 'Login',
     components: {
         ...components,
@@ -113,6 +122,10 @@ export default {
     },
     data() {
         return {
+            fromParams: {
+                from: null,
+                clinicID: null
+            },
             showForgot: false,
             username: null,
             password: null,
@@ -139,6 +152,11 @@ export default {
         password() {
             this.touched.password = true;
         }
+    },
+    computed: {
+        ...mapGetters({
+            clinic: 'getCurrentClinic'
+        })
     },
     methods: {
         focusOn(ref) {
@@ -195,12 +213,16 @@ export default {
         setClinic(data) {
             this.$store
                 .dispatch(CLINIC_AUTH_REQUEST, {
-                    clinicId: data.organizations[0].ID,
+                    clinicId: this.fromParams.clinicID || data.organizations[0].ID,
                     accessToken: data.accessToken
                 })
                 .then(result => {
                     if (result.accessToken) {
-                        this.$router.push({ name: 'Dashboard', params: { lang: this.$i18n.locale } });
+                        if (this.fromParams.clinicID) {
+                            this.$router.push(this.fromParams.from);
+                        } else {
+                            this.$router.push({ name: 'Dashboard', params: { lang: this.$i18n.locale } });
+                        }
                         this.$store.dispatch(NOTIFY, {
                             settings: {
                                 type: 'success',

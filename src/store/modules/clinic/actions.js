@@ -13,8 +13,8 @@ import {
     AUTH_DECODE_TOKEN,
     // AUTH_SUCCESS,
     AUTH_REFRESH_TOKEN,
-    USER_REQUEST,
-    PATIENT_UNSET
+    USER_REQUEST
+    // PATIENT_UNSET
 } from '@/constants';
 
 export default {

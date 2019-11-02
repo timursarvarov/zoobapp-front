@@ -65,7 +65,7 @@ export default {
         let procedures = [];
         const planID = rootGetters.getCurrentPlanID;
         if (planID) {
-            const ids = rootGetters.getPatient.plans[planID].procedures;
+            const ids = rootGetters.getPatient.plans[planID] && rootGetters.getPatient.plans[planID].procedures ? rootGetters.getPatient.plans[planID].procedures : null ;
             if (ids && ids.length > 0) {
                 procedures = rootGetters.getProceduresByIds(ids);
             }
@@ -85,9 +85,11 @@ export default {
         let proceduresIds = [];
         if (allPlanIDs && allPlanIDs.length > 0) {
             allPlanIDs.forEach(planID => {
-                proceduresIds = proceduresIds.concat(
-                    state.plans[planID].procedures
-                );
+                if(state.plans[planID]){
+                    proceduresIds = proceduresIds.concat(
+                        state.plans[planID].procedures
+                    );
+                }
             });
             if (proceduresIds && proceduresIds.length > 0) {
                 procedures = rootGetters.getProceduresByIds(proceduresIds);

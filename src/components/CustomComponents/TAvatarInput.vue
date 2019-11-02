@@ -36,8 +36,6 @@
     </div>
 </template>
 <script>
-import { NOTIFY } from '@/constants';
-
 const randomMC = require('random-material-color');
 
 export default {
@@ -95,7 +93,7 @@ export default {
                 this.showForm = true;
                 this.clearImage();
             } else {
-                this.$store.dispatch( {
+                this.$store.dispatch({
                     settings: {
                         message: 'No files selected!',
                         type: 'warning'

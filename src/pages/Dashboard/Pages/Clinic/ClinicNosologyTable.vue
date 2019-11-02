@@ -18,7 +18,7 @@
             <md-toolbar class="md-transparent">
                 <div class="md-layout-item md-size-33">
                     <md-field>
-                        <label for="pages">{{ $t(`${$options.name}.perPage`) }}</label>
+                        <label>{{ $t(`${$options.name}.perPage`) }}</label>
                         <md-select v-model="pagination.perPage" name="pages">
                             <md-option v-for="item in pagination.perPageOptions" :key="item" :label="item" :value="item">{{ item }}</md-option>
                         </md-select>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="md-layout md-layout-item md-size-33 ml-auto">
                     <md-field>
-                        <label for="pages">{{ $t(`${$options.name}.typeToSearch`) }}</label>
+                        <label>{{ $t(`${$options.name}.typeToSearch`) }}</label>
                         <md-input v-model="searchQuery" type="search" class="mb-3" clearable style="width: 200px" />
                     </md-field>
                 </div>
@@ -122,7 +122,7 @@
             </md-table>
             <md-card-actions md-alignment="space-between">
                 <div>
-                     <p class="card-category">
+                    <p class="card-category">
                         {{ $tc(`${$options.name}.paginationNumFrom`, total, { n: from }) }}
                         {{ $tc(`${$options.name}.paginationNumTo`, total, { n: to }) }}
                         {{ $tc(`${$options.name}.paginationItems`, total) }}
@@ -168,8 +168,8 @@ import Fuse from 'fuse.js';
 import components from '@/components';
 import {
     CLINIC_MANIPULATIONS_COLUMNS,
-    CLINIC_PROCEDURES_COLUMNS,
-    CLINIC_DIAGNOSIS_COLUMNS,
+    // CLINIC_PROCEDURES_COLUMNS,
+    // CLINIC_DIAGNOSIS_COLUMNS,
     PATIENT_PROCEDURE_DELETE,
     EB_SHOW_ITEM_WIZARD,
     EB_SHOW_PATIENT_PRINT_FORM,
@@ -282,18 +282,18 @@ export default {
             if (this.currentType === 'manipulations') {
                 return CLINIC_MANIPULATIONS_COLUMNS;
             }
-            if (this.currentType === 'anamnesis') {
-                return USER_ANAMNESIS_COLUMNS;
-            }
-            if (this.currentType === 'billing') {
-                return USER_BILLING_COLUMNS;
-            }
-            if (this.currentType === 'procedures') {
-                return USER_PROCEDURES_COLUMNS;
-            }
-            if (this.currentType === 'invoices') {
-                return USER_INVOICE_COLUMNS;
-            }
+            // if (this.currentType === 'anamnesis') {
+            //     return USER_ANAMNESIS_COLUMNS;
+            // }
+            // if (this.currentType === 'billing') {
+            //     return USER_BILLING_COLUMNS;
+            // }
+            // if (this.currentType === 'procedures') {
+            //     return USER_PROCEDURES_COLUMNS;
+            // }
+            // if (this.currentType === 'invoices') {
+            //     return USER_INVOICE_COLUMNS;
+            // }
             return CLINIC_MANIPULATIONS_COLUMNS;
         },
         defaultFields() {

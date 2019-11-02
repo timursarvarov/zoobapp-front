@@ -466,7 +466,7 @@ export default {
                         this.manipulationsNum = 0;
                     },
                     error => {
-                        this.$store.dispatch(NOTIFY,{
+                        this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: error.message,
                                 type: 'warning'
@@ -503,7 +503,7 @@ export default {
                         this.manipulationsNum = 0;
                         this.selectedManipulationID = '';
                         this.manipulationToEdit = {};
-                        this.$store.dispatch(NOTIFY,{
+                        this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'Manipulation saved',
                                 type: 'success'

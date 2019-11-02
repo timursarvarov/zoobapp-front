@@ -94,8 +94,7 @@ export default {
             planName: null,
             touched: {
                 planName: false
-            },
-
+            }
         };
     },
     computed: {

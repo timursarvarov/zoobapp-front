@@ -22,8 +22,8 @@
                             :round="false"
                             preview="preview"
                             :rotate="parseInt(rotate, 10)"
-                            @error="onError"
                         >
+                            <!--                            @error="onError"-->
                             <div slot="placeholder">
                                 No image
                             </div>
@@ -144,9 +144,9 @@ export default {
         this.calculateSizeAfterTimeout();
     },
     methods: {
-        onError(e) {
-            // console.log(e);
-        },
+        // onError(e) {
+        // console.log(e);
+        // },
         getColorButton(buttonColor) {
             return `md-${buttonColor}`;
         },

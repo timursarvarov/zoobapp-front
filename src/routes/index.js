@@ -52,7 +52,8 @@ router.beforeEach((to, from, next) => {
         next(); // make sure to always call next()!
     }
 });
-router.afterEach((to, from) => {
+router.afterEach(() => {
+    // console.log(to, from)
     store.dispatch(LOADER_STOP);
 });
 

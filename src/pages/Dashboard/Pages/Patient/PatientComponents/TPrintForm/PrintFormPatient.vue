@@ -3,35 +3,23 @@
         <div class="print-form__page__block">
             <t-print-form-patient-jaw :patient-props="patientProps" />
         </div>
-        <t-print-form-patient-procedures
-
-            />
-<!--        <t-print-form-patient-plan v-for="(planID, i) in selectedPlans" :planID="planID" :num="i" :key="i">-->
-<!--            <template slot="procedures" slot-scope="{ procedureId, index, showManipulations }">-->
-<!--                <t-print-form-patient-procedure-->
-<!--                    :showManipulations="showManipulationsGlobal && showManipulations"-->
-<!--                    :num="index + 1"-->
-<!--                    :procedure-id="procedureId"-->
-<!--                />-->
-<!--            </template>-->
-<!--        </t-print-form-patient-plan>-->
+        <t-print-form-patient-treatment />
+        <t-print-form-patient-anamnesis />
+        <t-print-form-patient-diagnosis />
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import TPrintFormPatientJaw from './TPrintFormPatientJaw';
-import TPrintFormPatientPlan from './TPrintFormPatientPlan';
-import TPrintFormPatientProcedure from './TPrintFormPatientProcedure';
 import { STORE_KEY_PATIENT } from '@/constants';
 
 export default {
     name: 'PrintFormPatient',
     components: {
-        TPrintFormPatientJaw,
-        TPrintFormPatientPlan,
-        TPrintFormPatientProcedure,
-        't-print-form-patient-procedures': () => import('./TPrintFormPatientProcedures')
+        't-print-form-patient-jaw': () => import('./TPrintFormPatientJaw'),
+        't-print-form-patient-diagnosis': () => import('./TPrintFormPatientDiagnosis.vue'),
+        't-print-form-patient-anamnesis': () => import('./TPrintFormPatientAnamnesis.vue'),
+        't-print-form-patient-treatment': () => import('./TPrintFormPatientTreatment')
     },
     data() {
         return {

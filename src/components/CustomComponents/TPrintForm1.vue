@@ -275,9 +275,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters({
-
-        }),
+        ...mapGetters({}),
         totalPrice() {
             let sum = 0;
             if (this.item.manipulations && this.item.manipulations.length > 0) {

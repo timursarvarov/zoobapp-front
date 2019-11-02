@@ -1,11 +1,8 @@
 <template>
-    <clinic-add-form
-        v-if="showAddClinic"
-        :showAddClinic.sync="showAddClinic"/>
+    <clinic-add-form v-if="showAddClinic" :showAddClinic.sync="showAddClinic" />
 </template>
 <script>
-import components from "@/components"
-
+import components from '@/components';
 
 export default {
     name: 'ClinicAddForm',
@@ -13,9 +10,7 @@ export default {
         ...components
     },
     data() {
-        return{
-
-        }
+        return {};
     },
     computed: {
         showAddClinic: {
@@ -26,7 +21,6 @@ export default {
                 // this.$clinicAddForm.clinicAddFormShown = !this.$clinicAddForm.clinicAddFormShown;
             }
         }
-    },
+    }
 };
-
 </script>

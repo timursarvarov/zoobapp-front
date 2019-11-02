@@ -1,7 +1,7 @@
 /* eslint-disable operator-linebreak */
 import axios from 'axios';
 import store from '@/store';
-import { AUTH_REFRESH_TOKEN, LOADER_STOP, NOTIFY, SERVER_ERRORS, USER_LOGOUT } from '@/constants';
+import { AUTH_REFRESH_TOKEN, LOADER_START, LOADER_STOP, NOTIFY, SERVER_ERRORS, USER_LOGOUT } from '@/constants';
 
 // for multiple requests
 export default function() {
@@ -14,7 +14,7 @@ export default function() {
                     resolve(result.accessToken);
                 })
                 .catch(err => {
-                    console.log(err)
+                    console.log(err);
                     store.dispatch(USER_LOGOUT);
                     throw new Error(err);
                 });
@@ -32,13 +32,13 @@ export default function() {
     }
 
     axios.interceptors.request.use(config => {
-        // store.dispatch(LOADER_START);
+        store.dispatch(LOADER_START);
         return config;
     });
 
     axios.interceptors.response.use(
         response => {
-            // store.dispatch(LOADER_STOP);
+            store.dispatch(LOADER_STOP);
             if (response.data.error) {
                 store.dispatch(NOTIFY, {
                     settings: {
@@ -54,9 +54,9 @@ export default function() {
             return response;
         },
         error => {
-            // store.dispatch(LOADER_STOP);
-            console.log(error)
-            if(error === '' ){
+            store.dispatch(LOADER_STOP);
+            console.log(error);
+            if (error === '') {
                 const { refreshToken, hasRefreshTokenError } = store.state.auth;
                 const originalRequest = config;
                 if (refreshToken && !hasRefreshTokenError) {
@@ -81,7 +81,10 @@ export default function() {
                     return requestPromise;
                 }
             }
-            const { config, response: { status } } = error;
+            const {
+                config,
+                response: { status }
+            } = error;
             if (status) {
                 const { refreshToken, hasRefreshTokenError } = store.state.auth;
                 const originalRequest = config;

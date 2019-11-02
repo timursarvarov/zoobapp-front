@@ -18,6 +18,7 @@ export default {
     diagnosis: null,
     invoices: null,
     anamnesis: null,
+    currentPlanID: null,
     created: null,
     updated: null,
     rating: null,

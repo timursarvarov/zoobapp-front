@@ -24,7 +24,7 @@
                             {{ $t(`${$options.name}.changePlanTitle`) }}
                         </md-tooltip>
                     </md-button>
-                    <md-button class="md-just-icon md-simple" @click="showDeleteItemSnackbar = true">
+                    <md-button class="md-just-icon md-simple" @click="$emit('onDeletePlan', currentPlanID)">
                         <md-icon>
                             delete
                         </md-icon>
@@ -105,7 +105,13 @@
 <script>
 import moment from 'moment';
 import { mapGetters } from 'vuex';
-import { NOTIFY, PATIENT_PLAN_EDIT, STORE_KEY_PATIENT, PATIENT_PLAN_DELETE, EB_SHOW_PATIENT_PRINT_FORM } from '@/constants';
+import {
+    // NOTIFY,
+    PATIENT_PLAN_EDIT,
+    STORE_KEY_PATIENT,
+    // PATIENT_PLAN_DELETE,
+    EB_SHOW_PATIENT_PRINT_FORM
+} from '@/constants';
 import components from '@/components';
 import patientComponents from '@/pages/Dashboard/Pages/Patient/PatientComponents';
 import EventBus from '@/plugins/event-bus';
@@ -304,40 +310,6 @@ export default {
         onSelected(items) {
             this.selectedItems = items;
             this.showDeleteItemSnackbar = items.length > 0;
-        },
-        redirectToPlan() {
-            console.log('redirested');
-            this.$router.push({
-                name: 'procedures',
-                params: {
-                    lang: this.$i18n.locale,
-                    patientID: this.patient.ID
-                }
-            });
-        },
-        deletePlan() {
-            this.deleting = true;
-            this.$store
-                .dispatch(`$_patient/${PATIENT_PLAN_DELETE}`, {
-                    planID: this.currentPlan.ID
-                })
-                .then()
-                .catch(() => {
-                    this.showDeleteItemSnackbar = false;
-                    if (this.lodash.isEmpty(this.patient.plans)) {
-                        this.redirectToPlan();
-                    }
-                    this.$store.dispatch(NOTIFY, {
-                        settings: {
-                            message: 'Plan deleted',
-                            type: 'success'
-                        }
-                    });
-                })
-                .then(() => {
-                    this.deleting = false;
-                    this.showDeleteItemSnackbar = false;
-                });
         }
     }
 };

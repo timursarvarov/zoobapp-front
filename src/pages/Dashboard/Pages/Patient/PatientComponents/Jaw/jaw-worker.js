@@ -1,4 +1,3 @@
-
 const calcJaw = function(params) {
     const $_getNestedProperty = function $_getNestedProperty(object = {}, key1 = null, key2 = null, key3 = null) {
         // if (this.lodash.isEmpty(object)) return undefined;
@@ -25,11 +24,11 @@ const calcJaw = function(params) {
             return false;
         }
         return Object.prototype.hasOwnProperty.call(obj, prop);
-    }
+    };
 
     const $_isHidingLocation = function(toothId, location, params) {
         // если не установлен прдедпочитаемы вид (params.prefer) то возвращаем значение по умолчанию
-        const isEmpty = function (obj) {
+        const isEmpty = function(obj) {
             if (obj === undefined || obj === null) return true;
             if (typeof obj === 'string' || Array.isArray(obj)) {
                 return obj.length === 0;
@@ -83,9 +82,9 @@ const calcJaw = function(params) {
         return hide;
     };
     const getToothClasses = function(toothId, location, params) {
-        const $_preferableJawClasses = function (toothId, location, params) {
+        const $_preferableJawClasses = function(toothId, location, params) {
             let toothClass = '';
-            const isEmpty = function (obj) {
+            const isEmpty = function(obj) {
                 if (obj === undefined || obj === null) return true;
                 if (typeof obj === 'string' || Array.isArray(obj)) {
                     return obj.length === 0;
@@ -116,7 +115,7 @@ const calcJaw = function(params) {
         const prefClass = $_preferableJawClasses(toothId, location, params);
         // Название класса локации из svg для отображеня в норме
         /* root || corona|| gum etc. */
-        toothClasses [location] = true;
+        toothClasses[location] = true;
         // Название класса локации из высчитанной формуллы для отображеня в диагнозов анамнеза и лечения
         /* anamnesis || procedure|| diagnose */
         if (prefClass) {

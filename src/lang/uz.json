@@ -255,11 +255,19 @@
 		"title": "Yangi reja qo'shing"
 	},
 	"PatientPlansList": {
+		"addNewPlan": "Yangi reja qo'shing",
+		"cancel": "Bekor qilish",
+		"deletePlan": "@:common.delete",
+		"deletePlanForm": "Rejani yo'q qilmoqchimisiz?",
+		"deleting": "O‘chirilmoqda ...",
 		"noPlansDescription": "Hech qanday reja tanlanmagan, iltimos birini tanlang",
 		"noPlansTitle": "Tanlangan rejalar yo'q",
 		"noPlansWithIdDescription": " {ID} ID bilan hech qanday reja topilmadi. Yuqoriga o'ting va yangisini yarating.",
-		"noPlansWithIdTitle": " {{ID}} raqami bilan rejalar yo'q",
-		"scrollTop": "Yuqoriga o‘tkazish"
+		"noPlansWithIdTitle": " {ID}ID raqami bilan reja yo'q",
+		"planDeleted": "Reja o‘chirib tashlandi",
+		"planTotal": "Jami:",
+		"scrollTop": "Yuqoriga o‘tkazish",
+		"somethingWrong": "Noma'lum, reja o'chirilmadi"
 	},
 	"PatientProceduresList": {
 		"approve": "Rejani tasdiqlang",
@@ -474,6 +482,13 @@
 		"totalManipulations": "Umumiy manipulyatsiyalar",
 		"totalPrice": "Umumiy narx:"
 	},
+	"TPrintFormPatientAnamnes": {
+		"print": "Chop etish:",
+		"printAnamnes": "Anamnez",
+		"printAnamnesManipulations": "Manipulyatsiya",
+		"printAnamnesProcedures": "Protseduralar",
+		"title": "Anamnez"
+	},
 	"TPrintFormPatientBio": {
 		"address": "@:common.address",
 		"allergy": "@:common.allergy",
@@ -483,6 +498,13 @@
 		"phone": "@:common.phone",
 		"print": "Chop eting"
 	},
+	"TPrintFormPatientDiagnosis": {
+		"print": "Chop etish",
+		"printDiagnose": "Tashxis",
+		"printDiagnoseManipulations": "Manipulyatsiyalar",
+		"printDiagnoseProcedures": "Protseduralar",
+		"title": "Tashxis"
+	},
 	"TPrintFormPatientHeader": {
 		"phone": "@:common.phone",
 		"url": "URL manzili"
@@ -491,14 +513,19 @@
 		"jaw": "Jag'",
 		"print": "Chop eting:"
 	},
+	"TPrintFormPatientNosology": {
+		"teeth": "Tanlangan tishlar yo'q | bitta tish | {count} tishlar"
+	},
 	"TPrintFormPatientPlan": {
 		"manipulations": "Manipulyatsiyalar",
 		"plan": "Rejasi",
 		"print": "Chop eting:",
 		"procedures": "Protseduralar"
 	},
-	"TPrintFormPatientProcedure": {
-		"teeth": "Tanlangan tishlar yo'q | Bitta tish | {count} Tishlar"
+	"TPrintFormPatientTreatment": {
+		"print": "Chop etish",
+		"title": "Davolash",
+		"treatment": "Davolash"
 	},
 	"TTableEditor": {
 		"ID": "@:common.ID",
@@ -642,6 +669,7 @@
 		"create": "Yaratmoq",
 		"created": "Yaratilgan sana",
 		"createdBy": "Muallif",
+		"delete": "Yo'q qilish",
 		"description": "Ta'rif",
 		"diagnoses": "Tashxis",
 		"diagnosis": "Tashxis",

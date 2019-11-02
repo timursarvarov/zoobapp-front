@@ -1,60 +1,55 @@
 <template>
     <div class="md-layout lock-wrapper text-center">
         <div class="md-layout-item md-size-50 md-small-size-100">
-                <lock-card>
-                    <div slot="imageProfile" class="avatar-container">
-                    <t-avatar
-                        class="avatarC"
-                        :text-to-color="user.id"
-                        :image-src="user.avatar"
-                        :title="user.firstName + ' ' + user.lastName"
-                    />
-<!--                        <div class="avatarC">-->
-<!--                            <div v-if="!user.avatar" class="md-layout md-alignment-center-center wrapper-acronim">-->
-<!--                                <div class="md-layout-item acronim">-->
-<!--                                    <span>{{ (user.firstName + ' ' + user.lastName) | acronim }}</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div v-else class="avatar" :style="{ 'background-image': 'url(' + user.avatar + ')' }" />-->
-<!--                        </div>-->
+            <lock-card>
+                <div slot="imageProfile" class="avatar-container">
+                    <t-avatar class="avatarC" :text-to-color="user.id" :image-src="user.avatar" :title="user.firstName + ' ' + user.lastName" />
+                    <!--                        <div class="avatarC">-->
+                    <!--                            <div v-if="!user.avatar" class="md-layout md-alignment-center-center wrapper-acronim">-->
+                    <!--                                <div class="md-layout-item acronim">-->
+                    <!--                                    <span>{{ (user.firstName + ' ' + user.lastName) | acronim }}</span>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                            <div v-else class="avatar" :style="{ 'background-image': 'url(' + user.avatar + ')' }" />-->
+                    <!--                        </div>-->
+                </div>
+                <h4 slot="title" class="title">{{ user.firstName | capitilize }} {{ user.lastName | capitilize }}</h4>
+                <div slot="content">
+                    <md-field :class="[{ 'md-error': errors.has('password') }, { 'md-valid': !errors.has('password') && touched.password }]">
+                        <md-icon>lock_outline</md-icon>
+                        <label>Enter Password</label>
+                        <md-input
+                            v-focus
+                            v-model="password"
+                            ref="password"
+                            v-validate="modelValidations.password"
+                            type="password"
+                            autocomplete="password"
+                            data-vv-name="password"
+                            required
+                            @keyup.enter="login()"
+                        />
+                        <span class="md-error">{{ errors.first('password') }}</span>
+                        <span class="md-error">{{ errors.first('username') }}</span>
+                        <slide-y-down-transition>
+                            <md-icon v-show="errors.has('password')" class="error">
+                                close
+                            </md-icon>
+                        </slide-y-down-transition>
+                        <slide-y-down-transition>
+                            <md-icon v-show="!errors.has('password') && touched.password" class="success">
+                                done
+                            </md-icon>
+                        </slide-y-down-transition>
+                    </md-field>
+                    <div class="md-layout">
+                        <small class="md-simple ml-auto" @click="showForgot = !showForgot">Forgot password?</small>
                     </div>
-                    <h4 slot="title" class="title">{{ user.firstName | capitilize }} {{ user.lastName | capitilize }}</h4>
-                    <div slot="content">
-                        <md-field :class="[{ 'md-error': errors.has('password') }, { 'md-valid': !errors.has('password') && touched.password }]">
-                            <md-icon>lock_outline</md-icon>
-                            <label>Enter Password</label>
-                            <md-input
-                                v-focus
-                                v-model="password"
-                                ref="password"
-                                v-validate="modelValidations.password"
-                                type="password"
-                                autocomplete="password"
-                                data-vv-name="password"
-                                required
-                                @keyup.enter="login()"
-                            />
-                            <span class="md-error">{{ errors.first('password') }}</span>
-                            <span class="md-error">{{ errors.first('username') }}</span>
-                            <slide-y-down-transition>
-                                <md-icon v-show="errors.has('password')" class="error">
-                                    close
-                                </md-icon>
-                            </slide-y-down-transition>
-                            <slide-y-down-transition>
-                                <md-icon v-show="!errors.has('password') && touched.password" class="success">
-                                    done
-                                </md-icon>
-                            </slide-y-down-transition>
-                        </md-field>
-                        <div class="md-layout">
-                            <small class="md-simple ml-auto" @click="showForgot = !showForgot">Forgot password?</small>
-                        </div>
-                    </div>
-                    <md-button slot="footer" class="md-success md-round" @click="login()">
-                        Unlock
-                    </md-button>
-                </lock-card>
+                </div>
+                <md-button slot="footer" class="md-success md-round" @click="login()">
+                    Unlock
+                </md-button>
+            </lock-card>
             <forgot-password :show-form.sync="showForgot" />
         </div>
     </div>
@@ -70,15 +65,15 @@ export default {
     name: 'Lock',
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            console.log(from.name, vm.user)
-            if(from.name && vm.user.userName){
-                const lockParams = JSON.stringify ({
-                    routeName: (from.name),
-                    routeMeta: (from.meta),
-                    routeParams: (from.params),
-                    clinicID: (vm.clinic.ID),
+            console.log(from.name, vm.user);
+            if (from.name && vm.user.userName) {
+                const lockParams = JSON.stringify({
+                    routeName: from.name,
+                    routeMeta: from.meta,
+                    routeParams: from.params,
+                    clinicID: vm.clinic.ID
                 });
-                localStorage.setItem('lockParams',lockParams);
+                localStorage.setItem('lockParams', lockParams);
             } else {
                 vm.$router.push({
                     name: 'login',
@@ -116,7 +111,7 @@ export default {
         ...mapGetters({
             user: 'getProfile',
             clinic: 'getCurrentClinic',
-            isLocked : 'isLocked',
+            isLocked: 'isLocked',
             authState: 'authState'
         })
     },
@@ -137,7 +132,7 @@ export default {
             }
             const { user, password } = this;
             this.$store.dispatch(AUTH_REQUEST, { username: user.userName, password }).then(
-                (result) => {
+                result => {
                     this.setClinic(result);
                 },
                 error => {
@@ -160,14 +155,14 @@ export default {
                 .then(result => {
                     if (result.accessToken) {
                         if (lockParams && lockParams.routeMeta && lockParams.routeMeta.requiresAuth === false) {
-                            this.$router.push({ name: 'Dashboard', params: {lang: this.$i18n.locale } })
+                            this.$router.push({ name: 'Dashboard', params: { lang: this.$i18n.locale } });
                         } else {
-                            this.$router.push({ name: lockParams.routeName, params : lockParams.routeParams })
+                            this.$router.push({ name: lockParams.routeName, params: lockParams.routeParams });
                         }
                         this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: `Welcome ${this.user.firstName}  ${this.user.lastName}`,
-                                type: 'success',
+                                type: 'success'
                             }
                         });
                     }

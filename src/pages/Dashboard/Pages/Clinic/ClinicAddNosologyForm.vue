@@ -23,7 +23,7 @@
                                     { 'md-error': errors.has('firstName') }
                                 ]"
                             >
-                                <label for="the_firstName23">First Name</label>
+                                <label>First Name</label>
                                 <md-input
                                     ref="firstName"
                                     v-model="firstName"
@@ -203,7 +203,7 @@
                         </div>
                         <div class="md-layout-item">
                             <md-field class="with-subline">
-                                <label for="movies">Doctors</label>
+                                <label>Doctors</label>
                                 <md-select id="movies" v-model="selectedDoctors" :disabled="loading" name="movies" multiple>
                                     <md-option value="fight-club">
                                         Fight Club
@@ -352,18 +352,23 @@
 </template>
 <script>
 import { SlideYDownTransition } from 'vue2-transitions';
-import { PATIENT_CREATE, NOTIFY, PATIENT_PARAMS_SET, LOCAL_STORAGE } from '@/constants';
+import {
+    PATIENT_CREATE,
+    NOTIFY,
+    // PATIENT_PARAMS_SET,
+    LOCAL_STORAGE
+} from '@/constants';
 
 export default {
     name: 'ClinicAddNosologyForm',
     components: {
         SlideYDownTransition
     },
-    props:{
-        showForm:{
+    props: {
+        showForm: {
             type: Boolean,
             default: () => false
-        },
+        }
     },
     data() {
         return {
@@ -421,10 +426,10 @@ export default {
             set(newValue) {
                 this.$emit('update:showForm', newValue);
             }
-        },
+        }
     },
     watch: {
-         showFormL() {
+        showFormL() {
             this.openProfile = localStorage.getItem(LOCAL_STORAGE.user.onCreationPatientOpenProfile);
             if (this.openProfile === 'true') {
                 this.openProfile = true;

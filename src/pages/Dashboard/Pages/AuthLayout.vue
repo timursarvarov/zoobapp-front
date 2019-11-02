@@ -98,7 +98,12 @@
 import { ZoomCenterTransition } from 'vue2-transitions';
 import { mapGetters } from 'vuex';
 import components from '@/components';
-import { LOGIN_BACKGROUND_URL, AVAILABLE_LANGUAGES, LOCAL_STORAGE, USER_UPDATE } from '@/constants';
+import {
+    // LOGIN_BACKGROUND_URL,
+    AVAILABLE_LANGUAGES,
+    LOCAL_STORAGE,
+    USER_UPDATE
+} from '@/constants';
 
 export default {
     name: 'AuthLayout',

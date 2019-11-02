@@ -215,7 +215,7 @@ export default {
                 catalogID = patientItemW.catalogProcedureID;
             }
             code = this.getCurrentClinicOriginalItem(this.type, catalogID).code;
-            console.log(code,this.type)
+            console.log(code, this.type);
             return code;
         },
         toggleItemVisibility(item, type) {

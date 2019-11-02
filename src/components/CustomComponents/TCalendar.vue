@@ -52,7 +52,7 @@ export default {
     beforeDestroy: function() {
         this.$refs.fullCalendar.destroy;
     },
-    props:{
+    props: {
         contentHeight: {
             type: [Number, String],
             default: () => 600

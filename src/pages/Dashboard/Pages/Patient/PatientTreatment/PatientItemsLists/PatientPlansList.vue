@@ -17,86 +17,84 @@
                 md-dynamic-height
                 v-for="(plan, key) in patient.plans"
             >
-                <router-view v-if="$route && $route.params && $route.params.planID in patient.plans" :id="key" :current-plan="plan" />
+                <router-view
+                    :current-plan="plan"
+                    :id="key"
+                    @onDeletePlan="showDeletePlanFunc"
+                    v-if="$route && $route.params && $route.params.planID in patient.plans"
+                ></router-view>
                 <md-empty-state
-                    v-else-if="patient.plans && Object.keys(patient.plans).length > 0"
+                    v-else-if="lodash.isEmpty(patient.plans)"
                     :md-label="$t(`${$options.name}.noPlansTitle`)"
                     :md-description="$t(`${$options.name}.noPlansDescription`)"
                 >
                 </md-empty-state>
                 <md-empty-state
-                    v-else-if="$route && $route.params"
+                    v-else-if="$route && $route.params && $route.params.planID && !($route.params.planID in patient.plans)"
                     :md-label="$t(`${$options.name}.noPlansWithIdTitle`, { ID: $route.params.planID })"
                     :md-description="$t(`${$options.name}.noPlansWithIdDescription`, { ID: $route.params.planID })"
                 >
-                    <md-button class="md-primary md-raised" @click="scrollToTop()">
-                        {{ $t(`${$options.name}.scrollTop`) }}
+                    <md-button class="md-success md-raised" @click="$emit('addPlan')">
+                        {{ $t(`${$options.name}.addNewPlan`) }}
                     </md-button>
                 </md-empty-state>
             </md-tab>
         </md-tabs>
+        <md-snackbar
+            v-if="showDeleteItemSnackbar"
+            :md-position="'center'"
+            :md-duration="10000"
+            :md-active.sync="showDeleteItemSnackbar"
+            md-persistent
+        >
+            <div class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100">
+                <div class="snackbar-text-wrapper ">
+                    {{ $t(`${$options.name}.deletePlanForm`) }}
+                    {{ $t(`${$options.name}.planTotal`) }}
+                    <animated-number :value="getPlanTotalPriceNum(planIdToDelete)" />
+                    {{ currentClinic.currencyCode }}
+                </div>
+                <div class="snackbar-action-wrapper  ml-auto md-alignment-center-right ">
+                    <md-button class="md-simple" @click="showDeleteItemSnackbar = false">
+                        {{ $t(`${$options.name}.cancel`) }}
+                    </md-button>
+                    <md-button :disabled="deleting" class="md-warning" @click="deletePlan()">
+                        <div v-if="deleting">
+                            <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
+                            &nbsp;
+                            <span>
+                                {{ $t(`${$options.name}.deleting`) }}
+                            </span>
+                        </div>
+                        <span v-else>
+                            <md-icon>
+                                delete
+                            </md-icon>
+                            {{ $t(`${$options.name}.deletePlan`) }}
+                        </span>
+                    </md-button>
+                </div>
+            </div>
+        </md-snackbar>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { PATIENT_PLAN_SWITCH_CURRENT,PATIENT_JAW_UPDATE, JAW_LOADER_STOP, JAW_LOADER_START,  PATIENT_EDIT,  STORE_KEY_PATIENT } from '@/constants';
+import { PATIENT_PLAN_DELETE, NOTIFY, PATIENT_JAW_UPDATE, JAW_LOADER_STOP, JAW_LOADER_START, PATIENT_EDIT, STORE_KEY_PATIENT } from '@/constants';
 import components from '@/components';
 
 export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            // if (vm.currentPlanID !== to.params.planID) {
-            //     vm.$router.push({
-            //         name: 'procedures',
-            //         params: {
-            //             lang: vm.$i18n.locale,
-            //             patientID: vm.patient.ID,
-            //             planID: vm.currentPlanID,
-            //         }
-            //     });
-            //     console.log( vm.currentPlanID, vm.$route,  'redirected procedures')
-            // }
-            //${$i18n.locale}/patient/${patient.ID}/treatment/plan/${plan.ID}
-            // console.log(to.params.planID)
-            // console.log(vm.currentPlanID)
-            // vm.setCurrentPlan(to.params.planID);
-            // if (to.params.planID && to.params.planID !== from.params.planID) {
-            //     if (vm.patient.currentPlanID === to.params.planID) {
-            //         return true;
-            //     } else {
-            //         vm.$store.dispatch(JAW_LOADER_START);
-            //         vm.$store
-            //             .dispatch(`$_patient/${PATIENT_EDIT}`, {
-            //                 params: {
-            //                     currentPlanID: parseInt(to.params.planID, 10)
-            //                 }
-            //             })
-            //             .then(response => {
-            //                 if (response) {
-            //                     vm.$store.dispatch(`$_patient/${PATIENT_JAW_UPDATE}`).then(() => {
-            //                         vm.$store.dispatch(JAW_LOADER_STOP);
-            //                         next()
-            //                     });
-            //                 }
-            //             })
-            //             .catch(err => {
-            //                 console.log(err);
-            //                 vm.$store.dispatch(JAW_LOADER_STOP);
-            //                 throw new Error(err);
-            //             });
-            //
-            //     }
-            // }
             vm.deleteTabStyle();
-            console.log(vm.currentPlanID,  vm.$route,  'planslist')
         });
     },
     beforeRouteUpdate(to, from, next) {
         this.deleteTabStyle();
         if (to.params.planID && to.params.planID !== from.params.planID) {
             if (this.patient.currentPlanID === to.params.planID) {
-                next()
+                next();
             } else {
                 this.$store.dispatch(JAW_LOADER_START);
                 this.$store
@@ -109,7 +107,7 @@ export default {
                         if (response) {
                             this.$store.dispatch(`$_patient/${PATIENT_JAW_UPDATE}`).then(() => {
                                 this.$store.dispatch(JAW_LOADER_STOP);
-                                next()
+                                next();
                             });
                         }
                     })
@@ -118,10 +116,9 @@ export default {
                         this.$store.dispatch(JAW_LOADER_STOP);
                         throw new Error(err);
                     });
-
             }
         }
-        next()
+        next();
     },
     name: 'PatientPlansList',
     components: {
@@ -130,8 +127,9 @@ export default {
     },
     data() {
         return {
-            showDeleteForm: false,
-            loading: false,
+            showDeleteItemSnackbar: false,
+            planIdToDelete: null,
+            deleting: false
         };
     },
 
@@ -156,51 +154,73 @@ export default {
             return tabHeaders;
         }
     },
-
     mounted() {
         this.deleteTabStyle();
-        if (this.currentPlanID !== this.$route.params.planID) {
+    },
+    watch: {
+        currentPlanID() {
+            this.showDeleteItemSnackbar = false;
+        }
+    },
+    methods: {
+        deletePlan() {
+            this.deleting = true;
+            this.$store
+                .dispatch(`$_patient/${PATIENT_PLAN_DELETE}`, {
+                    planID: this.planIdToDelete
+                })
+                .then(() => {
+                    this.showDeleteItemSnackbar = false;
+                    this.redirectToPlan();
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: this.$t(`${this.$options.name}.planDeleted`),
+                            type: 'success'
+                        }
+                    });
+                })
+                .catch(() => {
+                    this.showDeleteItemSnackbar = false;
+                    this.$store.dispatch(NOTIFY, {
+                        settings: {
+                            message: this.$t(`${this.$options.name}.somethingWrong`),
+                            type: 'warrning'
+                        }
+                    });
+                })
+                .then(() => {
+                    this.deleting = false;
+                    this.showDeleteItemSnackbar = false;
+                });
+        },
+        showDeletePlanFunc(planID) {
+            this.planIdToDelete = planID;
+            this.showDeleteItemSnackbar = true;
+        },
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
+        redirectToPlan() {
+            if (this.currentPlanID) {
                 this.$router.push({
                     name: 'procedures',
                     params: {
                         lang: this.$i18n.locale,
                         patientID: this.patient.ID,
-                        planID: this.currentPlanID,
+                        planID: this.currentPlanID
                     }
                 });
-                console.log( this.currentPlanID, this.$route,  'redirected procedures')
+            } else {
+                this.$router.push({
+                    name: 'plan',
+                    params: {
+                        lang: this.$i18n.locale,
+                        patientID: this.patient.ID
+                    }
+                });
             }
-    },
-    methods: {
-        scrollToTop() {
-            window.scrollTo(0, 0);
         },
-        // setCurrentPlan(planID) {
-        //     const setPlan = function(planID, vm) {
-        //         if (vm.patient.currentPlanID === planID) {
-        //             return true;
-        //         } else {
-        //             vm.$store.dispatch(JAW_LOADER_START);
-        //             vm.$store
-        //                 .dispatch(`$_patient/${PATIENT_EDIT}`, {
-        //                     params: {
-        //                         currentPlanID: parseInt(planID, 10)
-        //                     }
-        //                 })
-        //                 .then(response => {
-        //                     if (response) {
-        //                         vm.$store.dispatch(JAW_LOADER_STOP);
-        //                     }
-        //                 })
-        //                 .catch(err => {
-        //                     console.log(err);
-        //                     vm.$store.dispatch(JAW_LOADER_STOP);
-        //                     throw new Error(err);
-        //                 });
-        //         }
-        //     }
-        //     return setPlan
-        // },
+
         deleteTabStyle() {
             if (this.$refs.mdTabs) {
                 this.$refs.mdTabs.$children[0].$el.removeAttribute('style');
@@ -213,6 +233,10 @@ export default {
         getPlanTotalPrice(planID) {
             const totalPrice = this.manipulationsByPlanID(planID).reduce((a, b) => a + (b.totalPrice || 0), 0);
             return totalPrice ? ` - ${totalPrice.toFixed(2)} ${this.currentClinic.currencyCode}` : '';
+        },
+        getPlanTotalPriceNum(planID) {
+            const totalPrice = this.manipulationsByPlanID(planID).reduce((a, b) => a + (b.totalPrice || 0), 0);
+            return totalPrice;
         }
     }
 };

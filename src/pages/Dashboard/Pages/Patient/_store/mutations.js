@@ -61,7 +61,7 @@ export default {
             Vue.set(state[paramName], subParamName, []);
         }
         Vue.set(state[paramName][subParamName], subParamIndex, subParamValue);
-        console.log(state[paramName], subParamName, subParamIndex, subParamValue)
+        console.log(state[paramName], subParamName, subParamIndex, subParamValue);
     },
     [PATIENT_SUB_PARAM_DELETE]: (state, { param, paramIndex, subParam, subParamIndex, subParamID }) => {
         Vue.delete(state[param][paramIndex][subParam], subParamIndex);

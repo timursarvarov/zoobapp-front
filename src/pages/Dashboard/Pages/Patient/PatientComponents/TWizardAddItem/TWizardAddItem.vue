@@ -346,7 +346,7 @@ export default {
                             resolve(true);
                         },
                         error => {
-                            this.$store.dispatch(NOTIFY ,{
+                            this.$store.dispatch(NOTIFY, {
                                 settings: {
                                     message: error.response.data.error,
                                     type: 'warning'
@@ -382,7 +382,7 @@ export default {
                             resolve(true);
                         },
                         error => {
-                            this.$store.dispatch(NOTIFY ,{
+                            this.$store.dispatch(NOTIFY, {
                                 settings: {
                                     message: error.response.data.error,
                                     type: 'warning'
@@ -420,7 +420,7 @@ export default {
                             resolve(true);
                         },
                         error => {
-                            this.$store.dispatch(NOTIFY ,{
+                            this.$store.dispatch(NOTIFY, {
                                 settings: {
                                     message: error.response.data.error,
                                     type: 'warning'
@@ -554,7 +554,7 @@ export default {
                 if (!this.$refs[ref]) return false;
                 return this.$refs[ref].validate().then(res => {
                     if (!res) {
-                        this.$store.dispatch(NOTIFY,{
+                        this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'File issue',
                                 type: 'warning'
@@ -569,7 +569,7 @@ export default {
                 if (!this.$refs[ref]) return false;
                 return this.$refs[ref].validate().then(res => {
                     if (!res) {
-                        this.$store.dispatch(NOTIFY,{
+                        this.$store.dispatch(NOTIFY, {
                             settings: {
                                 message: 'Please add a description',
                                 type: 'warning'
