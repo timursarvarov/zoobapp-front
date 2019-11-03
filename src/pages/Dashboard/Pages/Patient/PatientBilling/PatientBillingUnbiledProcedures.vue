@@ -86,7 +86,7 @@ export default {
             manipulationsByPlanID: `${STORE_KEY_PATIENT}/getManipulationsByPlanID`
         }),
         filteredItems() {
-            const procedures = this.lodash.cloneDeep(this.aproovedPlansProcedures);
+            const procedures = this._.cloneDeep(this.aproovedPlansProcedures);
             return procedures.filter(p => {
                 return this.selectedPlans.includes(p.planID);
             });
@@ -164,7 +164,7 @@ export default {
         }
     },
     created() {
-        this.selectedPlans = this.lodash.cloneDeep(this.plansListOptions);
+        this.selectedPlans = this._.cloneDeep(this.plansListOptions);
     },
     methods: {
         showCreateInvoice() {

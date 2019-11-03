@@ -169,6 +169,11 @@
 		"selected": "Selected",
 		"unselect": "Unselect"
 	},
+	"PatientAnamnesisSearch": {
+		"noItemsDescription": "Unfortunately, the procedures failed to load, check the connection and try again",
+		"noItemsTitle": "Oops, the list of procedures for the anamnesis was not loaded",
+		"retry": "Retry"
+	},
 	"PatientBilling": {
 		"invoices": "Invoices",
 		"payments": "Payments",
@@ -211,6 +216,11 @@
 		"showRating": "Show Rating",
 		"source": "@:common.source",
 		"yearsOld": "@:common.yearsOld"
+	},
+	"PatientDiagnosisSearch": {
+		"noItemsDescription": "Unfortunately, the diagnoses failed to load, check the connection and try again",
+		"noItemsTitle": "Ooops, diagnoses weren't loaded",
+		"retry": "Retry"
 	},
 	"PatientFiles": {
 		"addFileDescription": "Click here or drop some files",
@@ -293,8 +303,11 @@
 	},
 	"PatientProceduresSearch": {
 		"addNewPlan": "Add New Plan",
-		"noPlansDescription": "To implemet a procedure, you should firstly create a plan",
-		"noPlansTitle": "No created plans"
+		"noItemsDescription": "Unfortunately, the procedures failed to load, check the connection and try again",
+		"noItemsTitle": "Oops, the list of procedures was not loaded",
+		"noPlansDescription": "To implement a procedure, you should first create a plan",
+		"noPlansTitle": "No plans found",
+		"retry": "Retry"
 	},
 	"PatientProfile": {
 		"BIO": "BIO",

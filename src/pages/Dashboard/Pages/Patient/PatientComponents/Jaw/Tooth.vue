@@ -260,7 +260,7 @@ export default {
         setAllTeethOnLoad() {
             const { setOnLoad } = this.originalItem;
             // если нет локаций
-            if (!this.lodash.isEmpty(setOnLoad)) {
+            if (!this._.isEmpty(setOnLoad)) {
                 Object.keys(setOnLoad).forEach(location => {
                     this.selectableTeeth.forEach(toothId => {
                         if (this.$_hasProp(setOnLoad, location)) {
@@ -274,7 +274,7 @@ export default {
             Object.keys(this.selectedItem.teeth).forEach(toothId => {
                 const tooth = this.selectedItem.teeth[toothId];
                 // если нет локаций
-                if (!this.lodash.isEmpty(tooth)) {
+                if (!this._.isEmpty(tooth)) {
                     Object.keys(tooth).forEach(location => {
                         this.setLocationOnLoad(location, toothId, tooth[location]);
                     });
@@ -300,9 +300,9 @@ export default {
             }
             if (this.selectableTeeth.length > 0) {
                 // устанавливаем локации setOnLoad локации
-                if (!this.lodash.isEmpty(this.originalItem.locations)) {
+                if (!this._.isEmpty(this.originalItem.locations)) {
                     // если диагноз редактируемый
-                    if (!this.lodash.isEmpty(this.selectedItem.teeth)) {
+                    if (!this._.isEmpty(this.selectedItem.teeth)) {
                         this.setAllEditableTeethOnLoad();
                     } else {
                         this.setAllTeethOnLoad();

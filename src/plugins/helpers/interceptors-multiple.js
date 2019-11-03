@@ -56,7 +56,7 @@ export default function() {
         error => {
             store.dispatch(LOADER_STOP);
             console.log(error);
-            if (error === '') {
+            if (error === 'Unauthorized') {
                 const { refreshToken, hasRefreshTokenError } = store.state.auth;
                 const originalRequest = config;
                 if (refreshToken && !hasRefreshTokenError) {

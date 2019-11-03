@@ -5,7 +5,6 @@
                 class=" md-layout md-layout-item md-xlarge-size-50 md-small-size-100 md-xsmall-size-100  md-large-size-50 md-medium-size-50  "
                 :class="[this.$sidebar.isMinimized ? ' md-sized-100 md-alignment-top-center' : ' md-sidze-50']"
             >
-                <!-- <div class="mx-auto" style="flex-grow:1;"> -->
                 <keep-alive>
                     <jaw
                         :age-category="!!patient.ageCategory"
@@ -39,7 +38,6 @@
                         </template>
                     </jaw>
                 </keep-alive>
-                <!-- </div> -->
             </div>
             <keep-alive>
                 <router-view
@@ -53,13 +51,20 @@
             </keep-alive>
         </div>
         <div style="margin-top:30px;" class="md-layout-item  md-size-100">
-            <!-- <keep-alive> -->
-            <router-view name="list" @addPlan="addPlan" :current-type="currentType" :plans="patient.plans" @showItemInfo="selectItem" />
-            <!-- </keep-alive> -->
+             <keep-alive>
+            <router-view
+                :canRedirect="_.isEmpty(routeBeforeLeave)"
+                :current-type="currentType"
+                :plans="patient.plans"
+                @addPlan="addPlan"
+                @showItemInfo="selectItem"
+                name="list"
+            />
+             </keep-alive>
         </div>
 
         <div v-if="showAddPlan">
-            <plan-add-form :show-form.sync="showAddPlan" :plans="patient.plans" :patient-id="patient.ID" />
+            <plan-add-form :show-form.sync="showAddPlan" :plans="patient.plans" :patient-id="patient.ID"></plan-add-form>
         </div>
     </div>
 </template>
@@ -82,7 +87,12 @@ import EventBus from '@/plugins/event-bus';
 export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            if (`${vm.currentPlanID}` !== `${to.params.planID}`) {
+            if (vm.routeBeforeLeave && to.name != 'plan') {
+                vm.$router.push({
+                    name: vm.routeBeforeLeave.name,
+                    params: vm.routeBeforeLeave.params
+                });
+            } else if(vm.currentPlanID  && to.name !== 'procedures') {
                 vm.$router.push({
                     name: 'procedures',
                     params: {
@@ -91,8 +101,20 @@ export default {
                         planID: vm.currentPlanID
                     }
                 });
+            } else if(! vm.currentPlanID && to.name !== 'plan') {
+                vm.$router.push({
+                    name: 'plan',
+                    params: {
+                        lang: vm.$i18n.locale,
+                        patientID: vm.patient.ID,
+                    }
+                });
             }
         });
+    },
+    beforeRouteLeave(to, from, next) {
+        this.routeBeforeLeave = from;
+        next();
     },
     components: {
         ...components,
@@ -101,6 +123,7 @@ export default {
     name: 'PatientTreatment',
     data() {
         return {
+            routeBeforeLeave: null,
             showToothDiagnosis: false,
             showAddItemWizard: false,
             jawHeight: 0,
@@ -129,14 +152,6 @@ export default {
                 return this.$route.meta.type;
             }
             return 'procedures';
-        },
-        originalItems() {
-            const originalItems = {
-                anamnesis: this.currentClinic.anamnesisComputed || [],
-                diagnosis: this.currentClinic.diagnosisComputed || [],
-                procedures: this.currentClinic.proceduresComputed || []
-            };
-            return originalItems;
         },
         files() {
             return this.patient.files;
@@ -174,28 +189,7 @@ export default {
             return itemToShow;
         }
     },
-    watch: {
-        $route(val) {
-            if (val.name === 'plan' && this.currentPlanID) {
-                this.$nextTick(() => {
-                    this.redirectToProcdures(this.currentPlanID);
-                });
-            }
-        }
-    },
     methods: {
-        redirectToProcdures(planID) {
-            if (this.$route.name !== 'procedures') {
-                this.$router.push({
-                    name: 'procedures',
-                    params: {
-                        lang: this.$i18n.locale,
-                        patientID: this.patient.ID,
-                        planID
-                    }
-                });
-            }
-        },
         addPlan() {
             if (this.patient.plans && this.patient.plans.length >= 10) {
                 this.$store.dispatch(NOTIFY, {
@@ -270,7 +264,7 @@ export default {
                 this.saveEditedProcedure(p);
                 return;
             }
-            const procedureL = this.lodash.cloneDeep(p);
+            const procedureL = this._.cloneDeep(p);
             procedureL.date = new Date();
             procedureL.author = {
                 ID: this.user.ID,

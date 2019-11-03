@@ -169,6 +169,11 @@
 		"selected": "Выбранно",
 		"unselect": "Отменить выбор"
 	},
+	"PatientAnamnesisSearch": {
+		"noItemsDescription": "К сожалению, процедуры не удалось загрузить, проверьте соединение и попробуйте снова",
+		"noItemsTitle": "Упс, список процедур для анамнеза не был загружен",
+		"retry": "Повторить"
+	},
 	"PatientBilling": {
 		"invoices": "Счета-фактуры",
 		"payments": "Платежи",
@@ -211,6 +216,11 @@
 		"showRating": "Показать рейтинг",
 		"source": "@:common.source",
 		"yearsOld": "@:common.yearsOld"
+	},
+	"PatientDiagnosisSearch": {
+		"noItemsDescription": "К сожалению, диагнозы загрузить не удалось, проверьте подключение и повторите",
+		"noItemsTitle": "Упс, диагнозы не загружены",
+		"retry": "Повторить"
 	},
 	"PatientFiles": {
 		"addFileDescription": "Кликните здесь или переместите несколько файлов сюда",
@@ -293,8 +303,11 @@
 	},
 	"PatientProceduresSearch": {
 		"addNewPlan": "Добавить новый план",
-		"noPlansDescription": "Чтобы cоздать процедуру, вы должны сначала создать план",
-		"noPlansTitle": "Нет созданных планов"
+		"noItemsDescription": "К сожалению, процедуры не удалось загрузить, проверьте соединение и попробуйте снова",
+		"noItemsTitle": "Упс, список процедур не был загружен",
+		"noPlansDescription": "Чтобы реализовать процедуру, вы должны сначала создать план",
+		"noPlansTitle": "Планов не обнаружено",
+		"retry": "Повторить"
 	},
 	"PatientProfile": {
 		"BIO": "BIO",

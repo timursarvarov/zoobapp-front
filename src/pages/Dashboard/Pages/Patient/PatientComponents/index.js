@@ -3,8 +3,8 @@ import Vue from 'vue';
 const requireComponents = {};
 const requireComponentContext = require.context('./', true, /\.vue$/i, 'lazy'); // lazy!
 requireComponentContext.keys().forEach(fileName => {
-    const componentName = Vue.lodash.upperFirst(
-        Vue.lodash.camelCase(
+    const componentName = Vue._.upperFirst(
+        Vue._.camelCase(
             fileName
                 .split('/')
                 .pop()

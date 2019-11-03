@@ -42,9 +42,7 @@
                                                             </div>-->
                                                             <t-print-form-patient-bio :patient="patient" />
                                                             <print-form-patient v-if="type === 'patient'" />
-                                                            <t-print-form-patient-jaw
-                                                                v-else-if="type === 'jaw'"
-                                                                :patient-props="patientProps" />
+                                                            <t-print-form-patient-jaw v-else-if="type === 'jaw'" :patient-props="patientProps" />
                                                             <t-print-form-patient-nosology
                                                                 v-else-if="type === 'procedures'"
                                                                 :num="1"
@@ -85,7 +83,7 @@
                     <md-card-actions md-alignment="right">
                         <md-button class="md-success" @click="showFormL = !showFormL">close</md-button>
                         <md-button class="md-success" @click="printD()">Print</md-button>
-<!--                        <md-button class="md-success" @click="print()">Print</md-button>-->
+                        <!--                        <md-button class="md-success" @click="print()">Print</md-button>-->
                     </md-card-actions>
                 </md-card>
             </div>
@@ -166,7 +164,7 @@ export default {
     },
     created() {
         if (this.patient.plans) {
-            this.selectedPlans = this.lodash.clone(Object.keys(this.patient.plans));
+            this.selectedPlans = this._.clone(Object.keys(this.patient.plans));
             // this.selectedPlans = this.getApprovedPlansIDs;
         }
     },

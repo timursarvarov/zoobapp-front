@@ -1,6 +1,7 @@
 <template lang="html">
     <div>
         <t-collapse-search
+            v-if="!loadingError"
             :style="[{ 'max-heifght': `${customHeight}px` }]"
             class="set-procedure-form"
             :items="currentDiagnosis"
@@ -13,7 +14,16 @@
             type="diagnosis"
             @onSetFavoritem="setFavoriteItems"
             @onSelected="selectItem"
-        />
+        >
+        </t-collapse-search>
+        <md-empty-state
+            v-else
+            :md-label="$t(`${$options.name}.noItemsTitle`)"
+            :md-description="$t(`${$options.name}.noItemsDescription`)">
+            <md-button class="md-success md-raised" @click="getItems">
+                {{ $t(`${$options.name}.retry`) }}
+            </md-button>
+        </md-empty-state>
     </div>
 </template>
 
@@ -24,6 +34,7 @@ import components from '@/components';
 import { tObjProp } from '@/mixins';
 
 export default {
+    name:'PatientDiagnosisSearch',
     components: {
         ...components
     },
@@ -45,9 +56,9 @@ export default {
     data() {
         return {
             recalculateItemsLocal: false,
-            selecteditemLocal: {},
             loading: false,
-            lastAgeCategory: 0
+            lastAgeCategory: 0,
+            loadingError: false
         };
     },
     computed: {
@@ -79,6 +90,7 @@ export default {
     methods: {
         getItems(languageChanged) {
             if (this.currentDiagnosis.length === 0 || languageChanged) {
+                this.loadingError = false;
                 this.loading = true;
                 this.$store
                     .dispatch(CLINIC_DIAGNOSIS_GET)
@@ -87,6 +99,7 @@ export default {
                         this.recalculateItemsLocal = !this.recalculateItemsLocal;
                     })
                     .catch(err => {
+                        this.loadingError = true;
                         this.loading = false;
                         throw new Error(err);
                     });

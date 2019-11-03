@@ -146,10 +146,10 @@ export default {
             if (this.originalLocations === undefined) {
                 return true;
             }
-            if (this.lodash.isEmpty(this.originalLocations)) {
+            if (this._.isEmpty(this.originalLocations)) {
                 return true;
             }
-            return !this.lodash.isEmpty(this.diagnoseLocal.teeth);
+            return !this._.isEmpty(this.diagnoseLocal.teeth);
         }
     },
     computed: {

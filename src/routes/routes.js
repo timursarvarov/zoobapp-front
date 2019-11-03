@@ -342,7 +342,6 @@ const patientPages = {
                         treatmentchild: load('Pages/Patient/PatientTreatment/PatientTreatment'),
                         search: load('Pages/Patient/PatientTreatment/PatientItemsSearch/PatientProceduresSearch')
                     },
-                    redirect: '/:lang/patient/:patientID/treatment/plan',
                     children: [
                         {
                             path: 'diagnosis',

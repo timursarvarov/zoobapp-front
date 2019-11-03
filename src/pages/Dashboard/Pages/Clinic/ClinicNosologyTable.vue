@@ -306,12 +306,12 @@ export default {
     },
     watch: {
         searchQuery(value) {
-            let result = this.lodash.clone(this.tableData);
+            let result = this._.clone(this.tableData);
             if (value !== '') {
                 result = this.fuseSearch.search(this.searchQuery);
             }
             console.log(value, this.searchedData, this.fuseSearch);
-            this.searchedData = this.lodash.clone(result);
+            this.searchedData = this._.clone(result);
         },
         selectedItems() {
             this.showSnackbar = this.selectedItems.length > 0;
@@ -326,7 +326,7 @@ export default {
             handler(value) {
                 this.initiateFuseSearch();
                 this.searchQuery = '';
-                this.searchedData = this.lodash.clone(value);
+                this.searchedData = this._.clone(value);
             }
         }
     },

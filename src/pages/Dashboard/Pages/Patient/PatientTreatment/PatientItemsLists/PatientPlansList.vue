@@ -87,6 +87,16 @@ import components from '@/components';
 export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
+            if (!to.params.planID && vm.currentPlanID) {
+                vm.$router.push({
+                    name: 'procedures',
+                    params: {
+                        lang: vm.$i18n.locale,
+                        patientID: vm.patient.ID,
+                        planID: vm.currentPlanID
+                    }
+                });
+            }
             vm.deleteTabStyle();
         });
     },
@@ -124,6 +134,12 @@ export default {
     components: {
         ...components
         // DeleteForm,
+    },
+    props: {
+        canRedirect: {
+            type: Boolean,
+            default: true
+        }
     },
     data() {
         return {

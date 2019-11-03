@@ -193,7 +193,7 @@
                     </md-field>
                 </div>
                 <div class="md-layout-item md-size-100 text-right">
-                    <md-button :disabled="lodash.isEmpty(changedFields) || loading" class="md-raised md-success mt-4" @click="updateProfile">
+                    <md-button :disabled="_.isEmpty(changedFields) || loading" class="md-raised md-success mt-4" @click="updateProfile">
                         <span v-if="loading">
                             <md-progress-spinner class="t-white" :md-diameter="12" :md-stroke="2" md-mode="indeterminate" />
                             {{ $t(`${$options.name}.loading`) }}
@@ -279,7 +279,7 @@ export default {
         changedFields() {
             const fields = {};
             Object.keys(this.user).forEach(key => {
-                if (!this.lodash.isEqual(this.user[key], this.copiedUser[key])) {
+                if (!this._.isEqual(this.user[key], this.copiedUser[key])) {
                     fields[key] = this.user[key];
                 }
             });
@@ -302,7 +302,7 @@ export default {
         }
     },
     created() {
-        this.copiedUser = this.lodash.clone(this.user);
+        this.copiedUser = this._.clone(this.user);
     },
     methods: {
         focusOn(ref) {
@@ -330,7 +330,7 @@ export default {
                         })
                         .then(response => {
                             if (response) {
-                                this.copiedUser = this.lodash.clone(response);
+                                this.copiedUser = this._.clone(response);
                                 this.$store.dispatch(NOTIFY, {
                                     settings: {
                                         message: 'Updated',

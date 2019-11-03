@@ -30,13 +30,13 @@
                         </h5>
                         <span>
                             <span v-if="hasLocationKeyOrSelectedTeeth()" class="category">
-                                <span v-if="lodash.isEmpty(itemToCreate.teeth)">{{ $t(`${$options.name}.selectTooth`) }}</span>
+                                <span v-if="_.isEmpty(itemToCreate.teeth)">{{ $t(`${$options.name}.selectTooth`) }}</span>
                                 <span v-else>
                                     <slide-y-down-transition>
-                                        <span v-show="!lodash.isEmpty(originalItem.locations)">For:</span>
+                                        <span v-show="!_.isEmpty(originalItem.locations)">For:</span>
                                     </slide-y-down-transition>
                                     <slide-y-down-transition>
-                                        <span v-show="lodash.isEmpty(originalItem.locations)">{{ $t(`${$options.name}.teethWithLocations`) }}</span>
+                                        <span v-show="_.isEmpty(originalItem.locations)">{{ $t(`${$options.name}.teethWithLocations`) }}</span>
                                     </slide-y-down-transition>
                                 </span>
                                 <transition-group name="list">
@@ -267,13 +267,13 @@ export default {
             return !this.itemToCreate.ID;
         },
         needToSaveEdited() {
-            return !this.lodash.isEqual(this.itemToCreate.teeth, this.itemToCompare.teeth);
+            return !this._.isEqual(this.itemToCreate.teeth, this.itemToCompare.teeth);
             // if (!this.currentTab || this.currentTab === 'locations') {
             // }
             // return false;
         },
         needToSaveDescription() {
-            return !this.lodash.isEqual(this.itemToCreate.description, this.itemToCompare.description);
+            return !this._.isEqual(this.itemToCreate.description, this.itemToCompare.description);
         },
 
         getItemCatalogFieldName() {
@@ -304,7 +304,7 @@ export default {
                         response => {
                             this.itemToCreate.ID = response.ID;
                             this.itemToCreate.teeth = response.teeth;
-                            this.itemToCompare = this.lodash.cloneDeep(response);
+                            this.itemToCompare = this._.cloneDeep(response);
                             this.isLoading = false;
                             resolve(true);
                         },
@@ -341,7 +341,7 @@ export default {
                         response => {
                             this.itemToCreate.ID = response.ID;
                             this.itemToCreate.teeth = response.teeth;
-                            this.itemToCompare = this.lodash.cloneDeep(response);
+                            this.itemToCompare = this._.cloneDeep(response);
                             this.isLoading = false;
                             resolve(true);
                         },
@@ -377,7 +377,7 @@ export default {
                         response => {
                             this.itemToCreate.ID = response.ID;
                             this.itemToCreate.teeth = response.teeth;
-                            this.itemToCompare = this.lodash.cloneDeep(response);
+                            this.itemToCompare = this._.cloneDeep(response);
                             this.isLoading = false;
                             resolve(true);
                         },

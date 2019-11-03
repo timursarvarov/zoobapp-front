@@ -1,6 +1,7 @@
 <template lang="html">
     <div>
         <t-collapse-search
+            v-if="!loadingError"
             :style="[{ 'max-heigfht': `${customHeight}px` }]"
             class="set-procedure-form"
             :items="currentAnamnesis"
@@ -12,8 +13,13 @@
             class-type="success"
             type="procedures"
             @onSetFavoritem="setFavoriteItems"
-            @onSelected="selectItem"
-        />
+            @onSelected="selectItem">
+        </t-collapse-search>
+        <md-empty-state v-else :md-label="$t(`${$options.name}.noItemsTitle`)" :md-description="$t(`${$options.name}.noItemsDescription`)">
+            <md-button class="md-success md-raised" @click="getItems">
+                {{ $t(`${$options.name}.retry`) }}
+            </md-button>
+        </md-empty-state>
     </div>
 </template>
 
@@ -24,6 +30,7 @@ import components from '@/components';
 import { tObjProp } from '@/mixins';
 
 export default {
+    name:'PatientAnamnesisSearch',
     components: {
         ...components
     },
@@ -49,7 +56,7 @@ export default {
     data() {
         return {
             recalculateItemsLocal: false,
-            selecteditemLocal: {},
+            loadingError: false,
             loading: false,
             lastAgeCategory: 0
         };
@@ -79,6 +86,7 @@ export default {
     methods: {
         getItems(languageChanged) {
             if (this.currentAnamnesis.length === 0 || languageChanged) {
+                this.loadingError = false;
                 this.loading = true;
                 this.$store
                     .dispatch(CLINIC_PROCEDURES_GET)
@@ -87,6 +95,7 @@ export default {
                         this.recalculateItemsLocal = !this.recalculateItemsLocal;
                     })
                     .catch(err => {
+                        this.loadingError = true;
                         this.loading = false;
                         throw new Error(err);
                     });

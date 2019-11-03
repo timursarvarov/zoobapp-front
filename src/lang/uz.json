@@ -169,6 +169,11 @@
 		"selected": "Tanlangan",
 		"unselect": "Tanlovni bekor qilish"
 	},
+	"PatientAnamnesisSearch": {
+		"noItemsDescription": "Afsuski, protseduralar yuklanmadi, ulanishni tekshiring va qaytadan urining",
+		"noItemsTitle": "Afsuski, anamnezga oid muolajalar ro'yxati yuklanmadi",
+		"retry": "Qayta urinish"
+	},
 	"PatientBilling": {
 		"invoices": "Hisob-fakturalar",
 		"payments": "To'lovlar",
@@ -211,6 +216,11 @@
 		"showRating": "Reytingni ko'rsatish",
 		"source": "@:common.source",
 		"yearsOld": "@:common.yearsOld"
+	},
+	"PatientDiagnosisSearch": {
+		"noItemsDescription": "Afsuski, tashxislar yuklanmadi, ulanishni tekshiring va qaytadan urining",
+		"noItemsTitle": "Afsuski, tashxislar yuklanmadi.",
+		"retry": "Qayta urinish"
 	},
 	"PatientFiles": {
 		"addFileDescription": "Bu erga bosing yoki ba'zi fayllarni tashlab yuboring",
@@ -293,8 +303,11 @@
 	},
 	"PatientProceduresSearch": {
 		"addNewPlan": "Yangi reja qo'shish",
+		"noItemsDescription": "Afsuski, protseduralar yuklanmadi, ulanishni tekshiring va qaytadan urining",
+		"noItemsTitle": "Afsuski, muolajalar ro'yxati yuklanmadi",
 		"noPlansDescription": "Jarayonni amalga oshirish uchun siz avval reja tuzishingiz kerak",
-		"noPlansTitle": "Yaratilgan rejalar yo'q"
+		"noPlansTitle": "Hech qanday reja topilmadi",
+		"retry": "Qayta urinish"
 	},
 	"PatientProfile": {
 		"BIO": "BIO",

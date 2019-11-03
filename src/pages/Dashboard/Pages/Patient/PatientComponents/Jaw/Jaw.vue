@@ -89,7 +89,6 @@
                                 :ref="toothId"
                                 :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width * toothWitdh}vmax` }]"
                             >
-                                <!-- { minWidth: `${jawSVG[toothId].width * ($mq.phone ? 0.09 : 0.05)}vmax` } -->
                                 <svg
                                     preserveAspectRatio="xMidYMid meet"
                                     xmlns="http://www.w3.org/2000/svg"
@@ -141,7 +140,6 @@
                                 :ref="toothId"
                                 :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width * toothWitdh}vmax` }]"
                             >
-                                <!-- { minWidth: `${jawSVG[toothId].width * ($mq.phone ? 0.09 : 0.05)}vmax` } -->
                                 <svg
                                     preserveAspectRatio="xMidYMid meet"
                                     class="tooth-content"
@@ -193,7 +191,6 @@
                                 :ref="toothId"
                                 :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width * toothWitdh}vmax` }]"
                             >
-                                <!-- { minWidth: `${jawSVG[toothId].width * ($mq.phone ? 0.09 : 0.05)}vmax` } -->
                                 <svg
                                     preserveAspectRatio="xMidYMid meet"
                                     :class="[{ selected: isToothSelected(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"
@@ -243,7 +240,6 @@
                                 :ref="toothId"
                                 :style="[{ width: printMode ? `${jawSVG[toothId].width}px` : `${jawSVG[toothId].width * toothWitdh}vmax` }]"
                             >
-                                <!-- { minWidth: `${jawSVG[toothId].width * ($mq.phone ? 0.09 : 0.05)}vmax` } -->
                                 <svg
                                     preserveAspectRatio="xMidYMid meet"
                                     :class="[{ selected: isToothSelected(toothId) }, { isToothShownDiagnose: isToothShownDiagnose(toothId) }]"
@@ -413,7 +409,7 @@ export default {
         //         if (type !== this.type) {
         //             Object.keys(this.jaw[type]).forEach(toothId => {
         //                 if (!teeth.includes(toothId)) {
-        //                     if (!this.lodash.isEmpty(this.jaw[type][toothId])) {
+        //                     if (!this._.isEmpty(this.jaw[type][toothId])) {
         //                         teeth.push(toothId);
         //                     }
         //                 }
@@ -429,12 +425,12 @@ export default {
             return this.hasBabyTeeth;
         },
         hasAdultTeeth() {
-            if (this.lodash.isEmpty(this.jaw)) return false;
+            if (this._.isEmpty(this.jaw)) return false;
             let has = false;
             Object.keys(this.jaw).forEach(type => {
-                if (!this.lodash.isEmpty(this.jaw[type])) {
+                if (!this._.isEmpty(this.jaw[type])) {
                     Object.keys(this.jaw[type]).forEach(toothID => {
-                        if (!this.lodash.isEmpty(this.jaw[type][toothID])) {
+                        if (!this._.isEmpty(this.jaw[type][toothID])) {
                             has = this.adultTeeth.includes(`${toothID}`) || has;
                         }
                     });
@@ -443,12 +439,12 @@ export default {
             return has;
         },
         hasBabyTeeth() {
-            if (this.lodash.isEmpty(this.jaw)) return false;
+            if (this._.isEmpty(this.jaw)) return false;
             let has = false;
             Object.keys(this.jaw).forEach(type => {
-                if (!this.lodash.isEmpty(this.jaw[type])) {
+                if (!this._.isEmpty(this.jaw[type])) {
                     Object.keys(this.jaw[type]).forEach(toothID => {
-                        if (!this.lodash.isEmpty(this.jaw[type][toothID])) {
+                        if (!this._.isEmpty(this.jaw[type][toothID])) {
                             has = this.babyTeeth.includes(`${toothID}`) || has;
                         }
                     });
@@ -620,7 +616,7 @@ export default {
         },
         toggleTeeth(teethToToggle) {
             const existingTeeth = [];
-            const selTeeth = this.lodash.cloneDeep(this.selectedTeethLocal);
+            const selTeeth = this._cloneDeep(this.selectedTeethLocal);
             this.selectedTeethLocal = [];
 
             for (let index = 0; index < teethToToggle.length; index += 1) {
