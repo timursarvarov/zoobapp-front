@@ -7,7 +7,7 @@
         :is-dialog-visible.sync="showAddItemWizard"
         :current-type="type"
         :single-item-name="singleItemName"
-    />
+    ></t-wizard-add-item>
 </template>
 <script>
 import { mapGetters } from 'vuex';

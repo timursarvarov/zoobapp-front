@@ -74,8 +74,6 @@
                             :original-item="originalItem"
                             :item-to-create="itemToCreate || null"
                             :size="jawListSize"
-                            :currency-code="currentClinic.currencyCode"
-                            :manipulations="currentClinic.manipulationsComputed"
                         />
 <!--                            @addManipulations="manipulationsCreated"-->
                     </t-wizard-tab>

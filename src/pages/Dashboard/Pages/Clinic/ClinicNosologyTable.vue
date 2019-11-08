@@ -95,7 +95,7 @@
                         <div v-else-if="field.key === 'price'" class="price">
                             <span class="md-title price_title">{{ item.price }}</span>
                             &nbsp;
-                            <small>{{ currentClinic.currencyCode }}</small>
+                            <small>{{ currency }}</small>
                         </div>
                         <div v-else-if="field.key === 'categoryCode'" class="categoryCode">
                             <span>{{ item.categoryCode }}</span>
@@ -239,9 +239,9 @@ export default {
     },
     computed: {
         ...mapGetters({
-            currentClinic: 'getCurrentClinic',
             patient: `${STORE_KEY_PATIENT}/getPatient`,
-            getAvailableManipulationsTableColumns: 'getAvailableManipulationsTableColumns'
+            getAvailableManipulationsTableColumns: 'getAvailableManipulationsTableColumns',
+            currency: 'getCurrency'
         }),
         slotsPassed() {
             return this.$slots;

@@ -11,7 +11,7 @@
                             { 'md-error': errors.has('paymentAmmount') }
                         ]"
                     >
-                        <label>Pay {{ currencyCode }}</label>
+                        <label>Pay {{ currency }}</label>
                         <md-input
                             ref="paymentAmmount"
                             v-model="payment.ammount"
@@ -160,9 +160,6 @@ export default {
             clinic: 'getCurrentClinic',
             currency: 'getCurrency'
         }),
-        currencyCode() {
-            return this.clinic.currencyCode;
-        },
         headers() {
             const headers = [
                 {
@@ -171,7 +168,7 @@ export default {
                     subTitlePostfix: 'procedures',
                     subTitleToFix: 0,
                     valuePrefix: 0,
-                    valuePostfix: this.currencyCode,
+                    valuePostfix: this.currency,
                     valueToFix: 2
                 },
                 {
@@ -181,7 +178,7 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: 0,
                     valueToFix: 2,
-                    valuePostfix: this.currencyCode
+                    valuePostfix: this.currency
                 },
                 {
                     title: 'Payments',
@@ -190,7 +187,7 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: 0,
                     valueToFix: 2,
-                    valuePostfix: this.currencyCode
+                    valuePostfix: this.currency
                 },
                 {
                     title: 'Patient debt',
@@ -199,7 +196,7 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: 0,
                     valueToFix: 2,
-                    valuePostfix: this.currencyCode
+                    valuePostfix: this.currency
                 }
             ];
             return headers;

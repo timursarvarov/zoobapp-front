@@ -13,10 +13,10 @@
                 </md-table-cell>
                 <md-table-cell>*</md-table-cell>
                 <md-table-cell md-label="Price">
-                    <small>{{ (item.price ? item.price : 0).toFixed(2) }}</small>
+                    <small>{{ (item.price ? item.price : 0) | currency('') }}</small>
                 </md-table-cell>
                 <md-table-cell md-label="Total">
-                    <small>{{ item.totalPrice.toFixed(2) }} &nbsp;{{ currentClinic.currencyCode }}</small>
+                    <small>{{ item.totalPrice | currency }}</small>
                 </md-table-cell>
             </md-table-row>
         </md-table>

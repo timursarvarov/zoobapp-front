@@ -92,7 +92,6 @@ export default {
                 symbolPosition: this.currentClinic.symbolPosition || 'front',
                 symbolSpacing: this.currentClinic.symbolSpacing !== undefined ? this.currentClinic.symbolSpacing : true
             };
-            console.log(this.currentClinic)
             this.$CurrencyFilter.setConfig(currencySettings);
         },
         setMomentLang(val) {

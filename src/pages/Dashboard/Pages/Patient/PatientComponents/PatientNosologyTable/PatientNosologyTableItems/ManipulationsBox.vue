@@ -32,6 +32,5 @@ export default {
             allManipulations: `${STORE_KEY_PATIENT}/getAllManipulations`
         })
     },
-    methods() {}
 };
 </script>

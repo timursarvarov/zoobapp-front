@@ -99,7 +99,7 @@
                     </div>
                     <div class="manipulations-input md-layout-item md-size-25">
                         <md-field class>
-                            <label>{{ $t(`${$options.name}.price`) }} {{ currencyCode }}</label>
+                            <label>{{ $t(`${$options.name}.price`) }} {{ currency }}</label>
                             <md-input
                                 id="price"
                                 ref="price"
@@ -223,7 +223,7 @@
                                 <div class="md-table-head-label">
                                     {{ $t(`${$options.name}.totalPrice`) }}:
                                     <animated-number :value="totalPrice" />
-                                    {{ currencyCode }}
+                                    {{ currency }}
                                 </div>
                             </div>
                         </th>
@@ -282,18 +282,10 @@ export default {
         event: 'updateDescription'
     },
     props: {
-        currencyCode: {
-            type: String,
-            default: () => ''
-        },
         selectedTeeth: {
             type: Array,
             default: () => []
         },
-        // manipulations: {
-        //     type: Array,
-        //     default: () => [],
-        // },
         size: {
             type: Object,
             default: () => {}
@@ -340,7 +332,8 @@ export default {
     computed: {
         ...mapGetters({
             allManipulations: `${STORE_KEY_PATIENT}/getAllManipulations`,
-            clinicManipulations: 'getCurrentManipulations'
+            clinicManipulations: 'getCurrentManipulations',
+            currency: 'getCurrency'
         }),
         currentManipulations() {
             if( this.itemToCreate.manipulations ){

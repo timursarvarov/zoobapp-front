@@ -31,7 +31,7 @@
                 <animated-number :value="selectedItems.length" />
                 {{ $tc(`${$options.name}.proceduresFor`, selectedItems.length) }}
                 <animated-number :value="totalPrice" />
-                {{ currentClinic.currencyCode }}
+                {{ currency }}
             </div>
             <div>
                 <md-button
@@ -81,6 +81,7 @@ export default {
             currentClinic: 'getCurrentClinic',
             availableBillingTableColumns: 'getAvailableBillingTableColumns',
             aproovedPlansProcedures: `${STORE_KEY_PATIENT}/getUnbilledAndApprovedPlansProcedures`,
+            currency: 'getCurrency',
             manipulationsByPlanID: `${STORE_KEY_PATIENT}/getManipulationsByPlanID`
         }),
         filteredItems() {
@@ -112,7 +113,7 @@ export default {
                     subTitlePrefix: null,
                     subTitlePostfix: null,
                     valuePrefix: 2,
-                    valuePostfix: this.currentClinic.currencyCode
+                    valuePostfix: this.currency
                 },
                 {
                     title: this.$t(`${this.$options.name}.unbilledProcedures`),
@@ -148,7 +149,7 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: 0,
                     valueToFix: 2,
-                    valuePostfix: this.currentClinic.currencyCode
+                    valuePostfix: this.currency
                 }
             ];
             return headers;
@@ -174,7 +175,7 @@ export default {
         },
         getPlanTotalPrice(planID) {
             const totalPrice = this.manipulationsByPlanID(planID).reduce((a, b) => a + (b.totalPrice || 0), 0);
-            return totalPrice ? ` - ${totalPrice.toFixed(2)} ${this.currentClinic.currencyCode}` : '';
+            return totalPrice ? ` - ${totalPrice.toFixed(2)} ${this.currency}` : '';
         }
     }
 };

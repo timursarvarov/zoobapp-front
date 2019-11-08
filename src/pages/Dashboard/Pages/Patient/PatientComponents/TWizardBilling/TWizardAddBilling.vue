@@ -31,7 +31,7 @@
                             ref="step1"
                             v-model="selectedProceduresL"
                             :all-procedures="allProcedures"
-                            :currency-code="currencyCode"
+                            :currency-code="currency"
                             :invoice-to-create="invoiceToCreate"
                             @onCreateInvoice="setInvoice"
                         />
@@ -43,7 +43,7 @@
                         </template>
                         <t-add-payment
                             ref="step2"
-                            :currency-code="currencyCode"
+                            :currency-code="currency"
                             :invoice="invoiceToCreate"
                             @on-validated="isDialogVisibleL = false"
                         />
@@ -85,7 +85,7 @@ export default {
             type: Array,
             default: () => []
         },
-        currencyCode: {
+        currency: {
             type: String,
             default: () => ''
         }

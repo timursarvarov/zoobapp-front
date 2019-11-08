@@ -35,7 +35,7 @@
                                             //! TODO из бэка брать
                                             33333
                                         }}
-                                        {{ currencyCode }}
+                                        {{ currency }}
                                     </span>
                                 </md-button>
                             </div>
@@ -97,7 +97,7 @@
                         </div>
                         // !TODO из бэка
                         <animated-number :to-fix="2" :value="33333" />
-                        &nbsp;{{ currencyCode }}
+                        &nbsp;{{ currency}}
                     </div>
                     <div class="procedure_header-actions">
                         <md-button class="md-just-icon md-round md-simple" @click="setItemToDelete(p)">
@@ -118,7 +118,7 @@
                         </div>
                         <h3 class="title">
                             <animated-number :to-fix="2" :value="totalPrice" />
-                            <small>&nbsp;{{ currencyCode }}</small>
+                            <small>&nbsp;{{ currency }}</small>
                         </h3>
                     </div>
                 </div>
@@ -179,12 +179,12 @@
                         <p class="category" :style="{ color: getGreenToRed(invoice.discount) }">
                             <b>After Discount </b>&nbsp;( -
                             <animated-number :to-fix="2" :value="discountSum || 0" />
-                            <small>&nbsp;{{ currencyCode }}</small
+                            <small>&nbsp;{{ currency }}</small
                             >)
                         </p>
                         <h3 :style="{ color: getGreenToRed(invoice.discount) }" class="title">
                             <animated-number :to-fix="2" :value="afterDiscount" />
-                            <small>&nbsp;{{ currencyCode }}</small>
+                            <small>&nbsp;{{ currency }}</small>
                         </h3>
                     </div>
                 </div>
@@ -234,12 +234,12 @@
                         <p class="category">
                             <b>After Tax</b>&nbsp;(
                             <animated-number :to-fix="2" :value="taxSum" />
-                            <small>&nbsp;{{ currencyCode }}</small
+                            <small>&nbsp;{{ currency }}</small
                             >)
                         </p>
                         <h3 class="title">
                             <animated-number :to-fix="2" :value="afterTax" />
-                            <small>&nbsp;{{ currencyCode }}</small>
+                            <small>&nbsp;{{ currency }}</small>
                         </h3>
                     </div>
                 </div>
@@ -313,7 +313,7 @@
                     </p>
                     <h2 class="title">
                         <animated-number :to-fix="2" :value="afterTax" />
-                        <small>&nbsp;{{ currencyCode }}</small>
+                        <small>&nbsp;{{ currency }}</small>
                     </h2>
                 </div>
             </div>
@@ -431,7 +431,7 @@ export default {
             patient: `${STORE_KEY_PATIENT}/getPatient`,
             allManipulations: `${STORE_KEY_PATIENT}/getAllManipulations`,
             getUnbilledAndApprovedPlansProcedures: `${STORE_KEY_PATIENT}/getUnbilledAndApprovedPlansProcedures`,
-            clinic: 'getCurrentClinic'
+            currency: 'getCurrency'
         }),
         headers() {
             const headers = [
@@ -441,7 +441,7 @@ export default {
                     subTitlePostfix: 'procedures',
                     subTitleToFix: 0,
                     valuePrefix: this.totalPrice,
-                    valuePostfix: this.currencyCode,
+                    valuePostfix: this.currency,
                     valueToFix: 2
                 },
                 {
@@ -451,7 +451,7 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: parseInt(this.discountSum, 10),
                     valueToFix: 2,
-                    valuePostfix: this.currencyCode
+                    valuePostfix: this.currency
                 },
                 {
                     title: 'Tax',
@@ -460,7 +460,7 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: parseInt(this.taxSum, 10),
                     valueToFix: 2,
-                    valuePostfix: this.currencyCode
+                    valuePostfix: this.currency
                 },
                 {
                     title: 'Total sum',
@@ -470,13 +470,10 @@ export default {
                     subTitleToFix: 0,
                     valuePrefix: parseInt(this.afterTax, 10),
                     valueToFix: 2,
-                    valuePostfix: this.currencyCode
+                    valuePostfix: this.currency
                 }
             ];
             return headers;
-        },
-        currencyCode() {
-            return this.clinic.currencyCode;
         },
         totalPrice() {
             // ! TODO из бэка берется
