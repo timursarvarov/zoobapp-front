@@ -1,11 +1,10 @@
 <template>
     <div class="manipulations">
-        <small v-for="(m, i) in getManipulationsByProcedureID(procedureId)" :key="m.ID" class="items-manipulations_wrapper">
-            <span class="text-left">{{ i + 1 }}. {{ m.title }}</span>
+        <small v-for="(mID, i) in manipulationsIDs" :key="mID" class="items-manipulations_wrapper">
+            <span class="text-left">{{ i + 1 }}. {{ allManipulations[mID].title }}</span>
             <div class="text-right">
-                {{ m.qty }} * {{ m.price || 0 | numSeparator }} =
-                {{ m.totalPrice || 0 | numSeparator }}
-                {{ currentClinic.currencyCode }}
+                {{ allManipulations[mID].qty }} * {{ allManipulations[mID].price | currency('') }} =
+                {{ allManipulations[mID].totalPrice | currency }}
             </div>
             <br />
         </small>
@@ -19,9 +18,9 @@ export default {
     name: 'ManipulationsBox',
     components: {},
     props: {
-        procedureId: {
-            type: Number,
-            default: () => null
+        manipulationsIDs: {
+            type: Array,
+            default: () => []
         }
     },
     data() {
@@ -30,8 +29,9 @@ export default {
     computed: {
         ...mapGetters({
             currentClinic: 'getCurrentClinic',
-            getManipulationsByProcedureID: `${STORE_KEY_PATIENT}/getManipulationsByProcedureID`
+            allManipulations: `${STORE_KEY_PATIENT}/getAllManipulations`
         })
-    }
+    },
+    methods() {}
 };
 </script>

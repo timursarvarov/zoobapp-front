@@ -72,7 +72,11 @@ export default {
             patient: `${STORE_KEY_PATIENT}/getPatient`,
             currentClinic: 'getCurrentClinic',
             getPatientAnamnesis: `${STORE_KEY_PATIENT}/getPatientAnamnesis`
-        })
+        }),
+        getProcedureprice(){
+            //!TODO из бэка брать стоимость прайса
+            return 33333
+        },
     },
     watch: {
         getPatientAnamnesis() {
@@ -128,8 +132,8 @@ export default {
             }
             if (currentSort === 'price') {
                 vm.sortedData = vm.getPatientAnamnesis.sort((a, b) => {
-                    const aTeethPrice = this.getManipulationsByProcedureID(a.ID).reduce((a, b) => a + b.totalPrice, 0) || 0;
-                    const bTeethPrice = this.getManipulationsByProcedureID(b.ID).reduce((a, b) => a + b.totalPrice, 0) || 0;
+                    const aTeethPrice = this.getProcedureprice || 0;
+                    const bTeethPrice = this.getProcedureprice || 0;
                     const orderLocal = currentSortOrder;
                     const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
                     const aVal = aTeethPrice === null ? dflt : aTeethPrice;

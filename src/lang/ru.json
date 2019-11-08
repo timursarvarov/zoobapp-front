@@ -236,6 +236,7 @@
 		"createdBy": "@:common.createdBy",
 		"description": "@:common.description",
 		"editorTitle": "Установить столбцы таблицы",
+		"manipulationNum": "нет манипуляций | {n} манипуляция |  {n} манипуляции | {n} манипуляция ",
 		"manipulations": "@:common.manipulations",
 		"noFoundDescription": "Ничего не найдено Прокрутите вверх и создайте новый элемент .",
 		"noFoundTitle": "Нечего показать",
@@ -266,7 +267,10 @@
 	},
 	"PatientPlansList": {
 		"addNewPlan": "Добавить новый план",
+		"approve": "Утвердить",
 		"cancel": "Отменить",
+		"changePlanTitle": "Изменить название плана",
+		"currentPlan": "Текущий план: ",
 		"deletePlan": "@:common.delete",
 		"deletePlanForm": "Удалить план?",
 		"deleting": "Удаление ...",
@@ -276,7 +280,9 @@
 		"noPlansWithIdTitle": "Нет плана с идентификатором {ID}",
 		"planDeleted": "План удален",
 		"planTotal": "Всего:",
+		"printPlan": "Печать плана",
 		"scrollTop": "Прокрутить вверх ",
+		"selectPlan": "Выберите план",
 		"somethingWrong": "Что-то не так, план не удален"
 	},
 	"PatientProceduresList": {
@@ -285,7 +291,8 @@
 		"complete": "Отметить как завершенный",
 		"createInvoice": "Создать счет",
 		"created": "Создан",
-		"deletePlan": "Удалить план",
+		"deletePlan": "Удалить план { planName } ?",
+		"noPlanTitle": "План с идентификатором {id} не найден",
 		"noProceduresDescription": "Прокрутите вверх и создайте новый",
 		"noProceduresTitle": "Процедуры не найдены",
 		"planName": "Название плана",
@@ -293,13 +300,15 @@
 		"proceduresFor": "процедур на | процедура на  | процедуры на | процедур на",
 		"scrollTop": "Прокрутить вверх ",
 		"selectAll": "Выбрать все",
+		"selectPlan": "Выберите план",
 		"selected": "Выбранно",
 		"totalManipulations": "Всего манипуляций",
 		"totalPrice": "Итоговая цена",
 		"totalProcedures": "Всего процедур",
 		"unApprove": "Не одобрить план",
 		"unbilledProcedures": "Неучтенные процедуры",
-		"unselect": "Отменить выбор"
+		"unselect": "Отменить выбор",
+		"updated": "Oбновлен"
 	},
 	"PatientProceduresSearch": {
 		"addNewPlan": "Добавить новый план",

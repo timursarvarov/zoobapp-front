@@ -236,6 +236,7 @@
 		"createdBy": "@:common.createdBy",
 		"description": "@:common.description",
 		"editorTitle": "Jadval ustunlarini o'rnating",
+		"manipulationNum": "manipulyatsiyalar yo'q | {n} manipulyatsiya | {n} manipulyatsiya",
 		"manipulations": "@:common.manipulations",
 		"noFoundDescription": "Hech qanday element topilmadi. Yuqoriga o'ting va yangisini yarating.",
 		"noFoundTitle": "Hech narsa ko'rsatilmaydi",
@@ -266,7 +267,10 @@
 	},
 	"PatientPlansList": {
 		"addNewPlan": "Yangi reja qo'shing",
+		"approve": "Tasdiqlash",
 		"cancel": "Bekor qilish",
+		"changePlanTitle": "Reja nomini o'zgartirish",
+		"currentPlan": "Joriy reja:  ",
 		"deletePlan": "@:common.delete",
 		"deletePlanForm": "Rejani yo'q qilmoqchimisiz?",
 		"deleting": "O‘chirilmoqda ...",
@@ -276,7 +280,9 @@
 		"noPlansWithIdTitle": " {ID}ID raqami bilan reja yo'q",
 		"planDeleted": "Reja o‘chirib tashlandi",
 		"planTotal": "Jami:",
+		"printPlan": "Rejasi chop etish",
 		"scrollTop": "Yuqoriga o‘tkazish",
+		"selectPlan": "Rejani tanlang",
 		"somethingWrong": "Noma'lum, reja o'chirilmadi"
 	},
 	"PatientProceduresList": {
@@ -285,7 +291,8 @@
 		"complete": "To'liq deb belgilang",
 		"createInvoice": "Hisob-fakturani yaratish",
 		"created": "Yaratilgan",
-		"deletePlan": "Rejani o'chirish",
+		"deletePlan": "{ planName }  rejani o'chirish ?",
+		"noPlanTitle": " {id} id rejasi topilmadi",
 		"noProceduresDescription": "Yuqoriga o'ting va yangisini yarating",
 		"noProceduresTitle": "Hech qanday protsedura topilmadi",
 		"planName": "Reja nomi",
@@ -293,13 +300,15 @@
 		"proceduresFor": "protseduralar | protsedura | protseduralar",
 		"scrollTop": "Yuqoriga o‘tkazish",
 		"selectAll": "Hammasini belgilash",
+		"selectPlan": "Rejani tanlang",
 		"selected": "Tanlangan",
 		"totalManipulations": "Umumiy manipulyatsiyalar",
 		"totalPrice": "Umumiy narx",
 		"totalProcedures": "Umumiy protseduralar",
 		"unApprove": "Rejani tasdiqlamang",
 		"unbilledProcedures": "Hisobga olinmagan protseduralar",
-		"unselect": "Tanlovni bekor qilish"
+		"unselect": "Tanlovni bekor qilish",
+		"updated": "Yangilandi"
 	},
 	"PatientProceduresSearch": {
 		"addNewPlan": "Yangi reja qo'shish",

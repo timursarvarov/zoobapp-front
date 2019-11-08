@@ -10,3 +10,4 @@ import './lodash';
 import './vue-i18n';
 import './vue-worker';
 import './vue-match-media';
+import './currency';

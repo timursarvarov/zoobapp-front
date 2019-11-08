@@ -72,12 +72,12 @@
                         <t-item-manipulations
                             ref="manipulations"
                             :original-item="originalItem"
-                            :item-i-d="itemToCreate.ID || null"
+                            :item-to-create="itemToCreate || null"
                             :size="jawListSize"
                             :currency-code="currentClinic.currencyCode"
                             :manipulations="currentClinic.manipulationsComputed"
-                            @addManipulations="manipulationsCreated"
                         />
+<!--                            @addManipulations="manipulationsCreated"-->
                     </t-wizard-tab>
                     <t-wizard-tab v-if="showTab('files')" name="files" :before-change="() => validateStep('files')">
                         <template slot="label">
@@ -105,15 +105,7 @@
 <script>
 import { SlideYDownTransition } from 'vue2-transitions';
 import { mapGetters } from 'vuex';
-// import TItemToothLocations from './TWizardItems/TItemToothLocations';
-// import TItemDescription from './TWizardItems/TItemDescription';
-// import TItemManipulations from './TWizardItems/TItemManipulations';
-// import TItemFiles from './TWizardItems/TItemFiles';
-// import TItemAppointment from './TWizardItems/TItemAppointment';
 import components from '@/components';
-// import SimpleWizard from '../TWizard/Wizard';
-// import WizardTab from '../TWizard/WizardTab';
-
 import { tObjProp } from '@/mixins';
 import { NOTIFY, PATIENT_PROCEDURE_SET, STORE_KEY_PATIENT, PATIENT_DIAGNOSE_SET, PATIENT_ANAMNES_SET, PATIENT_PROCEDURE_UPDATE } from '@/constants';
 
@@ -126,8 +118,6 @@ export default {
         't-item-manipulations': () => import('./TWizardItems/TItemManipulations'),
         't-item-files': () => import('./TWizardItems/TItemFiles'),
         't-item-appointment': () => import('./TWizardItems/TItemAppointment'),
-        // SimpleWizard,
-        // WizardTab,
         ...components
     },
     mixins: [tObjProp],
@@ -173,10 +163,7 @@ export default {
             isLoading: false,
             currentTab: '',
             jawListSize: {},
-            // description: '',
-            // needToSaveEdited: false,
             selectedTeethL: [],
-            // selectedTeethLocalJaw: [],
             itemToCreate: {
                 ID: null,
                 teeth: {},
@@ -205,10 +192,6 @@ export default {
             currentPlan: `${STORE_KEY_PATIENT}/getCurrentPlan`,
             getCurrentClinicOriginalItem: 'getCurrentClinicOriginalItem'
         }),
-        teethToWatch() {
-            return this.itemToCreate.teeth;
-        },
-
         originalDescriptions() {
             if (this.currentType === 'diagnosis') {
                 return this.diagnoseDescriptions;
@@ -268,9 +251,6 @@ export default {
         },
         needToSaveEdited() {
             return !this._.isEqual(this.itemToCreate.teeth, this.itemToCompare.teeth);
-            // if (!this.currentTab || this.currentTab === 'locations') {
-            // }
-            // return false;
         },
         needToSaveDescription() {
             return !this._.isEqual(this.itemToCreate.description, this.itemToCompare.description);
@@ -284,7 +264,7 @@ export default {
                 return 'catalogProcedureID';
             }
             if (this.currentType === 'anamnesis') {
-                return 'catalogProcedureID';
+                return 'catalogAnamnesID';
             }
             return null;
         },
@@ -293,7 +273,6 @@ export default {
                 catalogProcedureID: this.itemToCreate.catalogAnamnesID,
                 teeth: this.itemToCreate.teeth
             };
-            console.log(anamnes);
             this.isLoading = true;
             return new Promise((resolve, reject) => {
                 this.$store
@@ -303,7 +282,8 @@ export default {
                     .then(
                         response => {
                             this.itemToCreate.ID = response.ID;
-                            this.itemToCreate.teeth = response.teeth;
+                            this.$set(this.itemToCreate, 'manipulations', response.manipulations);
+                            this.$set(this.itemToCreate, 'teeth', response.teeth);
                             this.itemToCompare = this._.cloneDeep(response);
                             this.isLoading = false;
                             resolve(true);
@@ -340,7 +320,8 @@ export default {
                     .then(
                         response => {
                             this.itemToCreate.ID = response.ID;
-                            this.itemToCreate.teeth = response.teeth;
+                            this.$set(this.itemToCreate, 'manipulations', response.manipulations);
+                            this.$set(this.itemToCreate, 'teeth', response.teeth);
                             this.itemToCompare = this._.cloneDeep(response);
                             this.isLoading = false;
                             resolve(true);
@@ -577,7 +558,6 @@ export default {
                         });
                         return false;
                     }
-                    console.log('this.isDialogVisibleL');
                     if (res) {
                         return Promise.resolve(this.saveDescription());
                     }

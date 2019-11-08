@@ -88,7 +88,7 @@
                             <small>{{ (item.price ? item.price : 0).toFixed(2) }}</small>
                         </md-table-cell>
                         <md-table-cell md-label="Total">
-                            <small>{{ (item.price * item.num).toFixed(2) }} &nbsp;{{ currencyCode }}</small>
+                            <small>{{ item.price | currency }}</small>
                         </md-table-cell>
                     </md-table-row>
                 </md-table>
@@ -103,7 +103,7 @@
                         </p>
                         <h2 class="title">
                             <!-- <animated-number :toFix="2" :value="afterTax" /> -->
-                            <small>&nbsp;{{ currencyCode }}</small>
+                            <small>&nbsp;{{ currency }}</small>
                         </h2>
                     </div>
                 </div>
@@ -117,7 +117,6 @@
     </div>
 </template>
 <script>
-/* eslint-disable func-names */
 import { SlideYDownTransition } from 'vue2-transitions';
 import TToolbarRow from '@/components/CustomComponents/TToolbarRow';
 // import AnimatedNumber from '@/components/AnimatedNumber';
@@ -158,10 +157,8 @@ export default {
     computed: {
         ...mapGetters({
             patient: `${STORE_KEY_PATIENT}/getPatient`,
-            getManipulationsByProcedureID: `${STORE_KEY_PATIENT}/getManipulationsByProcedureID`,
-            getManipulationsByProcedureIDs: `${STORE_KEY_PATIENT}/getManipulationsByProcedureIDs`,
-            getUnbilledAndApprovedPlansProcedures: `${STORE_KEY_PATIENT}/getUnbilledAndApprovedPlansProcedures`,
-            clinic: 'getCurrentClinic'
+            clinic: 'getCurrentClinic',
+            currency: 'getCurrency'
         }),
         currencyCode() {
             return this.clinic.currencyCode;

@@ -236,6 +236,7 @@
 		"createdBy": "@:common.createdBy",
 		"description": "@:common.description",
 		"editorTitle": "Set table columns",
+		"manipulationNum": "no manipulations | {n} manipulation | {n} manipulation",
 		"manipulations": "@:common.manipulations",
 		"noFoundDescription": "No elements found. Scroll top, and create new one.",
 		"noFoundTitle": "Nothing to show ",
@@ -266,7 +267,10 @@
 	},
 	"PatientPlansList": {
 		"addNewPlan": "Add new plan",
+		"approve": "Approve",
 		"cancel": "Cancel",
+		"changePlanTitle": "Change plan title",
+		"currentPlan": "Current plan: ",
 		"deletePlan": "@:common.delete",
 		"deletePlanForm": "Delete plan?",
 		"deleting": "Deleting...",
@@ -276,7 +280,9 @@
 		"noPlansWithIdTitle": "No Plan with Id {ID}",
 		"planDeleted": "Plan deleted",
 		"planTotal": "Total: ",
+		"printPlan": "Print plan",
 		"scrollTop": "Scroll Top",
+		"selectPlan": "Select plan",
 		"somethingWrong": "Something wrong, plan don't deleted"
 	},
 	"PatientProceduresList": {
@@ -285,7 +291,8 @@
 		"complete": "Mark as complete",
 		"createInvoice": "Create invoice",
 		"created": "Created",
-		"deletePlan": "Delete plan",
+		"deletePlan": "Delete plan { planName } ? ",
+		"noPlanTitle": "Plan with id {id} not found",
 		"noProceduresDescription": "Scroll top, and create a new one",
 		"noProceduresTitle": "No procedures found",
 		"planName": "Plan name",
@@ -293,13 +300,15 @@
 		"proceduresFor": "procedures for | procedure for | procedures for",
 		"scrollTop": "Scroll Top",
 		"selectAll": "Select all",
+		"selectPlan": "Select Plan",
 		"selected": "Selected",
 		"totalManipulations": "Total manipulations",
 		"totalPrice": "Total price",
 		"totalProcedures": "Total procedures",
 		"unApprove": "Unapprove Plan",
 		"unbilledProcedures": "Unbilled procedures",
-		"unselect": "Unselect"
+		"unselect": "Unselect",
+		"updated": "Updated"
 	},
 	"PatientProceduresSearch": {
 		"addNewPlan": "Add New Plan",

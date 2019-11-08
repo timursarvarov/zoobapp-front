@@ -16,11 +16,6 @@
             @onSetFavoritem="setFavoriteItems"
             @onSelected="selectItem"
         >
-            <template slot="title-start-2">
-                <md-button key="addplan" class="md-success md-simple" @click="$emit('addPlan')">
-                    <md-icon>add</md-icon> {{ $t(`${$options.name}.addNewPlan`) }}
-                </md-button>
-            </template>
             <div slot="empty-space">
                 <md-empty-state :md-label="$t(`${$options.name}.noPlansTitle`)" :md-description="$t(`${$options.name}.noPlansDescription`)">
                     <md-button class="md-success md-raised" @click="$emit('addPlan')">

@@ -29,8 +29,8 @@ export default {
         return null;
     },
     getCurrentPlan: (state, rootGetters) => {
-        if ((state.plans, rootGetters.getCurrentPlanID)) {
-            return state.plans[rootGetters.getCurrentPlanID];
+        if (state.plans && rootGetters.getCurrentPlanID ) {
+            return state.plans[rootGetters.getCurrentPlanID] || {};
         }
         return {};
     },
@@ -53,67 +53,46 @@ export default {
         return diagnosis;
 
     },
-    getPatientAnamnesis: (state, rootGetters) => {
-        let anamnesis =[];
+    getPatientAnamnesis: (state) => {
         if(state.anamnesis && state.anamnesis.procedures){{
-             anamnesis = rootGetters.getProceduresByIds( state.anamnesis.procedures);
+             return state.anamnesis.procedures.map(ID => state.procedures[ID]);
         }}
-        return anamnesis;
-
+        return [];
     },
     getPatientCurrentPlanProcedures: (state, rootGetters) => {
-        let procedures = [];
         const planID = rootGetters.getCurrentPlanID;
-        if (planID) {
-            const ids = rootGetters.getPatient.plans[planID] && rootGetters.getPatient.plans[planID].procedures ? rootGetters.getPatient.plans[planID].procedures : null ;
+        if (planID && state.plans[planID]) {
+            const ids = state.plans && state.plans[planID].procedures ? state.plans[planID].procedures : null ;
             if (ids && ids.length > 0) {
-                procedures = rootGetters.getProceduresByIds(ids);
+                 return ids.map(ID => state.procedures[ID]);
             }
         }
-        procedures.sort((a, b) => new Date(b.created) - new Date(a.created));
-        return procedures;
+        return [];
     },
+    // возвращает список процедур всех апрувленых планов плюс текущий
     getPatientCurrentAndApprovedPlanProcedures: (state, rootGetters) => {
         if ( isEmpty(state.plans)) return [];
         const currentPlanID = rootGetters.getCurrentPlanID;
+        // получаем список ID текущего плана плюс утвержденные планы планы
         let allPlanIDs = Object.keys(state.plans).filter(
             planID =>
                 state.plans[planID].state === 1 && planID !== currentPlanID
         );
         allPlanIDs.push(currentPlanID);
-        let procedures = [];
         let proceduresIds = [];
         if (allPlanIDs && allPlanIDs.length > 0) {
             allPlanIDs.forEach(planID => {
-                if(state.plans[planID]){
+                if( state.plans[planID] && state.plans[planID].procedures){
                     proceduresIds = proceduresIds.concat(
                         state.plans[planID].procedures
                     );
                 }
             });
             if (proceduresIds && proceduresIds.length > 0) {
-                procedures = rootGetters.getProceduresByIds(proceduresIds);
+                return proceduresIds.map(ID => state.procedures[ID]);
             }
         }
-        return procedures;
-    },
-    getProceduresByIds: (state, getters, rootState, rootGetters) => ids => {
-        const procedures = [];
-        if (
-            ids &&
-            ids.length > 0 &&
-            rootGetters.getCurrentClinicProcedures &&
-            state.procedures
-        ) {
-            ids.forEach(ID => {
-                if (state.procedures[ID]) {
-                    procedures.push({
-                        ...state.procedures[ID]
-                    });
-                }
-            });
-        }
-        return procedures;
+        return [];
     },
     getUnbilledProceduresByIds: state => ids => {
         const procedures = [];
@@ -129,6 +108,7 @@ export default {
         return procedures;
     },
     getManipulationsByProcedureID: state => pID => {
+        const startTime = performance.now();
         let manipulations = [];
         if (pID && state.manipulations) {
             manipulations = Object.values(state.manipulations).filter(
@@ -140,45 +120,19 @@ export default {
                 );
             }
         }
-        return manipulations;
-    },
-    getManipulationsByProcedureIDs: (state, rootGetters) => pIDs => {
-        let manipulations = [];
-        if (pIDs && pIDs.length > 0) {
-            pIDs.forEach(ID => {
-                manipulations = manipulations.concat(
-                    rootGetters.getManipulationsByProcedureID(ID)
-                );
-            });
-        }
-        return manipulations;
-    },
-    getManipulationsByPlanID: state => pID => {
-        let manipulations = [];
-        if (pID && state.manipulations) {
-            manipulations = Object.values(state.manipulations).filter(
-                m => m.planID === pID
-            );
-            if (manipulations.length > 1) {
-                manipulations.sort(
-                    (a, b) => new Date(b.created) - new Date(a.created)
-                );
-            }
-        }
+        const duration = performance.now() - startTime;
+        console.log(`getManipulationsByProcedureID took ${duration}ms`);
         return manipulations;
     },
     getUnbilledAndApprovedPlansProcedures: (state, rootGetters) => {
         let procedures = [];
         if(!state.plans)return procedures;
         Object.values(state.plans).forEach(p => {
-            // if (p.state === 1 && p.procedures) {
             if (p.state && p.procedures) {
                 procedures = [
                     ...procedures,
                     ...rootGetters.getUnbilledProceduresByIds(p.procedures)
                 ];
-                // const pProcedures = rootGetters.getProceduresByIds(p.procedures);
-                // procedures = procedures.concat(pProcedures);
             }
         });
         return procedures;
@@ -189,6 +143,8 @@ export default {
         state.procedures && state.procedures[ID] ? state.procedures[ID] : {},
     getPatientDiagnosisByID: state => ID =>
         state.diagnosis && state.diagnosis[ID] ? state.diagnosis[ID] : {},
+    getAllManipulations: state =>
+        state.manipulations ? state.manipulations : {},
     getInvoicesAll: state =>
         state.invoices ? Object.values(state.invoices) : [],
     getPaymentsAll: state => state.payments || []

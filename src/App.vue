@@ -7,8 +7,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { AVAILABLE_LANGUAGES, AUTH_REFRESH_TOKEN } from '@/constants';
+import { AVAILABLE_LANGUAGES, AUTH_REFRESH_TOKEN, COMMON_CURRENCY } from '@/constants';
 import { Trans } from '@/plugins/translation';
+
+const observer = new PerformanceObserver(list => {
+    console.log('Long Task detected! 🚩️');
+    const entries = list.getEntries();
+    console.log(entries);
+});
 
 export default {
     name: 'App',
@@ -18,7 +24,9 @@ export default {
             refreshTokenExist: 'fetchStateRefreshToken',
             isProfileLoaded: 'isProfileLoaded',
             lang: 'getLang',
-            user: 'getProfile'
+            user: 'getProfile',
+            currentClinic: 'getCurrentClinic',
+            currency: 'getCurrency'
         }),
 
         languages() {
@@ -60,7 +68,9 @@ export default {
         if (this.refreshTokenExist) {
             this.$store
                 .dispatch(AUTH_REFRESH_TOKEN)
-                .then()
+                .then( () => {
+                    this.setGlobalCurrencyFilter()
+                })
                 .catch(err => {
                     console.log(err);
                     if (this.$route.name !== 'login') {
@@ -73,6 +83,18 @@ export default {
         this.setMomentLang(this.$i18n.locale);
     },
     methods: {
+        setGlobalCurrencyFilter() {
+            const currencySettings = {
+                symbol: this.currency || '£',
+                thousandsSeparator: this.currentClinic.thousandsSeparator ||',',
+                fractionCount: this.currentClinic.fractionCount || 2,
+                fractionSeparator: this.currentClinic.fractionSeparator || '.',
+                symbolPosition: this.currentClinic.symbolPosition || 'front',
+                symbolSpacing: this.currentClinic.symbolSpacing !== undefined ? this.currentClinic.symbolSpacing : true
+            };
+            console.log(this.currentClinic)
+            this.$CurrencyFilter.setConfig(currencySettings);
+        },
         setMomentLang(val) {
             if (val && val != 'en-US') {
                 if (val && val != 'en') {

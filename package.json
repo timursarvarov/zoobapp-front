@@ -57,6 +57,7 @@
     "vue-axios": "^2.1.4",
     "vue-clickaway": "2.2.2",
     "vue-cool-select": "^2.10.2",
+    "vue-currency-filter": "^3.4.3",
     "vue-i18n": "^8.14.0",
     "vue-infinite-loading": "^2.4.4",
     "vue-lodash": "^2.0.2",

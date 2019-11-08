@@ -31,7 +31,10 @@
                                     </span>
 
                                     <span class="text-right">
-                                        {{ `${getManipulationsByProcedureID(item.ID).reduce((a, b) => a + (b.totalPrice || 0), 0)}` }}
+                                        {{
+                                            //! TODO из бэка брать
+                                            33333
+                                        }}
                                         {{ currencyCode }}
                                     </span>
                                 </md-button>
@@ -92,7 +95,8 @@
                             </span>
                             <small>{{ p.created | moment('calendar') }}</small>
                         </div>
-                        <animated-number :to-fix="2" :value="getManipulationsByProcedureID(p.ID).reduce((a, b) => a + (b.totalPrice || 0), 0)" />
+                        // !TODO из бэка
+                        <animated-number :to-fix="2" :value="33333" />
                         &nbsp;{{ currencyCode }}
                     </div>
                     <div class="procedure_header-actions">
@@ -101,28 +105,7 @@
                         </md-button>
                     </div>
                 </div>
-                <div class="procedure_manipulations">
-                    <md-table :value="getManipulationsByProcedureID(p.ID)" class="no-header small" table-header-color="green">
-                        <md-table-row slot="md-table-row" slot-scope="{ item }">
-                            <md-table-cell md-label="Code">
-                                <small>{{ item.code }}</small>
-                            </md-table-cell>
-                            <md-table-cell class="manipulation-title" md-label="Title">
-                                <small>{{ item.title }}</small>
-                            </md-table-cell>
-                            <md-table-cell md-label="Qty" class="manipulations-input">
-                                <small>{{ item.qty }}</small>
-                            </md-table-cell>
-                            <md-table-cell>*</md-table-cell>
-                            <md-table-cell md-label="Price">
-                                <small>{{ (item.price ? item.price : 0).toFixed(2) }}</small>
-                            </md-table-cell>
-                            <md-table-cell md-label="Total">
-                                <small>{{ item.totalPrice.toFixed(2) }} &nbsp;{{ currencyCode }}</small>
-                            </md-table-cell>
-                        </md-table-row>
-                    </md-table>
-                </div>
+                <manipulations-table v-if="p.manipulations" :manipulations-ids="p.manipulations"/>
             </div>
         </div>
         <hr />
@@ -370,6 +353,7 @@
 <script>
 /* eslint-disable func-names */
 import { SlideYDownTransition } from 'vue2-transitions';
+import { ManipulationsTable } from './ManipulationsTable';
 import { CoolSelect } from 'vue-cool-select';
 import { mapGetters } from 'vuex';
 import animatedNumber from '@/components/AnimatedNumber';
@@ -382,7 +366,8 @@ export default {
         SlideYDownTransition,
         CoolSelect,
         TToolbarRow,
-        animatedNumber
+        animatedNumber,
+        ManipulationsTable
     },
     model: {
         prop: 'selectedProcedures',
@@ -444,8 +429,7 @@ export default {
     computed: {
         ...mapGetters({
             patient: `${STORE_KEY_PATIENT}/getPatient`,
-            getManipulationsByProcedureID: `${STORE_KEY_PATIENT}/getManipulationsByProcedureID`,
-            getManipulationsByProcedureIDs: `${STORE_KEY_PATIENT}/getManipulationsByProcedureIDs`,
+            allManipulations: `${STORE_KEY_PATIENT}/getAllManipulations`,
             getUnbilledAndApprovedPlansProcedures: `${STORE_KEY_PATIENT}/getUnbilledAndApprovedPlansProcedures`,
             clinic: 'getCurrentClinic'
         }),
@@ -480,7 +464,8 @@ export default {
                 },
                 {
                     title: 'Total sum',
-                    subTitlePrefix: parseInt(this.getManipulationsByProcedureIDs(this.selectedProcedures.map(p => p.ID)).length, 10),
+                    // !TODO пофиксить из бэка
+                    subTitlePrefix: 33333,
                     subTitlePostfix: 'manipulations',
                     subTitleToFix: 0,
                     valuePrefix: parseInt(this.afterTax, 10),
@@ -494,8 +479,8 @@ export default {
             return this.clinic.currencyCode;
         },
         totalPrice() {
-            const sum = this.getManipulationsByProcedureIDs(this.selectedProcedures.map(p => p.ID)).reduce((a, b) => a + b.totalPrice, 0);
-            return sum || 0;
+            // ! TODO из бэка берется
+            return 3333
         },
         unselectedProcedures() {
             const procedures = this.getUnbilledAndApprovedPlansProcedures.filter(

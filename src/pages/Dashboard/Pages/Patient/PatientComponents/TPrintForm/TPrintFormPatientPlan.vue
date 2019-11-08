@@ -2,15 +2,15 @@
     <div v-if="plan" :class="[{ 'hide-on-print': !showPlan }]" class="print_patient_plan">
         <div class="print_patient_plan__header">
             <h4 :class="[{ hidable__header: !showPlan }]" class="print_patient_plan__header_text">
-                <div>
+                <span>
                     <b>
                         {{ num + 1 }}&nbsp;
                         {{ plan.name }}
                     </b>
-                </div>
-                <div>
-                    <b>{{ getPlanTotalPrice(plan.ID) | numSeparator }}{{ currentClinic.currencyCode }}</b>
-                </div>
+                </span>
+                <span>
+                    <b>{{ plan.summary.totalPrice | currency }}</b>
+                </span>
             </h4>
             <md-subheader class="hide-on-print-actions">
                 {{ $t(`${$options.name}.print`) }}
@@ -54,7 +54,6 @@ export default {
     created() {
         if (!this.plan.procedures || this.plan.procedures.length < 1) {
             this.showProcedures = false;
-            console.log(this.showPlan );
             this.showPlan = false;
         }
     },
@@ -62,9 +61,7 @@ export default {
         ...mapGetters({
             currentClinic: 'getCurrentClinic',
             patient: `${STORE_KEY_PATIENT}/getPatient`,
-            getPatientProcedureByID: `${STORE_KEY_PATIENT}/getPatientProcedureByID`,
-            getManipulationsByProcedureID: `${STORE_KEY_PATIENT}/getManipulationsByProcedureID`,
-            manipulationsByPlanID: `${STORE_KEY_PATIENT}/getManipulationsByPlanID`
+            getPatientProcedureByID: `${STORE_KEY_PATIENT}/getPatientProcedureByID`
         }),
         canShowPlan() {
             if (!this.showPlan) {
@@ -79,16 +76,9 @@ export default {
         },
         plan() {
             if (!this.lodash.isEmpty(this.patient.plans)) {
-                console.log(this.patient.plans[this.planID].ID)
                 return this.patient.plans[this.planID];
             }
             return {};
-        }
-    },
-    methods: {
-        getPlanTotalPrice(planID) {
-            const totalPrice = this.manipulationsByPlanID(planID).reduce((a, b) => a + (b.totalPrice || 0), 0);
-            return totalPrice ? `${totalPrice.toFixed(2)}` : `${(0).toFixed(2)}`;
         }
     }
 };

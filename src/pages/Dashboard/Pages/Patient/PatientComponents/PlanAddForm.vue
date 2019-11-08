@@ -116,15 +116,10 @@ export default {
             return names;
         }
     },
+    created(){
+        this.setInitialName();
+    },
     watch: {
-        showFormL(value) {
-            if (value) {
-                this.setInitialName();
-                this.$nextTick(() => {
-                    this.focusOn('planName');
-                });
-            }
-        },
         planName() {
             this.touched.planName = true;
         }

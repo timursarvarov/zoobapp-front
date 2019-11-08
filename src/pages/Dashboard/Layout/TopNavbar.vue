@@ -22,8 +22,7 @@
                             :id="lastPatient.ID"
                             :firstLine="`${lastPatient.firstName} ${lastPatient.lastName}`"
                             :notificationClass="lastPatient.allergy ? 'warning' : ''"
-                            :notification="!lodash.isEmpty(lastPatient.allergy) ? 'A' : ''"
-                        />
+                            :notification="!lodash.isEmpty(lastPatient.allergy) ? 'A' : ''"></avatar-box>
                     </small>
                     <small v-if="$route.params.patientID && (lastPatient.firstName || lastPatient.lastName)">></small>
                     <small class="md-layout-item">{{ $t(`Routes.${$route.name}`) }}</small>

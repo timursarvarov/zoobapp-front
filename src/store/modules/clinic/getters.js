@@ -1,4 +1,4 @@
-import { COMPANY_NAME, COMPANY_LOGO_URL, COMPANY_COLOR, STORE_KEY_PATIENT, COMPANY_LINK } from '@/constants';
+import { COMPANY_NAME, COMPANY_LOGO_URL, COMPANY_COLOR, STORE_KEY_PATIENT, COMPANY_LINK, COMMON_CURRENCY } from '@/constants';
 
 export default {
     getCurrentManipulations: state => {
@@ -13,6 +13,7 @@ export default {
         }
         return manipulations;
     },
+    getCurrency: state => COMMON_CURRENCY[state.currencyCode].symbol,
     getUngroupedProcedures: state => state.ungroupedprocedures || [],
     getUngroupedAnamnesis: state => state.ungroupedanamnesis || [],
     getUngroupedDiagnosis: state => state.ungroupeddiagnosis || [],

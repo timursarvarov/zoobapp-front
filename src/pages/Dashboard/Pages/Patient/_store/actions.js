@@ -447,7 +447,6 @@ export default {
                     })
                 )
                 .then(resp => {
-                    console.log(resp);
                     if (resp.data.error) {
                         commit(PATIENT_PARAM_SET, {
                             paramName: 'status',
@@ -594,11 +593,11 @@ export default {
                     });
                     // записываем дефолтные манипуляции
                     if (manipulations) {
-                        manipulations.forEach(m => {
+                        manipulations.forEach( m => {
                             commit(PATIENT_PARAM_PUSH, {
                                 paramName: 'manipulations',
                                 paramValue: { ...m, justAdded: true },
-                                paramKey: `${m.ID}`
+                                paramKey: `${ m.ID }`
                             });
                             dispatch(PATIENT_ITEM_JUST_ADDED_TOGGLE, {
                                 params: {

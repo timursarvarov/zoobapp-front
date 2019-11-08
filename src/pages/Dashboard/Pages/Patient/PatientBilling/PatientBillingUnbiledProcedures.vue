@@ -81,8 +81,6 @@ export default {
             currentClinic: 'getCurrentClinic',
             availableBillingTableColumns: 'getAvailableBillingTableColumns',
             aproovedPlansProcedures: `${STORE_KEY_PATIENT}/getUnbilledAndApprovedPlansProcedures`,
-            getManipulationsByProcedureID: `${STORE_KEY_PATIENT}/getManipulationsByProcedureID`,
-            getManipulationsByProcedureIDs: `${STORE_KEY_PATIENT}/getManipulationsByProcedureIDs`,
             manipulationsByPlanID: `${STORE_KEY_PATIENT}/getManipulationsByPlanID`
         }),
         filteredItems() {
@@ -104,8 +102,8 @@ export default {
             return plans;
         },
         totalPrice() {
-            let sum = this.getManipulationsByProcedureIDs(this.selectedItems.map(p => p.ID)).reduce((a, b) => a + b.totalPrice, 0);
-            return sum || 0;
+            // !TODO будет релизовано в бэке
+            return 3333
         },
         headers() {
             const headers = [

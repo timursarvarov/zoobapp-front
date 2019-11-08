@@ -72,6 +72,7 @@
                         </md-menu-item>
                     </md-menu-content>
                 </md-menu>
+
             </md-toolbar>
             <div>
                 <slot name="top" />

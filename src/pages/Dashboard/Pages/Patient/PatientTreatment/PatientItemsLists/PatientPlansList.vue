@@ -1,45 +1,76 @@
 <template lang="html">
-    <div v-if="currentPlanID" class="patient-plans-list">
-        <md-tabs ref="mdTabs" md-sync-route class="t-md-tabs procedures">
-            <template slot="md-tab" slot-scope="{ tab }">
-                {{ tab.label }}
-                <span v-if="tab.data.badge" class="notification" :class="tab.data.class">{{ tab.data.badge }}</span>
-            </template>
-            <md-tab
-                :id="`${plan.ID}`"
-                :key="key"
-                :md-label="`${plan.name} ${getPlanTotalPrice(plan.ID)}`"
-                :md-template-data="{
-                    badge: plan.state === 1 ? 'aprooved' : '',
-                    class: 'md-info'
-                }"
-                :to="`/${$i18n.locale}/patient/${patient.ID}/treatment/plan/${plan.ID}`"
-                md-dynamic-height
-                v-for="(plan, key) in patient.plans"
-            >
-                <router-view
-                    :current-plan="plan"
-                    :id="key"
-                    @onDeletePlan="showDeletePlanFunc"
-                    v-if="$route && $route.params && $route.params.planID in patient.plans"
-                ></router-view>
-                <md-empty-state
-                    v-else-if="lodash.isEmpty(patient.plans)"
-                    :md-label="$t(`${$options.name}.noPlansTitle`)"
-                    :md-description="$t(`${$options.name}.noPlansDescription`)"
-                >
-                </md-empty-state>
-                <md-empty-state
-                    v-else-if="$route && $route.params && $route.params.planID && !($route.params.planID in patient.plans)"
-                    :md-label="$t(`${$options.name}.noPlansWithIdTitle`, { ID: $route.params.planID })"
-                    :md-description="$t(`${$options.name}.noPlansWithIdDescription`, { ID: $route.params.planID })"
-                >
-                    <md-button class="md-success md-raised" @click="$emit('addPlan')">
-                        {{ $t(`${$options.name}.addNewPlan`) }}
+    <div v-if="currentPlanID" class="patient-plans-list md-layout">
+        <md-toolbar class="md-transparent md-elevation-0">
+            <div class="md-toolbar-section-start" v-if="hasPlans">
+<!--                <div class="md-title">{{ $t(`${$options.name}.currentPlan`) }} &nbsp;</div>-->
+                <div>
+                    <md-field>
+                        <label>{{ $t(`${$options.name}.selectPlan`) }}</label>
+                        <md-select name="pages" @md-selected="openPlan" v-model="selectedPlanId">
+                            <md-option v-for="(plan, key) in patient.plans" :key="key" :label="plan.name" :value="plan.ID">
+                                {{ plan.name }}
+                                {{ plan.summary.totalPrice | currency }}
+                            </md-option>
+                        </md-select>
+                    </md-field>
+                </div>
+            </div>
+
+            <div class="md-toolbar-section-end">
+                <md-button class="md-simple " @click="$emit('addPlan')">
+                    <md-icon>add</md-icon>
+                    {{ $t(`${$options.name}.addNewPlan`) }}
+                </md-button>
+                <template v-if="existPlan">
+                    <md-button v-if="currentPlan.state === 1" class="md-simple" @click="unApprovePlan(currentPlanID)">
+                        <md-icon>
+                            cancel
+                        </md-icon>
+                        {{ $t(`${$options.name}.unApprove`) }}
                     </md-button>
-                </md-empty-state>
-            </md-tab>
-        </md-tabs>
+                    <md-button v-else class="md-info" @click="approvePlan(currentPlanID)">
+                        <md-icon>
+                            check
+                        </md-icon>
+                        {{ $t(`${$options.name}.approve`) }}
+                    </md-button>
+                    <drop-down multi-level direction="down">
+                        <md-button slot="title" class="md-button md-round md-just-icon md-simple" data-toggle="dropdown">
+                            <md-icon>more_vert</md-icon>
+                        </md-button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="md-layout" @click="showDeletePlanFunc(currentPlanID)">
+                                <a class="md-layout">
+                                    <md-icon>
+                                        delete
+                                    </md-icon>
+                                    {{ $t(`${$options.name}.deletePlan`) }}
+                                </a>
+                            </li>
+                            <li class="md-layout" @click="$emit('addPlan')">
+                                <a class="md-layout">
+                                    <md-icon>
+                                        edit
+                                    </md-icon>
+                                    {{ $t(`${$options.name}.changePlanTitle`) }}
+                                </a>
+                            </li>
+                            <li class="md-layout" @click="handlePrint(currentPlan)">
+                                <a class="md-layout">
+                                    <md-icon>
+                                        print
+                                    </md-icon>
+                                    {{ $t(`${$options.name}.printPlan`) }}
+                                </a>
+                            </li>
+                        </ul>
+                    </drop-down>
+                </template>
+            </div>
+        </md-toolbar>
+        <keep-alive>
+            <router-view></router-view>
+        </keep-alive>
         <md-snackbar
             v-if="showDeleteItemSnackbar"
             :md-position="'center'"
@@ -49,10 +80,10 @@
         >
             <div class="snackbar-wrapper md-layout md-alignment-center-space-between md-size-100">
                 <div class="snackbar-text-wrapper ">
-                    {{ $t(`${$options.name}.deletePlanForm`) }}
+                    {{ $t(`${$options.name}.deletePlanForm`, {planName: this.currentPlan.name}) }}
                     {{ $t(`${$options.name}.planTotal`) }}
-                    <animated-number :value="getPlanTotalPriceNum(planIdToDelete)" />
-                    {{ currentClinic.currencyCode }}
+                    <animated-number :value="this.planSummary.totalPrice" />
+                    {{ currency }}
                 </div>
                 <div class="snackbar-action-wrapper  ml-auto md-alignment-center-right ">
                     <md-button class="md-simple" @click="showDeleteItemSnackbar = false">
@@ -81,13 +112,24 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { PATIENT_PLAN_DELETE, NOTIFY, PATIENT_JAW_UPDATE, JAW_LOADER_STOP, JAW_LOADER_START, PATIENT_EDIT, STORE_KEY_PATIENT } from '@/constants';
+import {
+    PATIENT_PLAN_DELETE,
+    NOTIFY,
+    PATIENT_PLAN_EDIT,
+    PATIENT_JAW_UPDATE,
+    JAW_LOADER_STOP,
+    JAW_LOADER_START,
+    PATIENT_EDIT,
+    STORE_KEY_PATIENT,
+    EB_SHOW_PATIENT_PRINT_FORM
+} from '@/constants';
 import components from '@/components';
+import EventBus from '@/plugins/event-bus';
 
 export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            if (!to.params.planID && vm.currentPlanID) {
+            if (to.name != 'procedures' && !!vm.currentPlanID) {
                 vm.$router.push({
                     name: 'procedures',
                     params: {
@@ -96,36 +138,33 @@ export default {
                         planID: vm.currentPlanID
                     }
                 });
+                vm.selectedPlanId = vm.currentPlanID;
+            } else if (to.params.planID && `${to.params.planID}` !== `${vm.currentPlanID}` && to.params.planID in vm.patient.plans) {
+                vm.$nextTick(() => {
+                    vm.changeRoute(to.params.planID, 2);
+                });
+            } else {
+                // vm.$router.push({
+                //     name: 'plan',
+                //     params: {
+                //         lang: vm.$i18n.locale,
+                //         patientID: vm.patient.ID
+                //     }
+                // });
             }
-            vm.deleteTabStyle();
         });
     },
     beforeRouteUpdate(to, from, next) {
-        this.deleteTabStyle();
         if (to.params.planID && to.params.planID !== from.params.planID) {
             if (this.patient.currentPlanID === to.params.planID) {
+                this.selectedPlanId = to.params.planID;
                 next();
             } else {
-                this.$store.dispatch(JAW_LOADER_START);
-                this.$store
-                    .dispatch(`$_patient/${PATIENT_EDIT}`, {
-                        params: {
-                            currentPlanID: parseInt(to.params.planID, 10)
-                        }
-                    })
-                    .then(response => {
-                        if (response) {
-                            this.$store.dispatch(`$_patient/${PATIENT_JAW_UPDATE}`).then(() => {
-                                this.$store.dispatch(JAW_LOADER_STOP);
-                                next();
-                            });
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        this.$store.dispatch(JAW_LOADER_STOP);
-                        throw new Error(err);
+                this.$nextTick(() => {
+                    this.changeRoute(to.params.planID, 1).then(() => {
+                        next();
                     });
+                });
             }
         }
         next();
@@ -133,7 +172,6 @@ export default {
     name: 'PatientPlansList',
     components: {
         ...components
-        // DeleteForm,
     },
     props: {
         canRedirect: {
@@ -145,33 +183,38 @@ export default {
         return {
             showDeleteItemSnackbar: false,
             planIdToDelete: null,
-            deleting: false
+            deleting: false,
+            selectedPlanId: null
         };
     },
-
+    created(){
+        if(this.existPlan){
+            this.selectedPlanId = this.currentPlanID;
+        }
+    },
     computed: {
         ...mapGetters({
             patient: `${STORE_KEY_PATIENT}/getPatient`,
-            currentClinic: 'getCurrentClinic',
-            currentPlanProcedures: `${STORE_KEY_PATIENT}/getPatientCurrentPlanProcedures`,
+            currency: 'getCurrency',
             currentPlanID: `${STORE_KEY_PATIENT}/getCurrentPlanID`,
-            manipulationsByPlanID: `${STORE_KEY_PATIENT}/getManipulationsByPlanID`
+            manipulationsByPlanID: `${STORE_KEY_PATIENT}/getManipulationsByPlanID`,
+            currentPlan: `${STORE_KEY_PATIENT}/getCurrentPlan`
         }),
-        tabHeaders() {
-            const tabHeaders = [];
-            if (this.patient.plans) {
-                Object.values(this.patient.plans).forEach((p, i) => {
-                    tabHeaders[i] = {
-                        ...p,
-                        price: this.getPlanTotalPrice(p)
-                    };
-                });
+        planSummary() {
+            return this.currentPlan.summary | {};
+        },
+        hasPlans() {
+            if (this.patient.plans && Object.keys(this.patient.plans).length > 0) {
+                return true;
             }
-            return tabHeaders;
+            return false;
+        },
+        existPlan() {
+            if (this.$route.params && `${this.$route.params.planID}` in this.patient.plans) {
+                return true;
+            }
+            return false;
         }
-    },
-    mounted() {
-        this.deleteTabStyle();
     },
     watch: {
         currentPlanID() {
@@ -179,6 +222,59 @@ export default {
         }
     },
     methods: {
+        handlePrint(item) {
+            if (item) {
+                const params = {
+                    item,
+                    type: 'plan'
+                };
+                EventBus.$emit(EB_SHOW_PATIENT_PRINT_FORM, params);
+            }
+        },
+        changeRoute(planID, e) {
+            return new Promise(resolve => {
+                this.$store.dispatch(JAW_LOADER_START);
+                this.$store
+                    .dispatch(`$_patient/${PATIENT_EDIT}`, {
+                        params: {
+                            currentPlanID: parseInt(planID, 10)
+                        }
+                    })
+                    .then(response => {
+                        if (response) {
+                            this.$store.dispatch(`$_patient/${PATIENT_JAW_UPDATE}`).then(() => {
+                                this.$store.dispatch(JAW_LOADER_STOP);
+                                this.selectedPlanId = planID;
+                                resolve(true);
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.$store.dispatch(JAW_LOADER_STOP);
+                        throw new Error(err);
+                    });
+            });
+        },
+        openPlan(planID) {
+            if (this.$route.params.planID != planID) {
+                this.$router.push({
+                    name: 'procedures',
+                    params: {
+                        lang: this.$i18n.locale,
+                        patientID: this.patient.ID,
+                        planID
+                    }
+                });
+            }
+        },
+        unApprovePlan(planID) {
+            this.$store.dispatch(`$_patient/${PATIENT_PLAN_EDIT}`, {
+                planID,
+                key: 'state',
+                value: null
+            });
+        },
         deletePlan() {
             this.deleting = true;
             this.$store
@@ -219,7 +315,6 @@ export default {
         redirectToPlan() {
             if (this.currentPlanID) {
                 this.$router.push({
-                    name: 'procedures',
                     params: {
                         lang: this.$i18n.locale,
                         patientID: this.patient.ID,
@@ -237,23 +332,12 @@ export default {
             }
         },
 
-        deleteTabStyle() {
-            if (this.$refs.mdTabs) {
-                this.$refs.mdTabs.$children[0].$el.removeAttribute('style');
-            }
-        },
-
         showItemInfo(params) {
             this.$emit('showItemInfo', params);
         },
         getPlanTotalPrice(planID) {
-            const totalPrice = this.manipulationsByPlanID(planID).reduce((a, b) => a + (b.totalPrice || 0), 0);
-            return totalPrice ? ` - ${totalPrice.toFixed(2)} ${this.currentClinic.currencyCode}` : '';
+          return this.patients[planID].summary.totalPrice
         },
-        getPlanTotalPriceNum(planID) {
-            const totalPrice = this.manipulationsByPlanID(planID).reduce((a, b) => a + (b.totalPrice || 0), 0);
-            return totalPrice;
-        }
     }
 };
 </script>

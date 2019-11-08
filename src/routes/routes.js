@@ -380,7 +380,7 @@ const patientPages = {
                             components: {
                                 search: load('Pages/Patient/PatientTreatment/PatientItemsSearch/PatientProceduresSearch'),
                                 list: load('Pages/Patient/PatientTreatment/PatientItemsLists/PatientPlansList'),
-                                itemsList: load('Pages/Patient/PatientTreatment/PatientItemsLists/PatientPlansList')
+                                // itemsList: load('Pages/Patient/PatientTreatment/PatientItemsLists/PatientProceduresList')
                             },
                             children: [
                                 {

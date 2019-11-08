@@ -72,7 +72,7 @@ export default {
             patient: `${STORE_KEY_PATIENT}/getPatient`,
             currentClinic: 'getCurrentClinic',
             getPatientDiagnosis: `${STORE_KEY_PATIENT}/getPatientDiagnosis`
-        })
+        }),
     },
     watch: {
         getPatientDiagnosis() {
@@ -128,8 +128,8 @@ export default {
             }
             if (currentSort === 'price') {
                 vm.sortedData = vm.getPatientDiagnosis.sort((a, b) => {
-                    const aTeethPrice = this.getManipulationsByProcedureID(a.ID).reduce((a, b) => a + b.totalPrice, 0) || 0;
-                    const bTeethPrice = this.getManipulationsByProcedureID(b.ID).reduce((a, b) => a + b.totalPrice, 0) || 0;
+                    const aTeethPrice =  0;
+                    const bTeethPrice =  0;
                     const orderLocal = currentSortOrder;
                     const dflt = orderLocal === 'asc' ? Number.MAX_VALUE : -Number.MAX_VALUE;
                     const aVal = aTeethPrice === null ? dflt : aTeethPrice;

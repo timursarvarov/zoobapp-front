@@ -2,6 +2,7 @@ import { NOTIFY } from '@/constants';
 
 export default {
     [NOTIFY]: ({ commit }, { settings }) => {
+        console.log(NOTIFY)
         let set = settings;
         if (set.message) {
             if (Array.isArray(set.message)) {

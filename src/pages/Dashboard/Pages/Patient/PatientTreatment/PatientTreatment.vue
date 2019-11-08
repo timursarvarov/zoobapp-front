@@ -50,17 +50,17 @@
                 />
             </keep-alive>
         </div>
-        <div style="margin-top:30px;" class="md-layout-item  md-size-100">
-             <keep-alive>
-            <router-view
-                :canRedirect="_.isEmpty(routeBeforeLeave)"
-                :current-type="currentType"
-                :plans="patient.plans"
-                @addPlan="addPlan"
-                @showItemInfo="selectItem"
-                name="list"
-            />
-             </keep-alive>
+        <div style="margin-top:30px;" class="md-layout-item md-size-100">
+            <keep-alive>
+                <router-view
+                    :canRedirect="_.isEmpty(routeBeforeLeave)"
+                    :current-type="currentType"
+                    :plans="patient.plans"
+                    @addPlan="addPlan"
+                    @showItemInfo="selectItem"
+                    name="list"
+                />
+            </keep-alive>
         </div>
 
         <div v-if="showAddPlan">
@@ -87,34 +87,60 @@ import EventBus from '@/plugins/event-bus';
 export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
-            if (vm.routeBeforeLeave && to.name != 'plan') {
-                vm.$router.push({
-                    name: vm.routeBeforeLeave.name,
-                    params: vm.routeBeforeLeave.params
-                });
-            } else if(vm.currentPlanID  && to.name !== 'procedures') {
+            if (vm.routeBeforeLeave && to.name !== 'procedures') {
+                if (vm.routeBeforeLeave.name === 'Treatment') {
+                    vm.$router.push({
+                        name: 'plan',
+                        params: {
+                            lang: vm.$i18n.locale,
+                            patientID: vm.patient.ID
+                        }
+                    });
+                }
+                else {
+                    vm.$router.push({
+                        name: vm.routeBeforeLeave.name,
+                        params: vm.routeBeforeLeave.params
+                    });
+                }
+            } else if (to.name !== 'procedures' && vm.currentPLanID ) {
                 vm.$router.push({
                     name: 'procedures',
                     params: {
                         lang: vm.$i18n.locale,
                         patientID: vm.patient.ID,
-                        planID: vm.currentPlanID
+                        planID: vm.currentPLanID
                     }
                 });
-            } else if(! vm.currentPlanID && to.name !== 'plan') {
+            } else if (to.name !== 'plan' && to.name !== 'procedures') {
                 vm.$router.push({
                     name: 'plan',
                     params: {
                         lang: vm.$i18n.locale,
-                        patientID: vm.patient.ID,
+                        patientID: vm.patient.ID
                     }
                 });
             }
         });
     },
     beforeRouteLeave(to, from, next) {
-        this.routeBeforeLeave = from;
+        if (from.name !== 'Treatment') {
+            this.routeBeforeLeave = from;
+        }
         next();
+    },
+    beforeRouteUpdate(to, from, next) {
+        if(to.name === "Treatment"){
+            this.$router.push({
+                name: 'plan',
+                params: {
+                    lang: this.$i18n.locale,
+                    patientID: this.patient.ID
+                }
+            });
+        }else{
+            next();
+        }
     },
     components: {
         ...components,
@@ -142,7 +168,6 @@ export default {
             currentClinic: 'getCurrentClinic',
             user: 'getProfile',
             access_token: 'fetchStateAccessToken',
-            getProceduresByIds: `${STORE_KEY_PATIENT}/getProceduresByIds`,
             getPatientCurrentPlanProcedures: `${STORE_KEY_PATIENT}/getPatientCurrentPlanProcedures`,
             currentPlanID: `${STORE_KEY_PATIENT}/getCurrentPlanID`,
             currentPlanProcedures: `${STORE_KEY_PATIENT}/getPatientCurrentPlanProcedures`

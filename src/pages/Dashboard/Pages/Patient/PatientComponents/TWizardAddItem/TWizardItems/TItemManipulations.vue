@@ -1,6 +1,7 @@
 <template>
     <div class="wizard-tab-content" :style="[{ 'min-width': size.width ? `${size.width}px` : `70vw` }]">
         <div class="absolute-header-block">
+            {{itemToCreate.manipulations}}
             <md-toolbar class="toolbar-jaw manipulations-editor md-alignment-center-space-between md-layout md-transparent">
                 <div class="manipulations-autocomplite md-layout-item md-size-50 md-medium-size-40 md-small-size-100">
                     <cool-select
@@ -58,7 +59,7 @@
                         </template>
 
                         <template slot="input-start">
-                            <label for="input">
+                            <label >
                                 {{ $t(`${$options.name}.selectManipulation`) }}
                             </label>
                         </template>
@@ -66,7 +67,7 @@
                             <div style="display: flex;">
                                 <md-button class="IZ-select-button md-layout-item">
                                     <span class="text-left">{{ `${item.code} - ${item.title}` }}</span>
-                                    <span class="text-right">{{ `${item.price}` }} {{ currencyCode }}</span>
+                                    <span class="text-right">{{ `${item.price | currency}` }} </span>
                                 </md-button>
                             </div>
                         </template>
@@ -114,7 +115,7 @@
                     </div>
                     <div class="manipulations-input md-layout-item md-size-25">
                         <md-field class>
-                            <label>{{ $t(`${$options.name}.total`) }} {{ currencyCode }}</label>
+                            <label>{{ $t(`${$options.name}.total`) | currency }}</label>
                             <md-input v-model="manipulationsPriceTotal" tabindex="-1" type="number" disabled />
                         </md-field>
                     </div>
@@ -192,8 +193,7 @@
                     </md-table-cell>
                     <md-table-cell :md-label="$t(`${$options.name}.total`)" class="cell-manipulations-total">
                         <small> {{ item.qty }} * {{ item.price }} = &nbsp; </small>
-                        <b>{{ item.totalPrice }} </b> &nbsp;
-                        <small>{{ currencyCode }}</small>
+                        <b>{{ item.totalPrice | currency}} </b> &nbsp;
                     </md-table-cell>
                     <md-table-cell class="cell-actions">
                         <md-button class="md-just-icon md-round md-info md-simple" @click.native="setEditedManipulation(item), (item.editing = true)">
@@ -306,9 +306,9 @@ export default {
             type: Object,
             default: () => {}
         },
-        itemID: {
-            type: Number,
-            default: () => 0
+        itemToCreate: {
+            type: Object,
+            default: () => {}
         }
     },
     data() {
@@ -339,12 +339,14 @@ export default {
     },
     computed: {
         ...mapGetters({
-            getManipulationsByProcedureID: `${STORE_KEY_PATIENT}/getManipulationsByProcedureID`,
-            getPatientProcedureByID: `${STORE_KEY_PATIENT}/getPatientProcedureByID`,
+            allManipulations: `${STORE_KEY_PATIENT}/getAllManipulations`,
             clinicManipulations: 'getCurrentManipulations'
         }),
         currentManipulations() {
-            return this.getManipulationsByProcedureID(this.itemID);
+            if( this.itemToCreate.manipulations ){
+                return this.itemToCreate.manipulations.map(mID => this.allManipulations[mID]);
+            }
+            return [];
         },
         totalPrice() {
             let sum = 0;
@@ -359,14 +361,6 @@ export default {
                 return descriptionTitles || [];
             },
             set() {}
-        },
-        descriptionL: {
-            get() {
-                return this.description;
-            },
-            set(value) {
-                this.$emit('updateDescription', value);
-            }
         },
         selectedTeethNum() {
             return this.selectedTeeth.length || 1;
@@ -414,13 +408,13 @@ export default {
             this.selectedManipulationID = null;
         },
         deleteManipulation() {
-            if (!this.itemID) {
+            if (!this.itemToCreate.ID) {
                 return;
             }
             this.deleting = true;
             this.$store
                 .dispatch(`$_patient/${PATIENT_MANIPULATION_DELETE}`, {
-                    procedureID: this.itemID,
+                    procedureID: this.itemToCreate.ID,
                     manipulationID: this.manipulationToDelete.ID
                 })
                 .then(
@@ -445,14 +439,14 @@ export default {
                 });
         },
         addManipulation() {
-            if (!this.itemID) {
+            if (!this.itemToCreate.ID) {
                 return;
             }
             this.isLoading = true;
             this.$store
                 .dispatch(`$_patient/${PATIENT_MANIPULATION_SET}`, {
                     manipulationParams: {
-                        procedureID: this.itemID,
+                        procedureID: this.itemToCreate.ID,
                         price: parseFloat(this.manipulationPrice),
                         qty: parseInt(this.manipulationsNum, 10),
                         totalPrice: parseInt(this.manipulationsNum, 10) * parseInt(this.manipulationPrice, 10),
@@ -482,7 +476,7 @@ export default {
                 });
         },
         saveManipulation() {
-            if (!this.itemID) {
+            if (!this.itemToCreate.ID) {
                 return;
             }
             this.isLoading = true;

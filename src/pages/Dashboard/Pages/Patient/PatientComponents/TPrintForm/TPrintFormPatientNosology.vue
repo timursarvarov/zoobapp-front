@@ -17,9 +17,8 @@
                 </div>
             </div>
             <div class="print-patient-procedure_header__price">
-                <div class="price-sum">
-                    {{ procedurePrice | numSeparator }}
-                    &nbsp;{{ currencyCode }}
+                <div class="price-sum" v-if="procedure.summary">
+                    {{  procedure.summary.totalPrice | currency }}
                 </div>
             </div>
         </div>
@@ -32,31 +31,33 @@
             </div>
         </div>
         <div v-if="showManipulations" class="print-patient-procedure_manipulations">
-            <div class="print-patient-procedure_manipulations__row" v-for="(manip, mInd) in getManipulationsByProcedureID(procedure.ID)" :key="mInd">
-                <div class="manipulation manipulation_num">
-                    <small>{{ mInd + 1 }}</small>
-                </div>
-                <div class="manipulation manipulation_title">
-                    <small>
-                        <span>{{ manip.code }} - &nbsp;</span>
-                        {{ manip.title }}
-                    </small>
-                </div>
-                <div class="manipulation manipulation_qty">
-                    <small>{{ manip.qty }}</small>
-                </div>
-                <div class="manipulation manipulation_ac">*</div>
-                <div class="manipulation manipulation_price">
-                    <small>{{ (manip.price ? manip.price : 0).toFixed(2) | numSeparator }}</small>
-                </div>
-                <div class="manipulation manipulation_total">
-                    <small>{{ manip.totalPrice.toFixed(2) | numSeparator }} &nbsp;{{ currencyCode }}</small>
-                </div>
+            <div class="print-patient-procedure_manipulations__row" v-for="(manipulationID, mInd) in procedure.manipulations" :key="manipulationID">
+                <template v-if="allManipulations[manipulationID]">
+                    <div class="manipulation manipulation_num">
+                        <small>{{ mInd + 1 }}</small>
+                    </div>
+                    <div class="manipulation manipulation_title">
+                        <small>
+                            <span>{{ allManipulations[manipulationID].code }} - &nbsp;</span>
+                            {{ allManipulations[manipulationID].title }}
+                        </small>
+                    </div>
+                    <div class="manipulation manipulation_qty">
+                        <small>{{ allManipulations[manipulationID].qty }}</small>
+                    </div>
+                    <div class="manipulation manipulation_ac">*</div>
+                    <div class="manipulation manipulation_price">
+                        <small>{{ allManipulations[manipulationID].price | currency('') }}</small>
+                    </div>
+                    <div class="manipulation manipulation_total">
+                        <small>{{ allManipulations[manipulationID].totalPrice | currency }} </small>
+                    </div>
+                </template>
             </div>
         </div>
         <div v-if="procedure.description" class="description-wrapper">
             <small>
-                <div v-html="procedure.description" class="print-patient-procedure_description" />
+                <div v-html="procedure.description" class="print-patient-procedure_description"></div>
             </small>
         </div>
     </div>
@@ -92,11 +93,9 @@ export default {
     },
     computed: {
         ...mapGetters({
-            currentClinic: 'getCurrentClinic',
-            patient: `${STORE_KEY_PATIENT}/getPatient`,
             getPatientProcedureByID: `${STORE_KEY_PATIENT}/getPatientProcedureByID`,
             getPatientDiagnosisByID: `${STORE_KEY_PATIENT}/getPatientDiagnosisByID`,
-            getManipulationsByProcedureID: `${STORE_KEY_PATIENT}/getManipulationsByProcedureID`
+            allManipulations: `${STORE_KEY_PATIENT}/getAllManipulations`,
         }),
         procedure() {
             if (this.currentType === 'diagnose') {
@@ -104,13 +103,6 @@ export default {
             }
             return this.getPatientProcedureByID(this.procedureId) || {};
         },
-        currencyCode() {
-            return this.currentClinic.currencyCode;
-        },
-        procedurePrice() {
-            let price = this.getManipulationsByProcedureID(this.procedureId).reduce((a, b) => a + b.totalPrice, 0);
-            return price;
-        }
     },
     methods: {}
 };

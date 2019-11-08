@@ -52,9 +52,6 @@ export default {
         ...mapGetters({
             currentClinic: 'getCurrentClinic',
             patient: `${STORE_KEY_PATIENT}/getPatient`,
-            getPatientProcedureByID: `${STORE_KEY_PATIENT}/getPatientProcedureByID`,
-            getManipulationsByProcedureID: `${STORE_KEY_PATIENT}/getManipulationsByProcedureID`,
-            manipulationsByPlanID: `${STORE_KEY_PATIENT}/getManipulationsByPlanID`,
             patientAnamnesis: `${STORE_KEY_PATIENT}/getPatientAnamnesis`
         }),
         canShowPlan() {

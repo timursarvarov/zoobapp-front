@@ -67,7 +67,6 @@ export default {
     },
     methods: {
         showItems(payLoad) {
-            console.log(payLoad.item);
             this.selectedItem = payLoad.item;
             this.type = payLoad.type;
             this.showAddItemWizard = true;
