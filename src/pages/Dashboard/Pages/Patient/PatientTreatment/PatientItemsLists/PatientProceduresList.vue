@@ -1,8 +1,7 @@
 <template lang="html">
-    <div class="md-layout" >
-        <div v-if="existPlan">
-            <t-toolbar-row :headers="headers" />
-            <!--        <router-view></router-view>-->
+    <div  >
+        <div  v-if="existPlan">
+            <t-toolbar-row  :headers="headers"></t-toolbar-row>
             <patient-nosology-table
                 selectable
                 current-type="procedures"
@@ -55,7 +54,7 @@
                 </div>
             </md-snackbar>
         </div>
-        <div class="md-layout"  v-else >
+        <div  v-else >
                 <md-empty-state
                     :md-label="$t(`${$options.name}.noPlanTitle`, { id: this.$route.params.planID })"
                 >

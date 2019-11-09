@@ -272,7 +272,7 @@
 		"changePlanTitle": "Изменить название плана",
 		"currentPlan": "Текущий план: ",
 		"deletePlan": "@:common.delete",
-		"deletePlanForm": "Удалить план?",
+		"deletePlanForm": "Удалить план {planName} ?",
 		"deleting": "Удаление ...",
 		"noPlansDescription": "План не выбран, пожалуйста, выберите один",
 		"noPlansTitle": "Нет выбранных планов",

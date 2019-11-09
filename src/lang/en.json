@@ -272,7 +272,7 @@
 		"changePlanTitle": "Change plan title",
 		"currentPlan": "Current plan: ",
 		"deletePlan": "@:common.delete",
-		"deletePlanForm": "Delete plan?",
+		"deletePlanForm": "Delete plan {planName} ?",
 		"deleting": "Deleting...",
 		"noPlansDescription": "No plan selected, please choose one",
 		"noPlansTitle": "No selected plans",

@@ -1,7 +1,6 @@
 <template>
     <div class="wizard-tab-content" :style="[{ 'min-width': size.width ? `${size.width}px` : `70vw` }]">
         <div class="absolute-header-block">
-            {{itemToCreate.manipulations}}
             <md-toolbar class="toolbar-jaw manipulations-editor md-alignment-center-space-between md-layout md-transparent">
                 <div class="manipulations-autocomplite md-layout-item md-size-50 md-medium-size-40 md-small-size-100">
                     <cool-select
@@ -182,6 +181,7 @@
                         }
                     ]"
                 >
+                    <md-table-cell md-numereic md-label="#">{{ item.ID }}</md-table-cell>
                     <md-table-cell md-numereic md-label="#">{{ index + 1 }}</md-table-cell>
                     <md-table-cell class="manip_title" :md-label="$t(`${$options.name}.title`)">
                         <div class="md-layout">
@@ -484,7 +484,7 @@ export default {
                 })
                 .then(
                     () => {
-                        this.removeEditingClass(this.manipulationToEdit.ID);
+                        // this.removeEditingClass(this.manipulationToEdit.ID);
                         this.selectedManipulationID = '';
                         this.manipulationPrice = 0;
                         this.manipulationsNum = 0;

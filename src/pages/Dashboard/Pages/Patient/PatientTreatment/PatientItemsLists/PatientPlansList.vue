@@ -1,6 +1,6 @@
 <template lang="html">
-    <div v-if="currentPlanID" class="patient-plans-list md-layout">
-        <md-toolbar class="md-transparent md-elevation-0">
+    <div v-if="currentPlanID" class="patient-plans-list">
+        <md-toolbar class="md-transparent  md-elevation-0">
             <div class="md-toolbar-section-start" v-if="hasPlans">
 <!--                <div class="md-title">{{ $t(`${$options.name}.currentPlan`) }} &nbsp;</div>-->
                 <div>
@@ -69,7 +69,7 @@
             </div>
         </md-toolbar>
         <keep-alive>
-            <router-view></router-view>
+            <router-view ></router-view>
         </keep-alive>
         <md-snackbar
             v-if="showDeleteItemSnackbar"

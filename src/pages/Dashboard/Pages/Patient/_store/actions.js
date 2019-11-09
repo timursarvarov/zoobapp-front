@@ -824,8 +824,6 @@ export default {
                         paramValue: manipulationParamsN,
                         paramKey: `${manipulationParamsN.ID}`
                     });
-                    let manipulationsIDs = state.procedures[manipulationParams.procedureID].manipulations || [];
-                    manipulationsIDs.push(manipulationParamsN.ID);
                     // записали ID манипуляции в процедуру
                     commit(PATIENT_SUB_PARAM_PUSH, {
                         paramName: 'procedures',

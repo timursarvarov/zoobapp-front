@@ -272,7 +272,7 @@
 		"changePlanTitle": "Reja nomini o'zgartirish",
 		"currentPlan": "Joriy reja:  ",
 		"deletePlan": "@:common.delete",
-		"deletePlanForm": "Rejani yo'q qilmoqchimisiz?",
+		"deletePlanForm": "{planName}  rejani yo'q qilmoqchimisiz?",
 		"deleting": "O‘chirilmoqda ...",
 		"noPlansDescription": "Hech qanday reja tanlanmagan, iltimos birini tanlang",
 		"noPlansTitle": "Tanlangan rejalar yo'q",

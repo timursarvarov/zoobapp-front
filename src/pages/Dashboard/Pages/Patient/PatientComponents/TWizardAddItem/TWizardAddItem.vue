@@ -284,6 +284,7 @@ export default {
                             this.$set(this.itemToCreate, 'teeth', response.teeth);
                             this.itemToCompare = this._.cloneDeep(response);
                             this.isLoading = false;
+                            console.log(this.itemToCreate)
                             resolve(true);
                         },
                         error => {
@@ -322,6 +323,7 @@ export default {
                             this.$set(this.itemToCreate, 'teeth', response.teeth);
                             this.itemToCompare = this._.cloneDeep(response);
                             this.isLoading = false;
+                            console.log(this.itemToCreate)
                             resolve(true);
                         },
                         error => {
@@ -485,9 +487,9 @@ export default {
             this.itemToCompare = this.lodash.cloneDeep(this.selectedItem);
             this.selectedTeethL = this.lodash.cloneDeep(this.selectedItem.teeth);
         },
-        manipulationsCreated(manipulations) {
-            this.itemToCreate.manipulations = manipulations;
-        },
+        // manipulationsCreated(manipulations) {
+        //     this.itemToCreate.manipulations = manipulations;
+        // },
         hasLoctionsKey() {
             if (this.originalItem) {
                 return 'locations' in this.originalItem;
